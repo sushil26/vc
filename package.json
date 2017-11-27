@@ -1,0 +1,15 @@
+{
+  "name": "",
+  "version": "",
+  "description": "About =====",
+  "scripts": {
+    "start": "node signaling-server"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "circular-json": "^0.4.0",
+    "express": "^4.16.2",
+    "nodemailer": "^4.4.0",
+    "socket.io": "^1.7.4"
+  }
+}

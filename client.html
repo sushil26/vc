@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Conference</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+
+
+    <!-- ############################Chat jss########################## -->
+
+
+
+
+    <script>
+        // function bs_input_file() {
+        //     $(".input-file").before(
+        //         function () {
+        //             if (!$(this).prev().hasClass('input-ghost')) {
+        //                 var element = $("<input type='file' class='input-ghost' style='visibility:hidden; height:0'>");
+        //                 element.attr("name", $(this).attr("name"));
+        //                 element.change(function () {
+        //                     element.next(element).find('input').val((element.val()).split('\\').pop());
+        //                 });
+        //                 $(this).find("button.btn-choose").click(function () {
+        //                     element.click();
+        //                 });
+        //                 $(this).find("button.btn-reset").click(function () {
+        //                     element.val(null);
+        //                     $(this).parents(".input-file").find('input').val('');
+        //                 });
+        //                 $(this).find('input').css("cursor", "pointer");
+        //                 $(this).find('input').mousedown(function () {
+        //                     $(this).parents('.input-file').prev().click();
+        //                     return false;
+        //                 });
+        //                 return element;
+        //             }
+        //         }
+        //     );
+        // }
+        // $(function () {
+        //     bs_input_file();
+        // });
+
+
+    </script>
+    <!-- ################################################# -->
+
+
+    <script>
+        /** CONFIG **/
+        // var SIGNALING_SERVER = "http://localhost";
+        var SIGNALING_SERVER = "https://nameless-dawn-41556.herokuapp.com";
+        var USE_AUDIO = true;
+        var USE_VIDEO = true;
+        var DEFAULT_CHANNEL = 'some-global-channel-name';
+        var MUTE_AUDIO_BY_DEFAULT = false;
+
+        /** You should probably use a different stun server doing commercial stuff **/
+        /** Also see: https://gist.github.com/zziuni/3741933 **/
+        var ICE_SERVERS = [
+            { url: "stun:stun.l.google.com:19302" }
+        ];
+    </script>
+
+    <script>
+        var signaling_socket = null;   /* our socket.io connection to our webserver */
+        var local_media_stream = null; /* our own microphone / webcam */
+        var local_media_shareStream = null;
+        var peers = {};                /* keep track of our peer connections, indexed by peer_id (aka socket.io id) */
+        var peer_media_elements = {};  /* keep track of our <video>/<audio> tags, indexed by peer_id */
+        /* #### Logu Defined  ##### */
+        var peerNew_id = null;
+        var queryLink = null;
+        var txtQueryLink = null;
+        var userName = null;
+        signaling_socket = io();
+        var file;
+
+
+
+        function init() {
+            console.log("init-->");
+            signaling_socket = io(SIGNALING_SERVER);
+
+
+            signaling_socket.on('connect', function () {
+                console.log("signaling_socket connect-->");
+                // console.log("1.1:peers: " + JSON.stringify(peers));
+                // console.log("1.1:Connected to signaling server");
+
+
+                signaling_socket.on('message', function (config) {
+                    console.log("signaling_socket message-->");
+                    //console.log("Unique Peer Id: " + config.peer_id)
+                    queryLink = config.queryId;
+                    peerNew_id = config.peer_id;
+                    console.log("queryLink: "+queryLink);
+                    console.log("peerNew_id: "+peerNew_id);
+                    if (config.queryId == null) {
+                        console.log("message: config.peer_id: " + config.peer_id);
+
+                        document.getElementById('linkToShare').innerHTML += " https://nameless-dawn-41556.herokuapp.com/client/" + peerNew_id;
+                        document.getElementById('linkToShare').setAttribute('href', "https://nameless-dawn-41556.herokuapp.com/client/" + peerNew_id);
+
+                    }
+                    else {
+                        document.getElementById('linkToShare').innerHTML += " https://nameless-dawn-41556.herokuapp.com/client/" + config.queryId;
+                        document.getElementById('linkToShare').setAttribute('href', "https://nameless-dawn-41556.herokuapp.com/client/" + config.queryId);
+                        document.getElementById('videoZne').className='col-sm-9 videozone';
+                        document.getElementById('chatZone').style.display='inline';
+
+                        setup_local_media(function () {
+                            /* once the user has given us access to their
+                             * microphone/camcorder, join the channel and start peering up */
+                            join_chat_channel(DEFAULT_CHANNEL, { 'whatever-you-want-here': 'stuff' });
+
+
+                        });
+
+                    }
+
+                    console.log("<--signaling_socket message");
+
+                })
+
+
+                console.log("<--signaling_socket connect");
+
+
+            });
+            signaling_socket.on('disconnect', function () {
+                console.log("signaling_socket.on disconnect-->");
+                /* Tear down all of our peer connections and remove all the
+                 * media divs when we disconnect */
+                for (peer_id in peer_media_elements) {
+                    peer_media_elements[peer_id].remove();
+                }
+                for (peer_id in peers) {
+                    peers[peer_id].close();
+                }
+
+                peers = {};
+                peer_media_elements = {};
+                console.log("<--signaling_socket.on disconnect");
+            });
+            function join_chat_channel(channel, userdata) {
+                console.log("join_chat_channel-->");
+                // console.log("channel: " + channel);
+                // console.log("userdata: " + JSON.stringify(userdata));
+                // document.p.innerHTML = channel;
+                // document.getElementById("demo").innerHTML = channel;
+                signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink });
+                console.log("<--join_chat_channel");
+            }
+            function part_chat_channel(channel) {
+                console.log("part_chat_channel-->");
+                signaling_socket.emit('part', channel);
+                console.log("<--part_chat_channel");
+            }
+
+
+
+
+            /** 
+            * When we join a group, our signaling server will send out 'addPeer' events to each pair
+            * of users in the group (creating a fully-connected graph of users, ie if there are 6 people
+            * in the channel you will connect directly to the other 5, so there will be a total of 15 
+            * connections in the network). 
+            */
+            signaling_socket.on('addPeer', function (config) {
+                console.log("addPeer-->");
+                console.log('addPeer 1: Signaling server said to add peer:', config);
+                // console.log('Signaling server said to add peer:', JSON.stringify(config));
+                var peer_id = config.peer_id;
+                // console.log("addPeer 1.1: peers: " + JSON.stringify(peers));
+                // console.log("addPeer 1.2: peer_id: " + peer_id);
+                // console.log("addPeer : config.parentPeer: " + config.parentPeer);
+
+                if (peer_id in peers) {
+                    /* This could happen if the user joins multiple channels where the other peer is also in. */
+                    console.log("addPeer 1.3: Already connected to peer ", peer_id);
+                    return;
+                }
+                var peer_connection = new RTCPeerConnection(
+                    { "iceServers": ICE_SERVERS },
+                    { "optional": [{ "DtlsSrtpKeyAgreement": true }] } /* this will no longer be needed by chrome
+                                                                        * eventually (supposedly), but is necessary 
+                                                                        * for now to get firefox to talk to chrome */
+                );
+
+
+
+
+                peers[peer_id] = peer_connection;
+
+                peer_connection.onicecandidate = function (event) {
+                    console.log("onicecandidate-->")
+                    if (event.candidate) {
+                        // console.log("addPeer 1.5: event.candidate :" + event.candidate);
+                        // console.log("addPeer 1.5: peer_id :" + peer_id);
+                        // console.log("addPeer 1.6: event.candidate.sdpMLineIndex :" + event.candidate.sdpMLineIndex);
+                        // console.log("addPeer 1.7: event.candidate.candidate :" + event.candidate.candidate);
+                        console.log("started to call server relayICECandidate--><--")
+                        signaling_socket.emit('relayICECandidate', {
+                            'peer_id': peer_id,
+                            'ice_candidate': {
+                                'sdpMLineIndex': event.candidate.sdpMLineIndex,
+                                'candidate': event.candidate.candidate
+                            }
+                        });
+                    }
+                    console.log("<--onicecandidate")
+                }
+                peer_connection.onaddstream = function (event) {
+                    console.log("onaddstream-->")
+
+                    
+                    console.log("onAddStream", event);
+
+
+                    var remote_media = USE_VIDEO ? $("<video>") : $("<audio>");
+                    remote_media.attr("autoplay", "autoplay");
+                    remote_media.attr("style", "border:5px solid gray");
+                    if (MUTE_AUDIO_BY_DEFAULT) {
+                        remote_media.attr("muted", "true");
+                    }
+                    remote_media.attr("controls", "");
+                    console.log("onaddstream: peer_id: " + peer_id);
+                    peer_media_elements[peer_id] = remote_media;
+
+                    // if (local_media_stream) {
+                        
+                        $('#videosAttach').append(remote_media);
+                    // }
+
+                    // if (local_media_shareStream) {
+                    //     console.log("peer_connection.onaddStream(local_media_shareStream)-->");
+                    //     $('#screenVideosAttach').append(remote_media);
+
+                    // }
+
+
+                    attachMediaStream(remote_media[0], event.stream);
+                    console.log("<--onaddstream");
+                }
+
+                /* Add our local stream */
+                // if (local_media_stream) {
+                //     console.log("peer_connection.addStream(local_media_stream)-->");
+                    peer_connection.addStream(local_media_stream);
+                // }
+                // if (local_media_shareStream) {
+                //     console.log("peer_connection.addStream(local_media_shareStream);-->");
+                //     peer_connection.addStream(local_media_shareStream);
+                // }
+
+                /* Only one side of the peer connection should create the
+                 * offer, the signaling server picks one to be the offerer. 
+                 * The other user will get a 'sessionDescription' event and will
+                 * create an offer, then send back an answer 'sessionDescription' to us
+                 */
+                if (config.should_create_offer) {
+                    console.log("Create offer-->");
+                    // console.log("creating offer from peer id: " + config.owner);
+                    // console.log("config: " + JSON.stringify(config));
+                    peer_connection.createOffer(
+                        function (local_description) {
+                            console.log("local_description-->");
+                            console.log("Local offer description is: ", local_description);
+                            peer_connection.setLocalDescription(local_description,
+                                function () {
+                                    // console.log("local_description: " + JSON.stringify(local_description));
+                                    signaling_socket.emit('relaySessionDescription',
+                                        { 'peer_id': peer_id, 'session_description': local_description, 'from': "addpeer", 'owner': config.owner, 'queryLink': queryLink });
+                                    console.log("Offer setLocalDescription succeeded");
+                                },
+                                function () { Alert("Offer setLocalDescription failed!"); }
+                            );
+                            console.log("<--local_description");
+                        },
+                        function (error) {
+                            console.log("Error sending offer: ", error);
+                        });
+                        console.log("<--Create offer");
+                }
+
+                console.log("<--addPeer");
+            });
+
+
+            /** 
+             * Peers exchange session descriptions which contains information
+             * about their audio / video settings and that sort of stuff. First
+             * the 'offerer' sends a description to the 'answerer' (with type
+             * "offer"), then the answerer sends one back (with type "answer").  
+             */
+            signaling_socket.on('sessionDescription', function (config) {
+                console.log("sessionDescription-->");
+                console.log('SD 1: Remote description received: ', config);
+                console.log("config.peer_id: " + config.peer_id);
+                var peer_id = config.peer_id;
+                var peer = peers[peer_id];
+                var remote_description = config.session_description;
+                console.log("config.session_description: " + config.session_description);
+
+                var desc = new RTCSessionDescription(remote_description);
+                if (queryLink == config.queryId) {
+                    txtQueryLink = config.queryId;
+                    // document.getElementById('textChat').style.display = 'block';
+                    var stuff = peer.setRemoteDescription(desc,
+                        function () {
+                            console.log("setRemoteDescription succeeded");
+                            if (remote_description.type == "offer") {
+                                console.log("Creating answer");
+                                console.log("++++config.queryId: " + config.queryId);
+                                // console.log("++++config.peerIdForAuth: "+config.peerIdForAuth);
+
+
+
+                                peer.createAnswer(
+                                    function (local_description) {
+                                        console.log("Answer description is: ", local_description);
+                                        console.log("local_description: " + local_description);
+                                        peer.setLocalDescription(local_description,
+                                            function () {
+                                                signaling_socket.emit('relaySessionDescription',
+                                                    { 'peer_id': peer_id, 'session_description': local_description, 'from': "sessionDescription", 'owner': config.owner, 'queryLink': queryLink });
+                                                console.log("Answer setLocalDescription succeeded");
+                                            },
+                                            function () { Alert("Answer setLocalDescription failed!"); }
+                                        );
+                                    },
+                                    function (error) {
+                                        console.log("Error creating answer: ", error);
+                                        console.log(peer);
+                                    });
+
+
+
+
+                            }
+
+                        },
+                        function (error) {
+                            console.log("setRemoteDescription error: ", error);
+                        }
+                    );
+                }
+                else {
+                    console.log("setRemoteDescription: sorry");
+                    console.log("queryLink: " + queryLink);
+                    console.log("config.queryId: " + config.queryId);
+                }
+                console.log("Description Object: ", desc);
+                console.log("<--sessionDescription");
+            });
+
+            /**
+             * The offerer will send a number of ICE Candidate blobs to the answerer so they 
+             * can begin trying to find the best path to one another on the net.
+             */
+            signaling_socket.on('iceCandidate', function (config) {
+                console.log("iceCandidate-->");
+                // console.log("iceCandidate: " + JSON.stringify(config));
+                var peer = peers[config.peer_id];
+                var ice_candidate = config.ice_candidate;
+                peer.addIceCandidate(new RTCIceCandidate(ice_candidate));
+                console.log("<--iceCandidate");
+            });
+
+
+            /**
+             * When a user leaves a channel (or is disconnected from the
+             * signaling server) everyone will recieve a 'removePeer' message
+             * telling them to trash the media channels they have open for those
+             * that peer. If it was this client that left a channel, they'll also
+             * receive the removePeers. If this client was disconnected, they
+             * wont receive removePeers, but rather the
+             * signaling_socket.on('disconnect') code will kick in and tear down
+             * all the peer sessions.
+             */
+            signaling_socket.on('removePeer', function (config) {
+                console.log('Signaling server said to remove peer:', config);
+                var peer_id = config.peer_id;
+                if (peer_id in peer_media_elements) {
+                    peer_media_elements[peer_id].remove();
+                }
+                if (peer_id in peers) {
+                    peers[peer_id].close();
+                }
+
+                delete peers[peer_id];
+                delete peer_media_elements[config.peer_id];
+            });
+
+
+
+
+            console.log("<--init");
+        }
+
+
+
+
+        /***********************/
+        /** Local media stuff **/
+        /***********************/
+        function setup_local_media(callback, errorback) {
+
+            console.log("setup_local_media-->");
+
+            /* ##### Start trigger click for setName automatically  ##### */
+            $('#setName').trigger('click');
+            /* ##### End trigger click for setName automatically  ##### */
+
+
+
+            if (local_media_stream != null) {  /* ie, if we've already been initialized */
+                if (callback) callback();
+                return;
+            }
+            /* Ask user for permission to use the computers microphone and/or camera, 
+             * attach it to an <audio> or <video> tag if they give us access. */
+            console.log("Requesting access to local audio / video inputs");
+
+
+            navigator.getUserMedia = (navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia ||
+                navigator.msGetUserMedia);
+
+            attachMediaStream = function (element, stream) {
+                console.log("attachMediaStream-->");
+                // console.log('DEPRECATED, attachMediaStream will soon be removed.');
+                element.srcObject = stream;
+                console.log("<--attachMediaStream");
+            };
+
+
+
+            navigator.getUserMedia({ "audio": USE_AUDIO, "video": USE_VIDEO },
+                function (stream) { /* user accepted access to a/v */
+                    console.log("Access granted to audio/video");
+
+                    local_media_stream = stream;
+                    var local_media = USE_VIDEO ? $("<video>") : $("<audio>");
+                    local_media.attr("autoplay", "autoplay");
+                    local_media.attr("muted", "true"); /* always mute ourselves by default */
+                    local_media.attr("controls", "");
+                    local_media.attr("id", "videoElem");
+                    local_media.attr("style", "border:5px solid skyblue");
+                    $('#videosAttach').append(local_media);
+
+
+
+                    attachMediaStream(local_media[0], stream);
+
+                    if (callback) callback();
+                },
+                function () { /* user denied access to a/v */
+                    console.log("Access denied for audio/video");
+                    alert("You chose not to provide access to the camera/microphone, demo will not work.");
+                    if (errorback) errorback();
+                });
+
+
+                console.log("<--setup_local_media");
+
+
+
+        }
+
+
+     
+
+        function stopVideo(vid, stream) {
+            console.log("stop video: " + vid + "stream: " + stream);
+            // vid.pause();
+            // vid.src = "";
+            // localstream.stop();// videoElem.srcObject = null;
+            console.log("Vid off");
+        }
+
+
+        // function sendMessage() {
+        //     console.log("sendMsg-->");
+        //     if (userName != null) {
+
+        //         var msg = document.getElementById('message').value;
+        //         console.log("msg: " + msg);
+        //         if (msg) {
+        //             console.log("Start to emit message  ");
+        //             console.log("peerNew_id: " + peerNew_id);
+        //             signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+        //         }
+        //     }
+        //     else {
+        //         $('#setName').trigger('click');
+        //     }
+
+        //     console.log("<--sendMsg");
+
+        // }
+
+        signaling_socket.on('newTextMsg', function (data) {
+
+            console.log("newTextMsg-->");
+
+            console.log("data.message: " + data.message);
+            console.log("data.userId: " + data.userId);
+            console.log("data.queryId: " + data.queryId);
+
+            console.log("queryLink: " + queryLink);
+            if (data.queryId == queryLink) {
+                document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
+                    data.userName + '</b> :<i> ' + data.message + '</i></div>'
+
+                // scrollDown();
+
+
+            }
+            else {
+
+                console.log("newTextMsg: Sorry");
+            }
+            console.log("<--newTextMsg");
+
+        })
+
+
+        function emailInvite() {
+            console.log("emailInvite-->");
+            var email = document.getElementById('emailInvite').value;
+            var URL = document.getElementById('linkToShare').innerHTML;
+            console.log("email: " + email);
+            console.log("URL: " + URL);
+            if (email) {
+                console.log("Start to emit email  ");
+                console.log("peerNew_id: " + peerNew_id);
+                signaling_socket.emit('emailCapture', { 'email': email, 'userId': peerNew_id, 'url': URL });
+            }
+            else {
+                console.log("empty email");
+            }
+
+            console.log("<--emailInvite");
+
+        }
+
+        signaling_socket.on('emailSendInfo', function (data) {
+            console.log("emailSendInfo-->");
+            console.log("peerNew_id: " + peerNew_id);
+            console.log("data.userId: " + data.userId);
+            console.log("data.info: " + data.info);
+            console.log("data.info: " + JSON.stringify(data));
+
+            if (peerNew_id == data.userId) {
+                // var label = document.createElement("label");
+                // var txtNode = document.createTextNode(data.info);
+                // label.appendChild(txtNode);
+
+                // label.value = data.info;
+                // console.log("label: "+label);
+
+                document.getElementById('info').innerHTML = data.info;
+            }
+            else {
+
+                console.log("emailSendInfo: Sorry");
+            }
+
+            console.log("<--emailSendInfo");
+
+        })
+
+        function setName() {
+            userName = document.getElementById('userName').value;
+        }
+
+
+
+
+
+       
+    </script>
+
+
+    <style>
+        video {
+            width: 32%;
+            height: 32%;
+            /* border: 1px solid black; */
+        }
+
+        #chat {
+            width: 100%;
+            height: 80%;
+            top: 0px;
+            left: 0px;
+            overflow: auto;
+            background-color: #f1f1f1;
+
+
+        }
+
+        .chat {
+            width: 100%;
+            height: 80%;
+            top: 0px;
+            left: 0px;
+            overflow: auto;
+            background-color: #f1f1f1;
+        }
+
+        .videozone {
+            border-radius: 5px;
+            padding: 9em 0 9em 0;
+            background-color: #4686a0;
+            color: rgba(255, 255, 255, 0.75);
+            background-attachment: fixed, fixed, fixed;
+            background-image: url("/css/images/overlay2.png"), url("/css/images/overlay3.svg"), linear-gradient(45deg, #9dc66b 5%, #4fa49a 30%, #4361c2);
+            /* background-position: top left, center center, center center; */
+            background-size: auto, cover, cover;
+            overflow: hidden;
+            /* position: absolute; */
+            text-align: center;
+            height: 100%;
+        }
+
+        .chatbox {
+            background-color: #f1f1f1;
+            height: 95%;
+
+            padding-left: 0px;
+            padding-right: 0px;
+            border-radius: 5px;
+            float: right;
+
+        }
+
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+            .row.content {
+                height: auto;
+            }
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
+
+    </script>
+</head>
+
+
+
+<body onload="init()">
+
+    <div class="container-fluid" style="height:100%;">
+        <div class="row content" style="height:95%;">
+            <div class="col-sm-12 videozone"  id="videoZne">
+
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="setName" style="display:none">Set Name</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content" style="color:black">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Please Set Your Name</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control" placeholder="Enter your name" id="userName">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal" onclick="setName()">Submit</button>
+                                <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="videosAttach"></div>
+                </br>
+                <!-- <div id="shareVideosAttach" style=""></div> -->
+
+                <h3>Click Below Link To Start The Conference</h3>
+
+                <a style="color:black;" id="linkToShare"> </a>
+                </br>
+                </br>
+                <div class="form-inline" id="invitePeople_container">
+                    <div class="input-group" style="border:1px solid #0a425f;border-radius:5px;">
+                        <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
+                        </div>
+                    </div>
+                    <!-- <button type="button" id="myBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1">Start Screen Sharing</button> -->
+                    <br>
+                    <label id="info"></label>
+                </div>
+            </div>
+            <div class="col-sm-3 chatbox" id="chatZone" style="display:none;">
+                <!-- <div id="textChat"> -->
+
+                <div class="panel panel-info" style="border:#f1f1f1;height:100% ">
+                    <div class="panel-heading" style=" color:#f1f1f1; height:10% ; background-color:#0a425f">
+                        <h4>Chatting-Zone</h4>
+                    </div>
+
+                    <div class="panel-body chat" id="chat" style="height:70%;">
+                        <div id="message-container"></div>
+                    </div>
+                    <div class="panel-footer" style="height:25%">
+                        <textarea id="message" class="form-control" rows="2"></textarea>
+                        <div class="form-group">
+                            <!-- <div class="input-group input-file" name="Fichier1">
+                                <span class="input-group-btn">
+                                        
+                                    <button class="btn btn-default btn-choose" type="button" id="fileselect">
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                                <input type="text" class="form-control btn-choose" placeholder='Choose a file...' disabled/>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-warning btn-reset" type="button">Reset</button>
+                                </span>
+                            </div> -->
+                            <input id="fileselect" type="file" name="fileselect" />
+                        </div>
+
+
+
+                        <button type="button" class="btn" style="background-color: #29b6bd;color:#f1f1f1" name="button" onclick="sendMessage()">Send</button>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row" style="height:5%;">
+            <footer style="height:5% ;float:inherit">
+                <center>Copyright &copy; careator.com
+                </center>
+            </footer>
+        </div>
+
+
+    </div>
+
+    <script>
+   
+      var MAX_UPLOAD_SIZE = 1.5; // in MB
+        // var socket = io();
+
+        var imageReader = new FileReader();
+        var videoReader = new FileReader();
+       $('#fileselect').change(function (e) {
+
+            console.log("FIle Select -->");
+        file = e.target.files[0];
+       
+           
+           console.log("<--FIle Select");
+         });
+       function sendMessage() {
+            console.log("sendMsg-->");
+            var msg = document.getElementById('message').value;
+            // var file = e.target.files[0];
+            if (msg != null) {
+                if (userName != null) {
+
+
+                    console.log("msg: " + msg);
+                    if (msg) {
+                        console.log("Start to emit message  ");
+                        console.log("peerNew_id: " + peerNew_id);
+                        signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+                    }
+                }
+                else {
+                    $('#setName').trigger('click');
+                }
+            }
+            else{
+                console.log("You Didn't type any message")
+            }
+            if (file) {
+                console.log("file.type.substring(0,5): " + file.type.substring(0, 5));
+
+                if (file.type.substring(0, 5) === 'image' || file.type.substring(0, 5) === 'video' || file.type.substring(0, 4) === 'html') {
+
+                    console.log("file.size: " + file.size);
+                    console.log("MAX_UPLOAD_SIZE: " + MAX_UPLOAD_SIZE + "MAX_UPLOAD_SIZE * 1000 * 1000: " + MAX_UPLOAD_SIZE * 1000 * 1000);
+                    if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
+                        alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
+                    }
+                    else if (file.type.substring(0, 5) === 'image') {
+
+                        // upload image  
+                        imageReader.readAsDataURL(file);
+                    }
+                    else if (file.type.substring(0, 5) === 'video') {
+
+                        // uplaod video  
+                        videoReader.readAsDataURL(file);
+                    }
+                }
+                else {
+                    alert("Sorry, you an only share images or videos or html Files");
+                }
+
+                // reset select box and file object 
+                $('#fileselect').val('');
+                file = '';
+            }
+            else {
+                console.log("You haven't selected any file to share");
+            }
+
+            return false; // don't reload the page
+            console.log("<--Upload");
+        
+            console.log("<--sendMsg");
+
+        }
+
+        signaling_socket.on('newTextMsg', function (data) {
+
+            console.log("newTextMsg-->");
+
+            console.log("data.message: " + data.message);
+            console.log("data.userId: " + data.userId);
+            console.log("data.queryId: " + data.queryId);
+
+            console.log("queryLink: " + queryLink);
+            if (data.queryId == queryLink) {
+                document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
+                    data.userName + '</b> :<i> ' + data.message + '</i></div>'
+
+                // scrollDown();
+
+
+            }
+            else {
+
+                console.log("newTextMsg: Sorry");
+            }
+            console.log("<--newTextMsg");
+
+        })
+
+
+        function emailInvite() {
+            console.log("emailInvite-->");
+            var email = document.getElementById('emailInvite').value;
+            var URL = document.getElementById('linkToShare').innerHTML;
+            console.log("email: " + email);
+            console.log("URL: " + URL);
+            if (email) {
+                console.log("Start to emit email  ");
+                console.log("peerNew_id: " + peerNew_id);
+                signaling_socket.emit('emailCapture', { 'email': email, 'userId': peerNew_id, 'url': URL });
+            }
+            else {
+                console.log("empty email");
+            }
+
+            console.log("<--emailInvite");
+
+        }
+
+        signaling_socket.on('emailSendInfo', function (data) {
+            console.log("emailSendInfo-->");
+            console.log("peerNew_id: " + peerNew_id);
+            console.log("data.userId: " + data.userId);
+            console.log("data.info: " + data.info);
+            console.log("data.info: " + JSON.stringify(data));
+
+            if (peerNew_id == data.userId) {
+                // var label = document.createElement("label");
+                // var txtNode = document.createTextNode(data.info);
+                // label.appendChild(txtNode);
+
+                // label.value = data.info;
+                // console.log("label: "+label);
+
+                document.getElementById('info').innerHTML = data.info;
+            }
+            else {
+
+                console.log("emailSendInfo: Sorry");
+            }
+
+            console.log("<--emailSendInfo");
+
+        })
+
+        function setName() {
+            userName = document.getElementById('userName').value;
+        }
+
+
+
+
+
+        function playAudioForNotify() {
+            console.log("playAudioForNotify-->");
+            var snd = new Audio("./click.mp3"); // buffers automatically when created
+            snd.play();
+            console.log("<--playAudioForNotify");
+        }
+
+
+
+        /* #### Start File Sharing  ##### */
+
+      
+      
+
+        // Appends either an image or a video file to user's chat window
+        function appendFile(URI, type, name, queryId) {
+            console.log("appendFile-->");
+            console.log("URI: " + URI);
+            console.log("type: " + type);
+            // console.log("user: "+user);
+
+            if (queryId == queryLink) {
+                if (type === 'image') {
+            document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
+                name + '</b> :<i> <img src="' +URI + '" height="150px" /></i></div>'
+            }
+            else {
+                document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
+                    name + '</b> :<i> <video width="320" height="240" controls><source src="' +URI + '"><li></div>'
+           
+              
+            }
+            }
+
+            // $('#message-container').append($('<li style="color:gray; font-weight: 100;">').text('You:'));
+            // $('#messages').append($('<li>').text(user + ':'));
+            // if (user === 'self'){
+            //     $('#messages').append($('<li style="color:gray; font-weight: 100;">').text('You:'));
+            // }
+            // else {
+            //     $('#messages').append($('<li>').text(user + ':'));
+            // }
+
+            // if (type === 'image') {
+            //     $('#message-container').append('<li><img src="' + URI + '" height="150px" /><li>');
+            // }
+            // else {
+            //     $('#message-container').append('<li><video width="320" height="240" controls><source src="' + URI + '"><li>');
+            // }
+            console.log("<--appendFile");
+        }
+
+
+        imageReader.onload = function (e) {
+            console.log("imageReader.onload-->");
+            // append image to own interface
+            // appendFile(e.target.result, 'image', 'self');
+            // scrollDown();
+            var targetResult = e.target.result;
+
+            // share image
+            // TODO try stream?
+            signaling_socket.emit('file', {'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName, 'dataURI':targetResult, 'type':'image'});
+            console.log("<--imageReader.onload");
+        };
+
+        videoReader.onload = function (e) {
+            console.log("videoReader.onload-->");
+
+            // append video to own interface
+            //appendFile(e.target.result, 'video', 'self');
+            // scrollDown();
+
+            // share video
+            signaling_socket.emit('file', e.target.result, 'video');
+            console.log("<--videoReader.onload");
+        };
+
+        signaling_socket.on('file', function (data) {
+            console.log("File Request from Server-->");
+            console.log("data.queryLink: "+data.queryLink);
+            console.log("queryLink: "+queryLink);
+            if (data.queryId == queryLink) {
+                appendFile(data.dataURI, data.type, data.userName, data.queryId);
+            }
+            console.log("<--File Request from Server");
+            // appendFile(dataURI, type, from);
+            // scrollDown();
+
+        });
+
+/* #### End File Sharing  ##### */
+
+    </script>
+
+
+
+
+
+
+</body>
+
+</html>
