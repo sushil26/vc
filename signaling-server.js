@@ -321,6 +321,7 @@ io.sockets.on('connection', function (socket) {
 
 
         if (peerWithQueryId[data.userId] == data.queryLink) {
+            console.log("textMsg calling from server to client--><--");
             io.sockets.emit('newTextMsg', { 'message': data.message, 'userId': data.userId, 'queryId': peerWithQueryId[data.userId], 'userName': data.userName });
         }
         else {
