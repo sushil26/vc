@@ -60,7 +60,7 @@
         var SIGNALING_SERVER = "https://logchat.herokuapp.com/";
         var USE_AUDIO = true;
         var USE_VIDEO = true;
-        var DEFAULT_CHANNEL = 'some-global-channel-name';
+        var DEFAULT_CHANNEL = 'monkeyChannel94321';
         var MUTE_AUDIO_BY_DEFAULT = false;
 
         /** You should probably use a different stun server doing commercial stuff **/
@@ -510,31 +510,31 @@
 
         // }
 
-        signaling_socket.on('newTextMsg', function (data) {
+        // signaling_socket.on('newTextMsg', function (data) {
 
-            console.log("newTextMsg-->");
+        //     console.log("newTextMsg-->");
 
-            console.log("data.message: " + data.message);
-            console.log("data.userId: " + data.userId);
-            console.log("data.queryId: " + data.queryId);
+        //     console.log("data.message: " + data.message);
+        //     console.log("data.userId: " + data.userId);
+        //     console.log("data.queryId: " + data.queryId);
 
-            console.log("queryLink: " + queryLink);
-            if (data.queryId == queryLink) {
-                console.log("start to bind message ");
-                document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
-                    data.userName + '</b> :<i> ' + data.message + '</i></div>'
+        //     console.log("queryLink: " + queryLink);
+        //     if (data.queryId == queryLink) {
+        //         console.log("start to bind message ");
+        //         document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
+        //             data.userName + '</b> :<i> ' + data.message + '</i></div>'
 
-                // scrollDown();
+        //         // scrollDown();
 
 
-            }
-            else {
+        //     }
+        //     else {
 
-                console.log("newTextMsg: Sorry");
-            }
-            console.log("<--newTextMsg");
+        //         console.log("newTextMsg: Sorry");
+        //     }
+        //     console.log("<--newTextMsg");
 
-        })
+        // })
 
 
         function emailInvite() {
