@@ -520,6 +520,7 @@
 
             console.log("queryLink: " + queryLink);
             if (data.queryId == queryLink) {
+                console.log("start to bind message ");
                 document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
                     data.userName + '</b> :<i> ' + data.message + '</i></div>'
 
