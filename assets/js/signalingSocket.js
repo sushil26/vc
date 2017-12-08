@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Conference</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <script src="https://cdn.WebRTC-Experiment.com/getScreenId.js"></script>
-    <link rel="stylesheet" href="/css/font-awesome.min.css" />
-
-
-
-    <script>
-        /** CONFIG **/
+ /** CONFIG **/
         // var SIGNALING_SERVER = "http://localhost";
-        var SIGNALING_SERVER = "https://nameless-dawn-41556.herokuapp.com";
+        var SIGNALING_SERVER = "https://logchat.herokuapp.com";
         var USE_AUDIO = true;
         var USE_VIDEO = true;
         var DEFAULT_CHANNEL = 'some-global-channel-name';
@@ -28,9 +11,7 @@
         var ICE_SERVERS = [
             { url: "stun:stun.l.google.com:19302" }
         ];
-    </script>
-
-    <script>
+    
         var signaling_socket = null;   /* our socket.io connection to our webserver */
         var local_media_stream = null; /* our own microphone / webcam */
         var local_media_shareStream = null;
@@ -74,15 +55,17 @@
                     if (config.queryId == null) {
                         console.log("message: config.peer_id: " + config.peer_id);
 
-                        document.getElementById('linkToShare').innerHTML += " https://nameless-dawn-41556.herokuapp.com/client/" + peerNew_id;
-                        document.getElementById('linkToShare').setAttribute('href', "https://nameless-dawn-41556.herokuapp.com/client/" + peerNew_id);
+                        document.getElementById('linkToShare').innerHTML += " https://logchat.herokuapp.com/client/" + peerNew_id;
+                        document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
+                        document.getElementById('linkToShare').setAttribute('href', "https://logchat.com/client/" + peerNew_id);
 
                     }
                     else {
-                        document.getElementById('linkToShare').innerHTML += " https://nameless-dawn-41556.herokuapp.com/client/" + config.queryId;
-                        document.getElementById('linkToShare').setAttribute('href', "https://nameless-dawn-41556.herokuapp.com/client/" + config.queryId);
-                        document.getElementById('videoZne').className = 'col-sm-9 videozone';
-                        document.getElementById('chatZone').style.display = 'inline';
+                        document.getElementById('linkToShare').innerHTML += " https://logchat.com/client/" + config.queryId;
+                        document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + config.queryId);
+                        document.getElementById('videoHeaders').style.display = 'inline';
+                        document.getElementById('videoConf').style.display = 'none';
+                        document.getElementById('openChat').style.display = 'inline';
                         document.getElementById('disconnLink').style.display = 'inline';
                         document.getElementById('screenShareBtn').style.display = 'inline';
 
@@ -90,7 +73,7 @@
                         setup_local_media(function () {
                             /* once the user has given us access to their
                              * microphone/camcorder, join the channel and start peering up */
-                            join_chat_channel(DEFAULT_CHANNEL, { 'whatever-you-want-here': 'stuff' });
+                            join__channel(DEFAULT_CHANNEL, { 'whatever-you-want-here': 'stuff' });
 
 
                         });
@@ -126,19 +109,19 @@
                 // peer_media_sselements = {};
                 console.log("<--signaling_socket.on disconnect");
             });
-            function join_chat_channel(channel, userdata) {
-                console.log("join_chat_channel-->");
+            function join__channel(channel, userdata) {
+                console.log("join__channel-->");
                 // console.log("channel: " + channel);
                 // console.log("userdata: " + JSON.stringify(userdata));
                 // document.p.innerHTML = channel;
                 // document.getElementById("demo").innerHTML = channel;
                 signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink });
-                console.log("<--join_chat_channel");
+                console.log("<--join__channel");
             }
-            function part_chat_channel(channel) {
-                console.log("part_chat_channel-->");
+            function part__channel(channel) {
+                console.log("part__channel-->");
                 signaling_socket.emit('part', channel);
-                console.log("<--part_chat_channel");
+                console.log("<--part__channel");
             }
 
 
@@ -676,6 +659,15 @@
                         });
 
                     }, function (error) {
+                        var msg = "You Must Need to Install  Screen Share Extention, Click ok to install";
+                        var newLine = "\r\n"
+                        msg+=newLine;
+                        msg+="Note:Please Refresh the browser After Installing Extention ";
+                        if (window.confirm(msg)) 
+                        {
+                        window.open('https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog');
+                        };
+                    //    alert("You Must Need to Install This Screen Share Extention https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog ");
                         console.error(error);
                         if (errorback) errorback();
                     });
@@ -708,470 +700,6 @@
 
         function scrollDown() {
             console.log("scrollDown-->");
-            $('#chat').animate({ scrollTop: $('#chat').prop("scrollHeight") }, 500);
+            $('#popupMsg').animate({ scrollTop: $('#popupMsg').prop("scrollHeight") }, 500);
             console.log("<--scrollDown");
         }
-
-
-    </script>
-
-
-    <style>
-        video {
-            width: 32%;
-            height: 32%;
-            /* border: 1px solid black; */
-        }
-
-        #chat {
-            width: 100%;
-            height: 80%;
-            top: 0px;
-            left: 0px;
-            overflow: auto;
-            background-color: #f1f1f1;
-
-
-        }
-
-        .chat {
-            width: 100%;
-            height: 80%;
-            top: 0px;
-            left: 0px;
-            overflow: auto;
-            background-color: #f1f1f1;
-        }
-
-        .videozone {
-            border-radius: 5px;
-            padding: 9em 0 9em 0;
-            background-color: #4686a0;
-            color: rgba(255, 255, 255, 0.75);
-            background-attachment: fixed, fixed, fixed;
-            background-image: url("/css/images/overlay2.png"), url("/css/images/overlay3.svg"), linear-gradient(45deg, #9dc66b 5%, #4fa49a 30%, #4361c2);
-            /* background-position: top left, center center, center center; */
-            background-size: auto, cover, cover;
-            overflow: auto;
-            /* position: absolute; */
-            text-align: center;
-            height: 100%;
-        }
-
-        .chatbox {
-            background-color: #f1f1f1;
-            height: 95%;
-
-            padding-left: 0px;
-            padding-right: 0px;
-            border-radius: 5px;
-            float: right;
-
-        }
-
-        @media screen and (max-width: 767px) {
-            .sidenav {
-                height: auto;
-                padding: 15px;
-            }
-            .row.content {
-                height: auto;
-            }
-        }
-
-        html,
-        body {
-            height: 100%;
-        }
-    </style>
-
-    </script>
-</head>
-
-
-
-<body onload="init()">
-
-    <div class="container-fluid" style="height:100%;">
-        <div class="row content" style="height:95%;">
-            <!-- <button onclick="stopVideo()">Stop Video</button> -->
-            <div class="col-sm-12 videozone" id="videoZne">
-
-                <!-- Trigger the modal with a button -->
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="setName" style="display:none">Set Name</button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content" style="color:black">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Please Set Your Name</h4>
-                            </div>
-                            <div class="modal-body">
-                                <input type="text" class="form-control" placeholder="Enter your name" id="userName">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal" onclick="setName()">Submit</button>
-                                <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div id="videosAttach"></div>
-
-                <a href="/" class="btn" id="disconnLink" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Discoonect</a>
-                </br>
-                <div id="shareVideosAttach"></div>
-
-                <h3>
-                    <b>Note:-</b>Chrome user May need to install this extension for file sharing
-                    <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog">
-                        <button> Install Extension</button>
-                    </a>
-                </h3>
-
-
-                <h3>Click/Share Below Link To Start The Conference</h3>
-
-                <a style="color:black;" id="linkToShare"> </a>
-                </br>
-                </br>
-                <div class="form-inline" id="invitePeople_container">
-                    <div class="input-group" style="border:1px solid #0a425f;border-radius:5px;">
-                        <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
-                        </div>
-                    </div>
-                    <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button>
-                    <button type="button" id="screenShareStop" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Stop Screen Sharing</button>
-                    <br>
-                    <label id="info"></label>
-                </div>
-            </div>
-            <div class="col-sm-3 chatbox" id="chatZone" style="display:none;">
-                <!-- <div id="textChat"> -->
-
-                <div class="panel panel-info" style="border:#f1f1f1;height:100% ">
-                    <div class="panel-heading" style=" color:#f1f1f1; height:10% ; background-color:#0a425f">
-                        <h4>Chatting-Zone</h4>
-                    </div>
-
-                    <div class="panel-body chat" id="chat" style="height:70%;">
-                        <div id="message-container"></div>
-                    </div>
-                    <div class="panel-footer" style="height:25%">
-                        <textarea id="message" class="form-control" rows="2"></textarea>
-                        <div class="form-group">
-
-                            <input id="fileselect" type="file" name="fileselect" />
-                        </div>
-
-
-
-                        <button type="button" class="btn" style="background-color: #29b6bd;color:#f1f1f1" name="button" onclick="sendMessage()">Send</button>
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-    <div class="row" style="height:5%;">
-        <footer style="height:5% ;float:inherit">
-            <center>Copyright &copy; careator.com
-            </center>
-        </footer>
-    </div>
-
-    <script>
-
-        var MAX_UPLOAD_SIZE = 1.5; // in MB
-        // var socket = io();
-
-        var imageReader = new FileReader();
-        var videoReader = new FileReader();
-        var fileReader = new FileReader();
-        $('#fileselect').change(function (e) {
-
-            console.log("FIle Select -->");
-            file = e.target.files[0];
-            console.log("file: " + file);
-            console.log("file.type: " + file.type);
-
-
-            console.log("<--FIle Select");
-        });
-        function sendMessage() {
-            console.log("sendMsg-->");
-            var msg = document.getElementById('message').value;
-            // var file = e.target.files[0];
-            if (userName != null) {
-                if (msg != null) {
-
-
-
-                    console.log("msg: " + msg);
-                    if (msg) {
-                        console.log("Start to emit message  ");
-                        console.log("peerNew_id: " + peerNew_id);
-                        signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
-                    }
-
-                }
-                else {
-                    console.log("You Didn't type any message")
-                }
-                if (file) {
-                    console.log("file.type.substring(0,5): " + file.type.substring(0, 5));
-                    console.log("file.type.substring(0,4): " + file.type.substring(0, 4));
-
-                    // if (file.type.substring(0, 5) === 'image' || file.type.substring(0, 5) === 'video' || file.type.substring(0, 4) === 'docx') {
-
-                    console.log("file.size: " + file.size);
-                    console.log("MAX_UPLOAD_SIZE: " + MAX_UPLOAD_SIZE + "MAX_UPLOAD_SIZE * 1000 * 1000: " + MAX_UPLOAD_SIZE * 1000 * 1000);
-                    if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
-                        alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
-                    }
-                    else if (file.type.substring(0, 5) === 'image') {
-                        console.log("Image");
-                        // upload image  
-                        imageReader.readAsDataURL(file);
-                    }
-                    else if (file.type.substring(0, 5) === 'video') {
-
-                        console.log("Video");
-                        // uplaod video  
-                        videoReader.readAsDataURL(file);
-                    }
-                    else {
-                        console.log("other from sendMessage");
-                        fileReader.readAsDataURL(file);
-                    }
-
-                    // }
-                    // else {
-                    //     alert("Sorry, you an only share images or videos or html Files");
-                    // }
-
-                    // reset select box and file object 
-                    $('#fileselect').val('');
-                    file = '';
-
-                }
-                else {
-                    console.log("You haven't selected any file to share");
-                }
-            }
-            else {
-                $('#setName').trigger('click');
-            }
-
-            return false; // don't reload the page
-            console.log("<--Upload");
-
-            console.log("<--sendMsg");
-
-        }
-
-        signaling_socket.on('newTextMsg', function (data) {
-
-            console.log("newTextMsg-->");
-
-            console.log("data.message: " + data.message);
-            console.log("data.userId: " + data.userId);
-            console.log("data.queryId: " + data.queryId);
-
-            console.log("queryLink: " + queryLink);
-            if (data.queryId == queryLink) {
-                document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
-                    data.userName + '</b> :<i> ' + data.message + '</i></div>'
-
-                scrollDown();
-
-
-            }
-            else {
-
-                console.log("newTextMsg: Sorry");
-            }
-            console.log("<--newTextMsg");
-
-        })
-
-
-        function emailInvite() {
-            console.log("emailInvite-->");
-            var email = document.getElementById('emailInvite').value;
-            var URL = document.getElementById('linkToShare').innerHTML;
-            console.log("email: " + email);
-            console.log("URL: " + URL);
-            if (email) {
-                console.log("Start to emit email  ");
-                console.log("peerNew_id: " + peerNew_id);
-                signaling_socket.emit('emailCapture', { 'email': email, 'userId': peerNew_id, 'url': URL });
-            }
-            else {
-                console.log("empty email");
-            }
-
-            console.log("<--emailInvite");
-
-        }
-
-        signaling_socket.on('emailSendInfo', function (data) {
-            console.log("emailSendInfo-->");
-            console.log("peerNew_id: " + peerNew_id);
-            console.log("data.userId: " + data.userId);
-            console.log("data.info: " + data.info);
-            console.log("data.info: " + JSON.stringify(data));
-
-            if (peerNew_id == data.userId) {
-                // var label = document.createElement("label");
-                // var txtNode = document.createTextNode(data.info);
-                // label.appendChild(txtNode);
-
-                // label.value = data.info;
-                // console.log("label: "+label);
-
-                document.getElementById('info').innerHTML = data.info;
-            }
-            else {
-
-                console.log("emailSendInfo: Sorry");
-            }
-
-            console.log("<--emailSendInfo");
-
-        })
-
-        function setName() {
-            userName = document.getElementById('userName').value;
-        }
-
-
-
-
-
-        function playAudioForNotify() {
-            console.log("playAudioForNotify-->");
-            var snd = new Audio("./click.mp3"); // buffers automatically when created
-            snd.play();
-            console.log("<--playAudioForNotify");
-        }
-
-
-
-        /* #### Start File Sharing  ##### */
-
-
-
-
-        // Appends either an image or a video file to user's chat window
-        function appendFile(URI, type, name, queryId) {
-            console.log("appendFile-->");
-            console.log("URI: " + URI);
-            console.log("type: " + type);
-            // console.log("user: "+user);
-
-            if (queryId == queryLink) {
-                if (type === 'image') {
-                    console.log("image");
-                    document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
-                        name + '</b> :<i> <img src="' + URI + '" height="150px" /></i></div>'
-                }
-                else if (type === 'video') {
-                    console.log("video");
-                    document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
-                        name + '</b> :<i> <video width="320" height="240" controls><source src="' + URI + '"><li></div>'
-
-
-                }
-                else {
-                    console.log("Other");
-                    //             var save = document.createElement('a');
-                    // save.href = URI;
-                    // save.target = '_blank';
-                    // save.download = name || URI;
-                    // save.innerHTML="download"
-
-                    // var event = document.createEvent('Event');
-                    // event.initEvent('click', true, true);
-
-                    // save.dispatchEvent(event);
-                    // (window.URL || window.webkitURL).revokeObjectURL(save.href);
-                    document.getElementById('message-container').innerHTML += '<div class="panel" style="margin-bottom: 4px; border:4px solid transparent;"><b>' +
-                        name + '</b> : <a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a></div>'
-                }
-            }
-
-
-            console.log("<--appendFile");
-        }
-
-
-        imageReader.onload = function (e) {
-            console.log("imageReader.onload-->");
-            scrollDown();
-            var targetResult = e.target.result;
-
-            // share image
-            // TODO try stream?
-            signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
-            console.log("<--imageReader.onload");
-        };
-
-        videoReader.onload = function (e) {
-            console.log("videoReader.onload-->");
-
-
-            scrollDown();
-
-            // share video
-            signaling_socket.emit('file', e.target.result, 'video');
-            console.log("<--videoReader.onload");
-        };
-        fileReader.onload = function (e) {
-            console.log("fileReader.onload-->");
-
-            scrollDown();
-            var targetResult = e.target.result;
-
-            // share image
-            // TODO try stream?
-            signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName, 'dataURI': targetResult, 'type': 'doc' });
-            console.log("<--fileReader.onload");
-        };
-
-        signaling_socket.on('file', function (data) {
-            console.log("File Request from Server-->");
-            console.log("data.queryLink: " + data.queryLink);
-            console.log("queryLink: " + queryLink);
-            if (data.queryId == queryLink) {
-                appendFile(data.dataURI, data.type, data.userName, data.queryId);
-            }
-            console.log("<--File Request from Server");
-            // appendFile(dataURI, type, from);
-            scrollDown();
-
-        });
-
-/* #### End File Sharing  ##### */
-
-    </script>
-
-
-
-
-
-
-</body>
-
-</html>

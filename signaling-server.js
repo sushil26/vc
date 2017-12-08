@@ -44,13 +44,13 @@ main.get("/client", function (req, res) {
     queryId = null;
 
     console.log("start to render page");
-    res.sendFile(__dirname + '/client.html');
+    res.sendFile(__dirname + '/client2.html');
 });
 main.get("/client/:id", function (req, res) {
     queryId = req.params.id;
     console.log("queryId: " + req.params.id);
     console.log("start to render page");
-    res.sendFile(__dirname + '/client.html');
+    res.sendFile(__dirname + '/client2.html');
 });
 
 
@@ -75,7 +75,7 @@ var transporter = nodemailer.createTransport({
 var channels = {};
 var sockets = {};
 var peerTrack = [];
-var peerWithQueryId = []; /* PeerId with Query Id peer-id is a index value is query id  */
+var peerWithQueryId = []; /* PeerId with Query Id peer-id is a index value is a query id  */
 var peerTrackForVideo = { 'link': [] }; /* This variable for getting socket.id's with perticular Link*/
 var tempId = null;
 /**
@@ -145,10 +145,10 @@ io.sockets.on('connection', function (socket) {
         // console.log("channels: " + channels);
 
 
-        if (channel in socket.channels) {
-            console.log("join 1.1 [" + socket.id + "] ERROR: already joined ", channel);
-            return;
-        }
+        // if (channel in socket.channels) {
+        //     console.log("join 1.1 [" + socket.id + "] ERROR: already joined ", channel);
+        //     return;
+        // }
 
         if (!(channel in channels)) {
             console.log("join 1.2 [" + socket.id + "] INFO:channel ", channel);
@@ -241,70 +241,7 @@ io.sockets.on('connection', function (socket) {
             }
 
 
-            // if(config.from=='addpeer')
-            //     {
-            //         console.log("addPeer");
-            //         if (peerTrack.indexOf(queryId)>=0) {
-            //             console.log("addpeer: success");
-            //             sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner':config.owner });
-            //         }
-            //         else {
-            //             console.log("addpeer: Sorryyyyyy");
-            //         }
-            //     }
-            //     else if(config.from=='sessionDescription')
-            //         {
-            //             console.log("sessionDescription");
 
-            //             if(config.peer_id==queryId){
-            //                 sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner':config.owner });
-            //             }
-            //             else{
-            //                 console.log("sessionDescription: Sorryyyyyy");
-
-            //             }
-            //         }
-
-            // if(config.from=='addpeer')I
-            // {
-            //     if(queryId == config.peer_id)
-            //         {
-            //             console.log("addpeer: success");
-            //             sockets[peer_id].emit('sessionDescription', {'peer_id': socket.id, 'session_description': session_description, 'peerIdForAuth':peer_id});
-            //         }
-            //         else{
-            //             console.log("addpeer: Sorryyyyyy");
-            //         } 
-            // }    
-
-            // else if(config.from=='sessionDescription')
-            // {
-            //     if(queryId == config.peerIdForAuth)
-            //     {
-            //         console.log("sessionDescription: success");
-            //         sockets[peer_id].emit('sessionDescription', {'peer_id': socket.id, 'session_description': session_description});
-            //     }    
-            //     else
-            //         {
-            //             console.log("sessionDescription: Sorryyyyyy:)");
-            //         }
-
-            // }     
-
-
-
-            // if(queryId==config.peerIdForAuth)
-            //     {
-
-            //     }
-            // if(config.type == 'answer')
-            //     {
-
-            //         console.log("ANswer: "+config.type);
-            //         console.log("session_description.type: "+session_description.type);
-            //       sockets[peer_id].emit('sessionDescription', {'peer_id': socket.id, 'session_description': session_description, 'peerIdForAuth':config.peerIdForAuth,'queryId':queryId});
-            //     }    
-            // 
 
         }
         console.log("<--relaySessionDescription");
@@ -321,7 +258,6 @@ io.sockets.on('connection', function (socket) {
 
 
         if (peerWithQueryId[data.userId] == data.queryLink) {
-            console.log("textMsg calling from server to client--><--");
             io.sockets.emit('newTextMsg', { 'message': data.message, 'userId': data.userId, 'queryId': peerWithQueryId[data.userId], 'userName': data.userName });
         }
         else {
@@ -382,6 +318,7 @@ io.sockets.on('connection', function (socket) {
         console.log("file-->");
         console.log("peerWithQueryId[data.userId]: " + peerWithQueryId[data.userId]);
         console.log("data.queryLink: " + data.queryLink);
+        console.log("data.type: "+data.type);
         if (peerWithQueryId[data.userId] == data.queryLink) {
 
             io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
@@ -396,6 +333,17 @@ io.sockets.on('connection', function (socket) {
     });
     /* #### End File Sharing  ##### */
 
+    socket.on('stateChanged', function (data) {
+        console.log("stateChanged-->");
+        
+       
+        if (peerWithQueryId[data.userId] == data.queryLink) {
+            
+            sockets[data.peerNew_id].emit('stateChangedToClient',{ 'userId': data.userId, 'queryId': data.queryLink});
+        }
+        console.log("<--stateChanged");
+    })
 
-    console.log("<--connection started");
+
+    console.log("<--connection Ended");
 });
