@@ -57,11 +57,11 @@
 
                         document.getElementById('linkToShare').innerHTML += " https://logchat.herokuapp.com/client/" + peerNew_id;
                         document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
-                        document.getElementById('linkToShare').setAttribute('href', "https://logchat.com/client/" + peerNew_id);
+                        document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
 
                     }
                     else {
-                        document.getElementById('linkToShare').innerHTML += " https://logchat.com/client/" + config.queryId;
+                        document.getElementById('linkToShare').innerHTML += " https://logchat.herokuapp.com/client/" + config.queryId;
                         document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + config.queryId);
                         document.getElementById('videoHeaders').style.display = 'inline';
                         document.getElementById('videoConf').style.display = 'none';
