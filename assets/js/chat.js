@@ -4,6 +4,7 @@ var MAX_UPLOAD_SIZE = 1.5; // in MB
 var imageReader = new FileReader();
 var videoReader = new FileReader();
 var fileReader = new FileReader();
+
 $('#fileselect').change(function (e) {
 
     console.log("FIle Select -->");
@@ -49,6 +50,7 @@ function sendMessage() {
                 console.log("Start to emit message  ");
                 console.log("peerNew_id: " + peerNew_id);
                 signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+                document.getElementById('message').value = "";
             }
 
         }
@@ -99,11 +101,11 @@ function sendMessage() {
     else {
         $('#setName').trigger('click');
     }
-
-    return false; // don't reload the page
     console.log("<--Upload");
-
-    console.log("<--sendMsg");
+    
+        console.log("<--sendMsg");
+    return false; // don't reload the page
+   
 
 }
 
@@ -119,7 +121,7 @@ signaling_socket.on('newTextMsg', function (data) {
     if (data.queryId == queryLink) {
         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
             + data.userName + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text">' + data.message + '</div><div class="direct-chat-info clearfix"><span id='+data.message+' class="direct-chat-timestamp pull-right"></span></div>'
-
+            
        
         /* ##### Start Calling Get Time  ##### */
         DisplayCurrentTime(data.message);
@@ -183,9 +185,6 @@ signaling_socket.on('emailSendInfo', function (data) {
 
 })
 
-function setName() {
-    userName = document.getElementById('userName').value;
-}
 
 
 
@@ -313,7 +312,7 @@ signaling_socket.on('file', function (data) {
 
 
 $(function () {
-    $("#addClass ").click(function () {
+    $("#addChatWindow ").click(function () {
         $('#qnimate').addClass('popup-box-on');
     });
 
@@ -321,3 +320,6 @@ $(function () {
         $('#qnimate').removeClass('popup-box-on');
     });
 })
+
+
+

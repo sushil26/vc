@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Conference</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://cdn.WebRTC-Experiment.com/getScreenId.js"></script>
+    <!-- <script src="/node_modules/mediastream-gain-controller/build/mediastream-gain-controller.min.js"></script> -->
+
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/css/chatZone.css" />
+    <script src="/js/signalingSocket.js"></script>
+   
+    
+
+
+
+
+</head>
+
+
+
+<body onload="init()">
+
+    <div class="container-fluid" style="height:100%;">
+        <div class="row content videozone" style="height:95%;">
+            <div class="row" id="videoConf" style="text-align:center;">
+                <!-- <button onclick="stopVideo()">Stop Video</button> -->
+                <!-- <div class="round hollow text-center" id="openChat">
+                    <a id="addClass">
+                        <span class="glyphicon glyphicon-comment"></span> Chat Window </a>
+                </div> -->
+                <div class="round hollowvd text-center" id="openChat">
+                    <a class="addClass" id="videoConferenceUrl">
+                        <span class="glyphicon glyphicon-facetime-video"></span> Start Video Conference</a>
+                </div>
+            </div>
+
+
+            <div class="row" style="display:none;" id="videoHeaders">
+                <!-- <button onclick="stopVideo()">Stop Video</button> -->
+                <div class="round hollow text-center" id="openChat">
+                    <a id="addClass">
+                        <span class="glyphicon glyphicon-comment"></span> Chat Window </a>
+                </div>
+                <div class="round hollowts text-center" id="openChat">
+                    <a class="addClass">
+                        <span class="glyphicon glyphicon-facetime-video"></span> Trouble Shooting</a>
+                </div>
+                <div class="round hollowsc text-center" >
+                    <a class="addClass" display:none; id="screenShareBtn">
+                        <span class="glyphicon glyphicon-share"></span> Share Screen</a>
+                        <a class="addClass"  style="display:none;" id="screenShareStop">
+                                <span class="glyphicon glyphicon-share"></span> Stop Screen Sharing</a>
+
+                </div>
+        
+                <div class="round hollowex text-center " id="openChat">
+                    <a href="/" class="addClass" id="disconnLink">
+                        <span class="glyphicon glyphicon-off"></span>Exit</a>
+                </div>
+            </div>
+
+
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" id="setName" style="display:none" onclick="setNameBtn()">Set Name</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content" style="color:black">
+                        <div class="modal-header">
+                            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                            <h4 class="modal-title">Please Set Your Name</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="form-control" placeholder="Enter your name" id="userName">
+                        </div>
+                        <div class="modal-footer">
+                            <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal" >Submit</button>
+                            <!-- <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button> -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+                    <div id="namesAttach">
+                            
+                             
+                          </div>
+                          <div id="shareVideosAttach"></div>
+                <div id="videosAttach">
+                    
+                     
+                  </div>
+
+            </div>
+           
+           
+
+            </br>
+            <div id="controlBtns">
+                <div id="audio_btn" style="cursor:pointer;display:none;">
+                        <i id="audioUnmute_btn" class="fa fa-microphone fa-3x" aria-hidden="true" ></i>
+                        <i id="audioMute_btn"  class="fa fa-microphone-slash fa-3x" aria-hidden="true" style="display:none"></i>
+                </div>
+               
+            </div>
+
+
+
+
+            <h3>Share Below Link To Start The Conference</h3>
+
+            <a style="color:black;" id="linkToShare"> </a>
+            </br>
+            </br>
+            <div class="form-inline" id="invitePeople_container">
+
+                <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
+                <div class="btn">
+                    <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
+                </div>
+
+                <h4>
+                    <b>Note:-</b>Chrome user need to install this extension for Screen sharing
+                    <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog">
+                        <button class="btn">
+                            <span class="glyphicon glyphicon-save"></span> Install Extension</button>
+                    </a>
+                </h4>
+                <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
+
+                <br>
+                <label id="info"></label>
+            </div>
+
+            <div class="popup-box chat-popup" id="qnimate">
+                <div class="popup-head">
+                    <div class="popup-head-left pull-left">
+                        <i class="fa fa-twitter" aria-hidden="true"></i> Chatting zone
+                    </div>
+                    <div class="popup-head-right pull-right">
+                        <div class="btn-group">
+                            <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
+                                <i class="glyphicon glyphicon-cog"></i>
+                            </button>
+                            <ul role="menu" class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="#">Media</a>
+                                </li>
+
+                                <li>
+                                    <a href="#">Clear Chat</a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
+                            <i class="glyphicon glyphicon-off"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="popup-messages" id="popupMsg">
+                    <div class="direct-chat-messages">
+                        <!-- Message. Default to the left -->
+                        <div id="message-container"></div>
+                        <!-- /.direct-chat-msg -->
+                    </div>
+                </div>
+                <div class="popup-messages-footer">
+                    <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
+                    <div class="btn-footer ">
+                        <!-- <button class="bg_none ">
+                            <i class="glyphicon glyphicon-film "></i>
+                        </button>
+                        <button class="bg_none ">
+                            <i class="glyphicon glyphicon-camera "></i>
+                        </button> -->
+                        <button class="bg_none ">
+
+                            <div class="image-upload">
+                                <label for="fileselect">
+                                    <i class="glyphicon glyphicon-paperclip"> </i>
+                                </label>
+                                <input id="fileselect" type="file" name="fileselect" />
+                            </div>
+                        </button>
+                        <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">&nbsp
+                            <span class="glyphicon glyphicon-send"></span>
+                            </span>
+                        </button>
+                        <!-- <button class="bg_none pull-right ">
+                            <i class="glyphicon glyphicon-thumbs-up "></i>
+                        </button> -->
+                    </div>
+                </div>
+
+
+
+                <!-- <div class="col-sm-3 chatbox " id="chatZone " style="display:none; ">
+
+
+                    <div class="panel panel-info " style="border:#f1f1f1;height:100% ">
+                        <div class="panel-heading " style=" color:#f1f1f1; height:10% ; background-color:#0a425f ">
+                            <h4>Chatting-Zone</h4>
+                        </div>
+
+                        <div class="panel-body chat " id=" " style="height:70%; ">
+                            <div id="message-container"></div>
+                        </div>
+                        <div class="panel-footer " style="height:25% ">
+                            <textarea id="message " class="form-control " rows="2 "></textarea>
+                            <div class="form-group ">
+
+                                <input id="fileselect " type="file " name="fileselect " />
+                            </div>
+
+
+
+                            <button type="button " class="btn " style="background-color: #29b6bd;color:#f1f1f1 " name="button
+                        " onclick="sendMessage() ">Send</button>
+
+                        </div>
+
+
+                    </div>
+                </div> -->
+            </div>
+
+
+        </div>
+        <div class="row " style="height:5%; ">
+            <footer style="height:5% ;float:inherit ">
+                <center>Copyright &copy; careator.com
+                </center>
+            </footer>
+        </div>
+
+        <script src="/js/chat.js"></script>
+
+
+
+
+
+
+</body>
+
+</html>

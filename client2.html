@@ -10,9 +10,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://cdn.WebRTC-Experiment.com/getScreenId.js"></script>
+    <!-- <script src="/node_modules/mediastream-gain-controller/build/mediastream-gain-controller.min.js"></script> -->
+
     <link rel="stylesheet" href="/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/css/chatZone.css" />
     <script src="/js/signalingSocket.js"></script>
+
+
 
 
 
@@ -22,6 +26,29 @@
 
 
 <body onload="init()">
+
+    
+        <div class="topnavMax" id="myTopnav">
+            <a href="#home" class="active">Home</a>
+            <a href="#news">News</a>
+            <a href="#contact">Contact</a>
+            <a href="#about">About</a>
+            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+        </div>
+   
+
+
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
 
     <div class="container-fluid" style="height:100%;">
         <div class="row content videozone" style="height:95%;">
@@ -38,33 +65,34 @@
             </div>
 
 
-            <div class="row" style="display:none;" id="videoHeaders">
+            <div class="topnavMax" style="display:none;" id="videoHeaders">
                 <!-- <button onclick="stopVideo()">Stop Video</button> -->
                 <div class="round hollow text-center" id="openChat">
                     <a id="addClass">
                         <span class="glyphicon glyphicon-comment"></span> Chat Window </a>
                 </div>
-                <div class="round hollowvd text-center" id="openChat">
+                <div class="round hollowts text-center" id="openChat">
                     <a class="addClass">
                         <span class="glyphicon glyphicon-facetime-video"></span> Trouble Shooting</a>
                 </div>
-                <div class="round hollowsc text-center" >
+                <div class="round hollowsc text-center">
                     <a class="addClass" display:none; id="screenShareBtn">
                         <span class="glyphicon glyphicon-share"></span> Share Screen</a>
-                        <a class="addClass"  style="display:none;" id="screenShareStop">
-                                <span class="glyphicon glyphicon-share"></span> Stop Screen Sharing</a>
+                    <a class="addClass" style="display:none;" id="screenShareStop">
+                        <span class="glyphicon glyphicon-share"></span> Stop Screen Sharing</a>
 
                 </div>
-        
-                <div class="round hollowex text-center " id="openChat">
+
+                 <div class="round hollowex text-center " id="openChat">
                     <a href="/" class="addClass" id="disconnLink">
-                        <span class="glyphicon glyphicon-off"></span>&nbsp&nbspExit&nbsp&nbsp</a>
-                </div>
+                        <span class="glyphicon glyphicon-off"></span>Exit</a>
+                </div> 
             </div>
 
 
             <!-- Trigger the modal with a button -->
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="setName" style="display:none">Set Name</button>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"
+                id="setName" style="display:none" onclick="setNameBtn()">Set Name</button>
 
             <!-- Modal -->
             <div class="modal fade" id="myModal" role="dialog">
@@ -80,19 +108,28 @@
                             <input type="text" class="form-control" placeholder="Enter your name" id="userName">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal" onclick="setName()">Submit</button>
-                            <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button>
+                            <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
+                            <!-- <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button> -->
                         </div>
                     </div>
 
                 </div>
             </div>
 
-            <div id="videosAttach"></div>
+            <div id="videosAttach">
+
+
+            </div>
             <div id="shareVideosAttach"></div>
 
             </br>
+            <div id="controlBtns">
+                <div id="audio_btn" style="cursor:pointer;display:none;">
+                    <i id="audioUnmute_btn" class="fa fa-microphone fa-3x" aria-hidden="true"></i>
+                    <i id="audioMute_btn" class="fa fa-microphone-slash fa-3x" aria-hidden="true" style="display:none"></i>
+                </div>
 
+            </div>
 
 
 

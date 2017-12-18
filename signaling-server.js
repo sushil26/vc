@@ -21,7 +21,16 @@ var userName = null;
 
 // main.set('port', (process.env.PORT || 5000));
 main.use(express.static(__dirname + '/assets'));
-main.use(express.static(__dirname + '/images'))
+main.use(express.static(__dirname + '/css'));
+main.use(express.static(__dirname + '/js'));
+main.use(express.static(__dirname + '/img'));
+main.use(express.static(__dirname + '/lib'));
+main.use(express.static(__dirname + '/contactform'));
+
+
+
+
+
 main.set('port', (process.env.PORT || 8080));
 // main.listen(main.get('port'), function() {
 //     console.log('Node app is running on port', main.get('port'));
@@ -37,21 +46,42 @@ var io = require('socket.io').listen(server);
 // });
 
 //main.use(express.bodyParser());
-main.get('/', function (req, res) { res.sendFile(__dirname + '/index.html'); });
+main.get('/', function (req, res) { 
+   
+      
+    res.sendFile(__dirname + '/index.html'); 
+});
 
 
 main.get("/client", function (req, res) {
     queryId = null;
 
     console.log("start to render page");
-    res.sendFile(__dirname + '/client2.html');
+    res.sendFile(__dirname + '/client.html');
 });
+
 main.get("/client/:id", function (req, res) {
     queryId = req.params.id;
     console.log("queryId: " + req.params.id);
     console.log("start to render page");
-    res.sendFile(__dirname + '/client2.html');
+    res.sendFile(__dirname + '/client.html');
 });
+
+
+// main.get("/portfolio", function (req, res) {
+//     queryId = null;
+
+//     console.log("start to render page");
+
+//  res.sendFile(__dirname + '/index.html');
+// });
+// main.get("/portfolio/:id", function (req, res) {
+//     queryId = req.params.id;
+//     console.log("queryId: " + req.params.id);
+//     // console.log("start to render page");
+//     res.sendFile(__dirname + '/index.html');
+ 
+// });
 
 
 //Start Gmail Configuration
@@ -75,7 +105,8 @@ var transporter = nodemailer.createTransport({
 var channels = {};
 var sockets = {};
 var peerTrack = [];
-var peerWithQueryId = []; /* PeerId with Query Id peer-id is a index value is a query id  */
+var peerWithQueryId = []; /* PeerId with Query Id: peer-id is a index, value is a query id  */
+var peerWithUserName = []; /* PeerId with UserName: peer-id is a index, Value is a UserName  */
 var peerTrackForVideo = { 'link': [] }; /* This variable for getting socket.id's with perticular Link*/
 var tempId = null;
 /**
@@ -115,7 +146,7 @@ io.sockets.on('connection', function (socket) {
     peerTrackForVideo[queryId].push(socket.id);
     // console.log("peerTrackForVideo."+queryId+": "+peerTrackForVideo.queryId);
     /* ##### End arrang all sockets in single array with key which id we are using in a link   ##### */
-
+    console.log("QueryId: "+queryId);
     socket.emit('message', { 'peer_id': socket.id, 'queryId': queryId, 'userName': userName });
 
     socket.on('disconnect', function () {
@@ -137,6 +168,9 @@ io.sockets.on('connection', function (socket) {
         // console.log("config.owner: "+config.owner);
         // console.log("config.queryLink: "+config.queryLink);
         peerWithQueryId[config.owner] = config.queryLink;
+
+
+        peerWithUserName[config.owner] = config.userName;
 
         console.log("join 1 :[" + socket.id + "] join ", config);
         var channel = config.channel;
@@ -160,9 +194,10 @@ io.sockets.on('connection', function (socket) {
             // console.log("socket.id " + socket.id);
             // console.log("channels[channel][id] " + channels[channel][id]);
             console.log("start to call client addPeer--><--");
-            channels[channel][id].emit('addPeer', { 'peer_id': socket.id, 'should_create_offer': false, 'owner': socket.id, 'queryId': queryId });
 
-            socket.emit('addPeer', { 'peer_id': id, 'should_create_offer': true, 'owner': socket.id, 'queryId': queryId });
+            channels[channel][id].emit('addPeer', { 'peer_id': socket.id, 'should_create_offer': false, 'owner': socket.id, 'queryId': queryId, 'userName':peerWithUserName[socket.id] });
+
+            socket.emit('addPeer', { 'peer_id': id, 'should_create_offer': true, 'owner': socket.id, 'queryId': queryId, 'userName':peerWithUserName[id] });
         }
 
         channels[channel][socket.id] = socket;
@@ -247,6 +282,8 @@ io.sockets.on('connection', function (socket) {
         console.log("<--relaySessionDescription");
     });
 
+     
+
     /* ##### Start Gether text message  #### */
     socket.on('textMsg', function (data) {
         console.log("textMsg-->");
@@ -259,6 +296,7 @@ io.sockets.on('connection', function (socket) {
 
         if (peerWithQueryId[data.userId] == data.queryLink) {
             io.sockets.emit('newTextMsg', { 'message': data.message, 'userId': data.userId, 'queryId': peerWithQueryId[data.userId], 'userName': data.userName });
+            // io.sockets.emit('userDetail', {'userId': data.userId,'userName': data.userName });
         }
         else {
             console.log("textMsg: sorry ");
