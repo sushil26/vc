@@ -1,9 +1,9 @@
 /** CONFIG **/
-//var SIGNALING_SERVER = "http://localhost:8080";
-var SIGNALING_SERVER = "https://logchat.herokuapp.com";
+// var SIGNALING_SERVER = "http://localhost:8080";
+var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 var USE_AUDIO = true;
 var USE_VIDEO = true;
-var DEFAULT_CHANNEL = 'some-global-channel-name';
+var DEFAULT_CHANNEL = 'some-global-ch-name';
 var MUTE_AUDIO_BY_DEFAULT = false;
 
 
@@ -81,15 +81,15 @@ function init() {
                 console.log("query id is null");
                 console.log("message: config.peer_id: " + config.peer_id);
 
-                document.getElementById('linkToShare').innerHTML += " http://localhost:8080/#portfolio/" + peerNew_id;
+                document.getElementById('linkToShare').innerHTML += " http://localhost:8080/client/" + peerNew_id;
                 document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-                document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/#portfolio/" + peerNew_id);
+                document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
 
             }
             else {
                 console.log("query id nt null");
-                document.getElementById('linkToShare').innerHTML += "http://localhost:8080/#portfolio/" + config.queryId;
-                document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/#portfolio/" + config.queryId);
+                document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
+                document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
                // document.getElementById('videoHeaders').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';

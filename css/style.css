@@ -490,6 +490,8 @@ body.mobile-nav-active #mobile-nav-toggle {
   background: #fff;
 }
 
+#videosAttach video{width:100%;}
+
 #about .about-container .title {
   color: #333;
   font-weight: 700;
@@ -724,6 +726,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   overflow: hidden !important;
   margin-bottom: 15px;
   transition: all 350ms ease;
+  padding: 0;
   transform: scale(1);
 }
 

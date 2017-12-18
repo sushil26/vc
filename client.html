@@ -2,41 +2,41 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Regna Bootstrap Template</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
+    <meta charset="utf-8">
+    <title>Regna Bootstrap Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script src="https://cdn.WebRTC-Experiment.com/getScreenId.js"></script>
-  <!-- <script src="/node_modules/mediastream-gain-controller/build/mediastream-gain-controller.min.js"></script> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://cdn.WebRTC-Experiment.com/getScreenId.js"></script>
+    <!-- <script src="/node_modules/mediastream-gain-controller/build/mediastream-gain-controller.min.js"></script> -->
 
-  <link rel="stylesheet" href="/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/css/chatZone.css" />
-  <script src="/js/signalingSocket.js"></script>
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/css/chatZone.css" />
+    <script src="/js/signalingSocket.js"></script>
 
-  <!-- Favicons -->
-  <link href="/favicon.png" rel="icon">
-  <link href="/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="/favicon.png" rel="icon">
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
+    <!-- Google Fonts -->
 
-  <link rel="stylesheet" href="/css/chatZone.css" />
-
-
-  <!-- Libraries CSS Files -->
-  <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="/animate/animate.min.css" rel="stylesheet">
-
-  <!-- Main Stylesheet File -->
-  <link href="/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/chatZone.css" />
 
 
-  <!-- =======================================================
+    <!-- Libraries CSS Files -->
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="/style.css" rel="stylesheet">
+    <script src="/main.js"></script>
+
+    <!-- =======================================================
     Theme Name: Regna
     Theme URL: https://bootstrapmade.com/regna-bootstrap-onepage-template/
     Author: BootstrapMade.com
@@ -46,312 +46,259 @@
 
 <body onload="init()">
 
-  <!--==========================
+    <!--==========================
   Header
   ============================-->
-  <header id="header" style="background: rgba(52, 59, 64, 0.9);padding: 20px 0;height: 72px;transition: all 0.5s;">
-    <div class="container">
+    <header id="header" style="background: rgba(52, 59, 64, 0.9);padding: 20px 0;height: 72px;transition: all 0.5s;">
+        <div class="container">
 
-      <div id="logo" class="pull-left">
-        <!-- <a href="#hero"><img src="img/logo.png" alt="" title="" /></img></a> -->
-        <!-- Uncomment below if you prefer to use a text logo -->
-        <h1>
-          <a href="#hero">VC4ALL</a>
-        </h1>
-      </div>
+            <div id="logo" class="pull-left">
+                <!-- <a href="#hero"><img src="img/logo.png" alt="" title="" /></img></a> -->
+                <!-- Uncomment below if you prefer to use a text logo -->
+                <h1>
+                    <a href="#hero">VC4ALL</a>
+                </h1>
+            </div>
 
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active">
-            <a href="/">home</a>
-          </li>
-          <li>
-            <a href="#about">Video</a>
-          </li>
-          <li>
-            <a href="#services">Screen</a>
-          </li>
-          <li>
-            <a href="#portfolio">Chat</a>
-          </li>
-          <li>
-            <a href="#team">Trouble shooting</a>
-          </li>
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    <li class="menu-active">
+                        <a href="/">home</a>
+                    </li>
+                    <li>
+                        <a href="#about">Video</a>
+                    </li>
+                    <li>
+                        <a href="#services">Screen</a>
+                    </li>
+                    <li>
+                        <a href="#portfolio">Chat</a>
+                    </li>
+                    <li>
+                        <a href="#team">Trouble shooting</a>
+                    </li>
 
-        </ul>
-      </nav>
-      <!-- #nav-menu-container -->
-    </div>
-  </header>
-  <!-- #header -->
-
-
+                </ul>
+            </nav>
+            <!-- #nav-menu-container -->
+        </div>
+    </header>
+    <!-- #header -->
 
 
-  <!--==========================
+
+
+    <!--==========================
       Portfolio Section
     ============================-->
-  <section id="portfolio">
-    <div class="container wow fadeInUp">
+    <section id="portfolio">
+        <div class="container wow fadeInUp">
 
-      <div class="row">
-        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul id="portfolio-flters">
+                        <li class="filter-active" id="videoConfStart">
+                            <a id="videoConferenceUrl" style="color:white">Start Video Conference</a>
+                        </li>
+                        <!-- <li id="videoConfStart">  <a id="videoConferenceUrl">Start Video Conference </a></li> -->
+                        <li>
+                            <a id="screenShareBtn">Share Screen</a>
+                            <a id="screenShareStop" style="display:none;"> Stop Screen Sharing</a>
+                        </li>
+
+                        <li style="display:none" id="openChat">
+                            <a id="addChatWindow">Chat Window</a>
+                        </li>
+                        <!-- <li>Web</li> -->
+                    </ul>
+                    <div class="container-fluid" style="height:100%;">
 
 
 
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"
+                            id="setName" style="display:none" onclick="setNameBtn()">Set Name</button>
 
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
 
+                                <!-- Modal content-->
+                                <div class="modal-content" style="color:black">
+                                    <div class="modal-header">
+                                        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                        <h4 class="modal-title">Please Set Your Name</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control" placeholder="Enter your name" id="userName">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
+                                        <!-- <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button> -->
+                                    </div>
+                                </div>
 
-
-          <ul id="portfolio-flters">
-            <li class="filter-active" id="videoConfStart"> <a id="videoConferenceUrl" style="color:white">Start Video Conference</a></li>
-            <!-- <li id="videoConfStart">  <a id="videoConferenceUrl">Start Video Conference </a></li> -->
-            <li >
-              <a id="screenShareBtn">Share Screen</a>
-              <a id="screenShareStop"  style="display:none;"> Stop Screen Sharing</a>
-            </li>
-            
-            <li style="display:none" id="openChat"><a  id="addChatWindow">Chat Window</a></li>
-            <!-- <li>Web</li> -->
-          </ul>
-          <div class="container-fluid" style="height:100%;">
-          
-    
-    
-                <!-- Trigger the modal with a button -->
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" id="setName" style="display:none" onclick="setNameBtn()">Set Name</button>
-    
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-    
-                        <!-- Modal content-->
-                        <div class="modal-content" style="color:black">
-                            <div class="modal-header">
-                                <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                                <h4 class="modal-title">Please Set Your Name</h4>
-                            </div>
-                            <div class="modal-body">
-                                <input type="text" class="form-control" placeholder="Enter your name" id="userName">
-                            </div>
-                            <div class="modal-footer">
-                                <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal" >Submit</button>
-                                <!-- <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button> -->
                             </div>
                         </div>
-    
-                    </div>
-                </div>
-                <div>
-                        <div id="namesAttach">
-                                
-                                 
-                              </div>
-                              <div id="shareVideosAttach"></div>
-                    <div id="videosAttach">
-                        
-                         
-                      </div>
-    
-                </div>
-               
-               
-    
-                </br>
-                <div id="controlBtns">
-                    <div id="audio_btn" style="cursor:pointer;display:none;">
-                            <i id="audioUnmute_btn" class="fa fa-microphone fa-3x" aria-hidden="true" ></i>
-                            <i id="audioMute_btn"  class="fa fa-microphone-slash fa-3x" aria-hidden="true" style="display:none"></i>
-                    </div>
-                   
-                </div>
-    
-    
-    
-    
-                <h3>Share Below Link To Start The Conference</h3>
-    
-                <a style="color:black;" id="linkToShare"> </a>
-                </br>
-                </br>
-                <div class="form-inline" id="invitePeople_container">
-    
-                    <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
-                    <div class="btn">
-                        <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
-                    </div>
-    
-                    <h4>
-                        <b>Note:-</b>Chrome user need to install this extension for Screen sharing
-                        <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog">
-                            <button class="btn">
-                                <span class="glyphicon glyphicon-save"></span> Install Extension</button>
-                        </a>
-                    </h4>
-                    <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
-    
-                    <br>
-                    <label id="info"></label>
-                </div>
-    
-                <div class="popup-box chat-popup" id="qnimate">
-                    <div class="popup-head">
-                        <div class="popup-head-left pull-left">
-                            <i class="fa fa-twitter" aria-hidden="true"></i> Chatting zone
+                        <div>
+                            <div id="namesAttach"></div>
+                            <!-- <div id="shareVideosAttach"></div>
+                            <div id="videosAttach"></div> -->
+
                         </div>
-                        <div class="popup-head-right pull-right">
-                            <div class="btn-group">
-                                <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
-                                    <i class="glyphicon glyphicon-cog"></i>
-                                </button>
-                                <ul role="menu" class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="#">Media</a>
-                                    </li>
-    
-                                    <li>
-                                        <a href="#">Clear Chat</a>
-                                    </li>
-    
-                                </ul>
+
+
+
+                        </br>
+                        <div id="controlBtns">
+                            <div id="audio_btn" style="cursor:pointer;display:none;">
+                                <i id="audioUnmute_btn" class="fa fa-microphone fa-3x" aria-hidden="true"></i>
+                                <i id="audioMute_btn" class="fa fa-microphone-slash fa-3x" aria-hidden="true" style="display:none"></i>
                             </div>
-    
-                            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
-                                <i class="glyphicon glyphicon-off"></i>
-                            </button>
                         </div>
-                    </div>
-                    <div class="popup-messages" id="popupMsg">
-                        <div class="direct-chat-messages">
-                            <!-- Message. Default to the left -->
-                            <div id="message-container"></div>
-                            <!-- /.direct-chat-msg -->
+
+                        <h3>Share Below Link To Start The Conference</h3>
+
+                        <a style="color:black;" id="linkToShare"> </a>
+                        </br>
+                        </br>
+                        <div class="form-inline" id="invitePeople_container">
+
+                            <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
+                            <div class="btn">
+                                <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
+                            </div>
+
+                            <h4>
+                                <b>Note:-</b>Chrome user need to install this extension for Screen sharing
+                                <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog">
+                                    <button class="btn">
+                                        <span class="glyphicon glyphicon-save"></span> Install Extension</button>
+                                </a>
+                            </h4>
+                            <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
+
+                            <br>
+                            <label id="info"></label>
                         </div>
-                    </div>
-                    <div class="popup-messages-footer">
-                        <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
-                        <div class="btn-footer ">
-                            <!-- <button class="bg_none ">
+
+                        <div class="popup-box chat-popup" id="qnimate">
+                            <div class="popup-head">
+                                <div class="popup-head-left pull-left">
+                                    <i class="fa fa-twitter" aria-hidden="true"></i> Chatting zone
+                                </div>
+                                <div class="popup-head-right pull-right">
+                                    <div class="btn-group">
+                                        <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
+                                            <i class="glyphicon glyphicon-cog"></i>
+                                        </button>
+                                        <ul role="menu" class="dropdown-menu pull-right">
+                                            <li>
+                                                <a href="#">Media</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">Clear Chat</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+                                    <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
+                                        <i class="glyphicon glyphicon-off"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="popup-messages" id="popupMsg">
+                                <div class="direct-chat-messages">
+                                    <!-- Message. Default to the left -->
+                                    <div id="message-container"></div>
+                                    <!-- /.direct-chat-msg -->
+                                </div>
+                            </div>
+                            <div class="popup-messages-footer">
+                                <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
+                                <div class="btn-footer ">
+                                    <!-- <button class="bg_none ">
                                 <i class="glyphicon glyphicon-film "></i>
                             </button>
                             <button class="bg_none ">
                                 <i class="glyphicon glyphicon-camera "></i>
                             </button> -->
-                            <button class="bg_none ">
-    
-                                <div class="image-upload">
-                                    <label for="fileselect">
-                                        <i class="glyphicon glyphicon-paperclip"> </i>
-                                    </label>
-                                    <input id="fileselect" type="file" name="fileselect" />
-                                </div>
-                            </button>
-                            <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">&nbsp
-                                <span class="glyphicon glyphicon-send"></span>
-                                </span>
-                            </button>
-                            <!-- <button class="bg_none pull-right ">
+                                    <button class="bg_none ">
+
+                                        <div class="image-upload">
+                                            <label for="fileselect">
+                                                <i class="glyphicon glyphicon-paperclip"> </i>
+                                            </label>
+                                            <input id="fileselect" type="file" name="fileselect" />
+                                        </div>
+                                    </button>
+                                    <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">&nbsp
+                                        <span class="glyphicon glyphicon-send"></span>
+                                        </span>
+                                    </button>
+                                    <!-- <button class="bg_none pull-right ">
                                 <i class="glyphicon glyphicon-thumbs-up "></i>
                             </button> -->
+                                </div>
+                            </div>
                         </div>
                     </div>
-    
-    
-    
-                    <!-- <div class="col-sm-3 chatbox " id="chatZone " style="display:none; ">
-    
-    
-                        <div class="panel panel-info " style="border:#f1f1f1;height:100% ">
-                            <div class="panel-heading " style=" color:#f1f1f1; height:10% ; background-color:#0a425f ">
-                                <h4>Chatting-Zone</h4>
+
+                    <div class="row" id="portfolio-wrapper">
+                        <div class="col-lg-3 col-md-6 portfolio-item">
+                                <div id="shareVideosAttach"></div>
+                                <div id="videosAttach"></div>
+                            
+                            <div class="details">
+                                <h4>App 1</h4>
+                                <span>Alored dono par</span>
                             </div>
-    
-                            <div class="panel-body chat " id=" " style="height:70%; ">
-                                <div id="message-container"></div>
-                            </div>
-                            <div class="panel-footer " style="height:25% ">
-                                <textarea id="message " class="form-control " rows="2 "></textarea>
-                                <div class="form-group ">
-    
-                                    <input id="fileselect " type="file " name="fileselect " />
-                                </div>
-    
-    
-    
-                                <button type="button " class="btn " style="background-color: #29b6bd;color:#f1f1f1 " name="button
-                            " onclick="sendMessage() ">Send</button>
-    
-                            </div>
-    
-    
                         </div>
-                    </div> -->
+                    </div>
+
                 </div>
-    
-    
-            </div>
-            
-    
-        
-    
-   
+    </section>
+    <!-- #portfolio -->
 
-      <div class="row" id="portfolio-wrapper">
-        <div class="col-lg-3 col-md-6 portfolio-item ">
-          <a href="">
-            <img src="img/portfolio/app1.jpg" alt="">
-            <div class="details">
-              <h4>App 1</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
+    </main>
 
-
-
-      </div>
-
-    </div>
-  </section>
-  <!-- #portfolio -->
-
-  </main>
-
-  <!--==========================
+    <!--==========================
     Footer
   ============================-->
-  <footer id="footer">
-    <div class="footer-top">
-      <div class="container">
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
 
-      </div>
-    </div>
+            </div>
+        </div>
 
-    <div class="container">
-      <div class="copyright">
-        &copy; Copyright
-        <strong>Regna</strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        <!--
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright
+                <strong>Regna</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!--
           All the links in the footer should remain intact.
           You can delete the links only if you purchased the pro version.
           Licensing information: https://bootstrapmade.com/license/
           Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Regna
         -->
-        Bootstrap Templates by
-        <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-  </footer>
-  <!-- #footer -->
+                Bootstrap Templates by
+                <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+        </div>
+    </footer>
+    <!-- #footer -->
 
-  <a href="#" class="back-to-top">
-    <i class="fa fa-chevron-up"></i>
-  </a>
+    <a href="#" class="back-to-top">
+        <i class="fa fa-chevron-up"></i>
+    </a>
 
 
-  <script src="/js/chat.js"></script>
+    <script src="/js/chat.js"></script>
 
 </body>
 
