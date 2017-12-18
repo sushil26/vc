@@ -722,7 +722,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #portfolio .portfolio-item {
   position: relative;
-  height: 200px;
+  height: 220px;
   overflow: hidden !important;
   margin-bottom: 15px;
   transition: all 350ms ease;
@@ -767,7 +767,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #portfolio .portfolio-item:hover .details {
-  bottom: 0;
+  top: 0;
 }
 
 #portfolio .portfolio-item:hover img {
