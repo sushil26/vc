@@ -81,15 +81,25 @@ function init() {
                 console.log("query id is null");
                 console.log("message: config.peer_id: " + config.peer_id);
 
-                document.getElementById('linkToShare').innerHTML += " http://localhost:8080/client/" + peerNew_id;
-                document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-                document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+                document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + peerNew_id;
+                document.getElementById('videoConferenceUrl').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
+                document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
 
             }
             else {
                 console.log("query id nt null");
-                document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
-                document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
+                document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
+                document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
+
+            //     document.getElementById('linkToShare').innerHTML += " http://localhost:8080/client/" + peerNew_id;
+            //     document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+            //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+
+            // }
+            // else {
+            //     console.log("query id nt null");
+            //     document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
+            //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
                // document.getElementById('videoHeaders').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
