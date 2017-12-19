@@ -276,7 +276,7 @@ function init() {
                 remote_media.attr("muted", "true");
             }
             remote_media.attr("controls", "");
-            remote_media.attr("class", "col-lg-3 col-md-6 portfolio-item");
+          
             remote_media.attr("name", config.userName);
             console.log("onaddstream: peer_id: " + peer_id);
             peer_media_elements[peer_id] = remote_media;
