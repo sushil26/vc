@@ -276,6 +276,7 @@ function init() {
                 remote_media.attr("muted", "true");
             }
             remote_media.attr("controls", "");
+            remote_media.attr("class",  "col-lg-3 col-md-6 portfolio-item");
             remote_media.attr("name", config.userName);
             console.log("onaddstream: peer_id: " + peer_id);
             peer_media_elements[peer_id] = remote_media;
@@ -542,7 +543,8 @@ function setup_local_media(callback, errorback) {
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("controls", "");
             local_media.attr("id", "videoElem");
-            local_media.attr("style", "border:5px solid skyblue");
+            local_media.attr("class", "col-lg-3 col-md-6 portfolio-item");
+            local_media.attr("style", "border:1px solid black");
             $('#videosAttach').append(local_media);
 
             document.getElementById("videoElem").addEventListener("click", function () {
