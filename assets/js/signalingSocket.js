@@ -283,22 +283,26 @@ function init() {
 
 
             remote_media.attr("id", peer_id + "Remote");
+            $('#portfolio-wrapper').append('<div id="brilliant" class="col-lg-3 col-md-6 portfolio-item"><div id="videosAttach"></div><div class="details"><h4>'+config.userName+'</h4><span>Alored dono par</span></div></div>');
             $('#videosAttach').append(remote_media);
-            var parentElement = document.getElementById('videosAttach');
+         
 
-            var label = document.getElementById(peer_id + "RemoteUserName");
-            console.log(label);
-            if (label == null) {
-                var label = document.createElement("Label");
-                label.setAttribute("id", peer_id + "RemoteUserName");
-                label.innerHTML = document.getElementById(peer_id + "Remote").getAttribute("name");
-                parentElement.insertBefore(label, parentElement.children[2]);
-            }
-            else {
-                label.innerHTML = document.getElementById(peer_id + "Remote").getAttribute("name");
-            }
+            // $('#videosAttach').append(remote_media);
+            // var parentElement = document.getElementById('videosAttach');
 
-            peer_userName_elements[peer_id] = label;
+            // var label = document.getElementById(peer_id + "RemoteUserName");
+            // console.log(label);
+            // if (label == null) {
+            //     var label = document.createElement("Label");
+            //     label.setAttribute("id", peer_id + "RemoteUserName");
+            //     label.innerHTML = document.getElementById(peer_id + "Remote").getAttribute("name");
+            //     parentElement.insertBefore(label, parentElement.children[2]);
+            // }
+            // else {
+            //     label.innerHTML = document.getElementById(peer_id + "Remote").getAttribute("name");
+            // }
+
+            // peer_userName_elements[peer_id] = label;
 
 
             // var br = document.createElement("br");
