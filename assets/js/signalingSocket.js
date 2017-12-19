@@ -553,7 +553,7 @@ function setup_local_media(callback, errorback) {
             // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-item" + ">");
             // $('#videosAttach').after("<div class=" + "details" + "><h4>App 1</h4><span>Alored dono par</span></div></div>");
 
-            $('#portfolio-wrapper').append('<div id="brilliant" class="col-lg-3 col-md-6 portfolio-item"><div id="videosAttach"></div><div class="details"><h4>App 1</h4><span>Alored dono par</span></div></div>');
+            $('#portfolio-wrapper').append('<div id="brilliant" class="col-lg-3 col-md-6 portfolio-item"><div id="videosAttach"></div><div class="details"><h4>'+userName+'</h4><span>Alored dono par</span></div></div>');
             $('#videosAttach').append(local_media);
             document.getElementById("videoElem").addEventListener("click", function () {
                 var videoElem = document.getElementById('videoElem');
