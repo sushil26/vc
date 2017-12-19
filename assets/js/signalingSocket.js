@@ -283,8 +283,8 @@ function init() {
 
 
             remote_media.attr("id", peer_id + "Remote");
-            $('#portfolio-wrapper').append('<div id="brilliant" class="col-lg-3 col-md-6 portfolio-item"><div id="videosAttach"></div><div class="details"><h4>'+config.userName+'</h4><span>Alored dono par</span></div></div>');
-            $('#videosAttach').append(remote_media);
+            $('#portfolio-wrapper').append('<div id="brilliant" class="col-lg-3 col-md-6 portfolio-item"><div id="'+peer_id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>Alored dono par</span></div></div>');
+            $('#'+peer_id+'remoteVideoElement').append(remote_media);
          
 
             // $('#videosAttach').append(remote_media);
