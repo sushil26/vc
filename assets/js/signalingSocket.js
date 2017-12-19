@@ -681,12 +681,11 @@ function setup_local_media(callback, errorback) {
                     local_mediaScreenShare.attr("id", "screenShareElem");
                     local_mediaScreenShare.attr("style", "border:1px solid skyblue");
 
-                    $('#portfolio-wrapper').append('<div id="'+id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-item"><div id="'+id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>All is well</span></div></div>');
-                    $('#'+id+'remoteVideoElement').append(local_mediaScreenShare);
+                    //$('#portfolio-wrapper').append('<div id="'+id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-item"><div id="'+id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>All is well</span></div></div>');
+                    $('#videosAttach').append(local_mediaScreenShare);
 
 
-                    $('#shareVideosAttach').append(local_mediaScreenShare);
-
+                   
                     attachMediaStream(local_mediaScreenShare[0], stream);
 
                     /* ##### Start Stop Sharing ##### */
@@ -708,7 +707,7 @@ function setup_local_media(callback, errorback) {
                         if (existing) {
                             existing.parentNode.removeChild(existing);
                         }
-                        $('#shareVideosAttach').empty();
+                        $('#videosAttach').empty();
                         /* ######   ###### */
                         navigator.getUserMedia({ "audio": USE_AUDIO, "video": USE_VIDEO },
                             function (stream) { /* user accepted access to a/v */
