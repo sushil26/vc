@@ -679,8 +679,12 @@ function setup_local_media(callback, errorback) {
                     local_mediaScreenShare.attr("muted", "true"); /* always mute ourselves by default */
                     local_mediaScreenShare.attr("controls", "");
                     local_mediaScreenShare.attr("id", "screenShareElem");
-                   
-                    local_mediaScreenShare.attr("style", "border:5px solid skyblue");
+                    local_mediaScreenShare.attr("style", "border:1px solid skyblue");
+
+                    $('#portfolio-wrapper').append('<div id="'+peer_id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-item"><div id="'+peer_id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>Alored dono par</span></div></div>');
+                    $('#'+peer_id+'remoteVideoElement').append(local_mediaScreenShare);
+
+
                     $('#shareVideosAttach').append(local_mediaScreenShare);
 
                     attachMediaStream(local_mediaScreenShare[0], stream);
