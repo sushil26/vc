@@ -122,7 +122,6 @@ signaling_socket.on('newTextMsg', function (data) {
         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
             + data.userName + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text">' + data.message + '</div><div class="direct-chat-info clearfix"><span id='+data.message+' class="direct-chat-timestamp pull-right"></span></div>'
             
-       
         /* ##### Start Calling Get Time  ##### */
         DisplayCurrentTime(data.message);
         /* ##### End Calling Get Time  ##### */
