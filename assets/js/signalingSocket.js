@@ -91,19 +91,19 @@ function init() {
                 document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
                 document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
 
-            //     document.getElementById('linkToShare').innerHTML += " http://localhost:8080/client/" + peerNew_id;
-            //     document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-            //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+                //     document.getElementById('linkToShare').innerHTML += " http://localhost:8080/client/" + peerNew_id;
+                //     document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+                //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
 
-            // }
-            // else {
-            //     console.log("query id nt null");
-            //     document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
-            //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
-               // document.getElementById('videoHeaders').style.display = 'inline';
+                // }
+                // else {
+                //     console.log("query id nt null");
+                //     document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
+                //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
+                // document.getElementById('videoHeaders').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
-               // document.getElementById('disconnLink').style.display = 'inline';
+                // document.getElementById('disconnLink').style.display = 'inline';
                 document.getElementById('screenShareBtn').style.display = 'inline';
                 // document.getElementById('audio_btn').style.display = 'inline';
 
@@ -276,7 +276,7 @@ function init() {
                 remote_media.attr("muted", "true");
             }
             remote_media.attr("controls", "");
-            remote_media.attr("class",  "col-lg-3 col-md-6 portfolio-item");
+            remote_media.attr("class", "col-lg-3 col-md-6 portfolio-item");
             remote_media.attr("name", config.userName);
             console.log("onaddstream: peer_id: " + peer_id);
             peer_media_elements[peer_id] = remote_media;
@@ -543,15 +543,19 @@ function setup_local_media(callback, errorback) {
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("controls", "");
             local_media.attr("id", "videoElem");
-            local_media.attr("class", "col-lg-3 col-md-6 portfolio-item");
             local_media.attr("style", "border:1px solid black");
-            $('#videosAttach').append(local_media);
+           
 
+            // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-item" + ">");
+            // $('#videosAttach').after("<div class=" + "details" + "><h4>App 1</h4><span>Alored dono par</span></div></div>");
+
+            $('#portfolio-wrapper').append('<div id="brilliant" class="col-lg-3 col-md-6 portfolio-item"><div id="videosAttach"></div><div class="details"><h4>App 1</h4><span>Alored dono par</span></div></div>');
+            $('#videosAttach').append(local_media);
             document.getElementById("videoElem").addEventListener("click", function () {
                 var videoElem = document.getElementById('videoElem');
-               
+
                 var isFullScreen = videoElem.requestFullscreen || videoElem.mozRequestFullScreen || videoElem.webkitRequestFullscreen;
-                console.log("isFullScreen: "+isFullScreen);
+                console.log("isFullScreen: " + isFullScreen);
                 if (isFullScreen) {
                     console.log("SMall Screen");
                     if (videoElem.requestFullscreen) {
@@ -609,7 +613,7 @@ function setup_local_media(callback, errorback) {
 
 
 
-           
+
 
 
             if (callback) callback();
@@ -671,6 +675,7 @@ function setup_local_media(callback, errorback) {
                     local_mediaScreenShare.attr("muted", "true"); /* always mute ourselves by default */
                     local_mediaScreenShare.attr("controls", "");
                     local_mediaScreenShare.attr("id", "screenShareElem");
+                   
                     local_mediaScreenShare.attr("style", "border:5px solid skyblue");
                     $('#shareVideosAttach').append(local_mediaScreenShare);
 
