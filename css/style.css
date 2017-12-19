@@ -722,7 +722,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #portfolio .portfolio-item {
   position: relative;
-  height: 220px;
+  height: 200px;
   overflow: hidden !important;
   margin-bottom: 15px;
   transition: all 350ms ease;

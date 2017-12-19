@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Regna Bootstrap Template</title>
+    <title>Webchat</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -35,6 +35,13 @@
     <!-- Main Stylesheet File -->
     <link href="/style.css" rel="stylesheet">
     <script src="/main.js"></script>
+    <script src="/wow/wow.min.js"></script>
+    <script src="/superfish/hoverIntent.js"></script>
+    <script src="/superfish/superfish.min.js"></script>
+    <script src="/counterup/counterup.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8HeI8o-c1NppZA-92oYlXakhDPYR7XMY"></script>
+
+ 
 
     <!-- =======================================================
     Theme Name: Regna
@@ -219,14 +226,7 @@
                             <div class="popup-messages-footer">
                                 <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
                                 <div class="btn-footer ">
-                                    <!-- <button class="bg_none ">
-                                <i class="glyphicon glyphicon-film "></i>
-                            </button>
-                            <button class="bg_none ">
-                                <i class="glyphicon glyphicon-camera "></i>
-                            </button> -->
                                     <button class="bg_none ">
-
                                         <div class="image-upload">
                                             <label for="fileselect">
                                                 <i class="glyphicon glyphicon-paperclip"> </i>
@@ -238,31 +238,30 @@
                                         <span class="glyphicon glyphicon-send"></span>
                                         </span>
                                     </button>
-                                    <!-- <button class="bg_none pull-right ">
-                                <i class="glyphicon glyphicon-thumbs-up "></i>
-                            </button> -->
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row" id="portfolio-wrapper">
-                        <div class="col-lg-3 col-md-6 portfolio-item">
-                                <div id="shareVideosAttach"></div>
-                                <div id="videosAttach"></div>
-                            
-                            <div class="details">
-                                <h4>App 1</h4>
-                                <span>Alored dono par</span>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
+            </div>
+
+            <div class="row" id="portfolio-wrapper">
+                <!-- <div class="col-lg-3 col-md-6 portfolio-item"> -->
+                    <div id="shareVideosAttach"></div>
+                    <div id="videosAttach"></div>
+
+                    <div class="details">
+                        <h4>App 1</h4>
+                        <span>Alored dono par</span>
+                    </div>
+                <!-- </div> -->
+            </div>
+
+        </div>
     </section>
     <!-- #portfolio -->
 
-    </main>
+
 
     <!--==========================
     Footer
