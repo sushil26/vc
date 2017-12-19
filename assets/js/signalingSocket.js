@@ -542,10 +542,8 @@ function setup_local_media(callback, errorback) {
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("controls", "");
             local_media.attr("id", "videoElem");
-            local_media.attr("class", "col-lg-3 col-md-6 portfolio-item")
             local_media.attr("style", "border:5px solid skyblue");
             $('#videosAttach').append(local_media);
-
 
             document.getElementById("videoElem").addEventListener("click", function () {
                 var videoElem = document.getElementById('videoElem');
