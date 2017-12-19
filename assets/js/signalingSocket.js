@@ -81,25 +81,25 @@ function init() {
                 console.log("query id is null");
                 console.log("message: config.peer_id: " + config.peer_id);
 
-                document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + peerNew_id;
-                document.getElementById('videoConferenceUrl').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
-                document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
+                    document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + peerNew_id;
+                    document.getElementById('videoConferenceUrl').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
+                    document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
 
-            }
-            else {
-                console.log("query id nt null");
-                document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
-                document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
+                }
+                else {
+                    console.log("query id nt null");
+                    document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
+                    document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
 
-                //     document.getElementById('linkToShare').innerHTML += " http://localhost:8080/client/" + peerNew_id;
-                //     document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-                //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+            //     document.getElementById('linkToShare').innerHTML += " http://localhost:8080/client/" + peerNew_id;
+            //     document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+            //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
 
-                // }
-                // else {
-                //     console.log("query id nt null");
-                //     document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
-                //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
+            // }
+            // else {
+            //     console.log("query id nt null");
+            //     document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
+            //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
                 // document.getElementById('videoHeaders').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
@@ -276,17 +276,17 @@ function init() {
                 remote_media.attr("muted", "true");
             }
             remote_media.attr("controls", "");
-          
+
             remote_media.attr("name", config.userName);
             console.log("onaddstream: peer_id: " + peer_id);
             peer_media_elements[peer_id] = remote_media;
 
 
             remote_media.attr("id", peer_id + "Remote");
-            $('#portfolio-wrapper').append('<div id="'+peer_id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-item"><div id="'+peer_id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>Alored dono par</span></div></div>');
-            $('#'+peer_id+'remoteVideoElement').append(remote_media);
-         
-            peer_userName_elements[peer_id] = document.getElementById(''+peer_id+'remoteContainer');
+            $('#portfolio-wrapper').append('<div id="' + peer_id + 'remoteContainer" class="col-lg-3 col-md-6 portfolio-items"><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><h4>' + config.userName + '</h4><span>Alored dono par</span></div></div>');
+            $('#' + peer_id + 'remoteVideoElement').append(remote_media);
+
+            peer_userName_elements[peer_id] = document.getElementById('' + peer_id + 'remoteContainer');
             // $('#videosAttach').append(remote_media);
             // var parentElement = document.getElementById('videosAttach');
 
@@ -547,13 +547,13 @@ function setup_local_media(callback, errorback) {
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("controls", "");
             local_media.attr("id", "videoElem");
-            local_media.attr("style", "border:1px solid black");
-           
+            local_media.attr("style", "border:1px solid black;display:inline !important");
 
-            // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-item" + ">");
+
+            // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-items" + ">");
             // $('#videosAttach').after("<div class=" + "details" + "><h4>App 1</h4><span>Alored dono par</span></div></div>");
 
-            $('#portfolio-wrapper').append('<div id="brilliant" class="col-lg-3 col-md-6 portfolio-item"><div id="videosAttach"></div><div class="details"><h4>'+userName+'</h4><span>Alored dono par</span></div></div>');
+            $('#portfolio-wrapper').append('<div id="brilliant" class="col-lg-3 col-md-6 portfolio-items"><div id="videosAttach"></div><div class="details"><h4>' + userName + '</h4><span>Alored dono par</span></div></div>');
             $('#videosAttach').append(local_media);
             document.getElementById("videoElem").addEventListener("click", function () {
                 var videoElem = document.getElementById('videoElem');
@@ -681,11 +681,11 @@ function setup_local_media(callback, errorback) {
                     local_mediaScreenShare.attr("id", "screenShareElem");
                     local_mediaScreenShare.attr("style", "border:1px solid skyblue");
 
-                    //$('#portfolio-wrapper').append('<div id="'+id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-item"><div id="'+id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>All is well</span></div></div>');
+                    //$('#portfolio-wrapper').append('<div id="'+id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-items"><div id="'+id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>All is well</span></div></div>');
                     $('#videosAttach').append(local_mediaScreenShare);
 
 
-                   
+
                     attachMediaStream(local_mediaScreenShare[0], stream);
 
                     /* ##### Start Stop Sharing ##### */
