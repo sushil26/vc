@@ -81,15 +81,15 @@ function init() {
                 console.log("query id is null");
                 console.log("message: config.peer_id: " + config.peer_id);
 
-                    document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + peerNew_id;
-                    document.getElementById('videoConferenceUrl').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
-                    document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
+                document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + peerNew_id;
+                document.getElementById('videoConferenceUrl').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
+                document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
 
-                }
-                else {
-                    console.log("query id nt null");
-                    document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
-                    document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
+            }
+            else {
+                console.log("query id nt null");
+                document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
+                document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
 
 
 
@@ -119,10 +119,10 @@ function init() {
                 document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
-                
+
                 document.getElementById('audio_btn').style.display = 'inline';
                 document.getElementById('diconnect_btn').style.display = 'inline';
-                ocument.getElementById('hr').style.display = 'inline';
+                document.getElementsByClassName('hr').style.display = 'inline';
                 console.log("bretrigger");
                 /* ##### Start trigger click for setName automatically  ##### */
                 $('#setName').trigger('click');
