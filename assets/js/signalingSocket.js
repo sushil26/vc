@@ -121,7 +121,7 @@ function init() {
                 document.getElementById('openChat').style.display = 'inline';
                 
                 document.getElementById('audio_btn').style.display = 'inline';
-
+                document.getElementById('diconnect_btn').style.display = 'inline';
                 console.log("bretrigger");
                 /* ##### Start trigger click for setName automatically  ##### */
                 $('#setName').trigger('click');
