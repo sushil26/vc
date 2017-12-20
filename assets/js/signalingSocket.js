@@ -731,7 +731,7 @@ function setup_local_media(callback, errorback) {
                                 local_media.attr("muted", "true"); /* always mute ourselves by default */
                                 local_media.attr("controls", "");
                                 local_media.attr("id", "videoElem");
-                                local_media.attr("style", "border:5px solid skyblue");
+                                local_media.attr("style", "border:1px solid skyblue");
                                 $('#videosAttach').append(local_media);
 
                                 attachMediaStream(local_media[0], stream);
