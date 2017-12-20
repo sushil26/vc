@@ -89,246 +89,256 @@
 
 
 
-        <!--==========================
+    <!--==========================
       Portfolio Section
     ============================-->
-        <section id="portfolio">
-            <div class="container wow fadeInUp">
+    <section id="portfolio">
+        <div class="container wow fadeInUp">
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <ul id="portfolio-flters">
-                            <li class="filter-active" id="videoConfStart">
-                                <a id="videoConferenceUrl" style="color:white">Start Video Conference</a>
-                            </li>
-                            <!-- <li id="videoConfStart">  <a id="videoConferenceUrl">Start Video Conference </a></li> -->
-                            <li>
-                                <a id="screenShareBtn">Share Screen</a>
-                                <a id="screenShareStop" style="display:none;">Stop Screen Sharing</a>
-                            </li>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul id="portfolio-flters">
+                        <li class="filter-active" id="videoConfStart">
+                            <a id="videoConferenceUrl" style="color:white">Start Video Conference</a>
+                        </li>
+                        <!-- <li id="videoConfStart">  <a id="videoConferenceUrl">Start Video Conference </a></li> -->
+                        <li>
+                            <a id="screenShareBtn">Share Screen</a>
+                            <a id="screenShareStop" style="display:none;">Stop Screen Sharing</a>
+                        </li>
 
-                            <li style="display:none" id="openChat">
-                                <a id="addChatWindow">Chat Window</a>
-                            </li>
-                            <!-- <li>Web</li> -->
-                        </ul>
-                        <div class="container-fluid" style="height:100%;">
+                        <li style="display:none" id="openChat">
+                            <a id="addChatWindow">Chat Window</a>
+                        </li>
+                        <!-- <li>Web</li> -->
+                    </ul>
+                    <div class="container-fluid" style="height:100%;">
 
 
 
-                            <!-- Trigger the modal with a button -->
-                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"
-                                id="setName" style="display:none" onclick="setNameBtn()">Set Name</button>
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"
+                            id="setName" style="display:none" onclick="setNameBtn()">Set Name</button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="myModal" role="dialog">
-                                <div class="modal-dialog">
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
 
-                                    <!-- Modal content-->
-                                    <div class="modal-content" style="color:black">
-                                        <div class="modal-header">
-                                            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                                            <h4 class="modal-title">Please Set Your Name</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <input type="text" class="form-control" placeholder="Enter your name" id="userName">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
-                                            <!-- <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button> -->
-                                        </div>
+                                <!-- Modal content-->
+                                <div class="modal-content" style="color:black">
+                                    <div class="modal-header">
+                                        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                        <h4 class="modal-title">Please Set Your Name</h4>
                                     </div>
-
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control" placeholder="Enter your name" id="userName">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
+                                        <!-- <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button> -->
+                                    </div>
                                 </div>
+
+                            </div>
+                        </div>
+
+                        </br>
+                        <!-- <div id="controlBtns">
+                            <div id="audio_btn" style="cursor:pointer;display:none;">
+                                <i id="audioUnmute_btn" class="fa fa-microphone fa-3x" aria-hidden="true"></i>
+                                <i id="audioMute_btn" class="fa fa-microphone-slash fa-3x" aria-hidden="true" style="display:none"></i>
+                            </div>
+                        </div> -->
+
+                        <h3>Share Below Link To Start The Conference</h3>
+
+                        <a style="color:black;" id="linkToShare"> </a>
+                        </br>
+                        </br>
+                        <div class="form-inline" id="invitePeople_container">
+
+                            <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
+                            <div class="btn">
+                                <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
                             </div>
 
-                            </br>
-                            <div id="controlBtns">
-                                <div id="audio_btn" style="cursor:pointer;display:none;">
-                                    <i id="audioUnmute_btn" class="fa fa-microphone fa-3x" aria-hidden="true"></i>
-                                    <i id="audioMute_btn" class="fa fa-microphone-slash fa-3x" aria-hidden="true" style="display:none"></i>
+                            <h4>
+                                <b>Note:-</b>Chrome user need to install this extension for Screen sharing
+                                <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog">
+                                    <button class="btn">
+                                        <span class="glyphicon glyphicon-save"></span> Install Extension</button>
+                                </a>
+                            </h4>
+                            <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
+
+                            <br>
+                            <label id="info"></label>
+                        </div>
+
+                        <div class="popup-box chat-popup" id="qnimate">
+                            <div class="popup-head">
+                                <div class="popup-head-left pull-left">
+                                    <i class="fa fa-twitter" aria-hidden="true"></i> Chatting zone
                                 </div>
-                            </div>
+                                <div class="popup-head-right pull-right">
+                                    <div class="btn-group">
+                                        <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
+                                            <i class="glyphicon glyphicon-cog"></i>
+                                        </button>
+                                        <ul role="menu" class="dropdown-menu pull-right">
+                                            <li>
+                                                <a href="#">Media</a>
+                                            </li>
 
-                            <h3>Share Below Link To Start The Conference</h3>
+                                            <li>
+                                                <a href="#">Clear Chat</a>
+                                            </li>
 
-                            <a style="color:black;" id="linkToShare"> </a>
-                            </br>
-                            </br>
-                            <div class="form-inline" id="invitePeople_container">
-
-                                <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
-                                <div class="btn">
-                                    <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
-                                </div>
-
-                                <h4>
-                                    <b>Note:-</b>Chrome user need to install this extension for Screen sharing
-                                    <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog">
-                                        <button class="btn">
-                                            <span class="glyphicon glyphicon-save"></span> Install Extension</button>
-                                    </a>
-                                </h4>
-                                <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
-
-                                <br>
-                                <label id="info"></label>
-                            </div>
-
-                            <div class="popup-box chat-popup" id="qnimate">
-                                <div class="popup-head">
-                                    <div class="popup-head-left pull-left">
-                                        <i class="fa fa-twitter" aria-hidden="true"></i> Chatting zone
+                                        </ul>
                                     </div>
-                                    <div class="popup-head-right pull-right">
-                                        <div class="btn-group">
-                                            <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
-                                                <i class="glyphicon glyphicon-cog"></i>
-                                            </button>
-                                            <ul role="menu" class="dropdown-menu pull-right">
-                                                <li>
-                                                    <a href="#">Media</a>
-                                                </li>
 
-                                                <li>
-                                                    <a href="#">Clear Chat</a>
-                                                </li>
+                                    <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
+                                        <i class="glyphicon glyphicon-off"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="popup-messages" id="popupMsg">
+                                <div class="direct-chat-messages">
+                                    <!-- Message. Default to the left -->
+                                    <div id="message-container"></div>
+                                    <!-- /.direct-chat-msg -->
+                                </div>
+                            </div>
+                            <div class="popup-messages-footer">
+                                <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
+                                <div class="btn-footer ">
 
-                                            </ul>
+                                    <button class="bg_none ">
+
+                                        <div class="image-upload">
+                                            <label for="fileselect">
+                                                <i class="glyphicon glyphicon-paperclip"> </i>
+                                            </label>
+                                            <input id="fileselect" type="file" name="fileselect" />
                                         </div>
-
-                                        <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
-                                            <i class="glyphicon glyphicon-off"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="popup-messages" id="popupMsg">
-                                    <div class="direct-chat-messages">
-                                        <!-- Message. Default to the left -->
-                                        <div id="message-container"></div>
-                                        <!-- /.direct-chat-msg -->
-                                    </div>
-                                </div>
-                                <div class="popup-messages-footer">
-                                    <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
-                                    <div class="btn-footer ">
-
-                                        <button class="bg_none ">
-
-                                            <div class="image-upload">
-                                                <label for="fileselect">
-                                                    <i class="glyphicon glyphicon-paperclip"> </i>
-                                                </label>
-                                                <input id="fileselect" type="file" name="fileselect" />
-                                            </div>
-                                        </button>
-                                        <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">&nbsp
-                                            <span class="glyphicon glyphicon-send"></span>
-                                            </span>
-                                        </button>
-                                    </div>
+                                    </button>
+                                    <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">&nbsp
+                                        <span class="glyphicon glyphicon-send"></span>
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>    
-                        <div class="row" id="portfolio-wrapper" >
-
-
-
-                        </div>
-
-             </div>     
-        </section>
-        <!-- #portfolio -->
-        <!--Contact Section ============================-->
-        <section id="contact">
-            <div class="container wow fadeInUp">
-                <div class="section-header">
-                    <h3 class="section-title">Contact</h3>
-                    <p class="section-description">Feel Free To Contact Us, Our Executives Are Available 24*7</p>
                 </div>
             </div>
+            <center>
+                <div class="row" id="portfolio-wrapper">
+                </div>
+            </center>
+            <div class="row" style="text-align:center;">
 
-            <div id="google-map" data-latitude="12.922604" data-longitude="77.5546319"></div>
 
-            <div class="container wow fadeInUp">
-                <div class="row justify-content-center">
-                    <div class="col-lg-3 col-md-4">
-                        <div class="info">
-                            <div>
-                                <i class="fa fa-map-marker"></i>
-                                <p>Careator Technologies Private Limited
-                                    <br>Bangalore ,560076</p>
-                            </div>
+                <div id="audio_btn" class="col-lg-12" style="cursor:pointer;display:none;">
+                    <i id="audioUnmute_btn" class="fa fa-microphone fa-3x" aria-hidden="true"></i>
+                    <i id="audioMute_btn" class="fa fa-microphone-slash fa-3x" aria-hidden="true" style="display:none"></i>
+                    <i id="diconnect_btn" class="mdi mdi-call-end" aria-hidden="true"></i>
+                </div>
 
-                            <div>
-                                <i class="fa fa-envelope"></i>
-                                <p>info@example.com</p>
-                            </div>
 
-                            <div>
-                                <i class="fa fa-phone"></i>
-                                <p>+919066367679</p>
-                            </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- #portfolio -->
+    <!--Contact Section ============================-->
+    <section id="contact">
+        <div class="container wow fadeInUp">
+            <div class="section-header">
+                <h3 class="section-title">Contact</h3>
+                <p class="section-description">Feel Free To Contact Us, Our Executives Are Available 24*7</p>
+            </div>
+        </div>
+
+        <div id="google-map" data-latitude="12.922604" data-longitude="77.5546319"></div>
+
+        <div class="container wow fadeInUp">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-4">
+                    <div class="info">
+                        <div>
+                            <i class="fa fa-map-marker"></i>
+                            <p>Careator Technologies Private Limited
+                                <br>Bangalore ,560076</p>
                         </div>
 
-                        <div class="social-links">
-                            <a href="#" class="twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="#" class="facebook">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                            <a href="#" class="instagram">
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                            <a href="#" class="google-plus">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
-                            <a href="#" class="linkedin">
-                                <i class="fa fa-linkedin"></i>
-                            </a>
+                        <div>
+                            <i class="fa fa-envelope"></i>
+                            <p>info@example.com</p>
                         </div>
 
+                        <div>
+                            <i class="fa fa-phone"></i>
+                            <p>+919066367679</p>
+                        </div>
                     </div>
 
-                    <div class="col-lg-5 col-md-8">
-                        <div class="form">
-                            <div id="sendmessage">Your message has been sent. Thank you!</div>
-                            <div id="errormessage"></div>
-                            <form action="" method="post" role="form" class="contactForm">
-                                <div class="form-group">
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars"
-                                    />
-                                    <div class="validation"></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email"
-                                    />
-                                    <div class="validation"></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject"
-                                    />
-                                    <div class="validation"></div>
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                                    <div class="validation"></div>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit">Send Message</button>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="social-links">
+                        <a href="#" class="twitter">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="facebook">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="instagram">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="google-plus">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                        <a href="#" class="linkedin">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
                     </div>
 
                 </div>
 
+                <div class="col-lg-5 col-md-8">
+                    <div class="form">
+                        <div id="sendmessage">Your message has been sent. Thank you!</div>
+                        <div id="errormessage"></div>
+                        <form action="" method="post" role="form" class="contactForm">
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars"
+                                />
+                                <div class="validation"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email"
+                                />
+                                <div class="validation"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject"
+                                />
+                                <div class="validation"></div>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                                <div class="validation"></div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
-        </section>
-        <!-- #contact -->
+
+        </div>
+    </section>
+    <!-- #contact -->
     </main>
 
     <!--==========================

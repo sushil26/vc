@@ -1,6 +1,6 @@
 /** CONFIG **/
-// var SIGNALING_SERVER = "http://localhost:8080";
-var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
+//var SIGNALING_SERVER = "http://localhost:8080";
+var SIGNALING_SERVER = "https://logchat.herokuapp.com";
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -91,21 +91,36 @@ function init() {
                     document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
                     document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
 
-            //     document.getElementById('linkToShare').innerHTML += " http://localhost:8080/client/" + peerNew_id;
+
+
+                //     document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
+                //     document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
+                //     document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
+
+                // }
+                // else {
+                //     console.log("query id nt null");
+                //     document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + config.queryId;
+                //     document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + config.queryId);
+
+
+            //     document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + peerNew_id;
             //     document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-            //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+            //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client//client/" + peerNew_id);
 
             // }
             // else {
             //     console.log("query id nt null");
             //     document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
             //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
-                // document.getElementById('videoHeaders').style.display = 'inline';
+
+
+
+
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
-                // document.getElementById('disconnLink').style.display = 'inline';
                 document.getElementById('screenShareBtn').style.display = 'inline';
-                // document.getElementById('audio_btn').style.display = 'inline';
+                document.getElementById('audio_btn').style.display = 'inline';
 
                 console.log("bretrigger");
                 /* ##### Start trigger click for setName automatically  ##### */
@@ -262,7 +277,7 @@ function init() {
             console.log("onaddstream-->")
 
 
-            var existing = document.getElementById(peer_id + "Remote");
+            var existing = document.getElementById(peer_id + "remoteContainer");
             if (existing) {
                 existing.parentNode.removeChild(existing);
             }
@@ -283,7 +298,7 @@ function init() {
 
 
             remote_media.attr("id", peer_id + "Remote");
-            $('#portfolio-wrapper').append('<div id="' + peer_id + 'remoteContainer" class="col-lg-3 col-md-6 portfolio-items"><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><h4>' + config.userName + '</h4><span>Alored dono par</span></div></div>');
+            $('#portfolio-wrapper').append('<div id="' + peer_id + 'remoteContainer" class="col-lg-3 col-md-6 portfolio-items" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><h4>' + config.userName + '</h4><span>Alored dono par</span></div></div>');
             $('#' + peer_id + 'remoteVideoElement').append(remote_media);
 
             peer_userName_elements[peer_id] = document.getElementById('' + peer_id + 'remoteContainer');
@@ -553,7 +568,7 @@ function setup_local_media(callback, errorback) {
             // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-items" + ">");
             // $('#videosAttach').after("<div class=" + "details" + "><h4>App 1</h4><span>Alored dono par</span></div></div>");
 
-            $('#portfolio-wrapper').append('<div id="brilliant" class="col-lg-3 col-md-6 portfolio-items"><div id="videosAttach"></div><div class="details"><h4>' + userName + '</h4><span>Alored dono par</span></div></div>');
+            $('#portfolio-wrapper').append('<div class="col-lg-3 col-md-6 portfolio-items"><div id="videosAttach"></div><div class="details"><h4>' + userName + '</h4><span>Alored dono par</span></div></div>');
             $('#videosAttach').append(local_media);
             document.getElementById("videoElem").addEventListener("click", function () {
                 var videoElem = document.getElementById('videoElem');
@@ -585,32 +600,26 @@ function setup_local_media(callback, errorback) {
 
 
             })
-            // document.getElementById("audio_btn").addEventListener("click", function () {
-            //     console.log("audio_btn-->");
-            //     console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
-            //     var michrophoneVal = stream.getAudioTracks()[0].enabled;
-            //     stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
+            document.getElementById("audio_btn").addEventListener("click", function () {
+                console.log("audio_btn-->");
+                console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
+                var michrophoneVal = stream.getAudioTracks()[0].enabled;
+                stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
 
-            //     if (michrophoneVal) {
+                if (michrophoneVal) {
 
-            //         document.getElementById("audioMute_btn").style.display = 'inline';
-            //         document.getElementById("audioUnmute_btn").style.display = 'none';
-            //     }
-            //     else {
-            //         document.getElementById("audioMute_btn").style.display = 'none';
-            //         document.getElementById("audioUnmute_btn").style.display = 'inline';
-            //     }
+                    document.getElementById("audioMute_btn").style.display = 'inline';
+                    document.getElementById("audioUnmute_btn").style.display = 'none';
+                }
+                else {
+                    document.getElementById("audioMute_btn").style.display = 'none';
+                    document.getElementById("audioUnmute_btn").style.display = 'inline';
+                }
 
-            //     console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
-            //     console.log("<--audio_btn");
-            // })
-            // var audio_button = document.createElement("audio_button");
+                console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
+                console.log("<--audio_btn");
+            })
 
-
-            // $('#videosAttach').append(audio_button);
-            // audio_button.audio_onclick = function(){
-            //     myStream.getAudioTracks()[0].enabled = !(myStream.getAudioTracks()[0].enabled);
-            //   }
 
 
             attachMediaStream(local_media[0], stream);

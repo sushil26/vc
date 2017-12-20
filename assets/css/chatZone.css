@@ -471,11 +471,11 @@ font-family: Oswald;
 
 
 /* ##### Start Video Related Css  ##### */
-/* video {
-    width: 32%;
-    height: 32%;
+video {
+    width: 100%;
+    height: 100%;
     
-} */
+}
 
 #chat {
     width: 100%;
@@ -610,6 +610,11 @@ body {
   
   
 
-  /* ##### Start Mobile Css by Logu  ##### */
+  /* ##### video block css  ##### */
 
-  /* ##### End Mobile Css by logu  ##### */
+  .col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+  /* ##### video block css  ##### */
