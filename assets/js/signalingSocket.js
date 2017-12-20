@@ -1,6 +1,6 @@
 /** CONFIG **/
 //var SIGNALING_SERVER = "http://localhost:8080";
-var SIGNALING_SERVER = "https://logchat.herokuapp.com";
+var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
