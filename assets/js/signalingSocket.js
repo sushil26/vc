@@ -116,10 +116,10 @@ function init() {
 
 
 
-
+                document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
-                document.getElementById('screenShareBtn').style.display = 'inline';
+                
                 document.getElementById('audio_btn').style.display = 'inline';
 
                 console.log("bretrigger");
