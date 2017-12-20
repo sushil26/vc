@@ -562,7 +562,7 @@ function setup_local_media(callback, errorback) {
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("controls", "");
             local_media.attr("id", "videoElem");
-            local_media.attr("style", "border:1px solid black;display:inline !important");
+            local_media.attr("style", "border:1px solid skyblue;display:inline !important");
 
 
             // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-items" + ">");
