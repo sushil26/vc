@@ -1,6 +1,6 @@
 /** CONFIG **/
-var SIGNALING_SERVER = "http://localhost:8080";
-//var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
+//var SIGNALING_SERVER = "http://localhost:8080";
+var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -87,26 +87,26 @@ function init() {
 
                 // }
                 // else {
-                //     console.log("query id nt null");
-                //     document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
-                //     document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
+                    console.log("query id nt null");
+                    document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
+                    document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
 
 
 
-                //     document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
-                //     document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
-                //     document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
+                    document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
+                    document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
+                    document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
 
                 // }
                 // else {
                 //     console.log("query id nt null");
-                document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + config.queryId;
-                document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + config.queryId);
+                // document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + config.queryId;
+                // document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + config.queryId);
 
 
-                document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + peerNew_id;
-                document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-                document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client//client/" + peerNew_id);
+                // document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + peerNew_id;
+                // document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+                // document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client//client/" + peerNew_id);
 
                 // }
                 // else {
