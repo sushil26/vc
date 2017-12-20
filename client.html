@@ -75,7 +75,7 @@
                         <a href="#portfolio">Chat</a>
                     </li>
                     <li>
-                        <a href="#team">Trouble shooting</a>
+                        <a href="#troubleShooting">Trouble shooting</a>
                     </li>
                     <li>
                         <a href="#contact">Contact Us</a>
@@ -268,6 +268,96 @@
         </div>
     </section>
     <!-- #portfolio -->
+
+
+    <!--==========================
+    Trouble Shoot
+  ============================-->
+    <section id="troubleShooting">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">Trouble Shooting</h3>
+                <p class="section-description">Here you can get solution for your issues</p>
+            </div>
+            <div class="row about-container">
+                <div class="col-sm-12" style="border:1px solid black;">
+                    <p>
+                        <b>Isuue:</b> You choose not to provide access to the camera/microphone, demo will not work.
+                        <br>
+                        <a id="cameraAccessMore" onclick="more('cameraAccess')" style="cursor:pointer">More..</a>
+
+                        <span id="cameraAccess" style="display:none;">
+                            <b>Solutions:</b>
+                            <br>1)Check whether you have allow camera/microphone in any other tab from your browser, if yes stop
+                            that imediately then refresh our webpage.
+                            <br>2)Close all other your webpages where you have allowed your web camera/microphone.
+                            <br>3)Check the URL that you have entered https.
+                            <br>4)Go to setting and give access to camera and microphone as allow.
+                            <a id="cameraAccessShrink" onclick="shrink('cameraAccess')" style="cursor:pointer">Shrink..</a>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-sm-12" style="border:1px solid black;">
+                    <p>
+                        <b>Isuue:</b> More Noice/Eco.
+                        <br>
+                        <a id="noiceEcoMore" onclick="more('noiceEco')" style="cursor:pointer">More..</a>
+
+                        <span id="noiceEco" style="display:none;">
+                            <b>Solutions:</b>
+                            <br>1)Open your sound setting, check your input volume level is unamplified if it not set up to unamplified,
+                            it should not more than that level.
+                            <br>2)Your local video volume always should be mute..
+                            <a id="noiceEcoShrink" onclick="shrink('noiceEco')" style="cursor:pointer">Shrink..</a>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-sm-12" style="border:1px solid black;">
+                    <p>
+                        <b>Isuue:</b> Audio not reached to peer.
+                        <br>
+                        <a id="audioProbMore" onclick="more('audioProb')" style="cursor:pointer">More..</a>
+
+                        <span id="audioProb" style="display:none;">
+                            <b>Solutions:</b>
+                            <br>1)Check your microphone on/off if off, on it.
+                            <br>2)Increase volume of system, sometime sound not audiable because of low volume.
+                            <a id="audioProbShrink" onclick="shrink('audioProb')" style="cursor:pointer">Shrink..</a>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-sm-12" style="border:1px solid black;">
+                    <p>
+                        <b>Isuue:</b> Video is not appearing.
+                        <br>
+                        <a id="videoProbMore" onclick="more('videoProb')" style="cursor:pointer">More..</a>
+
+                        <span id="videoProb" style="display:none;">
+                            <b>Solutions:</b>
+                            <br>1)Check your Network Connectivity, if it slow you cant do video chat.
+                            <br>2)More than 3 person may takes more time to connect.
+                            <a id="videoProbShrink" onclick="shrink('videoProb')" style="cursor:pointer">Shrink..</a>
+                        </span>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <script>
+        function more(id) {
+            document.getElementById(id).style.display = 'block';
+            document.getElementById(id + 'More').style.display = 'none';
+        }
+        function shrink(id) {
+            document.getElementById(id).style.display = 'none';
+            document.getElementById(id + 'More').style.display = 'block';
+        }
+
+    </script>
+
+
+
     <!--Contact Section ============================-->
     <section id="contact">
         <div class="container wow fadeInUp">
