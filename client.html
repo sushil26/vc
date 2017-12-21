@@ -203,86 +203,6 @@
                         </div>
                     </div> -->
                     <div id="portfolio-wrapper">
-                            <div class="portfolio-items ">
-
-                                    <img src="/portfolio/web2.jpg" alt="">
-        
-                                    <div class="details">
-                                        <h4>Web 2</h4>
-                                        <span>Alored dono par</span>
-                                    </div>
-        
-                                </div>
-                                <div class="portfolio-items ">
-
-                                        <img src="/portfolio/web2.jpg" alt="">
-            
-                                        <div class="details">
-                                            <h4>Web 2</h4>
-                                            <span>Alored dono par</span>
-                                        </div>
-            
-                                    </div>
-                                    <div class="portfolio-items ">
-
-                                            <img src="/portfolio/web2.jpg" alt="">
-                
-                                            <div class="details">
-                                                <h4>Web 2</h4>
-                                                <span>Alored dono par</span>
-                                            </div>
-                
-                                        </div>
-                                        <div class="portfolio-items ">
-
-                                                <img src="/portfolio/web2.jpg" alt="">
-                    
-                                                <div class="details">
-                                                    <h4>Web 2</h4>
-                                                    <span>Alored dono par</span>
-                                                </div>
-                    
-                                            </div>
-                                            <div class="portfolio-items ">
-
-                                                    <img src="/portfolio/web2.jpg" alt="">
-                        
-                                                    <div class="details">
-                                                        <h4>Web 2</h4>
-                                                        <span>Alored dono par</span>
-                                                    </div>
-                        
-                                                </div>
-                                                <div class="portfolio-items ">
-
-                                                        <img src="/portfolio/web2.jpg" alt="">
-                            
-                                                        <div class="details">
-                                                            <h4>Web 2</h4>
-                                                            <span>Alored dono par</span>
-                                                        </div>
-                            
-                                                    </div>
-                                                    <div class="portfolio-items ">
-
-                                                            <img src="/portfolio/web2.jpg" alt="">
-                                
-                                                            <div class="details">
-                                                                <h4>Web 2</h4>
-                                                                <span>Alored dono par</span>
-                                                            </div>
-                                
-                                                        </div>
-                                                        <div class="portfolio-items ">
-
-                                                                <img src="/portfolio/web2.jpg" alt="">
-                                    
-                                                                <div class="details">
-                                                                    <h4>Web 2</h4>
-                                                                    <span>Alored dono par</span>
-                                                                </div>
-                                    
-                                                            </div>
                     </div>
 
                 </div>
@@ -636,18 +556,33 @@
             $("#openChat").click(function () {
                 //alert("hui");
                 $("#portfolio-wrapper").toggleClass("intro");
+                $("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("col-lg-3");
+
+                //  $("portfolio-items col-xs-12 col-sm-6 col-md-4").toggleClass("portfolio-items col-xs-12 col-sm-6 col-md-4");
+
+            });
+            $("#removeClass").click(function () {
+                $("#portfolio-wrapper").removeClass("intro");
             });
         });
     </script>
     <style>
-        #portfolio #portfolio-wrapper.intro {
-            width: 70%;
+        #portfolio .portfolio-items {
+
+            display: inline-block;
+            height: 200px;
+
         }
 
-        .intro .portfolio-items:last-child {
+        #portfolio .intro {
+            width: 75%;
+
+        }
+
+        /* .intro .portfolio-items:last-child {
             display: block;
             width: 30%;
-        }
+        } */
     </style>
 
 </body>
