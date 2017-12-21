@@ -241,8 +241,7 @@ font-family: Oswald;
 .popup-box .popup-messages {
 }
 .popup-head-left img {
-    border: 1px solid #7b7b7b;
-    border-radius: 50%;
+
     width: 44px;
 }
 .popup-messages-footer > textarea {
