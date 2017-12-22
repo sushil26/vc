@@ -302,7 +302,7 @@ function init() {
 
 
             remote_media.attr("id", peer_id + "Remote");
-            $('#portfolio-wrapper').append('<center><div id="' + peer_id + 'remoteContainer" class="col-xs-12 col-sm-6 col-md-4 col-lg-3  portfolio-items" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><h4>' + config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' + peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' + peer_id + '" owner=' + peer_id + ' name=' + config.userName + '></i><span>All is well</span></div></div></center>');
+            $('#portfolio-wrapper').append('<center><div id="' + peer_id + 'remoteContainer" class="col-xs-12 col-sm-6 col-md-4 col-lg-3  portfolio-items" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><button id="fullscreenbtn">[ &nbsp; ]</button><h4>' + config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' + peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' + peer_id + '" owner=' + peer_id + ' name=' + config.userName + '></i><span>All is well</span></div></div></center>');
             $('#' + peer_id + 'remoteVideoElement').append(remote_media);
 
             peer_userName_elements[peer_id] = document.getElementById('' + peer_id + 'remoteContainer');
@@ -317,6 +317,18 @@ function init() {
                     signaling_socket.emit('closeThisConn', { "removableId": removableId, "removableName": removableName, "controllerId": peerNew_id, "queryLink": queryLink });
                 })
             }
+
+            // <!--------video Controller-------->
+            var fullscreenbtn;
+            fullscreenbtn = document.getElementById("fullscreenbtn");
+            fullscreenbtn.addEventListener("click", toggleFullScreen, false);
+
+
+
+
+
+
+
 
             // $('#videosAttach').append(remote_media);
             // var parentElement = document.getElementById('videosAttach');
