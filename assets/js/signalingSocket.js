@@ -318,16 +318,20 @@ function init() {
                 })
             }
 
+
+
+
             // <!--------video Controller-------->
             var fullscreenbtn;
+            vid = document.getElementById("videosAttach");
             fullscreenbtn = document.getElementById("fullscreenbtn");
             fullscreenbtn.addEventListener("click", toggleFullScreen, false);
-            function toggleFullScreen(){
-                if(vid.requestFullScreen){
+            function toggleFullScreen() {
+                if (vid.requestFullScreen) {
                     vid.requestFullScreen();
-                } else if(vid.webkitRequestFullScreen){
+                } else if (vid.webkitRequestFullScreen) {
                     vid.webkitRequestFullScreen();
-                } else if(vid.mozRequestFullScreen){
+                } else if (vid.mozRequestFullScreen) {
                     vid.mozRequestFullScreen();
                 }
             }
@@ -563,7 +567,7 @@ function init() {
         if (config.removableId == peerNew_id) {
             console.log("Removable alert should start");
             alert("Session creater removed you from conference");
-            window.location.href = "https://logchat.herokuapp.com";
+            window.location.href = "https://svcapp.herokuapp.com";
         }
 
         // delete peer_media_sselements[config.peer_id];
@@ -639,7 +643,7 @@ function setup_local_media(callback, errorback) {
             // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-items" + ">");
             // $('#videosAttach').after("<div class=" + "details" + "><h4>App 1</h4><span>Alored dono par</span></div></div>");
 
-            $('#portfolio-wrapper').append('<center><div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items"><div id="videosAttach"></div><div class="details"><h4>' + userName + '</h4><span>All is wellr</span></div></div></center>');
+            $('#portfolio-wrapper').append('<center><div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn">[ &nbsp; ]</button><h4>' + userName + '</h4><span>All is wellr</span></div></div></center>');
             $('#videosAttach').append(local_media);
             document.getElementById("videoElem").addEventListener("click", function () {
                 var videoElem = document.getElementById('videoElem');
