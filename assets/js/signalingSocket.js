@@ -324,7 +324,7 @@ function init() {
             // <!--------video Controller-------->
             var fullscreenbtn;
             vid = document.getElementById("videoElem");
-            vid2 = document.getElementById(peer_id + "remoteVideoElement");
+            vid2 = document.getElementById(peer_id + "Remote");
 
             fullscreenbtn = document.getElementById("fullscreenbtn");
             fullscreenbtn.addEventListener("click", toggleFullScreen, false);
