@@ -56,31 +56,7 @@ function setNameBtn() {
 
 function init() {
 
-    // <!--------video Controller-------->
-    var fullscreenbtn;
-    vid = document.getElementById("videoElem");
-    vid2 = document.getElementById(peer_id + "Remote");
 
-    fullscreenbtn = document.getElementById("fullscreenbtn");
-    fullscreenbtn.addEventListener("click", toggleFullScreen, false);
-    function toggleFullScreen() {
-        if (vid.requestFullScreen) {
-            vid.requestFullScreen();
-        }
-        if (vid2.requestFullScreen) {
-            vid2.requestFullScreen();
-        } else if (vid.webkitRequestFullScreen) {
-            vid.webkitRequestFullScreen();
-        }
-        else if (vid2.webkitRequestFullScreen) {
-            vid2.webkitRequestFullScreen();
-        } else if (vid.mozRequestFullScreen) {
-            vid.mozRequestFullScreen();
-        }
-        else if (vid2.mozRequestFullScreen) {
-            vid2.mozRequestFullScreen();
-        }
-    }
 
 
     console.log("init-->");
@@ -596,7 +572,31 @@ function init() {
 
     console.log("<--init");
 
+    // <!--------video Controller-------->
+    var fullscreenbtn;
+    vid = document.getElementById("videoElem");
+    vid2 = document.getElementById(peer_id + "Remote");
 
+    fullscreenbtn = document.getElementById("fullscreenbtn");
+    fullscreenbtn.addEventListener("click", toggleFullScreen, false);
+    function toggleFullScreen() {
+        if (vid.requestFullScreen) {
+            vid.requestFullScreen();
+        }
+        if (vid2.requestFullScreen) {
+            vid2.requestFullScreen();
+        } else if (vid.webkitRequestFullScreen) {
+            vid.webkitRequestFullScreen();
+        }
+        else if (vid2.webkitRequestFullScreen) {
+            vid2.webkitRequestFullScreen();
+        } else if (vid.mozRequestFullScreen) {
+            vid.mozRequestFullScreen();
+        }
+        else if (vid2.mozRequestFullScreen) {
+            vid2.mozRequestFullScreen();
+        }
+    }
 
 
 }
