@@ -9,6 +9,12 @@
 --------------------------------------------------------------*/
 /* Trouble Shoot Section
 --------------------------------*/
+
+.fa:hover { 
+  color: rgb(218, 148, 160);
+}
+
+
 #troubleShooting {
   background: #fff;
   background-size: cover;
