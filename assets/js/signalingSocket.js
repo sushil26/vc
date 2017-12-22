@@ -322,6 +322,15 @@ function init() {
             var fullscreenbtn;
             fullscreenbtn = document.getElementById("fullscreenbtn");
             fullscreenbtn.addEventListener("click", toggleFullScreen, false);
+            function toggleFullScreen(){
+                if(vid.requestFullScreen){
+                    vid.requestFullScreen();
+                } else if(vid.webkitRequestFullScreen){
+                    vid.webkitRequestFullScreen();
+                } else if(vid.mozRequestFullScreen){
+                    vid.mozRequestFullScreen();
+                }
+            }
 
 
 
