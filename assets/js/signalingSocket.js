@@ -323,7 +323,7 @@ function init() {
 
             // <!--------video Controller-------->
             var fullscreenbtn;
-            vid = document.getElementById("videosAttach");
+            vid = document.getElementById("videoElem");
             fullscreenbtn = document.getElementById("fullscreenbtn");
             fullscreenbtn.addEventListener("click", toggleFullScreen, false);
             function toggleFullScreen() {
