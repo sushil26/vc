@@ -1,6 +1,6 @@
 /** CONFIG **/
-// var SIGNALING_SERVER = "http://localhost:8080";
- var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
+//var SIGNALING_SERVER = "http://localhost:8080";
+var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -34,7 +34,7 @@ signaling_socket = io();
 var file;
 var disconnPeerId = null;
 var shareScreen = null;
-
+var sessionHeader = null;
 
 
 function setNameBtn() {
@@ -104,9 +104,9 @@ function init() {
                 // document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + config.queryId);
 
 
-                // document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + peerNew_id;
-                // document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-                // document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client//client/" + peerNew_id);
+                //     document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + peerNew_id;
+                //     document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
+                //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client//client/" + peerNew_id);
 
                 // }
                 // else {
@@ -221,6 +221,8 @@ function init() {
         console.log('addPeer 1: Signaling server said to add peer:', config);
         // console.log('Signaling server said to add peer:', JSON.stringify(config));
         var peer_id = config.peer_id;
+        sessionHeader = config.sessionHeaderId;
+        console.log("sessionHeader: " + sessionHeader);
         // console.log("addPeer 1.1: peers: " + JSON.stringify(peers));
         // console.log("addPeer 1.2: peer_id: " + peer_id);
         // console.log("addPeer : config.parentPeer: " + config.parentPeer);
@@ -300,10 +302,22 @@ function init() {
 
 
             remote_media.attr("id", peer_id + "Remote");
-            $('#portfolio-wrapper').append('<center><div id="' + peer_id + 'remoteContainer" class="col-xs-12 col-sm-6 col-md-4 col-lg-3  portfolio-items" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><h4>' + config.userName + '</h4><span>All is well</span></div></div></center>');
+            $('#portfolio-wrapper').append('<center><div id="' + peer_id + 'remoteContainer" class="col-xs-12 col-sm-6 col-md-4 col-lg-3  portfolio-items" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><h4>' + config.userName + '</h4><i style="display:none" id="closeThisConn' + peer_id + '" class="fa fa-window-close" aria-hidden="true" id="closeThisConn' + peer_id + '" owner=' + peer_id + ' name=' + config.userName + '></i><span>All is well</span></div></div></center>');
             $('#' + peer_id + 'remoteVideoElement').append(remote_media);
 
             peer_userName_elements[peer_id] = document.getElementById('' + peer_id + 'remoteContainer');
+
+            if (peerNew_id == sessionHeader) {
+                document.getElementById("closeThisConn" + peer_id).style.display = 'inline';
+
+                document.getElementById("closeThisConn" + peer_id).addEventListener("click", function () {
+                    var removableId = document.getElementById("closeThisConn" + peer_id).getAttribute('owner');
+                    var removableName = document.getElementById("closeThisConn" + peer_id).getAttribute('name');
+
+                    signaling_socket.emit('closeThisConn', { "removableId": removableId, "removableName": removableName, "controllerId": peerNew_id, "queryLink": queryLink });
+                })
+            }
+
             // $('#videosAttach').append(remote_media);
             // var parentElement = document.getElementById('videosAttach');
 
@@ -501,6 +515,40 @@ function init() {
         peer_userName_elements[peer_id].remove();
         // delete peer_media_sselements[config.peer_id];
     });
+
+    /* Note: When video hoster want to remove perticular peer this functionality will work */
+    signaling_socket.on('authorizedForClose', function (config) {
+        console.log('authorizedForClose-->');
+
+        if (queryLink == config.queryId) {
+            console.log('queryLink,config.queryId are equal so to remove');
+
+            var peer_id = config.removableId;
+            if (peer_id in peer_media_elements) {
+                peer_media_elements[peer_id].remove();
+                peer_userName_elements[peer_id].remove();
+                // peer_media_sselements[peer_id].remove();
+            }
+            if (peer_id in peers) {
+                peers[peer_id].close();
+            }
+
+            delete peers[peer_id];
+            delete peer_media_elements[config.peer_id];
+            // peer_userName_elements[peer_id].remove();
+        }
+        console.log("config.removableId: " + config.removableId);
+        console.log("peerNew_id: " + peerNew_id);
+        if (config.removableId == peerNew_id) {
+            console.log("Removable alert should start");
+            alert("Session creater removed you from conference");
+            window.location.href = "https://logchat.herokuapp.com";
+        }
+
+        // delete peer_media_sselements[config.peer_id];
+        console.log('<--authorizedForClose');
+    });
+
 
 
 

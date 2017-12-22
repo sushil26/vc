@@ -46,10 +46,10 @@ var io = require('socket.io').listen(server);
 // });
 
 //main.use(express.bodyParser());
-main.get('/', function (req, res) { 
-   
-      
-    res.sendFile(__dirname + '/index.html'); 
+main.get('/', function (req, res) {
+
+
+    res.sendFile(__dirname + '/index.html');
 });
 
 
@@ -80,7 +80,7 @@ main.get("/client/:id", function (req, res) {
 //     console.log("queryId: " + req.params.id);
 //     // console.log("start to render page");
 //     res.sendFile(__dirname + '/index.html');
- 
+
 // });
 
 
@@ -109,6 +109,7 @@ var peerWithQueryId = []; /* PeerId with Query Id: peer-id is a index, value is 
 var peerWithUserName = []; /* PeerId with UserName: peer-id is a index, Value is a UserName  */
 var peerTrackForVideo = { 'link': [] }; /* This variable for getting socket.id's with perticular Link*/
 var tempId = null;
+var sessionHeaderId = null;
 /**
  * Users will connect to the signaling server, after which they'll issue a "join"
  * to join a particular channel. The signaling server keeps track of all sockets
@@ -146,7 +147,7 @@ io.sockets.on('connection', function (socket) {
     peerTrackForVideo[queryId].push(socket.id);
     // console.log("peerTrackForVideo."+queryId+": "+peerTrackForVideo.queryId);
     /* ##### End arrang all sockets in single array with key which id we are using in a link   ##### */
-    console.log("QueryId: "+queryId);
+    console.log("QueryId: " + queryId);
     socket.emit('message', { 'peer_id': socket.id, 'queryId': queryId, 'userName': userName });
 
     socket.on('disconnect', function () {
@@ -175,6 +176,20 @@ io.sockets.on('connection', function (socket) {
         console.log("join 1 :[" + socket.id + "] join ", config);
         var channel = config.channel;
         var userdata = config.userdata;
+
+        for (var key in peerWithQueryId) {
+            console.log("key: " + key);
+
+            var value = peerWithQueryId[key];
+            if (value == config.queryLink) {
+                sessionHeaderId = key;
+                break;
+            }
+            console.log("value " + value);
+            console.log("peerWithQueryId.indexOf(value): " + peerWithQueryId.indexOf(value));
+            // do something with "key" and "value" variables
+
+        }
         // console.log("socket.channels: " + JSON.stringify(socket.channels));
         // console.log("channels: " + channels);
 
@@ -195,9 +210,9 @@ io.sockets.on('connection', function (socket) {
             // console.log("channels[channel][id] " + channels[channel][id]);
             console.log("start to call client addPeer--><--");
 
-            channels[channel][id].emit('addPeer', { 'peer_id': socket.id, 'should_create_offer': false, 'owner': socket.id, 'queryId': queryId, 'userName':peerWithUserName[socket.id] });
+            channels[channel][id].emit('addPeer', { 'peer_id': socket.id, 'should_create_offer': false, 'owner': socket.id, 'queryId': queryId, 'userName': peerWithUserName[socket.id], 'sessionHeaderId': sessionHeaderId });
 
-            socket.emit('addPeer', { 'peer_id': id, 'should_create_offer': true, 'owner': socket.id, 'queryId': queryId, 'userName':peerWithUserName[id] });
+            socket.emit('addPeer', { 'peer_id': id, 'should_create_offer': true, 'owner': socket.id, 'queryId': queryId, 'userName': peerWithUserName[id], 'sessionHeaderId': sessionHeaderId });
         }
 
         channels[channel][socket.id] = socket;
@@ -282,7 +297,19 @@ io.sockets.on('connection', function (socket) {
         console.log("<--relaySessionDescription");
     });
 
-     
+    /* ##### Start remove PerticularId  ##### */
+    socket.on('closeThisConn', function (config) {
+        console.log("closeThisConn-->")
+
+
+
+        if (queryId == config.queryLink) {
+            console.log("queryId and config.queryLink are equal so gonna tell to client");
+            io.sockets.emit('authorizedForClose', { "removableId": config.removableId, "removableName": config.removableName, "controllerId": config.peerNew_id, "queryLink": config.queryLink, "queryId": queryId });
+        }
+        console.log("<--closeThisConn")
+    });
+    /* ##### End remove PerticularId  ##### */
 
     /* ##### Start Gether text message  #### */
     socket.on('textMsg', function (data) {
@@ -356,7 +383,7 @@ io.sockets.on('connection', function (socket) {
         console.log("file-->");
         console.log("peerWithQueryId[data.userId]: " + peerWithQueryId[data.userId]);
         console.log("data.queryLink: " + data.queryLink);
-        console.log("data.type: "+data.type);
+        console.log("data.type: " + data.type);
         if (peerWithQueryId[data.userId] == data.queryLink) {
 
             io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
@@ -373,11 +400,11 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('stateChanged', function (data) {
         console.log("stateChanged-->");
-        
-       
+
+
         if (peerWithQueryId[data.userId] == data.queryLink) {
-            
-            sockets[data.peerNew_id].emit('stateChangedToClient',{ 'userId': data.userId, 'queryId': data.queryLink});
+
+            sockets[data.peerNew_id].emit('stateChangedToClient', { 'userId': data.userId, 'queryId': data.queryLink });
         }
         console.log("<--stateChanged");
     })
