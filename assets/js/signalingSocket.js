@@ -311,7 +311,7 @@ function init() {
 
 
             remote_media.attr("id", peer_id + "Remote");
-            $('#portfolio-wrapper').append('<center><div id="' + peer_id + 'remoteContainer" class="col-xs-12 col-sm-6 col-md-4 col-lg-3  portfolio-items" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><button id="fullscreenbtn" style="float:left;">[ &nbsp; ]</button><h4>' + config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' + peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' + peer_id + '" owner=' + peer_id + ' name=' + config.userName + '></i><span>All is well</span></div></div></center>');
+            $('#portfolio-wrapper').append('<center><div id="' + peer_id + 'remoteContainer" class="col-xs-12 col-sm-6 col-md-4 col-lg-3  portfolio-items" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><button id="fullscreenbtn2" style="float:left;">[ &nbsp; ]</button><h4>' + config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' + peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' + peer_id + '" owner=' + peer_id + ' name=' + config.userName + '></i><span>All is well</span></div></div></center>');
             $('#' + peer_id + 'remoteVideoElement').append(remote_media);
 
             peer_userName_elements[peer_id] = document.getElementById('' + peer_id + 'remoteContainer');
@@ -344,6 +344,25 @@ function init() {
 
                 else if (vid.mozRequestFullScreen) {
                     vid.mozRequestFullScreen();
+                }
+
+            }
+            var fullscreenbtn2;
+            vid2 = document.getElementById(peer_id + "Remote");
+
+
+            fullscreenbtn2 = document.getElementById("fullscreenbtn2");
+            fullscreenbtn2.addEventListener("click", toggleFullScreen2, false);
+            function toggleFullScreen2() {
+                if (vid2.requestFullScreen) {
+                    vid2.requestFullScreen();
+                }
+                else if (vid2.webkitRequestFullScreen) {
+                    vid2.webkitRequestFullScreen();
+                }
+
+                else if (vid2.mozRequestFullScreen) {
+                    vid2.mozRequestFullScreen();
                 }
 
             }
