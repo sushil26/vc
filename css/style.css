@@ -23,6 +23,7 @@
 video{
   width:100%;
   height: 200px;
+  background: lightslategray;
 }
 body {
   background: #fff;
