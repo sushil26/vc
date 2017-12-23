@@ -695,7 +695,7 @@ function setup_local_media(callback, errorback) {
             // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-items" + ">");
             // $('#videosAttach').after("<div class=" + "details" + "><h4>App 1</h4><span>Alored dono par</span></div></div>");
 
-            $('#portfolio-wrapper').append('<center><div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" style="float:left;">[ &nbsp; ]</button><h4>' + userName + '</h4><span>All is wellr</span></div></div></center>');
+            $('#portfolio-wrapper').append('<center><div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" style="float:left;">[ &nbsp; ]</button><h4>' + userName + '</h4><span>All is well</span></div></div></center>');
             $('#videosAttach').append(local_media);
             document.getElementById("videoElem").addEventListener("click", function () {
                 var videoElem = document.getElementById('videoElem');
