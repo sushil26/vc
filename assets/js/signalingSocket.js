@@ -297,7 +297,7 @@ function init() {
                 existing.parentNode.removeChild(existing);
             }
 
-            var remote_media = USE_VIDEO ? $("<video>") : $("<audio>");
+            var remote_media = USE_VIDEO ? $("<video>") : $();
             console.log("remote_media: " + remote_media);
             remote_media.attr("autoplay", "autoplay");
             // remote_media.attr("style", "border:5px solid gray");
@@ -684,7 +684,7 @@ function setup_local_media(callback, errorback) {
 
             local_media_stream = stream;
             // local_media_shareStream = stream;
-            var local_media = USE_VIDEO ? $("<video>") : $("<audio>");
+            var local_media = USE_VIDEO ? $("<video>") : $();
             local_media.attr("autoplay", "autoplay");
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("controls", "");
@@ -853,7 +853,7 @@ function setup_local_media(callback, errorback) {
                                 local_media_shareStream = null;
                                 local_media_stream = stream;
                                 // local_media_shareStream = stream;
-                                var local_media = USE_VIDEO ? $("<video>") : $("<audio>");
+                                var local_media = USE_VIDEO ? $("<video>") : $();
                                 local_media.attr("autoplay", "autoplay");
                                 local_media.attr("muted", "true"); /* always mute ourselves by default */
                                 local_media.attr("controls", "");
