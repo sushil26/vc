@@ -366,6 +366,25 @@ function init() {
                 }
 
             }
+            var fullscreenbtn;
+            vid3 = document.getElementById("screenShareElem");
+
+
+            fullscreenbtn= document.getElementById("fullscreenbtn");
+            fullscreenbtn.addEventListener("click", toggleFullScreen3, false);
+            function toggleFullScreen3() {
+                if (vid3.requestFullScreen) {
+                    vid3.requestFullScreen();
+                }
+                else if (vid3.webkitRequestFullScreen) {
+                    vid3.webkitRequestFullScreen();
+                }
+
+                else if (vid3.mozRequestFullScreen) {
+                    vid3.mozRequestFullScreen();
+                }
+
+            }
 
 
 
@@ -846,7 +865,7 @@ function setup_local_media(callback, errorback) {
                             },
                             function () { /* user denied access to a/v */
                                 console.log("Access denied for audio/video");
-                                alert("You chose not to provide access to the camera/microphone, demo will not work.");
+                                alert("You chose not to provide access to the camera/microphone, Video will not work.");
                                 if (errorback) errorback();
                             });
                         /* ######   ###### */
