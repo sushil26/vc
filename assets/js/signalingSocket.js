@@ -124,6 +124,10 @@ function init() {
                 //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
 
 
+                document.getElementById('hr1').style.display = 'inline';
+
+
+                document.getElementById('hr2').style.display = 'inline';
 
                 document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
@@ -370,7 +374,7 @@ function init() {
             vid3 = document.getElementById("screenShareElem");
 
 
-            fullscreenbtn= document.getElementById("fullscreenbtn");
+            fullscreenbtn = document.getElementById("fullscreenbtn");
             fullscreenbtn.addEventListener("click", toggleFullScreen3, false);
             function toggleFullScreen3() {
                 if (vid3.requestFullScreen) {
