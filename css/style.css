@@ -24,6 +24,7 @@ video{
   width:100%;
   height: 200px;
   background: lightslategray;
+  border-radius: 15px;
 }
 body {
   background: #fff;
