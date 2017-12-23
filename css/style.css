@@ -762,7 +762,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #portfolio .portfolio-items .details {
-  border-top-radius: 15px; 
+  border-radius: 15px; 
   height: 50px;
   background: #2dc997;
   position: absolute;
