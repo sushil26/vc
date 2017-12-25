@@ -93,7 +93,7 @@
     <!--==========================
       Portfolio Section
     ============================-->
-    <section id="portfolio" style="background-color:skyblue;">
+    <section id="portfolio" style="background-color:skyblue;" class="fullhieght">
         <div class="container wow fadeInUp">
             <div class="row">
                 <div class="col-lg-12">
@@ -664,6 +664,11 @@
 
     <script>
         $(document).ready(function () {
+$("videoConfStart").click(function(){
+    $("#portfolio").removeClass("fullhieght");
+
+});
+
             $("#openChat").click(function () {
                 //alert("hui");
                 $("#portfolio-wrapper").addClass("intro");
@@ -678,6 +683,9 @@
         });
     </script>
     <style>
+        .fullhieght{
+            height: 100vh;
+        }
         #portfolio .portfolio-items {
 
             display: inline-block;
