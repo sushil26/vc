@@ -209,97 +209,91 @@
                     </center>
                 </div>
                 <div class="form-group row">
+
                     <center>
                         <div class="col-sm-12">
                             <a style="color:black;" id="linkToShare"> </a>
                         </div>
                     </center>
                 </div>
-                <div class="form-group row" id="invitePeople_container">
-                    <center>
+                <div class="form-inline" id="invitePeople_container">
 
-                        <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
-                        <div class="btn">
-                            <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
-                        </div>
+                    <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
+                    <div class="btn">
+                        <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
+                    </div>
 
-                    </center>
+                    <h4>
+                        <b>Note:-</b>Chrome user need to install this extension for Screen sharing
+                        <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog">
+                            <button class="btn">
+                                <span class="glyphicon glyphicon-save"></span> Install Extension</button>
+                        </a>
+                    </h4>
+                    <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
+
+                    <br>
+                    <label id="info"></label>
                 </div>
-                <div class="form-group row">
-                    <center>
-                        <h4>
-                            <b>Note:-</b>Chrome user need to install this extension for Screen sharing
-                            <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog">
-                                <button class="btn">
-                                    <span class="glyphicon glyphicon-save"></span> Install Extension</button>
-                            </a>
-                        </h4>
-                        <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
 
-                        <br>
-                        <label id="info"></label>
-                    </center>
-                </div>
             </div>
+            <div class="row">
+                <div class="popup-box chat-popup" id="qnimate">
+                    <div class="popup-head">
+                        <div class="popup-head-left pull-left">
+                            <img src="/icon.png"> Chatting zone
 
-        </div>
-        <div class="row">
-            <div class="popup-box chat-popup" id="qnimate">
-                <div class="popup-head">
-                    <div class="popup-head-left pull-left">
-                        <img src="/icon.png"> Chatting zone
-
-                    </div>
-                    <div class="popup-head-right pull-right">
-                        <div class="btn-group">
-                            <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
-                                <i class="glyphicon glyphicon-cog"></i>
-                            </button>
-                            <ul role="menu" class="dropdown-menu pull-right">
-                                <li>
-                                    <a href="#">Media</a>
-                                </li>
-
-                                <li>
-                                    <a href="#">Clear Chat</a>
-                                </li>
-
-                            </ul>
                         </div>
+                        <div class="popup-head-right pull-right">
+                            <div class="btn-group">
+                                <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
+                                    <i class="glyphicon glyphicon-cog"></i>
+                                </button>
+                                <ul role="menu" class="dropdown-menu pull-right">
+                                    <li>
+                                        <a href="#">Media</a>
+                                    </li>
 
-                        <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
-                            <i class="glyphicon glyphicon-off"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="popup-messages" id="popupMsg">
-                    <div class="direct-chat-messages">
-                        <!-- Message. Default to the left -->
-                        <div id="message-container"></div>
-                        <!-- /.direct-chat-msg -->
-                    </div>
-                </div>
-                <div class="popup-messages-footer">
-                    <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
-                    <div class="btn-footer ">
+                                    <li>
+                                        <a href="#">Clear Chat</a>
+                                    </li>
 
-                        <button class="bg_none ">
-
-                            <div class="image-upload">
-                                <label for="fileselect">
-                                    <i class="glyphicon glyphicon-paperclip"> </i>
-                                </label>
-                                <input id="fileselect" type="file" name="fileselect" />
+                                </ul>
                             </div>
-                        </button>
-                        <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">&nbsp
-                            <span class="glyphicon glyphicon-send"></span>
 
-                        </button>
+                            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
+                                <i class="glyphicon glyphicon-off"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="popup-messages" id="popupMsg">
+                        <div class="direct-chat-messages">
+                            <!-- Message. Default to the left -->
+                            <div id="message-container"></div>
+                            <!-- /.direct-chat-msg -->
+                        </div>
+                    </div>
+                    <div class="popup-messages-footer">
+                        <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
+                        <div class="btn-footer ">
+
+                            <button class="bg_none ">
+
+                                <div class="image-upload">
+                                    <label for="fileselect">
+                                        <i class="glyphicon glyphicon-paperclip"> </i>
+                                    </label>
+                                    <input id="fileselect" type="file" name="fileselect" />
+                                </div>
+                            </button>
+                            <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">&nbsp
+                                <span class="glyphicon glyphicon-send"></span>
+
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         </div>
     </section>
