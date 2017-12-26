@@ -127,13 +127,15 @@ signaling_socket.on('newTextMsg', function (data) {
         /* ##### End Calling Get Time  ##### */
 
         scrollDown();
-        count = count + 1;
-
+       
         var chatOpen = $("#qnimate").hasClass("popup-box-on");
         if (chatOpen) {
             document.getElementById('chatNotification').style.display = 'none';
+            
         }
         else {
+            count = count + 1;
+
             document.getElementById('chatNotification').style.display = 'inline';
             document.getElementById('chatNotification').innerHTML = '(' + count + ')';
         }
