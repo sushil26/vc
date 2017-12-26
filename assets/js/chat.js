@@ -1,6 +1,6 @@
 var MAX_UPLOAD_SIZE = 1.5; // in MB
 // var socket = io();
-
+var count = 0;
 var imageReader = new FileReader();
 var videoReader = new FileReader();
 var fileReader = new FileReader();
@@ -19,16 +19,16 @@ var date;
 var time;
 function DisplayCurrentTime(id) {
     console.log("DisplayCurrentTime-->");
-    console.log("id: "+id);
+    console.log("id: " + id);
     date = new Date();
-    console.log("date: "+date);
+    console.log("date: " + date);
     var hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     var am_pm = date.getHours() >= 12 ? "PM" : "AM";
     hours = hours < 10 ? "0" + hours : hours;
     var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
     var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
     time = hours + ":" + minutes + ":" + seconds + " " + am_pm;
-    console.log("time: "+time);
+    console.log("time: " + time);
     var lblTime = document.getElementById(id);
     lblTime.innerHTML = time;
 
@@ -102,10 +102,10 @@ function sendMessage() {
         $('#setName').trigger('click');
     }
     console.log("<--Upload");
-    
-        console.log("<--sendMsg");
+
+    console.log("<--sendMsg");
     return false; // don't reload the page
-   
+
 
 }
 
@@ -120,13 +120,24 @@ signaling_socket.on('newTextMsg', function (data) {
     console.log("queryLink: " + queryLink);
     if (data.queryId == queryLink) {
         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-            + data.userName + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text">' + data.message + '</div><div class="direct-chat-info clearfix"><span id='+data.message+' class="direct-chat-timestamp pull-right"></span></div>'
-            
+            + data.userName + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text">' + data.message + '</div><div class="direct-chat-info clearfix"><span id=' + data.message + ' class="direct-chat-timestamp pull-right"></span></div>'
+
         /* ##### Start Calling Get Time  ##### */
         DisplayCurrentTime(data.message);
         /* ##### End Calling Get Time  ##### */
 
         scrollDown();
+        count = count + 1;
+
+        var chatOpen = $("#qnimate").hasClass("popup-box-on");
+        if (chatOpen) {
+            document.getElementById('chatNotification').style.display = 'none';
+        }
+        else {
+            document.getElementById('chatNotification').style.display = 'inline';
+            document.getElementById('chatNotification').innerHTML = '(' + count + ')';
+        }
+
 
     }
     else {
@@ -214,8 +225,8 @@ function appendFile(URI, type, name, queryId) {
         if (type === 'image') {
             console.log("image");
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><img src="' + URI + '" height="100px" /></div><div class="direct-chat-info clearfix"><span id='+URI+' class="direct-chat-timestamp pull-right"></span></div>'
-           
+                + name + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><img src="' + URI + '" height="100px" /></div><div class="direct-chat-info clearfix"><span id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+
             /* ##### Start Calling Get Time  ##### */
             DisplayCurrentTime(URI);
             /* ##### End Calling Get Time  ##### */
@@ -224,12 +235,12 @@ function appendFile(URI, type, name, queryId) {
         else if (type === 'video') {
             console.log("video");
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><video width="320" height="240" controls><source src="' + URI + '"></div><div class="direct-chat-info clearfix"><span  id='+URI+' class="direct-chat-timestamp pull-right"></span></div>'
-            
-              /* ##### Start Calling Get Time  ##### */
-              DisplayCurrentTime(URI);
-              /* ##### End Calling Get Time  ##### */
-              scrollDown();
+                + name + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><video width="320" height="240" controls><source src="' + URI + '"></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+
+            /* ##### Start Calling Get Time  ##### */
+            DisplayCurrentTime(URI);
+            /* ##### End Calling Get Time  ##### */
+            scrollDown();
         }
         else {
             console.log("Other");
@@ -245,12 +256,12 @@ function appendFile(URI, type, name, queryId) {
             // save.dispatchEvent(event);
             // (window.URL || window.webkitURL).revokeObjectURL(save.href);
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div> <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a></div><div class="direct-chat-info clearfix"><span  id='+URI+' class="direct-chat-timestamp pull-right"></span></div>'
-            
-              /* ##### Start Calling Get Time  ##### */
-              DisplayCurrentTime(URI);
-              /* ##### End Calling Get Time  ##### */
-              scrollDown();
+                + name + '</span></div> <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+
+            /* ##### Start Calling Get Time  ##### */
+            DisplayCurrentTime(URI);
+            /* ##### End Calling Get Time  ##### */
+            scrollDown();
         }
 
 
@@ -313,6 +324,8 @@ signaling_socket.on('file', function (data) {
 $(function () {
     $("#addChatWindow ").click(function () {
         $('#qnimate').addClass('popup-box-on');
+        document.getElementById('chatNotification').style.display = 'none';
+        count = 0;
     });
 
     $("#removeClass ").click(function () {
