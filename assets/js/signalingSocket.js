@@ -124,8 +124,9 @@ function init() {
                 //     document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
 
 
-                document.getElementById('hr1').style.display ='inline';
-                document.getElementById('hr2').style.display ='inline';
+       
+                document.getElementById('feedback').style.display ='inline';
+                document.getElementById('fdb').style.display ='inline';
 
                 document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
