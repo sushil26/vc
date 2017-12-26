@@ -4,7 +4,6 @@
    ========================================================================== */
 /* =Preloader */
 #preloader {
-
     width: 100%;
     height: 100%;
     z-index: 101;
@@ -38,9 +37,5 @@
   
   .is-loading {
     overflow: hidden; }
-  
-    .header-container .bcg {
-      background-image: url(../img/img_mountains01.jpg);
-      background-size: cover; }
     
   
