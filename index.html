@@ -26,15 +26,89 @@
   <link href="/style.css" rel="stylesheet">
 
   <link rel="stylesheet" href="/css/chatZone.css" />
+  <style>
+    .preloader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 100vw;
+      height: 100vh;
+      background: #1D1D1D;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.5s ease;
+      z-index: 99999999999999;
+    }
 
-  <!-- Spinner-->
-  <link rel="stylesheet" href="/templatemo-style.css">
-  <script src="/jquery.magnific-popup.min.js"></script> 
+    .preloader_inner {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 4em;
+      height: 4em;
+      line-height: 4em;
+      text-align: center;
+      font-size: 3em;
+      font-family: monospace;
+      font-weight: 300;
+      color: #333;
+    }
+  </style>
+  <script>
+    loader();
 
+    document.querySelector('.btn').onclick = loader;
+
+    /*====================================
+    *     LOADER
+    ======================================*/
+    function loader(_success) {
+      var obj = document.querySelector('.preloader'),
+        inner = document.querySelector('.preloader_inner'),
+        page = document.querySelector('.page');
+      obj.classList.add('show');
+      page.classList.remove('show');
+      var w = 0,
+        t = setInterval(function () {
+          w = w + 1;
+          inner.textContent = w + '%';
+          if (w === 100) {
+            obj.classList.remove('show');
+            page.classList.add('show');
+            clearInterval(t);
+            w = 0;
+            if (_success) {
+              return _success();
+            }
+          }
+        }, 20);
+    }
+  </script>
+
+
+  <!-- =======================================================
+    Theme Name: Regna
+    Theme URL: https://bootstrapmade.com/regna-bootstrap-onepage-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
 </head>
 
 <body>
-
+  <div class="preloader">
+    <div class="preloader_inner">100%</div>
+  </div>
+  <div class="page">
+    <h1>Thats it,
+      <a href="javascript:void(0)" class="btn">try again</a>
+    </h1>
+  </div>
   <!--==========================
     Header
   ============================-->
@@ -116,13 +190,6 @@
       <!-- #nav-menu-container -->
     </div>
   </header>
-  <div id="loader-wrapper">
-
-    <div id="loader"></div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-
-  </div>
   <!-- #header -->
 
   <!--==========================
