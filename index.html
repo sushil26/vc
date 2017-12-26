@@ -26,97 +26,7 @@
   <link href="/style.css" rel="stylesheet">
 
   <link rel="stylesheet" href="/css/chatZone.css" />
-  <style>
-    .preloader {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      width: 100vw;
-      height: 100vh;
-      background: #1D1D1D;
-      visibility: hidden;
-      opacity: 0;
-      transition: all 0.5s ease;
-      z-index: 99999999999999;
-    }
-
-    .preloader_inner {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
-      width: 4em;
-      height: 4em;
-      line-height: 4em;
-      text-align: center;
-      font-size: 3em;
-      font-family: monospace;
-      font-weight: 300;
-      color: #333;
-    }
-
-    .page {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
-      width: 100%;
-      height: 4em;
-      line-height: 1em;
-      text-align: center;
-      font-size: 1em;
-      font-family: monospace;
-      font-weight: 300;
-      color: #4E4E51;
-      visibility: hidden;
-      opacity: 0;
-      transition: all 0.5s ease;
-    }
-
-    .show {
-      visibility: visible !important;
-      opacity: 1 !important;
-      transition: all 0.5s ease;
-    }
-  </style>
-  <script>
-    loader();
-
-    document.querySelector('.btn').onclick = loader;
-
-    /*====================================
-    *     LOADER
-    ======================================*/
-    function loader(_success) {
-      var obj = document.querySelector('.preloader'),
-        inner = document.querySelector('.preloader_inner'),
-        page = document.querySelector('.page');
-      obj.classList.add('show');
-      page.classList.remove('show');
-      var w = 0,
-        t = setInterval(function () {
-          w = w + 1;
-          inner.textContent = w + '%';
-          if (w === 100) {
-            obj.classList.remove('show');
-            page.classList.add('show');
-            clearInterval(t);
-            w = 0;
-            if (_success) {
-              return _success();
-            }
-          }
-        }, 20);
-    }
-  </script>
-
+  
 
   <!-- =======================================================
     Theme Name: Regna
@@ -127,14 +37,7 @@
 </head>
 
 <body>
-  <div class="preloader">
-    <div class="preloader_inner">100%</div>
-  </div>
-  <div class="page">
-    <h1>Thats it,
-      <a href="javascript:void(0)" class="btn">try again</a>
-    </h1>
-  </div>
+  
   <!--==========================
     Header
   ============================-->
