@@ -537,3 +537,8 @@ body {
 }
 
   /* ##### video block css  ##### */
+
+  .position
+  {
+    position: inherit !important;
+  }
