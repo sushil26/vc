@@ -197,8 +197,9 @@
                     </div>
 
                     <!-- Credentiial check-->
-
-                    <button data-target="#crdntl" id="crdbuttn" style="display:none" data-keyboard="false" data-toggle="modal">Login</button>
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="#modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"
+                    id="crdbuttn" style="display:none" onclick="setNameBtn()">Login</button>
+                    <!-- <button data-target="#crdntl" id="crdbuttn" style="display:none" data-keyboard="false" data-toggle="modal">Login</button> -->
                     <div class="modal fade" id="crdntl" role="dialog">
                         <div class="modal-dialog">
 
@@ -213,7 +214,7 @@
                                     <input type="password" class="form-control" placeholder="Enter password" id="crpass">
                                 </div>
                                 <div class="modal-footer">
-                                    
+
                                     <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" onclick="crdcheck()" data-dismiss="modal">Submit</button>
                                     <!-- <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button> -->
                                 </div>
