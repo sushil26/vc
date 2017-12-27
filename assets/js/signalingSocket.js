@@ -54,9 +54,11 @@ function crdcheck() {
     var uname = document.getElementById('crname').value;
     var upass = document.getElementById('crpass').value;
     if (uname == 'admin' && upass == 'admin123') {
+        console.log("Password Matched");
         document.getElementById('videoConfStart').enabled = true;
     }
     else {
+        console.log("Password Not Matched");
         document.getElementById('videoConfStart').disabled = true;
     }
 
