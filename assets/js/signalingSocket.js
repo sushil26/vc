@@ -60,6 +60,8 @@ function crdcheck() {
     else {
         console.log("Password Not Matched");
         document.getElementById('videoConfStart').disabled = true;
+        window.location="https://svcapp.herokuapp.com/client";
+
     }
 
 }
