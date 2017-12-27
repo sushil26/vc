@@ -51,9 +51,14 @@ function setNameBtn() {
 
 function crdcheck() {
     console.log("crdcheck-->");
-    uname = document.getElementById('crname').value;
-    upass = document.getElementById('crpass').value;
-
+    var uname = document.getElementById('crname').value;
+    var upass = document.getElementById('crpass').value;
+    if (uname == 'admin' && upass == 'admin123') {
+        document.getElementById('videoConfStart').enabled = true;
+    }
+    else {
+        document.getElementById('videoConfStart').disabled = true;
+    }
 
 }
 
@@ -65,11 +70,11 @@ function crdcheck() {
 
 function init() {
 
-   
+
 
 
     console.log("init-->");
-  
+
     signaling_socket = io(SIGNALING_SERVER);
 
 
