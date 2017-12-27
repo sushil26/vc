@@ -49,6 +49,15 @@ function setNameBtn() {
 }
 
 
+function crdcheck() {
+    console.log("crdcheck-->");
+    uname = document.getElementById('crname').value;
+    upass = document.getElementById('crpass').value;
+
+
+}
+
+
 
 
 
@@ -56,10 +65,11 @@ function setNameBtn() {
 
 function init() {
 
-
+   
 
 
     console.log("init-->");
+  
     signaling_socket = io(SIGNALING_SERVER);
 
 
@@ -88,6 +98,8 @@ function init() {
 
             if (config.queryId == null) {
                 console.log("query id is null");
+
+                $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
 
                 document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + peerNew_id;
