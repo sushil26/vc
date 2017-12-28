@@ -120,7 +120,7 @@ signaling_socket.on('newTextMsg', function (data) {
     console.log("queryLink: " + queryLink);
     if (data.queryId == queryLink) {
         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-            + data.userName + '</span></div><img class="fa fa-user direct-chat-img" aria-hidden="true"><!-- /.direct-chat-img --><div class="direct-chat-text">' + data.message + '</div><div class="direct-chat-info clearfix"><span id=' + data.message + ' class="direct-chat-timestamp pull-right"></span></div>'
+            + data.userName + '</span></div><i class="fa fa-user direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="direct-chat-text">' + data.message + '</div><div class="direct-chat-info clearfix"><span id=' + data.message + ' class="direct-chat-timestamp pull-right"></span></div>'
 
         /* ##### Start Calling Get Time  ##### */
         DisplayCurrentTime(data.message);
