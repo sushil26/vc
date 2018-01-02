@@ -698,6 +698,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin: 10px;
   border: 2px solid #fff;
   color: #fff;
+position: inherit !important;
 }
 
 #call-to-action .cta-btn:hover {
