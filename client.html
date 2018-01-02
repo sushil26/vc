@@ -739,14 +739,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
     <script src="/js/preLoader.js"></script>
     <script> $(document).ready(function () {
-            $('li:not([class!=""])').each(function () {
+            $('div:not([class!=""])').each(function () {
                 var that = $(this);
                 var text = that.html();
 
                 that.html(text.autoLink());
             });
 
-            var callback = $('li.callback');
+            var callback = $('div.callback');
 
             $(callback).html(
                 callback.html().autoLink({
