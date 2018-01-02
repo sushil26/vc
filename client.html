@@ -75,7 +75,7 @@
                 </span>
             </div>
 
-            <nav id="nav-menu-container" >
+            <nav id="nav-menu-container">
                 <ul class="nav-menu">
                     <li class="menu-active">
                         <a href="/">Home</a>
@@ -738,6 +738,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
     <script src="/js/preLoader.js"></script>
+    <script> $(document).ready(function () {
+            $('li:not([class!=""])').each(function () {
+                var that = $(this);
+                var text = that.html();
+
+                that.html(text.autoLink());
+            });
+
+            var callback = $('li.callback');
+
+            $(callback).html(
+                callback.html().autoLink({
+                    callback: function (url) {
+                        return /\.(gif|png|jpe?g)$/i.test(url) ? '<img src="' + url + '">' : null;
+                    }
+                })
+            );
+
+            var new_window = $('li.new_window');
+
+            $(new_window).html(
+                new_window.html().autoLink({ target: "_blank" })
+            );
+        });</script>
 
 </body>
 
