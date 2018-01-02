@@ -1,13 +1,15 @@
 jQuery(function($) {
   var re = /((http|https|ftp):\/\/[a-zа-я0-9\w?=&.\/-;#~%-]+(?![a-zа-я0-9\w\s?&.\/;#~%"=-]*>))/g;
+  
   function makeHTML(textNode) {
       var source = textNode.data;
       return source.replace(re, function() {
           var url = arguments[0];
-          var a = $('<a></a>').attr({'onclick' : 'window.open(\'' + url + '\'); return false;','href': '#', 'target': '_blank'}).text(url);
+          var a = $('<a></a>').attr({'href': url, 'target': '_blank'}).text(url);
           return url.match(/^https?:\/\/$/) ? url : $('<div></div>').append(a).html();
       });
   };
+
   function eachText(node, callback) {
       $.each(node.childNodes, function() {
           if (this.nodeType != 8 && this.nodeName != 'A') {
@@ -15,6 +17,7 @@ jQuery(function($) {
           }
       });
   };
+
   $.fn.autolink = function() {
       return this.each(function() {
           var queue = [];
