@@ -5,6 +5,57 @@ var imageReader = new FileReader();
 var videoReader = new FileReader();
 var fileReader = new FileReader();
 
+/ #####  Start Auto Link Js ##### /
+    (function () {
+        var autoLink,
+            slice = [].slice;
+
+        autoLink = function () {
+            var callback, k, linkAttributes, option, options, pattern, v;
+            options = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+            pattern = /(^|[\s\n]|<[A-Za-z]*\/?>)((?:https?|ftp):\/\/[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
+            if (!(options.length > 0)) {
+                return this.replace(pattern, "$1<a href='$2'>$2</a>");
+            }
+            option = options[0];
+            callback = option["callback"];
+            linkAttributes = ((function () {
+                var results;
+                results = [];
+                for (k in option) {
+                    v = option[k];
+                    if (k !== 'callback') {
+                        results.push(" " + k + "='" + v + "'");
+                    }
+                }
+                return results;
+            })()).join('');
+            return this.replace(pattern, function (match, space, url) {
+                var link;
+                link = (typeof callback === "function" ? callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url + "</a>");
+                return "" + space + link;
+            });
+        };
+
+        String.prototype['autoLink'] = autoLink;
+
+    }).call(this);
+
+
+function autoLinkNeed() {
+    console.log("autoLinkNeed-->");
+
+    var new_window = $('#message-container div.new_windowAutoLink:last')
+    console.log("new_window.html()-->:" + new_window.html());
+    $(new_window).html(
+        new_window.html().autoLink({ target: "_blank" })
+    );
+
+    console.log("<--autoLinkNeed");
+}
+
+/ #####  End Auto Link Js ##### /
+
 $('#fileselect').change(function (e) {
 
     console.log("FIle Select -->");
@@ -17,9 +68,9 @@ $('#fileselect').change(function (e) {
 });
 var date;
 var time;
-function DisplayCurrentTime(id) {
+function DisplayCurrentTime() {
     console.log("DisplayCurrentTime-->");
-    console.log("id: " + id);
+
     date = new Date();
     console.log("date: " + date);
     var hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
@@ -29,8 +80,8 @@ function DisplayCurrentTime(id) {
     var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
     time = hours + ":" + minutes + ":" + seconds + " " + am_pm;
     console.log("time: " + time);
-    var lblTime = document.getElementById(id);
-    lblTime.innerHTML = time;
+
+    return time;
 
     console.log("<--DisplayCurrentTime");
 };
@@ -119,13 +170,16 @@ signaling_socket.on('newTextMsg', function (data) {
 
     console.log("queryLink: " + queryLink);
     if (data.queryId == queryLink) {
-        document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-            + data.userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text">' + data.message + '</div><div class="direct-chat-info clearfix"><span id=' + data.message + ' class="direct-chat-timestamp pull-right"></span></div>'
+
 
         /* ##### Start Calling Get Time  ##### */
-        DisplayCurrentTime(data.message);
+        var time = DisplayCurrentTime();
         /* ##### End Calling Get Time  ##### */
 
+
+        document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
+            + data.userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text">' + data.message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + time + '</span></div>'
+        autoLinkNeed();
         scrollDown();
 
         var chatOpen = $("#qnimate").hasClass("popup-box-on");
