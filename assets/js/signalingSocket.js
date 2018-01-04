@@ -148,6 +148,7 @@ function init() {
 
                 document.getElementById('feedback').style.display = 'inline';
                 document.getElementById('fdb').style.display = 'inline';
+                document.getElementById('usercontectdtl').style.display = 'inline';
 
                 document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
