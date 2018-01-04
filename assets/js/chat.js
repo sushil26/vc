@@ -5,7 +5,7 @@ var imageReader = new FileReader();
 var videoReader = new FileReader();
 var fileReader = new FileReader();
 
-/ #####  Start Auto Link Js ##### /
+//#####  Start Auto Link Js #####//
     (function () {
         var autoLink,
             slice = [].slice;
@@ -54,7 +54,7 @@ function autoLinkNeed() {
     console.log("<--autoLinkNeed");
 }
 
-/ #####  End Auto Link Js ##### /
+//#####  End Auto Link Js #####//
 
 $('#fileselect').change(function (e) {
 
