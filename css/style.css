@@ -949,6 +949,7 @@ position: inherit !important;
   padding: 10px 24px;
   color: #fff;
   transition: 0.4s;
+  margin: 1%;
 }
 
 #contact .form button[type="submit"]:hover {
