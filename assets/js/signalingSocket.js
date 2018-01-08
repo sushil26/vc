@@ -1,6 +1,7 @@
 /** CONFIG **/
 //var SIGNALING_SERVER = "http://localhost:8080";
-var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
+//var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
+var SIGNALING_SERVER = "https://logchat.herokuapp.com";
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -15,7 +16,7 @@ var gainControllerVar, microphoneStream;
 /** You should probably use a different stun server doing commercial stuff **/
 /** Also see: https://gist.github.com/zziuni/3741933 **/
 var ICE_SERVERS = [
-    { url: "stun:stun.l.google.com:19302" }
+    { url: "stun:stun.l.google.com:19302" }, { url: "turn:turn.anyfirewall.com:443?transport=tcp", credential: "webrtc", username: "webrtc" }
 ];
 
 var signaling_socket = null;   /* our socket.io connection to our webserver */
@@ -111,27 +112,27 @@ function init() {
                 $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
 
-                document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + peerNew_id;
-                document.getElementById('videoConferenceUrl').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
-                document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
-
-            }
-            else {
-                console.log("query id nt null");
-                document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
-                document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
-
-
-
-                //     document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
-                //     document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
-                //     document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
+                //     document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + peerNew_id;
+                //     document.getElementById('videoConferenceUrl').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
+                //     document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
 
                 // }
                 // else {
                 //     console.log("query id nt null");
-                // document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + config.queryId;
-                // document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + config.queryId);
+                //     document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
+                //     document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
+
+
+
+                document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
+                document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
+                document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
+
+            }
+            else {
+                console.log("query id nt null");
+                document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + config.queryId;
+                document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + config.queryId);
 
 
                 //     document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + peerNew_id;
@@ -167,8 +168,12 @@ function init() {
 
                 document.getElementById("setNameId").addEventListener("click", function () {
                     userName = document.getElementById('userName').value;
-                    if (userName != null) {
+                    var userNameCapitalStart = userName.charAt(0).toUpperCase() + userName.slice(1);
+                    console.log("userNameCapitalStart: " + userNameCapitalStart);
+                    userName = userNameCapitalStart;
 
+                    if (userName) {
+                        $('#myModal').modal('hide');
                         setup_local_media(function () {
                             /* once the user has given us access to their
                              * microphone/camcorder, join the channel and start peering up */
@@ -178,6 +183,10 @@ function init() {
 
                         })
                     }
+                    else {
+                        console.log("User Name is Empty");
+                    }
+
                 })
 
 
@@ -746,6 +755,10 @@ function setup_local_media(callback, errorback) {
                     else if (videoElem.msExitFullscreen)
                         videoElem.msExitFullscreen();
                 }
+
+
+            
+
 
 
             })

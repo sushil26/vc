@@ -88,7 +88,9 @@ function DisplayCurrentTime() {
 
 function sendMessage() {
     console.log("sendMsg-->");
+
     var msg = document.getElementById('message').value;
+
     // var file = e.target.files[0];
     if (userName != null) {
 
@@ -150,6 +152,7 @@ function sendMessage() {
         }
     }
     else {
+        console.log("You haven't set name");
         $('#setName').trigger('click');
     }
     console.log("<--Upload");

@@ -31,15 +31,19 @@ main.use(express.static(__dirname + '/contactform'));
 
 
 
+
 main.set('port', (process.env.PORT || 8080));
 // main.listen(main.get('port'), function() {
 //     console.log('Node app is running on port', main.get('port'));
 //   });
+
 var server = main.listen(main.get('port'), function () {
     console.log("Listening on port " + main.get('port'));
 });
 
+
 var io = require('socket.io').listen(server);
+
 
 // server.listen(PORT, null, function () {
 //     console.log("Listening on port " + PORT);
@@ -275,24 +279,12 @@ io.sockets.on('connection', function (socket) {
 
             if (peerTrack.indexOf(queryId) >= 0) {
                 if (queryId == config.queryLink) {
-
-
-                    // var x = queryId;
-                    // console.log("peerTrackForVideo[x].indexOf(sockets.id): "+peerTrackForVideo[x].indexOf(sockets.id));
                     sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner': config.owner, 'queryId': config.queryLink, 'sendTo': peer_id });
-                    // if(peerTrackForVideo[x].indexOf(sockets.id)>=0)
-                    //  {
-                    //     sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner':config.owner, });
-                    //  }   
                 }
                 else {
                     console.log("relaySessionDescription: sorry");
                 }
             }
-
-
-
-
         }
         console.log("<--relaySessionDescription");
     });
@@ -300,9 +292,6 @@ io.sockets.on('connection', function (socket) {
     /* ##### Start remove PerticularId  ##### */
     socket.on('closeThisConn', function (config) {
         console.log("closeThisConn-->")
-
-
-
         if (queryId == config.queryLink) {
             console.log("queryId and config.queryLink are equal so gonna tell to client");
             io.sockets.emit('authorizedForClose', { "removableId": config.removableId, "removableName": config.removableName, "controllerId": config.peerNew_id, "queryLink": config.queryLink, "queryId": queryId });
@@ -314,16 +303,11 @@ io.sockets.on('connection', function (socket) {
     /* ##### Start Gether text message  #### */
     socket.on('textMsg', function (data) {
         console.log("textMsg-->");
-        // console.log("data.userId "+data.userId);
-        // console.log("data.message: "+data.message);
-        // console.log("data.queryLink: "+data.queryLink);
-        // //Send message to everyone
         console.log("peerWithQueryId[data.userId]: " + peerWithQueryId[data.userId]);
 
 
         if (peerWithQueryId[data.userId] == data.queryLink) {
             io.sockets.emit('newTextMsg', { 'message': data.message, 'userId': data.userId, 'queryId': peerWithQueryId[data.userId], 'userName': data.userName });
-            // io.sockets.emit('userDetail', {'userId': data.userId,'userName': data.userName });
         }
         else {
             console.log("textMsg: sorry ");
@@ -343,9 +327,6 @@ io.sockets.on('connection', function (socket) {
         console.log("data.userId " + data.userId);
         console.log("data.email: " + data.email);
         console.log("data.url: " + data.url);
-        // console.log("data.queryLink: "+data.queryLink);
-        // //Send message to everyone
-        // console.log("peerWithQueryId[data.userId]: "+peerWithQueryId[data.userId]);
         if (data.email) {
             var mailOptions = {
                 from: 'logeswari.careator@gmail.com',
@@ -388,12 +369,6 @@ io.sockets.on('connection', function (socket) {
 
             io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
         }
-        // var to = user.peers;
-
-        // for(var i=0; i < to.length; i++){
-        // dir[to[i]].socket.emit('file', dataURI,type, user.username);
-
-        // }
         console.log("<--file");
     });
     /* #### End File Sharing  ##### */

@@ -21,17 +21,11 @@
     <!-- Main Stylesheet File -->
     <link href="/style.css" rel="stylesheet">
     <script src="/clientmain.js"></script>
-
-
-
-
+    <script src="/node_modules/recordrtc/RecordRTC.js"> </script>
 
 </head>
 
 <body onload="init()">
-
-
-    
     <!--==========================
   Header
   ============================-->
@@ -132,6 +126,7 @@
 
                         <hr style="border-top:0;">
 
+
                         <div id="portfolio-wrapper" style="margin-right:auto;">
                         </div>
 
@@ -139,7 +134,18 @@
 
                     </center>
                 </div>
+                <div>
+                    <label id="percentage">0%</label>
+                    <progress id="progress-bar" value=0></progress>
+                    <br />
+                </div>
 
+                <hr />
+
+                <div>
+                    <button id="btn-start-recording">Start Recording</button>
+                    <button id="btn-stop-recording" disabled="">Stop Recording</button>
+                </div>
                 <div class="col-lg-12">
                     <!-- Trigger the modal with a button -->
                     <button data-toggle="modal" data-target="#myModal" id="setName" data-backdrop="static" data-keyboard="false" style="display:none"
@@ -158,7 +164,7 @@
                                         <input type="text" class="form-control" placeholder="Enter your name" id="userName">
                                     </div>
                                     <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                        <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
+                                        <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
                                         <!-- <button type="button" class="btn btn-warning btn-reset" data-dismiss="modal">Close</button> -->
                                     </div>
                                 </div>
@@ -218,7 +224,7 @@
                     </div>
                     <div class="form-group row">
 
-                        <div class="col-sm-12" style="text-overflow: ellipsis;">
+                        <div class="col-sm-12" style="overflow:hidden;text-overflow:ellipsis;">
                             <a style="color:black;" id="linkToShare"> </a>
                         </div>
 
@@ -265,7 +271,7 @@
                         <div class="popup-head-right pull-right">
                             <div class="btn-group">
                                 <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
-                                    <i class="glyphicon glyphicon-cog"></i>
+                                    <i class="fa fa-cog" style="color:white"></i>
                                 </button>
                                 <ul role="menu" class="dropdown-menu pull-right">
                                     <li>
@@ -280,7 +286,7 @@
                             </div>
 
                             <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
-                                <i class="glyphicon glyphicon-off"></i>
+                                <i class="fa fa-window-close" style="color:white"></i>
                             </button>
                         </div>
                     </div>
@@ -299,13 +305,13 @@
 
                                 <div class="image-upload">
                                     <label for="fileselect">
-                                        <i class="glyphicon glyphicon-paperclip"> </i>
+                                        <i class="fa fa-upload"> </i>
                                     </label>
                                     <input id="fileselect" type="file" name="fileselect" />
                                 </div>
                             </button>
-                            <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">&nbsp
-                                <span class="glyphicon glyphicon-send"></span>
+                            <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
+                                <span class="fa fa-paper-plane"></span>
 
                             </button>
                         </div>
