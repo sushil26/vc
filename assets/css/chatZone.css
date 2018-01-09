@@ -353,9 +353,8 @@ font-family: Oswald;
 
 .popup-messages .direct-chat-name {
 	font-size: 15px;
-	font-weight: 600;
 	margin: 0 0 0 49px !important;
-	color: rgb(5, 53, 56);
+	color: rgb(10,10,10);
 	opacity: 0.9;
 }
 .popup-messages .direct-chat-info {
