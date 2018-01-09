@@ -198,9 +198,7 @@ signaling_socket.on('newTextMsg', function (data) {
             document.getElementById('chatNotification').style.display = 'inline';
             document.getElementById('chatNotification').innerHTML = '(' + count + ')';
 
-            var x = document.getElementById("myAudio");
-
-           
+            var x = document.getElementById("myAudio");           
                 x.play();
         
 
