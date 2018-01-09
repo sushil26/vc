@@ -183,7 +183,7 @@ signaling_socket.on('newTextMsg', function (data) {
 
 
         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-            + data.userName + '</span></div><<i class=" class="direct-chat-img fa fa-user-circle"></i><div class="content direct-chat-text new_windowAutoLink">' + data.message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + time + '</span></div>'
+            + data.userName + '</span></div><i class="direct-chat-img fa fa-user-circle"></i><div class="content direct-chat-text new_windowAutoLink">' + data.message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + time + '</span></div>'
         autoLinkNeed();
         scrollDown();
 
