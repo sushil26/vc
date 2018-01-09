@@ -168,12 +168,14 @@ function sendMessage() {
 
 }
 
-$('#message').keydown(function (event) {
-    var keypressed = event.keyCode || event.which;
-    if (keypressed == 13) {
-        $(this).submit();
-    }
-});
+document.getElementById("message").addEventListener("keydown", function(e) {
+    if (!e) { var e = window.event; }
+    e.preventDefault(); // sometimes useful
+
+    // Enter is pressed
+    if (e.keyCode == 13) { sendMessage(); }
+}, false);
+
 
 
 signaling_socket.on('newTextMsg', function (data) {
