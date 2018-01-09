@@ -304,7 +304,7 @@
                                     <input id="fileselect" type="file" name="fileselect" />
                                 </div>
                             </button>
-                            <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
+                            <button class="btn" id="sndmgs" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
                                 <span class="fa fa-paper-plane"></span>
 
                             </button>
@@ -684,10 +684,9 @@
     <script src="/wow/wow.min.js"></script>
     <script src="/easing/easing.min.js"></script>
     <script>
-        $('#message').keypress(function (event) {
-            if (event.keyCode == 13 || event.which == 13) {
-                $('#password').focus();
-                event.preventDefault();
+        $("#message").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#sndmgs").click();
             }
         });
     </script>
