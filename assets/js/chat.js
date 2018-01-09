@@ -175,6 +175,7 @@ $('#message').keydown(function (event) {
     }
 });
 
+
 signaling_socket.on('newTextMsg', function (data) {
 
     console.log("newTextMsg-->");
