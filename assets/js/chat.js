@@ -171,7 +171,7 @@ function sendMessage() {
 $('#message').keydown(function (event) {
     var keypressed = event.keyCode || event.which;
     if (keypressed == 13) {
-        $(this).sendMessage();
+        $(this).submit();
     }
 });
 
