@@ -168,15 +168,6 @@ function sendMessage() {
 
 }
 
-document.getElementById("message").addEventListener("keydown", function(e) {
-    if (!e) { var e = window.event; }
-    e.preventDefault(); // sometimes useful
-
-    // Enter is pressed
-    if (e.keyCode == 13) { sendMessage(); }
-}, false);
-
-
 
 signaling_socket.on('newTextMsg', function (data) {
 
