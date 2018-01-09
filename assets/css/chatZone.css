@@ -250,6 +250,7 @@ font-family: Oswald;
     margin: 7px;
     padding: 5px !important;
     width: 95% !important;
+    font-size: 13px;
 }
 .popup-messages-footer {
   background-color:rgba(52, 59, 64, 0.9);
@@ -445,6 +446,7 @@ font-family: Oswald;
     right: 100%;
     top: 15px;
     width: 0;
+    font-size: 13px;
 }
 .direct-chat-text::after {
     border-width: 5px;
