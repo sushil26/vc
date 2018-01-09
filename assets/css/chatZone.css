@@ -5,8 +5,7 @@ body
 font-family: Oswald;
     }
 .popup-box {
-   background-color: #ffffff;
-    border: 1px solid #b0b0b0;
+
     bottom: 0;
     display: none;
     height: 415px;
@@ -203,6 +202,8 @@ font-family: Oswald;
     display: block !important;
 }
 .popup-box .popup-head {
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
     background-color: #0a425f;
     clear: both;
     color: #d9edf7;
