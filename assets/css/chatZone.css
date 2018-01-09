@@ -13,7 +13,6 @@ font-family: Oswald;
     right: 10px;
     width: 300px;
     height: 490px;
-    font-family: 'Open Sans', sans-serif;
 }
 /* .round.hollow {
     margin: 40px 0 0;
@@ -194,7 +193,7 @@ font-family: Oswald;
     text-decoration: none;
 font-family: Oswald;
     color: red;
-    color: #0a425f;
+    background: #3b4950;
    
 }
 
