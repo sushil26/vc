@@ -290,26 +290,26 @@
                         </div>
                     </div>
                     <div class="popup-messages-footer">
-                      
-                            <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "> </textarea>
-                            <input type="submit" style="display: none" />
-                            <div class="btn-footer ">
 
-                                <button class="bg_none ">
+                        <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "> </textarea>
+                        <input type="submit" style="display: none" />
+                        <div class="btn-footer ">
 
-                                    <div class="image-upload">
-                                        <label for="fileselect">
-                                            <i class="fa fa-upload"> </i>
-                                        </label>
-                                        <input id="fileselect" type="file" name="fileselect" />
-                                    </div>
-                                </button>
-                                <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
-                                    <span class="fa fa-paper-plane"></span>
+                            <button class="bg_none ">
 
-                                </button>
-                            </div>
-                      
+                                <div class="image-upload">
+                                    <label for="fileselect">
+                                        <i class="fa fa-upload"> </i>
+                                    </label>
+                                    <input id="fileselect" type="file" name="fileselect" />
+                                </div>
+                            </button>
+                            <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
+                                <span class="fa fa-paper-plane"></span>
+
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -683,6 +683,14 @@
     <script src="/js/chat.js"></script>
     <script src="/wow/wow.min.js"></script>
     <script src="/easing/easing.min.js"></script>
+    <script>
+        $('#message').keypress(function (event) {
+            if (event.keyCode == 13 || event.which == 13) {
+                $('#password').focus();
+                event.preventDefault();
+            }
+        });
+    </script>
 
     <script>
         $(document).ready(function () {
