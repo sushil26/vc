@@ -278,7 +278,7 @@ font-family: Oswald;
 
 .popup-box .popup-messages {
     background: #dbe2df  none repeat scroll 0 0;
-    height: 380px;
+    height: 330px;
     overflow: auto;
 }
 .direct-chat-messages {
