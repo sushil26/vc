@@ -277,7 +277,7 @@ font-family: Oswald;
 
 
 .popup-box .popup-messages {
-    background: #dbe2df  none repeat scroll 0 0;
+    background: #dbe2dfa6  none repeat scroll 0 0;
     height: 330px;
     overflow: auto;
 }
