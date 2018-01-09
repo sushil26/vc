@@ -9,6 +9,10 @@
 --------------------------------------------------------------*/
 /* Trouble Shoot Section
 --------------------------------*/
+.bt{
+  border:none;
+  background-color: transparent;
+}
 
 .cancelColrChange:hover { 
   color: rgb(218, 148, 160);
