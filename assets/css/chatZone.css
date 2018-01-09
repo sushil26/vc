@@ -203,7 +203,7 @@ font-family: Oswald;
 .popup-box .popup-head {
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
-    background-color: #3b4950;
+    background-color: rgba(52, 59, 64, 0.9);
     clear: both;
     color: #d9edf7;
     display: inline-table;
@@ -253,7 +253,7 @@ font-family: Oswald;
     width: 95% !important;
 }
 .popup-messages-footer {
-    background: #fff none repeat scroll 0 0;
+  background-color:rgba(52, 59, 64, 0.9);
     bottom: 0;
     position: absolute;
     width: 100%;
