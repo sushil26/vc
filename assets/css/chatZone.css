@@ -446,7 +446,7 @@ font-family: Oswald;
     right: 100%;
     top: 15px;
     width: 0;
-    font-size: 13px;
+  
 }
 .direct-chat-text::after {
     border-width: 5px;
@@ -457,6 +457,7 @@ font-family: Oswald;
     border: 1px solid #dfece7;
     border-radius: 2px;
     color: #1f2121;
+    font-size: 13px;
 }
 .direct-chat-text {
     background: #d2d6de none repeat scroll 0 0;
