@@ -281,7 +281,7 @@ function appendFile(URI, type, name, queryId) {
         if (type === 'image') {
             console.log("image");
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div><i class="direct-chat-img"> <i class="fa fa-user-circle fa-2x" style="margin-left: 3px; margin-top: 4px;"></i><div class="direct-chat-text"><img src="' + URI + '" height="100px" /></div><div class="direct-chat-info clearfix"><span id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+                + name + '</span></div><i class="direct-chat-img"> <i class="fa fa-user-circle fa-2x" style="margin-left: 3px; margin-top: 4px;"></i><div class="direct-chat-text"><img src="' + URI + '" width="100px" /></div><div class="direct-chat-info clearfix"><span id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
 
             /* ##### Start Calling Get Time  ##### */
             DisplayCurrentTime(URI);
