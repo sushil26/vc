@@ -90,23 +90,24 @@ function sendMessage() {
     console.log("sendMsg-->");
 
     var msg = document.getElementById('message').value;
-
+    console.log("msg: " + msg);
+    console.log("msg.value.length: "+msg.value.length);
     // var file = e.target.files[0];
     if (userName != null) {
 
+
+
+
+
+        console.log("msg: " + msg);
         if (msg) {
-
-
-
-            console.log("msg: " + msg);
-            if (msg) {
-                console.log("Start to emit message  ");
-                console.log("peerNew_id: " + peerNew_id);
-                signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
-                document.getElementById('message').value = "";
-            }
-
+            console.log("Start to emit message  ");
+            console.log("peerNew_id: " + peerNew_id);
+            signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+            document.getElementById('message').value = "";
         }
+
+
         else {
             console.log("You Didn't type any message")
         }
@@ -194,15 +195,10 @@ signaling_socket.on('newTextMsg', function (data) {
         }
         else {
             count = count + 1;
-
             document.getElementById('chatNotification').style.display = 'inline';
             document.getElementById('chatNotification').innerHTML = '(' + count + ')';
-
-            var x = document.getElementById("myAudio");           
-                x.play();
-        
-
-
+            var x = document.getElementById("myAudio");
+            x.play();
 
         }
 
