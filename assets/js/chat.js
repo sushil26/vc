@@ -91,14 +91,8 @@ function sendMessage() {
 
     var msg = document.getElementById('message').value;
     console.log("msg: " + msg);
-    console.log("msg.value.length: "+msg.value.length);
     // var file = e.target.files[0];
     if (userName != null) {
-
-
-
-
-
         console.log("msg: " + msg);
         if (msg) {
             console.log("Start to emit message  ");
@@ -106,8 +100,6 @@ function sendMessage() {
             signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
             document.getElementById('message').value = "";
         }
-
-
         else {
             console.log("You Didn't type any message")
         }
