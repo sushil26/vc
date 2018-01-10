@@ -690,7 +690,7 @@
     <script src="/easing/easing.min.js"></script>
     <script>
         $("#message").keyup(function (event) {
-            if (event.keyCode === 13 && document.getElementById('message').value!=null) {
+            if (event.keyCode === 13 && document.getElementById('message').value.length!=0) {
                 $("#sndmgs").click();  
             }
         });
