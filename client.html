@@ -691,14 +691,7 @@
     <script>
         $("#message").keyup(function (event) {
             if (event.keyCode === 13) {
-                var msg = document.getElementById('message').value;
-                if(msg){
-                    $("#sndmgs").click();
-                }
-                else{
-                    console.log("There is no string");
-                }
-               
+                $("#sndmgs").click();
             }
         });
     </script>

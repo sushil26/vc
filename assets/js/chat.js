@@ -94,7 +94,7 @@ function sendMessage() {
     // var file = e.target.files[0];
     if (userName != null) {
 
-        if (msg != null) {
+        if (msg) {
 
 
 
