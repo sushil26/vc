@@ -366,6 +366,7 @@ font-family: Oswald;
     margin: -9px 0 0 !important;
 }
 .popup-messages  .direct-chat-img {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border: 1px solid #fff;
 	background: #3f9684  none repeat scroll 0 0;
     border-radius: 50%;
@@ -453,6 +454,7 @@ font-family: Oswald;
 }
 .popup-messages .direct-chat-text {
     background: #dfece7 none repeat scroll 0 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border: 1px solid #dfece7;
     border-radius: 2px;
     color: #1f2121;
