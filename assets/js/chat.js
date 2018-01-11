@@ -281,7 +281,7 @@ function appendFile(URI, type, name, queryId) {
         if (type === 'image') {
             console.log("image");
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div><i class="direct-chat-img"> <i class="fa fa-user-circle fa-2x" style="margin-left: 3px; margin-top: 4px;"></i></i><div class="direct-chat-text"><img src="' + URI + '" height="100px" /></div><div class="direct-chat-info clearfix"><span id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+                + name + '</span></div><i class="direct-chat-img"> <i class="fa fa-user-circle fa-2x" style="margin-left: 3px; margin-top: 4px;"></i></i><div class="direct-chat-text"><img src="' + URI + '" height="100px" /></div><div class="direct-chat-info clearfix"><span id=' + URI + ' class="direct-chat-timestamp pull-right">'+time+'</span></div>'
 
             /* ##### Start Calling Get Time  ##### */
             DisplayCurrentTime(URI);
@@ -291,7 +291,7 @@ function appendFile(URI, type, name, queryId) {
         else if (type === 'video') {
             console.log("video");
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div><i class="direct-chat-img"> <i class="fa fa-user-circle fa-2x" style="margin-left: 3px; margin-top: 4px;"></i></i><div class="direct-chat-text"><video width="320" height="240" controls><source src="' + URI + '"></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+                + name + '</span></div><i class="direct-chat-img"> <i class="fa fa-user-circle fa-2x" style="margin-left: 3px; margin-top: 4px;"></i></i><div class="direct-chat-text"><video width="320" height="240" controls><source src="' + URI + '"></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right">'+time+'</span></div>'
 
             /* ##### Start Calling Get Time  ##### */
             DisplayCurrentTime(URI);
@@ -302,7 +302,7 @@ function appendFile(URI, type, name, queryId) {
             console.log("Other");
 
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div> <i class="direct-chat-img"> <i class="fa fa-user-circle fa-2x" style="margin-left: 3px; margin-top: 4px;"></i></i><div class="direct-chat-text"><a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+                + name + '</span></div> <i class="direct-chat-img"> <i class="fa fa-user-circle fa-2x" style="margin-left: 3px; margin-top: 4px;"></i></i><div class="direct-chat-text"><a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right">'+time+'</span></div>'
 
             /* ##### Start Calling Get Time  ##### */
             DisplayCurrentTime(URI);
