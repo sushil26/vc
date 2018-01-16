@@ -354,7 +354,7 @@ function init() {
                 $("#" + peer_id + "Remote").css({"height":"100vh"});
 
                 $("#videoElem").css({ "position": "absolute","top": "5%","left": "5%","z-index": "2"});
-
+                $("#videoElem").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
 
             }
             )
