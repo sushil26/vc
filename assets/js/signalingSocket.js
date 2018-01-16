@@ -353,7 +353,7 @@ function init() {
                 $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 $("#" + peer_id + "Remote").css({"height":"100vh"});
 
-                $("#videoElem").css({ "position": "absolute","top": "5%","left": "-45%","z-index": "2","background": "none","border": "none"});
+                $("#videoElem").css({ "position": "absolute","top": "5%","left": "5%","z-index": "2","background": "none","border": "none"});
                 $("#videoElem111").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
         
 
