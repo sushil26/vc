@@ -6,16 +6,11 @@ var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
 var MUTE_AUDIO_BY_DEFAULT = false;
-
-
-
-
 /** You should probably use a different stun server doing commercial stuff **/
 /** Also see: https://gist.github.com/zziuni/3741933 **/
 var ICE_SERVERS = [
     { url: "stun:stun.l.google.com:19302" }, { url: "turn:turn.anyfirewall.com:443?transport=tcp", credential: "webrtc", username: "webrtc" }
 ];
-
 var signaling_socket = null;   /* our socket.io connection to our webserver */
 var local_media_stream = null; /* our own microphone / webcam */
 var local_media_shareStream = null;
@@ -33,8 +28,6 @@ var file;
 var disconnPeerId = null;
 var shareScreen = null;
 var sessionHeader = null;
-
-
 function setNameBtn() {
     console.log("setName-->");
 
@@ -64,26 +57,11 @@ function crdcheck() {
 
 }
 
-
-
-
-
-
-
 function init() {
-
-
-
-
     console.log("init-->");
-
     signaling_socket = io(SIGNALING_SERVER);
-
-
     // $('#setNameId').trigger('click');
-
     // document.getElementById("screenShareBtn").addEventListener("click", function () {
-
     signaling_socket.on('connect', function () {
         console.log("signaling_socket connect-->");
         // console.log("1.1:peers: " + JSON.stringify(peers));
@@ -100,15 +78,10 @@ function init() {
             peerNew_id = config.peer_id;
             console.log("queryLink: " + queryLink);
             console.log("peerNew_id: " + peerNew_id);
-
-
-
             if (config.queryId == null) {
                 console.log("query id is null");
-
                 $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
-
                 document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + peerNew_id;
                 document.getElementById('videoConferenceUrl').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
                 document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + peerNew_id);
@@ -118,9 +91,6 @@ function init() {
                 console.log("query id nt null");
                 document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
                 document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
-
-
-
                 //     document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
                 //     document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
                 //     document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
@@ -188,11 +158,6 @@ function init() {
                 })
 
 
-
-
-
-
-
             }
 
             console.log("<--signaling_socket message");
@@ -204,9 +169,6 @@ function init() {
 
 
     });
-
-
-
 
 
     signaling_socket.on('disconnect', function () {
@@ -390,6 +352,14 @@ function init() {
 
             }
             )
+            // $("#fullscreenbtn2").click(function () {
+            //     console.log("sushil screen test");
+            //     $("#" + peer_id + "Remote").addClass("fullscr");
+            //     $(".portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("portfolio-items");
+
+
+            // }
+            // )
 
 
             // fullscreenbtn2 = document.getElementById("fullscreenbtn2");
