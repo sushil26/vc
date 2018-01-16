@@ -351,6 +351,7 @@ function init() {
                 console.log("sushil screen test");
                 $("#" + peer_id + "remoteVideoElement").addClass("fullscr");
                 $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
+                $("#" + peer_id + "Remote").css({"height":"100vh"});
 
 
             }
