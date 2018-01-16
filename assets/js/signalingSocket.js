@@ -382,14 +382,14 @@ function init() {
             var fullscreenbtn2;
             vid2 = document.getElementById(peer_id + "Remote");
 
-            $("#"+peer_id+"Remote").click(function () {
+            $("#" + peer_id + "Remote").click(function () {
 
-                $("#"+peer_id+"Remote").addClass("fullscr");
+                $("#" + peer_id + "Remote").addClass("fullscr");
                 $("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("portfolio-items col-sm-6 col-md-4 col-lg-3");
 
 
             }
-
+            )
 
 
             // fullscreenbtn2 = document.getElementById("fullscreenbtn2");
