@@ -346,8 +346,8 @@ function init() {
 
             $("#" + peer_id + "Remote").click(function () {
                 console.log("sushil screen test");
-                $("#" + peer_id + "Remote").addClass("fullscr");
-                $(".portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("portfolio-items");
+                $("#" + peer_id + "remoteContainer").addClass("fullscr");
+                $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
 
 
             }
