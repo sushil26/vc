@@ -340,6 +340,9 @@ function init() {
                     vid.mozRequestFullScreen();
                 }
 
+
+
+                
             }
             // var fullscreenbtn2;
             // vid2 = document.getElementById(peer_id + "Remote");
