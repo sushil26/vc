@@ -382,22 +382,31 @@ function init() {
             var fullscreenbtn2;
             vid2 = document.getElementById(peer_id + "Remote");
 
+            $("#"+peer_id+"Remote").click(function () {
 
-            fullscreenbtn2 = document.getElementById("fullscreenbtn2");
-            fullscreenbtn2.addEventListener("click", toggleFullScreen2, false);
-            function toggleFullScreen2() {
-                if (vid2.requestFullScreen) {
-                    vid2.requestFullScreen();
-                }
-                else if (vid2.webkitRequestFullScreen) {
-                    vid2.webkitRequestFullScreen();
-                }
+                $("#"+peer_id+"Remote").addClass("fullscr");
+                $("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("portfolio-items col-sm-6 col-md-4 col-lg-3");
 
-                else if (vid2.mozRequestFullScreen) {
-                    vid2.mozRequestFullScreen();
-                }
 
             }
+
+
+
+            // fullscreenbtn2 = document.getElementById("fullscreenbtn2");
+            // fullscreenbtn2.addEventListener("click", toggleFullScreen2, false);
+            // function toggleFullScreen2() {
+            //     if (vid2.requestFullScreen) {
+            //         vid2.requestFullScreen();
+            //     }
+            //     else if (vid2.webkitRequestFullScreen) {
+            //         vid2.webkitRequestFullScreen();
+            //     }
+
+            //     else if (vid2.mozRequestFullScreen) {
+            //         vid2.mozRequestFullScreen();
+            //     }
+
+            // }
             var fullscreenbtn;
             vid3 = document.getElementById("screenShareElem");
 
