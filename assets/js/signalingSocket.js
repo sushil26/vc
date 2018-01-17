@@ -356,7 +356,7 @@ function init() {
 
                 $("#videoElem").css({ "position": "absolute","top": "5%","left": "5%","z-index": "2","background": "none","border": "none","height": "auto","width": "20%"});
                 $("#videoElem111").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
-                $("header").remove();
+                document.getElementById('header').style.display = 'none';
                 document.getElementById('btnrestore').style.display = 'inline';
 
                 $("#btnrestore").click(function(){
@@ -366,7 +366,7 @@ function init() {
     
                     $("#videoElem").css({ "position": "","top": "","left": "","z-index": "","background": "","border": "","height": "","width": ""});
                     $("#videoElem111").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
-                    $("header").add();
+                    document.getElementById('header').style.display = 'inline';
                     document.getElementById('btnrestore').style.display = 'none';
 
 
