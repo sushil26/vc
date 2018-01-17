@@ -351,7 +351,7 @@ function init() {
             $("#" + peer_id + "fullscreenbtn2").click(function () {
                 console.log("sushil screen test");
                 $("#" + peer_id + "remoteVideoElement").addClass("fullscr");
-                document.getElementsByClassName('details').style.display = 'none';
+              
                 $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 $("#" + peer_id + "Remote").css({ "height": "100vh" });
 
@@ -372,7 +372,7 @@ function init() {
                 $("#videoElem111").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 document.getElementById('header').style.display = 'inline';
                 document.getElementById('btnrestore').style.display = 'none';
-                document.getElementsByClassName('details').style.display = 'inline';
+
 
             })
 
