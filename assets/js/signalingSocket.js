@@ -305,7 +305,7 @@ function init() {
 
 
             remote_media.attr("id", peer_id + "Remote");
-            $('#portfolio-wrapper').append('<div id="' + peer_id + 'remoteContainer" class="portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><button id="fullscreenbtn2" class="btn fa fa-expand" style="float:left;  margin-top: 10px; margin-left: 10px;"></button><h4>' + config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' + peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' + peer_id + '" owner=' + peer_id + ' name=' + config.userName + '></i><span>All is well</span></div></div>');
+            $('#portfolio-wrapper').append('<div id="' + peer_id + 'remoteContainer" class="portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><button id="' + peer_id + 'fullscreenbtn2" class="btn fa fa-expand" style="float:left;  margin-top: 10px; margin-left: 10px;"></button><h4>' + config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' + peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' + peer_id + '" owner=' + peer_id + ' name=' + config.userName + '></i><span>All is well</span></div></div>');
             $('#' + peer_id + 'remoteVideoElement').append(remote_media);
 
             peer_userName_elements[peer_id] = document.getElementById('' + peer_id + 'remoteContainer');
@@ -347,7 +347,8 @@ function init() {
             // var fullscreenbtn2;
             // vid2 = document.getElementById(peer_id + "Remote");
 
-            $("#" + peer_id + "Remote").click(function () {
+            // $("#" + peer_id + "Remote").click(function () {
+                $("#" + peer_id + " fullscreenbtn2").click(function () {
                 console.log("sushil screen test");
                 $("#" + peer_id + "remoteVideoElement").addClass("fullscr");
                 $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
