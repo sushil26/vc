@@ -114,7 +114,7 @@ function init() {
 
 
 
-                document.getElementById('btn-start-recording').style.display = 'inline';
+                // document.getElementById('btn-start-recording').style.display = 'inline';
                 document.getElementById('feedback').style.display = 'inline';
                 document.getElementById('fdb').style.display = 'inline';
                 document.getElementById('usercontectdtl').style.display = 'inline';
