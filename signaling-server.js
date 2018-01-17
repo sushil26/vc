@@ -342,7 +342,7 @@ io.sockets.on('connection', function (socket) {
                     console.log('Email sent: ' + info.response);
                     information = "email sent successfully";
                     console.log("information : " + information);
-                    setTimeout(function() { $("#info").hide(); }, 5000);
+       
                 }
                 console.log("information : " + information);
                 io.sockets.emit('emailSendInfo', { 'email': data.email, 'userId': data.userId, 'info': information });
