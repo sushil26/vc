@@ -358,6 +358,22 @@ function init() {
                 $("#videoElem111").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 $("header").remove();
                 document.getElementById('btnrestore').style.display = 'inline';
+
+                $("#btnrestore").click(function(){
+                    $("#" + peer_id + "remoteVideoElement").removeClass("fullscr");
+                    $("#" + peer_id + "remoteContainer").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
+                    $("#" + peer_id + "Remote").css({"height":"200px"});
+    
+                    $("#videoElem").css({ "position": "","top": "","left": "","z-index": "","background": "","border": "","height": "","width": ""});
+                    $("#videoElem111").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
+                    $("header").add();
+                    document.getElementById('btnrestore').style.display = 'none';
+
+
+                })
+
+
+
               
         
 
