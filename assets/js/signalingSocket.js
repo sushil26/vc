@@ -351,7 +351,7 @@ function init() {
             $("#" + peer_id + "fullscreenbtn2").click(function () {
                 console.log("sushil screen test");
                 $("#" + peer_id + "remoteVideoElement").addClass("fullscr");
-              
+
                 $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 $("#" + peer_id + "Remote").css({ "height": "100vh" });
 
@@ -359,7 +359,7 @@ function init() {
                 $("#videoElem111").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 document.getElementById('header').style.display = 'none';
                 document.getElementById('btnrestore').style.display = 'inline';
-              
+
             }
             )
 
@@ -712,8 +712,11 @@ function setup_local_media(callback, errorback) {
     };
 
 
-
     navigator.getUserMedia({ "audio": USE_AUDIO, "video": USE_VIDEO },
+
+
+
+
         function (stream) { /* user accepted access to a/v */
             console.log("Access granted to audio/video");
             console.log("stream: " + stream);
@@ -722,8 +725,20 @@ function setup_local_media(callback, errorback) {
 
 
             local_media_stream = stream;
+
+            // video: {
+            //     mandatory: {
+            //         chromeMediaSource: error ? 'screen' : 'desktop',
+            //             maxWidth: window.screen.width > 1920 ? window.screen.width : 1920,
+            //                 maxHeight: window.screen.height > 1080 ? window.screen.height : 1080
+            //     }
+            // };
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $();
+
+            video.setAttribute('height', '144');
+            video.setAttribute('width ', '240');
+
             local_media.attr("autoplay", "autoplay");
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             // local_media.attr("controls", "");
@@ -989,6 +1004,7 @@ function scrollDown() {
 (function () {
     window.getScreenId = function (callback) {
         // for Firefox:
+
         // sourceId == 'firefox'
         // screen_constraints = {...}
         if (!!navigator.mozGetUserMedia) {
