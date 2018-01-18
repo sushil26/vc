@@ -712,7 +712,7 @@ function setup_local_media(callback, errorback) {
     };
 
 
-    navigator.getUserMedia({ "audio": USE_AUDIO, "video": USE_VIDEO },
+    navigator.getUserMedia({ "audio": USE_AUDIO, "video": { width: 320, height: 240 } },
 
 
 
@@ -736,8 +736,7 @@ function setup_local_media(callback, errorback) {
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $();
 
-            local_media.attr("height", "144");
-            local_media.attr("width", "240");
+       
 
             local_media.attr("autoplay", "autoplay");
             local_media.attr("muted", "true"); /* always mute ourselves by default */
