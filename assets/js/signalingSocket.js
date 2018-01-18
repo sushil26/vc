@@ -712,7 +712,7 @@ function setup_local_media(callback, errorback) {
     };
 
 
-    navigator.getUserMedia({ audio: USE_AUDIO, video: { maxWidth: 640, maxHeight: 480, maxFrameRate : 20 } },
+    navigator.getUserMedia({ audio: USE_AUDIO, video: { maxWidth: 1280, maxHeight: 960, maxFrameRate : 20 } },
 
 
 
