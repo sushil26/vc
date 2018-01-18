@@ -9,7 +9,7 @@ var MUTE_AUDIO_BY_DEFAULT = false;
 /** You should probably use a different stun server doing commercial stuff **/
 /** Also see: https://gist.github.com/zziuni/3741933 **/
 var ICE_SERVERS = [
-    { url: "stun:stun.l.google.com:19302" }, { url: "turn:turn.anyfirewall.com:443?transport=tcp", credential: "webrtc", username: "webrtc" }
+    { url: "stun:stun.l.google.com:19302" }
 ];
 var signaling_socket = null;   /* our socket.io connection to our webserver */
 var local_media_stream = null; /* our own microphone / webcam */
