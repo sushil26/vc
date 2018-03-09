@@ -89,8 +89,8 @@ function init() {
             }
             else {
                 console.log("query id nt null");
-                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/" + config.queryId;
-                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/" + config.queryId);
+                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + config.queryId;
+                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + config.queryId);
                 //     document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
                 //     document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
                 //     document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
