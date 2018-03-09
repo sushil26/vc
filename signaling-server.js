@@ -32,7 +32,7 @@ main.use(express.static(__dirname + '/contactform'));
 
 
 
-main.set('port', (process.env.PORT || 8080));
+main.set('port', (process.env.PORT || 5000));
 // main.listen(main.get('port'), function() {
 //     console.log('Node app is running on port', main.get('port'));
 //   });
