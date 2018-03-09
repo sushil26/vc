@@ -1,6 +1,6 @@
 /** CONFIG **/
-//var SIGNALING_SERVER = "http://localhost:5000";
-var SIGNALING_SERVER = "http://localhost:5000";
+//var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "https://vc4all.in";
 //var SIGNALING_SERVER = "https://logchat.herokuapp.com";
 var USE_AUDIO = true;
 var USE_VIDEO = true;
@@ -51,7 +51,7 @@ function crdcheck() {
     else {
         console.log("Password Not Matched");
         document.getElementById('videoConfStart').disabled = true;
-        window.location = "http://localhost:5000";
+        window.location = "https://vc4all.in";
 
     }
 
@@ -82,15 +82,15 @@ function init() {
                 console.log("query id is null");
                 $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
-                document.getElementById('linkToShare').innerHTML += "http://localhost:5000/" + peerNew_id;
-                document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:5000/" + peerNew_id);
-                document.getElementById('linkToShare').setAttribute('href', "http://localhost:5000/" + peerNew_id);
+                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/" + peerNew_id;
+                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/" + peerNew_id);
+                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/" + peerNew_id);
 
             }
             else {
                 console.log("query id nt null");
-                document.getElementById('linkToShare').innerHTML += "http://localhost:5000/" + config.queryId;
-                document.getElementById('linkToShare').setAttribute('href', "http://localhost:5000/" + config.queryId);
+                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/" + config.queryId;
+                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/" + config.queryId);
                 //     document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
                 //     document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
                 //     document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
