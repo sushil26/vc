@@ -351,10 +351,8 @@ function init() {
             $("#" + peer_id + "fullscreenbtn2").click(function () {
                 console.log("sushil screen test");
                 $("#" + peer_id + "remoteVideoElement").addClass("fullscr");
-
                 $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 $("#" + peer_id + "Remote").css({ "height": "100vh" });
-
                 $("#videoElem").css({ "position": "absolute", "top": "5%", "left": "5%", "z-index": "2", "background": "none", "border": "none", "height": "auto", "width": "20%" });
                 $("#videoElem111").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 document.getElementById('header').style.display = 'none';
@@ -367,7 +365,6 @@ function init() {
                 $("#" + peer_id + "remoteVideoElement").removeClass("fullscr");
                 $("#" + peer_id + "remoteContainer").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 $("#" + peer_id + "Remote").css({ "height": "200px" });
-
                 $("#videoElem").css({ "position": "", "top": "", "left": "", "z-index": "", "background": "", "border": "", "height": "", "width": "" });
                 $("#videoElem111").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
                 document.getElementById('header').style.display = 'inline';
@@ -657,7 +654,7 @@ function init() {
         if (config.removableId == peerNew_id) {
             console.log("Removable alert should start");
             alert("Session creater removed you from conference");
-            window.location.href = "https://svcapp.herokuapp.com";
+            window.location.href = "https://vc4all.in";
         }
 
         // delete peer_media_sselements[config.peer_id];
@@ -712,7 +709,8 @@ function setup_local_media(callback, errorback) {
     };
 
 
-    navigator.getUserMedia({ audio: USE_AUDIO, video: {width: {exact: 320}, height: {exact: 240}}},
+    navigator.getUserMedia({video: {width: {exact: 320}, height: {exact: 240}}},
+        // navigator.getUserMedia({ audio: USE_AUDIO, video: {width: {exact: 320}, height: {exact: 240}}},
 
 
 
