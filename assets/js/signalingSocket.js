@@ -783,9 +783,10 @@ function setup_local_media(callback, errorback) {
             })
             document.getElementById("audio_btn").addEventListener("click", function () {
                 console.log("audio_btn-->");
-                console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
-                stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
+                // console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
                 var michrophoneVal = stream.getAudioTracks()[0].enabled;
+                stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
+                // var michrophoneVal = stream.getAudioTracks()[0].enabled;
 
 
                 if (michrophoneVal) {
