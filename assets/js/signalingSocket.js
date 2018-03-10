@@ -82,9 +82,9 @@ function init() {
                 console.log("query id is null");
                 $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
-                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/" + peerNew_id;
-                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/" + peerNew_id);
-                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/" + peerNew_id);
+                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id;
+                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id);
+                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id);
 
             }
             else {
