@@ -709,8 +709,8 @@ function setup_local_media(callback, errorback) {
     };
 
 
-    navigator.getUserMedia({video: {width: {exact: 320}, height: {exact: 240}}},
-        // navigator.getUserMedia({ audio: USE_AUDIO, video: {width: {exact: 320}, height: {exact: 240}}},
+
+     navigator.getUserMedia({ audio: USE_AUDIO, video: {width: {exact: 320}, height: {exact: 240}}},
 
 
 
