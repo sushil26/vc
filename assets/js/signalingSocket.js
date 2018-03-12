@@ -56,6 +56,12 @@ function crdcheck() {
     }
 
 }
+function schedMeet(){
+    // window.location = "https://logchat.herokuapp.com/schedMeet";
+    window.location = "https://vc4all.in/schedMeet";
+
+}
+
 
 function init() {
     console.log("init-->");

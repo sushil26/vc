@@ -7,9 +7,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <!-- Favicons -->
-    <link href="/fav.png" rel="icon" size="32x32">
-    <link href="/icon.png" rel="apple-touch-icon" sizes="16x16">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
@@ -24,7 +21,7 @@
     <!-- Main Stylesheet File -->
     <link href="/style.css" rel="stylesheet">
     <script src="/clientmain.js"></script>
-    <script src="/node_modules/recordrtc/RecordRTC.js"> </script>
+    <script src="/lib/recordrtc/RecordRTC.js"> </script>
 
 </head>
 
@@ -32,7 +29,7 @@
     <!--==========================
   Header
   ============================-->
-    <header id="header" style="background: rgba(52, 59, 64, 0.9);padding: 20px ;height: 72px;transition: all 0.5s;">
+    <header id="header" style="background: rgba(52, 59, 64, 0.9);padding: 20px; height: 72px;transition: all 0.5s;">
         <div class="container">
 
             <div id="logo" class="pull-left">
@@ -65,11 +62,15 @@
         </div>
     </header>
     <!-- #header -->
+
+
+
     <!--==========================
       Portfolio Section
     ============================-->
-    <section id="portfolio" style="background:skyblue">
+    <section id="portfolio" style="background-color:skyblue;">
         <div class="container wow fadeInUp">
+                <div id="downloadVideo"> haiii</div>
             <div class="row">
                 <div class="col-lg-12">
 
@@ -79,6 +80,12 @@
                             <button id="videoConfStart" class="btn fa fa-video-camera" style="color: darkcyan;background: honeydew;">
                                 &nbsp
                                 <b>Start Video Conference</b>
+                            </button>
+                        </a>
+                        <a id="scheduleMeeting" onclick="schedMeet()">
+                            <button id="scheduleStart" class="btn fa fa-video-camera" style="color: darkcyan;background: honeydew;">
+                                &nbsp
+                                <b>Schedule Meeting</b>
                             </button>
                         </a>
 
@@ -115,32 +122,29 @@
                                 <b>Unmute</b>
                             </button>
                         </a>
-                        <a class="" style="display:none;" href="/client" id="diconnect_btn">
+
+                        <!-- <a class="" style="display:none;" href="/client" id="diconnect_btn" > -->
+                        <a class="" style="display:none;" id="diconnect_btn"  href="/client" onclick="disconnecSession()">
                             <button class="btn fa fa-power-off" style="background: honeydew; color:red;">
+
                                 <b style="color:black;">Disconnect</b>
                             </button>
                         </a>
-                        <!-- <a id="btn-start-recording" style="display:none;">
-                            <button class="btn fa fa-play-circle" style="background: honeydew;color:black; ">
-                                <b style="color:black;">Record</b>
-                            </button>
-                        </a>
-                        <a id="btn-stop-recording" style="display:none;">
-                            <button class="btn fa fa-stop-circle" style="background: honeydew; color:red;">
 
-                                <b style="color:black;">Stop Recording</b>
-                            </button>
-                        </a> -->
                         <hr style="border-top:0;">
+
+
                         <div id="portfolio-wrapper" style="margin-right:auto;">
                         </div>
-                        <button id="btnrestore" class="fa fa-window-restore btn" style="z-index: 2; position: absolute; display:none;"></button>
+
+
+
                     </center>
                 </div>
-
-
-                <hr />
-
+               
+                <div id="record">
+                  
+                </div>
                 <div class="col-lg-12">
                     <!-- Trigger the modal with a button -->
                     <button data-toggle="modal" data-target="#myModal" id="setName" data-backdrop="static" data-keyboard="false" style="display:none"
@@ -228,9 +232,9 @@
 
                         <div class="col-sm-12">
                             <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
-
-                            <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
-
+                            <div class="btn">
+                                <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
+                            </div>
                             <br>
                             <label id="info"></label>
                         </div>
@@ -265,7 +269,7 @@
                         </div>
                         <div class="popup-head-right pull-right">
                             <div class="btn-group">
-                                <button data-toggle="dropdown" class="bt" type="button" aria-expanded="false">
+                                <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
                                     <i class="fa fa-cog" style="color:white"></i>
                                 </button>
                                 <ul role="menu" class="dropdown-menu pull-right">
@@ -280,8 +284,8 @@
                                 </ul>
                             </div>
 
-                            <button data-widget="remove" id="removeClass" class="bt" type="button">
-                                <i class="fa fa-minus-square" style="color:white"></i>
+                            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
+                                <i class="fa fa-window-close" style="color:white"></i>
                             </button>
                         </div>
                     </div>
@@ -292,30 +296,24 @@
                             <!-- /.direct-chat-msg -->
                         </div>
                     </div>
-                    <audio id="myAudio">
-                        <source src="/short_message.mp3">
-                    </audio>
                     <div class="popup-messages-footer">
-
-                        <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "> </textarea>
-                        <!-- <input type="submit" style="display: none" /> -->
+                        <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
                         <div class="btn-footer ">
-                            <button class="btn" id="sndmgs" style=" color:#f1f1f1; background-color: #0f9872;float:left;" onclick="sendMessage()">
-                                Send
 
-                            </button>
+                            <button class="bg_none ">
 
-                            <button class="bt" style=" color:#f1f1f1;">
                                 <div class="image-upload">
                                     <label for="fileselect">
-                                        <i class="fa fa-paperclip fa-2x"> </i>
+                                        <i class="fa fa-upload"> </i>
                                     </label>
                                     <input id="fileselect" type="file" name="fileselect" />
                                 </div>
                             </button>
+                            <button class="btn" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
+                                <span class="fa fa-paper-plane"></span>
 
+                            </button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -428,7 +426,7 @@
     </div>
 
 
-    <section id="feedback" style="display:none; ">
+    <section id="feedback" style="display:none; position: inherit !important;">
 
         <div class="container wow fadeIn">
             <div class="justify-content-center">
@@ -546,35 +544,6 @@
                     </div>
                     <hr>
 
-                    <div class="form-group row" id="usercontectdtl" style="display:none;">
-                        <div class="col-sm-6">
-                            <form action="" method="post" role="form" class="contactForm">
-                                <div class="form-group">
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars"
-                                    />
-                                    <div class="validation"></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email"
-                                    />
-                                    <div class="validation"></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="phone" id="phone" placeholder="phone" data-rule="minlen:4" data-msg="Please enter a valid phone no."
-                                    />
-                                    <div class="validation"></div>
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                                    <div class="validation"></div>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
                     <!-- <div class="form-group row">
                         <div class="col-sm-12">
                             <h3>&nbsp&nbspPlease Fill You Details </h3>
@@ -613,7 +582,37 @@
     <section id="contact">
         <div class="container wow fadeInUp">
             <div class="row justify-content-center">
-                <div class="col-sm-12">
+                <div class="col-lg-5 col-md-8" id="usercontectdtl" style="display:none;">
+                    <div class="form">
+                        <!-- <div id="sendmessage">Your message has been sent. Thank you!</div>
+                                <div id="errormessage"></div> -->
+                        <form action="" method="post" role="form" class="contactForm">
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars"
+                                />
+                                <div class="validation"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email"
+                                />
+                                <div class="validation"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="phone" id="phone" placeholder="phone" data-rule="minlen:4" data-msg="Please enter a valid phone no."
+                                />
+                                <div class="validation"></div>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                                <div class="validation"></div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4">
                     <div class="info">
                         <div>
                             <i class="fa fa-map-marker"></i>
@@ -680,30 +679,25 @@
         </div>
     </footer>
     <!-- #footer -->
-
     <a href="#" class="back-to-top">
         <i class="fa fa-chevron-up"></i>
     </a>
 
 
     <script src="/js/chat.js"></script>
+    <!-- <script src="/js/record.js"></script> -->
     <script src="/wow/wow.min.js"></script>
     <script src="/easing/easing.min.js"></script>
-    <script>
-        $("#message").keyup(function (event) {
-            if (event.keyCode === 13) {
-                $("#sndmgs").click();
-            }
-        });
-    </script>
 
     <script>
         $(document).ready(function () {
 
             $("#openChat").click(function () {
-
+                //alert("hui");
                 $("#portfolio-wrapper").addClass("intro");
-                $(".portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("col-lg-3");
+                $("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("col-lg-3");
+
+                //  $("portfolio-items col-xs-12 col-sm-6 col-md-4").toggleClass("portfolio-items col-xs-12 col-sm-6 col-md-4");
 
             });
             $("#removeClass").click(function () {
@@ -716,26 +710,20 @@
 
             display: inline-block;
             height: 200px;
+
         }
 
         #portfolio .intro {
             width: 75%;
+
         }
+
+        /* .intro .portfolio-items:last-child {
+            display: block;
+            width: 30%;
+        } */
     </style>
 
-    <style>
-        .fullscr {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: fill;
-            z-index: 1;
-        }
-    </style>
 </body>
 
 </html>
