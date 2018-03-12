@@ -26,7 +26,7 @@ class MainController {
         mm='0'+mm
     } 
     // Create date and slots array
-    this.days = [{dd:dd,mm:mm,yyyy:yyyy},{dd:dd+1,mm:mm,yyyy:yyyy},{dd:dd+2,mm:mm,yyyy:yyyy},{dd:dd+3,mm:mm,yyyy:yyyy},{dd:dd+3,mm:mm,yyyy:yyyy}];
+    this.days = [{dd:dd,mm:mm,yyyy:yyyy},{dd:dd+1,mm:mm,yyyy:yyyy},{dd:dd+2,mm:mm,yyyy:yyyy},{dd:dd+3,mm:mm,yyyy:yyyy},{dd:dd+4,mm:mm,yyyy:yyyy},{dd:dd+5,mm:mm,yyyy:yyyy},{dd:dd+6,mm:mm,yyyy:yyyy}];
     this.slots= [{h:'10',m:'00'},{h:'10',m:'15'},{h:'10',m:'30'},{h:'10',m:'45'},{h:'11',m:'00'},{h:'11',m:'15'},{h:'11',m:'30'},{h:'11',m:'45'}];
   
 
