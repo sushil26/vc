@@ -20,7 +20,7 @@
 <md-card class="md-whiteframe-z2" flex="33">
     <md-card-content>
         <h2>Booked Appointments</h2>
-        <p layout="column" style="background-color: lightgreen;border-radius: 5px; padding: 3px;" ng-repeat="a in $ctrl.appointments">
+<p layout="column" style="background-color: lightgreen;border-radius: 5px; padding: 5px;" ng-repeat="a in $ctrl.appointments">
   
             {{a.name}} ({{a.phone}}) => {{a.date | date:'dd-MMM-yyyy @ h:mma'}}
 
