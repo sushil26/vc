@@ -136,3 +136,8 @@ angular.module('appointmentApp')
   });
 
 })();
+function closeappointment(){
+    
+    window.location = "https://vc4all.in";     
+    
+}
