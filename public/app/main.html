@@ -21,7 +21,9 @@
     <md-card-content>
         <h2>Booked Appointments</h2>
         <p layout="column" ng-repeat="a in $ctrl.appointments">
+            <div style="border:1px solid black;">
             {{a.name}} ({{a.phone}}) => {{a.date | date:'dd-MMM-yyyy @ h:mma'}}
+</div>
         </p>
     </md-card-content>
     <md-card-footer></md-card-footer>
