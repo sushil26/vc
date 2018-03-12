@@ -11,6 +11,9 @@ var express = require('express');
 var http = require('http');
 var bodyParser = require('body-parser')
 var nodemailer = require('nodemailer');
+var fs = require('fs'),
+url = require('url'),
+path = require('path');
 
 var main = express()
 // var server = http.createServer(main)
@@ -19,42 +22,81 @@ var queryId = null;
 var userName = null;
 //io.set('log level', 2);
 
+main.get('/', function (req, res) {
+
+
+    res.sendFile(__dirname + '/home.html');
+});
+
 // main.set('port', (process.env.PORT || 5000));
+main.use(express.static(__dirname + '/appointments'));
+main.use(express.static(__dirname + '/public'));
 main.use(express.static(__dirname + '/assets'));
 main.use(express.static(__dirname + '/css'));
 main.use(express.static(__dirname + '/js'));
 main.use(express.static(__dirname + '/img'));
 main.use(express.static(__dirname + '/lib'));
 main.use(express.static(__dirname + '/contactform'));
+main.use(express.static(__dirname + '/node_modules'));
+
+
+// Dependencies
+
+var mongoose = require('mongoose');
+
+
+
+// MongoDB
+
+mongoose.connect('mongodb://localhost/appointment');
+// mongoose.connection.on('error', function(){});
+
+// Express
+// var app = express();
+
+main.use(express.static(__dirname + '/public'));
+
+main.use(bodyParser.json());
+main.use(bodyParser.urlencoded({ extended: true }));
+
+// Routes
+main.use('/api', require(__dirname +'/server/api/appointment/'));
 
 
 
 
+// // Dependencies
+// // var express = require('express');
+// var router = express.Router();
+
+// //Product
+// var Appointment = require('./model');
+// Appointment.methods(['get', 'put', 'post', 'delete']);
+// Appointment.register(router, '/appointments');
 
 
-// main.set('port', (process.env.PORT || 5000));
-// main.listen(main.get('port'), function() {
-//     console.log('Node app is running on port', main.get('port'));
-//   });
 
-var server = main.listen('5000', function () {
-    console.log("Listening on port 5000" );
+// module.exports = router;
+
+
+
+
+var server = main.listen(5000, function () {
+    console.log("Listening on port 5000");
 });
 
 
 var io = require('socket.io').listen(server);
 
-
 // server.listen(PORT, null, function () {
 //     console.log("Listening on port " + PORT);
 // });
 
+main.get('/schedMeet', function(req, res){
+    res.sendFile(__dirname + '/public/index.html');  
+
+})
 //main.use(express.bodyParser());
-main.get('/', function (req, res) {
-
-
-    res.sendFile(__dirname + '/index.html');
-});
 
 
 main.get("/client", function (req, res) {
@@ -70,6 +112,83 @@ main.get("/client/:id", function (req, res) {
     console.log("start to render page");
     res.sendFile(__dirname + '/client.html');
 });
+
+main.post('/uploadFile', function(request, response) {
+    console.log("uploadFile-->");
+    // parse a file upload
+    // var mime = require('mime');
+    var formidable = require('formidable');
+    var util = require('util');
+
+    var form = new formidable.IncomingForm();
+
+    form.parse(request);
+
+    form.on('fileBegin', function (name, file){
+        file.path = __dirname + '/uploads/' + file.name;
+        console.log("file.path: "+file.path);
+    });
+
+    form.on('file', function (name, file){
+        console.log('Uploaded ' + file.name);
+    });
+
+    
+
+    var dir = !!process.platform.match(/^win/) ? '\\uploads\\' : '/uploads/';
+    console.log("dir: "+dir);
+    console.log("__dirname: "+__dirname);
+    
+
+    form.uploadDir = __dirname + dir;
+    form.keepExtensions = true;
+    form.maxFieldsSize = 10 * 1024 * 1024;
+    form.maxFields = 1000;
+    form.multiples = false;
+
+ console.log("form.uploadDir: "+form.uploadDir);
+    // form.parse(request, function(err, fields, files) {
+    //     console.log("request-->");
+    //     // var file = util.inspect(files);
+
+    //     // response.writeHead(200, getHeaders('Content-Type', 'application/json'));
+
+    //     // var fileName = file.split('path:')[1].split('\',')[0].split(dir)[1].toString().replace(/\\/g, '').replace(/\//g, '');
+    //     // var fileURL ='http://' + server.address + ':' + main.get('port') + '/uploads/' + fileName;
+    //     // console.log('fileURL: ', fileURL);
+    //     // response.write(JSON.stringify({
+    //     //     fileURL: fileURL
+    //     // }));
+    //     // response.end();
+    //     console.log("<--request");
+    // });
+    console.log("<--uploadFile");
+})
+
+// function getHeaders(opt, val) {
+//     console.log("getHeaders-->");
+//     console.log("opt: "+opt);
+//     console.log("val: "+val);
+//     try {
+//         console.log("getHeaders try block-->");
+//         var headers = {};
+//         headers["Access-Control-Allow-Origin"] = "https://logchat.herokuapp.com/client";
+//         headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
+//         headers["Access-Control-Allow-Credentials"] = true;
+//         headers["Access-Control-Max-Age"] = '86400'; // 24 hours
+//         headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
+
+//         if (opt) {
+//             headers[opt] = val;
+//         }
+//         console.log("headers: "+JSON.stringify(headers));
+//         return headers;
+//     } catch (e) {
+//         console.log("getHeaders catch(e) block: "+e);
+//         return {};
+//     }
+//     console.log("getHeaders-->");
+// }
 
 
 // main.get("/portfolio", function (req, res) {
@@ -164,7 +283,27 @@ io.sockets.on('connection', function (socket) {
         }
         console.log("[" + socket.id + "] disconnected");
         delete sockets[socket.id];
+       
     });
+
+    socket.on('disconnectSession', function (data) {
+        console.log("disconnectSession-->");
+        if(sessionHeaderId == data.owner)
+        {
+            for (var channel in socket.channels) {
+                console.log("connection: channel: " + channel);
+                part(channel);
+            }
+            console.log("started to delete session");
+            console.log("sockets[data.deleteSessionId]: "+sockets[data.deleteSessionId]);
+            delete sockets[data.deleteSessionId];
+            delete channels[channel][data.deleteSessionId];
+            
+            console.log("sockets[data.deleteSessionId]: "+sockets[data.deleteSessionId]);
+        }
+        
+        console.log("<--disconnectSession");
+    })
 
 
     socket.on('join', function (config) {
@@ -187,6 +326,7 @@ io.sockets.on('connection', function (socket) {
             var value = peerWithQueryId[key];
             if (value == config.queryLink) {
                 sessionHeaderId = key;
+
                 break;
             }
             console.log("value " + value);
@@ -279,12 +419,24 @@ io.sockets.on('connection', function (socket) {
 
             if (peerTrack.indexOf(queryId) >= 0) {
                 if (queryId == config.queryLink) {
+
+
+                    // var x = queryId;
+                    // console.log("peerTrackForVideo[x].indexOf(sockets.id): "+peerTrackForVideo[x].indexOf(sockets.id));
                     sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner': config.owner, 'queryId': config.queryLink, 'sendTo': peer_id });
+                    // if(peerTrackForVideo[x].indexOf(sockets.id)>=0)
+                    //  {
+                    //     sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner':config.owner, });
+                    //  }   
                 }
                 else {
                     console.log("relaySessionDescription: sorry");
                 }
             }
+
+
+
+
         }
         console.log("<--relaySessionDescription");
     });
@@ -292,6 +444,9 @@ io.sockets.on('connection', function (socket) {
     /* ##### Start remove PerticularId  ##### */
     socket.on('closeThisConn', function (config) {
         console.log("closeThisConn-->")
+
+
+
         if (queryId == config.queryLink) {
             console.log("queryId and config.queryLink are equal so gonna tell to client");
             io.sockets.emit('authorizedForClose', { "removableId": config.removableId, "removableName": config.removableName, "controllerId": config.peerNew_id, "queryLink": config.queryLink, "queryId": queryId });
@@ -303,11 +458,16 @@ io.sockets.on('connection', function (socket) {
     /* ##### Start Gether text message  #### */
     socket.on('textMsg', function (data) {
         console.log("textMsg-->");
+        // console.log("data.userId "+data.userId);
+        // console.log("data.message: "+data.message);
+        // console.log("data.queryLink: "+data.queryLink);
+        // //Send message to everyone
         console.log("peerWithQueryId[data.userId]: " + peerWithQueryId[data.userId]);
 
 
         if (peerWithQueryId[data.userId] == data.queryLink) {
             io.sockets.emit('newTextMsg', { 'message': data.message, 'userId': data.userId, 'queryId': peerWithQueryId[data.userId], 'userName': data.userName });
+            // io.sockets.emit('userDetail', {'userId': data.userId,'userName': data.userName });
         }
         else {
             console.log("textMsg: sorry ");
@@ -327,6 +487,9 @@ io.sockets.on('connection', function (socket) {
         console.log("data.userId " + data.userId);
         console.log("data.email: " + data.email);
         console.log("data.url: " + data.url);
+        // console.log("data.queryLink: "+data.queryLink);
+        // //Send message to everyone
+        // console.log("peerWithQueryId[data.userId]: "+peerWithQueryId[data.userId]);
         if (data.email) {
             var mailOptions = {
                 from: 'logeswari.careator@gmail.com',
@@ -342,7 +505,6 @@ io.sockets.on('connection', function (socket) {
                     console.log('Email sent: ' + info.response);
                     information = "email sent successfully";
                     console.log("information : " + information);
-       
                 }
                 console.log("information : " + information);
                 io.sockets.emit('emailSendInfo', { 'email': data.email, 'userId': data.userId, 'info': information });
@@ -370,6 +532,12 @@ io.sockets.on('connection', function (socket) {
 
             io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
         }
+        // var to = user.peers;
+
+        // for(var i=0; i < to.length; i++){
+        // dir[to[i]].socket.emit('file', dataURI,type, user.username);
+
+        // }
         console.log("<--file");
     });
     /* #### End File Sharing  ##### */
