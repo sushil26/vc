@@ -48,27 +48,49 @@
             <a href="#hero">Home</a>
           </li>
           <li>
-            <a href="#about">About Us</a>
+            <a href="#about">Features</a>
           </li>
           <li>
-            <a href="#services">Services</a>
+            <a href="#services">About Us</a>
           </li>
-          <li>
+          <!-- <li>
             <a href="#portfolio">Portfolio</a>
           </li>
           <li>
             <a href="#team">Team</a>
+          </li> -->
+          <li>
+            <a href="#signUp"><SignUp/a>
           </li>
 
-          <li>
+          <!-- <li>
             <a href="#contact">Contact Us</a>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <!-- #nav-menu-container -->
     </div>
   </header>
   <!-- #header -->
+  <h2 class="quotes" 
+  style="
+  display: none;
+  position: absolute;
+  font-family:Oswald;
+  text-align:center;
+  padding: 2%;
+  width:auto;
+  height:auto;
+  font-weight:700;
+  font-size:30px;
+  z-index: 1;
+  border-radius:20px;
+  color: #e8e8b3;
+  top: 20%;
+  left: 4%;
+  line-height: 1.3;
+  background-color:rgba(0, 0, 0, 0.22);
+  ">The ultimate platform for instant messaging and video conferencing!</h2>
 
   <!--==========================
     Hero Section
@@ -635,6 +657,25 @@
 
   <!-- Template Main Javascript File -->
   <script src="/main.js"></script>
+
+  <script>
+		(function () {
+
+			var quotes = $(".quotes");
+			var quoteIndex = -1;
+
+			function showNextQuote() {
+				++quoteIndex;
+				quotes.eq(quoteIndex % quotes.length)
+					.fadeIn(1000)
+					.delay(2000)
+					.fadeOut(1000, showNextQuote);
+			}
+
+			showNextQuote();
+
+		})();
+	</script>
 
 
 
