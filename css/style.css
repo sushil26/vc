@@ -165,7 +165,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #hero .hero-container {
-  background: #15405769;
+  background-color: #11111140;
   display: table-cell;
   margin: 0;
   padding: 0 10px;
@@ -497,7 +497,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 #about {
   background: #fff;
-  padding: 10px 0;
 }
 
 #about .about-container .background {
@@ -572,7 +571,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* Facts Section
 --------------------------------*/
 #facts {
-  background: #f7f7f7;
   padding: 80px 0 60px 0;
 }
 
@@ -592,7 +590,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* Services Section
 --------------------------------*/
 #services {
-  background: #fff;
+  background: #00bcd4;
   background-size: cover;
   padding: 80px 0 60px 0;
 }
@@ -947,6 +945,7 @@ position: inherit !important;
   color: #fff;
   transition: 0.4s;
   margin: 1%;
+float: left;
 }
 
 #contact .form button[type="submit"]:hover {
