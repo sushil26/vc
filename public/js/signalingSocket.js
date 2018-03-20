@@ -243,7 +243,7 @@ function init() {
 
     console.log("init-->");
 
-    signaling_socket = io(SIGNALING_SERVER, {transports: ['websocket']});
+//    signaling_socket = io(SIGNALING_SERVER);
 
 
     // $('#setNameId').trigger('click');
