@@ -1,23 +1,19 @@
 {
-  "name": "",
-  "version": "",
-  "description": "About =====",
+  "name": "rnd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "node signaling-server"
+    "start": "node index"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "circular-json": "^0.4.0",
-    "express": "^4.16.2",
-    "formidable": "^1.1.1",
-    "fs": "0.0.1-security",
-    "mediastream-gain-controller": "0.0.4",
-   
-    "node-restful":"0.2.6",
-    "nodemailer": "^4.4.0",
-    "path": "^0.12.7",
-    "recordrtc": "^5.4.6",
-    "socket.io": "^1.7.4",
-    "url": "^0.11.0"
+    "angular": "^1.6.9",
+    "angular-ui-router": "^1.0.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.10",
+    "nodemailer": "^4.6.3",
+    "socket.io": "^2.0.4"
   }
 }
