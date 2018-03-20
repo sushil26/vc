@@ -45,9 +45,7 @@ var mongoConfig = require('./config/dbConfig.js');
 // main.listen(main.get('port'), function() {
 //     console.log('Node app is running on port', main.get('port'));
 //   });
-var server = app.listen(5000, function () {
-    console.log("Listening on port 5000");
-});
+var server = app.listen(5000);
 
 // var server = app.listen("8080");
    
