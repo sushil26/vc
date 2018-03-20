@@ -810,7 +810,7 @@ function init() {
         if (config.removableId == peerNew_id) {
             console.log("Removable alert should start");
             alert("Session creater removed you from conference");
-            window.location.href = "https://svcapp.herokuapp.com";
+            window.location.href = "https://vc4all.in";
         }
 
         // delete peer_media_sselements[config.peer_id];
