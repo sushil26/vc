@@ -1,7 +1,7 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
 var SIGNALING_SERVER = "https://vc4all.in";
-//var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
+//var SIGNALING_SERVER = "http://localhost:5000";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
 var USE_AUDIO = true;
 var USE_VIDEO = true;
@@ -163,7 +163,7 @@ var peerNew_id = null;
 var queryLink = null;
 var txtQueryLink = null;
 var userName = null;
-signaling_socket = io();
+signaling_socket = io(SIGNALING_SERVER);
 var file;
 var disconnPeerId = null;
 var shareScreen = null;

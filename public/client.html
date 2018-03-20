@@ -4,32 +4,10 @@
     <title>Video Conference</title>
 
     
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script> -->
+    <script src="/js/socket.io-1.4.5.js"></script>
     
-    <script src="/js/signalingSocket.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- 
-    
-
-    
-   
-
-    <!-- ##### Start Client Page dependencies  ##### -->
-    <!-- <link href='/css/fullcalendar.min.css' rel='stylesheet' />
-    <link href='/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-    <script src='/js/moment.min.js'></script> -->
-    <!-- <script src='/js/jquery.min.js'></script> -->
-    <!-- <script src='/js/fullcalendar.min.js'></script>
-
-    <style>
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-    </style> -->
-    <!-- ##### Start Client Page dependencies  ##### -->
-
-
     <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/home/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/chatZone.css" />
@@ -39,24 +17,9 @@
     <script src="/home/lib/wow/wow.min.js"></script>
     <script src="/home/lib/easing/easing.min.js"></script>
 
-
-
-
-
-    <!-- <script src="/controllers/clientCtrl.js"></script>-->
-    
-
-  
-
-
 </head>
 
 <body  onload="init()">
-    <!-- <div ui-view></div> -->
-    <!-- <script  src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script> -->
-
-
-
     <!-- ### Start header #### -->
     <header id="header" style="background: rgba(52, 59, 64, 0.9);padding: 20px; height: 72px;transition: all 0.5s;">
         <div class="container">
@@ -107,7 +70,7 @@
 
                     <center style="margin:5%;" >
 
-                        <a id="videoConferenceUrl" style="display:none;">
+                        <a id="videoConferenceUrl" >
                             <button id="videoConfStart" class="btn fa fa-video-camera" style="color: darkcyan;background: honeydew;">
                                 &nbsp
                                 <b>Start Video Conference</b>
@@ -696,7 +659,7 @@
     </style>
 
 </div>
-
+<script src="/js/signalingSocket.js"></script>
 </body>
 
 </html>
