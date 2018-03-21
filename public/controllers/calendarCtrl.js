@@ -36,7 +36,7 @@ app.controller('calendarCtrl', function ($scope, $window, httpFactory, moment, c
 
         console.log("data" + JSON.stringify(data.data))
         // $window.location.href = $scope.propertyJson.R082;
-        alert("Successfully sent the event");
+        alert("Successfully sent the event "+data.data.data.message);
       }
       else {
         alert("Event Send Failed");

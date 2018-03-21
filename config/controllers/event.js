@@ -60,12 +60,12 @@ module.exports.eventSend = function(req, res) {
                     if (error) {
                         console.log(error);
                         responseData = {
-                            "status": false,
-                            "errorCode": 400,
+                            "status": true,
+                            "errorCode": 200,
                             "message": "Registeration Successfull and Failed to send mail",
                             "data": data
                         }
-                        res.status(400).send(responseData);
+                        res.status(200).send(responseData);
                        
                 
                     } else {

@@ -24,6 +24,7 @@ module.exports = function(app, config) {
 
 var queryId = null;
 var userName = null;
+var time = null;
 
 // var mongoConfig = require('./config/dbConfig.js');
 
@@ -84,8 +85,9 @@ app.get("/client", function (req, res) {
     res.sendFile(__dirname + '/public/client.html');
 });
 
-app.get("/client/:id", function (req, res) {
+app.get("/client/:id/:time", function (req, res) {
     queryId = req.params.id;
+    time = req.params.id;
     console.log("queryId: " + req.params.id);
     console.log("start to render page");
     res.sendFile(__dirname + '/public/client.html');
@@ -107,6 +109,7 @@ var channels = {};
 var sockets = {};
 var peerTrack = [];
 var peerWithQueryId = []; /* PeerId with Query Id: peer-id is a index, value is a query id  */
+var peerWithTimeId = [];  /* PeerId with time Id: peer-id is a index, value is a time id  */
 var peerWithUserName = []; /* PeerId with UserName: peer-id is a index, Value is a UserName  */
 var peerTrackForVideo = { 'link': [] }; /* This variable for getting socket.id's with perticular Link*/
 var tempId = null;
@@ -149,7 +152,7 @@ io.sockets.on('connection', function (socket) {
     // console.log("peerTrackForVideo."+queryId+": "+peerTrackForVideo.queryId);
     /* ##### End arrang all sockets in single array with key which id we are using in a link   ##### */
     console.log("QueryId: " + queryId);
-    socket.emit('message', { 'peer_id': socket.id, 'queryId': queryId, 'userName': userName });
+    socket.emit('message', { 'peer_id': socket.id, 'queryId': queryId, 'time': time, 'userName': userName });
 
     socket.on('disconnect', function () {
 
@@ -189,7 +192,7 @@ io.sockets.on('connection', function (socket) {
         // console.log("config.owner: "+config.owner);
         // console.log("config.queryLink: "+config.queryLink);
         peerWithQueryId[config.owner] = config.queryLink;
-
+        peerWithTimeId[config.owner] = config.timeLink;
 
         peerWithUserName[config.owner] = config.userName;
 
@@ -201,7 +204,8 @@ io.sockets.on('connection', function (socket) {
             console.log("key: " + key);
 
             var value = peerWithQueryId[key];
-            if (value == config.queryLink) {
+            var timeValue = peerWithTimeId[key];
+            if (value == config.queryLink && timeValue == config.timeLink) {
                 sessionHeaderId = key;
 
                 break;
@@ -231,9 +235,9 @@ io.sockets.on('connection', function (socket) {
             // console.log("channels[channel][id] " + channels[channel][id]);
             console.log("start to call client addPeer--><--");
 
-            channels[channel][id].emit('addPeer', { 'peer_id': socket.id, 'should_create_offer': false, 'owner': socket.id, 'queryId': queryId, 'userName': peerWithUserName[socket.id], 'sessionHeaderId': sessionHeaderId });
+            channels[channel][id].emit('addPeer', { 'peer_id': socket.id, 'should_create_offer': false, 'owner': socket.id, 'queryId': queryId, 'time' : time, 'userName': peerWithUserName[socket.id], 'sessionHeaderId': sessionHeaderId });
 
-            socket.emit('addPeer', { 'peer_id': id, 'should_create_offer': true, 'owner': socket.id, 'queryId': queryId, 'userName': peerWithUserName[id], 'sessionHeaderId': sessionHeaderId });
+            socket.emit('addPeer', { 'peer_id': id, 'should_create_offer': true, 'owner': socket.id, 'queryId': queryId,'time' : time, 'userName': peerWithUserName[id], 'sessionHeaderId': sessionHeaderId });
         }
 
         channels[channel][socket.id] = socket;
@@ -300,7 +304,7 @@ io.sockets.on('connection', function (socket) {
 
                     // var x = queryId;
                     // console.log("peerTrackForVideo[x].indexOf(sockets.id): "+peerTrackForVideo[x].indexOf(sockets.id));
-                    sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner': config.owner, 'queryId': config.queryLink, 'sendTo': peer_id });
+                    sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner': config.owner, 'queryId': config.queryLink, 'time':config.timeLink, 'sendTo': peer_id });
                     // if(peerTrackForVideo[x].indexOf(sockets.id)>=0)
                     //  {
                     //     sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner':config.owner, });
@@ -324,9 +328,9 @@ io.sockets.on('connection', function (socket) {
 
 
 
-        if (queryId == config.queryLink) {
+        if (queryId == config.queryLink && time == config.timeLink) {
             console.log("queryId and config.queryLink are equal so gonna tell to client");
-            io.sockets.emit('authorizedForClose', { "removableId": config.removableId, "removableName": config.removableName, "controllerId": config.peerNew_id, "queryLink": config.queryLink, "queryId": queryId });
+            io.sockets.emit('authorizedForClose', { "removableId": config.removableId, "removableName": config.removableName, "controllerId": config.peerNew_id, "queryLink": config.queryLink, 'timeLink':config.timeLink, "queryId": queryId });
         }
         console.log("<--closeThisConn")
     });
@@ -342,8 +346,8 @@ io.sockets.on('connection', function (socket) {
         console.log("peerWithQueryId[data.userId]: " + peerWithQueryId[data.userId]);
 
 
-        if (peerWithQueryId[data.userId] == data.queryLink) {
-            io.sockets.emit('newTextMsg', { 'message': data.message, 'userId': data.userId, 'queryId': peerWithQueryId[data.userId], 'userName': data.userName });
+        if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
+            io.sockets.emit('newTextMsg', { 'message': data.message, 'userId': data.userId, 'queryId': peerWithQueryId[data.userId],'time':peerWithTimeId[data.userId], 'userName': data.userName });
             // io.sockets.emit('userDetail', {'userId': data.userId,'userName': data.userName });
         }
         else {
@@ -405,9 +409,9 @@ io.sockets.on('connection', function (socket) {
         console.log("peerWithQueryId[data.userId]: " + peerWithQueryId[data.userId]);
         console.log("data.queryLink: " + data.queryLink);
         console.log("data.type: " + data.type);
-        if (peerWithQueryId[data.userId] == data.queryLink) {
+        if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
 
-            io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
+            io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'time':data.timeLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
         }
         // var to = user.peers;
 
@@ -423,9 +427,9 @@ io.sockets.on('connection', function (socket) {
         console.log("stateChanged-->");
 
 
-        if (peerWithQueryId[data.userId] == data.queryLink) {
+        if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
 
-            sockets[data.peerNew_id].emit('stateChangedToClient', { 'userId': data.userId, 'queryId': data.queryLink });
+            sockets[data.peerNew_id].emit('stateChangedToClient', { 'userId': data.userId, 'queryId': data.queryLink, 'time': data.timeLink });
         }
         console.log("<--stateChanged");
     })
