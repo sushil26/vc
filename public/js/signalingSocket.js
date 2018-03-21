@@ -162,6 +162,7 @@ var peer_media_sselements = {};  /* keep track of our <video>/<audio> tags, inde
 /* #### Logu Defined  ##### */
 var peerNew_id = null;
 var queryLink = null;
+var timeLink = null;
 var txtQueryLink = null;
 var userName = null;
 signaling_socket = io();
@@ -265,6 +266,7 @@ function init() {
             //console.log("Unique Peer Id: " + config.peer_id)
             queryLink = config.queryId;
             peerNew_id = config.peer_id;
+            timeLink = config.time;
             var date = new Date();
 
             console.log("queryLink: " + queryLink);
@@ -404,7 +406,7 @@ function init() {
         // document.p.innerHTML = channel;
         // document.getElementById("demo").innerHTML = channel;
 
-        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink,  'timeLink': timeLink, 'userName': userName });
 
         console.log("<--join__channel");
     }
@@ -521,7 +523,7 @@ function init() {
                     var removableId = document.getElementById("closeThisConn" + peer_id).getAttribute('owner');
                     var removableName = document.getElementById("closeThisConn" + peer_id).getAttribute('name');
 
-                    signaling_socket.emit('closeThisConn', { "removableId": removableId, "removableName": removableName, "controllerId": peerNew_id, "queryLink": queryLink });
+                    signaling_socket.emit('closeThisConn', { "removableId": removableId, "removableName": removableName, "controllerId": peerNew_id, "queryLink": queryLink, 'timeLink': timeLink });
                 })
             }
 
@@ -661,7 +663,7 @@ function init() {
                         function () {
                             // console.log("local_description: " + JSON.stringify(local_description));
                             signaling_socket.emit('relaySessionDescription',
-                                { 'peer_id': peer_id, 'session_description': local_description, 'from': "addpeer", 'owner': config.owner, 'queryLink': queryLink });
+                                { 'peer_id': peer_id, 'session_description': local_description, 'from': "addpeer", 'owner': config.owner, 'queryLink': queryLink, 'timeLink': timeLink });
                             console.log("Offer setLocalDescription succeeded");
                         },
                         function () { alert("Offer setLocalDescription failed!"); }
@@ -714,7 +716,7 @@ function init() {
                                 peer.setLocalDescription(local_description,
                                     function () {
                                         signaling_socket.emit('relaySessionDescription',
-                                            { 'peer_id': peer_id, 'session_description': local_description, 'from': "sessionDescription", 'owner': config.owner, 'queryLink': queryLink });
+                                            { 'peer_id': peer_id, 'session_description': local_description, 'from': "sessionDescription", 'owner': config.owner, 'queryLink': queryLink, 'timeLink': timeLink });
                                         console.log("Answer setLocalDescription succeeded");
                                     },
                                     function () { console.log("Answer setLocalDescription failed!"); }
