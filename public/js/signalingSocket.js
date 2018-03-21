@@ -786,7 +786,7 @@ function init() {
 
         delete peers[peer_id];
         delete peer_media_elements[config.peer_id];
-        peer_userName_elements[peer_id].remove();
+        //peer_userName_elements[peer_id].remove();
         // delete peer_media_sselements[config.peer_id];
     });
 
