@@ -97,6 +97,7 @@ function sessionSet(data) {
 
 function vcLogout() {
     console.log("vcLogout");
+    window.location = "https://vc4all.in/client";
     localStorage.removeItem("userData");
     document.getElementById("appLogin").style.display = 'block';
     document.getElementById("appLogout").style.display = 'none';
