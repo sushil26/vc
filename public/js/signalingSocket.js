@@ -39,7 +39,7 @@ function logVC() {
 
 
     $.ajax({
-        url: "https://localhost/vc/login4VC",
+        url: "https://vc4all.in/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -117,7 +117,7 @@ function regVc() {
         "password": pswd
     };
     $.ajax({
-        url: "https://localhost/vc/register4VC",
+        url: "https://vc4all.in/vc/register4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
