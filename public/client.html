@@ -3,42 +3,30 @@
 <head>
     <title>Video Conference</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
-    <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/socket.io-1.4.5.js"></script>
-    
-    
- 
-    
+   
+<script src="/home/lib/jquery/jquery.min.js"></script>
+    <link href="/home/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Libraries CSS Files -->
+    <link href="/home/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
+    <!-- Main Stylesheet File -->
+    <link href="/home/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/chatZone.css" />
+  
 
     
+
+    <script src="/js/socket.io-1.4.5.js"></script> 
    
 
-    <!-- ##### Start Client Page dependencies  ##### -->
-    <!-- <link href='/css/fullcalendar.min.css' rel='stylesheet' />
-    <link href='/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-    <script src='/js/moment.min.js'></script> -->
-    <!-- <script src='/js/jquery.min.js'></script> -->
-    <!-- <script src='/js/fullcalendar.min.js'></script>
+    
 
-    <style>
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-    </style> -->
-    <!-- ##### Start Client Page dependencies  ##### -->
-
-
-  
-    <link rel="stylesheet" href="/home/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/chatZone.css" />
-    <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="/home/css/style.css" rel="stylesheet">
     <script src="/js/clientmain.js"></script>
-    <script src="/home/lib/wow/wow.min.js"></script>
-    <script src="/home/lib/easing/easing.min.js"></script>
+ 
+
+
+
+
 
 
 
@@ -661,22 +649,7 @@
     <!-- <script src="/js/chat.js"></script> -->
 
 
-    <script>
-        $(document).ready(function () {
-
-            $("#openChat").click(function () {
-                //alert("hui");
-                $("#portfolio-wrapper").addClass("intro");
-                $("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("col-lg-3");
-
-                //  $("portfolio-items col-xs-12 col-sm-6 col-md-4").toggleClass("portfolio-items col-xs-12 col-sm-6 col-md-4");
-
-            });
-            $("#removeClass").click(function () {
-                $("#portfolio-wrapper").removeClass("intro");
-            });
-        });
-    </script>
+  
     <style>
         #portfolio .portfolio-items {
 
@@ -697,7 +670,41 @@
     </style>
 
 </div>
+
+  <!-- JavaScript Libraries -->
+  
+  <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
+  <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/home/lib/easing/easing.min.js"></script>
+  <script src="/home/lib/wow/wow.min.js"></script>
+
+
+  <script src="/home/lib/superfish/superfish.min.js"></script>
+  <script src="/home/lib/counterup/counterup.min.js"></script>
+
+
+
+  <!-- Template Main Javascript File -->
+  <script src="/home/js/main.js"></script>
 <script src="/js/signalingSocket.js"></script>
+
+<script>
+        $(document).ready(function () {
+
+            $("#openChat").click(function () {
+                //alert("hui");
+                $("#portfolio-wrapper").addClass("intro");
+                $("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("col-lg-3");
+
+                //  $("portfolio-items col-xs-12 col-sm-6 col-md-4").toggleClass("portfolio-items col-xs-12 col-sm-6 col-md-4");
+
+            });
+            $("#removeClass").click(function () {
+                $("#portfolio-wrapper").removeClass("intro");
+            });
+        });
+    </script>
+
 </body>
 
 </html>
