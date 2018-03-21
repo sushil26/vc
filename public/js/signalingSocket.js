@@ -165,7 +165,7 @@ var queryLink = null;
 var timeLink = null;
 var txtQueryLink = null;
 var userName = null;
-signaling_socket = io();
+signaling_socket = io(SIGNALING_SERVER);
 var file;
 var disconnPeerId = null;
 var shareScreen = null;
