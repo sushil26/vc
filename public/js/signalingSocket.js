@@ -343,14 +343,14 @@ function init() {
 
 
                 // $('#myModal').modal('hide');
-                // setup_local_media(function () {
+                 setup_local_media(function () {
                 //     /* once the user has given us access to their
                 //      * microphone/camcorder, join the channel and start peering up */
 
 
-                //     join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
+                     join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
 
-                // })
+                 })
 
 
 
