@@ -2,11 +2,13 @@
 
 <head>
     <title>Video Conference</title>
-    <script src="/js/socket.io-1.4.5.js"></script>
-    
-
-
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
+    <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/socket.io-1.4.5.js"></script>
+    <script src="/js/signalingSocket.js"></script>
+    
  
     
 
@@ -29,7 +31,7 @@
     <!-- ##### Start Client Page dependencies  ##### -->
 
 
-    <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
     <link rel="stylesheet" href="/home/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/chatZone.css" />
     <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
@@ -50,7 +52,7 @@
 
 </head>
 
-<body  onload="init()">
+<body onload="init()">
     <!-- <div ui-view></div> -->
     <!-- <script  src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script> -->
 
@@ -106,7 +108,7 @@
 
                     <center style="margin:5%;" >
 
-                        <a id="videoConferenceUrl" style="display:none;">
+                        <a id="videoConferenceUrl" >
                             <button id="videoConfStart" class="btn fa fa-video-camera" style="color: darkcyan;background: honeydew;">
                                 &nbsp
                                 <b>Start Video Conference</b>
@@ -693,8 +695,7 @@
             width: 30%;
         } */
     </style>
-<script src="/js/signalingSocket.js"></script>
-<script src="/home/lib/jquery/jquery.min.js"></script>
+
 </div>
 </body>
 

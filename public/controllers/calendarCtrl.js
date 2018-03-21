@@ -1,112 +1,213 @@
-app.controller('calendarCtrl', function($scope,  $window, moment, calendarConfig) {
-    console.log("calendarCtrl==>");
-    var vm = this;
+app.controller('calendarCtrl', function ($scope, $window, httpFactory, moment, calendarConfig) {
+  console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
-    //These variables MUST be set as a minimum for the calendar to work
-    vm.calendarView = 'month';
-    vm.viewDate = new Date();
-    var actions = [{
-      label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
-      onClick: function(args) {
-        alert.show('Edited', args.calendarEvent);
+  $scope.save = function(s,e){
+    // console.log("s: "+s);
+    // console.log("e: "+e);
+    $scope.startDate = s;
+    $scope.endDate = e;
+
+  }
+  $scope.eventSend = function (res, name, id, email,start, end ,startAt, endAt, primColor) {
+    console.log("eventSend-->");
+    console.log("startAt: " + startAt)
+
+    var api = "https://vc4all.in/vc/eventSend";
+    console.log("api: " + api);
+
+    var obj = {
+      "reason": res,
+      "studName": name,
+      "studId": id,
+      "email": email,
+      "start":$scope.startDate,
+      "end":$scope.endDate,
+      "startAt": startAt,
+      "endAt": endAt,
+      "primColor":primColor
+
+    }
+    console.log("obj: " + JSON.stringify(obj));
+
+    httpFactory.post(api, obj).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+
+        console.log("data" + JSON.stringify(data.data))
+        // $window.location.href = $scope.propertyJson.R082;
+        alert("Successfully sent the event");
       }
-    }, {
-      label: '<i class=\'glyphicon glyphicon-remove\'></i>',
-      onClick: function(args) {
-        alert.show('Deleted', args.calendarEvent);
+      else {
+        alert("Event Send Failed");
+
       }
-    }];
-    vm.events = [
-      // {
-      //   title: 'An event',
-      //   color: calendarConfig.colorTypes.warning,
-      //   startsAt: moment().startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
-      //   endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
-      //   draggable: true,
-      //   resizable: true,
-      //   actions: actions
-      // }, {
-      //   title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
-      //   color: calendarConfig.colorTypes.info,
-      //   startsAt: moment().subtract(1, 'day').toDate(),
-      //   endsAt: moment().add(5, 'days').toDate(),
-      //   draggable: true,
-      //   resizable: true,
-      //   actions: actions
-      // }, {
-      //   title: 'This is a really long event title that occurs on every year',
-      //   color: calendarConfig.colorTypes.important,
-      //   startsAt: moment().startOf('day').add(7, 'hours').toDate(),
-      //   endsAt: moment().startOf('day').add(19, 'hours').toDate(),
-      //   recursOn: 'year',
-      //   draggable: true,
-      //   resizable: true,
-      //   actions: actions
-      // }
-    ];
 
-    vm.cellIsOpen = true;
+    })
 
-    vm.addEvent = function() {
-      vm.events.push({
-        title: 'New event',
-        startsAt: moment().startOf('day').toDate(),
-        endsAt: moment().endOf('day').toDate(),
-        color: calendarConfig.colorTypes.important,
-        draggable: true,
-        resizable: true
-      });
-    };
+  }
 
-  $scope.eventClicked = function(event) {
-      alert("clicked");
-      console.log("cliecked: "+event);
+  $scope.eventGet = function () {
+    console.log("eventGet-->");
 
-      //  alert.show('Clicked', event);
-    };
+    var api = "https://vc4all.in/vc/eventGet";
 
-    vm.eventEdited = function(event) {
-      alert("eventEdited");
-      console.log("cliecked: "+event);
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.eventData = data.data.data;
+        for (var x = 0; x < $scope.eventData.length; x++) {
+          console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
+          var obj = {
+            'title': 'An Event',
+            'color': $scope.eventData[x].primColor,
+            'startsAt':new Date($scope.eventData[x].start),
+            'endsAt': new Date($scope.eventData[x].end),
+            'draggable': true,
+            'resizable': true,
+            'actions': actions
 
-      // alert.show('Edited', event);
-    };
-
-    vm.eventDeleted = function(event) {
-      alert("eventDeleted");
-      console.log("deleted");
-      // alert.show('Deleted', event);
-    };
-
-    vm.eventTimesChanged = function(event) {
-      alert.show('Dropped or resized', event);
-    };
-
-    vm.toggle = function($event, field, event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-      event[field] = !event[field];
-    };
-
-    vm.timespanClicked = function(date, cell) {
-
-      if (vm.calendarView === 'month') {
-        if ((vm.cellIsOpen && moment(date).startOf('day').isSame(moment(vm.viewDate).startOf('day'))) || cell.events.length === 0 || !cell.inMonth) {
-          vm.cellIsOpen = false;
-        } else {
-          vm.cellIsOpen = true;
-          vm.viewDate = date;
+          }
+          console.log(" obj" + JSON.stringify(obj))
+          vm.events.push(obj);
+         
         }
-      } else if (vm.calendarView === 'year') {
-        if ((vm.cellIsOpen && moment(date).startOf('month').isSame(moment(vm.viewDate).startOf('month'))) || cell.events.length === 0) {
-          vm.cellIsOpen = false;
-        } else {
-          vm.cellIsOpen = true;
-          vm.viewDate = date;
-        }
+
+       
+        // $window.location.href = $scope.propertyJson.R082;
+
+      }
+      else {
+        alert("Event get Failed");
+
       }
 
-    };
+    })
+  }
+   $scope.eventGet();
+
+  var vm = this;
+
+  //These variables MUST be set as a minimum for the calendar to work
+  vm.calendarView = 'month';
+  vm.viewDate = new Date();
+  var actions = [{
+    label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
+    onClick: function (args) {
+      alert.show('Edited', args.calendarEvent);
+    }
+  }, {
+    label: '<i class=\'glyphicon glyphicon-remove\'></i>',
+    onClick: function (args) {
+      alert.show('Deleted', args.calendarEvent);
+    }
+  }];
+  vm.events = [
+    // {
+    //   title: 'An event',
+    //   color: calendarConfig.colorTypes.warning,
+    //   startsAt: moment().startOf('week').subtract(2, 'days').add(8, 'hours').toDate('2018-03-21T05:30:00.000Z'),
+    //   endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
+    //   draggable: true,
+    //   resizable: true,
+    //   actions: actions
+    // }
+  
+    // {
+    //   title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
+    //   color: calendarConfig.colorTypes.info,
+    //   startsAt: moment().subtract(1, 'day').toDate(),
+    //   endsAt: moment().add(5, 'days').toDate(),
+    //   draggable: true,
+    //   resizable: true,
+    //   actions: actions
+    // }, {
+    //   title: 'This is a really long event title that occurs on every year',
+    //   color: calendarConfig.colorTypes.important,
+    //   startsAt: moment().startOf('day').add(7, 'hours').toDate(),
+    //   endsAt: moment().startOf('day').add(19, 'hours').toDate(),
+    //   recursOn: 'year',
+    //   draggable: true,
+    //   resizable: true,
+    //   actions: actions
+    // }
+  ];
+
+  vm.cellIsOpen = true;
+
+  vm.addEvent = function () {
+    vm.events.push({
+      title: 'New event',
+      startsAt: moment().startOf('day').toDate(),
+      endsAt: moment().endOf('day').toDate(),
+      color: calendarConfig.colorTypes.important,
+      draggable: true,
+      resizable: true
+    });
+  };
+
+  vm.eventClicked = function (event) {
+    alert("clicked: " + event);
+    console.log("cliecked: " + event);
+
+    //  alert.show('Clicked', event);
+  };
+
+
+  $scope.eventClicked = function (event) {
+    alert("clicked: " + event);
+    console.log("cliecked: " + event);
+
+    //  alert.show('Clicked', event);
+  };
+
+  vm.eventEdited = function (event) {
+    alert("eventEdited");
+    console.log("cliecked: " + event);
+
+    // alert.show('Edited', event);
+  };
+
+  vm.eventDeleted = function (event) {
+    alert("eventDeleted");
+    console.log("deleted");
+    // alert.show('Deleted', event);
+  };
+
+  vm.eventTimesChanged = function (event) {
+    alert.show('Dropped or resized', event);
+  };
+
+  vm.toggle = function ($event, field, event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    event[field] = !event[field];
+  };
+
+  vm.timespanClicked = function (date, cell) {
+
+    if (vm.calendarView === 'month') {
+      if ((vm.cellIsOpen && moment(date).startOf('day').isSame(moment(vm.viewDate).startOf('day'))) || cell.events.length === 0 || !cell.inMonth) {
+        vm.cellIsOpen = false;
+      } else {
+        vm.cellIsOpen = true;
+        vm.viewDate = date;
+      }
+    } else if (vm.calendarView === 'year') {
+      if ((vm.cellIsOpen && moment(date).startOf('month').isSame(moment(vm.viewDate).startOf('month'))) || cell.events.length === 0) {
+        vm.cellIsOpen = false;
+      } else {
+        vm.cellIsOpen = true;
+        vm.viewDate = date;
+      }
+    }
+
+  };
+
+
+
+
 
 
 })

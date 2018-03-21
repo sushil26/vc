@@ -27,12 +27,12 @@ app.factory('httpFactory', function($http, $q, $rootScope) {
         get: function(api) {
             
             var dfd = $q.defer();
-            var getUrl = $rootScope.propertyJson.BASE_URL+api;
+            // var getUrl = $rootScope.propertyJson.BASE_URL+api;
             //console.log("getUrl"+getUrl);
             //var getUrl=api;
             $http({
                 method: 'GET',
-                url: getUrl
+                url: api
             }).
             then(function(data, status, headers, config) {
                 dfd.resolve(data);
@@ -48,7 +48,7 @@ app.factory('httpFactory', function($http, $q, $rootScope) {
             var j = dfd.promise.then(function(data) {
                 return data;
             })
-             spinnerService.hide('spinner');
+           
             return dfd.promise;
         },
         put:function(api,data,userName){
