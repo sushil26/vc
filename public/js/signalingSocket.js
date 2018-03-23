@@ -16,7 +16,7 @@ var videoReaderRecord = new FileReader();
 if (localStorage.getItem("userData")) {
 
   var  userData = JSON.stringify(localStorage.getItem("userData"));
-  userName = userData.userName;
+  userName = localStorage.getItem("userName");
   console.log("userData: "+userData);
   console.log("userData.userName;: "+userData.userName);
     document.getElementById("appLogin").style.display = 'none';
@@ -89,8 +89,9 @@ function sessionSet(data) {
             "email": data.data.email
         }
         localStorage.setItem("userData", userData);
-        // localStorage.setItem("status", data.data.status);
-        // localStorage.setItem("email", data.data.email);
+        localStorage.setItem("userName", data.data.userName);
+        localStorage.setItem("status", data.data.status);
+         localStorage.setItem("email", data.data.email);
         // Retrieve
         var info = localStorage.getItem("userData");
         alert("info: " + info);
