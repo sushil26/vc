@@ -86,13 +86,6 @@ function DisplayCurrentTime() {
 
     console.log("<--DisplayCurrentTime");
 };
-
-function sendMessage() {
-    console.log("sendMsg-->");
-
-    var msg = document.getElementById('message').value;
-
-
 if (localStorage.getItem("userData")) {
     // var userData = localStorage.getItem("userData");
     // console.log("localStorage.getItem(userData).status: "+localStorage.getItem("userData").status);
@@ -107,6 +100,13 @@ if (localStorage.getItem("userData")) {
     else{
         console.log("NOOOOOOOOOOOOO Session data");
     }
+function sendMessage() {
+    console.log("sendMsg-->");
+
+    var msg = document.getElementById('message').value;
+
+
+
     
 
     // var file = e.target.files[0];
@@ -120,7 +120,7 @@ if (localStorage.getItem("userData")) {
             if (msg) {
                 console.log("Start to emit message  ");
                 console.log("peerNew_id: " + peerNew_id);
-                signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+                signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
                 document.getElementById('message').value = "";
             }
 
