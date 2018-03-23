@@ -279,7 +279,7 @@ function init() {
             var dt = new Date();
             var dy = dt.getDay();
             var fy = dt.getFullYear();
-            var mn = dt.getMonth();
+            var m = dt.getMonth();
             var hr = dt.getHours();
 
             var date = dy.concat(fy.concat(m.concat(hr)));
