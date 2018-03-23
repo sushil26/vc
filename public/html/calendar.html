@@ -3,7 +3,7 @@
 <head>
   <title>Video Conference</title>
   <script src="/js/socket.io-1.4.5.js"></script>
-
+<script src="/js/calendarSocket.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <script src="/bower_components/angular/angular.min.js"></script>
@@ -31,7 +31,7 @@
   <script src="/home/lib/easing/easing.min.js"></script>
 </head>
 
-<body>
+<body onload="init()">
 
 
   <div ng-app="vcApp" ng-controller="calendarCtrl as vm">
@@ -74,7 +74,7 @@
       </div>
     </header>
     <div ui-view>
-
+--<a href="" id="linkToShare"></a>
       <!-- <div id='calendar' style="margin-top:10%;"></div> -->
 
       <h2 class="text-center" style="margin-top:10%;">{{ vm.calendarTitle }}</h2>
@@ -157,28 +157,50 @@
             </td>
             <td>
               <p class="input-group" style="max-width: 250px">
-                <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
+                <input type="text" 
+                class="form-control" 
+                readonly 
+                uib-datepicker-popup="dd MMMM yyyy" 
+                ng-model="event.startsAt" 
+                is-open="event.startOpen"
                   close-text="Close">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
+                  <button 
+                  type="button" 
+                  class="btn btn-default" 
+                  ng-click="vm.toggle($event, 'startOpen', event)" >
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
               </p>-              <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true">
               </div>
+
             </td>
             <td>
-              <p class="input-group" style="max-width: 250px">
-                <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.endsAt" is-open="event.endOpen"
-                  close-text="Close">
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'endOpen', event)">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                  </button>
-                </span>
-              </p>
-              <div uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true">
+              
+               <!--<p class="input-group" style="max-width: 250px">
+            <input
+              type="text"
+              class="form-control"
+              readonly
+              uib-datepicker-popup="dd MMMM yyyy"
+              ng-model="event.endsAt"
+              is-open="event.endOpen"
+              close-text="Close">
+            <span class="input-group-btn">
+              <button
+                type="button"
+                class="btn btn-default"
+                ng-click="vm.toggle($event, 'endOpen', event)">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+          </p>-->
+
+
+              <div style="margin-top:92px;" uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true">
               </div>
+
             </td>
             <td>
               <button class="btn btn-danger" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">

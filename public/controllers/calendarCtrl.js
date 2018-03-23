@@ -1,16 +1,27 @@
-app.controller('calendarCtrl', function ($scope, $window, httpFactory, moment, calendarConfig) {
+app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
   $scope.save = function(s,e){
-    // console.log("s: "+s);
-    // console.log("e: "+e);
-    $scope.startDate = s;
-    $scope.endDate = e;
+    console.log("s: "+s);
+    console.log("e: "+e);
+    var res =$filter('limitTo')(s, 2);
 
+    console.log("res: "+res);
+
+
+    console.log("$scope.startDate with filter : "+$filter('date')(s, "EEE MMM dd y"));
+  
+    console.log("$scope.endDate with filter: "+$filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
+    $scope.startDate = $filter('date')(s, "EEE MMM dd y");
+    $scope.endDate = $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'");
+    $scope.endDateRes = $scope.startDate+' '+$scope.endDate;
+    $scope.urlDate =  $filter('date')(s, "EEEMMMddyHHmmss");
+    console.log("$scope.endDateRes: "+    $scope.endDateRes);
   }
   $scope.eventSend = function (res, name, id, email,start, end ,startAt, endAt, primColor) {
     console.log("eventSend-->");
-    console.log("startAt: " + startAt)
+    console.log("startAt: " + startAt);
+    var url = document.getElementById('linkToShare').innerHTML;
 
     var api = "https://vc4all.in/vc/eventSend";
     console.log("api: " + api);
@@ -21,10 +32,11 @@ app.controller('calendarCtrl', function ($scope, $window, httpFactory, moment, c
       "studId": id,
       "email": email,
       "start":$scope.startDate,
-      "end":$scope.endDate,
+      "end":$scope.endDateRes,
       "startAt": startAt,
       "endAt": endAt,
-      "primColor":primColor
+      "primColor":primColor,
+      "url":url+"/"+$scope.urlDate
 
     }
     console.log("obj: " + JSON.stringify(obj));
@@ -79,7 +91,7 @@ app.controller('calendarCtrl', function ($scope, $window, httpFactory, moment, c
 
       }
       else {
-        alert("Event get Failed");
+        //alert("Event get Failed");
 
       }
 
