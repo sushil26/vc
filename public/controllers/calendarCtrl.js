@@ -20,43 +20,71 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   }
   $scope.eventSend = function (res, name, id, email,start, end ,startAt, endAt, primColor) {
     console.log("eventSend-->");
-    console.log("startAt: " + startAt);
-    var url = document.getElementById('linkToShare').innerHTML;
 
-    var api = "https://vc4all.in/vc/eventSend";
-    //var api = "http://localhost:5000/vc/eventSend";
-    console.log("api: " + api);
+    var SIGNALING_SERVER = "https://vc4all.in";
+    var queryLink = null;
+    var peerNew_id = null;
+var url;
+    signaling_socket = io(SIGNALING_SERVER);
 
-    var obj = {
-      "reason": res,
-      "studName": name,
-      "studId": id,
-      "email": email,
-      "start":$scope.startDate,
-      "end":$scope.endDateRes,
-      "startAt": startAt,
-      "endAt": endAt,
-      "primColor":primColor,
-      "url":url+"/"+$scope.urlDate
+    signaling_socket.on('connect', function () {
+        console.log("signaling_socket connect-->");
+        
+        if (disconnPeerId != null) {
+            location.reload();
+            disconnPeerId = null;
+        }
 
-    }
-    console.log("obj: " + JSON.stringify(obj));
+        signaling_socket.on('message', function (config) {
+            console.log("signaling_socket message-->");
+            
+            queryLink = config.queryId;
+            peerNew_id = config.peer_id;
 
-    httpFactory.post(api, obj).then(function (data) {
-      var checkStatus = httpFactory.dataValidation(data);
-      console.log("data--" + JSON.stringify(data.data));
-      if (checkStatus) {
+            url = "https://vc4all.in/client/" + peerNew_id+"/"+url;
 
-        console.log("data" + JSON.stringify(data.data))
-        // $window.location.href = $scope.propertyJson.R082;
-        alert("Successfully sent the event "+data.data.message);
-      }
-      else {
-        alert("Event Send Failed");
+            var api = "https://vc4all.in/vc/eventSend";
+            //var api = "http://localhost:5000/vc/eventSend";
+            console.log("api: " + api);
+        
+            var obj = {
+              "reason": res,
+              "studName": name,
+              "studId": id,
+              "email": email,
+              "start":$scope.startDate,
+              "end":$scope.endDateRes,
+              "startAt": startAt,
+              "endAt": endAt,
+              "primColor":primColor,
+              "url":url
+        
+            }
+            console.log("obj: " + JSON.stringify(obj));
+        
+            httpFactory.post(api, obj).then(function (data) {
+              var checkStatus = httpFactory.dataValidation(data);
+              console.log("data--" + JSON.stringify(data.data));
+              if (checkStatus) {
+        
+                console.log("data" + JSON.stringify(data.data))
+                // $window.location.href = $scope.propertyJson.R082;
+                alert("Successfully sent the event "+data.data.message);
+              }
+              else {
+                alert("Event Send Failed");
+        
+              }
+        
+            })
 
-      }
-
+        })
     })
+
+    console.log("startAt: " + startAt);
+    // var url = document.getElementById('linkToShare').innerHTML;
+
+    
 
   }
 
