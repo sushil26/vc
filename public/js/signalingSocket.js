@@ -1,9 +1,10 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
 var SIGNALING_SERVER = "https://vc4all.in";
-// var SIGNALING_SERVER = "http://localhost:5000";
+ //var SIGNALING_SERVER = "http://localhost:5000";
 //var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
+var userName = null;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -13,6 +14,9 @@ var MUTE_AUDIO_BY_DEFAULT = false;
 var videoReaderRecord = new FileReader();
 
 if (localStorage.getItem("userData")) {
+
+  var  userData = localStorage.getItem("userData");
+  userName = userData.userName;
     document.getElementById("appLogin").style.display = 'none';
     document.getElementById("appLogout").style.display = 'block';
     document.getElementById("videoConferenceUrl").style.display = 'block';
@@ -40,6 +44,7 @@ function logVC() {
 
     $.ajax({
         url: "https://vc4all.in/vc/login4VC",
+       //url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -87,7 +92,7 @@ function sessionSet(data) {
         // Retrieve
         var info = localStorage.getItem("userData");
         alert("info: " + info);
-
+        userName = info.userName;
         // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
     } else {
         alert("Sorry, your browser does not support Web Storage...");
@@ -165,7 +170,7 @@ var peerNew_id = null;
 var queryLink = null;
 var timeLink = null;
 var txtQueryLink = null;
-var userName = null;
+
 signaling_socket = io(SIGNALING_SERVER);
 var file;
 var disconnPeerId = null;
