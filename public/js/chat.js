@@ -98,6 +98,7 @@ if (localStorage.getItem("userData")) {
     console.log("localStorage.getItem(userData): "+localStorage.getItem("userData"));
     console.log("localStorage.getItem(userData).stringify: "+JSON.stringify(localStorage.getItem("userData")));
     console.log("userData: "+userData);
+    console.log("userData.userName: "+userData.userName);
     console.log("userData.strigify: "+JSON.stringify(userData));
     userName = userData.userName;
     console.log("userName-->: "+userName);
