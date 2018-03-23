@@ -23,8 +23,8 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     console.log("startAt: " + startAt);
     var url = document.getElementById('linkToShare').innerHTML;
 
-    //var api = "https://vc4all.in/vc/eventSend";
-    var api = "http://localhost:5000/vc/eventSend";
+    var api = "https://vc4all.in/vc/eventSend";
+    //var api = "http://localhost:5000/vc/eventSend";
     console.log("api: " + api);
 
     var obj = {
