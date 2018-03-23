@@ -277,7 +277,12 @@ function init() {
             peerNew_id = config.peer_id;
             timeLink = config.time;
             var dt = new Date();
-            var date = dt.getDay().concat(dt.getFullYear().concat(dt.getMonth().concat(dt.getHours())));
+            var dy = dt.getDay();
+            var fy = dt.getFullYear();
+            var mn = dt.getMonth();
+            var hr = dt.getHours();
+
+            var date = dy.concat(fy.concat(m.concat(hr)));
             
 
             console.log("queryLink: " + queryLink);
