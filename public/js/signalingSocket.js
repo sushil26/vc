@@ -276,7 +276,8 @@ function init() {
             queryLink = config.queryId;
             peerNew_id = config.peer_id;
             timeLink = config.time;
-            var date = new Date();
+            var date = new Date('YYYY-MM-DDTHH:mm:ss');
+            
 
             console.log("queryLink: " + queryLink);
             console.log("peerNew_id: " + peerNew_id);
