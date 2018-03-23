@@ -94,7 +94,7 @@ function sessionSet(data) {
          localStorage.setItem("email", data.data.email);
         // Retrieve
         var info = localStorage.getItem("userData");
-        alert("info: " + info);
+        // alert("info: " + info);
         userName = info.userName;
         // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
     } else {
@@ -277,7 +277,7 @@ function init() {
             peerNew_id = config.peer_id;
             timeLink = config.time;
             var dt = new Date();
-            var date = dt.getDate();
+            var date = dt.getDay.concat(dt.getFullYear.concat(dt.getMonth.concat(dt.getHours)));
             
 
             console.log("queryLink: " + queryLink);

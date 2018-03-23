@@ -1,90 +1,90 @@
 app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
-  $scope.save = function(s,e){
-    console.log("s: "+s);
-    console.log("e: "+e);
-    var res =$filter('limitTo')(s, 2);
+  $scope.save = function (s, e) {
+    console.log("s: " + s);
+    console.log("e: " + e);
+    var res = $filter('limitTo')(s, 2);
 
-    console.log("res: "+res);
+    console.log("res: " + res);
 
 
-    console.log("$scope.startDate with filter : "+$filter('date')(s, "EEE MMM dd y"));
-  
-    console.log("$scope.endDate with filter: "+$filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
+    console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
+
+    console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
     $scope.startDate = $filter('date')(s, "EEE MMM dd y");
     $scope.endDate = $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'");
-    $scope.endDateRes = $scope.startDate+' '+$scope.endDate;
-    $scope.urlDate =  $filter('date')(s, "EEEMMMddyHHmmss");
-    console.log("$scope.endDateRes: "+    $scope.endDateRes);
+    $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
+    $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
+    console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
-  $scope.eventSend = function (res, name, id, email,start, end ,startAt, endAt, primColor) {
+  $scope.eventSend = function (res, name, id, email, start, end, startAt, endAt, primColor) {
     console.log("eventSend-->");
 
     var SIGNALING_SERVER = "https://vc4all.in";
     var queryLink = null;
     var peerNew_id = null;
-var url;
+    var url;
     signaling_socket = io(SIGNALING_SERVER);
 
     signaling_socket.on('connect', function () {
-        console.log("signaling_socket connect-->");
-        
-        if (disconnPeerId != null) {
-            location.reload();
-            disconnPeerId = null;
+      console.log("signaling_socket connect-->");
+
+      if (disconnPeerId != null) {
+        location.reload();
+        disconnPeerId = null;
+      }
+
+      signaling_socket.on('message', function (config) {
+        console.log("signaling_socket message-->");
+
+        queryLink = config.queryId;
+        peerNew_id = config.peer_id;
+
+        url = "https://vc4all.in/client/" + peerNew_id + "/" + url;
+
+        var api = "https://vc4all.in/vc/eventSend";
+        //var api = "http://localhost:5000/vc/eventSend";
+        console.log("api: " + api);
+
+        var obj = {
+          "reason": res,
+          "studName": name,
+          "studId": id,
+          "email": email,
+          "start": $scope.startDate,
+          "end": $scope.endDateRes,
+          "startAt": startAt,
+          "endAt": endAt,
+          "primColor": primColor,
+          "url": url
+
         }
+        console.log("obj: " + JSON.stringify(obj));
 
-        signaling_socket.on('message', function (config) {
-            console.log("signaling_socket message-->");
-            
-            queryLink = config.queryId;
-            peerNew_id = config.peer_id;
+        httpFactory.post(api, obj).then(function (data) {
+          var checkStatus = httpFactory.dataValidation(data);
+          console.log("data--" + JSON.stringify(data.data));
+          if (checkStatus) {
 
-            url = "https://vc4all.in/client/" + peerNew_id+"/"+url;
+            console.log("data" + JSON.stringify(data.data))
+            // $window.location.href = $scope.propertyJson.R082;
+            alert("Successfully sent the event " + data.data.message);
+          }
+          else {
+            alert("Event Send Failed");
 
-            var api = "https://vc4all.in/vc/eventSend";
-            //var api = "http://localhost:5000/vc/eventSend";
-            console.log("api: " + api);
-        
-            var obj = {
-              "reason": res,
-              "studName": name,
-              "studId": id,
-              "email": email,
-              "start":$scope.startDate,
-              "end":$scope.endDateRes,
-              "startAt": startAt,
-              "endAt": endAt,
-              "primColor":primColor,
-              "url":url
-        
-            }
-            console.log("obj: " + JSON.stringify(obj));
-        
-            httpFactory.post(api, obj).then(function (data) {
-              var checkStatus = httpFactory.dataValidation(data);
-              console.log("data--" + JSON.stringify(data.data));
-              if (checkStatus) {
-        
-                console.log("data" + JSON.stringify(data.data))
-                // $window.location.href = $scope.propertyJson.R082;
-                alert("Successfully sent the event "+data.data.message);
-              }
-              else {
-                alert("Event Send Failed");
-        
-              }
-        
-            })
+          }
 
         })
+
+      })
     })
 
     console.log("startAt: " + startAt);
     // var url = document.getElementById('linkToShare').innerHTML;
 
-    
+
 
   }
 
@@ -103,7 +103,7 @@ var url;
           var obj = {
             'title': 'An Event',
             'color': $scope.eventData[x].primColor,
-            'startsAt':new Date($scope.eventData[x].start),
+            'startsAt': new Date($scope.eventData[x].start),
             'endsAt': new Date($scope.eventData[x].end),
             'draggable': true,
             'resizable': true,
@@ -112,10 +112,10 @@ var url;
           }
           console.log(" obj" + JSON.stringify(obj))
           vm.events.push(obj);
-         
+
         }
 
-       
+
         // $window.location.href = $scope.propertyJson.R082;
 
       }
@@ -126,7 +126,7 @@ var url;
 
     })
   }
-   $scope.eventGet();
+  $scope.eventGet();
 
   var vm = this;
 
@@ -154,7 +154,7 @@ var url;
     //   resizable: true,
     //   actions: actions
     // }
-  
+
     // {
     //   title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
     //   color: calendarConfig.colorTypes.info,
