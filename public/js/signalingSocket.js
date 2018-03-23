@@ -88,7 +88,7 @@ function sessionSet(data) {
             "status": data.data.status,
             "email": data.data.email
         }
-        localStorage.setItem("userData", JSON.stringify(userData));
+        localStorage.setItem("userData", userData);
         // localStorage.setItem("status", data.data.status);
         // localStorage.setItem("email", data.data.email);
         // Retrieve
