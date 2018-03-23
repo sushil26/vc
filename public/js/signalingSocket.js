@@ -18,7 +18,7 @@ if (localStorage.getItem("userData")) {
   var  userData = localStorage.getItem("userData");
   userName = userData.userName;
   console.log("userData: "+userData);
-  console.log("userName: "+userName);
+  console.log("userData.userName;: "+userData.userName);
     document.getElementById("appLogin").style.display = 'none';
     document.getElementById("appLogout").style.display = 'block';
     document.getElementById("videoConferenceUrl").style.display = 'block';
