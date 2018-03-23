@@ -52,7 +52,7 @@ module.exports.eventSend = function(req, res) {
                     from: "logeswari.careator@gmail.com",
                     to: req.body.email,
                     subject: "Regarding School Meeting",
-                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have attend meeting regarding <b>"+req.body.reason+" </b>please open the below link at sharp "+req.body.start+" to +"+req.body.endAt+" +</p><p>Here your link for meeting "+req.body.url+"</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>"+req.body.reason+" </b>please open the below link at sharp "+req.body.start+" to +"+req.body.endAt+" +</p><p>Here your link for meeting "+req.body.url+"</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                 };
                 console.log("mailOptions: "+JSON.stringify(mailOptions));
                 
