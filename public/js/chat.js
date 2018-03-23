@@ -4,6 +4,7 @@ var count = 0;
 var imageReader = new FileReader();
 var videoReader = new FileReader();
 var fileReader = new FileReader();
+var userName;
 
 //#####  Start Auto Link Js #####//
     (function () {
@@ -91,6 +92,17 @@ function sendMessage() {
 
     var msg = document.getElementById('message').value;
 
+
+if (localStorage.getItem("userData")) {
+    var userData = localStorage.getItem("userData");
+    userName = userData.userName;
+    console.log("userName-->: "+userName);
+    }
+    else{
+        console.log("NOOOOOOOOOOOOO Session data");
+    }
+    
+
     // var file = e.target.files[0];
     if (userName != null) {
 
@@ -153,7 +165,7 @@ function sendMessage() {
     }
     else {
         console.log("You haven't set name");
-        $('#setName').trigger('click');
+       // $('#setName').trigger('click');
     }
     console.log("<--Upload");
 

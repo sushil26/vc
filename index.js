@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json({
     limit: '100mb'
 }));
+
 module.exports = function(app, config) {
 	//app.set('view engine','html');
 	
