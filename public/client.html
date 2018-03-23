@@ -81,6 +81,12 @@
                     <li>
                         <a href="#contact">Contact Us</a>
                     </li>
+                    <li ng-hide="userData.status=='active' || userData.status=='inactive'">
+                        <a href="#" data-target="#crdntl" data-toggle="modal">Login</a>
+                    </li>
+                    <li ng-show="userData.status=='active' || userData.status=='inactive'">
+                        <a href="#" ng-click="vcLogout()">logout</a>
+                    </li>
                 </ul>
             </nav>
             <!-- #nav-menu-container -->
