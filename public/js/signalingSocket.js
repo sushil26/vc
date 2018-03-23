@@ -282,7 +282,7 @@ function init() {
             var m = dt.getMonth();
             var hr = dt.getHours();
 
-            var date = dy.concat(fy.concat(m.concat(hr)));
+            var date = dy.concat(fy, m, hr));
             
 
             console.log("queryLink: " + queryLink);
