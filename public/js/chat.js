@@ -357,7 +357,7 @@ imageReader.onload = function (e) {
 
     // share image
     // TODO try stream?
-    signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
+    signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
     console.log("<--imageReader.onload");
 };
 
@@ -368,7 +368,7 @@ videoReader.onload = function (e) {
     scrollDown();
 // 
     // share video
-    signaling_socket.emit('file',  { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName, 'dataURI': targetResult, 'type': 'video' });
+    signaling_socket.emit('file',  { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'video' });
     console.log("<--videoReader.onload");
 };
 fileReader.onload = function (e) {
@@ -379,7 +379,7 @@ fileReader.onload = function (e) {
 
     // share image
     // TODO try stream?
-    signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName, 'dataURI': targetResult, 'type': 'doc' });
+    signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'doc' });
     console.log("<--fileReader.onload");
 };
 
