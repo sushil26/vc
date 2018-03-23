@@ -15,8 +15,10 @@ var videoReaderRecord = new FileReader();
 
 if (localStorage.getItem("userData")) {
 
-  var  userData = localStorage.getItem("userData");
-  userName = userData.userName;
+  var  userData = JSON.stringify(localStorage.getItem("userData"));
+  userName = localStorage.getItem("userName");
+  console.log("userData: "+userData);
+  console.log("userName: "+userName);
     document.getElementById("appLogin").style.display = 'none';
     document.getElementById("appLogout").style.display = 'block';
     document.getElementById("videoConferenceUrl").style.display = 'block';
@@ -86,12 +88,13 @@ function sessionSet(data) {
             "status": data.data.status,
             "email": data.data.email
         }
-        localStorage.setItem("userData", JSON.stringify(userData));
-        // localStorage.setItem("status", data.data.status);
-        // localStorage.setItem("email", data.data.email);
+        localStorage.setItem("userData", userData);
+        localStorage.setItem("userName", data.data.userName);
+        localStorage.setItem("status", data.data.status);
+         localStorage.setItem("email", data.data.email);
         // Retrieve
         var info = localStorage.getItem("userData");
-        alert("info: " + info);
+        // alert("info: " + info);
         userName = info.userName;
         // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
     } else {
@@ -273,7 +276,9 @@ function init() {
             queryLink = config.queryId;
             peerNew_id = config.peer_id;
             timeLink = config.time;
-            var date = new Date();
+            var dt = new Date();
+            var date = dt.getDay.concat(dt.getFullYear).concat(dt.getMonth).concat(dt.getHours);
+            
 
             console.log("queryLink: " + queryLink);
             console.log("peerNew_id: " + peerNew_id);

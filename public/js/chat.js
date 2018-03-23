@@ -4,7 +4,7 @@ var count = 0;
 var imageReader = new FileReader();
 var videoReader = new FileReader();
 var fileReader = new FileReader();
-var userName;
+// var userName;
 
 //#####  Start Auto Link Js #####//
     (function () {
@@ -86,27 +86,27 @@ function DisplayCurrentTime() {
 
     console.log("<--DisplayCurrentTime");
 };
-
+if (localStorage.getItem("userData")) {
+    // var userData = localStorage.getItem("userData");
+    // console.log("localStorage.getItem(userData).status: "+localStorage.getItem("userData").status);
+    // console.log("localStorage.getItem(userData).stringify: "+JSON.stringify(localStorage.getItem("userData")));
+    // console.log("userData: "+userData);
+    // console.log("userData.status: "+userData.status);
+    // console.log("userData.userName: "+userData.userName);
+    // console.log("userData.strigify: "+JSON.stringify(userData));
+    // userName = userData.userName;
+    console.log("userName-->: "+userName);
+    }
+    else{
+        console.log("NOOOOOOOOOOOOO Session data");
+    }
 function sendMessage() {
     console.log("sendMsg-->");
 
     var msg = document.getElementById('message').value;
 
 
-if (localStorage.getItem("userData")) {
-    var userData = localStorage.getItem("userData");
-    console.log("localStorage.getItem(userData).status: "+localStorage.getItem("userData").status);
-    console.log("localStorage.getItem(userData).stringify: "+JSON.stringify(localStorage.getItem("userData")));
-    console.log("userData: "+userData);
-    console.log("userData.status: "+userData.status);
-    console.log("userData.userName: "+userData.userName);
-    console.log("userData.strigify: "+JSON.stringify(userData));
-    userName = userData.userName;
-    console.log("userName-->: "+userName);
-    }
-    else{
-        console.log("NOOOOOOOOOOOOO Session data");
-    }
+
     
 
     // var file = e.target.files[0];
@@ -120,7 +120,7 @@ if (localStorage.getItem("userData")) {
             if (msg) {
                 console.log("Start to emit message  ");
                 console.log("peerNew_id: " + peerNew_id);
-                signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+                signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
                 document.getElementById('message').value = "";
             }
 
