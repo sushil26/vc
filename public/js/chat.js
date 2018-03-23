@@ -94,6 +94,7 @@ function sendMessage() {
 
 
 if (localStorage.getItem("userData")) {
+    console.log("localStorage.getItem(userData): "+JSON.stringify(localStorage.getItem("userData")));
     userName = localStorage.getItem("userData").userName;
     console.log("userName-->: "+userName);
     }
