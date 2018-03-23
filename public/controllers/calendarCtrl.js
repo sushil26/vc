@@ -23,7 +23,8 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     console.log("startAt: " + startAt);
     var url = document.getElementById('linkToShare').innerHTML;
 
-    var api = "https://vc4all.in/vc/eventSend";
+    //var api = "https://vc4all.in/vc/eventSend";
+    var api = "http://localhost:5000/vc/eventSend";
     console.log("api: " + api);
 
     var obj = {
@@ -48,7 +49,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
         console.log("data" + JSON.stringify(data.data))
         // $window.location.href = $scope.propertyJson.R082;
-        alert("Successfully sent the event "+data.data.data[0].message);
+        alert("Successfully sent the event "+data.data.message);
       }
       else {
         alert("Event Send Failed");
