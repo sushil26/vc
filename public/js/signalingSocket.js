@@ -276,7 +276,8 @@ function init() {
             queryLink = config.queryId;
             peerNew_id = config.peer_id;
             timeLink = config.time;
-            var date = new Date('YYYY-MM-DDTHH:mm:ss');
+            var dt = new Date();
+            var date = dt.getDate()+date.getFullYear();
             
 
             console.log("queryLink: " + queryLink);
