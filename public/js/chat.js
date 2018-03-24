@@ -171,7 +171,7 @@ function sendMessage() {
     }
     else {
         console.log("You haven't set name");
-       // $('#setName').trigger('click');
+       $('#setName').trigger('click');
     }
     console.log("<--Upload");
 
