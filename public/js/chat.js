@@ -372,7 +372,7 @@ imageReader.onload = function (e) {
 
     // share image
     // TODO try stream?
-    // signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
+     signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
     console.log("<--imageReader.onload");
 };
 
