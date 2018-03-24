@@ -403,8 +403,9 @@ signaling_socket.on('file', function (data) {
     console.log("data.queryLink: " + data.queryLink);
     console.log("queryLink: " + queryLink);
     if (data.queryId == queryLink) {
-        appendFile(data.dataURI, data.type, data.userName, data.queryId);
+       // appendFile(data.dataURI, data.type, data.userName, data.queryId);
     }
+    
     console.log("<--File Request from Server");
     // appendFile(dataURI, type, from);
     scrollDown();
