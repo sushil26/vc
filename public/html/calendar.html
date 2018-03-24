@@ -138,52 +138,63 @@
 
         <thead style="background-color:deepskyblue;">
           <tr>
+              <th>Sr.no</th>
             <th>Event Name</th>
-            <!-- <th>Primary color</th>
-            <th>Secondary color</th> -->
-            <th>Starts at</th>
-            <th>Ends at</th>
+          <th>color</th>
+             <!--  <th>Secondary color</th> -->
+            <th>Timings</th>
+    
             <th>Edit</th>
           </tr>
         </thead>
 
         <tbody>
           <tr ng-repeat="event in vm.events track by $index">
-            <td>
+            <td>{{$index+1}}.</td>
+              <td>
               <input type="text" class="form-control" ng-model="event.title">
             </td>
-            <!-- <td>
-              <input class="form-control" colorpicker type="text" ng-model="event.color.primary">
+          <td>
+              <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Color
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" style="background-color:red" >Red</a>
+                    <a class="dropdown-item" style="background-color:green">Green</a>
+                    <a class="dropdown-item" style="background-color:Orange">Orange</a>
+                    <a class="dropdown-item" style="background-color:yellow">Yellow</a>
+                    <a class="dropdown-item" style="background-color:pink">Pink</a>
+                    <a class="dropdown-item" style="background-color:purple">purple</a>
+                    <a class="dropdown-item" style="background-color:blue">blue</a>
+                   
+                  </div>
+                </div>
+              <!-- <input class="form-control" colorpicker type="text" ng-model="event.color.primary"> -->
             </td>
-            <td>
+            <!--   <td>
               <input class="form-control" colorpicker type="text" ng-model="event.color.secondary">
             </td> -->
             <td>
-              <p class="input-group" style="max-width: 250px">
+              <p class="input-group">
                 <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
                   close-text="Close">
-                <span class="input-group-btn">
+              
                   <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
-                </span>
+                </input>
+              
               </p>
+           <div class="row" style="padding:2%;">
               <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true">
               </div>
-
-            </td>
-            <td>
-                <p class="input-group" style="max-width: 250px">
-                    <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
-                    close-text="Close">
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
-                      <i class="glyphicon glyphicon-calendar"></i>
-                    </button>
-                  </span>
-                  </p>
-              <div  uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true">
+              &nbspTo&nbsp
+            <div  uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true">
               </div>
+            </div>
+         
+              
             </td>
             <td>
               <button class="btn btn-success"  style="width: 70px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
