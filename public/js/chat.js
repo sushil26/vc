@@ -4,7 +4,22 @@ var count = 0;
 var imageReader = new FileReader();
 var videoReader = new FileReader();
 var fileReader = new FileReader();
-// var userName;
+var userName;
+
+
+function setNameBtn() {
+    console.log("setName-->");
+
+    userName = document.getElementById('userName').value;
+    if(userName){
+        sendMessage();
+    }
+    /* ie, if we've already been initialized */
+    // return userName;
+    //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+    console.log("<--setName");
+
+}
 
 //#####  Start Auto Link Js #####//
     (function () {

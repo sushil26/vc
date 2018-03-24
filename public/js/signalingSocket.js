@@ -184,16 +184,16 @@ var peerStream = null;
 
 
 
-function setNameBtn() {
-    console.log("setName-->");
+// function setNameBtn() {
+//     console.log("setName-->");
 
-    userName = document.getElementById('userName').value;
-    /* ie, if we've already been initialized */
-    return userName;
-    //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
-    console.log("<--setName");
+//     userName = document.getElementById('userName').value;
+//     /* ie, if we've already been initialized */
+//     return userName;
+//     //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+//     console.log("<--setName");
 
-}
+// }
 
 // function schedMeet() {
 //     // window.location = "https://logchat.herokuapp.com/schedMeet";
