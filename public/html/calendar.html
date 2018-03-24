@@ -3,13 +3,18 @@
 <head>
   <title>Video Conference</title>
   <script src="/js/socket.io-1.4.5.js"></script>
-<!-- <script src="/js/calendarSocket.js"></script> -->
+  <!-- <script src="/js/calendarSocket.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="vcApp.js"></script>
   <script src="vcAppCtrl.js"></script>
+
+
+  <link href="https://unpkg.com/bootstrap@3/dist/css/bootstrap.css" rel="stylesheet">
+  <link href="https://unpkg.com/angular-bootstrap-colorpicker@3/css/colorpicker.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
 
 
   <script src="/common/httpFactory.js"></script>
@@ -74,7 +79,7 @@
       </div>
     </header>
     <div ui-view style="margin-left:2%;margin-right:2%">
-<a href="" id="linkToShare"></a>
+      <a href="" id="linkToShare"></a>
       <!-- <div id='calendar' style="margin-top:10%;"></div> -->
 
       <h2 class="text-center" style="margin-top:10%;">{{ vm.calendarTitle }}</h2>
@@ -131,117 +136,94 @@
 
       <table class="table table-bordered">
 
-        <thead>
+        <thead style="background-color:deepskyblue;">
           <tr>
-            <th>Title</th>
-            <th>Primary color</th>
-            <th>Secondary color</th>
+            <th>Event Name</th>
+            <!-- <th>Primary color</th>
+            <th>Secondary color</th> -->
             <th>Starts at</th>
             <th>Ends at</th>
-            <th>Remove</th>
+            <th>Edit</th>
           </tr>
         </thead>
 
         <tbody>
           <tr ng-repeat="event in vm.events track by $index">
-
-           
             <td>
               <input type="text" class="form-control" ng-model="event.title">
             </td>
-            <td>
+            <!-- <td>
               <input class="form-control" colorpicker type="text" ng-model="event.color.primary">
             </td>
             <td>
               <input class="form-control" colorpicker type="text" ng-model="event.color.secondary">
-            </td>
+            </td> -->
             <td>
               <p class="input-group" style="max-width: 250px">
-                <input type="text" 
-                class="form-control" 
-                readonly 
-                uib-datepicker-popup="dd MMMM yyyy" 
-                ng-model="event.startsAt" 
-                is-open="event.startOpen"
+                <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
                   close-text="Close">
                 <span class="input-group-btn">
-                  <button 
-                  type="button" 
-                  class="btn btn-default" 
-                  ng-click="vm.toggle($event, 'startOpen', event)" >
+                  <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
-              </p>-<div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true">
+              </p>
+              <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true">
               </div>
 
             </td>
             <td>
-              
-               <!--<p class="input-group" style="max-width: 250px">
-            <input
-              type="text"
-              class="form-control"
-              readonly
-              uib-datepicker-popup="dd MMMM yyyy"
-              ng-model="event.endsAt"
-              is-open="event.endOpen"
-              close-text="Close">
-            <span class="input-group-btn">
-              <button
-                type="button"
-                class="btn btn-default"
-                ng-click="vm.toggle($event, 'endOpen', event)">
-                <i class="glyphicon glyphicon-calendar"></i>
-              </button>
-            </span>
-          </p>-->
-
-
-              <div style="margin-top:92px;" uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true">
+                <p class="input-group" style="max-width: 250px">
+                    <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
+                    close-text="Close">
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
+                  </p>
+              <div  uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true">
               </div>
-
             </td>
             <td>
-              <button class="btn btn-danger" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
+              <button class="btn btn-success"  style="width: 70px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
                 Save
               </button>
-              <button class="btn btn-danger" ng-click="vm.events.splice($index, 1)">
+              <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">
                 Delete
               </button>
               <button data-target="#event" id="crdbuttn" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"
-              ng-click="login()">Login</button>
-            <div class="modal fade" id="event" role="dialog">
-              <div class="modal-dialog">
-                <center>
-                  <!-- Modal content-->
-                  <div class="modal-content" style="color:#777;max-width:350px;">
-                    <div class="modal-header" style="background-color: gold;">
-                      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                      <h4 class="modal-title">Please Enter Details</h4>
-                    </div>
-                    <div class="modal-body">
+                ng-click="login()">Login</button>
+              <div class="modal fade" id="event" role="dialog">
+                <div class="modal-dialog">
+                  <center>
+                    <!-- Modal content-->
+                    <div class="modal-content" style="color:#777;max-width:350px;">
+                      <div class="modal-header" style="background-color: gold;">
+                        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                        <h4 class="modal-title">Please Enter Details</h4>
+                      </div>
+                      <div class="modal-body">
 
-                      <input type="text" ng-model="studName" class="form-control" placeholder="Student Name">
-                      <br>
-                      <input type="text" ng-model="studId" class="form-control" placeholder="Student Id">
-                      <br>
-                      <input type="email" ng-model="pEmail" class="form-control" placeholder="Enter EmailId">
-                      <br>
-                      <textarea ng-model="eventReason" class="form-control" placeholder="Reason for Event"></textarea>
+                        <input type="text" ng-model="studName" class="form-control" placeholder="Student Name">
+                        <br>
+                        <input type="text" ng-model="studId" class="form-control" placeholder="Student Id">
+                        <br>
+                        <input type="email" ng-model="pEmail" class="form-control" placeholder="Enter EmailId">
+                        <br>
+                        <textarea ng-model="eventReason" class="form-control" placeholder="Reason for Event"></textarea>
 
+                      </div>
+                      <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 10px;">
+                        <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(eventReason,studName, studId, pEmail,  event.startsAt, event.endsAt ,event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.color.primary)"
+                          data-dismiss="modal">Submit</button>
+
+                      </div>
                     </div>
-                    <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 10px;">
-                      <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(eventReason,studName, studId, pEmail,  event.startsAt, event.endsAt ,event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.color.primary)"
-                        data-dismiss="modal">Submit</button>
-                     
-                    </div>
-                  </div>
-                </center>
+                  </center>
+                </div>
               </div>
-            </div>
             </td>
-
           </tr>
         </tbody>
 
