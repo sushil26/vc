@@ -399,8 +399,8 @@ signaling_socket.on('file', function (data) {
     console.log("data.queryLink: " + data.queryLink);
     console.log("queryLink: " + queryLink);
     if (data.queryId == queryLink) {
-        appendFile(data.dataURI, data.type, data.userName, data.queryId);
-        scrollDown();
+        // appendFile(data.dataURI, data.type, data.userName, data.queryId);
+        // scrollDown();
     }
     else {
         console.log("Sorry query id is not equall with queryLink");
