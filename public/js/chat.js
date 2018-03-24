@@ -4,7 +4,22 @@ var count = 0;
 var imageReader = new FileReader();
 var videoReader = new FileReader();
 var fileReader = new FileReader();
-// var userName;
+var userName;
+
+
+function saveName() {
+    console.log("setName-->");
+
+    userName = document.getElementById('userName').value;
+    if(userName){
+        sendMessage();
+    }
+    /* ie, if we've already been initialized */
+    // return userName;
+    //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+    console.log("<--setName");
+
+}
 
 //#####  Start Auto Link Js #####//
     (function () {
@@ -171,7 +186,7 @@ function sendMessage() {
     }
     else {
         console.log("You haven't set name");
-       // $('#setName').trigger('click');
+       $('#setName').trigger('click');
     }
     console.log("<--Upload");
 
@@ -357,7 +372,7 @@ imageReader.onload = function (e) {
 
     // share image
     // TODO try stream?
-    signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
+     signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
     console.log("<--imageReader.onload");
 };
 
@@ -388,8 +403,9 @@ signaling_socket.on('file', function (data) {
     console.log("data.queryLink: " + data.queryLink);
     console.log("queryLink: " + queryLink);
     if (data.queryId == queryLink) {
-        appendFile(data.dataURI, data.type, data.userName, data.queryId);
+       // appendFile(data.dataURI, data.type, data.userName, data.queryId);
     }
+    
     console.log("<--File Request from Server");
     // appendFile(dataURI, type, from);
     scrollDown();

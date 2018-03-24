@@ -1,7 +1,7 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
 var SIGNALING_SERVER = "https://vc4all.in";
-// var SIGNALING_SERVER = "http://localhost:5000";
+//var SIGNALING_SERVER = "http://localhost:5000";
 //var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
 var userName = null;
@@ -127,6 +127,7 @@ function regVc() {
     };
     $.ajax({
         url: "https://vc4all.in/vc/register4VC",
+        //url: "http://localhost:5000/vc/register4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -183,16 +184,16 @@ var peerStream = null;
 
 
 
-function setNameBtn() {
-    console.log("setName-->");
+// function setNameBtn() {
+//     console.log("setName-->");
 
-    userName = document.getElementById('userName').value;
-    /* ie, if we've already been initialized */
-    return userName;
-    //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
-    console.log("<--setName");
+//     userName = document.getElementById('userName').value;
+//     /* ie, if we've already been initialized */
+//     return userName;
+//     //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+//     console.log("<--setName");
 
-}
+// }
 
 // function schedMeet() {
 //     // window.location = "https://logchat.herokuapp.com/schedMeet";
