@@ -11,7 +11,7 @@ function saveName() {
     console.log("setName-->");
 
     userName = document.getElementById('userName').value;
-    if(userName){
+    if (userName) {
         sendMessage();
     }
     /* ie, if we've already been initialized */
@@ -22,40 +22,40 @@ function saveName() {
 }
 
 //#####  Start Auto Link Js #####//
-    (function () {
-        var autoLink,
-            slice = [].slice;
+(function () {
+    var autoLink,
+        slice = [].slice;
 
-        autoLink = function () {
-            var callback, k, linkAttributes, option, options, pattern, v;
-            options = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-            pattern = /(^|[\s\n]|<[A-Za-z]*\/?>)((?:https?|ftp):\/\/[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
-            if (!(options.length > 0)) {
-                return this.replace(pattern, "$1<a href='$2'>$2</a>");
-            }
-            option = options[0];
-            callback = option["callback"];
-            linkAttributes = ((function () {
-                var results;
-                results = [];
-                for (k in option) {
-                    v = option[k];
-                    if (k !== 'callback') {
-                        results.push(" " + k + "='" + v + "'");
-                    }
+    autoLink = function () {
+        var callback, k, linkAttributes, option, options, pattern, v;
+        options = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+        pattern = /(^|[\s\n]|<[A-Za-z]*\/?>)((?:https?|ftp):\/\/[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
+        if (!(options.length > 0)) {
+            return this.replace(pattern, "$1<a href='$2'>$2</a>");
+        }
+        option = options[0];
+        callback = option["callback"];
+        linkAttributes = ((function () {
+            var results;
+            results = [];
+            for (k in option) {
+                v = option[k];
+                if (k !== 'callback') {
+                    results.push(" " + k + "='" + v + "'");
                 }
-                return results;
-            })()).join('');
-            return this.replace(pattern, function (match, space, url) {
-                var link;
-                link = (typeof callback === "function" ? callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url + "</a>");
-                return "" + space + link;
-            });
-        };
+            }
+            return results;
+        })()).join('');
+        return this.replace(pattern, function (match, space, url) {
+            var link;
+            link = (typeof callback === "function" ? callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url + "</a>");
+            return "" + space + link;
+        });
+    };
 
-        String.prototype['autoLink'] = autoLink;
+    String.prototype['autoLink'] = autoLink;
 
-    }).call(this);
+}).call(this);
 
 
 function autoLinkNeed() {
@@ -110,11 +110,11 @@ if (localStorage.getItem("userData")) {
     // console.log("userData.userName: "+userData.userName);
     // console.log("userData.strigify: "+JSON.stringify(userData));
     // userName = userData.userName;
-    console.log("userName-->: "+userName);
-    }
-    else{
-        console.log("NOOOOOOOOOOOOO Session data");
-    }
+    console.log("userName-->: " + userName);
+}
+else {
+    console.log("NOOOOOOOOOOOOO Session data");
+}
 function sendMessage() {
     console.log("sendMsg-->");
 
@@ -122,7 +122,7 @@ function sendMessage() {
 
 
 
-    
+
 
     // var file = e.target.files[0];
     if (userName != null) {
@@ -186,7 +186,7 @@ function sendMessage() {
     }
     else {
         console.log("You haven't set name");
-       $('#setName').trigger('click');
+        $('#setName').trigger('click');
     }
     console.log("<--Upload");
 
@@ -288,10 +288,6 @@ signaling_socket.on('emailSendInfo', function (data) {
 })
 
 
-
-
-
-
 function playAudioForNotify() {
     console.log("playAudioForNotify-->");
     var snd = new Audio("./click.mp3"); // buffers automatically when created
@@ -326,7 +322,7 @@ function appendFile(URI, type, name, queryId) {
         }
         else if (type === 'video') {
             console.log("video-->");
-          
+
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
                 + name + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><video width="320" height="240" controls><source src="' + URI + '"></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
 
@@ -372,7 +368,7 @@ imageReader.onload = function (e) {
 
     // share image
     // TODO try stream?
-     signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
+    signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
     console.log("<--imageReader.onload");
 };
 
@@ -381,9 +377,9 @@ videoReader.onload = function (e) {
     var targetResult = e.target.result;
 
     scrollDown();
-// 
+    // 
     // share video
-    signaling_socket.emit('file',  { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'video' });
+    signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'video' });
     console.log("<--videoReader.onload");
 };
 fileReader.onload = function (e) {
@@ -404,11 +400,15 @@ signaling_socket.on('file', function (data) {
     console.log("queryLink: " + queryLink);
     if (data.queryId == queryLink) {
         appendFile(data.dataURI, data.type, data.userName, data.queryId);
+        scrollDown();
     }
-    
+    else {
+        console.log("Sorry query id is not equall with queryLink");
+    }
+
     console.log("<--File Request from Server");
     // appendFile(dataURI, type, from);
-    scrollDown();
+
 
 });
 
