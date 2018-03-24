@@ -267,7 +267,7 @@ function init() {
         // console.log("1.1:peers: " + JSON.stringify(peers));
         // console.log("1.1:Connected to signaling server");
         if (disconnPeerId != null) {
-            location.reload();
+            // location.reload();
             disconnPeerId = null;
         }
 
