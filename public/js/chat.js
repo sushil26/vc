@@ -7,7 +7,7 @@ var fileReader = new FileReader();
 var userName;
 
 
-function setNameBtn() {
+function saveName() {
     console.log("setName-->");
 
     userName = document.getElementById('userName').value;
