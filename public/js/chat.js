@@ -152,23 +152,23 @@ function sendMessage() {
             console.log("file.size: " + file.size);
             console.log("MAX_UPLOAD_SIZE: " + MAX_UPLOAD_SIZE + "MAX_UPLOAD_SIZE * 1000 * 1000: " + MAX_UPLOAD_SIZE * 1000 * 1000);
             if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
-                console.log('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
+                alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
             }
-            // else if (file.type.substring(0, 5) === 'image') {
-            //     console.log("Image");
-            //     // upload image  
-            //     imageReader.readAsDataURL(file);
-            // }
-            // else if (file.type.substring(0, 5) === 'video') {
+            else if (file.type.substring(0, 5) === 'image') {
+                console.log("Image");
+                // upload image  
+                imageReader.readAsDataURL(file);
+            }
+            else if (file.type.substring(0, 5) === 'video') {
 
-            //     console.log("Video");
-            //     // uplaod video  
-            //     videoReader.readAsDataURL(file);
-            // }
-            // else {
-            //     console.log("other from sendMessage");
-            //     fileReader.readAsDataURL(file);
-            // }
+                console.log("Video");
+                // uplaod video  
+                videoReader.readAsDataURL(file);
+            }
+            else {
+                console.log("other from sendMessage");
+                fileReader.readAsDataURL(file);
+            }
 
             // }
             // else {
@@ -372,7 +372,7 @@ imageReader.onload = function (e) {
 
     // share image
     // TODO try stream?
-    signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
+    // signaling_socket.emit('file', { 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, 'dataURI': targetResult, 'type': 'image' });
     console.log("<--imageReader.onload");
 };
 
