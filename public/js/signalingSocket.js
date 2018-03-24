@@ -267,7 +267,7 @@ function init() {
         // console.log("1.1:peers: " + JSON.stringify(peers));
         // console.log("1.1:Connected to signaling server");
         if (disconnPeerId != null) {
-          //  location.reload();
+            location.reload();
             disconnPeerId = null;
         }
 
@@ -1366,7 +1366,7 @@ signaling_socket.on('stateChangedToClient', function (data) {
     console.log("data.userId: " + data.userId);
     console.log("peerNew_id: " + peerNew_id);
     if (data.userId == peerNew_id) {
-        //window.location.reload(true);
+        window.location.reload(true);
     }
     console.log("<--newstateChangedToClientTextMsg");
 })
