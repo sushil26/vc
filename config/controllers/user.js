@@ -151,7 +151,7 @@ module.exports.getUserData= function(req, res) {
             responseData = {
                 "status": true,
                 "message": "Successfull retrived data",
-                "data": listOfevents
+                "data": listOfUser
             }
            
           
