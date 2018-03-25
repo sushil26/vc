@@ -41,7 +41,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
 
             }
             else {
-                //alert("Event get Failed");
+                alert("Status updated failed, try again ");
 
             }
 
