@@ -132,3 +132,35 @@ module.exports.eventGet = function(req, res) {
     })
 
 }
+
+module.exports.deleteEvent = function(req, res) {
+    console.log("deleteEvent-->");
+    if(general.emptyCheck(req.body.id)){
+        var id ={
+            "_id": ObjectId(req.body.id)
+        }
+        event.remove(id, function (err, data) {
+            if (err) {
+                console.log("Failed to delete  data");
+                responseData = {
+                    "status": false,
+                    "message": "Failed to delete",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "Deleted Sucessfully",
+                    "data": data
+                }
+                res.status(200).send(responseData);
+            }
+        })
+
+
+    }
+    console.log("<--deleteEvent");
+
+}

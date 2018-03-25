@@ -200,7 +200,10 @@
               <button class="btn btn-success"  style="width: 70px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
                 Save
               </button>
-              <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">
+              <!-- <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">
+                Delete
+              </button> -->
+              <button class="btn btn-danger"  style="width: 70px;"ng-click="deleteEvent(event.id)">
                 Delete
               </button>
               <button data-target="#event" id="crdbuttn" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"

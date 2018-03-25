@@ -1,6 +1,31 @@
 app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
+  $scope.deleteEvent = function (id) {
+    console.log("deleteEvent-->");
+    var api = "https://vc4all.in/vc/deleteEvent";
+
+    var obj = {
+      "id": id
+    }
+    httpFactory.post(api, obj).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+
+        console.log("data" + JSON.stringify(data.data))
+        // $window.location.href = $scope.propertyJson.R082;
+        alert("Successfully sent the event " + data.data.message);
+      }
+      else {
+        alert("Event Send Failed");
+
+      }
+
+    })
+    console.log("<--deleteEvent");
+  }
+
   $scope.save = function (s, e) {
     console.log("s: " + s);
     console.log("e: " + e);
@@ -101,6 +126,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         for (var x = 0; x < $scope.eventData.length; x++) {
           console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
           var obj = {
+            'id': $scope.eventData[x]._id,
             'title': 'An Event',
             'color': $scope.eventData[x].primColor,
             'startsAt': new Date($scope.eventData[x].start),
