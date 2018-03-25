@@ -15,10 +15,10 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
         console.log("data" + JSON.stringify(data.data))
         // $window.location.href = $scope.propertyJson.R082;
-        alert("Successfully sent the event " + data.data.message);
+        alert(data.data.message);
       }
       else {
-        alert("Event Send Failed");
+        alert("Event Delete Failed");
 
       }
 
