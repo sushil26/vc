@@ -1,9 +1,11 @@
 app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
-  $scope.deleteEvent = function (id) {
+  $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");
     var api = "https://vc4all.in/vc/deleteEvent";
+
+    vm.events.splice(index,1);
 
     var obj = {
       "id": id
