@@ -94,11 +94,11 @@ app.get("/client/:id/:time", function (req, res) {
     res.sendFile(__dirname + '/public/client.html');
 });
 
-app.get("/calendar", function (req, res) {
+app.get("/mainPage", function (req, res) {
     // queryId = req.params.id;
-    console.log("queryId: " + req.params.id);
+ 
     console.log("start to render page");
-    res.sendFile(__dirname + '/public/html/calendar.html');
+    res.sendFile(__dirname + '/public/html/mainPage.html');
 });
 
 

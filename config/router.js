@@ -6,8 +6,10 @@ module.exports = function (app) {
 
     app.post('/vc/register4VC', user.register4VC);
     app.post('/vc/login4VC', user.login4VC);
+    app.get('/vc/getUserData', user.getUserData);
     
     app.post('/vc/eventSend', event.eventSend);
     app.get('/vc/eventGet', event.eventGet);
     app.post('/vc/deleteEvent', event.deleteEvent);
+   
 }

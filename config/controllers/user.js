@@ -133,3 +133,34 @@ var responseData;
     console.log("<==login");
 
 }
+
+module.exports.getUserData= function(req, res) {
+    console.log("getUserData-->");
+    var responseData;
+    user.find().toArray(function(err, listOfUser){ 
+        if (err) {
+               
+            responseData = {
+                "status": false,
+                "message": "Failed to get Data",
+                "data": data
+            }
+            res.status(400).send(responseData);
+        }
+        else{
+            responseData = {
+                "status": true,
+                "message": "Successfull retrived data",
+                "data": listOfevents
+            }
+           
+          
+
+            res.status(200).send(responseData);   
+        }
+       
+    })
+
+
+    console.log("<--getUserData");
+}

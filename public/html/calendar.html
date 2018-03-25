@@ -1,84 +1,5 @@
-<html>
 
-<head>
-  <title>Video Conference</title>
-  <script src="/js/socket.io-1.4.5.js"></script>
-  <!-- <script src="/js/calendarSocket.js"></script> -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-  <script src="/bower_components/angular/angular.min.js"></script>
-  <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="vcApp.js"></script>
-  <script src="vcAppCtrl.js"></script>
-
-
-  <link href="https://unpkg.com/bootstrap@3/dist/css/bootstrap.css" rel="stylesheet">
-  <link href="https://unpkg.com/angular-bootstrap-colorpicker@3/css/colorpicker.min.css" rel="stylesheet">
-  <link href="https://unpkg.com/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
-
-
-  <script src="/common/httpFactory.js"></script>
-  <script src="/common/socketFactory.js"></script>
-  <script src="/common/sessionAuthFactory.js"></script>
-  <script src="/bower_components/moment/min/moment.min.js"></script>
-  <link rel="stylesheet" href="/bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
-  <script src="/bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
-  <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
-  <script src="/controllers/calendarCtrl.js"></script>
-  <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="/home/lib/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/chatZone.css" />
-  <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
-  <link href="/home/css/style.css" rel="stylesheet">
-  <script src="/js/clientmain.js"></script>
-  <script src="/home/lib/wow/wow.min.js"></script>
-  <script src="/home/lib/easing/easing.min.js"></script>
-</head>
-
-<body>
-
-
-  <div ng-app="vcApp" ng-controller="calendarCtrl as vm">
-
-    <header id="header" style="background: rgba(52, 59, 64, 0.9);padding: 20px; height: 72px;transition: all 0.5s;">
-      <div class="container">
-
-        <div id="logo" class="pull-left">
-          <span>
-            <img style="float:left;" src="/home/img/icon.png" />
-            <h1 style="color:azure;float:left;">{{title}}</h1>
-            </img>
-          </span>
-        </div>
-
-        <nav id="nav-menu-container">
-          <ul class="nav-menu">
-            <li class="menu-active">
-              <a href="/">Home</a>
-            </li>
-            <li>
-              <a href="#portfolio">Conference</a>
-            </li>
-
-            <li id="fdb" style="display:none">
-              <a href="#feedback">Feedback</a>
-            </li>
-
-            <li>
-              <a href="#contact">Contact Us</a>
-            </li>
-            <li>
-              <a href="#">Logout</a>
-            </li>
-
-
-          </ul>
-        </nav>
-
-      </div>
-    </header>
-    <div ui-view style="margin-left:5%;margin-right:5%">
+    <div style="margin-left:5%;margin-right:5%" ng-controller="calendarCtrl as vm">
       <a href="" id="linkToShare"></a>
       <!-- <div id='calendar' style="margin-top:10%;"></div> -->
 
@@ -138,12 +59,12 @@
 
         <thead style="background-color:deepskyblue;">
           <tr>
-              <th>Sr.no</th>
+            <th>Sr.no</th>
             <th>Event Name</th>
-          <th>color</th>
-             <!--  <th>Secondary color</th> -->
+            <th>color</th>
+            <!--  <th>Secondary color</th> -->
             <th>Timings</th>
-    
+
             <th>Edit</th>
           </tr>
         </thead>
@@ -151,25 +72,26 @@
         <tbody>
           <tr ng-repeat="event in vm.events track by $index">
             <td>{{$index+1}}.</td>
-              <td>
+            <td>
               <input type="text" class="form-control" ng-model="event.title">
             </td>
-          <td>
+            <td>
               <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
                   Color
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" style="background-color:red" >Red</a>
-                    <a class="dropdown-item" style="background-color:green">Green</a>
-                    <a class="dropdown-item" style="background-color:Orange">Orange</a>
-                    <a class="dropdown-item" style="background-color:yellow">Yellow</a>
-                    <a class="dropdown-item" style="background-color:pink">Pink</a>
-                    <a class="dropdown-item" style="background-color:purple">purple</a>
-                    <a class="dropdown-item" style="background-color:blue">blue</a>
-                   
-                  </div>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" style="background-color:red">Red</a>
+                  <a class="dropdown-item" style="background-color:green">Green</a>
+                  <a class="dropdown-item" style="background-color:Orange">Orange</a>
+                  <a class="dropdown-item" style="background-color:yellow">Yellow</a>
+                  <a class="dropdown-item" style="background-color:pink">Pink</a>
+                  <a class="dropdown-item" style="background-color:purple">purple</a>
+                  <a class="dropdown-item" style="background-color:blue">blue</a>
+
                 </div>
+              </div>
               <!-- <input class="form-control" colorpicker type="text" ng-model="event.color.primary"> -->
             </td>
             <!--   <td>
@@ -179,31 +101,31 @@
               <p class="input-group">
                 <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
                   close-text="Close">
-              
-                  <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                  </button>
+
+                <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
                 </input>
-              
+
               </p>
-           <div class="row" style="padding:2%;">
-              <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true">
+              <div class="row" style="padding:2%;">
+                <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true">
+                </div>
+                &nbspTo&nbsp
+                <div uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true">
+                </div>
               </div>
-              &nbspTo&nbsp
-            <div  uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true">
-              </div>
-            </div>
-         
-              
+
+
             </td>
             <td>
-              <button class="btn btn-success"  style="width: 70px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
+              <button class="btn btn-success" style="width: 70px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
                 Save
               </button>
               <!-- <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">
                 Delete
               </button> -->
-              <button class="btn btn-danger"  style="width: 70px;"ng-click="deleteEvent(event.id, $index)">
+              <button class="btn btn-danger" style="width: 70px;" ng-click="deleteEvent(event.id, $index)">
                 Delete
               </button>
               <button data-target="#event" id="crdbuttn" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"
@@ -244,11 +166,3 @@
       </table>
 
     </div>
-
-
-
-  </div>
-
-</body>
-
-</html>
