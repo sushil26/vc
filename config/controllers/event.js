@@ -29,7 +29,9 @@ module.exports.eventSend = function(req, res) {
             "end":req.body.end,
             "startAt":req.body.startAt,
             "endAt":req.body.endAt,
-            "primColor":req.body.primColor
+            "primColor":req.body.primColor,
+            "url":req.body.url,
+            "password":'abc'
     
         }
         console.log("userData: "+JSON.stringify(userData));
@@ -46,9 +48,7 @@ module.exports.eventSend = function(req, res) {
             }
             else{
              
-              
-    
-              
+                      
                 var mailOptions = {
                     from: "logeswari.careator@gmail.com",
                     to: req.body.email,

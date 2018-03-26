@@ -57,10 +57,10 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     signaling_socket.on('connect', function () {
       console.log("signaling_socket connect-->");
 
-      if (disconnPeerId != null) {
-        location.reload();
-        disconnPeerId = null;
-      }
+      // if (disconnPeerId != null) {
+      //   location.reload();
+      //   disconnPeerId = null;
+      // }
 
       signaling_socket.on('message', function (config) {
         console.log("signaling_socket message-->");
@@ -135,7 +135,8 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
             'endsAt': new Date($scope.eventData[x].end),
             'draggable': true,
             'resizable': true,
-            'actions': actions
+            'actions': actions,
+            'url': $scope.eventData[x].url
 
           }
           console.log(" obj" + JSON.stringify(obj))
