@@ -82,26 +82,28 @@ function saveName() {
 
 
             console.log("data: " + JSON.stringify(data));
-            if (data.message == 'Login Successfully') {
-                console.log("login authorized");
-                localStorage.setItem("userData", userData);
-                localStorage.setItem("userName", userName);
-                init();
+            init();
+            // if (data.message == 'Login Successfully') {
+            //     console.log("login authorized");
+            //     localStorage.setItem("userData", userData);
+            //     localStorage.setItem("userName", userName);
+            //     init();
 
-            }
-            else if (data.message == 'Password is not matching') {
+            // }
+            // else if (data.message == 'Password is not matching') {
 
-                console.log("Password is not matching");
-                alert("Password is not matching");
-                $('#setName').trigger('click');
+            //     console.log("Password is not matching");
+            //     alert("Password is not matching");
+            //     $('#setName').trigger('click');
 
-            }
-            else if ('URL is not authorized') {
-                console.log("URL is not authorized");
-                alert("URL is not authorized");
-                window.location.href = "https://vc4all.in";
+            // }
+            // else if ('URL is not authorized') {
+            //     console.log("URL is not authorized");
+            //     alert("URL is not authorized");
+            //     window.location.href = "https://vc4all.in";
 
-            }
+            // }
+
 
         }
 
