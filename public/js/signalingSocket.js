@@ -14,11 +14,11 @@ var MUTE_AUDIO_BY_DEFAULT = false;
 var videoReaderRecord = new FileReader();
 
 if (localStorage.getItem("userData")) {
-console.log("User Name from session: "+localStorage.getItem("userData"));
-  var  userData = JSON.stringify(localStorage.getItem("userData"));
-  userName = localStorage.getItem("userName");
-  console.log("userData: "+userData);
-  console.log("userName: "+userName);
+    console.log("User Name from session: " + localStorage.getItem("userData"));
+    var userData = JSON.stringify(localStorage.getItem("userData"));
+    userName = localStorage.getItem("userName");
+    console.log("userData: " + userData);
+    console.log("userName: " + userName);
     document.getElementById("appLogin").style.display = 'none';
     document.getElementById("appLogout").style.display = 'block';
     document.getElementById("videoConferenceUrl").style.display = 'block';
@@ -27,17 +27,31 @@ console.log("User Name from session: "+localStorage.getItem("userData"));
     init();
 
 }
-else{
-    if (localStorage.getItem("userName")) {
-        console.log("User Name from session: " + localStorage.getItem("userName"));
-        userName = localStorage.getItem("userName");
-        init();
+else {
+
+    var url = window.location.href;
+    var stuff = url.split('/');
+    var id1 = stuff[stuff.length - 2];
+    var id2 = stuff[stuff.length - 3];
+    console.log("stuff.length: "+stuff.length);
+    console.log("id1**: "+id1);
+    console.log("id2**: "+id2);
+    if(stuff.length>5){
+        if (localStorage.getItem("userName")) {
+            console.log("User Name from session: " + localStorage.getItem("userName"));
+            userName = localStorage.getItem("userName");
+            init();
     
+        }
+        else {
+            console.log("No user data from session");
+            $('#setName').trigger('click');
+        }
+
     }
-    else {
-        console.log("No user data from session");
-        $('#setName').trigger('click');
-    }
+
+
+   
 }
 
 function saveName() {
@@ -63,7 +77,7 @@ function saveName() {
             var userData = {
                 "userName": userName,
             }
-          
+
 
             console.log("data: " + JSON.stringify(data));
             if (data.message == 'Login Successfully') {
@@ -83,7 +97,7 @@ function saveName() {
             else if ('URL is not authorized') {
                 console.log("URL is not authorized");
                 alert("URL is not authorized");
-                window.location.href="https://vc4all.in";
+                window.location.href = "https://vc4all.in";
 
             }
 
@@ -91,7 +105,7 @@ function saveName() {
 
     })
 
-   
+
     console.log("<--setName");
 
 }
@@ -116,7 +130,7 @@ function logVC() {
 
     $.ajax({
         url: "https://vc4all.in/vc/login4VC",
-       //url: "http://localhost:5000/vc/login4VC",
+        //url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -161,7 +175,7 @@ function sessionSet(data) {
         localStorage.setItem("userData", userData);
         localStorage.setItem("userName", data.data.userName);
         localStorage.setItem("status", data.data.status);
-         localStorage.setItem("email", data.data.email);
+        localStorage.setItem("email", data.data.email);
         // Retrieve
         var info = localStorage.getItem("userData");
         // alert("info: " + info);
@@ -357,7 +371,7 @@ function init() {
             var hr = dt.getHours().toString();
 
             var date = dy.concat(fy, m, hr);
-            
+
 
             console.log("queryLink: " + queryLink);
             console.log("peerNew_id: " + peerNew_id);
@@ -371,9 +385,9 @@ function init() {
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
 
-                    document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
-                    document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                    document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
+                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
 
                 // }
                 // else {
@@ -433,14 +447,14 @@ function init() {
 
 
                 // $('#myModal').modal('hide');
-                 setup_local_media(function () {
-                //     /* once the user has given us access to their
-                //      * microphone/camcorder, join the channel and start peering up */
+                setup_local_media(function () {
+                    //     /* once the user has given us access to their
+                    //      * microphone/camcorder, join the channel and start peering up */
 
 
-                     join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
+                    join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
 
-                 })
+                })
 
 
 
@@ -496,7 +510,7 @@ function init() {
         // document.p.innerHTML = channel;
         // document.getElementById("demo").innerHTML = channel;
 
-        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink,  'timeLink': timeLink, 'userName': userName });
+        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
 
         console.log("<--join__channel");
     }
