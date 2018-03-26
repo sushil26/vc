@@ -4,6 +4,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");
     var api = "https://vc4all.in/vc/deleteEvent";
+    //var api = "http://localhost:5000/vc/deleteEvent";
 
     vm.events.splice(index,1);
 
@@ -68,7 +69,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         queryLink = config.queryId;
         peerNew_id = config.peer_id;
 
-        url = "https://vc4all.in/client/" + peerNew_id + "/" + url;
+        url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate ;
 
         var api = "https://vc4all.in/vc/eventSend";
         //var api = "http://localhost:5000/vc/eventSend";
@@ -119,6 +120,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     console.log("eventGet-->");
 
     var api = "https://vc4all.in/vc/eventGet";
+    //var api = "http://localhost:5000/vc/eventGet";
 
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
