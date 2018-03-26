@@ -1024,16 +1024,16 @@ function setup_local_media(callback, errorback) {
             $('#videosAttach').append(local_media);
 
 
-            /* =============Start==================== */
-            $('#record').append('<div><label id="percentage">0%</label><progress id="progress-bar" value=0></progress><br /></div><hr /><div><button id="btn-start-recording">Start Recording</button><button id="btn-stop-recording" disabled="">Stop Recording</button></div>');
-            var btnStartRecording = document.querySelector('#btn-start-recording');
-            var btnStopRecording = document.querySelector('#btn-stop-recording');
-            var videoElement = document.getElementById('videoElem');
-            var progressBar = document.querySelector('#progress-bar');
-            var percentage = document.querySelector('#percentage');
+            // /* =============Start==================== */
+            // $('#record').append('<div><label id="percentage">0%</label><progress id="progress-bar" value=0></progress><br /></div><hr /><div><button id="btn-start-recording">Start Recording</button><button id="btn-stop-recording" disabled="">Stop Recording</button></div>');
+            // var btnStartRecording = document.querySelector('#btn-start-recording');
+            // var btnStopRecording = document.querySelector('#btn-stop-recording');
+            // var videoElement = document.getElementById('videoElem');
+            // var progressBar = document.querySelector('#progress-bar');
+            // var percentage = document.querySelector('#percentage');
 
-            var recorder;
-            var peerRecord;
+            // var recorder;
+            // var peerRecord;
 
             // reusable helpers
 
