@@ -229,7 +229,7 @@ io.sockets.on('connection', function (socket) {
             console.log("join 1.2 [" + socket.id + "] INFO:channel ", channel);
             channels[channel] = {};
         }
-
+        socket.emit('addPeer', { 'peer_id': id, 'should_create_offer': true, 'owner': socket.id, 'queryId': queryId,'time' : time, 'userName': peerWithUserName[id], 'sessionHeaderId': sessionHeaderId });
         for (id in channels[channel]) {
             // console.log("id " + id);
             // console.log("socket.id " + socket.id);
