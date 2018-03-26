@@ -4,13 +4,14 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     // if(localStorage.getItem("loginType")!='admin'){
 
     //   window.location.href="https://vc4all.in";
-      
+
 
     // }
 
     $scope.getUser = function () {
         console.log("getUser-->");
         var api = "https://vc4all.in/vc/getUserData";
+        //var api = "http://localhost:5000/vc/getUserData";
 
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
@@ -30,13 +31,14 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     }
     $scope.getUser();
 
-    $scope.updateUserStatus = function(id,status){
+    $scope.updateUserStatus = function (id, status) {
         console.log("updateUserStatus-->");
         var api = "https://vc4all.in/vc/updateUserStatus";
+        //var api = "http://localhost:5000/vc/updateUserStatus";
 
         var obj = {
-            "id":id,
-            "status":status
+            "id": id,
+            "status": status
         }
 
         httpFactory.post(api, obj).then(function (data) {
@@ -45,7 +47,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
             if (checkStatus) {
                 $scope.userData = data.data.data;
                 console.log(" obj" + JSON.stringify($scope.userData))
-
+                $scope.getUser();
             }
             else {
                 alert("Status updated failed, try again ");
@@ -57,6 +59,6 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
         console.log("<--updateUserStatus");
     }
 
-   
+
 
 })
