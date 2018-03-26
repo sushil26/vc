@@ -36,19 +36,22 @@ else {
     console.log("stuff.length: "+stuff.length);
     console.log("id1**: "+id1);
     console.log("id2**: "+id2);
+    if(stuff.length>5){
+        if (localStorage.getItem("userName")) {
+            console.log("User Name from session: " + localStorage.getItem("userName"));
+            userName = localStorage.getItem("userName");
+            init();
     
-
-
-    if (localStorage.getItem("userName")) {
-        console.log("User Name from session: " + localStorage.getItem("userName"));
-        userName = localStorage.getItem("userName");
-        init();
+        }
+        else {
+            console.log("No user data from session");
+            $('#setName').trigger('click');
+        }
 
     }
-    else {
-        console.log("No user data from session");
-        $('#setName').trigger('click');
-    }
+
+
+   
 }
 
 function saveName() {
