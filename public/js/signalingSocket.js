@@ -1,7 +1,7 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in";
-//var SIGNALING_SERVER = "http://localhost:5000";
+//var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "http://localhost:5000";
 //var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
 var userName = null;
@@ -1163,56 +1163,56 @@ function setup_local_media(callback, errorback) {
             }
 
             // UI events handling
-            document.getElementById("btn-start-recording").addEventListener("click", function () {
-                // btnStartRecording.onclick = function () {
-                console.log("btnStartRecording-->");
-                btnStartRecording.disabled = true;
+            // document.getElementById("btn-start-recording").addEventListener("click", function () {
+            //     // btnStartRecording.onclick = function () {
+            //     console.log("btnStartRecording-->");
+            //     btnStartRecording.disabled = true;
 
-                captureUserMedia(function (stream) {
-                    mediaStream = stream;
+            //     captureUserMedia(function (stream) {
+            //         mediaStream = stream;
 
-                    videoElement.src = window.URL.createObjectURL(stream);
-                    videoElement.play();
-                    videoElement.muted = true;
-                    videoElement.controls = false;
+            //         videoElement.src = window.URL.createObjectURL(stream);
+            //         videoElement.play();
+            //         videoElement.muted = true;
+            //         videoElement.controls = false;
 
-                    recorder = RecordRTC(stream, {
-                        type: 'video'
-                    });
-
-
-                    recorder.startRecording();
-
-                    // enable stop-recording button
-                    btnStopRecording.disabled = false;
-                });
-
-                if (peerStream != null) {
-                    peerRecord = RecordRTC(stream, {
-                        type: 'video'
-                    });
-                    peerRecord.startRecording();
-                }
-
-                console.log("<--btnStartRecording");
-            });
+            //         recorder = RecordRTC(stream, {
+            //             type: 'video'
+            //         });
 
 
-            document.getElementById("btn-stop-recording").addEventListener("click", function () {
-                // btnStopRecording.onclick = function () {
-                btnStartRecording.disabled = false;
-                btnStopRecording.disabled = true;
+            //         recorder.startRecording();
 
-                recorder.stopRecording(postFiles);
+            //         // enable stop-recording button
+            //         btnStopRecording.disabled = false;
+            //     });
 
-                if (peerStream != null) {
-                    peerRecord.stopRecording(postFiles)
-                }
-            });
+            //     if (peerStream != null) {
+            //         peerRecord = RecordRTC(stream, {
+            //             type: 'video'
+            //         });
+            //         peerRecord.startRecording();
+            //     }
 
-            window.onbeforeunload = function () {
-                startRecording.disabled = false;
-            };
+            //     console.log("<--btnStartRecording");
+            // });
+
+
+            // document.getElementById("btn-stop-recording").addEventListener("click", function () {
+            //     // btnStopRecording.onclick = function () {
+            //     btnStartRecording.disabled = false;
+            //     btnStopRecording.disabled = true;
+
+            //     recorder.stopRecording(postFiles);
+
+            //     if (peerStream != null) {
+            //         peerRecord.stopRecording(postFiles)
+            //     }
+            // });
+
+            // window.onbeforeunload = function () {
+            //     startRecording.disabled = false;
+            // };
 
             /* ================End================= */
 
