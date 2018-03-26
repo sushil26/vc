@@ -20,7 +20,8 @@
                 </tr>
               </thead>
               <tbody>
-          <tr ng-repeat="ud in userData">
+          <tr ng-repeat="ud in userData" if="ud.status!='null'">
+
             <td ng-if="ud.status=='active'" style="background-color:aliceblue;">{{ud.userName}}</td>
                   <td ng-if="ud.status=='inactive'"style="background-color:tomato;">{{ud.userName}}</td>
                   <td ng-if="ud.status=='active'" style="background-color:aliceblue;">{{ud.email}}</td>
