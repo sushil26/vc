@@ -24,12 +24,14 @@ if (localStorage.getItem("userData")) {
     document.getElementById("videoConferenceUrl").style.display = 'block';
     document.getElementById("scheduleMeeting").style.display = 'block';
     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+    init();
 
 }
 else{
     if (localStorage.getItem("userName")) {
         console.log("User Name from session: " + userName);
         userName = localStorage.getItem("userName");
+        init();
     
     }
     else {
@@ -67,6 +69,7 @@ function saveName() {
             console.log("data: " + JSON.stringify(data));
             if (data.message == 'Login Successfully') {
                 console.log("login authorized");
+                init();
 
             }
             else if (data.message == 'Password is not matching') {
@@ -132,7 +135,7 @@ function logVC() {
                 document.getElementById("videoConferenceUrl").style.display = 'block';
                 document.getElementById("scheduleMeeting").style.display = 'block';
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
+                init();
             }
             else if (data.message == 'Password is wrong') {
                 alert("Password is wrong");
