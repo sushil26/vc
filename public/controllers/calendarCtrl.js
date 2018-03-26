@@ -1,12 +1,12 @@
 app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
-  if(localStorage.getItem("loginType")!='teacher'){
+  // if(localStorage.getItem("loginType")!='teacher'){
 
-    window.location.href="https://vc4all.in";
+  //   window.location.href="https://vc4all.in";
     
 
-  }
+  // }
 
   $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");

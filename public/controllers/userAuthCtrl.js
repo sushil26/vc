@@ -1,12 +1,12 @@
 app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     console.log("userAuthCtrl==>: " + localStorage.getItem("userData"));
 
-    if(localStorage.getItem("loginType")!='admin'){
+    // if(localStorage.getItem("loginType")!='admin'){
 
-      window.location.href="https://vc4all.in";
+    //   window.location.href="https://vc4all.in";
       
 
-    }
+    // }
 
     $scope.getUser = function () {
         console.log("getUser-->");
