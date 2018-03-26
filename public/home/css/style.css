@@ -590,7 +590,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* Services Section
 --------------------------------*/
 #services {
-  background: #00bcd4;
+background: darkturquoise;
   background-size: cover;
   padding: 80px 0 60px 0;
 }

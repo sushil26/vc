@@ -2,28 +2,29 @@
     <head>
         <title>User Authentication</title>
     </head> -->
-<div  style="margin-left:5%;margin-right:5%;margin-top:15%;" ng-controller="userAuthCtrl">
+<div style="margin-top: 85px;" ng-controller="userAuthCtrl">
 
-        <h1>Welcome to AUser Authentication Page</h1>
+      
 
        
         <div class="container">
-            <h2>Admin Table</h2>
+            <h2>Teacher List</h2>
                    
             <table class="table table-bordered">
               <thead>
-                <tr>
+                <tr style="background: darkturquoise;">
                   <th>Userame</th>
                   <th>Email</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  <th>Activation</th>
                 </tr>
               </thead>
               <tbody>
           <tr ng-repeat="ud in userData">
                   <td>{{ud.userName}}</td>
                   <td>{{ud.email}}</td>
-                  <td>{{ud.status}}</td>
+                  <td ng-if="ud.status=='inactive'"style="background-color:tomato;">{{ud.status}}</td>
+                  <td ng-if="ud.status=='active'" style="background-color:turquoise;">{{ud.status}}</td>
                 
                   <td><button ng-click="updateUserStatus(ud._id)">switch</button></td>
                 </tr>
