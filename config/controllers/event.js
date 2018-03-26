@@ -173,6 +173,7 @@ module.exports.parentCredential = function (req, res) {
         
         event.find({'url':req.body.url}).toArray(function (err, data) {
             if (data.length > 0) {
+                console.log("data[0].password: "+data[0].password);
                 if (data[0].password == req.body.pswd) {
                     console.log("Successfully Logged in");
                     responseData = {
