@@ -33,27 +33,25 @@ else {
     var stuff = url.split('/');
     var id1 = stuff[stuff.length - 2];
     var id2 = stuff[stuff.length - 3];
-    console.log("stuff.length: " + stuff.length);
-    console.log("id1**: " + id1);
-    console.log("id2**: " + id2);
-    if (stuff.length > 5) {
+    console.log("stuff.length: "+stuff.length);
+    console.log("id1**: "+id1);
+    console.log("id2**: "+id2);
+    if(stuff.length>5){
         if (localStorage.getItem("userName")) {
             console.log("User Name from session: " + localStorage.getItem("userName"));
             userName = localStorage.getItem("userName");
             init();
-
+    
         }
         else {
             console.log("No user data from session");
             $('#setName').trigger('click');
-        //    userName="logu";
-        //     init();
         }
 
     }
 
 
-
+   
 }
 
 function saveName() {
@@ -82,28 +80,26 @@ function saveName() {
 
 
             console.log("data: " + JSON.stringify(data));
-            init();
-            // if (data.message == 'Login Successfully') {
-            //     console.log("login authorized");
-            //     localStorage.setItem("userData", userData);
-            //     localStorage.setItem("userName", userName);
-            //     init();
+            if (data.message == 'Login Successfully') {
+                console.log("login authorized");
+                localStorage.setItem("userData", userData);
+                localStorage.setItem("userName", userName);
+                init();
 
-            // }
-            // else if (data.message == 'Password is not matching') {
+            }
+            else if (data.message == 'Password is not matching') {
 
-            //     console.log("Password is not matching");
-            //     alert("Password is not matching");
-            //     $('#setName').trigger('click');
+                console.log("Password is not matching");
+                alert("Password is not matching");
+                $('#setName').trigger('click');
 
-            // }
-            // else if ('URL is not authorized') {
-            //     console.log("URL is not authorized");
-            //     alert("URL is not authorized");
-            //     window.location.href = "https://vc4all.in";
+            }
+            else if ('URL is not authorized') {
+                console.log("URL is not authorized");
+                alert("URL is not authorized");
+                window.location.href = "https://vc4all.in";
 
-            // }
-
+            }
 
         }
 
@@ -163,8 +159,8 @@ function logVC() {
                 alert("There is no match for this EMail id from student database ");
             }
 
-            if (data.loginType == 'admin') {
-                window.location.href = "https://vc4all.in/mainPage#!/userAuth";
+            if(data.loginType=='admin'){
+                window.location.href="https://vc4all.in/mainPage#!/userAuth";
             }
         }
 
@@ -1023,30 +1019,11 @@ function setup_local_media(callback, errorback) {
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $();
             local_media.attr("autoplay", "autoplay");
-            local_media.attr("muted", "0"); /* always mute ourselves by default */
-            local_media.attr("volume", "0");
-
+            local_media.attr("muted", "true"); /* always mute ourselves by default */
             // local_media.attr("controls", "");
             local_media.attr("id", "videoElem");
             local_media.attr("style", "border:1px solid skyblue;display:inline !important");
 
-            var context = new (window.AudioContext || window.webkitAudioContext)();
-            
-            var sineWave = context.createOscillator();
-
-            // Declare gain node
-            var gainNode = context.createGain();
-
-            // Connect sine wave to gain node
-            sineWave.connect(gainNode);
-
-            // Connect gain node to speakers
-            gainNode.connect(context.destination);
-
-            // Play sine wave
-            //sineWave.noteOn(0);
-
-            gainNode.gain.value = 0.9;
 
             // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-items" + ">");
             // $('#videosAttach').after("<div class=" + "details" + "><h4>App 1</h4><span>Alored dono par</span></div></div>");
@@ -1192,7 +1169,57 @@ function setup_local_media(callback, errorback) {
                 });
             }
 
+            // UI events handling
+            // document.getElementById("btn-start-recording").addEventListener("click", function () {
+            //     // btnStartRecording.onclick = function () {
+            //     console.log("btnStartRecording-->");
+            //     btnStartRecording.disabled = true;
 
+            //     captureUserMedia(function (stream) {
+            //         mediaStream = stream;
+
+            //         videoElement.src = window.URL.createObjectURL(stream);
+            //         videoElement.play();
+            //         videoElement.muted = true;
+            //         videoElement.controls = false;
+
+            //         recorder = RecordRTC(stream, {
+            //             type: 'video'
+            //         });
+
+
+            //         recorder.startRecording();
+
+            //         // enable stop-recording button
+            //         btnStopRecording.disabled = false;
+            //     });
+
+            //     if (peerStream != null) {
+            //         peerRecord = RecordRTC(stream, {
+            //             type: 'video'
+            //         });
+            //         peerRecord.startRecording();
+            //     }
+
+            //     console.log("<--btnStartRecording");
+            // });
+
+
+            // document.getElementById("btn-stop-recording").addEventListener("click", function () {
+            //     // btnStopRecording.onclick = function () {
+            //     btnStartRecording.disabled = false;
+            //     btnStopRecording.disabled = true;
+
+            //     recorder.stopRecording(postFiles);
+
+            //     if (peerStream != null) {
+            //         peerRecord.stopRecording(postFiles)
+            //     }
+            // });
+
+            // window.onbeforeunload = function () {
+            //     startRecording.disabled = false;
+            // };
 
             /* ================End================= */
 
