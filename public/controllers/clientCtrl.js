@@ -40,10 +40,13 @@ app.controller('clientCtrl', function($scope, httpFactory, $window) {
         var api = "http://localhost:8080/vc/login4VC";
         console.log("api: " + api);
 
+       
+
         var obj = {
             "email":email,
             "password": pswd
         }
+       
         httpFactory.post(api, obj).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));

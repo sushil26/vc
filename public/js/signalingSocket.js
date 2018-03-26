@@ -158,6 +158,10 @@ function logVC() {
             else if (data.errorCode == 'No Match') {
                 alert("There is no match for this EMail id from student database ");
             }
+
+            if(data.loginType=='admin'){
+                window.location.href="https://vc4all.in/mainPage#!/userAuth";
+            }
         }
 
     })
