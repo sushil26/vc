@@ -14,7 +14,7 @@ var MUTE_AUDIO_BY_DEFAULT = false;
 var videoReaderRecord = new FileReader();
 
 if (localStorage.getItem("userData")) {
-
+console.log("User Name from session: "+localStorage.getItem("userData"));
   var  userData = JSON.stringify(localStorage.getItem("userData"));
   userName = localStorage.getItem("userName");
   console.log("userData: "+userData);
