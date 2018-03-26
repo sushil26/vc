@@ -31,7 +31,7 @@ module.exports.eventSend = function (req, res) {
             "endAt": req.body.endAt,
             "primColor": req.body.primColor,
             "url": req.body.url,
-            "password": 'password'
+            "password": password
 
         }
         console.log("userData: " + JSON.stringify(userData));
@@ -173,6 +173,9 @@ module.exports.parentCredential = function (req, res) {
         
         event.find({'url':req.body.url}).toArray(function (err, data) {
             if (data.length > 0) {
+                console.log("data[0].password: "+data[0].password);
+                console.log("data[0].url: "+data[0].url);
+                console.log("req.body.pswd: "+req.body.pswd);
                 if (data[0].password == req.body.pswd) {
                     console.log("Successfully Logged in");
                     responseData = {
