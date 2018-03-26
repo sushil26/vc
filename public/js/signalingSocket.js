@@ -44,7 +44,7 @@ function saveName() {
     console.log("setName-->");
 
     userName = document.getElementById('userName').value;
-    pswd = document.getElementById('saveName').value;
+    pswd = document.getElementById('P_pswd').value;
     var obj = {
         "pswd": pswd,
         "url": window.location.href
