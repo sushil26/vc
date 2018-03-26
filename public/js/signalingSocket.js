@@ -14,7 +14,7 @@ var MUTE_AUDIO_BY_DEFAULT = false;
 var videoReaderRecord = new FileReader();
 
 if (localStorage.getItem("userData")) {
-
+console.log("User Name from session: "+localStorage.getItem("userData"));
   var  userData = JSON.stringify(localStorage.getItem("userData"));
   userName = localStorage.getItem("userName");
   console.log("userData: "+userData);
@@ -29,7 +29,7 @@ if (localStorage.getItem("userData")) {
 }
 else{
     if (localStorage.getItem("userName")) {
-        console.log("User Name from session: " + userName);
+        console.log("User Name from session: " + localStorage.getItem("userName"));
         userName = localStorage.getItem("userName");
         init();
     
@@ -63,12 +63,13 @@ function saveName() {
             var userData = {
                 "userName": userName,
             }
-            localStorage.setItem("userData", userData);
-            localStorage.setItem("userName", userName);
+          
 
             console.log("data: " + JSON.stringify(data));
             if (data.message == 'Login Successfully') {
                 console.log("login authorized");
+                localStorage.setItem("userData", userData);
+                localStorage.setItem("userName", userName);
                 init();
 
             }
@@ -176,6 +177,9 @@ function vcLogout() {
     console.log("vcLogout");
     window.location = "https://vc4all.in/client";
     localStorage.removeItem("userData");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("status");
+    localStorage.removeItem("email");
     document.getElementById("appLogin").style.display = 'block';
     document.getElementById("appLogout").style.display = 'none';
     document.getElementById("videoConferenceUrl").style.display = 'none';
