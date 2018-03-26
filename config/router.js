@@ -12,5 +12,6 @@ module.exports = function (app) {
     app.post('/vc/eventSend', event.eventSend);
     app.get('/vc/eventGet', event.eventGet);
     app.post('/vc/deleteEvent', event.deleteEvent);
+    app.post('/vc/parentCredential', event.parentCredential);
    
 }

@@ -6,15 +6,71 @@ var videoReader = new FileReader();
 var fileReader = new FileReader();
 var userName;
 
+if (localStorage.getItem("userName")) {
+    console.log("User Name from session: " + userName);
+    userName = localStorage.getItem("userName");
+
+}
+else {
+    console.log("No user data from session");
+    $('#setName').trigger('click');
+}
+
+
 
 function saveName() {
     console.log("setName-->");
 
     userName = document.getElementById('userName').value;
-    if (userName) {
-        sendMessage();
+    pswd = document.getElementById('saveName').value;
+    var obj = {
+        "pswd": pswd,
+        "url": window.location.href
     }
-    /* ie, if we've already been initialized */
+
+    $.ajax({
+        url: "https://vc4all.in/vc/parentCredential",
+        //url: "http://localhost:5000/vc/login4VC",
+        type: "POST",
+        data: JSON.stringify(obj),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data) {
+            // callback(data);
+
+            var userData = {
+                "userName": userName,
+            }
+            localStorage.setItem("userData", userData);
+            localStorage.setItem("userName", userName);
+
+            console.log("data: " + JSON.stringify(data));
+            if (data.message == 'Login Successfully') {
+                console.log("login authorized");
+
+            }
+            else if (data.message == 'Password is not matching') {
+
+                console.log("Password is not matching");
+                alert("Password is not matching");
+                $('#setName').trigger('click');
+
+            }
+            else if ('URL is not authorized') {
+                console.log("URL is not authorized");
+                alert("URL is not authorized");
+                window.location.href="https://vc4all.in";
+
+            }
+
+        }
+
+    })
+
+    // if (userName) {
+    //     sendMessage();
+    // }
+    // /* ie, if we've already been initialized */
     // return userName;
     //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
     console.log("<--setName");
@@ -186,7 +242,7 @@ function sendMessage() {
     }
     else {
         console.log("You haven't set name");
-        $('#setName').trigger('click');
+       // $('#setName').trigger('click');
     }
     console.log("<--Upload");
 
