@@ -135,7 +135,8 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
             'endsAt': new Date($scope.eventData[x].end),
             'draggable': true,
             'resizable': true,
-            'actions': actions
+            'actions': actions,
+            'url': $scope.eventData[x].url
 
           }
           console.log(" obj" + JSON.stringify(obj))
