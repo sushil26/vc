@@ -1,6 +1,13 @@
 app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
+  if(localStorage.getItem("loginType")!='teacher'){
+
+    window.location.href="https://vc4all.in";
+    
+
+  }
+
   $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");
     var api = "https://vc4all.in/vc/deleteEvent";
@@ -76,6 +83,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         console.log("api: " + api);
 
         var obj = {
+          "userId": localStorage.getItem("id"),
           "reason": res,
           "studName": name,
           "studId": id,
@@ -118,8 +126,8 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
   $scope.eventGet = function () {
     console.log("eventGet-->");
-
-    var api = "https://vc4all.in/vc/eventGet";
+var id= localStorage.getItem("id");
+    var api = "https://vc4all.in/vc/eventGet/:"+id;
     //var api = "http://localhost:5000/vc/eventGet";
 
     httpFactory.get(api).then(function (data) {

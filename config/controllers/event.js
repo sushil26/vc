@@ -21,6 +21,7 @@ module.exports.eventSend = function (req, res) {
     if (general.emptyCheck(req.body.studName) && general.emptyCheck(req.body.studId) && general.emptyCheck(req.body.reason) && general.emptyCheck(req.body.email)) {
         var password = 'abc';
         var userData = {
+            "userId": req.body.userId,
             "reason": req.body.reason,
             "studName": req.body.studName,
             "studId": req.body.studId,
@@ -108,7 +109,11 @@ module.exports.eventSend = function (req, res) {
 module.exports.eventGet = function (req, res) {
     console.log("getEvent-->");
     var responseData;
-    event.find().toArray(function (err, listOfevents) {
+    var id ={
+        userId = req.params.id
+    } 
+
+    event.find(id).toArray(function (err, listOfevents) {
         if (err) {
 
             responseData = {

@@ -174,12 +174,15 @@ function sessionSet(data) {
         var userData = {
             "userName": data.data.userName,
             "status": data.data.status,
-            "email": data.data.email
+            "email": data.data.email,
+            "loginType": data.loginType
         }
         localStorage.setItem("userData", userData);
         localStorage.setItem("userName", data.data.userName);
         localStorage.setItem("status", data.data.status);
         localStorage.setItem("email", data.data.email);
+        localStorage.setItem("loginType", data.loginType);
+        localStorage.setItem("id", data.data._id);
         // Retrieve
         var info = localStorage.getItem("userData");
         // alert("info: " + info);
