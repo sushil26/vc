@@ -63,12 +63,13 @@ function saveName() {
             var userData = {
                 "userName": userName,
             }
-            localStorage.setItem("userData", userData);
-            localStorage.setItem("userName", userName);
+          
 
             console.log("data: " + JSON.stringify(data));
             if (data.message == 'Login Successfully') {
                 console.log("login authorized");
+                localStorage.setItem("userData", userData);
+                localStorage.setItem("userName", userName);
                 init();
 
             }
