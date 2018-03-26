@@ -30,13 +30,13 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     }
     $scope.getUser();
 
-    $scope.updateUserStatus = function(id){
+    $scope.updateUserStatus = function(id,status){
         console.log("updateUserStatus-->");
         var api = "https://vc4all.in/vc/updateUserStatus";
 
         var obj = {
             "id":id,
-            "status":"active"
+            "status":status
         }
 
         httpFactory.post(api, obj).then(function (data) {
@@ -57,5 +57,6 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
         console.log("<--updateUserStatus");
     }
 
+   
 
 })
