@@ -388,10 +388,10 @@ function init() {
 
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
-
-                    document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
-                    document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                    document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                    // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
+                    
+                    // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
 
                 // }
                 // else {
@@ -414,8 +414,8 @@ function init() {
             }
             else {
                 console.log("query id nt null");
-                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client" + config.queryId + "/" + config.time;
-                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + config.queryId + "/" + config.time);
+                // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client" + config.queryId + "/" + config.time;
+                // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + config.queryId + "/" + config.time);
 
 
 
