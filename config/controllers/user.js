@@ -20,7 +20,7 @@ module.exports.register4VC = function (req, res) {
             "userName": req.body.userName,
             "email": req.body.email,
             "password": req.body.password,
-            "status": "active"
+            "status": "inactive"
 
         }
         console.log("userData: " + JSON.stringify(userData));
