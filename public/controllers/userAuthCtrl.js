@@ -23,12 +23,12 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     }
     $scope.getUser();
 
-    $scope.updateUserStatus = function(){
+    $scope.updateUserStatus = function(id){
         console.log("updateUserStatus-->");
         var api = "https://vc4all.in/vc/updateUserStatus";
 
         var obj = {
-            "id":"id",
+            "id":id,
             "status":"active"
         }
 
