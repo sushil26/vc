@@ -109,11 +109,11 @@ module.exports.eventSend = function (req, res) {
 module.exports.eventGet = function (req, res) {
     console.log("getEvent-->");
     var responseData;
-    var id ={
-        userId = req.params.id
-    } 
+    // var id ={
+    //     userId = req.params.id
+    // } 
 
-    event.find(id).toArray(function (err, listOfevents) {
+    event.find().toArray(function (err, listOfevents) {
         if (err) {
 
             responseData = {
