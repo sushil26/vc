@@ -31,7 +31,7 @@ module.exports.eventSend = function (req, res) {
             "endAt": req.body.endAt,
             "primColor": req.body.primColor,
             "url": req.body.url,
-            "password": 'password'
+            "password": password
 
         }
         console.log("userData: " + JSON.stringify(userData));
