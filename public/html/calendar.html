@@ -103,7 +103,7 @@
                 <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
                   close-text="Close">
 
-                <button type="button" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
+                <button type="button" class="btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
                   <i class="glyphicon glyphicon-calendar"></i>
                 </button>
                 </input>
@@ -119,7 +119,9 @@
 
 
             </td>
-            <td><a ng-if="event.url" class="form-control" href="{{event.url}}">Start Conference</a></td>
+            <td><button  class="btn btn-success" ng-if="event.url">
+              <a href="{{event.url}}">Start Conference</a>
+            </button></td>
             <td>
               <button  ng-if="!event.url" class="btn btn-success" style="width: 70px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
                 Save
