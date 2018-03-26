@@ -74,49 +74,77 @@ module.exports.login4VC = function (req, res) {
     // console.log("res.body.email: "+JSON.stringify(req.body.data));
 
     if (general.emptyCheck(req.body.email) && general.emptyCheck(req.body.password)) {
-        user.find({ 'email': req.body.email }).toArray(function (err, data) {
-            if (data.length > 0) {
-                if (data[0].password == req.body.password) {
-                    if (data[0].status == 'active') {
-                        console.log("Successfully Logged in");
-                        responseData = {
-                            "status": true,
-                            "message": "Login Successfully",
-                            "data": data[0]
-                        }
-                        res.status(200).send(responseData);
-                    }
-                    else {
-                        console.log("Profile Inactive");
-                        responseData = {
-                            "status": false,
-                            "message": "Profile Inactive",
-                            "data": data[0]
-                        }
-                        res.status(200).send(responseData);
 
-                    }
-
+        var adminData={
+            "userName":"admin",
+            "status":"inactive",
+            "email":"admin123@gmail.com"
+        }
+        if (req.body.email == 'admin123@gmail.com') {
+            if (req.body.password == 'admin123') {
+                responseData = {
+                    "status": true,
+                    "message": "Login Successfully",
+                    "loginType":"admin",
+                    "data":adminData
                 }
-                else {
-                    responseData = {
-                        "status": false,
-                        "errorCode": "E005",
-                        "message": "Password is wrong"
-                    }
-                    res.status(200).send(responseData);
-                }
+                res.status(200).send(responseData);
             }
             else {
                 responseData = {
                     "status": false,
-                    "errorCode": "No Match",
-                    "message": "There is no match for this EMail id from student database"
+                    "message": "Password is wrong"
                 }
-                res.status(200).send(responseData);
-
+                res.status(400).send(responseData);
             }
-        })
+
+        }
+        else {
+            user.find({ 'email': req.body.email }).toArray(function (err, data) {
+                if (data.length > 0) {
+                    if (data[0].password == req.body.password) {
+                        if (data[0].status == 'active') {
+                            console.log("Successfully Logged in");
+                            responseData = {
+                                "status": true,
+                                "message": "Login Successfully",
+                                "loginType":"teacher",
+                                "data": data[0]
+                            }
+                            res.status(200).send(responseData);
+                        }
+                        else {
+                            console.log("Profile Inactive");
+                            responseData = {
+                                "status": false,
+                                "message": "Profile Inactive",
+                                "data": data[0]
+                            }
+                            res.status(200).send(responseData);
+
+                        }
+
+                    }
+                    else {
+                        responseData = {
+                            "status": false,
+                            "errorCode": "E005",
+                            "message": "Password is wrong"
+                        }
+                        res.status(200).send(responseData);
+                    }
+                }
+                else {
+                    responseData = {
+                        "status": false,
+                        "errorCode": "No Match",
+                        "message": "There is no match for this EMail id from student database"
+                    }
+                    res.status(200).send(responseData);
+
+                }
+            })
+        }
     }
     else {
         console.log("Epty value found");
@@ -174,11 +202,11 @@ module.exports.updateUserStatus = function (req, res) {
             '_id': ObjectId(req.body.id)
         }
         var updatedJson = {
-            
+
             "status": req.body.status
         }
-        user.update(obj,{ $set: updatedJson }, { multi: true }, function (err, data) {
-           
+        user.update(obj, { $set: updatedJson }, { multi: true }, function (err, data) {
+
             if (err) {
 
                 responseData = {
@@ -194,9 +222,9 @@ module.exports.updateUserStatus = function (req, res) {
                     "message": "Successfull updated status",
                     "data": data
                 }
-    
-    
-    
+
+
+
                 res.status(200).send(responseData);
             }
 
