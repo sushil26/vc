@@ -121,13 +121,13 @@
             </td>---{{event.url}}
             <td><a ng-if="event.url" class="form-control" href="event.url">Start Conference</a></td>
             <td>
-              <button class="btn btn-success" style="width: 70px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
+              <button  ng-if="!event.url" class="btn btn-success" style="width: 70px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
                 Save
               </button>
               <!-- <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">
                 Delete
               </button> -->
-              <button class="btn btn-danger" style="width: 70px;" ng-click="deleteEvent(event.id, $index)">
+              <button ng-if="event.url" class="btn btn-danger" style="width: 70px;" ng-click="deleteEvent(event.id, $index)">
                 Delete
               </button>
               <button data-target="#event" id="crdbuttn" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"
