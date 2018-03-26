@@ -175,6 +175,7 @@ module.exports.parentCredential = function (req, res) {
             if (data.length > 0) {
                 console.log("data[0].password: "+data[0].password);
                 console.log("data[0].url: "+data[0].url);
+                console.log("req.body.pswd: "+req.body.pswd);
                 if (data[0].password == req.body.pswd) {
                     console.log("Successfully Logged in");
                     responseData = {
