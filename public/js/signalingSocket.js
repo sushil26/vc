@@ -29,7 +29,7 @@ console.log("User Name from session: "+localStorage.getItem("userData"));
 }
 else{
     if (localStorage.getItem("userName")) {
-        console.log("User Name from session: " + userName);
+        console.log("User Name from session: " + localStorage.getItem("userName"));
         userName = localStorage.getItem("userName");
         init();
     
@@ -176,6 +176,9 @@ function vcLogout() {
     console.log("vcLogout");
     window.location = "https://vc4all.in/client";
     localStorage.removeItem("userData");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("status");
+    localStorage.removeItem("email");
     document.getElementById("appLogin").style.display = 'block';
     document.getElementById("appLogout").style.display = 'none';
     document.getElementById("videoConferenceUrl").style.display = 'none';
