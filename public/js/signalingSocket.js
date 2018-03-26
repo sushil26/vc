@@ -1023,30 +1023,11 @@ function setup_local_media(callback, errorback) {
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $();
             local_media.attr("autoplay", "autoplay");
-            local_media.attr("muted", "0"); /* always mute ourselves by default */
-            local_media.attr("volume", "0");
-
+            local_media.attr("muted", "true"); /* always mute ourselves by default */
             // local_media.attr("controls", "");
             local_media.attr("id", "videoElem");
             local_media.attr("style", "border:1px solid skyblue;display:inline !important");
 
-            var context = new (window.AudioContext || window.webkitAudioContext)();
-            
-            var sineWave = context.createOscillator();
-
-            // Declare gain node
-            var gainNode = context.createGain();
-
-            // Connect sine wave to gain node
-            sineWave.connect(gainNode);
-
-            // Connect gain node to speakers
-            gainNode.connect(context.destination);
-
-            // Play sine wave
-            //sineWave.noteOn(0);
-
-            gainNode.gain.value = 0.9;
 
             // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-items" + ">");
             // $('#videosAttach').after("<div class=" + "details" + "><h4>App 1</h4><span>Alored dono par</span></div></div>");
