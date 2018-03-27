@@ -477,6 +477,7 @@ function init() {
                 // }
 
                 document.getElementById("userNSet").addEventListener("click", function () {
+                    console.log("userNSet-->");
                     setup_local_media(function () {
 
                         join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
