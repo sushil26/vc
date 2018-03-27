@@ -27,8 +27,8 @@ if (localStorage.getItem("userData")) {
     // init();
     $('#userNSet').trigger('click');
 
-    
-  
+
+
 }
 else {
 
@@ -82,39 +82,11 @@ function saveName() {
             var userData = {
                 "userName": userName,
             }
-
-
             console.log("data: " + JSON.stringify(data));
-            // $('#userNSet').trigger('click');
-            // if (data.message == 'Login Successfully') {
-            //     console.log("login authorized");
-            //     localStorage.setItem("userData", userData);
-            //     localStorage.setItem("userName", userName);
-            //     init();
-
-            // }
-            // else if (data.message == 'Password is not matching') {
-
-            //     console.log("Password is not matching");
-            //     alert("Password is not matching");
-            //     $('#setName').trigger('click');
-
-            // }
-            // else if ('URL is not authorized') {
-            //     console.log("URL is not authorized");
-            //     alert("URL is not authorized");
-            //     window.location.href = "https://vc4all.in";
-
-            // }
-
-
         }
 
     })
-
-
     console.log("<--setName");
-
 }
 
 
@@ -129,12 +101,7 @@ function logVC() {
         "password": Password
     };
     console.log("obj: " + JSON.stringify(obj));
-    // var obj = {"data":"test"}
-
     console.log("logVC");
-
-
-
     $.ajax({
         url: "https://vc4all.in/vc/login4VC",
         //url: "http://localhost:5000/vc/login4VC",
@@ -143,8 +110,6 @@ function logVC() {
         contentType: "application/json",
         dataType: 'json',
         success: function (data) {
-            // callback(data);
-
             console.log("data: " + JSON.stringify(data));
             if (data.message == 'Profile Inactive') {
                 alert("Your Profile is inactive, inform your system admin to verify it");
@@ -157,7 +122,7 @@ function logVC() {
                 document.getElementById("videoConferenceUrl").style.display = 'block';
                 document.getElementById("scheduleMeeting").style.display = 'block';
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-                userName= data.data.userName;
+                userName = data.data.userName;
             }
             else if (data.message == 'Password is wrong') {
                 alert("Password is wrong");
@@ -168,7 +133,7 @@ function logVC() {
 
             if (data.loginType == 'admin') {
                 window.location.href = "https://vc4all.in/mainPage#!/userAuth";
-                
+
             }
         }
 
@@ -193,10 +158,9 @@ function sessionSet(data) {
         localStorage.setItem("id", data.data._id);
         // Retrieve
         var info = localStorage.getItem("userData");
-        // alert("info: " + info);
+     
         userName = info.userName;
-        // $('#userNSet').trigger('click');
-        // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+     
     } else {
         alert("Sorry, your browser does not support Web Storage...");
 
@@ -285,45 +249,6 @@ var shareScreen = null;
 var sessionHeader = null;
 var peerStream = null;
 
-
-
-// function setNameBtn() {
-//     console.log("setName-->");
-
-//     userName = document.getElementById('userName').value;
-//     /* ie, if we've already been initialized */
-//     return userName;
-//     //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
-//     console.log("<--setName");
-
-// }
-
-// function schedMeet() {
-//     // window.location = "https://logchat.herokuapp.com/schedMeet";
-//     window.location = "https://vc4all.in/schedMeet";
-
-// }
-
-/* ### Start login Submit   ### */
-// function crdcheck() {
-//     console.log("crdcheck-->");
-//     var uname = document.getElementById('crname').value;
-//     var upass = document.getElementById('crpass').value;
-//     if (uname == 'admin' && upass == 'admin123') {
-//         console.log("Password Matched");
-//         document.getElementById('videoConfStart').enabled = true;
-//     }
-//     else {
-//         console.log("Password Not Matched");
-//         document.getElementById('videoConfStart').disabled = true;
-//         // window.location = "https://logchat.herokuapp.com/client";
-//         window.location = "http://localhost:8080";
-
-//     }
-
-// }
-/* ### End login Submit   ### */
-
 /* ### Start Register Button Click  ### */
 function register() {
     console.log("register-->");
@@ -332,8 +257,6 @@ function register() {
 
 }
 /* ### End Register Button Click ### */
-
-
 function disconnecSession() {
     console.log("disconnecSession-->");
     console.log("sessionHeader: " + sessionHeader);
@@ -349,29 +272,13 @@ function disconnecSession() {
     console.log("-->disconnecSession");
 }
 
-// function startVideoAction() {
-//     setup_localMedia(function () {
-
-
-//         join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
-
-//     })
-// }
-
 
 function init() {
-
-
-
 
     console.log("init-->");
 
     signaling_socket = io(SIGNALING_SERVER);
 
-
-    // $('#setNameId').trigger('click');
-
-    // document.getElementById("screenShareBtn").addEventListener("click", function () {
 
     signaling_socket.on('connect', function () {
         console.log("signaling_socket connect-->");
@@ -396,13 +303,9 @@ function init() {
 
             var date = dy.concat(fy, m, hr);
 
-
             console.log("queryLink: " + queryLink);
             console.log("peerNew_id: " + peerNew_id);
-
             console.log("date: " + date);
-
-
 
             if (config.queryId == null) {
                 console.log("query id is null");
@@ -410,49 +313,11 @@ function init() {
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
                 document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
-                // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-
-                // }
-                // else {
-                //     console.log("query id nt null");
-                //     document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
-                //     document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
-
-
-                //
-
-                // document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
-                // document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
-                // document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
-                // document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + peerNew_id;
-                // document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-                // document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-
-
-
+             
             }
             else {
                 console.log("query id nt null");
-                // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client" + config.queryId + "/" + config.time;
-                // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + config.queryId + "/" + config.time);
-
-
-
-
-
-                // }
-                // else {
-                //     console.log("query id nt null");
-                // document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
-                // document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
-
-
-
-                // document.getElementById('feedback').style.display = 'inline';
-                // document.getElementById('fdb').style.display = 'inline';
-                // document.getElementById('usercontectdtl').style.display = 'inline';
-
+              
                 document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
@@ -460,23 +325,14 @@ function init() {
                 document.getElementById('audio_btn').style.display = 'inline';
                 document.getElementById('diconnect_btn').style.display = 'inline';
                 document.getElementById('videoConferenceLinkExtention').style.display = 'inline';
-
-                console.log("bretrigger");
-                /* ##### Start trigger click for setName automatically  ##### */
-                // $('#setName').trigger('click');
-                /* ##### End trigger click for setName automatically  ##### */
-
-                console.log("Start CallBack");
-
-
+                         
                 if (userName != null) {
-                    // $('#myModal').modal('hide');
+                 
                     setup_local_media(function () {
 
                         join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
                     })
                 }
-
 
                 document.getElementById("setNameId").addEventListener("click", function () {
                     console.log("setup_local_media calling**");
@@ -495,16 +351,12 @@ function init() {
                     })
                 })
 
-
             }
             console.log("<--signaling_socket message");
 
         })
         console.log("<--signaling_socket connect");
     });
-
-
-
 
 
     signaling_socket.on('disconnect', function () {
@@ -545,9 +397,6 @@ function init() {
         signaling_socket.emit('part', channel);
         console.log("<--part__channel");
     }
-
-
-
 
     /** 
     * When we join a group, our signaling server will send out 'addPeer' events to each pair
@@ -953,44 +802,10 @@ function init() {
         console.log('<--authorizedForClose');
     });
 
-
-
-
-
     console.log("<--init");
 
     // <!--------video Controller-------->
-
-
-
 }
-
-// function appendFile_record(URI) {
-//     console.log("appendFile_record-->");
-//     console.log("URI: " + URI);
-//     // console.log("type: " + type);
-
-
-//     var xhrReq = new XMLHttpRequest();
-//     xhrReq.open("GET", "/htmlTemplate/videoRecord.html", true);
-//     xhrReq.onreadystatechange = function () {
-//         if (xhrReq.readyState === 4) {
-//             if (xhrReq.status === 0) {
-//                 document.getElementById('recordedVideos').innerHTML += '<video width="320" height="240" controls src="' + URI + '"></video>';
-//             }
-//         }
-//     }
-//     xhrReq.send(null);
-
-//     document.getElementById('downloadVideo').innerHTML = '<a href="/htmlTemplate/videoRecord.html" download="videoRecord" target="_blank">Download Conference</a>';
-
-
-
-//     // document.getElementById('downloadVideo').innerHTML = '<a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a>';
-//     // console.log(" document.getElementById('downloadVideo').innerHTML: "+ document.getElementById('downloadVideo').innerHTML);
-
-//     console.log("<--appendFile_record");
-// }
 
 
 /***********************/
