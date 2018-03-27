@@ -282,50 +282,14 @@ function init() {
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
 
-                    document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
-                    document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                    document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-
-                // }
-                // else {
-                //     console.log("query id nt null");
-                //     document.getElementById('linkToShare').innerHTML += "https://svcapp.herokuapp.com/client/" + config.queryId;
-                //     document.getElementById('linkToShare').setAttribute('href', "https://svcapp.herokuapp.com/client/" + config.queryId);
-
-
-                //
-
-                // document.getElementById('linkToShare').innerHTML += "https://logchat.herokuapp.com/client/" + peerNew_id;
-                // document.getElementById('videoConferenceUrl').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
-                // document.getElementById('linkToShare').setAttribute('href', "https://logchat.herokuapp.com/client/" + peerNew_id);
-                // document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + peerNew_id;
-                // document.getElementById('videoConferenceUrl').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-                // document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + peerNew_id);
-
-
+                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
+                // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
 
             }
             else {
                 console.log("query id nt null");
-                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client" + config.queryId + "/" + config.time;
-                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + config.queryId + "/" + config.time);
-
-
-
-
-
-                // }
-                // else {
-                //     console.log("query id nt null");
-                // document.getElementById('linkToShare').innerHTML += "http://localhost:8080/client/" + config.queryId;
-                // document.getElementById('linkToShare').setAttribute('href', "http://localhost:8080/client/" + config.queryId);
-
-
-
-                // document.getElementById('feedback').style.display = 'inline';
-                // document.getElementById('fdb').style.display = 'inline';
-                // document.getElementById('usercontectdtl').style.display = 'inline';
-
+              
                 document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
@@ -344,14 +308,14 @@ function init() {
 
 
                 // $('#myModal').modal('hide');
-                 setup_local_media(function () {
-                //     /* once the user has given us access to their
-                //      * microphone/camcorder, join the channel and start peering up */
+                setup_local_media(function () {
+                    //     /* once the user has given us access to their
+                    //      * microphone/camcorder, join the channel and start peering up */
 
 
-                     join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
+                    join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
 
-                 })
+                })
 
 
 
@@ -407,7 +371,7 @@ function init() {
         // document.p.innerHTML = channel;
         // document.getElementById("demo").innerHTML = channel;
 
-        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink,  'timeLink': timeLink, 'userName': userName });
+        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
 
         console.log("<--join__channel");
     }
