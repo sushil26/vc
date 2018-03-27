@@ -26,6 +26,7 @@ if (localStorage.getItem("userData")) {
     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
     // init();
 
+    startAction();
 }
 else {
 
@@ -456,6 +457,8 @@ function init() {
                 console.log("Start CallBack");
 
 
+               function startAction() {
+
 
                 // $('#myModal').modal('hide');
                 setup_local_media(function () {
@@ -466,6 +469,9 @@ function init() {
                     join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
 
                 })
+
+            }
+           
 
            }
             console.log("<--signaling_socket message");
