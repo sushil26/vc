@@ -265,7 +265,7 @@ var local_media_stream = null; /* our own microphone / webcam */
 var local_media_shareStream = null;
 var peers = {};                /* keep track of our peer connections, indexed by peer_id (aka socket.io id) */
 var peer_media_elements = {};
-peer_userName_elements = {};
+var peer_userName_elements = {};
 var peer_media_sselements = {};  /* keep track of our <video>/<audio> tags, indexed by peer_id */
 /* #### Logu Defined  ##### */
 var peerNew_id = null;
