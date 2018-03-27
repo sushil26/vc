@@ -26,7 +26,7 @@ if (localStorage.getItem("userData")) {
     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
     // init();
 
-    startAction();
+    startVideoAction();
 }
 else {
 
@@ -41,14 +41,14 @@ else {
         if (localStorage.getItem("userName")) {
             console.log("User Name from session: " + localStorage.getItem("userName"));
             userName = localStorage.getItem("userName");
-            // init();
+            startVideoAction();
 
         }
         else {
             console.log("No user data from session");
             $('#setName').trigger('click');
-        //    userName="logu";
-        //     init();
+            //    userName="logu";
+            //     init();
         }
 
     }
@@ -83,7 +83,7 @@ function saveName() {
 
 
             console.log("data: " + JSON.stringify(data));
-            // init();
+            startVideoAction();
             // if (data.message == 'Login Successfully') {
             //     console.log("login authorized");
             //     localStorage.setItem("userData", userData);
@@ -155,7 +155,7 @@ function logVC() {
                 document.getElementById("videoConferenceUrl").style.display = 'block';
                 document.getElementById("scheduleMeeting").style.display = 'block';
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-                // init();
+
             }
             else if (data.message == 'Password is wrong') {
                 alert("Password is wrong");
@@ -192,6 +192,7 @@ function sessionSet(data) {
         var info = localStorage.getItem("userData");
         // alert("info: " + info);
         userName = info.userName;
+        startVideoAction();
         // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
     } else {
         alert("Sorry, your browser does not support Web Storage...");
@@ -345,6 +346,14 @@ function disconnecSession() {
     console.log("-->disconnecSession");
 }
 
+function startVideoAction() {
+    setup_localMedia(function () {
+
+
+        join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
+
+    })
+}
 
 
 function init() {
@@ -457,23 +466,21 @@ function init() {
                 console.log("Start CallBack");
 
 
-               function startAction() {
+                if (userName != null) {
 
 
-                // $('#myModal').modal('hide');
-                setup_local_media(function () {
-                    //     /* once the user has given us access to their
-                    //      * microphone/camcorder, join the channel and start peering up */
+                    // $('#myModal').modal('hide');
+                    setup_local_media(function () {
 
 
-                    join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
+                        join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
 
-                })
+                    })
+
+                }
+
 
             }
-           
-
-           }
             console.log("<--signaling_socket message");
 
         })
