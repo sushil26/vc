@@ -247,31 +247,31 @@ function emailInvite() {
 
 }
 
-// signaling_socket.on('emailSendInfo', function (data) {
-//     console.log("emailSendInfo-->");
-//     console.log("peerNew_id: " + peerNew_id);
-//     console.log("data.userId: " + data.userId);
-//     console.log("data.info: " + data.info);
-//     console.log("data.info: " + JSON.stringify(data));
+signaling_socket.on('emailSendInfo', function (data) {
+    console.log("emailSendInfo-->");
+    console.log("peerNew_id: " + peerNew_id);
+    console.log("data.userId: " + data.userId);
+    console.log("data.info: " + data.info);
+    console.log("data.info: " + JSON.stringify(data));
 
-//     if (peerNew_id == data.userId) {
-//         // var label = document.createElement("label");
-//         // var txtNode = document.createTextNode(data.info);
-//         // label.appendChild(txtNode);
+    if (peerNew_id == data.userId) {
+        // var label = document.createElement("label");
+        // var txtNode = document.createTextNode(data.info);
+        // label.appendChild(txtNode);
 
-//         // label.value = data.info;
-//         // console.log("label: "+label);
+        // label.value = data.info;
+        // console.log("label: "+label);
 
-//         document.getElementById('info').innerHTML = data.info;
-//     }
-//     else {
+        document.getElementById('info').innerHTML = data.info;
+    }
+    else {
 
-//         console.log("emailSendInfo: Sorry");
-//     }
+        console.log("emailSendInfo: Sorry");
+    }
 
-//     console.log("<--emailSendInfo");
+    console.log("<--emailSendInfo");
 
-// })
+})
 
 
 function playAudioForNotify() {

@@ -1450,16 +1450,16 @@ function setup_local_media(callback, errorback) {
 }
 
 
-// signaling_socket.on('stateChangedToClient', function (data) {
+signaling_socket.on('stateChangedToClient', function (data) {
 
-//     console.log("newstateChangedToClientTextMsg-->");
-//     console.log("data.userId: " + data.userId);
-//     console.log("peerNew_id: " + peerNew_id);
-//     if (data.userId == peerNew_id) {
-//         window.location.reload(true);
-//     }
-//     console.log("<--newstateChangedToClientTextMsg");
-// })
+    console.log("newstateChangedToClientTextMsg-->");
+    console.log("data.userId: " + data.userId);
+    console.log("peerNew_id: " + peerNew_id);
+    if (data.userId == peerNew_id) {
+        window.location.reload(true);
+    }
+    console.log("<--newstateChangedToClientTextMsg");
+})
 
 /***********************/
 /** Local media stuff **/
