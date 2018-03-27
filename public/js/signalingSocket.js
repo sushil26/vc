@@ -40,7 +40,7 @@ else {
         if (localStorage.getItem("userName")) {
             console.log("User Name from session: " + localStorage.getItem("userName"));
             userName = localStorage.getItem("userName");
-            init();
+            // init();
 
         }
         else {
@@ -82,7 +82,7 @@ function saveName() {
 
 
             console.log("data: " + JSON.stringify(data));
-            init();
+            // init();
             // if (data.message == 'Login Successfully') {
             //     console.log("login authorized");
             //     localStorage.setItem("userData", userData);
@@ -154,7 +154,7 @@ function logVC() {
                 document.getElementById("videoConferenceUrl").style.display = 'block';
                 document.getElementById("scheduleMeeting").style.display = 'block';
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-                init();
+                // init();
             }
             else if (data.message == 'Password is wrong') {
                 alert("Password is wrong");
