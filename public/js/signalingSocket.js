@@ -375,13 +375,14 @@ function init() {
             queryLink = config.queryId;
             peerNew_id = config.peer_id;
             timeLink = config.time;
-            var dt = new Date();
-            var dy = dt.getDay().toString();
-            var fy = dt.getFullYear().toString();
-            var m = dt.getMonth().toString();
-            var hr = dt.getHours().toString();
+            // var dt = new Date();
+            // var dy = dt.getDay().toString();
+            // var fy = dt.getFullYear().toString();
+            // var m = dt.getMonth().toString();
+            // var hr = dt.getHours().toString();
 
-            var date = dy.concat(fy, m, hr);
+            // var date = dy.concat(fy, m, hr);
+            var date = new Date();
 
 
             console.log("queryLink: " + queryLink);
@@ -395,7 +396,7 @@ function init() {
 
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
-                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + dt);
+                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
                 // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
                 // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
 
