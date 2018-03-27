@@ -241,7 +241,7 @@ function disconnecSession() {
 
 function init() {
 
-    console.log("init-->");
+        console.log("init-->");
 
     signaling_socket = io(SIGNALING_SERVER);
 
