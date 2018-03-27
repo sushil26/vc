@@ -1,10 +1,9 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
 var SIGNALING_SERVER = "https://vc4all.in";
-//var SIGNALING_SERVER = "http://localhost:5000";
+// var SIGNALING_SERVER = "http://localhost:5000";
 //var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
-var userName = null;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -14,106 +13,13 @@ var MUTE_AUDIO_BY_DEFAULT = false;
 var videoReaderRecord = new FileReader();
 
 if (localStorage.getItem("userData")) {
-    console.log("User Name from session: " + localStorage.getItem("userData"));
-    var userData = JSON.stringify(localStorage.getItem("userData"));
-    userName = localStorage.getItem("userName");
-    console.log("userData: " + userData);
-    console.log("userName: " + userName);
     document.getElementById("appLogin").style.display = 'none';
     document.getElementById("appLogout").style.display = 'block';
     document.getElementById("videoConferenceUrl").style.display = 'block';
     document.getElementById("scheduleMeeting").style.display = 'block';
     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-    init();
 
 }
-else {
-
-    var url = window.location.href;
-    var stuff = url.split('/');
-    var id1 = stuff[stuff.length - 2];
-    var id2 = stuff[stuff.length - 3];
-    console.log("stuff.length: " + stuff.length);
-    console.log("id1**: " + id1);
-    console.log("id2**: " + id2);
-    if (stuff.length > 5) {
-        if (localStorage.getItem("userName")) {
-            console.log("User Name from session: " + localStorage.getItem("userName"));
-            userName = localStorage.getItem("userName");
-            init();
-
-        }
-        else {
-            console.log("No user data from session");
-            $('#setName').trigger('click');
-        //    userName="logu";
-        //     init();
-        }
-
-    }
-
-
-
-}
-
-function saveName() {
-    console.log("setName-->");
-
-    userName = document.getElementById('userName').value;
-    pswd = document.getElementById('P_pswd').value;
-    var obj = {
-        "pswd": pswd,
-        "url": window.location.href
-    }
-
-    $.ajax({
-        url: "https://vc4all.in/vc/parentCredential",
-        //url: "http://localhost:5000/vc/login4VC",
-        type: "POST",
-        data: JSON.stringify(obj),
-        contentType: "application/json",
-        dataType: 'json',
-        success: function (data) {
-            // callback(data);
-
-            var userData = {
-                "userName": userName,
-            }
-
-
-            console.log("data: " + JSON.stringify(data));
-            init();
-            // if (data.message == 'Login Successfully') {
-            //     console.log("login authorized");
-            //     localStorage.setItem("userData", userData);
-            //     localStorage.setItem("userName", userName);
-            //     init();
-
-            // }
-            // else if (data.message == 'Password is not matching') {
-
-            //     console.log("Password is not matching");
-            //     alert("Password is not matching");
-            //     $('#setName').trigger('click');
-
-            // }
-            // else if ('URL is not authorized') {
-            //     console.log("URL is not authorized");
-            //     alert("URL is not authorized");
-            //     window.location.href = "https://vc4all.in";
-
-            // }
-
-
-        }
-
-    })
-
-
-    console.log("<--setName");
-
-}
-
 
 function logVC() {
     console.log("logVC from signalingSocket.js");
@@ -134,7 +40,6 @@ function logVC() {
 
     $.ajax({
         url: "https://vc4all.in/vc/login4VC",
-        //url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -154,17 +59,13 @@ function logVC() {
                 document.getElementById("videoConferenceUrl").style.display = 'block';
                 document.getElementById("scheduleMeeting").style.display = 'block';
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-                init();
+
             }
             else if (data.message == 'Password is wrong') {
                 alert("Password is wrong");
             }
             else if (data.errorCode == 'No Match') {
                 alert("There is no match for this EMail id from student database ");
-            }
-
-            if (data.loginType == 'admin') {
-                window.location.href = "https://vc4all.in/mainPage#!/userAuth";
             }
         }
 
@@ -178,19 +79,15 @@ function sessionSet(data) {
         var userData = {
             "userName": data.data.userName,
             "status": data.data.status,
-            "email": data.data.email,
-            "loginType": data.loginType
+            "email": data.data.email
         }
-        localStorage.setItem("userData", userData);
-        localStorage.setItem("userName", data.data.userName);
-        localStorage.setItem("status", data.data.status);
-        localStorage.setItem("email", data.data.email);
-        localStorage.setItem("loginType", data.loginType);
-        localStorage.setItem("id", data.data._id);
+        localStorage.setItem("userData", JSON.stringify(userData));
+        // localStorage.setItem("status", data.data.status);
+        // localStorage.setItem("email", data.data.email);
         // Retrieve
         var info = localStorage.getItem("userData");
-        // alert("info: " + info);
-        userName = info.userName;
+        alert("info: " + info);
+
         // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
     } else {
         alert("Sorry, your browser does not support Web Storage...");
@@ -202,9 +99,6 @@ function vcLogout() {
     console.log("vcLogout");
     window.location = "https://vc4all.in/client";
     localStorage.removeItem("userData");
-    localStorage.removeItem("userName");
-    localStorage.removeItem("status");
-    localStorage.removeItem("email");
     document.getElementById("appLogin").style.display = 'block';
     document.getElementById("appLogout").style.display = 'none';
     document.getElementById("videoConferenceUrl").style.display = 'none';
@@ -225,7 +119,6 @@ function regVc() {
     };
     $.ajax({
         url: "https://vc4all.in/vc/register4VC",
-        //url: "http://localhost:5000/vc/register4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -272,8 +165,8 @@ var peerNew_id = null;
 var queryLink = null;
 var timeLink = null;
 var txtQueryLink = null;
-
-// signaling_socket = io(SIGNALING_SERVER);
+var userName = null;
+signaling_socket = io(SIGNALING_SERVER);
 var file;
 var disconnPeerId = null;
 var shareScreen = null;
@@ -282,16 +175,16 @@ var peerStream = null;
 
 
 
-// function setNameBtn() {
-//     console.log("setName-->");
+function setNameBtn() {
+    console.log("setName-->");
 
-//     userName = document.getElementById('userName').value;
-//     /* ie, if we've already been initialized */
-//     return userName;
-//     //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
-//     console.log("<--setName");
+    userName = document.getElementById('userName').value;
+    /* ie, if we've already been initialized */
+    return userName;
+    //signaling_socket.emit('userNameDetail', { 'userId': peerNew_id, 'queryLink': queryLink, 'userName': userName });
+    console.log("<--setName");
 
-// }
+}
 
 // function schedMeet() {
 //     // window.location = "https://logchat.herokuapp.com/schedMeet";
@@ -375,14 +268,7 @@ function init() {
             queryLink = config.queryId;
             peerNew_id = config.peer_id;
             timeLink = config.time;
-            var dt = new Date();
-            var dy = dt.getDay().toString();
-            var fy = dt.getFullYear().toString();
-            var m = dt.getMonth().toString();
-            var hr = dt.getHours().toString();
-
-            var date = dy.concat(fy, m, hr);
-
+            var date = new Date();
 
             console.log("queryLink: " + queryLink);
             console.log("peerNew_id: " + peerNew_id);
@@ -395,9 +281,10 @@ function init() {
 
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
-                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
-                // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+
+                    document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
+                    document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                    document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
 
                 // }
                 // else {
@@ -420,8 +307,8 @@ function init() {
             }
             else {
                 console.log("query id nt null");
-                // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client" + config.queryId + "/" + config.time;
-                // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + config.queryId + "/" + config.time);
+                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client" + config.queryId + "/" + config.time;
+                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + config.queryId + "/" + config.time);
 
 
 
@@ -457,14 +344,14 @@ function init() {
 
 
                 // $('#myModal').modal('hide');
-                setup_local_media(function () {
-                    //     /* once the user has given us access to their
-                    //      * microphone/camcorder, join the channel and start peering up */
+                 setup_local_media(function () {
+                //     /* once the user has given us access to their
+                //      * microphone/camcorder, join the channel and start peering up */
 
 
-                    join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
+                     join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
 
-                })
+                 })
 
 
 
@@ -520,7 +407,7 @@ function init() {
         // document.p.innerHTML = channel;
         // document.getElementById("demo").innerHTML = channel;
 
-        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
+        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink,  'timeLink': timeLink, 'userName': userName });
 
         console.log("<--join__channel");
     }
@@ -1035,16 +922,16 @@ function setup_local_media(callback, errorback) {
             $('#videosAttach').append(local_media);
 
 
-            // /* =============Start==================== */
-            // $('#record').append('<div><label id="percentage">0%</label><progress id="progress-bar" value=0></progress><br /></div><hr /><div><button id="btn-start-recording">Start Recording</button><button id="btn-stop-recording" disabled="">Stop Recording</button></div>');
-            // var btnStartRecording = document.querySelector('#btn-start-recording');
-            // var btnStopRecording = document.querySelector('#btn-stop-recording');
-            // var videoElement = document.getElementById('videoElem');
-            // var progressBar = document.querySelector('#progress-bar');
-            // var percentage = document.querySelector('#percentage');
+            /* =============Start==================== */
+            $('#record').append('<div><label id="percentage">0%</label><progress id="progress-bar" value=0></progress><br /></div><hr /><div><button id="btn-start-recording">Start Recording</button><button id="btn-stop-recording" disabled="">Stop Recording</button></div>');
+            var btnStartRecording = document.querySelector('#btn-start-recording');
+            var btnStopRecording = document.querySelector('#btn-stop-recording');
+            var videoElement = document.getElementById('videoElem');
+            var progressBar = document.querySelector('#progress-bar');
+            var percentage = document.querySelector('#percentage');
 
-            // var recorder;
-            // var peerRecord;
+            var recorder;
+            var peerRecord;
 
             // reusable helpers
 
@@ -1173,7 +1060,57 @@ function setup_local_media(callback, errorback) {
                 });
             }
 
+            // UI events handling
+            document.getElementById("btn-start-recording").addEventListener("click", function () {
+                // btnStartRecording.onclick = function () {
+                console.log("btnStartRecording-->");
+                btnStartRecording.disabled = true;
 
+                captureUserMedia(function (stream) {
+                    mediaStream = stream;
+
+                    videoElement.src = window.URL.createObjectURL(stream);
+                    videoElement.play();
+                    videoElement.muted = true;
+                    videoElement.controls = false;
+
+                    recorder = RecordRTC(stream, {
+                        type: 'video'
+                    });
+
+
+                    recorder.startRecording();
+
+                    // enable stop-recording button
+                    btnStopRecording.disabled = false;
+                });
+
+                if (peerStream != null) {
+                    peerRecord = RecordRTC(stream, {
+                        type: 'video'
+                    });
+                    peerRecord.startRecording();
+                }
+
+                console.log("<--btnStartRecording");
+            });
+
+
+            document.getElementById("btn-stop-recording").addEventListener("click", function () {
+                // btnStopRecording.onclick = function () {
+                btnStartRecording.disabled = false;
+                btnStopRecording.disabled = true;
+
+                recorder.stopRecording(postFiles);
+
+                if (peerStream != null) {
+                    peerRecord.stopRecording(postFiles)
+                }
+            });
+
+            window.onbeforeunload = function () {
+                startRecording.disabled = false;
+            };
 
             /* ================End================= */
 

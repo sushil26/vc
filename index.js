@@ -86,9 +86,25 @@ app.get("/client", function (req, res) {
     res.sendFile(__dirname + '/public/client.html');
 });
 
-app.get("/client/:id", function (req, res) {
+app.get("/clientTest", function (req, res) {
+   
+    queryId = null;
+    console.log("queryId: "+queryId);
+    console.log("start to render page");
+    res.sendFile(__dirname + '/public/clientTest.html');
+});
+
+app.get("/clientTest/:id/:time", function (req, res) {
     queryId = req.params.id;
-    // time = req.params.id;
+    time = req.params.id;
+    console.log("queryId: " + req.params.id);
+    console.log("start to render page");
+    res.sendFile(__dirname + '/public/clientTest.html');
+});
+
+app.get("/client/:id/:time", function (req, res) {
+    queryId = req.params.id;
+    time = req.params.id;
     console.log("queryId: " + req.params.id);
     console.log("start to render page");
     res.sendFile(__dirname + '/public/client.html');
@@ -125,9 +141,6 @@ var sessionHeaderId = null;
  * information. After all of that happens, they'll finally be able to complete
  * the peer connection and will be streaming audio/video between eachother.
  */
-
-
-
 
 io.sockets.on('connection', function (socket) {
 
@@ -417,6 +430,9 @@ io.sockets.on('connection', function (socket) {
 
             io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'time':data.timeLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
         }
+        else{
+            console.log("Sorry from server from file socket");
+        }
         // var to = user.peers;
 
         // for(var i=0; i < to.length; i++){
@@ -427,16 +443,16 @@ io.sockets.on('connection', function (socket) {
     });
     /* #### End File Sharing  ##### */
 
-    // socket.on('stateChanged', function (data) {
-    //     console.log("stateChanged-->");
+    socket.on('stateChanged', function (data) {
+        console.log("stateChanged-->");
 
 
-    //     if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
+        if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
 
-    //         sockets[data.peerNew_id].emit('stateChangedToClient', { 'userId': data.userId, 'queryId': data.queryLink, 'time': data.timeLink });
-    //     }
-    //     console.log("<--stateChanged");
-    // })
+            sockets[data.peerNew_id].emit('stateChangedToClient', { 'userId': data.userId, 'queryId': data.queryLink, 'time': data.timeLink });
+        }
+        console.log("<--stateChanged");
+    })
 
 
     console.log("<--connection Ended");
