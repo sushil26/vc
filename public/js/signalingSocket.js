@@ -949,32 +949,32 @@ function init() {
 
 }
 
-function appendFile_record(URI) {
-    console.log("appendFile_record-->");
-    console.log("URI: " + URI);
-    // console.log("type: " + type);
+// function appendFile_record(URI) {
+//     console.log("appendFile_record-->");
+//     console.log("URI: " + URI);
+//     // console.log("type: " + type);
 
 
-    var xhrReq = new XMLHttpRequest();
-    xhrReq.open("GET", "/htmlTemplate/videoRecord.html", true);
-    xhrReq.onreadystatechange = function () {
-        if (xhrReq.readyState === 4) {
-            if (xhrReq.status === 0) {
-                document.getElementById('recordedVideos').innerHTML += '<video width="320" height="240" controls src="' + URI + '"></video>';
-            }
-        }
-    }
-    xhrReq.send(null);
+//     var xhrReq = new XMLHttpRequest();
+//     xhrReq.open("GET", "/htmlTemplate/videoRecord.html", true);
+//     xhrReq.onreadystatechange = function () {
+//         if (xhrReq.readyState === 4) {
+//             if (xhrReq.status === 0) {
+//                 document.getElementById('recordedVideos').innerHTML += '<video width="320" height="240" controls src="' + URI + '"></video>';
+//             }
+//         }
+//     }
+//     xhrReq.send(null);
 
-    document.getElementById('downloadVideo').innerHTML = '<a href="/htmlTemplate/videoRecord.html" download="videoRecord" target="_blank">Download Conference</a>';
+//     document.getElementById('downloadVideo').innerHTML = '<a href="/htmlTemplate/videoRecord.html" download="videoRecord" target="_blank">Download Conference</a>';
 
 
 
-    // document.getElementById('downloadVideo').innerHTML = '<a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a>';
-    // console.log(" document.getElementById('downloadVideo').innerHTML: "+ document.getElementById('downloadVideo').innerHTML);
+//     // document.getElementById('downloadVideo').innerHTML = '<a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a>';
+//     // console.log(" document.getElementById('downloadVideo').innerHTML: "+ document.getElementById('downloadVideo').innerHTML);
 
-    console.log("<--appendFile_record");
-}
+//     console.log("<--appendFile_record");
+// }
 
 
 /***********************/
@@ -1049,129 +1049,129 @@ function setup_local_media(callback, errorback) {
             // reusable helpers
 
             // this function submits recorded blob to nodejs server
-            function postFiles() {
-                console.log("postFiles-->");
-                var blob = recorder.getBlob();
+            // function postFiles() {
+            //     console.log("postFiles-->");
+            //     var blob = recorder.getBlob();
 
-                // getting unique identifier for the file name
-                var fileName = generateRandomString() + '.webm';
+            //     // getting unique identifier for the file name
+            //     var fileName = generateRandomString() + '.webm';
 
-                var file = new File([blob], fileName, {
-                    type: 'video/webm'
-                });
+            //     var file = new File([blob], fileName, {
+            //         type: 'video/webm'
+            //     });
 
-                videoElement.src = '';
-                videoElement.poster = '/ajax-loader.gif';
+            //     videoElement.src = '';
+            //     videoElement.poster = '/ajax-loader.gif';
 
-                // console.log("url: " + url);
-                // console.log("data: " + data);
-                // file = data;
+            //     // console.log("url: " + url);
+            //     // console.log("data: " + data);
+            //     // file = data;
 
-                // if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
-                //     alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
-                // }
-                if (file.type.substring(0, 5) === 'video') {
+            //     // if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
+            //     //     alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
+            //     // }
+            //     if (file.type.substring(0, 5) === 'video') {
 
-                    console.log("Video");
-                    // uplaod video  
-                    videoReaderRecord.readAsDataURL(file);
-                }
-                xhr('/uploadFile', file, function (responseText) {
-                    console.log("/uploadFile-->");
-                    var fileURL = JSON.parse(responseText).fileURL;
+            //         console.log("Video");
+            //         // uplaod video  
+            //         videoReaderRecord.readAsDataURL(file);
+            //     }
+            //     xhr('/uploadFile', file, function (responseText) {
+            //         console.log("/uploadFile-->");
+            //         var fileURL = JSON.parse(responseText).fileURL;
 
-                    console.info('fileURL', fileURL);
-                    videoElement.src = fileURL;
-                    videoElement.play();
-                    videoElement.muted = false;
-                    videoElement.controls = true;
+            //         console.info('fileURL', fileURL);
+            //         videoElement.src = fileURL;
+            //         videoElement.play();
+            //         videoElement.muted = false;
+            //         videoElement.controls = true;
 
-                    document.querySelector('#footer-h2').innerHTML = '<a href="' + videoElement.src + '">' + videoElement.src + '</a>';
-                    console.log("<--/uploadFile");
-                });
+            //         document.querySelector('#footer-h2').innerHTML = '<a href="' + videoElement.src + '">' + videoElement.src + '</a>';
+            //         console.log("<--/uploadFile");
+            //     });
 
-                if (mediaStream) mediaStream.stop();
-                console.log("<--postFiles");
-            }
-            videoReaderRecord.onload = function (e) {
-                console.log("videoReaderRecord.onload-->");
-                var targetResult = e.target.result;
+            //     if (mediaStream) mediaStream.stop();
+            //     console.log("<--postFiles");
+            // }
+            // videoReaderRecord.onload = function (e) {
+            //     console.log("videoReaderRecord.onload-->");
+            //     var targetResult = e.target.result;
 
-                // scrollDown();
-                // 
-                // share video
-                appendFile_record(targetResult);
-                console.log("<--videoReaderRecord.onload");
-            };
+            //     // scrollDown();
+            //     // 
+            //     // share video
+            //     appendFile_record(targetResult);
+            //     console.log("<--videoReaderRecord.onload");
+            // };
 
-            // XHR2/FormData
-            function xhr(url, data, callback) {
-                console.log("xhr-->");
-                console.log("url: " + url);
-                console.log("data: " + data);
-                file = data;
+            // // XHR2/FormData
+            // function xhr(url, data, callback) {
+            //     console.log("xhr-->");
+            //     console.log("url: " + url);
+            //     console.log("data: " + data);
+            //     file = data;
 
-                if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
-                    alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
-                }
-                if (file.type.substring(0, 5) === 'video') {
+            //     if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
+            //         alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
+            //     }
+            //     if (file.type.substring(0, 5) === 'video') {
 
-                    console.log("Video");
-                    // uplaod video  
-                    videoReader.readAsDataURL(file);
-                }
+            //         console.log("Video");
+            //         // uplaod video  
+            //         videoReader.readAsDataURL(file);
+            //     }
 
-                var request = new XMLHttpRequest();
-                console.log("request: " + request);
-                request.onreadystatechange = function () {
-                    if (request.readyState == 4 && request.status == 200) {
-                        callback(request.responseText);
-                    }
-                };
+            //     var request = new XMLHttpRequest();
+            //     console.log("request: " + request);
+            //     request.onreadystatechange = function () {
+            //         if (request.readyState == 4 && request.status == 200) {
+            //             callback(request.responseText);
+            //         }
+            //     };
 
-                request.upload.onprogress = function (event) {
-                    progressBar.max = event.total;
-                    progressBar.value = event.loaded;
-                    progressBar.innerHTML = 'Upload Progress ' + Math.round(event.loaded / event.total * 100) + "%";
-                };
+            //     request.upload.onprogress = function (event) {
+            //         progressBar.max = event.total;
+            //         progressBar.value = event.loaded;
+            //         progressBar.innerHTML = 'Upload Progress ' + Math.round(event.loaded / event.total * 100) + "%";
+            //     };
 
-                request.upload.onload = function () {
-                    percentage.style.display = 'none';
-                    progressBar.style.display = 'none';
-                };
-                request.open('POST', url);
+            //     request.upload.onload = function () {
+            //         percentage.style.display = 'none';
+            //         progressBar.style.display = 'none';
+            //     };
+            //     request.open('POST', url);
 
-                var formData = new FormData();
-                formData.append('file', data);
-                request.send(formData);
-                console.log("<--xhr");
-            }
+            //     var formData = new FormData();
+            //     formData.append('file', data);
+            //     request.send(formData);
+            //     console.log("<--xhr");
+            // }
 
-            // generating random string
-            function generateRandomString() {
-                if (window.crypto) {
-                    var a = window.crypto.getRandomValues(new Uint32Array(3)),
-                        token = '';
-                    for (var i = 0, l = a.length; i < l; i++) token += a[i].toString(36);
-                    return token;
-                } else {
-                    return (Math.random() * new Date().getTime()).toString(36).replace(/\./g, '');
-                }
-            }
+            // // generating random string
+            // function generateRandomString() {
+            //     if (window.crypto) {
+            //         var a = window.crypto.getRandomValues(new Uint32Array(3)),
+            //             token = '';
+            //         for (var i = 0, l = a.length; i < l; i++) token += a[i].toString(36);
+            //         return token;
+            //     } else {
+            //         return (Math.random() * new Date().getTime()).toString(36).replace(/\./g, '');
+            //     }
+            // }
 
-            var mediaStream = null;
-            // reusable getUserMedia
-            function captureUserMedia(success_callback) {
-                var session = {
-                    audio: true,
-                    video: true
-                };
+            // var mediaStream = null;
+            // // reusable getUserMedia
+            // function captureUserMedia(success_callback) {
+            //     var session = {
+            //         audio: true,
+            //         video: true
+            //     };
 
-                navigator.getUserMedia(session, success_callback, function (error) {
-                    alert('Unable to capture your camera. Please check console logs.');
-                    console.error(error);
-                });
-            }
+            //     navigator.getUserMedia(session, success_callback, function (error) {
+            //         alert('Unable to capture your camera. Please check console logs.');
+            //         console.error(error);
+            //     });
+            // }
 
 
 
