@@ -1,10 +1,10 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in";
-//var SIGNALING_SERVER = "http://localhost:5000";
+//var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "http://localhost:5000";
 //var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
-var userName = null;
+var userName;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -70,8 +70,8 @@ function saveName() {
     }
 
     $.ajax({
-        url: "https://vc4all.in/vc/parentCredential",
-        //url: "http://localhost:5000/vc/login4VC",
+      //  url: "https://vc4all.in/vc/parentCredential",
+        url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -103,8 +103,8 @@ function logVC() {
     console.log("obj: " + JSON.stringify(obj));
     console.log("logVC");
     $.ajax({
-        url: "https://vc4all.in/vc/login4VC",
-        //url: "http://localhost:5000/vc/login4VC",
+      //  url: "https://vc4all.in/vc/login4VC",
+        url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -248,7 +248,7 @@ var disconnPeerId = null;
 var shareScreen = null;
 var sessionHeader = null;
 var peerStream = null;
-
+signaling_socket = io(SIGNALING_SERVER);
 /* ### Start Register Button Click  ### */
 function register() {
     console.log("register-->");
@@ -277,7 +277,7 @@ function init() {
 
     console.log("init-->");
 
-    signaling_socket = io(SIGNALING_SERVER);
+
 
 
     signaling_socket.on('connect', function () {
@@ -807,17 +807,12 @@ function init() {
     // <!--------video Controller-------->
 }
 
-
 /***********************/
 /** Local media stuff **/
 /***********************/
 function setup_local_media(callback, errorback) {
 
     console.log("setup_local_media-->");
-
-
-
-
 
     if (local_media_stream != null) {  /* ie, if we've already been initialized */
         if (callback) callback();

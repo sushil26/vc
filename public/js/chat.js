@@ -400,12 +400,14 @@ signaling_socket.on('file', function (data) {
 
 $(function () {
     $("#addChatWindow ").click(function () {
+        console.log("addChatWindow-->");
         $('#qnimate').addClass('popup-box-on');
         document.getElementById('chatNotification').style.display = 'none';
         count = 0;
     });
 
     $("#removeClass ").click(function () {
+        console.log("removeClass-->");
         $('#qnimate').removeClass('popup-box-on');
     });
 })
