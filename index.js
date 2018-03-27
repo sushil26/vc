@@ -86,21 +86,6 @@ app.get("/client", function (req, res) {
     res.sendFile(__dirname + '/public/client.html');
 });
 
-// app.get("/clientTest", function (req, res) {
-   
-//     queryId = null;
-//     console.log("queryId: "+queryId);
-//     console.log("start to render page");
-//     res.sendFile(__dirname + '/public/clientTest.html');
-// });
-
-// app.get("/clientTest/:id/:time", function (req, res) {
-//     queryId = req.params.id;
-//     time = req.params.id;
-//     console.log("queryId: " + req.params.id);
-//     console.log("start to render page");
-//     res.sendFile(__dirname + '/public/clientTest.html');
-// });
 
 app.get("/client/:id/:time", function (req, res) {
     queryId = req.params.id;
