@@ -4,7 +4,7 @@ var SIGNALING_SERVER = "https://vc4all.in";
 //var SIGNALING_SERVER = "http://localhost:5000";
 //var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
-var userName;
+// var userName;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -25,6 +25,92 @@ if (localStorage.getItem("userData")) {
     document.getElementById("scheduleMeeting").style.display = 'block';
     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
     init();
+
+}
+else {
+
+    var url = window.location.href;
+    var stuff = url.split('/');
+    var id1 = stuff[stuff.length - 2];
+    var id2 = stuff[stuff.length - 3];
+    console.log("stuff.length: " + stuff.length);
+    console.log("id1**: " + id1);
+    console.log("id2**: " + id2);
+    if (stuff.length > 5) {
+        if (localStorage.getItem("userName")) {
+            console.log("User Name from session: " + localStorage.getItem("userName"));
+            userName = localStorage.getItem("userName");
+            init();
+
+        }
+        else {
+            console.log("No user data from session");
+            $('#setName').trigger('click');
+        //    userName="logu";
+        //     init();
+        }
+
+    }
+
+
+
+}
+
+function saveName() {
+    console.log("setName-->");
+
+    userName = document.getElementById('userName').value;
+    pswd = document.getElementById('P_pswd').value;
+    var obj = {
+        "pswd": pswd,
+        "url": window.location.href
+    }
+
+    $.ajax({
+        url: "https://vc4all.in/vc/parentCredential",
+        //url: "http://localhost:5000/vc/login4VC",
+        type: "POST",
+        data: JSON.stringify(obj),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data) {
+            // callback(data);
+
+            var userData = {
+                "userName": userName,
+            }
+
+
+            console.log("data: " + JSON.stringify(data));
+            init();
+            // if (data.message == 'Login Successfully') {
+            //     console.log("login authorized");
+            //     localStorage.setItem("userData", userData);
+            //     localStorage.setItem("userName", userName);
+            //     init();
+
+            // }
+            // else if (data.message == 'Password is not matching') {
+
+            //     console.log("Password is not matching");
+            //     alert("Password is not matching");
+            //     $('#setName').trigger('click');
+
+            // }
+            // else if ('URL is not authorized') {
+            //     console.log("URL is not authorized");
+            //     alert("URL is not authorized");
+            //     window.location.href = "https://vc4all.in";
+
+            // }
+
+
+        }
+
+    })
+
+
+    console.log("<--setName");
 
 }
 
