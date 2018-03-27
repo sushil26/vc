@@ -1,17 +1,13 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-//var SIGNALING_SERVER = "https://vc4all.in";
-var SIGNALING_SERVER = "http://localhost:5000";
-//var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
-// var SIGNALING_SERVER = "https://logchat.herokuapp.com";
+var SIGNALING_SERVER = "https://vc4all.in";
+//var SIGNALING_SERVER = "http://localhost:5000";
+
 var userName;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
 var MUTE_AUDIO_BY_DEFAULT = false;
-
-
-// var videoReaderRecord = new FileReader();
 
 if (localStorage.getItem("userData")) {
     console.log("User Name from session: " + localStorage.getItem("userData"));
@@ -26,9 +22,6 @@ if (localStorage.getItem("userData")) {
     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
     // init();
     $('#userNSet').trigger('click');
-
-
-
 }
 else {
 
@@ -70,8 +63,8 @@ function saveName() {
     }
 
     $.ajax({
-      //  url: "https://vc4all.in/vc/parentCredential",
-        url: "http://localhost:5000/vc/login4VC",
+       url: "https://vc4all.in/vc/parentCredential",
+      //  url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -103,8 +96,8 @@ function logVC() {
     console.log("obj: " + JSON.stringify(obj));
     console.log("logVC");
     $.ajax({
-      //  url: "https://vc4all.in/vc/login4VC",
-        url: "http://localhost:5000/vc/login4VC",
+        url: "https://vc4all.in/vc/login4VC",
+      //  url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
