@@ -24,7 +24,7 @@ if (localStorage.getItem("userData")) {
     document.getElementById("videoConferenceUrl").style.display = 'block';
     document.getElementById("scheduleMeeting").style.display = 'block';
     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-    init();
+    
 
 }
 else {
