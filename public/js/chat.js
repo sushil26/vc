@@ -182,50 +182,50 @@ function sendMessage() {
 
 }
 
-signaling_socket.on('newTextMsg', function (data) {
+// signaling_socket.on('newTextMsg', function (data) {
 
-    console.log("newTextMsg-->");
+//     console.log("newTextMsg-->");
 
-    console.log("data.message: " + data.message);
-    console.log("data.userId: " + data.userId);
-    console.log("data.queryId: " + data.queryId);
+//     console.log("data.message: " + data.message);
+//     console.log("data.userId: " + data.userId);
+//     console.log("data.queryId: " + data.queryId);
 
-    console.log("queryLink: " + queryLink);
-    if (data.queryId == queryLink) {
-
-
-        /* ##### Start Calling Get Time  ##### */
-        var time = DisplayCurrentTime();
-        /* ##### End Calling Get Time  ##### */
+//     console.log("queryLink: " + queryLink);
+//     if (data.queryId == queryLink) {
 
 
-        document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-            + data.userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + data.message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + time + '</span></div>'
-        autoLinkNeed();
-        scrollDown();
-
-        var chatOpen = $("#qnimate").hasClass("popup-box-on");
-        if (chatOpen) {
-            document.getElementById('chatNotification').style.display = 'none';
-
-        }
-        else {
-            count = count + 1;
-
-            document.getElementById('chatNotification').style.display = 'inline';
-            document.getElementById('chatNotification').innerHTML = '(' + count + ')';
-        }
+//         /* ##### Start Calling Get Time  ##### */
+//         var time = DisplayCurrentTime();
+//         /* ##### End Calling Get Time  ##### */
 
 
-    }
-    else {
+//         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
+//             + data.userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + data.message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + time + '</span></div>'
+//         autoLinkNeed();
+//         scrollDown();
 
-        console.log("newTextMsg: Sorry");
-    }
+//         var chatOpen = $("#qnimate").hasClass("popup-box-on");
+//         if (chatOpen) {
+//             document.getElementById('chatNotification').style.display = 'none';
 
-    console.log("<--newTextMsg");
+//         }
+//         else {
+//             count = count + 1;
 
-})
+//             document.getElementById('chatNotification').style.display = 'inline';
+//             document.getElementById('chatNotification').innerHTML = '(' + count + ')';
+//         }
+
+
+//     }
+//     else {
+
+//         console.log("newTextMsg: Sorry");
+//     }
+
+//     console.log("<--newTextMsg");
+
+// })
 
 
 function emailInvite() {

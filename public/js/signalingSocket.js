@@ -46,8 +46,8 @@ else {
         else {
             console.log("No user data from session");
             $('#setName').trigger('click');
-        //    userName="logu";
-        //     init();
+            //    userName="logu";
+            //     init();
         }
 
     }
@@ -133,8 +133,8 @@ function logVC() {
 
 
     $.ajax({
-        url: "https://vc4all.in/vc/login4VC",
-        //url: "http://localhost:5000/vc/login4VC",
+        //url: "https://vc4all.in/vc/login4VC",
+        url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -273,7 +273,7 @@ var queryLink = null;
 var timeLink = null;
 var txtQueryLink = null;
 
-signaling_socket = io(SIGNALING_SERVER);
+// signaling_socket = io(SIGNALING_SERVER);
 var file;
 var disconnPeerId = null;
 var shareScreen = null;
@@ -345,7 +345,6 @@ function disconnecSession() {
 }
 
 
-
 function init() {
 
 
@@ -375,14 +374,7 @@ function init() {
             queryLink = config.queryId;
             peerNew_id = config.peer_id;
             timeLink = config.time;
-            var dt = new Date();
-            var dy = dt.getDay().toString();
-            var fy = dt.getFullYear().toString();
-            var m = dt.getMonth().toString();
-            var hr = dt.getHours().toString();
-
-            var date = dy.concat(fy, m, hr);
-
+            var date = new Date();
 
             console.log("queryLink: " + queryLink);
             console.log("peerNew_id: " + peerNew_id);
@@ -395,9 +387,10 @@ function init() {
 
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
-                document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
-                // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+
+                    document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id + "/" + date;
+                    document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                    document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
 
                 // }
                 // else {
@@ -420,8 +413,8 @@ function init() {
             }
             else {
                 console.log("query id nt null");
-                // document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client" + config.queryId + "/" + config.time;
-                // document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + config.queryId + "/" + config.time);
+                document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client" + config.queryId + "/" + config.time;
+                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + config.queryId + "/" + config.time);
 
 
 
@@ -457,14 +450,14 @@ function init() {
 
 
                 // $('#myModal').modal('hide');
-                setup_local_media(function () {
-                    //     /* once the user has given us access to their
-                    //      * microphone/camcorder, join the channel and start peering up */
+                 setup_local_media(function () {
+                //     /* once the user has given us access to their
+                //      * microphone/camcorder, join the channel and start peering up */
 
 
-                    join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
+                     join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
 
-                })
+                 })
 
 
 
@@ -520,7 +513,7 @@ function init() {
         // document.p.innerHTML = channel;
         // document.getElementById("demo").innerHTML = channel;
 
-        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
+        signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink,  'timeLink': timeLink, 'userName': userName });
 
         console.log("<--join__channel");
     }
@@ -1035,16 +1028,16 @@ function setup_local_media(callback, errorback) {
             $('#videosAttach').append(local_media);
 
 
-            // /* =============Start==================== */
-            // $('#record').append('<div><label id="percentage">0%</label><progress id="progress-bar" value=0></progress><br /></div><hr /><div><button id="btn-start-recording">Start Recording</button><button id="btn-stop-recording" disabled="">Stop Recording</button></div>');
-            // var btnStartRecording = document.querySelector('#btn-start-recording');
-            // var btnStopRecording = document.querySelector('#btn-stop-recording');
-            // var videoElement = document.getElementById('videoElem');
-            // var progressBar = document.querySelector('#progress-bar');
-            // var percentage = document.querySelector('#percentage');
+            /* =============Start==================== */
+            $('#record').append('<div><label id="percentage">0%</label><progress id="progress-bar" value=0></progress><br /></div><hr /><div><button id="btn-start-recording">Start Recording</button><button id="btn-stop-recording" disabled="">Stop Recording</button></div>');
+            var btnStartRecording = document.querySelector('#btn-start-recording');
+            var btnStopRecording = document.querySelector('#btn-stop-recording');
+            var videoElement = document.getElementById('videoElem');
+            var progressBar = document.querySelector('#progress-bar');
+            var percentage = document.querySelector('#percentage');
 
-            // var recorder;
-            // var peerRecord;
+            var recorder;
+            var peerRecord;
 
             // reusable helpers
 
@@ -1173,7 +1166,57 @@ function setup_local_media(callback, errorback) {
                 });
             }
 
+            // UI events handling
+            document.getElementById("btn-start-recording").addEventListener("click", function () {
+                // btnStartRecording.onclick = function () {
+                console.log("btnStartRecording-->");
+                btnStartRecording.disabled = true;
 
+                captureUserMedia(function (stream) {
+                    mediaStream = stream;
+
+                    videoElement.src = window.URL.createObjectURL(stream);
+                    videoElement.play();
+                    videoElement.muted = true;
+                    videoElement.controls = false;
+
+                    recorder = RecordRTC(stream, {
+                        type: 'video'
+                    });
+
+
+                    recorder.startRecording();
+
+                    // enable stop-recording button
+                    btnStopRecording.disabled = false;
+                });
+
+                if (peerStream != null) {
+                    peerRecord = RecordRTC(stream, {
+                        type: 'video'
+                    });
+                    peerRecord.startRecording();
+                }
+
+                console.log("<--btnStartRecording");
+            });
+
+
+            document.getElementById("btn-stop-recording").addEventListener("click", function () {
+                // btnStopRecording.onclick = function () {
+                btnStartRecording.disabled = false;
+                btnStopRecording.disabled = true;
+
+                recorder.stopRecording(postFiles);
+
+                if (peerStream != null) {
+                    peerRecord.stopRecording(postFiles)
+                }
+            });
+
+            window.onbeforeunload = function () {
+                startRecording.disabled = false;
+            };
 
             /* ================End================= */
 
@@ -1407,16 +1450,21 @@ function setup_local_media(callback, errorback) {
 }
 
 
-signaling_socket.on('stateChangedToClient', function (data) {
+// signaling_socket.on('stateChangedToClient', function (data) {
 
-    console.log("newstateChangedToClientTextMsg-->");
-    console.log("data.userId: " + data.userId);
-    console.log("peerNew_id: " + peerNew_id);
-    if (data.userId == peerNew_id) {
-        window.location.reload(true);
-    }
-    console.log("<--newstateChangedToClientTextMsg");
-})
+//     console.log("newstateChangedToClientTextMsg-->");
+//     console.log("data.userId: " + data.userId);
+//     console.log("peerNew_id: " + peerNew_id);
+//     if (data.userId == peerNew_id) {
+//         window.location.reload(true);
+//     }
+//     console.log("<--newstateChangedToClientTextMsg");
+// })
+
+/***********************/
+/** Local media stuff **/
+/***********************/
+
 
 
 

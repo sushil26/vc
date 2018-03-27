@@ -126,6 +126,9 @@ var sessionHeaderId = null;
  * the peer connection and will be streaming audio/video between eachother.
  */
 
+
+
+
 io.sockets.on('connection', function (socket) {
 
     console.log("connection started-->");
@@ -413,9 +416,6 @@ io.sockets.on('connection', function (socket) {
         if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
 
             io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'time':data.timeLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
-        }
-        else{
-            console.log("Sorry from server from file socket");
         }
         // var to = user.peers;
 
