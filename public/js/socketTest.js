@@ -4,6 +4,7 @@ var SIGNALING_SERVER = "https://vc4all.in";
 // var SIGNALING_SERVER = "http://localhost:5000";
 //var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
+var userName;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -13,13 +14,106 @@ var MUTE_AUDIO_BY_DEFAULT = false;
 // var videoReaderRecord = new FileReader();
 
 if (localStorage.getItem("userData")) {
+    console.log("User Name from session: " + localStorage.getItem("userData"));
+    var userData = JSON.stringify(localStorage.getItem("userData"));
+    userName = localStorage.getItem("userName");
+    console.log("userData: " + userData);
+    console.log("userName: " + userName);
     document.getElementById("appLogin").style.display = 'none';
     document.getElementById("appLogout").style.display = 'block';
     document.getElementById("videoConferenceUrl").style.display = 'block';
     document.getElementById("scheduleMeeting").style.display = 'block';
     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+    init();
 
 }
+else {
+
+    var url = window.location.href;
+    var stuff = url.split('/');
+    var id1 = stuff[stuff.length - 2];
+    var id2 = stuff[stuff.length - 3];
+    console.log("stuff.length: " + stuff.length);
+    console.log("id1**: " + id1);
+    console.log("id2**: " + id2);
+    if (stuff.length > 5) {
+        if (localStorage.getItem("userName")) {
+            console.log("User Name from session: " + localStorage.getItem("userName"));
+            userName = localStorage.getItem("userName");
+            init();
+
+        }
+        else {
+            console.log("No user data from session");
+            $('#setName').trigger('click');
+        //    userName="logu";
+        //     init();
+        }
+
+    }
+
+
+
+}
+
+function saveName() {
+    console.log("setName-->");
+
+    userName = document.getElementById('userName').value;
+    pswd = document.getElementById('P_pswd').value;
+    var obj = {
+        "pswd": pswd,
+        "url": window.location.href
+    }
+
+    $.ajax({
+        url: "https://vc4all.in/vc/parentCredential",
+        //url: "http://localhost:5000/vc/login4VC",
+        type: "POST",
+        data: JSON.stringify(obj),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data) {
+            // callback(data);
+
+            var userData = {
+                "userName": userName,
+            }
+
+
+            console.log("data: " + JSON.stringify(data));
+            init();
+            // if (data.message == 'Login Successfully') {
+            //     console.log("login authorized");
+            //     localStorage.setItem("userData", userData);
+            //     localStorage.setItem("userName", userName);
+            //     init();
+
+            // }
+            // else if (data.message == 'Password is not matching') {
+
+            //     console.log("Password is not matching");
+            //     alert("Password is not matching");
+            //     $('#setName').trigger('click');
+
+            // }
+            // else if ('URL is not authorized') {
+            //     console.log("URL is not authorized");
+            //     alert("URL is not authorized");
+            //     window.location.href = "https://vc4all.in";
+
+            // }
+
+
+        }
+
+    })
+
+
+    console.log("<--setName");
+
+}
+
 
 function logVC() {
     console.log("logVC from signalingSocket.js");
@@ -40,6 +134,7 @@ function logVC() {
 
     $.ajax({
         url: "https://vc4all.in/vc/login4VC",
+        //url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -59,13 +154,17 @@ function logVC() {
                 document.getElementById("videoConferenceUrl").style.display = 'block';
                 document.getElementById("scheduleMeeting").style.display = 'block';
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
+                init();
             }
             else if (data.message == 'Password is wrong') {
                 alert("Password is wrong");
             }
             else if (data.errorCode == 'No Match') {
                 alert("There is no match for this EMail id from student database ");
+            }
+
+            if (data.loginType == 'admin') {
+                window.location.href = "https://vc4all.in/mainPage#!/userAuth";
             }
         }
 
