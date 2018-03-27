@@ -86,9 +86,9 @@ app.get("/client", function (req, res) {
     res.sendFile(__dirname + '/public/client.html');
 });
 
-app.get("/client/:id/:time", function (req, res) {
+app.get("/client/:id", function (req, res) {
     queryId = req.params.id;
-    time = req.params.id;
+    // time = req.params.id;
     console.log("queryId: " + req.params.id);
     console.log("start to render page");
     res.sendFile(__dirname + '/public/client.html');
@@ -427,16 +427,16 @@ io.sockets.on('connection', function (socket) {
     });
     /* #### End File Sharing  ##### */
 
-    socket.on('stateChanged', function (data) {
-        console.log("stateChanged-->");
+    // socket.on('stateChanged', function (data) {
+    //     console.log("stateChanged-->");
 
 
-        if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
+    //     if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
 
-            sockets[data.peerNew_id].emit('stateChangedToClient', { 'userId': data.userId, 'queryId': data.queryLink, 'time': data.timeLink });
-        }
-        console.log("<--stateChanged");
-    })
+    //         sockets[data.peerNew_id].emit('stateChangedToClient', { 'userId': data.userId, 'queryId': data.queryLink, 'time': data.timeLink });
+    //     }
+    //     console.log("<--stateChanged");
+    // })
 
 
     console.log("<--connection Ended");
