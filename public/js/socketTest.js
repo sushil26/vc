@@ -786,14 +786,9 @@ function init() {
     });
 
 
-
-
-
     console.log("<--init");
 
     // <!--------video Controller-------->
-
-
 
 }
 
@@ -920,14 +915,7 @@ function setup_local_media(callback, errorback) {
                 console.log("<--audio_btn");
             })
 
-
-
             attachMediaStream(local_media[0], stream);
-
-
-
-
-
 
             if (callback) callback();
         },
@@ -1082,12 +1070,7 @@ function setup_local_media(callback, errorback) {
         });
     })
 
-
-
-
     console.log("<--setup_local_media");
-
-
 
 }
 

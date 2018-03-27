@@ -466,25 +466,11 @@ function init() {
 
                 })
 
-
-
-
-
-
-
-
-
-
-            }
-
+           }
             console.log("<--signaling_socket message");
 
         })
-
-
         console.log("<--signaling_socket connect");
-
-
     });
 
 
@@ -1179,9 +1165,6 @@ function setup_local_media(callback, errorback) {
 
 
 
-
-
-
             document.getElementById("videoElem").addEventListener("click", function () {
                 var videoElem = document.getElementById('videoElem');
 
@@ -1235,13 +1218,7 @@ function setup_local_media(callback, errorback) {
                 console.log("<--audio_btn");
             })
 
-
-
             attachMediaStream(local_media[0], stream);
-
-
-
-
 
 
             if (callback) callback();
@@ -1397,12 +1374,7 @@ function setup_local_media(callback, errorback) {
         });
     })
 
-
-
-
     console.log("<--setup_local_media");
-
-
 
 }
 

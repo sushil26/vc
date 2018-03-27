@@ -1,4 +1,4 @@
-var MAX_UPLOAD_SIZE = 1; // in MB
+var MAX_UPLOAD_SIZE = 1.5; // in MB
 // var socket = io();
 var count = 0;
 var imageReader = new FileReader();
@@ -105,9 +105,6 @@ function sendMessage() {
     console.log("sendMsg-->");
 
     var msg = document.getElementById('message').value;
-
-
-
 
 
     // var file = e.target.files[0];
