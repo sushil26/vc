@@ -387,6 +387,7 @@ function init() {
             console.log("queryLink: " + queryLink);
             console.log("peerNew_id: " + peerNew_id);
 
+            console.log("date: " + date);
 
 
 
