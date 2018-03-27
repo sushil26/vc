@@ -178,15 +178,19 @@ function sessionSet(data) {
         var userData = {
             "userName": data.data.userName,
             "status": data.data.status,
-            "email": data.data.email
+            "email": data.data.email,
+            "loginType": data.loginType
         }
-        localStorage.setItem("userData", JSON.stringify(userData));
-        // localStorage.setItem("status", data.data.status);
-        // localStorage.setItem("email", data.data.email);
+        localStorage.setItem("userData", userData);
+        localStorage.setItem("userName", data.data.userName);
+        localStorage.setItem("status", data.data.status);
+        localStorage.setItem("email", data.data.email);
+        localStorage.setItem("loginType", data.loginType);
+        localStorage.setItem("id", data.data._id);
         // Retrieve
         var info = localStorage.getItem("userData");
-        alert("info: " + info);
-
+        // alert("info: " + info);
+        userName = info.userName;
         // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
     } else {
         alert("Sorry, your browser does not support Web Storage...");
@@ -198,6 +202,9 @@ function vcLogout() {
     console.log("vcLogout");
     window.location = "https://vc4all.in/client";
     localStorage.removeItem("userData");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("status");
+    localStorage.removeItem("email");
     document.getElementById("appLogin").style.display = 'block';
     document.getElementById("appLogout").style.display = 'none';
     document.getElementById("videoConferenceUrl").style.display = 'none';
@@ -218,6 +225,7 @@ function regVc() {
     };
     $.ajax({
         url: "https://vc4all.in/vc/register4VC",
+        //url: "http://localhost:5000/vc/register4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
