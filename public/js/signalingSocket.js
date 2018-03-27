@@ -4,7 +4,7 @@ var SIGNALING_SERVER = "https://vc4all.in";
 //var SIGNALING_SERVER = "http://localhost:5000";
 //var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
-var userName;
+var userName = null;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
@@ -265,7 +265,7 @@ var local_media_stream = null; /* our own microphone / webcam */
 var local_media_shareStream = null;
 var peers = {};                /* keep track of our peer connections, indexed by peer_id (aka socket.io id) */
 var peer_media_elements = {};
-var peer_userName_elements = {};
+peer_userName_elements = {};
 var peer_media_sselements = {};  /* keep track of our <video>/<audio> tags, indexed by peer_id */
 /* #### Logu Defined  ##### */
 var peerNew_id = null;
@@ -375,14 +375,13 @@ function init() {
             queryLink = config.queryId;
             peerNew_id = config.peer_id;
             timeLink = config.time;
-            // var dt = new Date();
-            // var dy = dt.getDay().toString();
-            // var fy = dt.getFullYear().toString();
-            // var m = dt.getMonth().toString();
-            // var hr = dt.getHours().toString();
+            var dt = new Date();
+            var dy = dt.getDay().toString();
+            var fy = dt.getFullYear().toString();
+            var m = dt.getMonth().toString();
+            var hr = dt.getHours().toString();
 
-            // var date = dy.concat(fy, m, hr);
-            var date = new Date();
+            var date = dy.concat(fy, m, hr);
 
 
             console.log("queryLink: " + queryLink);
