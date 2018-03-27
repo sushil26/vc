@@ -25,8 +25,10 @@ if (localStorage.getItem("userData")) {
     document.getElementById("scheduleMeeting").style.display = 'block';
     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
     // init();
+    $('#userNSet').trigger('click');
 
-    startVideoAction();
+    
+  
 }
 else {
 
@@ -83,7 +85,7 @@ function saveName() {
 
 
             console.log("data: " + JSON.stringify(data));
-            startVideoAction();
+            $('#userNSet').trigger('click');
             // if (data.message == 'Login Successfully') {
             //     console.log("login authorized");
             //     localStorage.setItem("userData", userData);
@@ -192,7 +194,7 @@ function sessionSet(data) {
         var info = localStorage.getItem("userData");
         // alert("info: " + info);
         userName = info.userName;
-        startVideoAction();
+        $('#userNSet').trigger('click');
         // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
     } else {
         alert("Sorry, your browser does not support Web Storage...");
@@ -346,14 +348,14 @@ function disconnecSession() {
     console.log("-->disconnecSession");
 }
 
-function startVideoAction() {
-    setup_localMedia(function () {
+// function startVideoAction() {
+//     setup_localMedia(function () {
 
 
-        join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
+//         join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
 
-    })
-}
+//     })
+// }
 
 
 function init() {
@@ -466,18 +468,21 @@ function init() {
                 console.log("Start CallBack");
 
 
-                if (userName != null) {
+                // if (userName != null) {
+                //     // $('#myModal').modal('hide');
+                //     setup_local_media(function () {
 
+                //         join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
+                //     })
+                // }
 
-                    // $('#myModal').modal('hide');
+                document.getElementById("userNSet").addEventListener("click", function () {
                     setup_local_media(function () {
 
-
                         join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
-
                     })
 
-                }
+                })
 
 
             }
