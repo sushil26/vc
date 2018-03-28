@@ -34,9 +34,6 @@ if (localStorage.getItem("userData")) {
         document.getElementById("scheduleMeeting").style.display = 'none';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
     }
-
-
-    // init();
     $('#userNSet').trigger('click');
 }
 else {
