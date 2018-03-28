@@ -96,6 +96,12 @@ function saveName() {
                 localStorage.setItem("userName", userName);
                 localStorage.setItem("status", "instantActive");
                 localStorage.setItem("loginType", "parent");
+                document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("LoginUrl").style.display = 'none';
+                document.getElementById("appLogout").style.display = 'block';
+                document.getElementById("videoConferenceUrl").style.display = 'none';
+                document.getElementById("scheduleMeeting").style.display = 'none';
+                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
             }
             else {
 
