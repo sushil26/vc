@@ -243,3 +243,45 @@ module.exports.updateUserStatus = function (req, res) {
 
     console.log("<--updateUserStatus");
 }
+
+module.exports.deleteUser = function (req, res) {
+    console.log("deleteUser-->");
+    var responseData;
+    if (general.emptyCheck(req.body.id)) {
+        var id = {
+            "_id": ObjectId(req.body.id)
+        }
+        user.remove(id, function (err, data) {
+            if (err) {
+                console.log("Failed to delete  data");
+                responseData = {
+                    "status": false,
+                    "message": "Failed to delete",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "Deleted Sucessfully",
+                    "data": data
+                }
+                res.status(200).send(responseData);
+            }
+        })
+
+
+    }
+    else{
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "empty value found"
+                       
+        }
+        res.status(400).send(responseData);
+
+    }
+    console.log("<--deleteUser");
+}
