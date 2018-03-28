@@ -12,7 +12,6 @@
     <!-- Main Stylesheet File -->
     <link href="/home/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/chatZone.css" />
-
     <script src="/js/socket.io-1.4.5.js"></script>
 
 
@@ -58,9 +57,9 @@
                         <a href="/" style="text-shadow: 2px 2px 4px #000000;">Home</a>
                     </li>
 
-                    <li>
+                    <!-- <li>
                         <a href="#contact" style="text-shadow: 2px 2px 4px #000000;">Contact Us</a>
-                    </li>
+                    </li> -->
                     <li id="appLogin" style="display:block;">
                         <a href="#" data-target="#crdntl" data-toggle="modal" style="text-shadow: 2px 2px 4px #000000;">Login</a>
                     </li>
@@ -81,7 +80,7 @@
     <!--==========================
       Portfolio Section
     ============================-->
-    <div ui-view>
+    <main>
         <section id="portfolio" style="background: darkturquoise; min-height: 360px;">
             <div class="container wow">
                 <div id="downloadVideo"> </div>
@@ -90,7 +89,7 @@
 
                         <center style="margin:5%;">
                             <a id="LoginUrl">
-                            <h2 style="margin-top: 110px;">Please use Your credential/Login to Start</h2>
+                                <h2 style="margin-top: 110px;">Please use Your credential/Login to Start</h2>
                             </a>
 
                             <a id="videoConferenceUrl" style="display:none;">
@@ -268,11 +267,11 @@
                         </div> -->
                             <div class="form-group row">
 
-                            <div class="col-sm-12" style="overflow:hidden;text-overflow:ellipsis;">
-                                <a style="color:black;" id="linkToShare"> </a>
-                            </div>
+                                <div class="col-sm-12" style="overflow:hidden;text-overflow:ellipsis;">
+                                    <a style="color:black;" id="linkToShare"> </a>
+                                </div>
 
-                        </div>
+                            </div>
                             <div class="form-inline row" id="invitePeople_container">
 
                                 <!-- <div class="col-sm-12">
@@ -520,149 +519,87 @@
                 </div>
             </div>
         </section>
+    </main>
 
-
-        <section id="contact">
-            <!-- <div id="map" data-latitude="12.922604" data-longitude="77.5546319"></div> -->
-
-            <div class="container wow">
-                <div class="row justify-content-center">
-                    <div class="col-sm-12" style="margin-top: 25px;">
-                        <center>
-                            <h3 class="section-title">CONTACT US</h3>
-                        </center>
-
-
-                    </div>
-                    <hr>
-                    <div class="col-lg-12">
-                        <div class="info">
-                            <div>
-                                <i class="fa fa-map-marker"></i>
-                                <p>Careator Technologies Private Limited
-                                    <br>Bangalore ,560076</p>
-                            </div>
-
-                            <div>
-                                <i class="fa fa-envelope"></i>
-                                <p>info@example.com</p>
-                            </div>
-
-                            <div>
-                                <i class="fa fa-phone"></i>
-                                <p>+919066367679</p>
-                            </div>
-                        </div>
-
-                        <div class="social-links">
-                            <a href="#" class="twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="#" class="facebook">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                            <a href="#" class="instagram">
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                            <a href="#" class="google-plus">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
-                            <a href="#" class="linkedin">
-                                <i class="fa fa-linkedin"></i>
-                            </a>
-                        </div>
-
-                    </div>
-
-
-
-                </div>
-
-            </div>
-        </section>
-        <!-- #contact -->
-
-        </main>
-
-        <!--==========================
+    <!--==========================
           Footer
         ============================-->
-        <footer id="footer">
-            <div class="footer-top">
-                <div class="container">
-
-                </div>
-            </div>
-
+    <footer id="footer">
+        <div class="footer-top">
             <div class="container">
-                <div class="copyright">
-                    &copy; Copyright
-                    <strong>Careator</strong>. All Rights Reserved
-                </div>
+
             </div>
-        </footer>
-        <!-- #footer -->
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright
+                <strong>Careator</strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer>
+    <!-- #footer -->
 
 
 
-        <!-- #footer -->
-        <a href="#" class="back-to-top">
-            <i class="fa fa-chevron-up"></i>
-        </a>
+    <!-- #footer -->
+    <a href="#" class="back-to-top">
+        <i class="fa fa-chevron-up"></i>
+    </a>
 
 
-        <style>
-            #portfolio .portfolio-items {
+    <style>
+        #portfolio .portfolio-items {
 
-                display: inline-block;
-                height: 200px;
+            display: inline-block;
+            height: 200px;
 
-            }
+        }
 
-            #portfolio .intro {
-                width: 75%;
+        #portfolio .intro {
+            width: 75%;
 
-            }
+        }
 
-            /* .intro .portfolio-items:last-child {
+        /* .intro .portfolio-items:last-child {
             display: block;
             width: 30%;
         } */
-        </style>
+    </style>
 
-        </div>
+    </div>
 
-        <!-- JavaScript Libraries -->
+    <!-- JavaScript Libraries -->
 
-        <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
-        <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="/home/lib/easing/easing.min.js"></script>
-        <script src="/home/lib/wow/wow.min.js"></script>
-        <script src="/home/lib/superfish/superfish.min.js"></script>
-        <script src="/home/lib/counterup/counterup.min.js"></script>
-        <!-- Template Main Javascript File -->
-        
-       <!-- <script src="/js/socketTest.js"></script>  -->
-        <!--      <script src="/js/chatTest.js"></script> -->
-        <script src="/js/signalingSocket.js"></script>
-       
-        <script src="/js/chat.js"></script>
-        <script>
-            $(document).ready(function () {
+    <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
+    <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/home/lib/easing/easing.min.js"></script>
+    <script src="/home/lib/wow/wow.min.js"></script>
+    <script src="/home/lib/superfish/superfish.min.js"></script>
+    <script src="/home/lib/counterup/counterup.min.js"></script>
+    <!-- Template Main Javascript File -->
 
-                $("#openChat").click(function () {
-                    //alert("hui");
-                    $("#portfolio-wrapper").addClass("intro");
-                    $("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("col-lg-3");
+    <!-- <script src="/js/socketTest.js"></script>  -->
+    <!--      <script src="/js/chatTest.js"></script> -->
+    <script src="/js/signalingSocket.js"></script>
 
-                    //  $("portfolio-items col-xs-12 col-sm-6 col-md-4").toggleClass("portfolio-items col-xs-12 col-sm-6 col-md-4");
+    <script src="/js/chat.js"></script>
+    <script>
+        $(document).ready(function () {
 
-                });
-                $("#removeClass").click(function () {
-                    $("#portfolio-wrapper").removeClass("intro");
-                });
+            $("#openChat").click(function () {
+                //alert("hui");
+                $("#portfolio-wrapper").addClass("intro");
+                $("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3").removeClass("col-lg-3");
+
+                //  $("portfolio-items col-xs-12 col-sm-6 col-md-4").toggleClass("portfolio-items col-xs-12 col-sm-6 col-md-4");
+
             });
-        </script>
+            $("#removeClass").click(function () {
+                $("#portfolio-wrapper").removeClass("intro");
+            });
+        });
+    </script>
 
 </body>
 
