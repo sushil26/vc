@@ -1,177 +1,184 @@
-<div style="margin-left:5%;margin-right:5%" ng-controller="calendarCtrl as vm">
-  <!-- <a href="" id="linkToShare"></a> -->
-  <!-- <div id='calendar' style="margin-top:10%;"></div> -->
-  <h2 class="text-center" style="margin-top:10%;">{{ vm.calendarTitle }}</h2>
-  <div class="row">
-   
-  <br>
-  <!-- on-event-click="eventClicked(calendarEvent)" -->
+<main>
+  <div style="margin-left:5%;margin-right:5%" ng-controller="calendarCtrl as vm">
+    <!-- <a href="" id="linkToShare"></a> -->
+    <!-- <div id='calendar' style="margin-top:10%;"></div> -->
+    <h2 class="text-center" style="margin-top:75px;">{{ vm.calendarTitle }}</h2>
+    <hr>
+    <div class="row">
 
-  <div class="col-md-6 text-center">
-    <mwl-calendar events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)"
-      on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-      cell-is-open="vm.cellIsOpen" day-view-start="06:00" day-view-end="22:59" day-view-split="30" cell-modifier="vm.modifyCell(calendarCell)"
-      cell-auto-open-disabled="true" on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
-    </mwl-calendar>
-  </div>
-  <div class="col-md-3 text-center">
-      <div class="btn-group">
+      <br>
+      <!-- on-event-click="eventClicked(calendarEvent)" -->
 
-        <button class="btn btn-primary" mwl-date-modifier date="vm.viewDate" decrement="vm.calendarView" ng-click="vm.cellIsOpen = false">
-          Previous
-        </button>
-        <button class="btn btn-default" mwl-date-modifier date="vm.viewDate" set-to-today ng-click="vm.cellIsOpen = false">
-          Today
-        </button>
-        <button class="btn btn-primary" mwl-date-modifier date="vm.viewDate" increment="vm.calendarView" ng-click="vm.cellIsOpen = false">
-          Next
-        </button>
+      <div class="col-md-6 text-center" style="background:#e5caa74d;">
+        <mwl-calendar events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)"
+          on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+          cell-is-open="vm.cellIsOpen" day-view-start="06:00" day-view-end="22:59" day-view-split="30" cell-modifier="vm.modifyCell(calendarCell)"
+          cell-auto-open-disabled="true" on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
+        </mwl-calendar>
       </div>
-    </div>
-    <br>
 
-    <br class="visible-xs visible-lg visible-sm">
+      <div class="col-md-6 text-center">
+        <br>
+        <br>
+        <div style="background:#e5caa74d;border-top-left-radius: 30px; border-bottom-right-radius: 30px;padding: 1%;">
+          <div style=" border:1px solid rgb(173, 173, 173); border-top-left-radius: 30px; border-bottom-right-radius: 30px;padding: 19%;">
+            <div class="btn-group">
 
-    <div class="col-md-3 text-center">
-      <div class="btn-group">
-        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
-        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
-        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" ng-click="vm.cellIsOpen = false">Week</label>
-        <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" ng-click="vm.cellIsOpen = false">Day</label>
-      </div>
-    </div>
-
-  <br>
-  <br>
-  <br>
-  <div class="col-md-12 col-sm-12 col-lg-12">
-  <h3 id="event-editor">
-    Edit events
-    <button class="btn btn-primary pull-right" ng-click="vm.addEvent()">
-      Add new
-    </button>
-    <!-- <div class="clearfix"></div> -->
-  </h3>
-
-  <table class="table table-bordered">
-
-    <thead style="background-color:deepskyblue;">
-      <tr>
-        <th>Sr.no</th>
-        <th>Event Name</th>
-        <th>Color</th>
-        <!--  <th>Secondary color</th> -->
-        <th>Timing</th>
-        <th>Url</th>
-        <th>Edit</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr ng-repeat="event in vm.events track by $index">
-        <td>{{$index+1}}.</td>
-        <td>
-          <input type="text" class="form-control" ng-model="event.title">
-        </td>
-        <td>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Color
-            </button>
-            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" ng-options="item for item in names" ></div> -->
-            <select ng-model="event.color.primary">
-              <option ng-repeat="ec in eventColors" ng-class="{ec: true}" ng-selected="{event.color.primary == ec}">{{ec}}</option>  
-            </select>
-            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" ng-model="event.color.primary" style="background-color:red">Red</a>
-              <a class="dropdown-item" ng-model="event.color.primary" style="background-color:green">Green</a>
-              <a class="dropdown-item" ng-model="event.color.primary" style="background-color:Orange">Orange</a>
-              <a class="dropdown-item" ng-model="event.color.primary" style="background-color:yellow">Yellow</a>
-              <a class="dropdown-item" ng-model="event.color.primary" style="background-color:pink">Pink</a>
-              <a class="dropdown-item" ng-model="event.color.primary" style="background-color:purple">purple</a>
-              <a class="dropdown-item" ng-model="event.color.primary" style="background-color:blue">blue</a>
-            </div> -->
-          </div>
-          <!-- <input class="form-control" colorpicker type="text" ng-model="event.color.primary"> -->
-        </td>
-        <!--   <td>
-              <input class="form-control" colorpicker type="text" ng-model="event.color.secondary">
-            </td> -->
-        <td>
-          <p class="input-group">
-            <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
-              close-text="Close">
-
-            <button type="button" class="btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-            </input>
-
-          </p>
-          <div class="row" style="padding:2%;">
-            <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="10" show-meridian="true">
+              <button class="btn btn-primary" mwl-date-modifier date="vm.viewDate" decrement="vm.calendarView" ng-click="vm.cellIsOpen = false">
+                Previous
+              </button>
+              <button class="btn btn-default" mwl-date-modifier date="vm.viewDate" set-to-today ng-click="vm.cellIsOpen = false">
+                Today
+              </button>
+              <button class="btn btn-primary" mwl-date-modifier date="vm.viewDate" increment="vm.calendarView" ng-click="vm.cellIsOpen = false">
+                Next
+              </button>
             </div>
-            &nbspTo&nbsp
-            <div uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="10" show-meridian="true">
+
+            <hr>
+
+            <div class="btn-group">
+              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
+              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
+              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" ng-click="vm.cellIsOpen = false">Week</label>
+              <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" ng-click="vm.cellIsOpen = false">Day</label>
             </div>
           </div>
+        </div>
+      </div>
 
-
-        </td>
-        <td>
-          <a href="{{event.url}}">
-            <button class="btn btn-success" ng-if="event.url" style="width: 70px;">
-              Start Conference
-            </button>
-          </a>
-        </td>
-        <td>
-          <button ng-if="!event.url" class="btn btn-success" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
-            Save
+      <br>
+      <br>
+      <br>
+      <div class="col-md-12 col-sm-12 col-lg-12">
+        <br>
+        <br>
+        <br>
+        <h3 id="event-editor">
+          Edit events
+          <button class="btn btn-primary pull-right" ng-click="vm.addEvent()">
+            Add new
           </button>
-          <!-- <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">
-                Delete
-              </button> -->
-          <button ng-if="event.url" class="btn btn-danger" style="width: 80px;" ng-click="deleteEvent(event.id, $index)">
-            Delete
-          </button>
-          <button data-target="#event" id="crdbuttn" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"
-            ng-click="login()">Login</button>
-          <div class="modal fade" id="event" role="dialog">
-            <div class="modal-dialog">
-              <center>
-                <!-- Modal content-->
-                <div class="modal-content" style="color:#777;max-width:350px;">
-                  <div class="modal-header" style="background-color: gold;">
-                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                    <h4 class="modal-title">Please Enter Details</h4>
-                  </div>
-                  <div class="modal-body">
+          <!-- <div class="clearfix"></div> -->
+        </h3>
+        <hr>
+        <table class="table table-bordered">
 
-                    <input type="text" ng-model="studName" class="form-control" placeholder="Student Name">
-                    <br>
-                    <input type="text" ng-model="studId" class="form-control" placeholder="Student Id">
-                    <br>
-                    <input type="email" ng-model="pEmail" class="form-control" placeholder="Enter EmailId">
-                    <br>
-                    <textarea ng-model="eventReason" class="form-control" placeholder="Reason for Event"></textarea>
+          <thead style="background-color:#a09484;">
+            <tr>
+              <th>Sr.no</th>
+              <th>Event Name</th>
+              <th>Color</th>
+              <!--  <th>Secondary color</th> -->
+              <th>Timing</th>
+              <th>Conference</th>
 
-                  </div>
-                  <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 10px;">
-                    <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(eventReason,studName, studId, pEmail,  event.startsAt, event.endsAt ,event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.color.primary)"
-                      data-dismiss="modal">Submit</button>
+              <th>Edit</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="event in vm.events track by $index" style="background:#e5caa74d;">
+              <td>{{$index+1}}.</td>
+              <td>
+                <input type="text" class="form-control" ng-model="event.title">
+              </td>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Color
+                  </button>
+                  <div class="dropdown-menu" ng-model="event.color.primary" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:red">Red</a>
+                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:green">Green</a>
+                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:Orange">Orange</a>
+                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:yellow">Yellow</a>
+                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:pink">Pink</a>
+                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:purple">purple</a>
+                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:blue">blue</a>
 
                   </div>
                 </div>
-              </center>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
+                <!-- <input class="form-control" colorpicker type="text" ng-model="event.color.primary"> -->
+              </td>
+              <!--   <td>
+              <input class="form-control" colorpicker type="text" ng-model="event.color.secondary">
+            </td> -->
+              <td>
+                <p class="input-group">
+                  <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
+                    close-text="Close">
+                  <button type="button" class="btn" ng-click="vm.toggle($event, 'startOpen', event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                  </input>
 
-  </table>
+                </p>
+                <div class="row" style="padding:2%;">
+                  <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="10" show-meridian="true">
+                  </div>
+                  &nbspTo&nbsp
+                  <div uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="10" show-meridian="true">
+                  </div>
+                </div>
 
-</div>
-</div>
+
+              </td>
+              <td>
+                <a href="{{event.url}}">
+                  <button class="btn btn-primary" ng-if="event.url" style="width:80px;">
+                    Start
+                  </button>
+                </a>
+              </td>
+              <td>
+                <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
+                  Save
+                </button>
+                <!-- <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">
+                Delete
+              </button> -->
+                <button ng-if="event.url" class="btn btn-danger" style="width: 80px;" ng-click="deleteEvent(event.id, $index)">
+                  Delete
+                </button>
+                <button data-target="#event" id="crdbuttn" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                  ng-click="login()">Login</button>
+                <div class="modal fade" id="event" role="dialog">
+                  <div class="modal-dialog">
+                    <center>
+                      <!-- Modal content-->
+                      <div class="modal-content" style="color:#777;max-width:350px;">
+                        <div class="modal-header" style="background-color: gold;">
+                          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                          <h4 class="modal-title">Please Enter Details</h4>
+                        </div>
+                        <div class="modal-body">
+
+                          <input type="text" ng-model="studName" class="form-control" placeholder="Student Name">
+                          <br>
+                          <input type="text" ng-model="studId" class="form-control" placeholder="Student Id">
+                          <br>
+                          <input type="email" ng-model="pEmail" class="form-control" placeholder="Enter EmailId">
+                          <br>
+                          <textarea ng-model="eventReason" class="form-control" placeholder="Reason for Event"></textarea>
+
+                        </div>
+                        <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 10px;">
+                          <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(eventReason,studName, studId, pEmail,  event.startsAt, event.endsAt ,event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.color.primary)"
+                            data-dismiss="modal">Submit</button>
+
+                        </div>
+                      </div>
+                    </center>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+</main>
