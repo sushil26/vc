@@ -3,7 +3,6 @@ app.controller("vcAppCtrl", function(
   httpFactory,
   $window,
   $timeout,
-  signaling_socket,
   $state,
   $http
 ) {
