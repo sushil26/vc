@@ -1,12 +1,20 @@
 <div style="margin-left:5%;margin-right:5%" ng-controller="calendarCtrl as vm">
-  <a href="" id="linkToShare"></a>
+  <!-- <a href="" id="linkToShare"></a> -->
   <!-- <div id='calendar' style="margin-top:10%;"></div> -->
-
   <h2 class="text-center" style="margin-top:10%;">{{ vm.calendarTitle }}</h2>
-
   <div class="row">
+   
+  <br>
+  <!-- on-event-click="eventClicked(calendarEvent)" -->
 
-    <div class="col-md-6 text-center">
+  <div class="col-md-6 text-center">
+    <mwl-calendar events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)"
+      on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+      cell-is-open="vm.cellIsOpen" day-view-start="06:00" day-view-end="22:59" day-view-split="30" cell-modifier="vm.modifyCell(calendarCell)"
+      cell-auto-open-disabled="true" on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
+    </mwl-calendar>
+  </div>
+  <div class="col-md-3 text-center">
       <div class="btn-group">
 
         <button class="btn btn-primary" mwl-date-modifier date="vm.viewDate" decrement="vm.calendarView" ng-click="vm.cellIsOpen = false">
@@ -20,10 +28,11 @@
         </button>
       </div>
     </div>
+    <br>
 
-    <br class="visible-xs visible-sm">
+    <br class="visible-xs visible-lg visible-sm">
 
-    <div class="col-md-6 text-center">
+    <div class="col-md-3 text-center">
       <div class="btn-group">
         <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
         <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
@@ -32,20 +41,10 @@
       </div>
     </div>
 
-  </div>
-
-  <br>
-  <!-- on-event-click="eventClicked(calendarEvent)" -->
-  <mwl-calendar events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)"
-    on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-    cell-is-open="vm.cellIsOpen" day-view-start="06:00" day-view-end="22:59" day-view-split="30" cell-modifier="vm.modifyCell(calendarCell)"
-    cell-auto-open-disabled="true" on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
-  </mwl-calendar>
-
   <br>
   <br>
   <br>
-
+  <div class="col-md-12 col-sm-12 col-lg-12">
   <h3 id="event-editor">
     Edit events
     <button class="btn btn-primary pull-right" ng-click="vm.addEvent()">
@@ -172,4 +171,5 @@
 
   </table>
 
+</div>
 </div>
