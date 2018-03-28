@@ -157,6 +157,7 @@ function logVC() {
                 alert("Logged in Successfull");
                 sessionSet(data);
                 document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("LoginUrl").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
                 document.getElementById("videoConferenceUrl").style.display = 'block';
                 document.getElementById("scheduleMeeting").style.display = 'block';
