@@ -58,7 +58,33 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
 
         console.log("<--updateUserStatus");
     }
+    $scope.deleteUser = function (id) {
+        console.log("deleteUser-->");
+        var api = "https://vc4all.in/vc/deleteUser";
+        //var api = "http://localhost:5000/vc/updateUserStatus";
 
+        var obj = {
+            "id": id
+        }
+
+        httpFactory.post(api, obj).then(function (data) {
+            var checkStatus = httpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                $scope.userData = data.data.data;
+                console.log(" obj" + JSON.stringify($scope.userData))
+              
+            }
+            else {
+                alert("Status updated failed, try again ");
+
+            }
+
+        })
+
+
+        console.log("<--deleteUser");
+    }
 
 
 })
