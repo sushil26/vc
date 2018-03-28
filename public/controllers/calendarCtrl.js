@@ -4,17 +4,20 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   // if(localStorage.getItem("loginType")!='teacher'){
 
   //   window.location.href="https://vc4all.in";
-    
+
 
   // }
+
+  $scope.eventColors = ['red','green','blue'];
+       
+        
+      
 
   $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");
     var api = "https://vc4all.in/vc/deleteEvent";
     //var api = "http://localhost:5000/vc/deleteEvent";
-
-    vm.events.splice(index,1);
-
+    vm.events.splice(index, 1);
     var obj = {
       "id": id
     }
@@ -22,7 +25,6 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
       var checkStatus = httpFactory.dataValidation(data);
       console.log("data--" + JSON.stringify(data.data));
       if (checkStatus) {
-
         console.log("data" + JSON.stringify(data.data))
         // $window.location.href = $scope.propertyJson.R082;
         alert(data.data.message);
@@ -31,7 +33,6 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         alert("Event Delete Failed");
 
       }
-
     })
     console.log("<--deleteEvent");
   }
@@ -76,7 +77,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         queryLink = config.queryId;
         peerNew_id = config.peer_id;
 
-        url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate ;
+        url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
 
         var api = "https://vc4all.in/vc/eventSend";
         //var api = "http://localhost:5000/vc/eventSend";
@@ -127,7 +128,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
   $scope.eventGet = function () {
     console.log("eventGet-->");
-var userId= localStorage.getItem("id");
+    var userId = localStorage.getItem("id");
     var api = "https://vc4all.in/vc/eventGet";
     //var api = "http://localhost:5000/vc/eventGet";
 
@@ -154,10 +155,6 @@ var userId= localStorage.getItem("id");
           vm.events.push(obj);
 
         }
-
-
-        // $window.location.href = $scope.propertyJson.R082;
-
       }
       else {
         //alert("Event get Failed");
@@ -231,10 +228,7 @@ var userId= localStorage.getItem("id");
   vm.eventClicked = function (event) {
     alert("clicked: " + event);
     console.log("cliecked: " + event);
-
-    //  alert.show('Clicked', event);
   };
-
 
   $scope.eventClicked = function (event) {
     alert("clicked: " + event);

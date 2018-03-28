@@ -63,7 +63,6 @@
         <!--  <th>Secondary color</th> -->
         <th>Timing</th>
         <th>Url</th>
-
         <th>Edit</th>
       </tr>
     </thead>
@@ -80,7 +79,11 @@
               aria-expanded="false">
               Color
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" ng-options="item for item in names" ></div> -->
+            <select ng-model="event.color.primary">
+              <option ng-repeat="ec in eventColors" ng-class="{ec: true}" ng-selected="{event.color.primary == ec}">{{ec}}</option>  
+            </select>
+            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" ng-model="event.color.primary" style="background-color:red">Red</a>
               <a class="dropdown-item" ng-model="event.color.primary" style="background-color:green">Green</a>
               <a class="dropdown-item" ng-model="event.color.primary" style="background-color:Orange">Orange</a>
@@ -88,8 +91,7 @@
               <a class="dropdown-item" ng-model="event.color.primary" style="background-color:pink">Pink</a>
               <a class="dropdown-item" ng-model="event.color.primary" style="background-color:purple">purple</a>
               <a class="dropdown-item" ng-model="event.color.primary" style="background-color:blue">blue</a>
-
-            </div>
+            </div> -->
           </div>
           <!-- <input class="form-control" colorpicker type="text" ng-model="event.color.primary"> -->
         </td>
