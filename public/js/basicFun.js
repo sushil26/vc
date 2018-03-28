@@ -169,7 +169,6 @@ function regVc() {
 }
 function vcLogout() {
     console.log("vcLogout");
-    window.location = "https://vc4all.in/client";
     localStorage.removeItem("userData");
     localStorage.removeItem("userName");
     localStorage.removeItem("status");
