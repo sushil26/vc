@@ -45,9 +45,9 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
-                $scope.userData[index].status = status
-                // console.log(" obj" + JSON.stringify($scope.userData))
-                // $scope.getUser();
+                $scope.userData[index].status = status;
+                alert("Updated Status Successfully");
+               
             }
             else {
                 alert("Status updated failed, try again ");
@@ -74,6 +74,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
                 // $scope.userData = data.data.data;
                 console.log(" obj" + JSON.stringify($scope.userData))
                 $scope.userData.splice(index, 1);
+                alert("Deleted User Successfully, This User can't login now");
             }
             else {
                 alert("Status updated failed, try again ");
