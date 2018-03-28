@@ -167,3 +167,15 @@ function regVc() {
 
 
 }
+function vcLogout() {
+    console.log("vcLogout");
+    window.location = "https://vc4all.in/client";
+    localStorage.removeItem("userData");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("status");
+    localStorage.removeItem("email");
+    document.getElementById("appLogin").style.display = 'block';
+    document.getElementById("appReg").style.display = 'none';
+    document.getElementById("LoginUrl").style.display = 'block';
+    document.getElementById("appLogout").style.display = 'none';
+}
