@@ -35,7 +35,7 @@
             <button class="btn" ng-if="ud.status=='inactive'" ng-click="updateUserStatus(ud._id,'active')">Activate</button>
           </td>
           <td  style="background-color:aliceblue;">
-              <button class="btn" ng-click="deleteUser(ud._id)">Delete</button>
+              <button class="btn" ng-click="deleteUser(ud._id, $index)">Delete</button>
           </td>
         </tr>
       </tbody>
