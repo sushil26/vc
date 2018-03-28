@@ -161,6 +161,12 @@ function logVC() {
             }
 
             if (data.loginType == 'admin') {
+                sessionSet(data);
+                document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("appLogout").style.display = 'block';
+                document.getElementById("videoConferenceUrl").style.display = 'block';
+                document.getElementById("scheduleMeeting").style.display = 'block';
+                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
                 window.location.href = "https://vc4all.in/mainPage#!/userAuth";
 
             }
