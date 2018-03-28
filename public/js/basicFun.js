@@ -10,20 +10,14 @@ if (localStorage.getItem("userData")) {
     if (loginType == 'teacher' || loginType == 'admin') {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("appReg").style.display = 'none';
-        document.getElementById("LoginUrl").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
-        document.getElementById("videoConferenceUrl").style.display = 'block';
-        document.getElementById("scheduleMeeting").style.display = 'block';
-        document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+       
     }
     else if (loginType == 'parent') {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("appReg").style.display = 'none';
-        document.getElementById("LoginUrl").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
-        document.getElementById("videoConferenceUrl").style.display = 'none';
-        document.getElementById("scheduleMeeting").style.display = 'none';
-        document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+        
     }
     $('#userNSet').trigger('click');
 }
@@ -43,13 +37,8 @@ else {
             // startVideoAction();
             document.getElementById("appLogin").style.display = 'none';
             document.getElementById("appReg").style.display = 'none';
-            document.getElementById("LoginUrl").style.display = 'none';
             document.getElementById("appLogout").style.display = 'block';
-            document.getElementById("videoConferenceUrl").style.display = 'none';
-            document.getElementById("scheduleMeeting").style.display = 'none';
-            document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-        }
+       }
         else {
             console.log("No user data from session");
             $('#setName').trigger('click');
@@ -92,11 +81,7 @@ function logVC() {
                 sessionSet(data);
                 document.getElementById("appLogin").style.display = 'none';
                 document.getElementById("appReg").style.display = 'none';
-                document.getElementById("LoginUrl").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
-                document.getElementById("videoConferenceUrl").style.display = 'block';
-                document.getElementById("scheduleMeeting").style.display = 'block';
-                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
                 userName = data.data.userName;
             }
             else if (data.message == 'Password is wrong') {
@@ -110,12 +95,8 @@ function logVC() {
                 sessionSet(data);
                 document.getElementById("appLogin").style.display = 'none';
                 document.getElementById("appReg").style.display = 'none';
-                document.getElementById("LoginUrl").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
-                document.getElementById("videoConferenceUrl").style.display = 'block';
-                document.getElementById("scheduleMeeting").style.display = 'block';
-                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-                window.location.href = "https://vc4all.in/mainPage#!/userAuth";
+               
 
             }
         }
