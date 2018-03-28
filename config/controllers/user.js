@@ -75,13 +75,15 @@ module.exports.login4VC = function (req, res) {
 
     if (general.emptyCheck(req.body.email) && general.emptyCheck(req.body.password)) {
 
-        var adminData={
-            "userName":"admin",
-            "status":"inactive",
-            "email":"admin123@gmail.com"
-        }
+        
         if (req.body.email == 'admin123@gmail.com') {
+            var adminData;
             if (req.body.password == 'admin123') {
+                adminData = {
+                    "userName":"admin",
+                    "status":"active",
+                    "email":"admin123@gmail.com"
+                }
                 responseData = {
                     "status": true,
                     "message": "Login Successfully",

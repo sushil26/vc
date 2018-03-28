@@ -13,14 +13,29 @@ if (localStorage.getItem("userData")) {
     console.log("User Name from session: " + localStorage.getItem("userData"));
     var userData = JSON.stringify(localStorage.getItem("userData"));
     userName = localStorage.getItem("userName");
+    loginType = localStorage.getItem("loginType");
+
     console.log("userData: " + userData);
     console.log("userName: " + userName);
-    document.getElementById("appLogin").style.display = 'none';
-    document.getElementById("LoginUrl").style.display = 'none';
-    document.getElementById("appLogout").style.display = 'block';
-    document.getElementById("videoConferenceUrl").style.display = 'block';
-    document.getElementById("scheduleMeeting").style.display = 'block';
-    document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+    console.log("loginType: " + loginType);
+    if (loginType == 'teacher' && loginType == 'admin') {
+        document.getElementById("appLogin").style.display = 'none';
+        document.getElementById("LoginUrl").style.display = 'none';
+        document.getElementById("appLogout").style.display = 'block';
+        document.getElementById("videoConferenceUrl").style.display = 'block';
+        document.getElementById("scheduleMeeting").style.display = 'block';
+        document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+    }
+    else if(loginType == 'parent'){
+        document.getElementById("appLogin").style.display = 'none';
+        document.getElementById("LoginUrl").style.display = 'none';
+        document.getElementById("appLogout").style.display = 'block';
+        document.getElementById("videoConferenceUrl").style.display = 'none';
+        document.getElementById("scheduleMeeting").style.display = 'none';
+        document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+    }
+
+
     // init();
     $('#userNSet').trigger('click');
 }
@@ -38,6 +53,12 @@ else {
             console.log("User Name from session: " + localStorage.getItem("userName"));
             userName = localStorage.getItem("userName");
             // startVideoAction();
+            document.getElementById("appLogin").style.display = 'none';
+            document.getElementById("LoginUrl").style.display = 'none';
+            document.getElementById("appLogout").style.display = 'block';
+            document.getElementById("videoConferenceUrl").style.display = 'none';
+            document.getElementById("scheduleMeeting").style.display = 'none';
+            document.getElementById("videoConferenceLinkExtention").style.display = 'block';
 
         }
         else {
@@ -64,25 +85,39 @@ function saveName() {
     }
 
     $.ajax({
-       url: "https://vc4all.in/vc/parentCredential",
-      //  url: "http://localhost:5000/vc/login4VC",
+        url: "https://vc4all.in/vc/parentCredential",
+        //  url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
         dataType: 'json',
         success: function (data) {
-            // callback(data);
-
             var userData = {
                 "userName": userName,
+                "status": "instantActive",
+                "loginType": "parent"
             }
             console.log("data: " + JSON.stringify(data));
-        }
+            if (data.message == "Login Successfully") {
+                localStorage.setItem("userName", userName);
+                localStorage.setItem("status", "instantActive");
+                localStorage.setItem("loginType", "parent");
+                document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("LoginUrl").style.display = 'none';
+                document.getElementById("appLogout").style.display = 'block';
+                document.getElementById("videoConferenceUrl").style.display = 'none';
+                document.getElementById("scheduleMeeting").style.display = 'none';
+                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+            }
+            else {
 
+            }
+
+
+        }
     })
     console.log("<--setName");
 }
-
 
 function logVC() {
     console.log("logVC from signalingSocket.js");
@@ -98,7 +133,7 @@ function logVC() {
     console.log("logVC");
     $.ajax({
         url: "https://vc4all.in/vc/login4VC",
-      //  url: "http://localhost:5000/vc/login4VC",
+        //  url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -137,7 +172,6 @@ function logVC() {
 
 function sessionSet(data) {
     if (typeof (Storage) !== "undefined") {
-        // Store
         var userData = {
             "userName": data.data.userName,
             "status": data.data.status,
@@ -152,9 +186,9 @@ function sessionSet(data) {
         localStorage.setItem("id", data.data._id);
         // Retrieve
         var info = localStorage.getItem("userData");
-     
+
         userName = info.userName;
-     
+
     } else {
         alert("Sorry, your browser does not support Web Storage...");
 
@@ -307,11 +341,11 @@ function init() {
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
                 document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-             
+
             }
             else {
                 console.log("query id nt null");
-              
+
                 document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
@@ -319,9 +353,9 @@ function init() {
                 document.getElementById('audio_btn').style.display = 'inline';
                 document.getElementById('diconnect_btn').style.display = 'inline';
                 document.getElementById('videoConferenceLinkExtention').style.display = 'inline';
-                         
+
                 if (userName != null) {
-                 
+
                     setup_local_media(function () {
 
                         join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
