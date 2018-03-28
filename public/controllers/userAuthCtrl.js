@@ -31,7 +31,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     }
     $scope.getUser();
 
-    $scope.updateUserStatus = function (id, status) {
+    $scope.updateUserStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
         var api = "https://vc4all.in/vc/updateUserStatus";
         //var api = "http://localhost:5000/vc/updateUserStatus";
@@ -47,7 +47,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
             if (checkStatus) {
                 $scope.userData = data.data.data;
                 console.log(" obj" + JSON.stringify($scope.userData))
-                $scope.getUser();
+                // $scope.getUser();
             }
             else {
                 alert("Status updated failed, try again ");
