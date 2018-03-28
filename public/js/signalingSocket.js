@@ -26,7 +26,7 @@ if (localStorage.getItem("userData")) {
         document.getElementById("scheduleMeeting").style.display = 'block';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
     }
-    else if(loginType == 'parent'){
+    else if (loginType == 'parent') {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("LoginUrl").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
@@ -110,7 +110,17 @@ function saveName() {
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
             }
             else {
-
+                console.log("Wrong credential");
+                localStorage.setItem("userName", userName);
+                localStorage.setItem("status", "instantActive");
+                localStorage.setItem("loginType", "parent");
+                document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("LoginUrl").style.display = 'none';
+                document.getElementById("appLogout").style.display = 'block';
+                document.getElementById("videoConferenceUrl").style.display = 'none';
+                document.getElementById("scheduleMeeting").style.display = 'none';
+                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+                // $('#setName').trigger('click');
             }
 
 
