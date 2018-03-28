@@ -45,8 +45,8 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
-                $scope.userData = data.data.data;
-                console.log(" obj" + JSON.stringify($scope.userData))
+                $scope.userData[index].status = status
+                // console.log(" obj" + JSON.stringify($scope.userData))
                 // $scope.getUser();
             }
             else {
