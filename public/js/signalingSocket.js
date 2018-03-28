@@ -34,9 +34,6 @@ if (localStorage.getItem("userData")) {
         document.getElementById("scheduleMeeting").style.display = 'none';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
     }
-
-
-    // init();
     $('#userNSet').trigger('click');
 }
 else {
@@ -54,6 +51,7 @@ else {
             userName = localStorage.getItem("userName");
             // startVideoAction();
             document.getElementById("appLogin").style.display = 'none';
+            document.getElementById("appReg").style.display = 'none';
             document.getElementById("LoginUrl").style.display = 'none';
             document.getElementById("appLogout").style.display = 'block';
             document.getElementById("videoConferenceUrl").style.display = 'none';
@@ -157,6 +155,7 @@ function logVC() {
                 alert("Logged in Successfull");
                 sessionSet(data);
                 document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("appReg").style.display = 'none';
                 document.getElementById("LoginUrl").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
                 document.getElementById("videoConferenceUrl").style.display = 'block';
@@ -174,6 +173,7 @@ function logVC() {
             if (data.loginType == 'admin') {
                 sessionSet(data);
                 document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("appReg").style.display = 'none';
                 document.getElementById("LoginUrl").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
                 document.getElementById("videoConferenceUrl").style.display = 'block';
@@ -221,6 +221,7 @@ function vcLogout() {
     localStorage.removeItem("status");
     localStorage.removeItem("email");
     document.getElementById("appLogin").style.display = 'block';
+    document.getElementById("appReg").style.display = 'none';
     document.getElementById("LoginUrl").style.display = 'block';
     document.getElementById("appLogout").style.display = 'none';
     document.getElementById("videoConferenceUrl").style.display = 'none';
@@ -296,14 +297,7 @@ var shareScreen = null;
 var sessionHeader = null;
 var peerStream = null;
 signaling_socket = io(SIGNALING_SERVER);
-/* ### Start Register Button Click  ### */
-function register() {
-    console.log("register-->");
-    $('#registerVcBtn').trigger('click');
 
-
-}
-/* ### End Register Button Click ### */
 function disconnecSession() {
     console.log("disconnecSession-->");
     console.log("sessionHeader: " + sessionHeader);
