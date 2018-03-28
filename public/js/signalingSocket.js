@@ -18,7 +18,7 @@ if (localStorage.getItem("userData")) {
     console.log("userData: " + userData);
     console.log("userName: " + userName);
     console.log("loginType: " + loginType);
-    if (loginType == 'teacher' && loginType == 'admin') {
+    if (loginType == 'teacher' || loginType == 'admin') {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("LoginUrl").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
@@ -26,7 +26,7 @@ if (localStorage.getItem("userData")) {
         document.getElementById("scheduleMeeting").style.display = 'block';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
     }
-    else if(loginType == 'parent'){
+    else if (loginType == 'parent') {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("LoginUrl").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
@@ -110,7 +110,17 @@ function saveName() {
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
             }
             else {
-
+                console.log("Wrong credential");
+                localStorage.setItem("userName", userName);
+                localStorage.setItem("status", "instantActive");
+                localStorage.setItem("loginType", "parent");
+                document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("LoginUrl").style.display = 'none';
+                document.getElementById("appLogout").style.display = 'block';
+                document.getElementById("videoConferenceUrl").style.display = 'none';
+                document.getElementById("scheduleMeeting").style.display = 'none';
+                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+                // $('#setName').trigger('click');
             }
 
 
@@ -147,6 +157,7 @@ function logVC() {
                 alert("Logged in Successfull");
                 sessionSet(data);
                 document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("LoginUrl").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
                 document.getElementById("videoConferenceUrl").style.display = 'block';
                 document.getElementById("scheduleMeeting").style.display = 'block';
@@ -161,6 +172,13 @@ function logVC() {
             }
 
             if (data.loginType == 'admin') {
+                sessionSet(data);
+                document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("LoginUrl").style.display = 'none';
+                document.getElementById("appLogout").style.display = 'block';
+                document.getElementById("videoConferenceUrl").style.display = 'block';
+                document.getElementById("scheduleMeeting").style.display = 'block';
+                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
                 window.location.href = "https://vc4all.in/mainPage#!/userAuth";
 
             }
@@ -203,6 +221,7 @@ function vcLogout() {
     localStorage.removeItem("status");
     localStorage.removeItem("email");
     document.getElementById("appLogin").style.display = 'block';
+    document.getElementById("LoginUrl").style.display = 'block';
     document.getElementById("appLogout").style.display = 'none';
     document.getElementById("videoConferenceUrl").style.display = 'none';
     document.getElementById("scheduleMeeting").style.display = 'none';
