@@ -400,7 +400,6 @@ function init() {
         console.log("<--signaling_socket connect");
     });
 
-
     signaling_socket.on('disconnect', function () {
         console.log("signaling_socket.on disconnect-->");
         disconnPeerId = peerNew_id;
@@ -425,11 +424,7 @@ function init() {
     });
     function join__channel(channel, userdata) {
         console.log("join__channel-->");
-        // console.log("channel: " + channel);
-        // console.log("userdata: " + JSON.stringify(userdata));
-        // document.p.innerHTML = channel;
-        // document.getElementById("demo").innerHTML = channel;
-
+      
         signaling_socket.emit('join', { "channel": channel, "userdata": userdata, 'owner': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
 
         console.log("<--join__channel");
@@ -483,10 +478,6 @@ function init() {
 
         //     }
         // }
-
-
-
-
 
         peers[peer_id] = peer_connection;
 
@@ -640,8 +631,6 @@ function init() {
             console.log("<--X is NUll");
             console.log("<--onaddstream");
         }
-
-
         if (local_media_stream) {
             document.getElementById('screenShareBtn').style.display = 'inline';
             document.getElementById('screenShareStop').style.display = 'none';
@@ -650,16 +639,12 @@ function init() {
             peer_connection.addStream(local_media_stream);
         }
 
-
         if (local_media_shareStream) {
             console.log("peer_connection.addStream(local_media_shareStream);-->");
             document.getElementById('screenShareBtn').style.display = 'none';
             document.getElementById('screenShareStop').style.display = 'inline';
             peer_connection.addStream(local_media_shareStream);
         }
-
-
-
 
         /* Only one side of the peer connection should create the
          * offer, the signaling server picks one to be the offerer. 
