@@ -26,6 +26,7 @@ if (localStorage.getItem("userData")) {
         document.getElementById("videoConferenceUrl").style.display = 'block';
         document.getElementById("scheduleMeeting").style.display = 'block';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+
     }
     else if (loginType == 'parent') {
         document.getElementById("appLogin").style.display = 'none';
@@ -35,8 +36,9 @@ if (localStorage.getItem("userData")) {
         document.getElementById("videoConferenceUrl").style.display = 'none';
         document.getElementById("scheduleMeeting").style.display = 'none';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+       
     }
-    $('#userNSet').trigger('click');
+  
 }
 else {
 
@@ -320,9 +322,6 @@ function init() {
 
     console.log("init-->");
 
-
-
-
     signaling_socket.on('connect', function () {
         console.log("signaling_socket connect-->");
         // console.log("1.1:peers: " + JSON.stringify(peers));
@@ -369,8 +368,8 @@ function init() {
                 document.getElementById('diconnect_btn').style.display = 'inline';
                 document.getElementById('videoConferenceLinkExtention').style.display = 'inline';
 
-                if (userName != null) {
-
+                if (userName!=undefined) {
+                    console.log("userName with localmedia setup call: " + userName);
                     setup_local_media(function () {
 
                         join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
