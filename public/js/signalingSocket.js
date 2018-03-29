@@ -26,6 +26,7 @@ if (localStorage.getItem("userData")) {
         document.getElementById("videoConferenceUrl").style.display = 'block';
         document.getElementById("scheduleMeeting").style.display = 'block';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+        
     }
     else if (loginType == 'parent') {
         document.getElementById("appLogin").style.display = 'none';
@@ -369,7 +370,7 @@ function init() {
                 document.getElementById('diconnect_btn').style.display = 'inline';
                 document.getElementById('videoConferenceLinkExtention').style.display = 'inline';
 
-                if (userName != null) {
+                if (userName) {
 
                     setup_local_media(function () {
 
