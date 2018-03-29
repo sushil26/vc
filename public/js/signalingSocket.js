@@ -26,7 +26,7 @@ if (localStorage.getItem("userData")) {
         document.getElementById("videoConferenceUrl").style.display = 'block';
         document.getElementById("scheduleMeeting").style.display = 'block';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-        
+
     }
     else if (loginType == 'parent') {
         document.getElementById("appLogin").style.display = 'none';
@@ -370,8 +370,8 @@ function init() {
                 document.getElementById('diconnect_btn').style.display = 'inline';
                 document.getElementById('videoConferenceLinkExtention').style.display = 'inline';
 
-                if (userName) {
-console.log("userName with localmedia setup call: "+userName);
+                if (userName!=undefined) {
+                    console.log("userName with localmedia setup call: " + userName);
                     setup_local_media(function () {
 
                         join__channel(DEFAULT_CHANNEL, { 'whatever-you--here': 'stuff' });
