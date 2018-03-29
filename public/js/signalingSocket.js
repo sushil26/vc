@@ -608,12 +608,6 @@ function init() {
 
             }
 
-
-
-
-
-
-
             // $('#videosAttach').append(remote_media);
             // var parentElement = document.getElementById('videosAttach');
 
@@ -783,7 +777,6 @@ function init() {
         console.log("<--iceCandidate");
     });
 
-
     /**
      * When a user leaves a channel (or is disconnected from the
      * signaling server) everyone will recieve a 'removePeer' message
@@ -877,176 +870,26 @@ function setup_local_media(callback, errorback) {
         element.srcObject = stream;
         console.log("<--attachMediaStream");
     };
-
-
-
     navigator.getUserMedia({ "audio": USE_AUDIO, "video": USE_VIDEO },
         function (stream) { /* user accepted access to a/v */
             console.log("Access granted to audio/video");
             console.log("stream: " + stream);
             console.log("stream: " + JSON.stringify(stream));
 
-
-
             local_media_stream = stream;
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $();
             local_media.attr("autoplay", "autoplay");
             local_media.attr("muted", "true"); /* always mute ourselves by default */
-            // local_media.attr("controls", "");
             local_media.attr("id", "videoElem");
             local_media.attr("style", "border:1px solid skyblue;display:inline !important");
+            // local_media.attr("autoplay", "autoplay");
+            // local_media.attr("muted", "false"); /* always mute ourselves by default */
+            // local_media.attr("id", "videoElem");
+            // local_media.attr("style", "border:1px solid skyblue;display:inline !important");
 
-
-            // $('#videosAttach').before("<div class=" + "col-lg-3 col-md-6 portfolio-items" + ">");
-            // $('#videosAttach').after("<div class=" + "details" + "><h4>App 1</h4><span>Alored dono par</span></div></div>");
             $('#portfolio-wrapper').append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' + userName + '</h4><span>All is well</span></div></div>');
             $('#videosAttach').append(local_media);
-
-
-            // /* =============Start==================== */
-            // $('#record').append('<div><label id="percentage">0%</label><progress id="progress-bar" value=0></progress><br /></div><hr /><div><button id="btn-start-recording">Start Recording</button><button id="btn-stop-recording" disabled="">Stop Recording</button></div>');
-            // var btnStartRecording = document.querySelector('#btn-start-recording');
-            // var btnStopRecording = document.querySelector('#btn-stop-recording');
-            // var videoElement = document.getElementById('videoElem');
-            // var progressBar = document.querySelector('#progress-bar');
-            // var percentage = document.querySelector('#percentage');
-
-            // var recorder;
-            // var peerRecord;
-
-            // reusable helpers
-
-            // this function submits recorded blob to nodejs server
-            // function postFiles() {
-            //     console.log("postFiles-->");
-            //     var blob = recorder.getBlob();
-
-            //     // getting unique identifier for the file name
-            //     var fileName = generateRandomString() + '.webm';
-
-            //     var file = new File([blob], fileName, {
-            //         type: 'video/webm'
-            //     });
-
-            //     videoElement.src = '';
-            //     videoElement.poster = '/ajax-loader.gif';
-
-            //     // console.log("url: " + url);
-            //     // console.log("data: " + data);
-            //     // file = data;
-
-            //     // if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
-            //     //     alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
-            //     // }
-            //     if (file.type.substring(0, 5) === 'video') {
-
-            //         console.log("Video");
-            //         // uplaod video  
-            //         videoReaderRecord.readAsDataURL(file);
-            //     }
-            //     xhr('/uploadFile', file, function (responseText) {
-            //         console.log("/uploadFile-->");
-            //         var fileURL = JSON.parse(responseText).fileURL;
-
-            //         console.info('fileURL', fileURL);
-            //         videoElement.src = fileURL;
-            //         videoElement.play();
-            //         videoElement.muted = false;
-            //         videoElement.controls = true;
-
-            //         document.querySelector('#footer-h2').innerHTML = '<a href="' + videoElement.src + '">' + videoElement.src + '</a>';
-            //         console.log("<--/uploadFile");
-            //     });
-
-            //     if (mediaStream) mediaStream.stop();
-            //     console.log("<--postFiles");
-            // }
-            // videoReaderRecord.onload = function (e) {
-            //     console.log("videoReaderRecord.onload-->");
-            //     var targetResult = e.target.result;
-
-            //     // scrollDown();
-            //     // 
-            //     // share video
-            //     appendFile_record(targetResult);
-            //     console.log("<--videoReaderRecord.onload");
-            // };
-
-            // // XHR2/FormData
-            // function xhr(url, data, callback) {
-            //     console.log("xhr-->");
-            //     console.log("url: " + url);
-            //     console.log("data: " + data);
-            //     file = data;
-
-            //     if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
-            //         alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
-            //     }
-            //     if (file.type.substring(0, 5) === 'video') {
-
-            //         console.log("Video");
-            //         // uplaod video  
-            //         videoReader.readAsDataURL(file);
-            //     }
-
-            //     var request = new XMLHttpRequest();
-            //     console.log("request: " + request);
-            //     request.onreadystatechange = function () {
-            //         if (request.readyState == 4 && request.status == 200) {
-            //             callback(request.responseText);
-            //         }
-            //     };
-
-            //     request.upload.onprogress = function (event) {
-            //         progressBar.max = event.total;
-            //         progressBar.value = event.loaded;
-            //         progressBar.innerHTML = 'Upload Progress ' + Math.round(event.loaded / event.total * 100) + "%";
-            //     };
-
-            //     request.upload.onload = function () {
-            //         percentage.style.display = 'none';
-            //         progressBar.style.display = 'none';
-            //     };
-            //     request.open('POST', url);
-
-            //     var formData = new FormData();
-            //     formData.append('file', data);
-            //     request.send(formData);
-            //     console.log("<--xhr");
-            // }
-
-            // // generating random string
-            // function generateRandomString() {
-            //     if (window.crypto) {
-            //         var a = window.crypto.getRandomValues(new Uint32Array(3)),
-            //             token = '';
-            //         for (var i = 0, l = a.length; i < l; i++) token += a[i].toString(36);
-            //         return token;
-            //     } else {
-            //         return (Math.random() * new Date().getTime()).toString(36).replace(/\./g, '');
-            //     }
-            // }
-
-            // var mediaStream = null;
-            // // reusable getUserMedia
-            // function captureUserMedia(success_callback) {
-            //     var session = {
-            //         audio: true,
-            //         video: true
-            //     };
-
-            //     navigator.getUserMedia(session, success_callback, function (error) {
-            //         alert('Unable to capture your camera. Please check console logs.');
-            //         console.error(error);
-            //     });
-            // }
-
-
-
-            /* ================End================= */
-
-
 
             document.getElementById("videoElem").addEventListener("click", function () {
                 var videoElem = document.getElementById('videoElem');
@@ -1112,28 +955,14 @@ function setup_local_media(callback, errorback) {
             if (errorback) errorback();
         });
 
-
-
-
     document.getElementById("screenShareBtn").addEventListener("click", function () {
 
         console.log("screenShare-->");
-
-
         getScreenId(function (error, sourceId, screen_constraints) {
-            // error    == null || 'permission-denied' || 'not-installed' || 'installed-disabled' || 'not-chrome'
-            // sourceId == null || 'string' || 'firefox'
-
-
-            // screen_constraints.audio = true;
             navigator.getUserMedia(screen_constraints, function (stream) {
 
                 navigator.getUserMedia({ audio: true }, function (audioStream) {
                     stream.addTrack(audioStream.getAudioTracks()[0]);
-
-
-
-
                     // shareScreen = peerNew_id;
                     var local_media = document.getElementById('videoElem');
                     stopVideo(local_media);
@@ -1168,15 +997,11 @@ function setup_local_media(callback, errorback) {
                     //$('#portfolio-wrapper').append('<div id="'+id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-items"><div id="'+id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>All is well</span></div></div>');
                     $('#videosAttach').append(local_mediaScreenShare);
 
-
-
                     attachMediaStream(local_mediaScreenShare[0], stream);
 
                     /* ##### Start Stop Sharing ##### */
                     // var btn = document.createElement("input");
                     var btn = document.getElementById('screenShareStop');
-
-
 
                     btn.onclick = function stopVideo(local_mediaScreenShare) {
                         let stream = screenShareElem.srcObject;
@@ -1222,16 +1047,7 @@ function setup_local_media(callback, errorback) {
 
                     };
 
-
-
-
-
-
                     /* ##### End Stop Sharing ##### */
-
-
-
-
 
                     if (callback) callback();
                     // document.querySelector('video').src = URL.createObjectURL(stream);
@@ -1261,7 +1077,6 @@ function setup_local_media(callback, errorback) {
 
 }
 
-
 signaling_socket.on('stateChangedToClient', function (data) {
 
     console.log("newstateChangedToClientTextMsg-->");
@@ -1272,10 +1087,6 @@ signaling_socket.on('stateChangedToClient', function (data) {
     }
     console.log("<--newstateChangedToClientTextMsg");
 })
-
-
-
-
 
 function scrollDown() {
     console.log("scrollDown-->");
