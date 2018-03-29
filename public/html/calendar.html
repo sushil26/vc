@@ -4,7 +4,7 @@
     <!-- <div id='calendar' style="margin-top:10%;"></div> -->
     <h2 class="text-center" style="margin-top:75px;">{{ vm.calendarTitle }}</h2>
     <hr>
-    <div class="row">
+    <div class="row" ng-if="userLoginType=='admin' || userLoginType=='teacher'">
 
       <br>
       <!-- on-event-click="eventClicked(calendarEvent)" -->

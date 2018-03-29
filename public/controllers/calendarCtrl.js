@@ -10,10 +10,12 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   if (localStorage.getItem("loginType") == 'admin') {
     console.log("loginType: " + localStorage.getItem("loginType"));
     document.getElementById('userAuth').style.display = "block";
+    $scope.userLoginType='admin';
 
   }
   else if (localStorage.getItem("loginType") == 'teacher') {
     document.getElementById('userAuth').style.display = "none";
+    $scope.userLoginType='teacher';
   }
   else {
     window.location.href = "https://vc4all.in";
