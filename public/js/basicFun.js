@@ -11,15 +11,21 @@ if (localStorage.getItem("userData")) {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
+        document.getElementById("userAuth").style.display = 'none';
        
     }
     else if (loginType == 'parent') {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
+        document.getElementById("userAuth").style.display = 'none';
         
     }
-    $('#userNSet').trigger('click');
+
+   if(loginType == 'admin')
+   {
+    document.getElementById("userAuth").style.display = 'block';
+   }
 }
 else {
 
