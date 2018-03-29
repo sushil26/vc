@@ -7,6 +7,13 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
 
   // }
+  if(localStorage.getItem("loginType")=='teacher' || localStorage.getItem("loginType")=='admin'){
+    document.getElementById('userAuth').style.display="block";
+ 
+}
+else{
+    window.location.href="https://vc4all.in";
+}
 
   $scope.eventColors = ['red','green','blue'];
        
