@@ -7,19 +7,22 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
 
   // }
-  if(localStorage.getItem("loginType")=='admin'){
-    console.log("loginType: "+localStorage.getItem("loginType"));
-    document.getElementById('userAuth').style.display="block";
- 
-}
-else{
-    window.location.href="https://vc4all.in";
-}
+  if (localStorage.getItem("loginType") == 'admin') {
+    console.log("loginType: " + localStorage.getItem("loginType"));
+    document.getElementById('userAuth').style.display = "block";
 
-  $scope.eventColors = ['red','green','blue'];
-       
-        
-      
+  }
+  else if (localStorage.getItem("loginType") == 'teacher') {
+    document.getElementById('userAuth').style.display = "none";
+  }
+  else {
+    window.location.href = "https://vc4all.in";
+  }
+
+  $scope.eventColors = ['red', 'green', 'blue'];
+
+
+
 
   $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");
