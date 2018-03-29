@@ -19,6 +19,7 @@ if (localStorage.getItem("userData")) {
     console.log("userName: " + userName);
     console.log("loginType: " + loginType);
     if (loginType == 'teacher' || loginType == 'admin') {
+        document.getElementById('userAuth').style.display="none";
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("appReg").style.display = 'none';
         document.getElementById("LoginUrl").style.display = 'none';
@@ -29,6 +30,7 @@ if (localStorage.getItem("userData")) {
 
     }
     else if (loginType == 'parent') {
+        document.getElementById('userAuth').style.display="none";
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("appReg").style.display = 'none';
         document.getElementById("LoginUrl").style.display = 'none';
@@ -37,6 +39,10 @@ if (localStorage.getItem("userData")) {
         document.getElementById("scheduleMeeting").style.display = 'none';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
        
+    }
+
+    if( loginType == 'admin'){
+        document.getElementById('userAuth').style.display="block";
     }
   
 }
@@ -54,6 +60,7 @@ else {
             console.log("User Name from session: " + localStorage.getItem("userName"));
             userName = localStorage.getItem("userName");
             // startVideoAction();
+            document.getElementById('userAuth').style.display="none";
             document.getElementById("appLogin").style.display = 'none';
             document.getElementById("appReg").style.display = 'none';
             document.getElementById("LoginUrl").style.display = 'none';
@@ -104,6 +111,7 @@ function saveName() {
                 localStorage.setItem("userName", userName);
                 localStorage.setItem("status", "instantActive");
                 localStorage.setItem("loginType", "parent");
+                document.getElementById('userAuth').style.display="none";
                 document.getElementById("appLogin").style.display = 'none';
                 document.getElementById("LoginUrl").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
@@ -116,6 +124,7 @@ function saveName() {
                 localStorage.setItem("userName", userName);
                 localStorage.setItem("status", "instantActive");
                 localStorage.setItem("loginType", "parent");
+                document.getElementById('userAuth').style.display="none";
                 document.getElementById("appLogin").style.display = 'none';
                 document.getElementById("LoginUrl").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
@@ -158,6 +167,7 @@ function logVC() {
             else if (data.message == 'Login Successfully') {
                 alert("Logged in Successfull");
                 sessionSet(data);
+                document.getElementById('userAuth').style.display="none";
                 document.getElementById("appLogin").style.display = 'none';
                 document.getElementById("appReg").style.display = 'none';
                 document.getElementById("LoginUrl").style.display = 'none';
@@ -176,6 +186,7 @@ function logVC() {
 
             if (data.loginType == 'admin') {
                 sessionSet(data);
+                document.getElementById('userAuth').style.display="block";
                 document.getElementById("appLogin").style.display = 'none';
                 document.getElementById("appReg").style.display = 'none';
                 document.getElementById("LoginUrl").style.display = 'none';
