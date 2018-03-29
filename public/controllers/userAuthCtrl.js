@@ -2,7 +2,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     console.log("userAuthCtrl==>: " + localStorage.getItem("userData"));
 
     if(localStorage.getItem("loginType")=='admin'){
-        console.log("loginType: "+loginType);
+        console.log("loginType: "+localStorage.getItem("loginType"));
         document.getElementById('userAuth').style.display="none";
      
     }
