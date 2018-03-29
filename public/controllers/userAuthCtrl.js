@@ -1,12 +1,16 @@
 app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     console.log("userAuthCtrl==>: " + localStorage.getItem("userData"));
 
-    // if(localStorage.getItem("loginType")!='admin'){
-
-    //   window.location.href="https://vc4all.in";
-
-
-    // }
+    if(localStorage.getItem("loginType")=='admin'){
+        console.log("loginType: "+localStorage.getItem("loginType"));
+        document.getElementById('userAuth').style.display="none";
+        $scope.getUser();
+     
+    }
+    else{
+        window.location.href="https://vc4all.in";
+    }
+    
 
     $scope.getUser = function () {
         console.log("getUser-->");
@@ -29,7 +33,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
         })
         console.log("<--getUser");
     }
-    $scope.getUser();
+  
 
     $scope.updateUserStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
