@@ -10,7 +10,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
         window.location.href="https://vc4all.in";
     }
     
-    $scope.getUser();
+
     $scope.getUser = function () {
         console.log("getUser-->");
         var api = "https://vc4all.in/vc/getUserData";
@@ -33,7 +33,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
         console.log("<--getUser");
     }
   
-
+    $scope.getUser();
     $scope.updateUserStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
         var api = "https://vc4all.in/vc/updateUserStatus";
