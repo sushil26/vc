@@ -41,7 +41,7 @@
           </li>
           <li id="userAuth" style="display:none;">
             <a href="https://vc4all.in/mainPage#!/userAuth">User Authentication</a>
-        </li> 
+          </li>
           <li>
             <a href="#services" style="text-shadow: 2px 2px 4px #000000;">Features</a>
           </li>
@@ -571,21 +571,20 @@
   <div class="modal fade" id="crdntl" role="dialog">
     <div class="modal-dialog">
       <center>
-       <!-- Modal content Login -->
-       <div id="lgn" class="modal-content" style="color:#777;max-width:350px;">
+        <!-- Modal content Login -->
+        <div class="modal-content" style="color:#777;max-width:350px;">
           <div class="modal-header" style="background-color: gold;">
-              <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-              <h4 class="modal-title" style="margin-left: 2px;">Login</h4>
-              <button class="btn-default fa fa-close" style="margin-top: 2px;" aria-hidden="true" type="reset" data-dismiss="modal"></button>
+            <h4 class="modal-title" style="margin-left: 2px;">Login</h4>
+            <button class="btn-default fa fa-close" style="margin-top: 2px;" aria-hidden="true" type="reset" data-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-              <input style="
+            <input style="
               background:  #ddd;
               border-radius: inherit;
               height: 50px;
-              border: #ddd;" type="email" class="form-control" placeholder="Email" id="crdEmail" >
-              <br>
-              <input style="
+              border: #ddd;" type="email" class="form-control" placeholder="Email" id="crdEmail">
+            <br>
+            <input style="
               background:  #ddd;
               border-radius: inherit;
               height: 50px;
@@ -593,13 +592,13 @@
           </div>
           <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 15px;">
 
-              <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
-                  onclick="logVC()" data-dismiss="modal">Submit</button>
+            <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
+              onclick="logVC()" data-dismiss="modal">Submit</button>
           </div>
           <p style="font-size:12px;" class="message">Not registered?
-              <a  id=lgnr href="#" data-target="#regVC" data-toggle="modal">Register Here</a>
+            <a href="#"  data-toggle="modal" data-target="#regVC">Register Here</a>
           </p>
-      </div>
+        </div>
       </center>
     </div>
   </div>
@@ -607,40 +606,40 @@
     <div class="modal-dialog">
       <center>
         <!-- Modal content Register -->
-        <div  id=regstr class="modal-content" style="color:#777;max-width:350px;">
-            <div class="modal-header" style="background-color: gold;">
-                <h4 class="modal-title" style="margin-left: 2px;">Register</h4>
-                <button class="btn-default fa fa-close" style="margin-top: 2px;" aria-hidden="true" type="reset" data-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <input type="text" 
-                style="background:  #ddd;
+        <div class="modal-content" style="color:#777;max-width:350px;">
+          <div class="modal-header" style="background-color: gold;">
+            <h4 class="modal-title" style="margin-left: 2px;">Register</h4>
+            <button class="btn-default fa fa-close" style="margin-top: 2px;" aria-hidden="true" type="reset" data-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" style="background:  #ddd;
                 border-radius: inherit;
                 height: 50px;
-                border: #ddd;"  class="form-control" placeholder="Username" id="regVC_un">
-                <br>
-                <input style="
+                border: #ddd;" class="form-control" placeholder="Username" id="regVC_un">
+            <br>
+            <input style="
                 background:  #ddd;
                 border-radius: inherit;
                 height: 50px;
                 border: #ddd;" type="email" class="form-control" placeholder="Email" id="regVC_emailId">
-                <br>
-                <input   style="background:  #ddd;
+            <br>
+            <input style="background:  #ddd;
                 border-radius: inherit;
                 height: 50px;
                 border: #ddd;" type="password" class="form-control" placeholder="Password" id="regVC_pswd">
-                <br>
-                <input type="password"  style="background:  #ddd;
+            <br>
+            <input type="password" style="background:  #ddd;
                 border-radius: inherit;
                 height: 50px;
                 border: #ddd;" class="form-control" placeholder="Confirm Password" id="regVCCF_pswd">
-            </div>
-            <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 15px;">
-                <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn" onclick="regVc()" data-dismiss="modal">Submit</button>
-            </div>
-            <p style="font-size:12px;" class="message">Already Registered ?
-                    <a href="#"  id="regl" data-target="#crdntl" data-toggle="modal">Login Here</a>
-            </p>
+          </div>
+          <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 15px;">
+            <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
+              onclick="regVc()" data-dismiss="modal">Submit</button>
+          </div>
+          <p style="font-size:12px;" class="message">Already Registered ?
+            <a href="#"  data-toggle="modal" data-target="#crdntl">Login Here</a>
+          </p>
         </div>
       </center>
     </div>
@@ -688,16 +687,6 @@
   <!-- Template Main Javascript File -->
   <script src="/home/js/main.js"></script>
   <script>
-    $(document).ready(function () {
-      $("#regl").click(function () {
-        $("#regstr").css("display", "none");
-        $("#lgn").css("display", "inline");
-      });
-      $("#lgnr").click(function () {
-        $("#lgn").css("display", "none");
-        $("#regstr").css("display", "inline");
-      });
-    })
     var TxtType = function (el, toRotate, period) {
       this.toRotate = toRotate;
       this.el = el;
