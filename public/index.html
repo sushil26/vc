@@ -597,7 +597,7 @@
                   onclick="logVC()" data-dismiss="modal">Submit</button>
           </div>
           <p style="font-size:12px;" class="message">Not registered?
-              <a  id=lgnr href="#" data-target="#regVC" data-toggle="modal">Register Here</a>
+              <a  data-target="#regVC" data-dismiss="modal">Register Here</a>
           </p>
       </div>
       </center>
@@ -639,7 +639,7 @@
                 <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn" onclick="regVc()" data-dismiss="modal">Submit</button>
             </div>
             <p style="font-size:12px;" class="message">Already Registered ?
-                    <a href="#"  id="regl" data-target="#crdntl" data-toggle="modal">Login Here</a>
+                    <a  data-target="#crdntl" data-dismiss="modal">Login Here</a>
             </p>
         </div>
       </center>
@@ -688,16 +688,7 @@
   <!-- Template Main Javascript File -->
   <script src="/home/js/main.js"></script>
   <script>
-    $(document).ready(function () {
-      $("#regl").click(function () {
-        $("#regstr").css("display", "none");
-        $("#lgn").css("display", "block");
-      });
-      $("#lgnr").click(function () {
-        $("#lgn").css("display", "none");
-        $("#regstr").css("display", "block");
-      });
-    })
+
     var TxtType = function (el, toRotate, period) {
       this.toRotate = toRotate;
       this.el = el;
