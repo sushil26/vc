@@ -4,6 +4,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     if(localStorage.getItem("loginType")=='admin'){
         console.log("loginType: "+localStorage.getItem("loginType"));
         document.getElementById('userAuth').style.display="none";
+        $scope.getUser();
      
     }
     else{
@@ -32,7 +33,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
         })
         console.log("<--getUser");
     }
-    $scope.getUser();
+  
 
     $scope.updateUserStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
