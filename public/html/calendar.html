@@ -83,20 +83,11 @@
               </td>
               <td>
                 <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" colorpicker type="text" ng-model="event.color.primary" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Color
-                  </button>
-                  <div class="dropdown-menu" ng-model="event.color.primary" colorpicker type="text" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:red">Red</a>
-                    <a class="dropdown-item" ng-model="event.color.primary" colorpicker type="text" style="background-color:green">Green</a>
-                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:Orange">Orange</a>
-                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:yellow">Yellow</a>
-                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:pink">Pink</a>
-                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:purple">purple</a>
-                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:blue">blue</a>
-
-                  </div>
+                    <select ng-model="event.color.primary">
+                        <option ng-repeat="ec in eventColors" style="background-color:{{ec}}"
+                        >{{person}}</option>  
+                      </select>
+                
                 </div>
                 <!-- <input class="form-control" colorpicker type="text" ng-model="event.color.primary"> -->
               </td>
