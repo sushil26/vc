@@ -14,18 +14,19 @@ if (localStorage.getItem("userData")) {
         document.getElementById("userAuth").style.display = 'none';
        
     }
+    else if(loginType == 'admin'){
+        document.getElementById("appLogin").style.display = 'none';
+        document.getElementById("appReg").style.display = 'none';
+        document.getElementById("appLogout").style.display = 'block';
+        document.getElementById("userAuth").style.display = 'block';
+    }
     else if (loginType == 'parent') {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
         document.getElementById("userAuth").style.display = 'none';
-        
-    }
-
-   if(loginType == 'admin')
-   {
-    document.getElementById("userAuth").style.display = 'block';
    }
+
 }
 else {
 
@@ -99,6 +100,7 @@ function logVC() {
 
             if (data.loginType == 'admin') {
                 sessionSet(data);
+                document.getElementById("userAuth").style.display = 'block';
                 document.getElementById("appLogin").style.display = 'none';
                 document.getElementById("appReg").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
@@ -179,6 +181,7 @@ function vcLogout() {
     localStorage.removeItem("userName");
     localStorage.removeItem("status");
     localStorage.removeItem("email");
+    document.getElementById("userAuth").style.display = 'none';
     document.getElementById("appLogout").style.display = 'none';
     document.getElementById("appLogin").style.display = 'block';
     document.getElementById("appReg").style.display = 'block';
