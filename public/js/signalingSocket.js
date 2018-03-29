@@ -679,7 +679,6 @@ function init() {
         console.log("<--addPeer");
     });
 
-
     /** 
      * Peers exchange session descriptions which contains information
      * about their audio / video settings and that sort of stuff. First
