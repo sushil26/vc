@@ -4,14 +4,13 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     if(localStorage.getItem("loginType")=='admin'){
         console.log("loginType: "+localStorage.getItem("loginType"));
         document.getElementById('userAuth').style.display="none";
-        $scope.getUser();
-     
+         $scope.userLoginType='admin';
     }
     else{
         window.location.href="https://vc4all.in";
     }
     
-
+    $scope.getUser();
     $scope.getUser = function () {
         console.log("getUser-->");
         var api = "https://vc4all.in/vc/getUserData";
