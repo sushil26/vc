@@ -36,8 +36,9 @@ if (localStorage.getItem("userData")) {
         document.getElementById("videoConferenceUrl").style.display = 'none';
         document.getElementById("scheduleMeeting").style.display = 'none';
         document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+       
     }
-    $('#userNSet').trigger('click');
+  
 }
 else {
 
@@ -320,9 +321,6 @@ function disconnecSession() {
 function init() {
 
     console.log("init-->");
-
-
-
 
     signaling_socket.on('connect', function () {
         console.log("signaling_socket connect-->");
