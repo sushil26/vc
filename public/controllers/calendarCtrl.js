@@ -8,6 +8,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
   // }
   if(localStorage.getItem("loginType")=='teacher' || localStorage.getItem("loginType")=='admin'){
+    console.log("loginType: "+loginType);
     document.getElementById('userAuth').style.display="block";
  
 }
