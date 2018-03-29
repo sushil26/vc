@@ -7,7 +7,7 @@ if (localStorage.getItem("userData")) {
     console.log("userData: " + userData);
     console.log("userName: " + userName);
     console.log("loginType: " + loginType);
-    if (loginType == 'teacher' || loginType == 'admin') {
+    if (loginType == 'teacher') {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
