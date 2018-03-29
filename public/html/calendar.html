@@ -22,7 +22,7 @@
         <br>
         <div style="background:#e5caa74d;border-top-left-radius: 30px; border-bottom-right-radius: 30px;padding: 1%;">
           <div style=" border:1px solid rgb(173, 173, 173); border-top-left-radius: 30px; border-bottom-right-radius: 30px;padding: 19%;">
-            <div class="btn-group">
+            <div class="btn-group ">
 
               <button class="btn btn-primary" mwl-date-modifier date="vm.viewDate" decrement="vm.calendarView" ng-click="vm.cellIsOpen = false">
                 Previous
@@ -37,7 +37,7 @@
 
             <hr>
 
-            <div class="btn-group">
+            <div class="btn-group ">
               <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
               <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
               <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" ng-click="vm.cellIsOpen = false">Week</label>
@@ -50,6 +50,7 @@
       <br>
       <br>
       <br>
+
       <div class="col-md-12 col-sm-12 col-lg-12">
         <br>
         <br>
@@ -85,13 +86,13 @@
               </td>
               <td>
                 <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
+                  <button class="btn btn-primary dropdown-toggle" colorpicker type="text" ng-model="event.color.primary" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Color
                   </button>
-                  <div class="dropdown-menu" ng-model="event.color.primary" aria-labelledby="dropdownMenuButton">
+                  <div class="dropdown-menu" ng-model="event.color.primary" colorpicker type="text" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" ng-model="event.color.primary" style="background-color:red">Red</a>
-                    <a class="dropdown-item" ng-model="event.color.primary" style="background-color:green">Green</a>
+                    <a class="dropdown-item" ng-model="event.color.primary" colorpicker type="text" style="background-color:green">Green</a>
                     <a class="dropdown-item" ng-model="event.color.primary" style="background-color:Orange">Orange</a>
                     <a class="dropdown-item" ng-model="event.color.primary" style="background-color:yellow">Yellow</a>
                     <a class="dropdown-item" ng-model="event.color.primary" style="background-color:pink">Pink</a>
@@ -107,15 +108,17 @@
             </td> -->
               <td>
                 <p class="input-group">
-                  <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen"
-                    close-text="Close">
-                  <button type="button" class="btn" ng-click="vm.toggle($event, 'startOpen', event)">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                  </button>
-                  </input>
-
+                  <input type="text" style="margin-bottom: -4px;" class="form-control" 
+                  readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" 
+                  is-open="event.startOpen"close-text="Close">
+                  <span class="input-group-btn">
+                    <button type="button"  style="margin-top: 0px;height: 33px;"
+                    class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
                 </p>
-                <div class="row" style="padding:2%;">
+                <div class="row">
                   <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="10" show-meridian="true">
                   </div>
                   &nbspTo&nbsp
