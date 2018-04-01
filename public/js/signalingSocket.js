@@ -415,6 +415,8 @@ function init() {
                 document.getElementById('audio_btn').style.display = 'inline';
                 document.getElementById('diconnect_btn').style.display = 'inline';
                 document.getElementById('videoConferenceLinkExtention').style.display = 'inline';
+                var loginType = localStorage.getItem('loginType');
+                var userName = localStorage.getItem('userName');
                 if (loginType == 'teacher' || loginType == 'admin') {
                     document.getElementById('linkToShare').style.display = 'block';
                     document.getElementById('emailInvitation').style.display = 'inline';
