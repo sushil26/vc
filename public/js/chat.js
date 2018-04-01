@@ -231,7 +231,10 @@ function emailInvite() {
     var URL = document.getElementById('linkToShare').innerHTML;
     console.log("email: " + email);
     console.log("URL: " + URL);
-  
+  var obj={
+      "email":email,
+      "url":URL
+  }
     $.ajax({
         url: "https://vc4all.in/vc/emailInvite",
         //  url: "http://localhost:5000/vc/login4VC",

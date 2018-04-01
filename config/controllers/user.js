@@ -300,7 +300,7 @@ module.exports.emailInvite = function (req, res) {
         from: "logeswari.careator@gmail.com",
         to: req.body.email,
         subject: "Regarding School Instance Meeting",
-        html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link: "+ req.body.url +"and password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+        html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link: "+ req.body.url +"and password: abc</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
     };
     console.log("mailOptions: " + JSON.stringify(mailOptions));
 
