@@ -18,6 +18,10 @@ var transporter = nodemailer.createTransport({
 module.exports.eventSend = function (req, res) {
     console.log("eventSend-->");
     var responseData;
+    console.log("req.body.studName: "+req.body.studName);
+    console.log("req.body.studId: "+req.body.studId);
+    console.log("req.body.reason: "+req.body.reason);
+    console.log("req.body.email: "+req.body.email);
     if (general.emptyCheck(req.body.studName) && general.emptyCheck(req.body.studId) && general.emptyCheck(req.body.reason) && general.emptyCheck(req.body.email)) {
         var password = 'abc';
         var userData = {
