@@ -335,6 +335,7 @@ module.exports.emailInvite = function (req, res) {
 module.exports.sessionCreate = function (req, res) {
     console.log("sessionCreate-->");
     var responseData;
+    console.log("req.body.url: "+req.body.url);
     if (general.emptyCheck(req.body.url)) {
        var data = {
            "url":req.body.url
