@@ -300,7 +300,7 @@ module.exports.emailInvite = function (req, res) {
         from: "logeswari.careator@gmail.com",
         to: req.body.email,
         subject: "Regarding School Instance Meeting",
-        html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link: "+ req.body.url +"and password: abc</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+        html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link: " + req.body.url + "and password: abc</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
     };
     console.log("mailOptions: " + JSON.stringify(mailOptions));
 
@@ -330,4 +330,30 @@ module.exports.emailInvite = function (req, res) {
 
     });
     console.log("<--emailInvite");
+}
+
+module.exports.sessionCreate = function (req, res) {
+    console.log("sessionCreate-->");
+    var responseData;
+    if (general.emptyCheck(req.body.url)) {
+       var data = {
+           "url":req.body.url
+       }
+        responseData = {
+            "status": true,
+            "message": "get url sucessfully",
+            "data": data
+        }
+        res.status(200).send(responseData);
+    }
+    else {
+        responseData = {
+            "status": false,
+            "message": "empty value found"
+
+        }
+        res.status(400).send(responseData);
+
+    }
+    console.log("<--sessionCreate");
 }

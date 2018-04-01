@@ -363,6 +363,34 @@ function disconnecSession() {
     console.log("-->disconnecSession");
 }
 
+function startSession(id, date) {
+    console.log("startSession-->");
+    var url = "https://vc4all.in/client/" + id + "/" + date;
+    var obj = {
+        "url": url
+    }
+    $.ajax({
+        url: "https://vc4all.in/vc/sessionCreate",
+        //  url: "http://localhost:5000/vc/login4VC",
+        type: "POST",
+        data: JSON.stringify(obj),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data) {
+            if(data.status=='true'){
+                window.location.href=data.data.url;
+            }
+            else{
+                alert("refresh your page and try again");
+            }
+       
+
+
+        }
+    })
+    console.log(",--startSession");
+}
+
 function init() {
 
     console.log("init-->");
@@ -400,7 +428,7 @@ function init() {
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
                 //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                document.getElementById('videoConferenceUrl').setAttribute('onclick', "startSession("+peerNew_id+","+date+")");
+                document.getElementById('videoConferenceUrl').setAttribute('onclick', "startSession(" + peerNew_id + "," + date + ")");
                 document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
                 document.getElementById('linkToShare').innerHTML = "https://vc4all.in/client/" + peerNew_id + "/" + date;
 
