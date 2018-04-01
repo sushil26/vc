@@ -429,7 +429,7 @@ function init() {
                 console.log("message: config.peer_id: " + config.peer_id);
                
                 //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                document.getElementById('videoConferenceUrl').setAttribute('onclick', startSession(peerNew_id , date));
+                document.getElementById('videoConferenceUrl').setAttribute('onclick', "startSession("+peerNew_id+" , "+date+")");
                 document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
                 document.getElementById('linkToShare').innerHTML = "https://vc4all.in/client/" + peerNew_id + "/" + date;
 
