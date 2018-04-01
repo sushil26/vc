@@ -379,7 +379,7 @@ function startSession(id, date) {
         success: function (data) {
             console.log("data: "+JSON.stringify(data));
             console.log("data.status: "+data.status);
-            if(data.status=='true'){
+            if(data.status){
                 window.location.href=data.data.url;
             }
             else{
