@@ -225,65 +225,6 @@ signaling_socket.on('newTextMsg', function (data) {
 })
 
 
-function emailInvite() {
-    console.log("emailInvite-->");
-    var email = document.getElementById('emailInvite').value;
-    var URL = document.getElementById('linkToShare').innerHTML;
-    console.log("email: " + email);
-    console.log("URL: " + URL);
-  var obj={
-      "email":email,
-      "url":URL
-  }
-    $.ajax({
-        url: "https://vc4all.in/vc/emailInvite",
-        //  url: "http://localhost:5000/vc/login4VC",
-        type: "POST",
-        data: JSON.stringify(obj),
-        contentType: "application/json",
-        dataType: 'json',
-        success: function (data) {
-            var userData = {
-                "email": email,
-                "url": URL            
-            }
-            console.log("data: " + JSON.stringify(data));
-
-            document.getElementById('info').innerHTML = data.message;
-          
-
-        }
-    })
-
-    console.log("<--emailInvite");
-
-}
-
-signaling_socket.on('emailSendInfo', function (data) {
-    console.log("emailSendInfo-->");
-    console.log("peerNew_id: " + peerNew_id);
-    console.log("data.userId: " + data.userId);
-    console.log("data.info: " + data.info);
-    console.log("data.info: " + JSON.stringify(data));
-
-    if (peerNew_id == data.userId) {
-        // var label = document.createElement("label");
-        // var txtNode = document.createTextNode(data.info);
-        // label.appendChild(txtNode);
-
-        // label.value = data.info;
-        // console.log("label: "+label);
-
-        document.getElementById('info').innerHTML = data.info;
-    }
-    else {
-
-        console.log("emailSendInfo: Sorry");
-    }
-
-    console.log("<--emailSendInfo");
-
-})
 
 
 function playAudioForNotify() {

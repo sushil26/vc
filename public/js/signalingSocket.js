@@ -141,6 +141,43 @@ function saveName() {
     console.log("<--setName");
 }
 
+function emailInvite() {
+    console.log("emailInvite-->");
+    var email = document.getElementById('emailInvite').value;
+    var URL = document.getElementById('linkToShare').innerHTML;
+    console.log("email: " + email);
+    console.log("URL: " + URL);
+  var obj={
+      "email":email,
+      "url":URL
+  }
+    $.ajax({
+        url: "https://vc4all.in/vc/emailInvite",
+        //  url: "http://localhost:5000/vc/login4VC",
+        type: "POST",
+        data: JSON.stringify(obj),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data) {
+            var userData = {
+                "email": email,
+                "url": URL            
+            }
+            console.log("data: " + JSON.stringify(data));
+
+            document.getElementById('info').innerHTML = data.message;
+          
+
+        }
+    })
+
+    console.log("<--emailInvite");
+
+}
+
+
+
+
 function logVC() {
     console.log("logVC from signalingSocket.js");
     console.log("email: " + document.getElementById("crdEmail").value);
