@@ -378,6 +378,7 @@ function startSession(id, date) {
         dataType: 'json',
         success: function (data) {
             console.log("data: "+JSON.stringify(data));
+            console.log("data.status: "+data.status);
             if(data.status=='true'){
                 window.location.href=data.data.url;
             }
