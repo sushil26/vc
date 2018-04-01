@@ -18,6 +18,10 @@ var transporter = nodemailer.createTransport({
 module.exports.eventSend = function (req, res) {
     console.log("eventSend-->");
     var responseData;
+    console.log("req.body.studName: "+req.body.studName);
+    console.log("req.body.studId: "+req.body.studId);
+    console.log("req.body.reason: "+req.body.reason);
+    console.log("req.body.email: "+req.body.email);
     if (general.emptyCheck(req.body.studName) && general.emptyCheck(req.body.studId) && general.emptyCheck(req.body.reason) && general.emptyCheck(req.body.email)) {
         var password = 'abc';
         var userData = {
@@ -54,7 +58,7 @@ module.exports.eventSend = function (req, res) {
                     from: "logeswari.careator@gmail.com",
                     to: req.body.email,
                     subject: "Regarding School Meeting",
-                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.start + " to +" + req.body.endAt + " +</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to +" + req.body.endAt + " +</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                 };
                 console.log("mailOptions: " + JSON.stringify(mailOptions));
 

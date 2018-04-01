@@ -67,7 +67,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
-  $scope.eventSend = function (res, name, id, email, start, end, startAt, endAt, primColor) {
+  $scope.eventSend = function (res, name, id, start, startAt, endAt, primColor) {
     console.log("eventSend-->");
 
     var SIGNALING_SERVER = "https://vc4all.in";
@@ -78,11 +78,6 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
     signaling_socket.on('connect', function () {
       console.log("signaling_socket connect-->");
-
-      // if (disconnPeerId != null) {
-      //   location.reload();
-      //   disconnPeerId = null;
-      // }
 
       signaling_socket.on('message', function (config) {
         console.log("signaling_socket message-->");
@@ -95,14 +90,14 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         var api = "https://vc4all.in/vc/eventSend";
         //var api = "http://localhost:5000/vc/eventSend";
         console.log("api: " + api);
-
+      var email = document.getElementById('eventEmails').value;
         var obj = {
           "userId": localStorage.getItem("id"),
           "reason": res,
           "studName": name,
           "studId": id,
           "email": email,
-          "start": $scope.startDate,
+          "start": start,
           "end": $scope.endDateRes,
           "startAt": startAt,
           "endAt": endAt,
