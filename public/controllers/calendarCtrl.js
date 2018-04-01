@@ -67,7 +67,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
-  $scope.eventSend = function (res, name, id, startAt, endAt, primColor) {
+  $scope.eventSend = function (res, name, id, start, startAt, endAt, primColor) {
     console.log("eventSend-->");
 
     var SIGNALING_SERVER = "https://vc4all.in";
@@ -97,7 +97,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
           "studName": name,
           "studId": id,
           "email": email,
-          "start": $scope.startDate,
+          "start": start,
           "end": $scope.endDateRes,
           "startAt": startAt,
           "endAt": endAt,
