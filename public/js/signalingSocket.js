@@ -166,17 +166,12 @@ function emailInvite() {
             console.log("data: " + JSON.stringify(data));
 
             document.getElementById('info').innerHTML = data.message;
-          
-
-        }
+       }
     })
 
     console.log("<--emailInvite");
 
 }
-
-
-
 
 function logVC() {
     console.log("logVC from signalingSocket.js");
@@ -404,11 +399,15 @@ function init() {
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
                 document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                document.getElementById('linkToShare').innerHTML="https://vc4all.in/client/" + peerNew_id + "/" + date;
 
             }
             else {
                 console.log("query id nt null");
-
+                
+                document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+                document.getElementById('linkToShare').innerHTML="https://vc4all.in/client/" + peerNew_id + "/" + date;
                 document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
