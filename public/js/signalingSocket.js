@@ -378,7 +378,7 @@ function init() {
                 document.getElementById('audio_btn').style.display = 'inline';
                 document.getElementById('diconnect_btn').style.display = 'inline';
                 document.getElementById('videoConferenceLinkExtention').style.display = 'inline';
-
+                document.getElementById('emailInvitation').style.display = 'block';
                 if (userName != undefined) {
                     console.log("userName with localmedia setup call: " + userName);
                     setup_local_media(function () {
