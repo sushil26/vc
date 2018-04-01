@@ -9,6 +9,7 @@ module.exports = function (app) {
     app.get('/vc/getUserData', user.getUserData);
     app.post('/vc/updateUserStatus',user.updateUserStatus);
     app.post('/vc/deleteUser',user.deleteUser);
+    app.post('vc/emailInvite',user.emailInvite);
     
     app.post('/vc/eventSend', event.eventSend);
     app.get('/vc/eventGet', event.eventGet);

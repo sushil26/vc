@@ -231,14 +231,26 @@ function emailInvite() {
     var URL = document.getElementById('linkToShare').innerHTML;
     console.log("email: " + email);
     console.log("URL: " + URL);
-    if (email) {
-        console.log("Start to emit email  ");
-        console.log("peerNew_id: " + peerNew_id);
-        signaling_socket.emit('emailCapture', { 'email': email, 'userId': peerNew_id, 'url': URL });
-    }
-    else {
-        console.log("empty email");
-    }
+  
+    $.ajax({
+        url: "https://vc4all.in/vc/emailInvite",
+        //  url: "http://localhost:5000/vc/login4VC",
+        type: "POST",
+        data: JSON.stringify(obj),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data) {
+            var userData = {
+                "email": email,
+                "url": URL            
+            }
+            console.log("data: " + JSON.stringify(data));
+
+            document.getElementById('info').innerHTML = data.message;
+          
+
+        }
+    })
 
     console.log("<--emailInvite");
 

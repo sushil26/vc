@@ -4,6 +4,16 @@ var general = require('../general.js');
 var util = require('util');
 var bodyParser = require('body-parser');
 var ObjectId = require('mongodb').ObjectID;
+var nodemailer = require('nodemailer');
+
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'logeswari.careator@gmail.com',
+        pass: 'iloveindia'
+    }
+});
 
 // var randomstring = require("randomstring");
 
@@ -69,26 +79,22 @@ module.exports.register4VC = function (req, res) {
 module.exports.login4VC = function (req, res) {
     console.log("login==>");
     var responseData;
-    // console.log("res.body.email: "+JSON.stringify(req));
-    // console.log("res.body.email: "+req.body.data);
-    // console.log("res.body.email: "+JSON.stringify(req.body.data));
-
     if (general.emptyCheck(req.body.email) && general.emptyCheck(req.body.password)) {
 
-        
+
         if (req.body.email == 'admin123@gmail.com') {
             var adminData;
             if (req.body.password == 'admin123') {
                 adminData = {
-                    "userName":"admin",
-                    "status":"active",
-                    "email":"admin123@gmail.com"
+                    "userName": "admin",
+                    "status": "active",
+                    "email": "admin123@gmail.com"
                 }
                 responseData = {
                     "status": true,
                     "message": "Login Successfully",
-                    "loginType":"admin",
-                    "data":adminData
+                    "loginType": "admin",
+                    "data": adminData
                 }
                 res.status(200).send(responseData);
             }
@@ -110,7 +116,7 @@ module.exports.login4VC = function (req, res) {
                             responseData = {
                                 "status": true,
                                 "message": "Login Successfully",
-                                "loginType":"teacher",
+                                "loginType": "teacher",
                                 "data": data[0]
                             }
                             res.status(200).send(responseData);
@@ -275,15 +281,53 @@ module.exports.deleteUser = function (req, res) {
 
 
     }
-    else{
+    else {
         console.log("Epty value found");
         responseData = {
             "status": false,
             "message": "empty value found"
-                       
+
         }
         res.status(400).send(responseData);
 
     }
     console.log("<--deleteUser");
+}
+
+module.exports.emailInvite = function (req, res) {
+    console.log("emailInvite-->");
+    var mailOptions = {
+        from: "logeswari.careator@gmail.com",
+        to: req.body.email,
+        subject: "Regarding School Instance Meeting",
+        html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link: "+ req.body.url +"and password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+    };
+    console.log("mailOptions: " + JSON.stringify(mailOptions));
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+            responseData = {
+                "status": true,
+                "errorCode": 200,
+                "message": "Registeration Successfull and Failed to send mail",
+                "data": data
+            }
+            res.status(200).send(responseData);
+
+
+        } else {
+            console.log('Email sent: ' + info.response);
+            responseData = {
+                "status": true,
+                "errorCode": 200,
+                "message": "Registeration Successfull and sent mail",
+
+                "data": data
+            }
+            res.status(200).send(responseData);
+        }
+
+    });
+    console.log("<--emailInvite");
 }
