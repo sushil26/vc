@@ -67,7 +67,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
-  $scope.eventSend = function (res, name, id, start, end, startAt, endAt, primColor) {
+  $scope.eventSend = function (res, name, id, startAt, endAt, primColor) {
     console.log("eventSend-->");
 
     var SIGNALING_SERVER = "https://vc4all.in";
@@ -90,7 +90,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         var api = "https://vc4all.in/vc/eventSend";
         //var api = "http://localhost:5000/vc/eventSend";
         console.log("api: " + api);
-        var email = document.getElementById('eventEmails').value;
+      var email = document.getElementById('eventEmails').value;
         var obj = {
           "userId": localStorage.getItem("id"),
           "reason": res,
