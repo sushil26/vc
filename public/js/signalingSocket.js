@@ -147,10 +147,10 @@ function emailInvite() {
     var URL = document.getElementById('linkToShare').innerHTML;
     console.log("email: " + email);
     console.log("URL: " + URL);
-  var obj={
-      "email":email,
-      "url":URL
-  }
+    var obj = {
+        "email": email,
+        "url": URL
+    }
     $.ajax({
         url: "https://vc4all.in/vc/emailInvite",
         //  url: "http://localhost:5000/vc/login4VC",
@@ -161,12 +161,12 @@ function emailInvite() {
         success: function (data) {
             var userData = {
                 "email": email,
-                "url": URL            
+                "url": URL
             }
             console.log("data: " + JSON.stringify(data));
 
             document.getElementById('info').innerHTML = data.message;
-       }
+        }
     })
 
     console.log("<--emailInvite");
@@ -400,14 +400,14 @@ function init() {
                 console.log("message: config.peer_id: " + config.peer_id);
                 document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
                 document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                document.getElementById('linkToShare').innerHTML="https://vc4all.in/client/" + peerNew_id + "/" + date;
+                document.getElementById('linkToShare').innerHTML = "https://vc4all.in/client/" + peerNew_id + "/" + date;
 
             }
             else {
                 console.log("query id nt null");
-                
+
                 document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + queryLink + "/" + date);
-                document.getElementById('linkToShare').innerHTML="https://vc4all.in/client/" + queryLink + "/" + date;
+                document.getElementById('linkToShare').innerHTML = "https://vc4all.in/client/" + queryLink + "/" + date;
                 document.getElementById('screenBtns').style.display = 'inline';
                 document.getElementById('videoConfStart').style.display = 'none';
                 document.getElementById('openChat').style.display = 'inline';
@@ -415,9 +415,12 @@ function init() {
                 document.getElementById('audio_btn').style.display = 'inline';
                 document.getElementById('diconnect_btn').style.display = 'inline';
                 document.getElementById('videoConferenceLinkExtention').style.display = 'inline';
-                document.getElementById('linkToShare').style.display = 'block';
-                document.getElementById('emailInvitation').style.display = 'inline';
-                
+                if (loginType == 'teacher' || loginType == 'admin') {
+                    document.getElementById('linkToShare').style.display = 'block';
+                    document.getElementById('emailInvitation').style.display = 'inline';
+                }
+
+
                 if (userName != undefined) {
                     console.log("userName with localmedia setup call: " + userName);
                     setup_local_media(function () {
