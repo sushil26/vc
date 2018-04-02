@@ -306,15 +306,15 @@ function startSession(id, date) {
         contentType: "application/json",
         dataType: 'json',
         success: function (data) {
-            console.log("data: "+JSON.stringify(data));
-            console.log("data.status: "+data.status);
-            if(data.status){
-                window.location.href=data.data.url;
+            console.log("data: " + JSON.stringify(data));
+            console.log("data.status: " + data.status);
+            if (data.status) {
+                window.location.href = data.data.url;
             }
-            else{
+            else {
                 alert("refresh your page and try again");
             }
-       
+
 
 
         }
@@ -335,7 +335,7 @@ function init() {
             var userData = JSON.stringify(localStorage.getItem("userData"));
             userName = localStorage.getItem("userName");
             loginType = localStorage.getItem("loginType");
-        
+
             console.log("userData: " + userData);
             console.log("userName: " + userName);
             console.log("loginType: " + loginType);
@@ -348,7 +348,7 @@ function init() {
                 document.getElementById("videoConferenceUrl").style.display = 'block';
                 document.getElementById("scheduleMeeting").style.display = 'block';
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-        
+
             }
             else if (loginType == 'parent') {
                 document.getElementById('userAuth').style.display = "none";
@@ -359,15 +359,15 @@ function init() {
                 document.getElementById("videoConferenceUrl").style.display = 'none';
                 document.getElementById("scheduleMeeting").style.display = 'none';
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-        
+
             }
             if (loginType == 'admin') {
                 document.getElementById('userAuth').style.display = "block";
             }
-        
+
         }
         else {
-        
+
             var url = window.location.href;
             var stuff = url.split('/');
             var id1 = stuff[stuff.length - 2];
@@ -388,7 +388,7 @@ function init() {
                     document.getElementById("videoConferenceUrl").style.display = 'none';
                     document.getElementById("scheduleMeeting").style.display = 'none';
                     document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-        
+
                 }
                 else {
                     console.log("No user data from session");
@@ -396,11 +396,11 @@ function init() {
                     //    userName="logu";
                     //     init();
                 }
-        
+
             }
-        
-        
-        
+
+
+
         }
         if (disconnPeerId != null) {
             location.reload();
@@ -430,9 +430,9 @@ function init() {
 
                 // $('#crdbuttn').trigger('click');
                 console.log("message: config.peer_id: " + config.peer_id);
-               
+
                 //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-                document.getElementById('videoConferenceUrl').setAttribute('onclick', "startSession('"+peerNew_id+"' , '"+date+"')");
+                document.getElementById('videoConferenceUrl').setAttribute('onclick', "startSession('" + peerNew_id + "' , '" + date + "')");
                 document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
                 document.getElementById('linkToShare').innerHTML = "https://vc4all.in/client/" + peerNew_id + "/" + date;
 
@@ -651,7 +651,25 @@ function init() {
             }
 
 
-            $("#" + peer_id + "fullscreenbtn2").click(function () { console.log("sushil screen test"); $("#" + peer_id + "remoteVideoElement").addClass("fullscr"); $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"); $("#" + peer_id + "Remote").css({ "height": "100vh" }); $("#videoElem").css({ "position": "absolute", "top": "5%", "left": "5%", "z-index": "2", "background": "none", "border": "none", "height": "auto", "width": "20%" }); $("#videoElem111").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"); document.getElementById('header').style.display = 'none'; document.getElementById('btnrestore').style.display = 'inline'; } ) $("#btnrestore").click(function () { $("#" + peer_id + "remoteVideoElement").removeClass("fullscr"); $("#" + peer_id + "remoteContainer").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"); $("#" + peer_id + "Remote").css({ "height": "200px" }); $("#videoElem").css({ "position": "", "top": "", "left": "", "z-index": "", "background": "", "border": "", "height": "", "width": "" }); $("#videoElem111").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"); document.getElementById('header').style.display = 'inline'; document.getElementById('btnrestore').style.display = 'none'; })
+            $("#" + peer_id + "fullscreenbtn2").click(function () {
+                console.log("sushil screen test");
+                $("#" + peer_id + "remoteVideoElement").addClass("fullscr");
+                $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
+                $("#" + peer_id + "Remote").css({ "height": "100vh" });
+                $("#videoElem").css({ "position": "absolute", "top": "5%", "left": "5%", "z-index": "2", "background": "none", "border": "none", "height": "auto", "width": "20%" });
+                $("#videoElem111").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
+                document.getElementById('header').style.display = 'none';
+                document.getElementById('btnrestore').style.display = 'inline';
+            })
+            $("#btnrestore").click(function () {
+                $("#" + peer_id + "remoteVideoElement").removeClass("fullscr");
+                $("#" + peer_id + "remoteContainer").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
+                $("#" + peer_id + "Remote").css({ "height": "200px" });
+                $("#videoElem").css({ "position": "", "top": "", "left": "", "z-index": "", "background": "", "border": "", "height": "", "width": "" });
+                $("#videoElem111").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3");
+                document.getElementById('header').style.display = 'inline';
+                document.getElementById('btnrestore').style.display = 'none';
+            })
             // var fullscreenbtn2;
             // vid2 = document.getElementById(peer_id + "Remote");
             // fullscreenbtn2 = document.getElementById("fullscreenbtn2");
@@ -953,10 +971,10 @@ function setup_local_media(callback, errorback) {
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $();
             // local_media.attr("autoplay", "true");
-  
+
             local_media.attr("muted", "muted"); /* always mute ourselves by default */
             local_media.attr("id", "videoElem");
-   
+
 
             local_media.attr("style", "border:1px solid skyblue;display:inline !important");
 
