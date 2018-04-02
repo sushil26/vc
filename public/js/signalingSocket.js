@@ -944,7 +944,7 @@ function setup_local_media(callback, errorback) {
         element.srcObject = stream;
         console.log("<--attachMediaStream");
     };
-    navigator.getUserMedia({ "audio":false, "video": USE_VIDEO },
+    navigator.getUserMedia({ "audio": USE_AUDIO, "video": USE_VIDEO },
         function (stream) { /* user accepted access to a/v */
             console.log("Access granted to audio/video");
             console.log("stream: " + stream);
@@ -952,7 +952,7 @@ function setup_local_media(callback, errorback) {
 
             local_media_stream = stream;
             // local_media_shareStream = stream;
-            var local_media = USE_VIDEO ? $("<video>") : $();
+            var local_media = USE_VIDEO ? $("<video>") : $("<audio>");
             local_media.attr("autoplay", "true");
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("id", "videoElem");
