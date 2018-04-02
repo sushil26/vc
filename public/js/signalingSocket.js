@@ -361,7 +361,6 @@ function init() {
                 document.getElementById("videoConferenceLinkExtention").style.display = 'block';
         
             }
-        
             if (loginType == 'admin') {
                 document.getElementById('userAuth').style.display = "block";
             }
@@ -637,6 +636,7 @@ function init() {
             fullscreenbtn = document.getElementById("fullscreenbtn");
             fullscreenbtn.addEventListener("click", toggleFullScreen, false);
             function toggleFullScreen() {
+                console.log()
                 if (vid.requestFullScreen) {
                     vid.requestFullScreen();
                 }
@@ -649,25 +649,26 @@ function init() {
                 }
 
             }
-            var fullscreenbtn2;
-            vid2 = document.getElementById(peer_id + "Remote");
 
 
-            fullscreenbtn2 = document.getElementById("fullscreenbtn2");
-            fullscreenbtn2.addEventListener("click", toggleFullScreen2, false);
-            function toggleFullScreen2() {
-                if (vid2.requestFullScreen) {
-                    vid2.requestFullScreen();
-                }
-                else if (vid2.webkitRequestFullScreen) {
-                    vid2.webkitRequestFullScreen();
-                }
+            $("#" + peer_id + "fullscreenbtn2").click(function () { console.log("sushil screen test"); $("#" + peer_id + "remoteVideoElement").addClass("fullscr"); $("#" + peer_id + "remoteContainer").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"); $("#" + peer_id + "Remote").css({ "height": "100vh" }); $("#videoElem").css({ "position": "absolute", "top": "5%", "left": "5%", "z-index": "2", "background": "none", "border": "none", "height": "auto", "width": "20%" }); $("#videoElem111").removeClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"); document.getElementById('header').style.display = 'none'; document.getElementById('btnrestore').style.display = 'inline'; } ) $("#btnrestore").click(function () { $("#" + peer_id + "remoteVideoElement").removeClass("fullscr"); $("#" + peer_id + "remoteContainer").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"); $("#" + peer_id + "Remote").css({ "height": "200px" }); $("#videoElem").css({ "position": "", "top": "", "left": "", "z-index": "", "background": "", "border": "", "height": "", "width": "" }); $("#videoElem111").addClass("portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"); document.getElementById('header').style.display = 'inline'; document.getElementById('btnrestore').style.display = 'none'; })
+            // var fullscreenbtn2;
+            // vid2 = document.getElementById(peer_id + "Remote");
+            // fullscreenbtn2 = document.getElementById("fullscreenbtn2");
+            // fullscreenbtn2.addEventListener("click", toggleFullScreen2, false);
+            // function toggleFullScreen2() {
+            //     if (vid2.requestFullScreen) {
+            //         vid2.requestFullScreen();
+            //     }
+            //     else if (vid2.webkitRequestFullScreen) {
+            //         vid2.webkitRequestFullScreen();
+            //     }
 
-                else if (vid2.mozRequestFullScreen) {
-                    vid2.mozRequestFullScreen();
-                }
+            //     else if (vid2.mozRequestFullScreen) {
+            //         vid2.mozRequestFullScreen();
+            //     }
 
-            }
+            // }
             var fullscreenbtn;
             vid3 = document.getElementById("screenShareElem");
 
@@ -963,6 +964,7 @@ function setup_local_media(callback, errorback) {
             $('#videosAttach').append(local_media);
 
             document.getElementById("videoElem").addEventListener("click", function () {
+                console.log("screem size change request-->");
                 var videoElem = document.getElementById('videoElem');
 
                 var isFullScreen = videoElem.requestFullscreen || videoElem.mozRequestFullScreen || videoElem.webkitRequestFullscreen;
