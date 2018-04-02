@@ -81,7 +81,7 @@ app.get('/', function (req, res) {
 app.get("/client", function (req, res) {
    
     queryId = null;
-    console.log("queryId: "+queryId);
+   
     console.log("start to render page");
     res.sendFile(__dirname + '/public/client.html');
 });

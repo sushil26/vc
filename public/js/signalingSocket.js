@@ -9,79 +9,7 @@ var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
 var MUTE_AUDIO_BY_DEFAULT = false;
 
-if (localStorage.getItem("userData")) {
-    console.log("User Name from session: " + localStorage.getItem("userData"));
-    var userData = JSON.stringify(localStorage.getItem("userData"));
-    userName = localStorage.getItem("userName");
-    loginType = localStorage.getItem("loginType");
 
-    console.log("userData: " + userData);
-    console.log("userName: " + userName);
-    console.log("loginType: " + loginType);
-    if (loginType == 'teacher' || loginType == 'admin') {
-        document.getElementById('userAuth').style.display = "none";
-        document.getElementById("appLogin").style.display = 'none';
-        document.getElementById("appReg").style.display = 'none';
-        document.getElementById("LoginUrl").style.display = 'none';
-        document.getElementById("appLogout").style.display = 'block';
-        document.getElementById("videoConferenceUrl").style.display = 'block';
-        document.getElementById("scheduleMeeting").style.display = 'block';
-        document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-    }
-    else if (loginType == 'parent') {
-        document.getElementById('userAuth').style.display = "none";
-        document.getElementById("appLogin").style.display = 'none';
-        document.getElementById("appReg").style.display = 'none';
-        document.getElementById("LoginUrl").style.display = 'none';
-        document.getElementById("appLogout").style.display = 'none';
-        document.getElementById("videoConferenceUrl").style.display = 'none';
-        document.getElementById("scheduleMeeting").style.display = 'none';
-        document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-    }
-
-    if (loginType == 'admin') {
-        document.getElementById('userAuth').style.display = "block";
-    }
-
-}
-else {
-
-    var url = window.location.href;
-    var stuff = url.split('/');
-    var id1 = stuff[stuff.length - 2];
-    var id2 = stuff[stuff.length - 3];
-    console.log("stuff.length: " + stuff.length);
-    console.log("id1**: " + id1);
-    console.log("id2**: " + id2);
-    if (stuff.length > 5) {
-        if (localStorage.getItem("userName")) {
-            console.log("User Name from session: " + localStorage.getItem("userName"));
-            userName = localStorage.getItem("userName");
-            // startVideoAction();
-            document.getElementById('userAuth').style.display = "none";
-            document.getElementById("appLogin").style.display = 'none';
-            document.getElementById("appReg").style.display = 'none';
-            document.getElementById("LoginUrl").style.display = 'none';
-            document.getElementById("appLogout").style.display = 'none';
-            document.getElementById("videoConferenceUrl").style.display = 'none';
-            document.getElementById("scheduleMeeting").style.display = 'none';
-            document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-        }
-        else {
-            console.log("No user data from session");
-            $('#setName').trigger('click');
-            //    userName="logu";
-            //     init();
-        }
-
-    }
-
-
-
-}
 
 function saveName() {
     console.log("setName-->");
@@ -318,7 +246,10 @@ function regVc() {
 }
 
 
-// var MicGainController = function(){function a(a){this.gain=1;var b=this.context=new AudioContext;this.microphone=b.createMediaStreamSource(a),this.gainFilter=b.createGain(),this.destination=b.createMediaStreamDestination(),this.originalStream=a,this.outputStream=this.destination.stream,this.microphone.connect(this.gainFilter),this.gainFilter.connect(this.destination)}return a.prototype.setGain=function(a){this.gainFilter.gain.value=a,this.gain=a},a.prototype.getGain=function(){return this.gain},a.prototype.off=function(){return this.setGain(0)},a.prototype.on=function(){this.setGain(1)},a};
+var MicGainController = function(){
+    function a(a){
+        this.gain=1;var b=this.context=new AudioContext;
+        this.microphone=b.createMediaStreamSource(a),this.gainFilter=b.createGain(),this.destination=b.createMediaStreamDestination(),this.originalStream=a,this.outputStream=this.destination.stream,this.microphone.connect(this.gainFilter),this.gainFilter.connect(this.destination)}return a.prototype.setGain=function(a){this.gainFilter.gain.value=a,this.gain=a},a.prototype.getGain=function(){return this.gain},a.prototype.off=function(){return this.setGain(0)},a.prototype.on=function(){this.setGain(1)},a};
 var gainControllerVar, microphoneStream;
 
 /** You should probably use a different stun server doing commercial stuff **/
@@ -401,6 +332,79 @@ function init() {
         console.log("signaling_socket connect-->");
         // console.log("1.1:peers: " + JSON.stringify(peers));
         // console.log("1.1:Connected to signaling server");
+        if (localStorage.getItem("userData")) {
+            console.log("User Name from session: " + localStorage.getItem("userData"));
+            var userData = JSON.stringify(localStorage.getItem("userData"));
+            userName = localStorage.getItem("userName");
+            loginType = localStorage.getItem("loginType");
+        
+            console.log("userData: " + userData);
+            console.log("userName: " + userName);
+            console.log("loginType: " + loginType);
+            if (loginType == 'teacher' || loginType == 'admin') {
+                document.getElementById('userAuth').style.display = "none";
+                document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("appReg").style.display = 'none';
+                document.getElementById("LoginUrl").style.display = 'none';
+                document.getElementById("appLogout").style.display = 'block';
+                document.getElementById("videoConferenceUrl").style.display = 'block';
+                document.getElementById("scheduleMeeting").style.display = 'block';
+                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+        
+            }
+            else if (loginType == 'parent') {
+                document.getElementById('userAuth').style.display = "none";
+                document.getElementById("appLogin").style.display = 'none';
+                document.getElementById("appReg").style.display = 'none';
+                document.getElementById("LoginUrl").style.display = 'none';
+                document.getElementById("appLogout").style.display = 'none';
+                document.getElementById("videoConferenceUrl").style.display = 'none';
+                document.getElementById("scheduleMeeting").style.display = 'none';
+                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+        
+            }
+        
+            if (loginType == 'admin') {
+                document.getElementById('userAuth').style.display = "block";
+            }
+        
+        }
+        else {
+        
+            var url = window.location.href;
+            var stuff = url.split('/');
+            var id1 = stuff[stuff.length - 2];
+            var id2 = stuff[stuff.length - 3];
+            console.log("stuff.length: " + stuff.length);
+            console.log("id1**: " + id1);
+            console.log("id2**: " + id2);
+            if (stuff.length > 5) {
+                if (localStorage.getItem("userName")) {
+                    console.log("User Name from session: " + localStorage.getItem("userName"));
+                    userName = localStorage.getItem("userName");
+                    // startVideoAction();
+                    document.getElementById('userAuth').style.display = "none";
+                    document.getElementById("appLogin").style.display = 'none';
+                    document.getElementById("appReg").style.display = 'none';
+                    document.getElementById("LoginUrl").style.display = 'none';
+                    document.getElementById("appLogout").style.display = 'none';
+                    document.getElementById("videoConferenceUrl").style.display = 'none';
+                    document.getElementById("scheduleMeeting").style.display = 'none';
+                    document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+        
+                }
+                else {
+                    console.log("No user data from session");
+                    $('#setName').trigger('click');
+                    //    userName="logu";
+                    //     init();
+                }
+        
+            }
+        
+        
+        
+        }
         if (disconnPeerId != null) {
             location.reload();
             disconnPeerId = null;
@@ -940,7 +944,7 @@ function setup_local_media(callback, errorback) {
         element.srcObject = stream;
         console.log("<--attachMediaStream");
     };
-    navigator.getUserMedia({ "audio": USE_AUDIO, "video": USE_VIDEO },
+    navigator.getUserMedia({ "audio":{ echoCancellation: false }, "video": USE_VIDEO },
         function (stream) { /* user accepted access to a/v */
             console.log("Access granted to audio/video");
             console.log("stream: " + stream);
@@ -949,7 +953,7 @@ function setup_local_media(callback, errorback) {
             local_media_stream = stream;
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $();
-            local_media.attr("autoplay", "autoplay");
+            local_media.attr("autoplay", "true");
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("id", "videoElem");
             local_media.attr("style", "border:1px solid skyblue;display:inline !important");
