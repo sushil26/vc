@@ -939,8 +939,8 @@ function setup_local_media(callback, errorback) {
     attachMediaStream = function (element, stream) {
         console.log("attachMediaStream-->");
         // console.log('DEPRECATED, attachMediaStream  will soon be removed.');
-        var context = new webkitAudioContext(),
-var sineWave = context.createOscillator();
+        var context = new webkitAudioContext();
+        var sineWave = context.createOscillator();
 
 // Declare gain node
 var gainNode = context.createGainNode();
