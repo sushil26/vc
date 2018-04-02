@@ -953,7 +953,7 @@ function setup_local_media(callback, errorback) {
             local_media_stream = stream;
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $("<audio>");
-            local_media.attr("autoplay", "autoplay");
+            local_media.attr("autoplay", "true");
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("id", "videoElem");
             local_media.attr("style", "border:1px solid skyblue;display:inline !important");
