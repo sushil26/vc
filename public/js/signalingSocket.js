@@ -248,7 +248,7 @@ function regVc() {
 //     function a(a){
 //         this.gain=1;var b=this.context=new AudioContext;
 //         this.microphone=b.createMediaStreamSource(a),this.gainFilter=b.createGain(),this.destination=b.createMediaStreamDestination(),this.originalStream=a,this.outputStream=this.destination.stream,this.microphone.connect(this.gainFilter),this.gainFilter.connect(this.destination)}return a.prototype.setGain=function(a){this.gainFilter.gain.value=a,this.gain=a},a.prototype.getGain=function(){return this.gain},a.prototype.off=function(){return this.setGain(0)},a.prototype.on=function(){this.setGain(1)},a};
-var microphoneStream;
+//var gainControllerVar, microphoneStream;
 
 /** You should probably use a different stun server doing commercial stuff **/
 /** Also see: https://gist.github.com/zziuni/3741933 **/
