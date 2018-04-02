@@ -9,8 +9,6 @@ var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
 var MUTE_AUDIO_BY_DEFAULT = false;
 
-
-
 function saveName() {
     console.log("setName-->");
 
@@ -246,11 +244,11 @@ function regVc() {
 }
 
 
-var MicGainController = function(){
-    function a(a){
-        this.gain=1;var b=this.context=new AudioContext;
-        this.microphone=b.createMediaStreamSource(a),this.gainFilter=b.createGain(),this.destination=b.createMediaStreamDestination(),this.originalStream=a,this.outputStream=this.destination.stream,this.microphone.connect(this.gainFilter),this.gainFilter.connect(this.destination)}return a.prototype.setGain=function(a){this.gainFilter.gain.value=a,this.gain=a},a.prototype.getGain=function(){return this.gain},a.prototype.off=function(){return this.setGain(0)},a.prototype.on=function(){this.setGain(1)},a};
-var gainControllerVar, microphoneStream;
+// var MicGainController = function(){
+//     function a(a){
+//         this.gain=1;var b=this.context=new AudioContext;
+//         this.microphone=b.createMediaStreamSource(a),this.gainFilter=b.createGain(),this.destination=b.createMediaStreamDestination(),this.originalStream=a,this.outputStream=this.destination.stream,this.microphone.connect(this.gainFilter),this.gainFilter.connect(this.destination)}return a.prototype.setGain=function(a){this.gainFilter.gain.value=a,this.gain=a},a.prototype.getGain=function(){return this.gain},a.prototype.off=function(){return this.setGain(0)},a.prototype.on=function(){this.setGain(1)},a};
+// var gainControllerVar, microphoneStream;
 
 /** You should probably use a different stun server doing commercial stuff **/
 /** Also see: https://gist.github.com/zziuni/3741933 **/
@@ -941,6 +939,23 @@ function setup_local_media(callback, errorback) {
     attachMediaStream = function (element, stream) {
         console.log("attachMediaStream-->");
         // console.log('DEPRECATED, attachMediaStream  will soon be removed.');
+        var context = new webkitAudioContext(),
+var sineWave = context.createOscillator();
+
+// Declare gain node
+var gainNode = context.createGainNode();
+
+// Connect sine wave to gain node
+sineWave.connect(gainNode);
+
+// Connect gain node to speakers
+gainNode.connect(context.stream);
+
+// Play sine wave
+sineWave.noteOn(0);
+
+gainNode.gain.value = 0.9;
+
         element.srcObject = stream;
         console.log("<--attachMediaStream");
     };
@@ -956,6 +971,8 @@ function setup_local_media(callback, errorback) {
             local_media.attr("autoplay", "true");
             local_media.attr("muted", "true"); /* always mute ourselves by default */
             local_media.attr("id", "videoElem");
+            local_media.attr("volume", "0.9");
+
             local_media.attr("style", "border:1px solid skyblue;display:inline !important");
 
             $('#portfolio-wrapper').append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' + userName + '</h4><span>All is well</span></div></div>');
