@@ -943,7 +943,7 @@ function setup_local_media(callback, errorback) {
         var sineWave = context.createOscillator();
 
 // Declare gain node
-var gainNode = context.createGainNode();
+var gainNode = context.createGain();
 
 // Connect sine wave to gain node
 sineWave.connect(gainNode);
