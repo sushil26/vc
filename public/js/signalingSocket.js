@@ -398,6 +398,9 @@ function startSession(id, date) {
     console.log(",--startSession");
 }
 
+signaling_socket.on('message', function (config) {
+console.log("message socket as a saperate");
+})
 function init() {
 
     console.log("init-->");
