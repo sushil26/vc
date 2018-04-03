@@ -2,6 +2,25 @@
 console.log("Signaling Socket.js");
 var SIGNALING_SERVER = "https://vc4all.in";
 //var SIGNALING_SERVER = "http://localhost:5000";
+var signaling_socket = null;   /* our socket.io connection to our webserver */
+var local_media_stream = null; /* our own microphone / webcam */
+var local_media_shareStream = null;
+var peers = {};                /* keep track of our peer connections, indexed by peer_id (aka socket.io id) */
+var peer_media_elements = {};
+peer_userName_elements = {};
+var peer_media_sselements = {};  /* keep track of our <video>/<audio> tags, indexed by peer_id */
+/* #### Logu Defined  ##### */
+var peerNew_id = null;
+var queryLink = null;
+var timeLink = null;
+var txtQueryLink = null;
+
+// signaling_socket = io(SIGNALING_SERVER);
+var file;
+var disconnPeerId = null;
+var shareScreen = null;
+var sessionHeader = null;
+var peerStream = null;
 signaling_socket = io(SIGNALING_SERVER);
 var userName;
 var USE_AUDIO = true;
@@ -256,25 +275,6 @@ var ICE_SERVERS = [
     { url: "stun:stun.l.google.com:19302" }
 ];
 
-var signaling_socket = null;   /* our socket.io connection to our webserver */
-var local_media_stream = null; /* our own microphone / webcam */
-var local_media_shareStream = null;
-var peers = {};                /* keep track of our peer connections, indexed by peer_id (aka socket.io id) */
-var peer_media_elements = {};
-peer_userName_elements = {};
-var peer_media_sselements = {};  /* keep track of our <video>/<audio> tags, indexed by peer_id */
-/* #### Logu Defined  ##### */
-var peerNew_id = null;
-var queryLink = null;
-var timeLink = null;
-var txtQueryLink = null;
-
-// signaling_socket = io(SIGNALING_SERVER);
-var file;
-var disconnPeerId = null;
-var shareScreen = null;
-var sessionHeader = null;
-var peerStream = null;
 
 
 function disconnecSession() {
