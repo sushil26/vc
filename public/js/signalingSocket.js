@@ -1,6 +1,7 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "http://139.59.46.79:5000";
+//var SIGNALING_SERVER = "https://vc4all.in/client";
 //var SIGNALING_SERVER = "http://localhost:5000";
 
 var userName;
@@ -805,7 +806,9 @@ function init() {
         var peer_id = config.peer_id;
         var peer = peers[peer_id];
         var remote_description = config.session_description;
-        console.log("config.session_description: " + config.session_description);
+        console.log("config.queryId: "+config.queryId);
+       
+        console.log("queryLink: " + queryLink);
 
         var desc = new RTCSessionDescription(remote_description);
         if (queryLink == config.queryId) {
