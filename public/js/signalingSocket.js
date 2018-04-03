@@ -331,78 +331,7 @@ function init() {
         console.log("signaling_socket connect-->");
         // console.log("1.1:peers: " + JSON.stringify(peers));
         // console.log("1.1:Connected to signaling server");
-        if (localStorage.getItem("userData")) {
-            console.log("User Name from session: " + localStorage.getItem("userData"));
-            var userData = JSON.stringify(localStorage.getItem("userData"));
-            userName = localStorage.getItem("userName");
-            loginType = localStorage.getItem("loginType");
-
-            console.log("userData: " + userData);
-            console.log("userName: " + userName);
-            console.log("loginType: " + loginType);
-            if (loginType == 'teacher' || loginType == 'admin') {
-                document.getElementById('userAuth').style.display = "none";
-                document.getElementById("appLogin").style.display = 'none';
-                document.getElementById("appReg").style.display = 'none';
-                document.getElementById("LoginUrl").style.display = 'none';
-                document.getElementById("appLogout").style.display = 'block';
-                document.getElementById("videoConferenceUrl").style.display = 'block';
-                document.getElementById("scheduleMeeting").style.display = 'block';
-                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-            }
-            else if (loginType == 'parent') {
-                document.getElementById('userAuth').style.display = "none";
-                document.getElementById("appLogin").style.display = 'none';
-                document.getElementById("appReg").style.display = 'none';
-                document.getElementById("LoginUrl").style.display = 'none';
-                document.getElementById("appLogout").style.display = 'none';
-                document.getElementById("videoConferenceUrl").style.display = 'none';
-                document.getElementById("scheduleMeeting").style.display = 'none';
-                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-            }
-            if (loginType == 'admin') {
-                document.getElementById('userAuth').style.display = "block";
-            }
-
-        }
-        else {
-
-            var url = window.location.href;
-            var stuff = url.split('/');
-            var id1 = stuff[stuff.length - 2];
-            var id2 = stuff[stuff.length - 3];
-            console.log("stuff.length: " + stuff.length);
-            console.log("id1**: " + id1);
-            console.log("id2**: " + id2);
-            if (stuff.length > 5) {
-                if (localStorage.getItem("userName")) {
-                    console.log("User Name from session: " + localStorage.getItem("userName"));
-                    userName = localStorage.getItem("userName");
-                    // startVideoAction();
-                    document.getElementById('userAuth').style.display = "none";
-                    document.getElementById("appLogin").style.display = 'none';
-                    document.getElementById("appReg").style.display = 'none';
-                    document.getElementById("LoginUrl").style.display = 'none';
-                    document.getElementById("appLogout").style.display = 'none';
-                    document.getElementById("videoConferenceUrl").style.display = 'none';
-                    document.getElementById("scheduleMeeting").style.display = 'none';
-                    document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-                }
-                else {
-                    console.log("No user data from session");
-                    $('#setName').trigger('click');
-                    //    userName="logu";
-                    //     init();
-                }
-
-            }
-
-
-
-        }
+       
         if (disconnPeerId != null) {
             location.reload();
             disconnPeerId = null;
