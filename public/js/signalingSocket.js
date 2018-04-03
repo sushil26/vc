@@ -1,7 +1,7 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-//var SIGNALING_SERVER = "http://139.59.46.79:5000";
-var SIGNALING_SERVER = "https://vc4all.in/client";
+var SIGNALING_SERVER = "https://139.59.46.79:5000";
+//var SIGNALING_SERVER = "https://vc4all.in/client";
 //var SIGNALING_SERVER = "http://localhost:5000";
 
 var userName;
