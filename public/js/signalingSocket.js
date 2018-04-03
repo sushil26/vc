@@ -805,7 +805,9 @@ function init() {
         var peer_id = config.peer_id;
         var peer = peers[peer_id];
         var remote_description = config.session_description;
-        console.log("config.session_description: " + config.session_description);
+        console.log("config.queryId: "+config.queryId);
+       
+        console.log("queryLink: " + queryLink);
 
         var desc = new RTCSessionDescription(remote_description);
         if (queryLink == config.queryId) {
