@@ -1,4 +1,4 @@
-var MAX_UPLOAD_SIZE = 1.5; // in MB
+var MAX_UPLOAD_SIZE = 0.5; // in MB
 // var socket = io();
 var count = 0;
 var imageReader = new FileReader();
@@ -224,9 +224,6 @@ signaling_socket.on('newTextMsg', function (data) {
 
 })
 
-
-
-
 function playAudioForNotify() {
     console.log("playAudioForNotify-->");
     var snd = new Audio("./click.mp3"); // buffers automatically when created
@@ -234,12 +231,7 @@ function playAudioForNotify() {
     console.log("<--playAudioForNotify");
 }
 
-
-
 /* #### Start File Sharing  ##### */
-
-
-
 
 // Appends either an image or a video file to user's  window
 function appendFile(URI, type, name, queryId) {
@@ -298,8 +290,6 @@ function appendFile(URI, type, name, queryId) {
 
     console.log("<--appendFile");
 }
-
-
 imageReader.onload = function (e) {
     console.log("imageReader.onload-->");
     scrollDown();
@@ -352,8 +342,6 @@ signaling_socket.on('file', function (data) {
 });
 
 /* #### End File Sharing  ##### */
-
-
 $(function () {
     $("#addChatWindow ").click(function () {
         console.log("addChatWindow-->");
