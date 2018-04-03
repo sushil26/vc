@@ -1,7 +1,7 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-//var SIGNALING_SERVER = "https://vc4all.in";
-var SIGNALING_SERVER = "http://localhost:5000";
+var SIGNALING_SERVER = "https://vc4all.in/client";
+//var SIGNALING_SERVER = "http://localhost:5000";
 var signaling_socket = null;   /* our socket.io connection to our webserver */
 var local_media_stream = null; /* our own microphone / webcam */
 var local_media_shareStream = null;
@@ -21,7 +21,7 @@ var disconnPeerId = null;
 var shareScreen = null;
 var sessionHeader = null;
 var peerStream = null;
-io.set('transports', [ 'xhr-polling', 'jsonp-polling', 'htmlfile' ]);
+
 signaling_socket = io(SIGNALING_SERVER);
 
 var userName;
@@ -398,12 +398,10 @@ function startSession(id, date) {
     console.log(",--startSession");
 }
 
-signaling_socket.on('message', function (config) {
-console.log("message socket as a saperate");
-})
-function init() {
 
-    console.log("init-->");
+// function init() {
+
+//     console.log("init-->");
 
     signaling_socket.on('connect', function () {
         console.log("signaling_socket connect-->");
@@ -942,10 +940,10 @@ function init() {
         console.log('<--authorizedForClose');
     });
 
-    console.log("<--init");
+//     console.log("<--init");
 
-    // <!--------video Controller-------->
-}
+//     // <!--------video Controller-------->
+// }
 
 /***********************/
 /** Local media stuff **/
