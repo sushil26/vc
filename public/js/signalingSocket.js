@@ -1,6 +1,6 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "https://vc4all.in/client";
 //var SIGNALING_SERVER = "http://localhost:5000";
 
 var userName;
