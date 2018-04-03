@@ -1,14 +1,108 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "http://139.59.46.79:5000";
-//var SIGNALING_SERVER = "https://vc4all.in/client";
+var SIGNALING_SERVER = "https://vc4all.in";
 //var SIGNALING_SERVER = "http://localhost:5000";
+var signaling_socket = null;   /* our socket.io connection to our webserver */
+var local_media_stream = null; /* our own microphone / webcam */
+var local_media_shareStream = null;
+var peers = {};                /* keep track of our peer connections, indexed by peer_id (aka socket.io id) */
+var peer_media_elements = {};
+peer_userName_elements = {};
+var peer_media_sselements = {};  /* keep track of our <video>/<audio> tags, indexed by peer_id */
+/* #### Logu Defined  ##### */
+var peerNew_id = null;
+var queryLink = null;
+var timeLink = null;
+var txtQueryLink = null;
+
+// signaling_socket = io(SIGNALING_SERVER);
+var file;
+var disconnPeerId = null;
+var shareScreen = null;
+var sessionHeader = null;
+var peerStream = null;
+
+signaling_socket = io(SIGNALING_SERVER);
 
 var userName;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = 'some-global-ch-name';
 var MUTE_AUDIO_BY_DEFAULT = false;
+
+
+if (localStorage.getItem("userData")) {
+    console.log("User Name from session: " + localStorage.getItem("userData"));
+    var userData = JSON.stringify(localStorage.getItem("userData"));
+    userName = localStorage.getItem("userName");
+    loginType = localStorage.getItem("loginType");
+
+    console.log("userData: " + userData);
+    console.log("userName: " + userName);
+    console.log("loginType: " + loginType);
+    if (loginType == 'teacher' || loginType == 'admin') {
+        document.getElementById('userAuth').style.display = "none";
+        document.getElementById("appLogin").style.display = 'none';
+        document.getElementById("appReg").style.display = 'none';
+        document.getElementById("LoginUrl").style.display = 'none';
+        document.getElementById("appLogout").style.display = 'block';
+        document.getElementById("videoConferenceUrl").style.display = 'block';
+        document.getElementById("scheduleMeeting").style.display = 'block';
+        document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+
+    }
+    else if (loginType == 'parent') {
+        document.getElementById('userAuth').style.display = "none";
+        document.getElementById("appLogin").style.display = 'none';
+        document.getElementById("appReg").style.display = 'none';
+        document.getElementById("LoginUrl").style.display = 'none';
+        document.getElementById("appLogout").style.display = 'none';
+        document.getElementById("videoConferenceUrl").style.display = 'none';
+        document.getElementById("scheduleMeeting").style.display = 'none';
+        document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+
+    }
+    if (loginType == 'admin') {
+        document.getElementById('userAuth').style.display = "block";
+    }
+
+}
+else {
+
+    var url = window.location.href;
+    var stuff = url.split('/');
+    var id1 = stuff[stuff.length - 2];
+    var id2 = stuff[stuff.length - 3];
+    console.log("stuff.length: " + stuff.length);
+    console.log("id1**: " + id1);
+    console.log("id2**: " + id2);
+    if (stuff.length > 5) {
+        if (localStorage.getItem("userName")) {
+            console.log("User Name from session: " + localStorage.getItem("userName"));
+            userName = localStorage.getItem("userName");
+            // startVideoAction();
+            document.getElementById('userAuth').style.display = "none";
+            document.getElementById("appLogin").style.display = 'none';
+            document.getElementById("appReg").style.display = 'none';
+            document.getElementById("LoginUrl").style.display = 'none';
+            document.getElementById("appLogout").style.display = 'none';
+            document.getElementById("videoConferenceUrl").style.display = 'none';
+            document.getElementById("scheduleMeeting").style.display = 'none';
+            document.getElementById("videoConferenceLinkExtention").style.display = 'block';
+
+        }
+        else {
+            console.log("No user data from session");
+            $('#setName').trigger('click');
+            //    userName="logu";
+            //     init();
+        }
+
+    }
+
+
+
+}
 
 function saveName() {
     console.log("setName-->");
@@ -257,26 +351,7 @@ var ICE_SERVERS = [
     { url: "stun:stun.l.google.com:19302" }
 ];
 
-var signaling_socket = null;   /* our socket.io connection to our webserver */
-var local_media_stream = null; /* our own microphone / webcam */
-var local_media_shareStream = null;
-var peers = {};                /* keep track of our peer connections, indexed by peer_id (aka socket.io id) */
-var peer_media_elements = {};
-peer_userName_elements = {};
-var peer_media_sselements = {};  /* keep track of our <video>/<audio> tags, indexed by peer_id */
-/* #### Logu Defined  ##### */
-var peerNew_id = null;
-var queryLink = null;
-var timeLink = null;
-var txtQueryLink = null;
 
-// signaling_socket = io(SIGNALING_SERVER);
-var file;
-var disconnPeerId = null;
-var shareScreen = null;
-var sessionHeader = null;
-var peerStream = null;
-signaling_socket = io(SIGNALING_SERVER);
 
 function disconnecSession() {
     console.log("disconnecSession-->");
@@ -323,86 +398,16 @@ function startSession(id, date) {
     console.log(",--startSession");
 }
 
-function init() {
 
-    console.log("init-->");
+// function init() {
+
+//     console.log("init-->");
 
     signaling_socket.on('connect', function () {
         console.log("signaling_socket connect-->");
         // console.log("1.1:peers: " + JSON.stringify(peers));
         // console.log("1.1:Connected to signaling server");
-        if (localStorage.getItem("userData")) {
-            console.log("User Name from session: " + localStorage.getItem("userData"));
-            var userData = JSON.stringify(localStorage.getItem("userData"));
-            userName = localStorage.getItem("userName");
-            loginType = localStorage.getItem("loginType");
-
-            console.log("userData: " + userData);
-            console.log("userName: " + userName);
-            console.log("loginType: " + loginType);
-            if (loginType == 'teacher' || loginType == 'admin') {
-                document.getElementById('userAuth').style.display = "none";
-                document.getElementById("appLogin").style.display = 'none';
-                document.getElementById("appReg").style.display = 'none';
-                document.getElementById("LoginUrl").style.display = 'none';
-                document.getElementById("appLogout").style.display = 'block';
-                document.getElementById("videoConferenceUrl").style.display = 'block';
-                document.getElementById("scheduleMeeting").style.display = 'block';
-                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-            }
-            else if (loginType == 'parent') {
-                document.getElementById('userAuth').style.display = "none";
-                document.getElementById("appLogin").style.display = 'none';
-                document.getElementById("appReg").style.display = 'none';
-                document.getElementById("LoginUrl").style.display = 'none';
-                document.getElementById("appLogout").style.display = 'none';
-                document.getElementById("videoConferenceUrl").style.display = 'none';
-                document.getElementById("scheduleMeeting").style.display = 'none';
-                document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-            }
-            if (loginType == 'admin') {
-                document.getElementById('userAuth').style.display = "block";
-            }
-
-        }
-        else {
-
-            var url = window.location.href;
-            var stuff = url.split('/');
-            var id1 = stuff[stuff.length - 2];
-            var id2 = stuff[stuff.length - 3];
-            console.log("stuff.length: " + stuff.length);
-            console.log("id1**: " + id1);
-            console.log("id2**: " + id2);
-            if (stuff.length > 5) {
-                if (localStorage.getItem("userName")) {
-                    console.log("User Name from session: " + localStorage.getItem("userName"));
-                    userName = localStorage.getItem("userName");
-                    // startVideoAction();
-                    document.getElementById('userAuth').style.display = "none";
-                    document.getElementById("appLogin").style.display = 'none';
-                    document.getElementById("appReg").style.display = 'none';
-                    document.getElementById("LoginUrl").style.display = 'none';
-                    document.getElementById("appLogout").style.display = 'none';
-                    document.getElementById("videoConferenceUrl").style.display = 'none';
-                    document.getElementById("scheduleMeeting").style.display = 'none';
-                    document.getElementById("videoConferenceLinkExtention").style.display = 'block';
-
-                }
-                else {
-                    console.log("No user data from session");
-                    $('#setName').trigger('click');
-                    //    userName="logu";
-                    //     init();
-                }
-
-            }
-
-
-
-        }
+       
         if (disconnPeerId != null) {
             location.reload();
             disconnPeerId = null;
@@ -603,9 +608,9 @@ function init() {
             // remote_media.attr("style", "border:5px solid gray");
             remote_media.attr("id", peer_id + "Remote");
             if (MUTE_AUDIO_BY_DEFAULT) {
-                remote_media.attr("muted", "muted");
+                remote_media.attr("muted", "true");
             }
-            remote_media.attr("controls", "false");
+            remote_media.attr("controls", "");
 
             remote_media.attr("name", config.userName);
             console.log("onaddstream: peer_id: " + peer_id);
@@ -806,9 +811,7 @@ function init() {
         var peer_id = config.peer_id;
         var peer = peers[peer_id];
         var remote_description = config.session_description;
-        console.log("config.queryId: "+config.queryId);
-       
-        console.log("queryLink: " + queryLink);
+        console.log("config.session_description: " + config.session_description);
 
         var desc = new RTCSessionDescription(remote_description);
         if (queryLink == config.queryId) {
@@ -937,10 +940,10 @@ function init() {
         console.log('<--authorizedForClose');
     });
 
-    console.log("<--init");
+//     console.log("<--init");
 
-    // <!--------video Controller-------->
-}
+//     // <!--------video Controller-------->
+// }
 
 /***********************/
 /** Local media stuff **/

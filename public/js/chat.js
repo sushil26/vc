@@ -1,4 +1,5 @@
-var MAX_UPLOAD_SIZE = 1.5; // in MB
+//var MAX_UPLOAD_SIZE = 0.5; // in MB
+var MAX_UPLOAD_SIZE = 0.09; // in MB
 // var socket = io();
 var count = 0;
 var imageReader = new FileReader();
@@ -133,8 +134,10 @@ function sendMessage() {
             // if (file.type.substring(0, 5) === 'image' || file.type.substring(0, 5) === 'video' || file.type.substring(0, 4) === 'docx') {
 
             console.log("file.size: " + file.size);
+            console.log("MAX_UPLOAD_SIZE * 1000: " + MAX_UPLOAD_SIZE * 1000);
             console.log("MAX_UPLOAD_SIZE: " + MAX_UPLOAD_SIZE + "MAX_UPLOAD_SIZE * 1000 * 1000: " + MAX_UPLOAD_SIZE * 1000 * 1000);
-            if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
+            /* &&&& MAX_UPLOAD_SIZE was in a if condition is-->MAX_UPLOAD_SIZE * 1000 * 1000, i have changed for test purpose as--> MAX_UPLOAD_SIZE * 1000 &&&& */
+            if (file.size > MAX_UPLOAD_SIZE * 1000*1000) {
                 alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
             }
             else if (file.type.substring(0, 5) === 'image') {
@@ -224,9 +227,6 @@ signaling_socket.on('newTextMsg', function (data) {
 
 })
 
-
-
-
 function playAudioForNotify() {
     console.log("playAudioForNotify-->");
     var snd = new Audio("./click.mp3"); // buffers automatically when created
@@ -234,12 +234,7 @@ function playAudioForNotify() {
     console.log("<--playAudioForNotify");
 }
 
-
-
 /* #### Start File Sharing  ##### */
-
-
-
 
 // Appends either an image or a video file to user's  window
 function appendFile(URI, type, name, queryId) {
@@ -298,8 +293,6 @@ function appendFile(URI, type, name, queryId) {
 
     console.log("<--appendFile");
 }
-
-
 imageReader.onload = function (e) {
     console.log("imageReader.onload-->");
     scrollDown();
@@ -352,8 +345,6 @@ signaling_socket.on('file', function (data) {
 });
 
 /* #### End File Sharing  ##### */
-
-
 $(function () {
     $("#addChatWindow ").click(function () {
         console.log("addChatWindow-->");
