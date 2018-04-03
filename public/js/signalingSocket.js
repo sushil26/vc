@@ -1,6 +1,6 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in/client";
+var SIGNALING_SERVER = "https://vc4all.in";
 //var SIGNALING_SERVER = "http://localhost:5000";
 var signaling_socket = null;   /* our socket.io connection to our webserver */
 var local_media_stream = null; /* our own microphone / webcam */
