@@ -137,7 +137,7 @@ function sendMessage() {
             console.log("MAX_UPLOAD_SIZE * 1000: " + MAX_UPLOAD_SIZE * 1000);
             console.log("MAX_UPLOAD_SIZE: " + MAX_UPLOAD_SIZE + "MAX_UPLOAD_SIZE * 1000 * 1000: " + MAX_UPLOAD_SIZE * 1000 * 1000);
             /* &&&& MAX_UPLOAD_SIZE was in a if condition is-->MAX_UPLOAD_SIZE * 1000 * 1000, i have changed for test purpose as--> MAX_UPLOAD_SIZE * 1000 &&&& */
-            if (file.size > MAX_UPLOAD_SIZE * 1000) {
+            if (file.size > MAX_UPLOAD_SIZE * 1000*1000) {
                 alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
             }
             else if (file.type.substring(0, 5) === 'image') {
