@@ -1,6 +1,7 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in/client";
+var SIGNALING_SERVER = "http://139.59.46.79:5000";
+//var SIGNALING_SERVER = "https://vc4all.in/client";
 //var SIGNALING_SERVER = "http://localhost:5000";
 
 var userName;
@@ -275,7 +276,7 @@ var disconnPeerId = null;
 var shareScreen = null;
 var sessionHeader = null;
 var peerStream = null;
-signaling_socket = io();
+signaling_socket = io(SIGNALING_SERVER);
 
 function disconnecSession() {
     console.log("disconnecSession-->");
