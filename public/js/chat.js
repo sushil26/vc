@@ -1,4 +1,5 @@
-var MAX_UPLOAD_SIZE = 0.5; // in MB
+//var MAX_UPLOAD_SIZE = 0.5; // in MB
+var MAX_UPLOAD_SIZE = 0.09; // in MB
 // var socket = io();
 var count = 0;
 var imageReader = new FileReader();
