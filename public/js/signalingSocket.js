@@ -602,9 +602,9 @@ function init() {
             // remote_media.attr("style", "border:5px solid gray");
             remote_media.attr("id", peer_id + "Remote");
             if (MUTE_AUDIO_BY_DEFAULT) {
-                remote_media.attr("muted", "true");
+                remote_media.attr("muted", "muted");
             }
-            remote_media.attr("controls", "");
+            remote_media.attr("controls", "false");
 
             remote_media.attr("name", config.userName);
             console.log("onaddstream: peer_id: " + peer_id);
