@@ -1,7 +1,7 @@
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in";
-//var SIGNALING_SERVER = "http://localhost:5000";
+//var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "http://localhost:5000";
 var signaling_socket = null;   /* our socket.io connection to our webserver */
 var local_media_stream = null; /* our own microphone / webcam */
 var local_media_shareStream = null;
@@ -21,7 +21,9 @@ var disconnPeerId = null;
 var shareScreen = null;
 var sessionHeader = null;
 var peerStream = null;
+io.set('transports', [ 'xhr-polling', 'jsonp-polling', 'htmlfile' ]);
 signaling_socket = io(SIGNALING_SERVER);
+
 var userName;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
