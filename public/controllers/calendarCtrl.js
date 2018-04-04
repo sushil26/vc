@@ -135,7 +135,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
               'url': eventPostedData.url
              
             });
-            $scope.eventGet();
+            // $scope.eventGet();
           }
           else {
             alert("Event Send Failed");
