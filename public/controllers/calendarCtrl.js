@@ -120,9 +120,9 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
             // $scope.eventGet();
             // vm.events.push({
             //   title: 'New event',
-            //   startsAt: start,
-            //   endsAt: $scope.endDateRes,
-            //   color: primColor,
+            //   startsAt: data.data.start,
+            //   endsAt: data.data.end,
+            //   color: data.data.primColor,
             //   draggable: true,
             //   resizable: true
             // });
