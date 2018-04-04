@@ -95,7 +95,6 @@
                     <a class="dropdown-item" ng-model="event.color.primary" style="background-color:pink">Pink</a>
                     <a class="dropdown-item" ng-model="event.color.primary" style="background-color:purple">purple</a>
                     <a class="dropdown-item" ng-model="event.color.primary" style="background-color:blue">blue</a>
-
                   </div>
                 </div>
                 <!-- <input class="form-control" colorpicker type="text" ng-model="event.color.primary"> -->
@@ -132,8 +131,11 @@
                 </a>
               </td>
               <td>
+                  ----{{event.startsAt}}---&&&----{{event.startsAt | date:'M/d/yy h:mm a'}}
+              </td>
+              <td> 
                 <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
-                    ----{{event.startsAt}}---&&&----{{event.startsAt | date:'M/d/yy h:mm a'}}Save
+                Save
                 </button>
                 <!-- <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">
                 Delete
@@ -153,7 +155,6 @@
                           <h4 class="modal-title">Please Enter Details</h4>
                         </div>
                         <div class="modal-body">
-
                           <input type="text" ng-model="studName" class="form-control" placeholder="Student Name">
                           <br>
                           <input type="text" ng-model="studId" class="form-control" placeholder="Student Id">
