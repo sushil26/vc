@@ -226,7 +226,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
   vm.addEvent = function () {
     console.log("addEvent-->");
-    vm.events.push({
+    vm.event.splice(0,0,{
       title: 'New event',
       startsAt: moment().startOf('day').toDate(),
       endsAt: moment().endOf('day').toDate(),
@@ -234,6 +234,14 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
       draggable: true,
       resizable: true
     });
+    // vm.events.push({
+    //   title: 'New event',
+    //   startsAt: moment().startOf('day').toDate(),
+    //   endsAt: moment().endOf('day').toDate(),
+    //   color: calendarConfig.colorTypes.important,
+    //   draggable: true,
+    //   resizable: true
+    // });
   };
 
   vm.eventClicked = function (event) {

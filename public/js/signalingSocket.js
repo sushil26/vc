@@ -1083,7 +1083,7 @@ function setup_local_media(callback, errorback) {
                     //local_media_stream = stream;
                     local_media_shareStream = stream;
                     var local_mediaScreenShare = USE_VIDEO ? $("<video>") : $("<audio>");
-                    local_mediaScreenShare.attr("autoplay", "autoplay");
+                    //local_mediaScreenShare.attr("autoplay", "autoplay");
                     local_mediaScreenShare.attr("muted", "muted"); /* always mute ourselves by default */
                     // local_mediaScreenShare.attr("controls", "");
                     local_mediaScreenShare.attr("id", "screenShareElem");
@@ -1122,7 +1122,7 @@ function setup_local_media(callback, errorback) {
                                 local_media_stream = stream;
                                 // local_media_shareStream = stream;
                                 var local_media = USE_VIDEO ? $("<video>") : $();
-                                local_media.attr("autoplay", "autoplay");
+                                //local_media.attr("autoplay", "autoplay");
                                 local_media.attr("muted", "muted"); /* always mute ourselves by default */
                                 // local_media.attr("controls", "");
                                 local_media.attr("id", "videoElem");
