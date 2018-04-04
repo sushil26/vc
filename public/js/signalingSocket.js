@@ -963,7 +963,8 @@ function setup_local_media(callback, errorback) {
     navigator.getUserMedia = (navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia);
+        navigator.msGetUserMedia ||
+        navigator.mediaDevices.getUserMedia);
 
     attachMediaStream = function (element, stream) {
         console.log("attachMediaStream-->");
