@@ -118,6 +118,14 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
             // $window.location.href = $scope.propertyJson.R082;
             alert("Successfully sent the event " + data.data.message);
             $scope.eventGet();
+            vm.events.push({
+              title: 'New event',
+              startsAt: start,
+              endsAt: $scope.endDateRes,
+              color: primColor,
+              draggable: true,
+              resizable: true
+            });
           }
           else {
             alert("Event Send Failed");
