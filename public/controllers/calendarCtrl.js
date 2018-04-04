@@ -134,7 +134,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
       })
     })
 
-    console.log("startAt: " + startAt);
+    console.log("<--eventSend");
     // var url = document.getElementById('linkToShare').innerHTML;
   }
   $scope.eventGet = function () {
