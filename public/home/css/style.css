@@ -490,7 +490,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .section-header .section-description {
   text-align: center;
-  padding-bottom: 40px;
+
   color: #999;
 }
 
@@ -571,9 +571,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 /* Facts Section
 --------------------------------*/
-#facts {
-  padding: 80px 0 60px 0;
-}
 
 #facts .counters span {
   font-size: 48px;
@@ -850,7 +847,7 @@ position: inherit !important;
 /* Contact Section
 --------------------------------*/
 #contact {
-  background: #f7f7f7;
+  background: darkturquoise;
   /* padding: 80px 0 40px 0; */
 }
 
@@ -865,12 +862,12 @@ position: inherit !important;
 
 #contact .info i {
   font-size: 32px;
-  color: #2dc997;
+  color: #333333;
   float: left;
 }
 
 #contact .info p {
-  padding: 0 0 10px 50px;
+  padding: 0 0 0px 50px;
   margin-bottom: 20px;
   line-height: 22px;
   font-size: 14px;
@@ -882,6 +879,7 @@ position: inherit !important;
 
 #contact .social-links {
   padding-bottom: 20px;
+  float: left;
 }
 
 #contact .social-links a {
@@ -891,7 +889,7 @@ position: inherit !important;
   color: #fff;
   line-height: 1;
   padding: 8px 0;
-  border-radius: 50%;
+  border-radius: 20%;
   text-align: center;
   width: 36px;
   height: 36px;
