@@ -971,7 +971,7 @@ function setup_local_media(callback, errorback) {
         element.srcObject = stream;
         console.log("<--attachMediaStream");
     };
-    navigator.getUserMedia({  audio: USE_AUDIO, video: {width: {exact: 320}, height: {exact: 240}}},
+    navigator.getUserMedia({ audio: USE_AUDIO, video: USE_VIDEO},
         function (stream) { /* user accepted access to a/v */
             console.log("Access granted to audio/video");
             console.log("stream: " + stream);
