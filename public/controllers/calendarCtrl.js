@@ -136,7 +136,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
   $scope.eventGet = function () {
     console.log("eventGet-->");
-    var userId = localStorage.getItem("id");
+    var id = localStorage.getItem("id");
     var api = "https://vc4all.in/vc/eventGet"+ "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
 
