@@ -121,7 +121,7 @@
                   <div uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="10" show-meridian="true">
                   </div>
                 </div>
-              </td>
+              </td>---------{{event.startsAt | date:'M/d/yy h:mm a'}}
               <td>
                 <a href="{{event.url}}">
                   <button class="btn btn-primary" ng-if="event.url" style="width:80px;">
@@ -140,7 +140,7 @@
                   Delete
                 </button>
                 <button data-target="#event" id="crdbuttn" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"
-                  ng-click="login()">Login</button>
+                  ng-click="login()">event</button>
                 <div class="modal fade" id="event" role="dialog">
                   <div class="modal-dialog">
                     <center>
