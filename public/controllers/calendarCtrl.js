@@ -74,7 +74,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   }
   $scope.eventSend = function (res, name, id, primColor) {
     //$scope.eventSend = function (a, b) {
-      alert("a: "+a+"b: "+b);
+      //alert("a: "+a+"b: "+b);
     console.log("eventSend-->");
 
     var SIGNALING_SERVER = "https://vc4all.in";
