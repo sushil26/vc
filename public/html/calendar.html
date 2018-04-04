@@ -121,6 +121,8 @@
                   <div uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="10" show-meridian="true">
                   </div>
                 </div>
+
+
               </td>
               <td>
                 <a href="{{event.url}}">
@@ -129,7 +131,7 @@
                   </button>
                 </a>
               </td>
-              <td>---------{{event.startsAt | date:'M/d/yy h:mm a'}}----*********------{{event.startsAt}}
+              <td>
                 <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
                   Save
                 </button>
@@ -140,7 +142,7 @@
                   Delete
                 </button>
                 <button data-target="#event" id="crdbuttn" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"
-                  ng-click="login()">event</button>
+                  ng-click="login()">Login</button>
                 <div class="modal fade" id="event" role="dialog">
                   <div class="modal-dialog">
                     <center>
@@ -162,10 +164,8 @@
 
                         </div>
                         <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 10px;">
-                          <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(event.startsAt, event.startsAt | date:'M/d/yy h:mm a')"
+                          <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(eventReason,studName, studId, event.startsAt, event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.color.primary)"
                             data-dismiss="modal">Submit</button>
-                          <!-- <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(eventReason,studName, studId, event.startsAt, event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.color.primary)"
-                            data-dismiss="modal">Submit</button> -->
 
                         </div>
                       </div>
