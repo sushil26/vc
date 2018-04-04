@@ -116,8 +116,11 @@ module.exports.eventGet = function (req, res) {
     // var id ={
     //     userId = req.params.id
     // } 
-
-    event.find().toArray(function (err, listOfevents) {
+if(general.emptyCheck(req.params.id)){
+    var id = {
+        "userId": req.params.id
+    }
+    event.find(id).toArray(function (err, listOfevents) {
         if (err) {
 
             responseData = {
@@ -140,6 +143,17 @@ module.exports.eventGet = function (req, res) {
         }
 
     })
+
+}
+else{
+    console.log("Epty value found");
+    responseData = {
+        "status": false,
+        "message": "there is no userId to find",
+       
+    }
+    res.status(400).send(responseData);
+}
 
 }
 

@@ -264,7 +264,8 @@ function sessionSet(data) {
             "userName": data.data.userName,
             "status": data.data.status,
             "email": data.data.email,
-            "loginType": data.loginType
+            "loginType": data.loginType,
+            "id": data.data._id
         }
         localStorage.setItem("userData", userData);
         localStorage.setItem("userName", data.data.userName);
@@ -397,7 +398,6 @@ function startSession(id, date) {
     })
     console.log(",--startSession");
 }
-
 
 // function init() {
 
