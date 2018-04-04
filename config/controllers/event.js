@@ -70,7 +70,7 @@ module.exports.eventSend = function (req, res) {
                             "status": true,
                             "errorCode": 200,
                             "message": "Registeration Successfull and Failed to send mail",
-                            "data": data
+                            "data": userData
                         }
                         res.status(200).send(responseData);
 
@@ -82,7 +82,7 @@ module.exports.eventSend = function (req, res) {
                             "errorCode": 200,
                             "message": "Registeration Successfull and sent mail",
 
-                            "data": data
+                            "data": userData
                         }
                         res.status(200).send(responseData);
                     }

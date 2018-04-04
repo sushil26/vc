@@ -124,15 +124,15 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
             vm.events.splice(0, 1);
             var eventPostedData = data.data.data;
             vm.events.push({
-              'id': eventPostedData._id,
-              'title': eventPostedData.title,
-              'color': eventPostedData.primColor,
-              'startsAt': new Date(eventPostedData.start),
-              'endsAt': new Date(eventPostedData.end),
+              'id': obj.userId,
+              'title': obj.title,
+              'color': obj.primColor,
+              'startsAt': obj.start,
+              'endsAt': obj.end,
               'draggable': true,
               'resizable': true,
               'actions': actions,
-              'url': eventPostedData.url
+              'url': obj.url
              
             });
             // $scope.eventGet();
