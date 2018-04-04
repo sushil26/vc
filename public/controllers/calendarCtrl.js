@@ -65,11 +65,12 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
-  $scope.eventSend = function (res, name, id, start, startAt, endAt, primColor) {
+  $scope.eventSend = function (a,b) {
     console.log("eventSend-->");
     console.log("startAt, endAt: "+startAt+" "+ endAt)
     console.log("start: "+start);
     console.log("$scope.endDateRes: "+$scope.endDateRes);
+    alert("a and b: "+a+" "+b);
 
     var SIGNALING_SERVER = "https://vc4all.in";
     var queryLink = null;
@@ -77,63 +78,63 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     var url;
     signaling_socket = io(SIGNALING_SERVER);
 
-    signaling_socket.on('connect', function () {
-      console.log("signaling_socket connect-->");
+    // signaling_socket.on('connect', function () {
+    //   console.log("signaling_socket connect-->");
 
-      signaling_socket.on('message', function (config) {
-        console.log("signaling_socket message-->");
+    //   signaling_socket.on('message', function (config) {
+    //     console.log("signaling_socket message-->");
 
-        queryLink = config.queryId;
-        peerNew_id = config.peer_id;
+    //     queryLink = config.queryId;
+    //     peerNew_id = config.peer_id;
 
-        url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
+    //     url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
 
-        var api = "https://vc4all.in/vc/eventSend";
-        //var api = "http://localhost:5000/vc/eventSend";
-        console.log("api: " + api);
-        var email = document.getElementById('eventEmails').value;
-        var obj = {
-          "userId": localStorage.getItem("id"),
-          "reason": res,
-          "studName": name,
-          "studId": id,
-          "email": email,
-          "start": start,
-          "end": $scope.endDateRes,
-          "startAt": startAt,
-          "endAt": endAt,
-          "primColor": primColor,
-          "url": url
-        }
-        console.log("obj: " + JSON.stringify(obj));
+    //     var api = "https://vc4all.in/vc/eventSend";
+    //     //var api = "http://localhost:5000/vc/eventSend";
+    //     console.log("api: " + api);
+    //     var email = document.getElementById('eventEmails').value;
+    //     var obj = {
+    //       "userId": localStorage.getItem("id"),
+    //       "reason": res,
+    //       "studName": name,
+    //       "studId": id,
+    //       "email": email,
+    //       "start": start,
+    //       "end": $scope.endDateRes,
+    //       "startAt": startAt,
+    //       "endAt": endAt,
+    //       "primColor": primColor,
+    //       "url": url
+    //     }
+    //     console.log("obj: " + JSON.stringify(obj));
 
-        httpFactory.post(api, obj).then(function (data) {
-          var checkStatus = httpFactory.dataValidation(data);
-          console.log("data--" + JSON.stringify(data.data));
-          if (checkStatus) {
+    //     httpFactory.post(api, obj).then(function (data) {
+    //       var checkStatus = httpFactory.dataValidation(data);
+    //       console.log("data--" + JSON.stringify(data.data));
+    //       if (checkStatus) {
 
-            console.log("data" + JSON.stringify(data.data))
-            // $window.location.href = $scope.propertyJson.R082;
-            alert("Successfully sent the event " + data.data.message);
-            // $scope.eventGet();
-            // vm.events.push({
-            //   title: 'New event',
-            //   startsAt: data.data.start,
-            //   endsAt: data.data.end,
-            //   color: data.data.primColor,
-            //   draggable: true,
-            //   resizable: true
-            // });
-          }
-          else {
-            alert("Event Send Failed");
+    //         console.log("data" + JSON.stringify(data.data))
+    //         // $window.location.href = $scope.propertyJson.R082;
+    //         alert("Successfully sent the event " + data.data.message);
+    //         // $scope.eventGet();
+    //         // vm.events.push({
+    //         //   title: 'New event',
+    //         //   startsAt: data.data.start,
+    //         //   endsAt: data.data.end,
+    //         //   color: data.data.primColor,
+    //         //   draggable: true,
+    //         //   resizable: true
+    //         // });
+    //       }
+    //       else {
+    //         alert("Event Send Failed");
 
-          }
+    //       }
 
-        })
+    //     })
 
-      })
-    })
+    //   })
+    // })
 
     console.log("startAt: " + startAt);
     // var url = document.getElementById('linkToShare').innerHTML;
