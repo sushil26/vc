@@ -75,7 +75,6 @@ app.get('/', function (req, res) {
     
 });
 
-
 // require('./config/server_socket')(io);
 
 app.get("/client", function (req, res) {

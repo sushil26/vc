@@ -7,15 +7,17 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
 
   // }
+
+
   if (localStorage.getItem("loginType") == 'admin') {
     console.log("loginType: " + localStorage.getItem("loginType"));
     document.getElementById('userAuth').style.display = "block";
-    $scope.userLoginType='admin';
+    $scope.userLoginType = 'admin';
 
   }
   else if (localStorage.getItem("loginType") == 'teacher') {
     document.getElementById('userAuth').style.display = "none";
-    $scope.userLoginType='teacher';
+    $scope.userLoginType = 'teacher';
   }
   else {
     window.location.href = "https://vc4all.in";
@@ -90,7 +92,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         var api = "https://vc4all.in/vc/eventSend";
         //var api = "http://localhost:5000/vc/eventSend";
         console.log("api: " + api);
-      var email = document.getElementById('eventEmails').value;
+        var email = document.getElementById('eventEmails').value;
         var obj = {
           "userId": localStorage.getItem("id"),
           "reason": res,
@@ -129,15 +131,11 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
     console.log("startAt: " + startAt);
     // var url = document.getElementById('linkToShare').innerHTML;
-
-
-
   }
-
   $scope.eventGet = function () {
     console.log("eventGet-->");
-    var userId = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/eventGet";
+    var id = localStorage.getItem("id");
+    var api = "https://vc4all.in/vc/eventGet"+ "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
 
     httpFactory.get(api).then(function (data) {
