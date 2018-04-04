@@ -223,6 +223,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   vm.cellIsOpen = true;
 
   vm.addEvent = function () {
+    console.log("addEvent-->");
     vm.events.push({
       title: 'New event',
       startsAt: moment().startOf('day').toDate(),

@@ -131,7 +131,7 @@
                   </button>
                 </a>
               </td>
-              <td>
+              <td>----------{{event.startsAt}}------&&&-----------{{event.startsAt | date:'M/d/yy h:mm a'}}
                 <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
                   Save
                 </button>
