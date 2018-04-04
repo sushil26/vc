@@ -26,6 +26,7 @@ module.exports.eventSend = function (req, res) {
         var password = 'abc';
         var userData = {
             "userId": req.body.userId,
+            "title": req.body.title,
             "reason": req.body.reason,
             "studName": req.body.studName,
             "studId": req.body.studId,
