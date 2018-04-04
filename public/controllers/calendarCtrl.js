@@ -5,7 +5,6 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
   //   window.location.href="https://vc4all.in";
 
-
   // }
 
 
@@ -69,6 +68,8 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   $scope.eventSend = function (res, name, id, start, startAt, endAt, primColor) {
     console.log("eventSend-->");
     console.log("startAt, endAt: "+startAt+" "+ endAt)
+    console.log("start: "+start);
+    console.log("$scope.endDateRes: "+$scope.endDateRes);
 
     var SIGNALING_SERVER = "https://vc4all.in";
     var queryLink = null;
@@ -103,7 +104,6 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
           "endAt": endAt,
           "primColor": primColor,
           "url": url
-
         }
         console.log("obj: " + JSON.stringify(obj));
 

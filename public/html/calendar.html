@@ -105,25 +105,22 @@
             </td> -->
               <td>
                 <p class="input-group">
-                  <input type="text" style="margin-bottom: -4px;" class="form-control" 
-                  readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" 
-                  is-open="event.startOpen"close-text="Close">
+                  <input type="text" style="margin-bottom: -4px;" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt"
+                    is-open="event.startOpen" close-text="Close">
                   <span class="input-group-btn">
-                    <button type="button"  style="margin-top: 0px;height: 33px;"
-                    class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
+                    <button type="button" style="margin-top: 0px;height: 33px;" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
                       <i class="glyphicon glyphicon-calendar"></i>
                     </button>
                   </span>
                 </p>
-                <div class="row">
+                <div class="row" style="padding:2%">
+
                   <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="10" show-meridian="true">
                   </div>
                   &nbspTo&nbsp
                   <div uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="10" show-meridian="true">
                   </div>
                 </div>
-
-
               </td>
               <td>
                 <a href="{{event.url}}">
