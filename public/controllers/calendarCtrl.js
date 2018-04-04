@@ -52,7 +52,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     console.log("<--deleteEvent");
   }
 
-  $scope.save = function (s, e) {
+  $scope.save = function (s, e, sFiltered, eFiltered) {
     console.log("s: " + s);
     console.log("e: " + e);
     var res = $filter('limitTo')(s, 2);
@@ -63,14 +63,17 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
 
     console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
+    $scope.startD = s;
+    $scope.startFiltered = sFiltered;
+    $scope.endFiltered = eFiltered;
     $scope.startDate = $filter('date')(s, "EEE MMM dd y");
     $scope.endDate = $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'");
     $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
-  // $scope.eventSend = function (res, name, id, start, startAt, endAt, primColor) {
-    $scope.eventSend = function (a, b) {
+  $scope.eventSend = function (res, name, id, primColor) {
+    //$scope.eventSend = function (a, b) {
       alert("a: "+a+"b: "+b);
     console.log("eventSend-->");
 
@@ -80,56 +83,56 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     var url;
     signaling_socket = io(SIGNALING_SERVER);
 
-    // signaling_socket.on('connect', function () {
-    //   console.log("signaling_socket connect-->");
+    signaling_socket.on('connect', function () {
+      console.log("signaling_socket connect-->");
 
-    //   signaling_socket.on('message', function (config) {
-    //     console.log("signaling_socket message-->");
+      signaling_socket.on('message', function (config) {
+        console.log("signaling_socket message-->");
 
-    //     queryLink = config.queryId;
-    //     peerNew_id = config.peer_id;
+        queryLink = config.queryId;
+        peerNew_id = config.peer_id;
 
-    //     url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
+        url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
 
-    //     var api = "https://vc4all.in/vc/eventSend";
-    //     //var api = "http://localhost:5000/vc/eventSend";
-    //     console.log("api: " + api);
-    //     var email = document.getElementById('eventEmails').value;
-    //     var obj = {
-    //       "userId": localStorage.getItem("id"),
-    //       "reason": res,
-    //       "studName": name,
-    //       "studId": id,
-    //       "email": email,
-    //       "start": start,
-    //       "end": $scope.endDateRes,
-    //       "startAt": startAt,
-    //       "endAt": endAt,
-    //       "primColor": primColor,
-    //       "url": url
+        var api = "https://vc4all.in/vc/eventSend";
+        //var api = "http://localhost:5000/vc/eventSend";
+        console.log("api: " + api);
+        var email = document.getElementById('eventEmails').value;
+        var obj = {
+          "userId": localStorage.getItem("id"),
+          "reason": res,
+          "studName": name,
+          "studId": id,
+          "email": email,
+          "start":  $scope.startD,
+          "end": $scope.endDateRes,
+          "startAt": $scope.startFiltered,
+          "endAt": $scope.endFiltered,
+          "primColor": primColor,
+          "url": url
 
-    //     }
-    //     console.log("obj: " + JSON.stringify(obj));
+        }
+        console.log("obj: " + JSON.stringify(obj));
 
-    //     httpFactory.post(api, obj).then(function (data) {
-    //       var checkStatus = httpFactory.dataValidation(data);
-    //       console.log("data--" + JSON.stringify(data.data));
-    //       if (checkStatus) {
+        httpFactory.post(api, obj).then(function (data) {
+          var checkStatus = httpFactory.dataValidation(data);
+          console.log("data--" + JSON.stringify(data.data));
+          if (checkStatus) {
 
-    //         console.log("data" + JSON.stringify(data.data))
-    //         // $window.location.href = $scope.propertyJson.R082;
-    //         alert("Successfully sent the event " + data.data.message);
-    //         $scope.eventGet();
-    //       }
-    //       else {
-    //         alert("Event Send Failed");
+            console.log("data" + JSON.stringify(data.data))
+            // $window.location.href = $scope.propertyJson.R082;
+            alert("Successfully sent the event " + data.data.message);
+            $scope.eventGet();
+          }
+          else {
+            alert("Event Send Failed");
 
-    //       }
+          }
 
-    //     })
+        })
 
-    //   })
-    // })
+      })
+    })
 
     console.log("startAt: " + startAt);
     // var url = document.getElementById('linkToShare').innerHTML;
@@ -157,7 +160,6 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
             'resizable': true,
             'actions': actions,
             'url': $scope.eventData[x].url
-
           }
           console.log(" obj" + JSON.stringify(obj))
           vm.events.push(obj);
