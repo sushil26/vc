@@ -608,9 +608,9 @@ function startSession(id, date) {
             // remote_media.attr("style", "border:5px solid gray");
             remote_media.attr("id", peer_id + "Remote");
             if (MUTE_AUDIO_BY_DEFAULT) {
-                remote_media.attr("muted", "muted");
+                remote_media.attr("muted", "true");
             }
-            remote_media.attr("controls", "false");
+            remote_media.attr("controls", "");
 
             remote_media.attr("name", config.userName);
             console.log("onaddstream: peer_id: " + peer_id);
@@ -981,7 +981,7 @@ function setup_local_media(callback, errorback) {
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $();
             // local_media.attr("autoplay", "true");
-             local_media.attr("autoplay", "true");
+            //local_media.attr("autoplay", "autoplay");
             local_media.attr("muted", "muted"); /* always mute ourselves by default */
             local_media.attr("id", "videoElem");
             local_media.attr("style", "border:1px solid skyblue;display:inline !important");
