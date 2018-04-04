@@ -121,7 +121,7 @@
                   <div uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="10" show-meridian="true">
                   </div>
                 </div>
-              </td>---------{{event.startsAt | date:'M/d/yy h:mm a'}}
+              </td>
               <td>
                 <a href="{{event.url}}">
                   <button class="btn btn-primary" ng-if="event.url" style="width:80px;">
@@ -129,7 +129,7 @@
                   </button>
                 </a>
               </td>
-              <td>
+              <td>---------{{event.startsAt | date:'M/d/yy h:mm a'}}----*********------{{event.startsAt}}
                 <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt)">
                   Save
                 </button>
