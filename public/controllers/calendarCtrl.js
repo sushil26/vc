@@ -59,8 +59,8 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
     console.log("res: " + res);
     console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
-   console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
-   $scope.title = title;
+    console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
+    $scope.title = title;
     $scope.startD = s;
     $scope.startFiltered = sFiltered;
     $scope.endFiltered = eFiltered;
@@ -72,7 +72,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   }
   $scope.eventSend = function (res, name, id, primColor) {
     //$scope.eventSend = function (a, b) {
-      //alert("a: "+a+"b: "+b);
+    //alert("a: "+a+"b: "+b);
     console.log("eventSend-->");
 
     var SIGNALING_SERVER = "https://vc4all.in";
@@ -98,12 +98,12 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         var email = document.getElementById('eventEmails').value;
         var obj = {
           "userId": localStorage.getItem("id"),
-          "title":$scope.title,
+          "title": $scope.title,
           "reason": res,
           "studName": name,
           "studId": id,
           "email": email,
-          "start":  $scope.startD,
+          "start": $scope.startD,
           "end": $scope.endDateRes,
           "startAt": $scope.startFiltered,
           "endAt": $scope.endFiltered,
@@ -121,6 +121,20 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
             console.log("data" + JSON.stringify(data.data))
             // $window.location.href = $scope.propertyJson.R082;
             alert("Successfully sent the event " + data.data.message);
+            vm.events.splice(0, 1);
+            var eventPostedData = data.data.data;
+            vm.events.push({
+              'id': eventPostedData._id,
+              'title': eventPostedData.title,
+              'color': eventPostedData.primColor,
+              'startsAt': new Date(eventPostedData.start),
+              'endsAt': new Date(eventPostedData.end),
+              'draggable': true,
+              'resizable': true,
+              'actions': actions,
+              'url': eventPostedData.url
+             
+            });
             $scope.eventGet();
           }
           else {
@@ -139,7 +153,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   $scope.eventGet = function () {
     console.log("eventGet-->");
     var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/eventGet"+ "/" + id;
+    var api = "https://vc4all.in/vc/eventGet" + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
 
     httpFactory.get(api).then(function (data) {
@@ -225,7 +239,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
   vm.addEvent = function () {
     console.log("addEvent-->");
-    vm.events.splice(0,0,{
+    vm.events.splice(0, 0, {
       title: 'New event',
       startsAt: moment().startOf('day').toDate(),
       endsAt: moment().endOf('day').toDate(),
