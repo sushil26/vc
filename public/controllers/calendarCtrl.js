@@ -71,6 +71,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   }
   $scope.eventSend = function (res, name, id, start, startAt, endAt, primColor) {
     console.log("eventSend-->");
+    console.log("startAt, endAt: "+startAt+" "+ endAt);
 
     var SIGNALING_SERVER = "https://vc4all.in";
     var queryLink = null;
