@@ -138,44 +138,44 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     console.log("startAt: " + startAt);
     // var url = document.getElementById('linkToShare').innerHTML;
   }
-  $scope.eventGet = function () {
-    console.log("eventGet-->");
-    var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/eventGet"+ "/" + id;
-    //var api = "http://localhost:5000/vc/eventGet";
+  // $scope.eventGet = function () {
+  //   console.log("eventGet-->");
+  //   var id = localStorage.getItem("id");
+  //   var api = "https://vc4all.in/vc/eventGet"+ "/" + id;
+  //   //var api = "http://localhost:5000/vc/eventGet";
 
-    httpFactory.get(api).then(function (data) {
-      var checkStatus = httpFactory.dataValidation(data);
-      console.log("data--" + JSON.stringify(data.data));
-      if (checkStatus) {
-        $scope.eventData = data.data.data;
-        for (var x = 0; x < $scope.eventData.length; x++) {
-          console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
-          var obj = {
-            'id': $scope.eventData[x]._id,
-            'title': 'An Event',
-            'color': $scope.eventData[x].primColor,
-            'startsAt': new Date($scope.eventData[x].start),
-            'endsAt': new Date($scope.eventData[x].end),
-            'draggable': true,
-            'resizable': true,
-            'actions': actions,
-            'url': $scope.eventData[x].url
+  //   httpFactory.get(api).then(function (data) {
+  //     var checkStatus = httpFactory.dataValidation(data);
+  //     console.log("data--" + JSON.stringify(data.data));
+  //     if (checkStatus) {
+  //       $scope.eventData = data.data.data;
+  //       for (var x = 0; x < $scope.eventData.length; x++) {
+  //         console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
+  //         var obj = {
+  //           'id': $scope.eventData[x]._id,
+  //           'title': 'An Event',
+  //           'color': $scope.eventData[x].primColor,
+  //           'startsAt': new Date($scope.eventData[x].start),
+  //           'endsAt': new Date($scope.eventData[x].end),
+  //           'draggable': true,
+  //           'resizable': true,
+  //           'actions': actions,
+  //           'url': $scope.eventData[x].url
 
-          }
-          console.log(" obj" + JSON.stringify(obj))
-          vm.events.push(obj);
+  //         }
+  //         console.log(" obj" + JSON.stringify(obj))
+  //         vm.events.push(obj);
 
-        }
-      }
-      else {
-        //alert("Event get Failed");
+  //       }
+  //     }
+  //     else {
+  //       //alert("Event get Failed");
 
-      }
+  //     }
 
-    })
-  }
-  $scope.eventGet();
+  //   })
+  // }
+  // $scope.eventGet();
 
   var vm = this;
 
