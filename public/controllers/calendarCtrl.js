@@ -67,9 +67,9 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   }
   $scope.eventSend = function (a,b) {
     console.log("eventSend-->");
-    console.log("startAt, endAt: "+startAt+" "+ endAt)
-    console.log("start: "+start);
-    console.log("$scope.endDateRes: "+$scope.endDateRes);
+    // console.log("startAt, endAt: "+startAt+" "+ endAt)
+    // console.log("start: "+start);
+    // console.log("$scope.endDateRes: "+$scope.endDateRes);
     alert("a and b: "+a+" "+b);
 
     var SIGNALING_SERVER = "https://vc4all.in";
