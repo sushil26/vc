@@ -994,7 +994,6 @@ function setup_local_media(callback, errorback) {
             document.getElementById("videoElem").addEventListener("click", function () {
                 console.log("screem size change request-->");
                 var videoElem = document.getElementById('videoElem');
-
                 var isFullScreen = videoElem.requestFullscreen || videoElem.mozRequestFullScreen || videoElem.webkitRequestFullscreen;
                 console.log("isFullScreen: " + isFullScreen);
                 if (isFullScreen) {
