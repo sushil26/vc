@@ -963,7 +963,7 @@ function setup_local_media(callback, errorback) {
     navigator.getUserMedia = (navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia);
+        navigator.msGetUserMedia );
 
     attachMediaStream = function (element, stream) {
         console.log("attachMediaStream-->");
@@ -971,7 +971,7 @@ function setup_local_media(callback, errorback) {
         element.srcObject = stream;
         console.log("<--attachMediaStream");
     };
-    navigator.getUserMedia({  audio: USE_AUDIO, video: {width: {exact: 320}, height: {exact: 240}}},
+    navigator.getUserMedia({ "audio": USE_AUDIO, "video": USE_VIDEO },
         function (stream) { /* user accepted access to a/v */
             console.log("Access granted to audio/video");
             console.log("stream: " + stream);
@@ -981,11 +981,9 @@ function setup_local_media(callback, errorback) {
             // local_media_shareStream = stream;
             var local_media = USE_VIDEO ? $("<video>") : $();
             // local_media.attr("autoplay", "true");
-
+            local_mediaScreenShare.attr("autoplay", "autoplay");
             local_media.attr("muted", "muted"); /* always mute ourselves by default */
             local_media.attr("id", "videoElem");
-
-
             local_media.attr("style", "border:1px solid skyblue;display:inline !important");
 
             // $('#portfolio-wrapper').append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' + userName + '</h4><span>All is well</span></div></div>');
@@ -1021,17 +1019,12 @@ function setup_local_media(callback, errorback) {
                     else if (videoElem.msExitFullscreen)
                         videoElem.msExitFullscreen();
                 }
-
-
-
-
             })
             document.getElementById("audio_btn").addEventListener("click", function () {
                 console.log("audio_btn-->");
                 console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
                 stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
                 var michrophoneVal = stream.getAudioTracks()[0].enabled;
-
 
                 if (michrophoneVal) {
 
@@ -1092,7 +1085,7 @@ function setup_local_media(callback, errorback) {
                     local_media_shareStream = stream;
                     var local_mediaScreenShare = USE_VIDEO ? $("<video>") : $("<audio>");
                     local_mediaScreenShare.attr("autoplay", "autoplay");
-                    local_mediaScreenShare.attr("muted", "true"); /* always mute ourselves by default */
+                    local_mediaScreenShare.attr("muted", "muted"); /* always mute ourselves by default */
                     // local_mediaScreenShare.attr("controls", "");
                     local_mediaScreenShare.attr("id", "screenShareElem");
                     local_mediaScreenShare.attr("style", "border:1px solid skyblue");
@@ -1131,7 +1124,7 @@ function setup_local_media(callback, errorback) {
                                 // local_media_shareStream = stream;
                                 var local_media = USE_VIDEO ? $("<video>") : $();
                                 local_media.attr("autoplay", "autoplay");
-                                local_media.attr("muted", "true"); /* always mute ourselves by default */
+                                local_media.attr("muted", "muted"); /* always mute ourselves by default */
                                 // local_media.attr("controls", "");
                                 local_media.attr("id", "videoElem");
                                 local_media.attr("style", "border:1px solid skyblue");
@@ -1147,7 +1140,6 @@ function setup_local_media(callback, errorback) {
                                 if (errorback) errorback();
                             });
                         /* ######   ###### */
-
                     };
 
                     /* ##### End Stop Sharing ##### */
