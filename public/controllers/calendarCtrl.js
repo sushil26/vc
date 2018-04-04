@@ -52,17 +52,15 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     console.log("<--deleteEvent");
   }
 
-  $scope.save = function (s, e, sFiltered, eFiltered) {
+  $scope.save = function (s, e, sFiltered, eFiltered, title) {
     console.log("s: " + s);
     console.log("e: " + e);
     var res = $filter('limitTo')(s, 2);
 
     console.log("res: " + res);
-
-
     console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
-
-    console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
+   console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
+   $scope.title = title;
     $scope.startD = s;
     $scope.startFiltered = sFiltered;
     $scope.endFiltered = eFiltered;
@@ -100,6 +98,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
         var email = document.getElementById('eventEmails').value;
         var obj = {
           "userId": localStorage.getItem("id"),
+          "title":$scope.title,
           "reason": res,
           "studName": name,
           "studId": id,
@@ -152,7 +151,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
           console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
           var obj = {
             'id': $scope.eventData[x]._id,
-            'title': 'An Event',
+            'title': $scope.eventData[x].title,
             'color': $scope.eventData[x].primColor,
             'startsAt': new Date($scope.eventData[x].start),
             'endsAt': new Date($scope.eventData[x].end),
