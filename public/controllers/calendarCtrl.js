@@ -259,9 +259,10 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   };
 
   vm.eventClicked = function (event) {
-    alert("clicked: " + event);
+    // alert("clicked: " + event);
     console.log("cliecked: " + JSON.stringify(event));
     $scope.evtData = JSON.stringify(event);
+    console.log("$scope.evtData.studentName: "+$scope.evtData.studentName);
     $('#eDetail').trigger('click');
     // var eClicked = $uibModal.open({
     //   scope: $scope,
