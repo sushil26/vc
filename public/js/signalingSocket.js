@@ -22,7 +22,7 @@ var shareScreen = null;
 var sessionHeader = null;
 var peerStream = null;
 
-signaling_socket = io('ws://localhost', {transports: ['websocket']});
+signaling_socket = io('ws://vc4all.in', {transports: ['websocket']});
 
 var userName;
 var USE_AUDIO = true;
