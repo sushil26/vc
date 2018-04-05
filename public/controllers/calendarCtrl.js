@@ -260,7 +260,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.eventDetailClick = function (index) {
     console.log("eventDetailClick--> ");
-    $scope.evtData = vm.events[index];
+  var evtData = vm.events[index];
     console.log(" $scope.evtData: " + $scope.evtData);
     var eClicked = $uibModal.open({
       scope: $scope,
@@ -268,7 +268,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       windowClass: 'show',
       backdropClass: 'show',
       controller: function ($scope, $uibModalInstance) {
-        $scope.eventDetails = event;
+        $scope.eventDetails = evtData;
         console.log("$scope.eventDetails: " + $scope.eventDetails);
       }
     })
