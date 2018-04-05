@@ -49,7 +49,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("<--deleteEvent");
   }
 
-  $scope.updateSave = function (s, e, sFiltered, eFiltered, id) {
+  $scope.updateSave = function (s, e, sFiltered, eFiltered, id, msg) {
     console.log("updateSave-->");
     console.log("s: " + s);
     console.log("e: " + e);
@@ -67,7 +67,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
 
-    $scope.updatedEvent($scope.eventDetails.reason, id);
+    $scope.updatedEvent(msg, id);
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
 
