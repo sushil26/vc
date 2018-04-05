@@ -30,10 +30,10 @@ module.exports.eventUpdate = function (req, res) {
             "startAt": req.body.startAt,
             "endAt": req.body.endAt
         }
-        console.log("updatedJson: "+JSON.stringify(updatedJson));
+        console.log("updatedJson: " + JSON.stringify(updatedJson));
         event.update(id, { $set: updatedJson }, { multi: true }, function (err, setData) {
 
-            console.log("set query done: "+JSON.stringify(setData));
+            console.log("set query done: " + JSON.stringify(setData));
             if (err) {
                 console.log("Failed to set the data");
                 responseData = {
@@ -44,13 +44,39 @@ module.exports.eventUpdate = function (req, res) {
                 res.status(400).send(responseData);
             }
             else {
-                responseData = {
-                    "status": true,
-                    "errorCode": 200,
-                    "message": "Updated Successfull",
-                    "data": setData
-                }
-                res.status(200).send(responseData);
+                var mailOptions = {
+                    from: "logeswari.careator@gmail.com",
+                    to: req.body.email,
+                    subject: "Regarding School Meeting",
+                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to +" + req.body.endAt + " +</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                };
+                console.log("mailOptions: " + JSON.stringify(mailOptions));
+
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                        responseData = {
+                            "status": true,
+                            "errorCode": 200,
+                            "message": "Registeration Successfull and Failed to send mail",
+                            "data": userData
+                        }
+                        res.status(200).send(responseData);
+
+
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                        responseData = {
+                            "status": true,
+                            "errorCode": 200,
+                            "message": "Registeration Successfull and sent mail",
+
+                            "data": userData
+                        }
+                        res.status(200).send(responseData);
+                    }
+
+                });
             }
         })
 

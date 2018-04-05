@@ -49,7 +49,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("<--deleteEvent");
   }
 
-  $scope.updateSave = function (s, e, sFiltered, eFiltered, id, msg) {
+  $scope.updateSave = function (s, e, sFiltered, eFiltered, id, msg, email, url) {
     console.log("updateSave-->");
     console.log("_id: "+id);
     console.log("s: " + s);
@@ -68,11 +68,11 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
 
-    $scope.updatedEvent(msg, id);
+    $scope.updatedEvent(msg, id, email, url);
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
 
-  $scope.updatedEvent = function(res, id){
+  $scope.updatedEvent = function(res, id, email, url){
     console.log("updatedEvent-->");
     console.log("id: "+id);
     var obj = {
@@ -82,6 +82,8 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       "end": $scope.endDateRes,
       "startAt": $scope.startFiltered,
       "endAt": $scope.endFiltered,
+      "email": email,
+      "url": url
    }
    console.log("obj: "+JSON.stringify(obj));
 
