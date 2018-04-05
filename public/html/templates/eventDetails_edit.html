@@ -4,22 +4,51 @@
 </div>
 
 <div class="modal-body loginpopUp_body">
-    <label>Student Name</label><br>
+    <label>Event Name</label>
+    <input type="text" class="form-control" ng-model="eventDetails.title">
+    <label>Timing</label>
+    <p class="input-group">
+        <input type="text" style="margin-bottom: -4px;" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="eventDetails.startsAt"
+            is-open="event.startOpen" close-text="Close">
+        <span class="input-group-btn">
+            <button type="button" style="margin-top: 0px;height: 33px;" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+        </span>
+    </p>
+    <div class="row" style="padding:2%">
+
+        <div uib-timepicker ng-model="eventDetails.startsAt" hour-step="1" minute-step="10" show-meridian="true">
+        </div>
+        &nbspTo&nbsp
+        <div uib-timepicker ng-model="eventDetails.endsAt" hour-step="1" minute-step="10" show-meridian="true">
+        </div>
+    </div>
+    <label>Student Name</label>
+    <br>
     <input type="text" ng-model="eventDetails.studentName">
-    <label>Student Id</label><br>
+    <label>Student Id</label>
+    <br>
     <input type="text" ng-model="eventDetails.studendtId">
-    <label>Title</label><br>
-    <input type="text" ng-model="eventDetails.title">
-    <label>Message</label><br>
+   
+    <label>Message</label>
+    <br>
     <input type="text" ng-model="eventDetails.reason">
-    <label>Date</label><br>
+    <label>Date</label>
+    <br>
     <input type="text" ng-model="eventDetails.startsAt | date:'M/d/yy'">
-    <label>Start Time</label><br>
+    <label>Start Time</label>
+    <br>
     <input type="text" ng-model="eventDetails.startsAt |  date:'h:mm a'">
-    <label>End Time</label><br>
+    <label>End Time</label>
+    <br>
     <input type="text" ng-model="eventDetails.endsAt |  date:'h:mm a'">
+    
 </div>
 <div class="modal-footer loginpopUp_footer">
     <button class="btn btn-default loginpopUp_footerBtn" type="button" ng-click="$close()">Close</button>
+    <button class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt, event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.title)">
+        Save
+      </button>
     <!-- <button type="submit" class="btn btn-default loginpopUp_footerBtn" ng-click="specOffSub(speOff_uploadForm, speOffTitle, speOffMsg, file.upload)">Upload</button> -->
 </div>
