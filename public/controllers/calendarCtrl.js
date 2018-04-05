@@ -121,8 +121,12 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     $scope.endFiltered = eFiltered;
     $scope.startDate = $filter('date')(s, "EEE MMM dd y");
     $scope.endDate = $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'");
+
     $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
+
+   console.log("$scope.urlDate: " + $scope.urlDate);
+   console.log("$scope.endDate: " + $scope.endDate);
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
   $scope.eventSend = function (res, name, id, primColor) {
@@ -161,7 +165,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
           "start": $scope.startD,
           "end": $scope.endDateRes,
           "startAt": $scope.startFiltered,
-          "endAt": $scope.endFiltered,
+          "endAt": $scope.endFiltered, /* ###Note: have work and this is unwanted */
           "primColor": primColor,
           "url": url
 
