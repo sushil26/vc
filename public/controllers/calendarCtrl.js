@@ -130,7 +130,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
               'resizable': true,
               'actions': actions,
               'url': obj.url
-             
+
             });
             // $scope.eventGet();
           }
@@ -258,13 +258,31 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     // });
   };
 
+  $scope.eventDetailClick = function (index) {
+    console.log("eventDetailClick--> ");
+    $scope.evtData = vm.events[index];
+    console.log(" $scope.evtData: " + $scope.evtData);
+    var eClicked = $uibModal.open({
+      scope: $scope,
+      templateUrl: '/html/templates/eventDetail.html',
+      windowClass: 'show',
+      backdropClass: 'show',
+      controller: function ($scope, $uibModalInstance) {
+        $scope.eventDetails = event;
+        console.log("$scope.eventDetails: " + $scope.eventDetails);
+      }
+    })
+    console.log("<--eventDetailClick");
+  }
+
   vm.eventClicked = function (event) {
+    console.log("eventClicked-->");
     // alert("clicked: " + event);
     console.log("cliecked: " + JSON.stringify(event));
     $scope.evtData = event;
-    console.log("$scope.evtData: "+$scope.evtData);
-    console.log("$scope.evtData.id: "+$scope.evtData.id);
-   
+    console.log("$scope.evtData: " + $scope.evtData);
+    console.log("$scope.evtData.id: " + $scope.evtData.id);
+
     // $('#eDetail').trigger('click');
     var eClicked = $uibModal.open({
       scope: $scope,
@@ -273,15 +291,16 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       backdropClass: 'show',
       controller: function ($scope, $uibModalInstance) {
         $scope.eventDetails = event;
-        console.log("$scope.eventDetails: "+$scope.eventDetails);
+        console.log("$scope.eventDetails: " + $scope.eventDetails);
       }
     })
+    console.log("<--eventClicked");
   };
 
   $scope.eventClicked = function (event) {
     alert("clicked: " + event);
     console.log("cliecked: " + event);
-   //  alert.show('Clicked', event);
+    //  alert.show('Clicked', event);
   };
 
   vm.eventEdited = function (event) {
