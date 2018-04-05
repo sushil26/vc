@@ -197,7 +197,8 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   var actions = [{
     label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
     onClick: function (args) {
-      alert.show('Edited', args.calendarEvent);
+      alert('Edited', args.calendarEvent);
+      // alert.show('Edited', args.calendarEvent);
     }
   }, {
     label: '<i class=\'glyphicon glyphicon-remove\'></i>',
