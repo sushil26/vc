@@ -262,16 +262,17 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     alert("clicked: " + event);
     console.log("cliecked: " + JSON.stringify(event));
     $scope.eventDetails = JSON.stringify(event);
-    var eClicked = $uibModal.open({
-      scope: $scope,
-      templateUrl: '/html/templates/eventDetails.html',
-      windowClass: 'show',
-      backdropClass: 'show',
-      controller: function ($scope, $uibModalInstance) {
-        $scope.eventDetails = JSON.stringify(event);
-        console.log("$scope.eventDetails: "+$scope.eventDetails);
-      }
-    })
+    $('#eDetail').trigger('click');
+    // var eClicked = $uibModal.open({
+    //   scope: $scope,
+    //   templateUrl: '/html/templates/eventDetails.html',
+    //   windowClass: 'show',
+    //   backdropClass: 'show',
+    //   controller: function ($scope, $uibModalInstance) {
+    //     $scope.eventDetails = JSON.stringify(event);
+    //     console.log("$scope.eventDetails: "+$scope.eventDetails);
+    //   }
+    // })
   };
 
   $scope.eventClicked = function (event) {
