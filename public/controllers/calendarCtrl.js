@@ -1,4 +1,4 @@
-app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig, $uibModal,) {
+app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig, $uibModal) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
   // if(localStorage.getItem("loginType")!='teacher'){
@@ -263,6 +263,8 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     console.log("cliecked: " + JSON.stringify(event));
     $scope.evtData = JSON.stringify(event);
     console.log("$scope.evtData: "+$scope.evtData);
+    console.log("$scope.evtData.id: "+$scope.evtData.id);
+    console.log("$scope.evtData.id: "+$scope.evtData[0].id);
     console.log("$scope.evtData[0].studentName: "+$scope.evtData.studentName);
     $('#eDetail').trigger('click');
     // var eClicked = $uibModal.open({
