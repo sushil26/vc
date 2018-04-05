@@ -136,7 +136,7 @@ module.exports.eventSend = function (req, res) {
                     from: "logeswari.careator@gmail.com",
                     to: req.body.email,
                     subject: "Regarding School Meeting",
-                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link on date " + req.body.date + " timing from"+req.body.sd+ "to" + req.body.ed + " +</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link on date " + req.body.date + " timing from"+req.body.sd+ " to " + req.body.ed +"</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                 };
                 console.log("mailOptions: " + JSON.stringify(mailOptions));
 
