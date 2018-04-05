@@ -173,7 +173,8 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
             "studentName": $scope.eventData[x].studName,
             "studendtId": $scope.eventData[x].studId,
             "title": $scope.eventData[x].title,
-            "reason": $scope.eventData[x].reason
+            "reason": $scope.eventData[x].reason,
+            "email":  $scope.eventData[x].email
           }
           console.log(" obj" + JSON.stringify(obj))
           vm.events.push(obj);
