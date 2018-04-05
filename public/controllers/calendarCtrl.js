@@ -58,7 +58,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("res: " + res);
     console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
     console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
-    $scope.title = title;
+   
     $scope.startD = s;
     $scope.startFiltered = sFiltered;
     $scope.endFiltered = eFiltered;
