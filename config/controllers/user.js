@@ -8,7 +8,7 @@ var nodemailer = require('nodemailer');
 
 
 var transporter = nodemailer.createTransport({
-    service: '_autodiscover',
+    service: 'vc4all',
     auth: {
         user: 'info@vc4all.in',
         pass: 'ctpl@123'
