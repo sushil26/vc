@@ -110,6 +110,9 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   $scope.save = function (date, sd, ed, s, e, sFiltered, eFiltered, title) {
     console.log("s: " + s);
     console.log("e: " + e);
+    console.log("sd: " + sd);
+    console.log("ed: " + ed);
+
     var res = $filter('limitTo')(s, 2);
 
     console.log("res: " + res);
