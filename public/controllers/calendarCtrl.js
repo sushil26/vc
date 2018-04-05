@@ -1,4 +1,4 @@
-app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig, $uibModal) {
+app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, httpFactory, moment, calendarConfig, $uibModal) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
   // if(localStorage.getItem("loginType")!='teacher'){
