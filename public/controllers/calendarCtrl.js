@@ -1,4 +1,4 @@
-app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig) {
+app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, moment, calendarConfig, $uibModal,) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
   // if(localStorage.getItem("loginType")!='teacher'){
@@ -24,9 +24,6 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   }
 
   $scope.eventColors = ['red', 'green', 'blue'];
-
-
-
 
   $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");
@@ -260,6 +257,15 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   vm.eventClicked = function (event) {
     alert("clicked: " + event);
     console.log("cliecked: " + JSON.stringify(event));
+    var eventClicked = $uibModal.open({
+      scope: $scope,
+      templateUrl: '/html/templates/eventDetails.html',
+      windowClass: 'show',
+      backdropClass: 'show',
+      controller: function ($scope, $uibModalInstance) {
+        $scope.eventDetails = JSON.stringify(event);
+      }
+    })
   };
 
   $scope.eventClicked = function (event) {
