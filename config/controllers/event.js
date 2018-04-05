@@ -33,7 +33,7 @@ module.exports.eventUpdate = function (req, res) {
         console.log("updatedJson: "+JSON.stringify(updatedJson));
         event.update(id, { $set: updatedJson }, { multi: true }, function (err, setData) {
 
-            console.log("set query done");
+            console.log("set query done: "+JSON.stringify(setData));
             if (err) {
                 console.log("Failed to set the data");
                 responseData = {
