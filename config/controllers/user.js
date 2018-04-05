@@ -298,7 +298,7 @@ module.exports.deleteUser = function (req, res) {
 module.exports.emailInvite = function (req, res) {
     console.log("emailInvite-->");
     var mailOptions = {
-        from: "logeswari.careator@gmail.com",
+        from: "info@vc4all.in",
         to: req.body.email,
         subject: "Regarding School Instance Meeting",
         html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link: " + req.body.url + "and password: abc</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
