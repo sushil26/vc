@@ -21,7 +21,7 @@ module.exports.eventUpdate = function (req, res) {
     var responseData;
     if (general.emptyCheck(req.params.id)) {
         var id = {
-            "_id": ObjectId(req.body.id)
+            "_id": ObjectId(req.params.id)
         }
         var updatedJson = {
             "reason": req.body.reason,
