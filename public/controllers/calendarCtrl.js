@@ -264,7 +264,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log(" $scope.evtData: " + $scope.evtData);
     var eClicked = $uibModal.open({
       scope: $scope,
-      templateUrl: '/html/templates/eventDetail.html',
+      templateUrl: '/html/templates/eventDetails.html',
       windowClass: 'show',
       backdropClass: 'show',
       controller: function ($scope, $uibModalInstance) {
