@@ -268,6 +268,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
       backdropClass: 'show',
       controller: function ($scope, $uibModalInstance) {
         $scope.eventDetails = JSON.stringify(event);
+        console.log("$scope.eventDetails: "+$scope.eventDetails);
       }
     })
   };
