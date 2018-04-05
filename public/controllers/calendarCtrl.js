@@ -261,7 +261,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   vm.eventClicked = function (event) {
     // alert("clicked: " + event);
     console.log("cliecked: " + JSON.stringify(event));
-    $scope.evtData = JSON.stringify(event);
+    $scope.evtData = event;
     console.log("$scope.evtData: "+$scope.evtData);
     console.log("$scope.evtData.id: "+$scope.evtData.id);
     console.log("$scope.evtData.id: "+$scope.evtData[0].id);
