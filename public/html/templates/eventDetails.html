@@ -5,19 +5,19 @@
 
 <div class="modal-body loginpopUp_body">
     <label>Student Name</label><br>
-    <label style="color:green">{{eventDetails.studentName}}</label>
+    <p style="color:green">{{eventDetails.studentName}}</p>
     <label>Student Id</label><br>
-    <label style="color:green">{{eventDetails.studendtId}}</label>
+    <p style="color:green">{{eventDetails.studendtId}}</p>
     <label>Title</label><br>
-    <label style="color:green">{{eventDetails.title}}</label>
+    <p style="color:green">{{eventDetails.title}}</p>
     <label>Message</label><br>
-    <label style="color:green">{{eventDetails.reason}}</label>
+    <p style="color:green">{{eventDetails.reason}}</p>
     <label>Date</label><br>
-    <label style="color:green">{{eventDetails.startsAt | date:'M/d/yy'}}</label>
+    <p style="color:green">{{eventDetails.startsAt | date:'M/d/yy'}}</p>
     <label>Start Time</label><br>
-    <label style="color:green">{{eventDetails.startsAt |  date:'h:mm a'}}</label>
+    <p style="color:green">{{eventDetails.startsAt |  date:'h:mm a'}}</p>
     <label>End Time</label><br>
-    <label style="color:green">{{eventDetails.endsAt |  date:'h:mm a'}}</label>
+    <p style="color:green">{{eventDetails.endsAt |  date:'h:mm a'}}</p>
 </div>
 <div class="modal-footer loginpopUp_footer">
     <button class="btn btn-default loginpopUp_footerBtn" type="button" ng-click="$close()">Close</button>
