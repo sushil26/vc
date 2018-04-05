@@ -169,7 +169,11 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
             'draggable': true,
             'resizable': true,
             'actions': actions,
-            'url': $scope.eventData[x].url
+            'url': $scope.eventData[x].url,
+            "studentName": $scope.eventData[x].studName,
+            "studendtId": $scope.eventData[x].studId,
+            "title": $scope.eventData[x].title,
+            "reason": $scope.eventData[x].reason
           }
           console.log(" obj" + JSON.stringify(obj))
           vm.events.push(obj);
