@@ -198,6 +198,18 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
     onClick: function (args) {
       alert('Edited', args.calendarEvent);
+      console.log("args.calendarEvent: "+args.calendarEvent);
+      console.log("JSON args.calendarEvent: "+JSON.stringify(args.calendarEvent));
+      var eClicked = $uibModal.open({
+        scope: $scope,
+        templateUrl: '/html/templates/eventDetails_edit.html',
+        windowClass: 'show',
+        backdropClass: 'show',
+        controller: function ($scope, $uibModalInstance) {
+          $scope.eventDetails = evtData;
+          console.log("$scope.eventDetails: " + $scope.eventDetails);
+        }
+      })
       // alert.show('Edited', args.calendarEvent);
     }
   }, {
