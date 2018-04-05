@@ -68,7 +68,7 @@
             <tr>
               <th>Sr.no</th>
               <th>Event Name</th>
-              <th>Color</th>
+              <!-- <th>Color</th> -->
               <th>Timing</th>
               <th>Conference</th>
               <th>Edit</th>
@@ -79,9 +79,10 @@
             <tr ng-repeat="event in vm.events track by $index" style="background:#e5caa74d;">
               <td>{{$index+1}}.</td>
               <td>
-                <input type="text" class="form-control" ng-model="event.title">
+                <input type="text" class="form-control" ng-model="event.title" ng-click="eventDetailClick($index)">
+              
               </td>
-              <td>
+              <!-- <td>
                 <div class="dropdown">
                   <button class="btn btn-primary dropdown-toggle" colorpicker type="text" ng-model="event.color.primary" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -97,8 +98,8 @@
                     <a class="dropdown-item" ng-model="event.color.primary" style="background-color:blue">blue</a>
                   </div>
                 </div>
-                <!-- <input class="form-control" colorpicker type="text" ng-model="event.color.primary"> -->
-              </td>
+            
+              </td> -->
               <!--   <td>
               <input class="form-control" colorpicker type="text" ng-model="event.color.secondary">
             </td> -->
@@ -131,7 +132,7 @@
                 </a>
               </td>
               <td>
-                <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt, event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.title)">
+                <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt| date:'M/d/yy',event.startsAt| date:'h:mm a', event.endsAt| date:'h:mm a', event.startsAt, event.endsAt, event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.title)">
                   Save
                 </button>
                 <!-- <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">

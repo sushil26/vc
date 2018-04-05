@@ -15,13 +15,90 @@ var transporter = nodemailer.createTransport({
         pass: 'ctpl@123'
     }
 });
+module.exports.eventUpdate = function (req, res) {
+    console.log("eventUpdate-->");
+    console.log("req.params.id: " + req.params.id);
+    var responseData;
+    if (general.emptyCheck(req.params.id)) {
+        var id = {
+            "_id": ObjectId(req.params.id)
+        }
+        var updatedJson = {
+            "reason": req.body.reason,
+            "start": req.body.start,
+            "end": req.body.end,
+            "startAt": req.body.startAt,
+            "endAt": req.body.endAt
+        }
+        console.log("updatedJson: " + JSON.stringify(updatedJson));
+        event.update(id, { $set: updatedJson }, { multi: true }, function (err, setData) {
+
+            console.log("set query done: " + JSON.stringify(setData));
+            if (err) {
+                console.log("Failed to set the data");
+                responseData = {
+                    "status": false,
+                    "message": "Failed to Update",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                var mailOptions = {
+                    from: "logeswari.careator@gmail.com",
+                    to: req.body.email,
+                    subject: "Regarding School Meeting",
+                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to +" + req.body.endAt + " +</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                };
+                console.log("mailOptions: " + JSON.stringify(mailOptions));
+
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                        responseData = {
+                            "status": true,
+                            "errorCode": 200,
+                            "message": "Registeration Successfull and Failed to send mail",
+                            "data": userData
+                        }
+                        res.status(200).send(responseData);
+
+
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                        responseData = {
+                            "status": true,
+                            "errorCode": 200,
+                            "message": "Registeration Successfull and sent mail",
+
+                            "data": userData
+                        }
+                        res.status(200).send(responseData);
+                    }
+
+                });
+            }
+        })
+
+    }
+    else {
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "empty value found"
+        }
+        res.status(400).send(responseData);
+
+    }
+    console.log("<--eventUpdate");
+}
 module.exports.eventSend = function (req, res) {
     console.log("eventSend-->");
     var responseData;
-    console.log("req.body.studName: "+req.body.studName);
-    console.log("req.body.studId: "+req.body.studId);
-    console.log("req.body.reason: "+req.body.reason);
-    console.log("req.body.email: "+req.body.email);
+    console.log("req.body.studName: " + req.body.studName);
+    console.log("req.body.studId: " + req.body.studId);
+    console.log("req.body.reason: " + req.body.reason);
+    console.log("req.body.email: " + req.body.email);
     if (general.emptyCheck(req.body.studName) && general.emptyCheck(req.body.studId) && general.emptyCheck(req.body.reason) && general.emptyCheck(req.body.email)) {
         var password = 'abc';
         var userData = {
@@ -59,7 +136,7 @@ module.exports.eventSend = function (req, res) {
                     from: "info@vc4all.in",
                     to: req.body.email,
                     subject: "Regarding School Meeting",
-                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to +" + req.body.endAt + " +</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link on date " + req.body.date + " timing from"+req.body.sd+ " to " + req.body.ed +"</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                 };
                 console.log("mailOptions: " + JSON.stringify(mailOptions));
 
@@ -117,44 +194,44 @@ module.exports.eventGet = function (req, res) {
     // var id ={
     //     userId = req.params.id
     // } 
-if(general.emptyCheck(req.params.id)){
-    var id = {
-        "userId": req.params.id
-    }
-    event.find(id).toArray(function (err, listOfevents) {
-        if (err) {
-
-            responseData = {
-                "status": false,
-                "message": "Failed to get Data",
-                "data": data
-            }
-            res.status(400).send(responseData);
+    if (general.emptyCheck(req.params.id)) {
+        var id = {
+            "userId": req.params.id
         }
-        else {
-            responseData = {
-                "status": true,
-                "message": "Registeration Successfull",
-                "data": listOfevents
+        event.find(id).toArray(function (err, listOfevents) {
+            if (err) {
+
+                responseData = {
+                    "status": false,
+                    "message": "Failed to get Data",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "Registeration Successfull",
+                    "data": listOfevents
+                }
+
+
+
+                res.status(200).send(responseData);
             }
 
+        })
 
-
-            res.status(200).send(responseData);
-        }
-
-    })
-
-}
-else{
-    console.log("Epty value found");
-    responseData = {
-        "status": false,
-        "message": "there is no userId to find",
-       
     }
-    res.status(400).send(responseData);
-}
+    else {
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "there is no userId to find",
+
+        }
+        res.status(400).send(responseData);
+    }
 
 }
 
@@ -194,12 +271,12 @@ module.exports.parentCredential = function (req, res) {
     console.log("parentCredential-->");
     var responseData;
     if (general.emptyCheck(req.body.url) && general.emptyCheck(req.body.pswd)) {
-        
-        event.find({'url':req.body.url}).toArray(function (err, data) {
+
+        event.find({ 'url': req.body.url }).toArray(function (err, data) {
             if (data.length > 0) {
-                console.log("data[0].password: "+data[0].password);
-                console.log("data[0].url: "+data[0].url);
-                console.log("req.body.pswd: "+req.body.pswd);
+                console.log("data[0].password: " + data[0].password);
+                console.log("data[0].url: " + data[0].url);
+                console.log("req.body.pswd: " + req.body.pswd);
                 if (data[0].password == req.body.pswd) {
                     console.log("Successfully Logged in");
                     responseData = {
@@ -209,7 +286,7 @@ module.exports.parentCredential = function (req, res) {
                     }
                     res.status(200).send(responseData);
                 }
-                else{
+                else {
                     console.log("Password is not matching");
                     responseData = {
                         "status": true,
@@ -220,7 +297,7 @@ module.exports.parentCredential = function (req, res) {
 
                 }
             }
-            else{
+            else {
                 responseData = {
                     "status": false,
                     "errorCode": "No Match",
