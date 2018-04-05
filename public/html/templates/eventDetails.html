@@ -4,21 +4,20 @@
 </div>
 
 <div class="modal-body loginpopUp_body">
-    <label>Student Name</label><br>---{{backdropClass}}
-    <input type="text" ng-modal="eventDetails.studentName">
-    <label>{{eventDetails.studentName}}</label>
+    <label>Student Name</label><br>
+    <label style="color:green">{{eventDetails.studentName}}</label>
     <label>Student Id</label><br>
-    <label>{{eventDetails.studendtId}}</label>
+    <label style="color:green">{{eventDetails.studendtId}}</label>
     <label>Title</label><br>
-    <label>{{eventDetails.title}}</label>
+    <label style="color:green">{{eventDetails.title}}</label>
     <label>Message</label><br>
-    <label>{{eventDetails.reason}}</label>
+    <label style="color:green">{{eventDetails.reason}}</label>
     <label>Date</label><br>
-    <label>{{eventDetails.startsAt | date:'M/d/yy'}}</label>
+    <label style="color:green">{{eventDetails.startsAt | date:'M/d/yy'}}</label>
     <label>Start Time</label><br>
-    <label>{{eventDetails.startsAt |  date:'h:mm a'}}</label>
+    <label style="color:green">{{eventDetails.startsAt |  date:'h:mm a'}}</label>
     <label>End Time</label><br>
-    <label>{{eventDetails.endsAt |  date:'h:mm a'}}</label>
+    <label style="color:green">{{eventDetails.endsAt |  date:'h:mm a'}}</label>
 </div>
 <div class="modal-footer loginpopUp_footer">
     <button class="btn btn-default loginpopUp_footerBtn" type="button" ng-click="$close()">Close</button>

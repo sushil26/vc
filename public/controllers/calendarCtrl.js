@@ -264,19 +264,18 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     $scope.evtData = event;
     console.log("$scope.evtData: "+$scope.evtData);
     console.log("$scope.evtData.id: "+$scope.evtData.id);
-    console.log("$scope.evtData.id: "+$scope.evtData[0].id);
-    console.log("$scope.evtData[0].studentName: "+$scope.evtData.studentName);
-    $('#eDetail').trigger('click');
-    // var eClicked = $uibModal.open({
-    //   scope: $scope,
-    //   templateUrl: '/html/templates/eventDetails.html',
-    //   windowClass: 'show',
-    //   backdropClass: 'show',
-    //   controller: function ($scope, $uibModalInstance) {
-    //     $scope.eventDetails = JSON.stringify(event);
-    //     console.log("$scope.eventDetails: "+$scope.eventDetails);
-    //   }
-    // })
+   
+    // $('#eDetail').trigger('click');
+    var eClicked = $uibModal.open({
+      scope: $scope,
+      templateUrl: '/html/templates/eventDetails.html',
+      windowClass: 'show',
+      backdropClass: 'show',
+      controller: function ($scope, $uibModalInstance) {
+        $scope.eventDetails = event;
+        console.log("$scope.eventDetails: "+$scope.eventDetails);
+      }
+    })
   };
 
   $scope.eventClicked = function (event) {
