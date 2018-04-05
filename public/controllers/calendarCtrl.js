@@ -259,20 +259,18 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
 
   vm.eventClicked = function (event) {
     alert("clicked: " + event);
-    console.log("cliecked: " + event);
+    console.log("cliecked: " + JSON.stringify(event));
   };
 
   $scope.eventClicked = function (event) {
     alert("clicked: " + event);
     console.log("cliecked: " + event);
-
-    //  alert.show('Clicked', event);
+   //  alert.show('Clicked', event);
   };
 
   vm.eventEdited = function (event) {
     alert("eventEdited");
     console.log("cliecked: " + event);
-
     // alert.show('Edited', event);
   };
 
