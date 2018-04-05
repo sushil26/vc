@@ -261,7 +261,8 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   vm.eventClicked = function (event) {
     alert("clicked: " + event);
     console.log("cliecked: " + JSON.stringify(event));
-    var eventClicked = $uibModal.open({
+    $scope.eventDetails = JSON.stringify(event);
+    var eClicked = $uibModal.open({
       scope: $scope,
       templateUrl: '/html/templates/eventDetails.html',
       windowClass: 'show',
