@@ -53,7 +53,7 @@ var server = app.listen('5000', function () {
 
 // var server = app.listen("8080");
    
-var io = require('socket.io')(server);
+var io = require('socket.io').listen(server);
     
     // server.timeout = 9999999999;
 mongoConfig.connectToServer(function(err) {
