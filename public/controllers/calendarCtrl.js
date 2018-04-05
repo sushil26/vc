@@ -264,8 +264,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     $scope.evtData = event;
     console.log("$scope.evtData: "+$scope.evtData);
     console.log("$scope.evtData.id: "+$scope.evtData.id);
-    console.log("$scope.evtData.id: "+$scope.evtData[0].id);
-    console.log("$scope.evtData[0].studentName: "+$scope.evtData.studentName);
+   
     // $('#eDetail').trigger('click');
     var eClicked = $uibModal.open({
       scope: $scope,
