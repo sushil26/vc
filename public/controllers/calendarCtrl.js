@@ -49,6 +49,60 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("<--deleteEvent");
   }
 
+  $scope.updateSave = function (s, e, sFiltered, eFiltered, id) {
+    console.log("updateSave-->");
+    console.log("s: " + s);
+    console.log("e: " + e);
+    var res = $filter('limitTo')(s, 2);
+
+    console.log("res: " + res);
+    console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
+    console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
+    $scope.title = title;
+    $scope.startD = s;
+    $scope.startFiltered = sFiltered;
+    $scope.endFiltered = eFiltered;
+    $scope.startDate = $filter('date')(s, "EEE MMM dd y");
+    $scope.endDate = $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'");
+    $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
+    $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
+
+    $scope.updatedEvent($scope.eventDetails.reason, id);
+    console.log("$scope.endDateRes: " + $scope.endDateRes);
+  }
+
+  $scope.updatedEvent = function(res, id){
+    console.log("updatedEvent-->");
+    var obj = {
+      "userId": localStorage.getItem("id"),
+      "reason": res,
+      "start": $scope.startD,
+      "end": $scope.endDateRes,
+      "startAt": $scope.startFiltered,
+      "endAt": $scope.endFiltered,
+   }
+   console.log("obj: "+JSON.stringify(obj));
+
+   var api = "https://vc4all.in/vc/eventUpdate"+ "/" + id;
+
+   httpFactory.post(api, obj).then(function (data) {
+    var checkStatus = httpFactory.dataValidation(data);
+    console.log("data--" + JSON.stringify(data.data));
+    if (checkStatus) {
+
+      console.log("data" + JSON.stringify(data.data))
+      // $window.location.href = $scope.propertyJson.R082;
+      alert("Successfully event updated" + data.data.message);
+    }
+    else {
+      alert("Event Send Failed");
+
+    }
+
+  })
+    console.log("<--updatedEvent");
+  }
+
   $scope.save = function (s, e, sFiltered, eFiltered, title) {
     console.log("s: " + s);
     console.log("e: " + e);

@@ -15,6 +15,19 @@ var transporter = nodemailer.createTransport({
         pass: 'iloveindia'
     }
 });
+module.exports.eventUpdate= function (req, res) {
+    console.log("eventUpdate-->");
+    console.log("req.params.id: "+req.params.id);
+    if(general.emptyCheck(req.params.id)){
+        var id = {
+            "userId": req.params.id
+        }
+    }
+    else{
+
+    }
+    console.log("<--eventUpdate");
+}
 module.exports.eventSend = function (req, res) {
     console.log("eventSend-->");
     var responseData;
