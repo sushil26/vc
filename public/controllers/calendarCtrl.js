@@ -51,6 +51,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.updateSave = function (s, e, sFiltered, eFiltered, id, msg) {
     console.log("updateSave-->");
+    console.log("_id: "+id);
     console.log("s: " + s);
     console.log("e: " + e);
     var res = $filter('limitTo')(s, 2);
@@ -73,8 +74,9 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.updatedEvent = function(res, id){
     console.log("updatedEvent-->");
+    console.log("id: "+id);
     var obj = {
-      "userId": localStorage.getItem("id"),
+      "_id": id,
       "reason": res,
       "start": $scope.startD,
       "end": $scope.endDateRes,
