@@ -131,7 +131,7 @@
                 </a>
               </td>
               <td>
-                <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt, event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.title)">
+                <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt| date:'M/d/yy',event.startsAt| date:'h:mm a',event.endAt| date:'h:mm a', event.startsAt, event.endsAt, event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.title)">
                   Save
                 </button>
                 <!-- <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">

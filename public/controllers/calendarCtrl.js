@@ -51,7 +51,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.updateSave = function (s, e, sFiltered, eFiltered, id, msg, email, url) {
     console.log("updateSave-->");
-    console.log("_id: "+id);
+    console.log("_id: " + id);
     console.log("s: " + s);
     console.log("e: " + e);
     var res = $filter('limitTo')(s, 2);
@@ -59,7 +59,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("res: " + res);
     console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
     console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
-   
+
     $scope.startD = s;
     $scope.startFiltered = sFiltered;
     $scope.endFiltered = eFiltered;
@@ -72,9 +72,9 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
 
-  $scope.updatedEvent = function(res, id, email, url){
+  $scope.updatedEvent = function (res, id, email, url) {
     console.log("updatedEvent-->");
-    console.log("id: "+id);
+    console.log("id: " + id);
     var obj = {
       "_id": id,
       "reason": res,
@@ -84,30 +84,30 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       "endAt": $scope.endFiltered,
       "email": email,
       "url": url
-   }
-   console.log("obj: "+JSON.stringify(obj));
-
-   var api = "https://vc4all.in/vc/eventUpdate"+ "/" + id;
-
-   httpFactory.post(api, obj).then(function (data) {
-    var checkStatus = httpFactory.dataValidation(data);
-    console.log("data--" + JSON.stringify(data.data));
-    if (checkStatus) {
-
-      console.log("data" + JSON.stringify(data.data))
-      // $window.location.href = $scope.propertyJson.R082;
-      alert("Successfully event updated" + data.data.message);
     }
-    else {
-      alert("Event Send Failed");
+    console.log("obj: " + JSON.stringify(obj));
 
-    }
+    var api = "https://vc4all.in/vc/eventUpdate" + "/" + id;
 
-  })
+    httpFactory.post(api, obj).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+
+        console.log("data" + JSON.stringify(data.data))
+        // $window.location.href = $scope.propertyJson.R082;
+        alert("Successfully event updated" + data.data.message);
+      }
+      else {
+        alert("Event Send Failed");
+
+      }
+
+    })
     console.log("<--updatedEvent");
   }
 
-  $scope.save = function (s, e, sFiltered, eFiltered, title) {
+  $scope.save = function (date, sd, ed, s, e, sFiltered, eFiltered, title) {
     console.log("s: " + s);
     console.log("e: " + e);
     var res = $filter('limitTo')(s, 2);
@@ -116,7 +116,10 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
     console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
     $scope.title = title;
-    $scope.startD = s;
+    $scope.date = date,
+      $scope.sd = sd,
+      $scope.ed = ed,
+      $scope.startD = s;
     $scope.startFiltered = sFiltered;
     $scope.endFiltered = eFiltered;
     $scope.startDate = $filter('date')(s, "EEE MMM dd y");
@@ -125,8 +128,9 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
 
-   console.log("$scope.urlDate: " + $scope.urlDate);
-   console.log("$scope.endDate: " + $scope.endDate);
+    console.log("$scope.endDate: " + $scope.endDate);
+    console.log("$scope.urlDate: " + $scope.urlDate);
+    console.log("$scope.endDate: " + $scope.endDate);
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
   $scope.eventSend = function (res, name, id, primColor) {
@@ -167,7 +171,10 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
           "startAt": $scope.startFiltered,
           "endAt": $scope.endFiltered, /* ###Note: have work and this is unwanted */
           "primColor": primColor,
-          "url": url
+          "url": url,
+          "date": $scope.date,
+          "sd": $scope.sd,
+          "ed": $scope.ed
 
         }
         console.log("obj: " + JSON.stringify(obj));
@@ -236,7 +243,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
             "studendtId": $scope.eventData[x].studId,
             "title": $scope.eventData[x].title,
             "reason": $scope.eventData[x].reason,
-            "email":  $scope.eventData[x].email
+            "email": $scope.eventData[x].email
           }
           console.log(" obj" + JSON.stringify(obj))
           vm.events.push(obj);
@@ -261,8 +268,8 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
     onClick: function (args) {
       alert('Edited', args.calendarEvent);
-      console.log("args.calendarEvent: "+args.calendarEvent);
-      console.log("JSON args.calendarEvent: "+JSON.stringify(args.calendarEvent));
+      console.log("args.calendarEvent: " + args.calendarEvent);
+      console.log("JSON args.calendarEvent: " + JSON.stringify(args.calendarEvent));
       var eClicked = $uibModal.open({
         scope: $scope,
         templateUrl: '/html/templates/eventDetails_edit.html',
@@ -336,7 +343,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.eventDetailClick = function (index) {
     console.log("eventDetailClick--> ");
-  var evtData = vm.events[index];
+    var evtData = vm.events[index];
     console.log(" $scope.evtData: " + $scope.evtData);
     var eClicked = $uibModal.open({
       scope: $scope,
