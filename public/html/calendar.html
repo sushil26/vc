@@ -130,9 +130,9 @@
                   </button>
                 </a>
               </td>
-              <td> 
+              <td>
                 <button ng-if="!event.url" class="btn btn-primary" style="width: 80px;" data-target="#event" data-toggle="modal" ng-click="save(event.startsAt, event.endsAt, event.startsAt | date:'M/d/yy h:mm a', event.endsAt | date:'M/d/yy h:mm a', event.title)">
-                Save
+                  Save
                 </button>
                 <!-- <button class="btn btn-danger"  style="width: 70px;"ng-click="vm.events.splice($index, 1)">
                 Delete
@@ -141,7 +141,7 @@
                   Delete
                 </button>
                 <button data-target="#event" id="crdbuttn" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"
-                  ng-click="login()">Login</button>
+                  ng-click="login()">Event</button>
                 <div class="modal fade" id="event" role="dialog">
                   <div class="modal-dialog">
                     <center>
@@ -164,7 +164,7 @@
                         <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 10px;">
                           <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(eventReason,studName, studId, event.color.primary)"
                             data-dismiss="modal">Submit</button>
-                            <!-- <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(event.startsAt, event.startsAt | date:'M/d/yy h:mm a')"
+                          <!-- <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="eventSend(event.startsAt, event.startsAt | date:'M/d/yy h:mm a')"
                             data-dismiss="modal">Submit</button> -->
 
                         </div>
@@ -177,7 +177,42 @@
           </tbody>
 
         </table>
-
+        <!-- ##### Start Event Detail  ##### -->
+        <button data-target="#eventDet" id="eDetail" style="display:none" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+          >Event</button>
+        <div class="modal fade" id="eventDet" role="dialog">
+          <div class="modal-dialog">
+            <center>
+              <!-- Modal content-->
+              <div class="modal-content" style="color:#777;max-width:350px;">
+                <div class="modal-header" style="background-color: gold;">
+                  <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                  <h4 class="modal-title">Event Details</h4>
+                </div>
+                <div class="modal-body">
+                  <label>Student Name</label><br>
+                  <label>{{evtData.studentName}}</label>
+                  <label>Student Id</label><br>
+                  <label>{{evtData.studendtId}}</label>
+                  <label>Title</label><br>
+                  <label>{{evtData.title}}</label>
+                  <label>Message</label><br>
+                  <label>{{evtData.reason}}</label>
+                  <label>Date</label><br>
+                  <label>{{evtData.startsAt | date:'M/d/yy'}}</label>
+                  <label>Start Time</label><br>
+                  <label>{{evtData.startsAt |  date:'h:mm a'}}</label>
+                  <label>End Time</label><br>
+                  <label>{{evtData.endsAt |  date:'h:mm a'}}</label>
+                </div>
+                <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;padding: 10px;">
+                  <button type="button" class="close" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </center>
+          </div>
+        </div>
+        <!-- ##### End Event Detail  ##### -->
       </div>
     </div>
 </main>

@@ -259,19 +259,22 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   };
 
   vm.eventClicked = function (event) {
-    alert("clicked: " + event);
+    // alert("clicked: " + event);
     console.log("cliecked: " + JSON.stringify(event));
-    $scope.eventDetails = JSON.stringify(event);
-    var eClicked = $uibModal.open({
-      scope: $scope,
-      templateUrl: '/html/templates/eventDetails.html',
-      windowClass: 'show',
-      backdropClass: 'show',
-      controller: function ($scope, $uibModalInstance) {
-        $scope.eventDetails = JSON.stringify(event);
-        console.log("$scope.eventDetails: "+$scope.eventDetails);
-      }
-    })
+    $scope.evtData = JSON.stringify(event);
+    console.log("$scope.evtData: "+$scope.evtData);
+    console.log("$scope.evtData[0].studentName: "+$scope.evtData.studentName);
+    $('#eDetail').trigger('click');
+    // var eClicked = $uibModal.open({
+    //   scope: $scope,
+    //   templateUrl: '/html/templates/eventDetails.html',
+    //   windowClass: 'show',
+    //   backdropClass: 'show',
+    //   controller: function ($scope, $uibModalInstance) {
+    //     $scope.eventDetails = JSON.stringify(event);
+    //     console.log("$scope.eventDetails: "+$scope.eventDetails);
+    //   }
+    // })
   };
 
   $scope.eventClicked = function (event) {
