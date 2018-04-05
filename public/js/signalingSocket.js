@@ -22,7 +22,7 @@ var shareScreen = null;
 var sessionHeader = null;
 var peerStream = null;
 
-signaling_socket = io('ws://localhost:5000', {transports: ['websocket']});
+signaling_socket = io('ws://localhost', {transports: ['websocket']});
 
 var userName;
 var USE_AUDIO = true;
