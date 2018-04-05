@@ -8,10 +8,11 @@ var nodemailer = require('nodemailer');
 
 
 var transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: '_autodiscover',
+    host:'smtpout.asia.secureserver.net',
     auth: {
-        user: 'logeswari.careator@gmail.com',
-        pass: 'iloveindia'
+        user: 'info@vc4all.in',
+        pass: 'ctpl@123'
     }
 });
 
