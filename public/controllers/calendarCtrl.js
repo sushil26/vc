@@ -206,7 +206,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
         windowClass: 'show',
         backdropClass: 'show',
         controller: function ($scope, $uibModalInstance) {
-          $scope.eventDetails = evtData;
+          $scope.eventDetails = args.calendarEvent;
           console.log("$scope.eventDetails: " + $scope.eventDetails);
         }
       })
