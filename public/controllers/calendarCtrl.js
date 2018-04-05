@@ -327,7 +327,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   vm.addEvent = function () {
     console.log("addEvent-->");
     vm.events.splice(0, 0, {
-      // title: 'New event',
+      title: 'New event',
       startsAt: moment().startOf('day').toDate(),
       endsAt: moment().endOf('day').toDate(),
       color: calendarConfig.colorTypes.important,
