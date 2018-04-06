@@ -5,7 +5,7 @@ var util = require('util');
 var bodyParser = require('body-parser');
 var ObjectId = require('mongodb').ObjectID;
 var nodemailer = require('nodemailer');
-
+// var randomstring = require("randomstring");
 
 var transporter = nodemailer.createTransport({
     service: 'Godaddy',
@@ -13,15 +13,13 @@ var transporter = nodemailer.createTransport({
     secureConnection: true,
     port: 465,
     auth: {
-        user:'info@vc4all.in',
-        pass:'cptl@123'
+        user: 'info@vc4all.in',
+        pass: 'cptl@123'
     },
-    tls:{
+    tls: {
         rejectUnauthorized: false
     }
 });
-
-// var randomstring = require("randomstring");
 
 module.exports.register4VC = function (req, res) {
     console.log("Regisyer==>");
@@ -341,11 +339,11 @@ module.exports.emailInvite = function (req, res) {
 module.exports.sessionCreate = function (req, res) {
     console.log("sessionCreate-->");
     var responseData;
-    console.log("req.body.url: "+req.body.url);
+    console.log("req.body.url: " + req.body.url);
     if (general.emptyCheck(req.body.url)) {
-       var data = {
-           "url":req.body.url
-       }
+        var data = {
+            "url": req.body.url
+        }
         responseData = {
             "status": true,
             "message": "get url sucessfully",
@@ -363,4 +361,45 @@ module.exports.sessionCreate = function (req, res) {
 
     }
     console.log("<--sessionCreate");
+}
+
+module.exports.teacherInsert = function (req, res) {
+    console.log("teacherInsert-->");
+    var responseData;
+    var userData = {
+        "schoolName": req.body.schoolName,
+        "teacherId": req.body.teacherId,
+        "teacherName": req.body.teacherName,
+        "teacherEmail": req.body.teacherEmail,
+        "mobileNum": req.body.mobileNum,
+        "css": req.body.css,
+        "pswd": req.body.pswd,
+        "status": "inactive",
+        "loginType": "teacher"
+    }
+    console.log("<--teacherInsert");
+
+    console.log("userData: " + JSON.stringify(userData));
+    user.insertOne(userData, function (err, data) {
+        console.log("data: " + JSON.stringify(data));
+        if (err) {
+
+            responseData = {
+                "status": false,
+                "message": "Failed to Insert",
+                "data": data
+            }
+            res.status(400).send(responseData);
+        }
+        else {
+            responseData = {
+                "status": true,
+                "errorCode": 200,
+                "message": "Insert Successfull",
+                "data": userData
+            }
+            res.status(200).send(responseData);
+        }
+    })
+
 }
