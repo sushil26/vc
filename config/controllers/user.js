@@ -8,13 +8,10 @@ var nodemailer = require('nodemailer');
 // var randomstring = require("randomstring");
 
 var transporter = nodemailer.createTransport({
-    service: 'Godaddy',
-    host: "smtpout.asia.secureserver.net",  
-    secureConnection: true,
-    port: 465,
+    service: 'Gmail',
     auth: {
-        user: 'info@vc4all.in',
-        pass: 'cptl@123'
+        user: 'logeswari.careator@gmail.com',
+        pass: 'iloveindia'
     },
     tls: {
         rejectUnauthorized: false
