@@ -18,4 +18,9 @@ var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 
         templateUrl: '/html/userAuthentication.html',
         controller: 'userAuthCtrl'
       })
+      .state('teacherInsert', {
+        url: '/teacherI',
+        templateUrl: '/html/teacherDataInsert.html',
+        controller: 'teacherInsertCtrl'
+      })
   });
