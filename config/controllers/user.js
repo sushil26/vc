@@ -377,8 +377,7 @@ module.exports.teacherInsert = function (req, res) {
         "status": "inactive",
         "loginType": "teacher"
     }
-    console.log("<--teacherInsert");
-
+   
     console.log("userData: " + JSON.stringify(userData));
     user.insertOne(userData, function (err, data) {
         console.log("data: " + JSON.stringify(data));
@@ -401,5 +400,49 @@ module.exports.teacherInsert = function (req, res) {
             res.status(200).send(responseData);
         }
     })
+
+    console.log("<--teacherInsert");
+}
+
+module.exports.studentInsert = function (req, res) {
+    console.log("studentInsert-->");
+    var responseData;
+    var userData = {
+        "schoolName": req.body.schoolName,
+        "studId": req.body.studId,
+        "studName": req.body.studName,
+        "parentName": req.body.parentName,
+        "parentEmail": req.body.parentEmail,
+        "mobileNum": req.body.mobileNum,
+        "css": req.body.css,
+        "pswd": req.body.pswd,
+        "status": "inactive",
+        "loginType": "studParent"
+    }
+ 
+    console.log("userData: " + JSON.stringify(userData));
+    user.insertOne(userData, function (err, data) {
+        console.log("data: " + JSON.stringify(data));
+        if (err) {
+
+            responseData = {
+                "status": false,
+                "message": "Failed to Insert",
+                "data": data
+            }
+            res.status(400).send(responseData);
+        }
+        else {
+            responseData = {
+                "status": true,
+                "errorCode": 200,
+                "message": "Insert Successfull",
+                "data": userData
+            }
+            res.status(200).send(responseData);
+        }
+    })
+
+    console.log("<--studentInsert");
 
 }
