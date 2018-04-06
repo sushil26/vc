@@ -19,7 +19,7 @@
       <tbody>
         <tr ng-repeat="ud in userData">
           <td style="background-color:aliceblue;">{{$index+1}}.</td>
-          <td style="background-color:aliceblue;" ><a data-target="#teacherdtl" data-toggle="modal" style="text-shadow: 2px 2px 4px #000000;">{{ud.teacherName}}</a></td>
+          <td style="background-color:aliceblue;" ><a data-target="#teacherdtl" data-toggle="modal">{{ud.teacherName}}</a></td>
           <td style="background-color:aliceblue;">{{ud.teacherId}}</td>
           <td style="background-color:aliceblue;">{{ud.teacherEmail}}</td>
           <td style="background-color:aliceblue;">{{ud.mobileNum}}</td>
@@ -39,39 +39,42 @@
     </table>
     <div class="modal fade" id="teacherdtl" role="dialog">
         <div class="modal-dialog">
-          <center>
+        
             <!-- Modal content Login -->
             <div class="modal-content" style="
                   max-width: 350px;
                   background: #00000075; color:#777; border: 0px;">
               <div class="modal-header" style="background-color: darkturquoise;     border-bottom: 0px;">
-                <h4 class="modal-title" style="margin-left: 2px;">Login</h4>
+                <h4 class="modal-title" style="margin-left: 2px;">Details</h4>
                 <button class="btn-default fa fa-close" style="margin-top: 2px;    border-color: white;
                 border-radius: 25%;" aria-hidden="true" type="reset" data-dismiss="modal"></button>
               </div>
               <div class="modal-body">
-                <input style="
-                        background:  #ddd;
-                        border-radius: inherit;
-                        height: 50px;
-                        border: #ddd;" type="email" class="form-control" placeholder="Email" id="crdEmail">
-                <br>
-                <input style="
-                        background:  #ddd;
-                        border-radius: inherit;
-                        height: 50px;
-                        border: #ddd;" type="password" id="crdPswd" class="form-control" placeholder="Password">
+                <table>
+                  <tr>
+                    <td>Name</td>
+                    <td>Sushil</td>
+                  </tr> <tr>
+                      <td>Email</td>
+                      <td>Sushil</td>
+                    </tr> <tr>
+                        <td>Name</td>
+                        <td>Sushil</td>
+                      </tr> <tr>
+                          <td>Name</td>
+                          <td>Sushil</td>
+                        </tr> <tr>
+                            <td>Name</td>
+                            <td>Sushil</td>
+                          </tr> <tr>
+                              <td>Name</td>
+                              <td>Sushil</td>
+                            </tr>
+                </table>
+                
               </div>
-              <div class="modal-footer" style="border-top:0px; padding: 15px;">
-    
-                <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
-                  onclick="logVC()" data-dismiss="modal">Submit</button>
-              </div>
-              <p style="font-size:12px;" class="message">Not registered?
-                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#regVC">Register Here</a>
-              </p>
-            </div>
-          </center>
+             
+     
         </div>
       </div>
   </div>
