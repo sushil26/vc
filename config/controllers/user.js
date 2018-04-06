@@ -1,5 +1,7 @@
 var db = require('../dbConfig.js').getDb();
-var user = db.collection('user');
+var user = db.collection('user');/* ### Teacher collection  ### */
+var stud = db.collection('student');/* ### student collection  ### */
+
 var general = require('../general.js');
 var util = require('util');
 var bodyParser = require('body-parser');
@@ -418,7 +420,7 @@ module.exports.studentInsert = function (req, res) {
     }
  
     console.log("userData: " + JSON.stringify(userData));
-    user.insertOne(userData, function (err, data) {
+    stud.insertOne(userData, function (err, data) {
         console.log("data: " + JSON.stringify(data));
         if (err) {
 
