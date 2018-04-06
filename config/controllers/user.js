@@ -203,7 +203,36 @@ module.exports.getUserData = function (req, res) {
 
     console.log("<--getUserData");
 }
+module.exports.getStudData = function (req, res) {
+    console.log("getUserData-->");
+    var responseData;
+    stud.find().toArray(function (err, listOfUser) {
+        if (err) {
 
+            responseData = {
+                "status": false,
+                "message": "Failed to get Data",
+                "data": data
+            }
+            res.status(400).send(responseData);
+        }
+        else {
+            responseData = {
+                "status": true,
+                "message": "Successfull retrived data",
+                "data": listOfUser
+            }
+
+
+
+            res.status(200).send(responseData);
+        }
+
+    })
+
+
+    console.log("<--getUserData");
+}
 module.exports.updateUserStatus = function (req, res) {
     console.log("updateUserStatus-->");
     var responseData;
