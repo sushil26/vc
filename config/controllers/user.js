@@ -572,6 +572,7 @@ module.exports.teacherdetail = function (req, res) {
             "userId": req.params.id
         }
         user.find(id).toArray(function (err, data) {
+            console.log("data: "+JSON.stringify(data));
             if (err) {
     
                 responseData = {
