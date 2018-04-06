@@ -130,7 +130,7 @@ function sessionSet(data) {
             localStorage.setItem("id", data.data._id);
             localStorage.setItem("css", data.data.css);
         }
-        
+        console.log("localStorage.setItem(css)): ",+localStorage.getItem("css"));
         // Retrieve
         var info = localStorage.getItem("userData");
 
