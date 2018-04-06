@@ -20,8 +20,8 @@ var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 
       })
       .state('teacherInsert', {
         url: '/teacherI',
-        templateUrl: '/html/studentDataInsert.html',
-        controller: 'studentInsertCtrl'
+        templateUrl: '/html/teacherDataInsert.html',
+        controller: 'teacherInsertCtrl'
       })
       .state('studentInsert', {
         url: '/studentI',
