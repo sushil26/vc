@@ -1,6 +1,6 @@
 app.controller('studentInsertCtrl', function ($scope, $window, httpFactory) {
     console.log("studInsertCtrl==>");
-    console.log("$scope.parentN: "+$scope.parentN);
+    console.log("$scope.parentName: "+$scope.parentName);
 
     $scope.cs = [];
   
@@ -12,7 +12,7 @@ app.controller('studentInsertCtrl', function ($scope, $window, httpFactory) {
             "schoolName": $scope.schoolName,
             "studId": $scope.studId,
             "studName": $scope.studName,
-            "parentName" : $scope.parentN,
+            "parentName" : $scope.parentName,
             "parentEmail": $scope.parentEmail,
             "mobileNum": $scope.mobileNum,
             "css": $scope.css,
