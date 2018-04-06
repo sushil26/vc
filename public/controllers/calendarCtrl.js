@@ -9,22 +9,22 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   // }
   $scope.getTeacherData = function () {
     console.log("getTeacherData-->");
-    var id = localStorage.getItem("id");
+    // var id = localStorage.getItem("id");
     
-    var api = "https://vc4all.in/vc/teacherGet" + "/" + id;
-    //var api = "http://localhost:5000/vc/eventGet";
-    console.log("api: " + api);
-    httpFactory.get(api).then(function (data) {
-      var checkStatus = httpFactory.dataValidation(data);
-      console.log("data--" + JSON.stringify(data.data));
-      if (checkStatus) {
-        $scope.teacherData = data.data.data;
-        console.log("teacherData: " + JSON.stringify(teacherData));
-      }
-      else {
+    // var api = "https://vc4all.in/vc/teacherGet" + "/" + id;
+    // //var api = "http://localhost:5000/vc/eventGet";
+    // console.log("api: " + api);
+    // httpFactory.get(api).then(function (data) {
+    //   var checkStatus = httpFactory.dataValidation(data);
+    //   console.log("data--" + JSON.stringify(data.data));
+    //   if (checkStatus) {
+    //     $scope.teacherData = data.data.data;
+    //     console.log("teacherData: " + JSON.stringify(teacherData));
+    //   }
+    //   else {
 
-      }
-    })
+    //   }
+    // })
     console.log("<--getTeacherData");
   }
 
