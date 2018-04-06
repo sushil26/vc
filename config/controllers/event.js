@@ -1,5 +1,6 @@
 var db = require('../dbConfig.js').getDb();
 var event = db.collection('event');
+var user = db.collection('user');/* ### Teacher collection  ### */
 var general = require('../general.js');
 var ObjectId = require('mongodb').ObjectID;
 
@@ -244,4 +245,10 @@ module.exports.parentCredential = function (req, res) {
         res.status(400).send(responseData);
     }
     console.log("<--parentCredential");
+}
+
+module.exports.teacherdetail = function (req, res) {
+    console.log("teacherdetail-->");
+
+    console.log("<--teacherdetail");
 }
