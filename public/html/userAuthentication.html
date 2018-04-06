@@ -6,8 +6,10 @@
       <thead>
         <tr style="background: darkturquoise;">
           <th>Sr.no</th>
-          <th>Userame</th>
+          <th>Teacher Name</th>
+          <th>Teacher Id</th>
           <th>Email</th>
+          <th>Mobile Number</th>
           <th>Status</th>
           <th>Activation</th>
           <th>Delete</th>
@@ -17,8 +19,10 @@
       <tbody>
         <tr ng-repeat="ud in userData">
           <td style="background-color:aliceblue;">{{$index+1}}.</td>
-          <td style="background-color:aliceblue;">{{ud.userName}}</td>
-          <td style="background-color:aliceblue;">{{ud.email}}</td>
+          <td style="background-color:aliceblue;">{{ud.teacherName}}</td>
+          <td style="background-color:aliceblue;">{{ud.teacherId}}</td>
+          <td style="background-color:aliceblue;">{{ud.teacherEmail}}</td>
+          <td style="background-color:aliceblue;">{{ud.mobileNum}}</td>
           <td ng-if="ud.status=='active'" style="background-color:aliceblue;">{{ud.status}}</td>
           <td ng-if="ud.status=='inactive'" style="background-color:tomato;">{{ud.status}}</td>
           <td style="background-color:aliceblue;">
