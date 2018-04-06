@@ -128,7 +128,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
-                $scope.userData[index].status = status;
+                $scope.studData[index].status = status;
                 alert("Updated Status Successfully");
                
             }
@@ -156,7 +156,7 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
             if (checkStatus) {
                 // $scope.userData = data.data.data;
                 console.log(" obj" + JSON.stringify($scope.userData))
-                $scope.userData.splice(index, 1);
+                $scope.studData.splice(index, 1);
                 alert("Deleted User Successfully, This User can't login now");
             }
             else {
