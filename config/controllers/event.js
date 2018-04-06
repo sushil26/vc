@@ -1,6 +1,6 @@
 var db = require('../dbConfig.js').getDb();
 var event = db.collection('event');
-var user = db.collection('user');/* ### Teacher collection  ### */
+
 var general = require('../general.js');
 var ObjectId = require('mongodb').ObjectID;
 
