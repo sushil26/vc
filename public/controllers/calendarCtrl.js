@@ -7,6 +7,25 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
 
   // }
+  $scope.getTeacherData = function () {
+    console.log("getTeacherData-->");
+    var id = localStorage.getItem("id");
+    var api = "https://vc4all.in/vc/teacherDataGet" + "/" + id;
+    //var api = "http://localhost:5000/vc/eventGet";
+    console.log("api: " + api);
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.teacherData = data.data.data;
+        console.log("teacherData: " + JSON.stringify(teacherData));
+      }
+      else {
+
+      }
+    })
+    console.log("<--getTeacherData");
+  }
 
 
   if (localStorage.getItem("loginType") == 'admin') {
@@ -17,21 +36,8 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   else if (localStorage.getItem("loginType") == 'teacher') {
     document.getElementById('userAuth').style.display = "none";
     $scope.userLoginType = 'teacher';
-    var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/teacherDataGet" + "/" + id;
-    //var api = "http://localhost:5000/vc/eventGet";
+    $scope.getTeacherData();
 
-    httpFactory.get(api).then(function (data) {
-      var checkStatus = httpFactory.dataValidation(data);
-      console.log("data--" + JSON.stringify(data.data));
-      if (checkStatus) {
-        $scope.teacherData = data.data.data;
-        console.log("teacherData: "+JSON.stringify(teacherData));
-      }
-      else{
-
-      }
-    })
 
   }
   else {
@@ -235,7 +241,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("<--eventSend");
     // var url = document.getElementById('linkToShare').innerHTML;
   }
-  
+
   $scope.eventGet = function () {
     console.log("eventGet-->");
     var id = localStorage.getItem("id");
