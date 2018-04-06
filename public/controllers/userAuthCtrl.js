@@ -34,6 +34,31 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     }
   
     $scope.getUser();
+
+    $scope.getStudentList = function () {
+        console.log("getStudentList-->");
+        var api = "https://vc4all.in/vc/getStudData";
+        //var api = "http://localhost:5000/vc/getUserData";
+
+        httpFactory.get(api).then(function (data) {
+            var checkStatus = httpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                $scope.studData = data.data.data;
+                console.log("studData" + JSON.stringify($scope.studData))
+
+            }
+            else {
+                //alert("Event get Failed");
+
+            }
+
+        })
+        console.log("<--getStudentList");
+    }
+  
+    $scope.getStudentList();
+
     $scope.updateUserStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
         var api = "https://vc4all.in/vc/updateUserStatus";
