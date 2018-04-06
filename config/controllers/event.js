@@ -250,9 +250,7 @@ module.exports.parentCredential = function (req, res) {
 module.exports.teacherDataGet = function (req, res) {
     console.log("teacherDataGet-->");
     var responseData;
-    // var id ={
-    //     userId = req.params.id
-    // } 
+   
 if(general.emptyCheck(req.params.id)){
     var id = {
         "_id":  ObjectId(req.body.id)
