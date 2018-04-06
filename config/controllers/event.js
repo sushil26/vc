@@ -9,8 +9,8 @@ var nodemailer = require('nodemailer');
 
 
 var transporter = nodemailer.createTransport({
-    service: 'vc4all',
- 
+    service: 'vc4all.in',
+    host:'smtp.asia.secureserver.net',
     auth: {
         user: 'info@vc4all.in',
         pass: 'ctpl@123'
