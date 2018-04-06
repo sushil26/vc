@@ -1,6 +1,5 @@
 var db = require('../dbConfig.js').getDb();
 var event = db.collection('event');
-
 var general = require('../general.js');
 var ObjectId = require('mongodb').ObjectID;
 
@@ -246,4 +245,3 @@ module.exports.parentCredential = function (req, res) {
     }
     console.log("<--parentCredential");
 }
-
