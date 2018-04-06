@@ -10,6 +10,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   $scope.getTeacherData = function () {
     console.log("getTeacherData-->");
     var id = localStorage.getItem("id");
+    
     var api = "https://vc4all.in/vc/teacherGet" + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
     console.log("api: " + api);

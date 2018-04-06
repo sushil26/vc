@@ -251,42 +251,42 @@ module.exports.teacherGet = function (req, res) {
     console.log("teacherDataGet-->");
     var responseData;
 
-    if (general.emptyCheck(req.params.id)) {
-        var id = {
-            "_id": ObjectId(req.params.id)
-        }
-        teacher.find(id).toArray(function (err, userData) {
-            if (err) {
+    // if (general.emptyCheck(req.params.id)) {
+    //     var id = {
+    //         "_id": ObjectId(req.params.id)
+    //     }
+    //     teacher.find(id).toArray(function (err, userData) {
+    //         if (err) {
 
-                responseData = {
-                    "status": false,
-                    "message": "Failed to get Data",
-                    "data": data
-                }
-                res.status(400).send(responseData);
-            }
-            else {
-                responseData = {
-                    "status": true,
-                    "message": "Got Data Successfull",
-                    "data": userData
-                }
+    //             responseData = {
+    //                 "status": false,
+    //                 "message": "Failed to get Data",
+    //                 "data": data
+    //             }
+    //             res.status(400).send(responseData);
+    //         }
+    //         else {
+    //             responseData = {
+    //                 "status": true,
+    //                 "message": "Got Data Successfull",
+    //                 "data": userData
+    //             }
 
-                res.status(200).send(responseData);
-            }
+    //             res.status(200).send(responseData);
+    //         }
 
-        })
+    //     })
 
-    }
-    else {
-        console.log("Epty value found");
-        responseData = {
-            "status": false,
-            "message": "there is no userId to find",
+    // }
+    // else {
+    //     console.log("Epty value found");
+    //     responseData = {
+    //         "status": false,
+    //         "message": "there is no userId to find",
 
-        }
-        res.status(400).send(responseData);
-    }
+    //     }
+    //     res.status(400).send(responseData);
+    // }
 
     console.log("<--teacherDataGet");
 }
