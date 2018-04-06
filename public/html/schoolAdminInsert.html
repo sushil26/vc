@@ -1,0 +1,25 @@
+<div style="margin-top: 85px;" ng-controller="teacherInsertCtrl">
+    <div class="container">
+        <h2>Teacher Data Insert</h2>
+  
+
+    <form>
+        
+        <input type="text" ng-model="schoolName" placeholder="Enter school Name"><br><br>
+        <input type="text" ng-model="teacherId" placeholder="Enter teacher id"><br><br>
+        <input type="text" ng-model="teacherName" placeholder="Enter Teacher Name"><br><br>
+        <input type="email" ng-model="teacherEmail" placeholder="Enter Teacher Email"><br><br>
+        <input type="text" ng-model="mobileNum" placeholder="Enter Teacher mobile number"><br><br>
+        <div ng-repeat="x in css">
+            <input type="text" ng-model="x.class" placeholder="Enter Class"><br><br>
+            <input type="text" ng-model="x.section" placeholder="Enter Section"><br><br>
+            <input type="text" ng-model="x.subject" placeholder="Enter Subject"><br><br>
+        </div>
+        <button ng-click="addSCC()">Add Class-Section-Subject</button><br><br>
+       
+        <input type="password" ng-model="pswd" placeholder="Enter password"><br><br>
+
+        <button ng-click="saveTeacher()">Submit</button>
+    </form>
+</div>
+</div>
