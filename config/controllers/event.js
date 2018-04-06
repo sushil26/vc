@@ -1,5 +1,6 @@
 var db = require('../dbConfig.js').getDb();
 var event = db.collection('event');
+var teacher = db.collection('user');
 var general = require('../general.js');
 var ObjectId = require('mongodb').ObjectID;
 
@@ -244,4 +245,50 @@ module.exports.parentCredential = function (req, res) {
         res.status(400).send(responseData);
     }
     console.log("<--parentCredential");
+}
+
+module.exports.teacherDataGet = function (req, res) {
+    console.log("teacherDataGet-->");
+    var responseData;
+    // var id ={
+    //     userId = req.params.id
+    // } 
+if(general.emptyCheck(req.params.id)){
+    var id = {
+        "_id":  ObjectId(req.body.id)
+    }
+    teacher.find(id).toArray(function (err, userData) {
+        if (err) {
+
+            responseData = {
+                "status": false,
+                "message": "Failed to get Data",
+                "data": data
+            }
+            res.status(400).send(responseData);
+        }
+        else {
+            responseData = {
+                "status": true,
+                "message": "Got Data Successfull",
+                "data": userData
+            }
+
+           res.status(200).send(responseData);
+        }
+
+    })
+
+}
+else{
+    console.log("Epty value found");
+    responseData = {
+        "status": false,
+        "message": "there is no userId to find",
+       
+    }
+    res.status(400).send(responseData);
+}
+
+console.log("<--teacherDataGet");
 }

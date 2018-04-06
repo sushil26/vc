@@ -17,8 +17,22 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   else if (localStorage.getItem("loginType") == 'teacher') {
     document.getElementById('userAuth').style.display = "none";
     $scope.userLoginType = 'teacher';
-    $scope.css = localStorage.getItem("css");
-    console.log("css: "+JSON.stringify(localStorage.getItem("loginType")));
+    $scope.UserId = localStorage.getItem("id");
+    var api = "https://vc4all.in/vc/teacherDataGet" + "/" + id;
+    //var api = "http://localhost:5000/vc/eventGet";
+
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.teacherData = data.data.data;
+        console.log("teacherData: "+JSON.stringify(teacherData));
+      }
+      else{
+
+      }
+    })
+
   }
   else {
     window.location.href = "https://vc4all.in";
