@@ -8,6 +8,7 @@ module.exports = function (app) {
     app.get('/vc/getUserData', user.getUserData);
     app.get('/vc/getStudData', user.getStudData);
     app.post('/vc/updateUserStatus',user.updateUserStatus);
+    app.post('/vc/updateStudStatus',user.updateStudStatus);
     app.post('/vc/deleteUser', user.deleteUser);
     app.post('/vc/emailInvite', user.emailInvite);
     app.post('/vc/sessionCreate', user.sessionCreate);
