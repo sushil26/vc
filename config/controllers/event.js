@@ -247,8 +247,3 @@ module.exports.parentCredential = function (req, res) {
     console.log("<--parentCredential");
 }
 
-module.exports.teacherdetail = function (req, res) {
-    console.log("teacherdetail-->");
-
-    console.log("<--teacherdetail");
-}

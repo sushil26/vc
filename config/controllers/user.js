@@ -564,3 +564,9 @@ module.exports.studentInsert = function (req, res) {
     console.log("<--studentInsert");
 
 }
+
+module.exports.teacherdetail = function (req, res) {
+    console.log("teacherdetail-->");
+
+    console.log("<--teacherdetail");
+}
