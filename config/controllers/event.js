@@ -9,13 +9,13 @@ var nodemailer = require('nodemailer');
 
 
 var transporter = nodemailer.createTransport({
-    service: 'Godaddy',
-    host: "smtpout.vc4all.in",  
-    secureConnection: true,
-    port: 465,
+    service: 'Gmail',
     auth: {
-        user:'info@vc4all.in',
-        pass:'cptl@123'
+        user: 'logeswari.careator@gmail.com',
+        pass: 'iloveindia'
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 });
 module.exports.eventSend = function (req, res) {
