@@ -112,7 +112,7 @@ module.exports.login4VC = function (req, res) {
         else {
             user.find({ 'teacherEmail': req.body.email }).toArray(function (err, data) {
                 if (data.length > 0) {
-                    if (data[0].password == req.body.password) {
+                    if (data[0].password == req.body.pswd) {
                         if (data[0].status == 'active') {
                             console.log("Successfully Logged in");
                             responseData = {
