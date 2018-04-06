@@ -1,6 +1,6 @@
 <div style="margin-top: 85px;" ng-controller="userAuthCtrl">
   <div class="container" ng-if="userLoginType=='admin'">
-    <h2>Teacher List</h2>
+    <h2>Teacher's List</h2>
     <table class="table table-bordered">
 
       <thead>
@@ -20,17 +20,9 @@
         <tr ng-repeat="ud in userData">
           <td style="background-color:aliceblue;">{{$index+1}}.</td>
           <td style="background-color:aliceblue;">
-<<<<<<< HEAD
-       
-              <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">{{ud.teacherName}}</button>
-                
-                  <!-- Modal -->
-         </td>
-=======
             <button type="button" class="btn-info " data-toggle="modal" data-target="#myModal">{{ud.teacherName}}</button>
             <!-- Modal -->
           </td>
->>>>>>> 1ce8c402229855c0033d3578f494d50f546073d8
           <td style="background-color:aliceblue;">{{ud.teacherId}}</td>
           <td style="background-color:aliceblue;">{{ud.teacherEmail}}</td>
           <td style="background-color:aliceblue;">{{ud.mobileNum}}</td>
