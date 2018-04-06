@@ -17,7 +17,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   else if (localStorage.getItem("loginType") == 'teacher') {
     document.getElementById('userAuth').style.display = "none";
     $scope.userLoginType = 'teacher';
-    $scope.UserId = localStorage.getItem("id");
+    var id = localStorage.getItem("id");
     var api = "https://vc4all.in/vc/teacherDataGet" + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
 
