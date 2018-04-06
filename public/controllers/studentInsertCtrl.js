@@ -13,7 +13,7 @@ app.controller('studentInsertCtrl', function ($scope, $window, httpFactory) {
             "studName": $scope.studName,
             "parentName" : $scope.parentName,
             "parentEmail": $scope.parentEmail,
-            "mobileNum": mobileNum,
+            "mobileNum": $scope.mobileNum,
             "css": $scope.css,
             "pswd": $scope.pswd
         }
