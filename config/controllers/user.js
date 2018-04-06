@@ -15,6 +15,9 @@ var transporter = nodemailer.createTransport({
     auth: {
         user:'info@vc4all.in',
         pass:'cptl@123'
+    },
+    tls:{
+        rejectUnauthorized: false
     }
 });
 
