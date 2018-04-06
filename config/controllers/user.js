@@ -84,7 +84,6 @@ module.exports.login4VC = function (req, res) {
     var responseData;
     if (general.emptyCheck(req.body.email) && general.emptyCheck(req.body.password)) {
 
-
         if (req.body.email == 'admin123@gmail.com') {
             var adminData;
             if (req.body.password == 'admin123') {
@@ -111,7 +110,7 @@ module.exports.login4VC = function (req, res) {
 
         }
         else {
-            user.find({ 'email': req.body.email }).toArray(function (err, data) {
+            user.find({ 'teacherEmail': req.body.email }).toArray(function (err, data) {
                 if (data.length > 0) {
                     if (data[0].password == req.body.password) {
                         if (data[0].status == 'active') {
