@@ -3,7 +3,7 @@ app.controller('teacherInsertCtrl', function ($scope, $window, httpFactory) {
 
     $scope.class = ["3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
     $scope.section = ["A", "B", "C", "D", "E"];
-    $scope.css = [{ "class": "", "section": "", "subject": "" }];
+    $scope.css = [];
     $scope.addSCC = function () {
         console.log("addSCC-->");
 
@@ -44,7 +44,7 @@ app.controller('teacherInsertCtrl', function ($scope, $window, httpFactory) {
             }
   
           })
-          
+
         console.log("<--saveTeacher");
     }
 
