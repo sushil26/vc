@@ -1,6 +1,5 @@
 var db = require('../dbConfig.js').getDb();
 var event = db.collection('event');
-var teacher = db.collection('user');
 var general = require('../general.js');
 var ObjectId = require('mongodb').ObjectID;
 
@@ -22,10 +21,10 @@ var transporter = nodemailer.createTransport({
 module.exports.eventSend = function (req, res) {
     console.log("eventSend-->");
     var responseData;
-    console.log("req.body.studName: " + req.body.studName);
-    console.log("req.body.studId: " + req.body.studId);
-    console.log("req.body.reason: " + req.body.reason);
-    console.log("req.body.email: " + req.body.email);
+    console.log("req.body.studName: "+req.body.studName);
+    console.log("req.body.studId: "+req.body.studId);
+    console.log("req.body.reason: "+req.body.reason);
+    console.log("req.body.email: "+req.body.email);
     if (general.emptyCheck(req.body.studName) && general.emptyCheck(req.body.studId) && general.emptyCheck(req.body.reason) && general.emptyCheck(req.body.email)) {
         var password = 'abc';
         var userData = {
@@ -121,44 +120,44 @@ module.exports.eventGet = function (req, res) {
     // var id ={
     //     userId = req.params.id
     // } 
-    if (general.emptyCheck(req.params.id)) {
-        var id = {
-            "userId": req.params.id
-        }
-        event.find(id).toArray(function (err, listOfevents) {
-            if (err) {
+if(general.emptyCheck(req.params.id)){
+    var id = {
+        "userId": req.params.id
+    }
+    event.find(id).toArray(function (err, listOfevents) {
+        if (err) {
 
-                responseData = {
-                    "status": false,
-                    "message": "Failed to get Data",
-                    "data": data
-                }
-                res.status(400).send(responseData);
+            responseData = {
+                "status": false,
+                "message": "Failed to get Data",
+                "data": data
             }
-            else {
-                responseData = {
-                    "status": true,
-                    "message": "Registeration Successfull",
-                    "data": listOfevents
-                }
-
-
-
-                res.status(200).send(responseData);
+            res.status(400).send(responseData);
+        }
+        else {
+            responseData = {
+                "status": true,
+                "message": "Registeration Successfull",
+                "data": listOfevents
             }
 
-        })
 
-    }
-    else {
-        console.log("Epty value found");
-        responseData = {
-            "status": false,
-            "message": "there is no userId to find",
 
+            res.status(200).send(responseData);
         }
-        res.status(400).send(responseData);
+
+    })
+
+}
+else{
+    console.log("Epty value found");
+    responseData = {
+        "status": false,
+        "message": "there is no userId to find",
+       
     }
+    res.status(400).send(responseData);
+}
 
 }
 
@@ -198,12 +197,12 @@ module.exports.parentCredential = function (req, res) {
     console.log("parentCredential-->");
     var responseData;
     if (general.emptyCheck(req.body.url) && general.emptyCheck(req.body.pswd)) {
-
-        event.find({ 'url': req.body.url }).toArray(function (err, data) {
+        
+        event.find({'url':req.body.url}).toArray(function (err, data) {
             if (data.length > 0) {
-                console.log("data[0].password: " + data[0].password);
-                console.log("data[0].url: " + data[0].url);
-                console.log("req.body.pswd: " + req.body.pswd);
+                console.log("data[0].password: "+data[0].password);
+                console.log("data[0].url: "+data[0].url);
+                console.log("req.body.pswd: "+req.body.pswd);
                 if (data[0].password == req.body.pswd) {
                     console.log("Successfully Logged in");
                     responseData = {
@@ -213,7 +212,7 @@ module.exports.parentCredential = function (req, res) {
                     }
                     res.status(200).send(responseData);
                 }
-                else {
+                else{
                     console.log("Password is not matching");
                     responseData = {
                         "status": true,
@@ -224,7 +223,7 @@ module.exports.parentCredential = function (req, res) {
 
                 }
             }
-            else {
+            else{
                 responseData = {
                     "status": false,
                     "errorCode": "No Match",
@@ -245,48 +244,4 @@ module.exports.parentCredential = function (req, res) {
         res.status(400).send(responseData);
     }
     console.log("<--parentCredential");
-}
-
-module.exports.teacherGet = function (req, res) {
-    console.log("teacherDataGet-->");
-    var responseData;
-
-    // if (general.emptyCheck(req.params.id)) {
-    //     var id = {
-    //         "_id": ObjectId(req.params.id)
-    //     }
-    //     teacher.find(id).toArray(function (err, userData) {
-    //         if (err) {
-
-    //             responseData = {
-    //                 "status": false,
-    //                 "message": "Failed to get Data",
-    //                 "data": data
-    //             }
-    //             res.status(400).send(responseData);
-    //         }
-    //         else {
-    //             responseData = {
-    //                 "status": true,
-    //                 "message": "Got Data Successfull",
-    //                 "data": userData
-    //             }
-
-    //             res.status(200).send(responseData);
-    //         }
-
-    //     })
-
-    // }
-    // else {
-    //     console.log("Epty value found");
-    //     responseData = {
-    //         "status": false,
-    //         "message": "there is no userId to find",
-
-    //     }
-    //     res.status(400).send(responseData);
-    // }
-
-    console.log("<--teacherDataGet");
 }
