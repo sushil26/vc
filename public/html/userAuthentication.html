@@ -19,7 +19,7 @@
       <tbody>
         <tr ng-repeat="ud in userData">
           <td style="background-color:aliceblue;">{{$index+1}}.</td>
-          <td style="background-color:aliceblue;" data-target="#teacherdtl">{{ud.teacherName}}</td>
+          <td style="background-color:aliceblue;" ><a href="#" data-target="#teacherdtl" data-toggle="modal" style="text-shadow: 2px 2px 4px #000000;">{{ud.teacherName}}</a></td>
           <td style="background-color:aliceblue;">{{ud.teacherId}}</td>
           <td style="background-color:aliceblue;">{{ud.teacherEmail}}</td>
           <td style="background-color:aliceblue;">{{ud.mobileNum}}</td>
