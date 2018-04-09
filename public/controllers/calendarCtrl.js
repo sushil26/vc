@@ -7,17 +7,39 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
 
   // }
+  $scope.getTeacherData = function () {
+    console.log("getTeacherData-->");
+    var id = localStorage.getItem("id");
+    
+    var api = "https://vc4all.in/vc/teacherdetail" + "/" + id;
+    //var api = "http://localhost:5000/vc/eventGet";
+    console.log("api: " + api);
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.teacherData = data.data.data;
+        console.log("teacherData: " + JSON.stringify(teacherData));
+      }
+      else {
+
+      }
+    })
+    console.log("<--getTeacherData");
+  }
 
 
   if (localStorage.getItem("loginType") == 'admin') {
     console.log("loginType: " + localStorage.getItem("loginType"));
     document.getElementById('userAuth').style.display = "block";
     $scope.userLoginType = 'admin';
-
   }
   else if (localStorage.getItem("loginType") == 'teacher') {
     document.getElementById('userAuth').style.display = "none";
     $scope.userLoginType = 'teacher';
+    $scope.getTeacherData();
+
+
   }
   else {
     window.location.href = "https://vc4all.in";
@@ -136,6 +158,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("$scope.endDate: " + $scope.endDate);
     console.log("$scope.endDateRes: " + $scope.endDateRes);
   }
+
   $scope.eventSend = function (res, name, id, primColor) {
     //$scope.eventSend = function (a, b) {
     //alert("a: "+a+"b: "+b);
@@ -219,6 +242,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("<--eventSend");
     // var url = document.getElementById('linkToShare').innerHTML;
   }
+
   $scope.eventGet = function () {
     console.log("eventGet-->");
     var id = localStorage.getItem("id");

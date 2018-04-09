@@ -1,6 +1,7 @@
 <div style="margin-top: 85px;" ng-controller="userAuthCtrl">
   <div class="container" ng-if="userLoginType=='admin'">
     <h2>Teacher List</h2>
+    <!-- ##### Start the Teacher List ##### -->
     <table class="table table-bordered">
 
       <thead>
@@ -38,6 +39,8 @@
         </tr>
       </tbody>
     </table>
+    <!-- ##### Start the Teacher List ##### -->
+    
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
         <center>
@@ -76,6 +79,47 @@
       </div>
     </div>
 
+    <h2>Student List</h2>
+
+    <!-- ##### Start the Student List ##### -->
+    <table class="table table-bordered">
+
+      <thead>
+        <tr style="background: darkturquoise;">
+          <th>Sr.no</th>
+          <th>Student Name</th>
+          <th>Student Id</th>
+          <th>Parent Name</th>
+          <th>Parent Email</th>
+          <th>Status</th>
+          <th>Activation</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="sd in studData">
+          <td style="background-color:aliceblue;">{{$index+1}}.</td>
+          <td style="background-color:aliceblue;">
+            <button type="button" class="btn-info " data-toggle="modal" data-target="#myModal">{{sd.studName}}</button>
+            <!-- Modal -->
+          </td>
+          <td style="background-color:aliceblue;">{{sd.studId}}</td>
+          <td style="background-color:aliceblue;">{{sd.parentName}}</td>
+          <td style="background-color:aliceblue;">{{sd.parentEmail}}</td>
+          <td ng-if="sd.status=='active'" style="background-color:aliceblue;">{{sd.status}}</td>
+          <td ng-if="sd.status=='inactive'" style="background-color:tomato;">{{sd.status}}</td>
+          <td style="background-color:aliceblue;">
+            <button class="btn" ng-if="sd.status=='active'" ng-click="updateStudStatus(sd._id,'inactive',$index)" style="width: 70px;">Dectivate</button>
+            <button class="btn" ng-if="sd.status=='inactive'" ng-click="updateStudStatus(sd._id,'active',$index)" style="width: 70px;">Activate</button>
+          </td>
+          <td style="background-color:aliceblue;">
+            <button class="btn" ng-click="deleteStud(sd._id, $index)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ##### End the Student List ##### -->
   </div>
 </div>
 <!-- </html> -->

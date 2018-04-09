@@ -84,7 +84,6 @@ module.exports.login4VC = function (req, res) {
     var responseData;
     if (general.emptyCheck(req.body.email) && general.emptyCheck(req.body.password)) {
 
-
         if (req.body.email == 'admin123@gmail.com') {
             var adminData;
             if (req.body.password == 'admin123') {
@@ -111,9 +110,9 @@ module.exports.login4VC = function (req, res) {
 
         }
         else {
-            user.find({ 'email': req.body.email }).toArray(function (err, data) {
+            user.find({ 'teacherEmail': req.body.email }).toArray(function (err, data) {
                 if (data.length > 0) {
-                    if (data[0].password == req.body.password) {
+                    if (data[0].password == req.body.pswd) {
                         if (data[0].status == 'active') {
                             console.log("Successfully Logged in");
                             responseData = {
@@ -203,7 +202,36 @@ module.exports.getUserData = function (req, res) {
 
     console.log("<--getUserData");
 }
+module.exports.getStudData = function (req, res) {
+    console.log("getUserData-->");
+    var responseData;
+    stud.find().toArray(function (err, listOfUser) {
+        if (err) {
 
+            responseData = {
+                "status": false,
+                "message": "Failed to get Data",
+                "data": data
+            }
+            res.status(400).send(responseData);
+        }
+        else {
+            responseData = {
+                "status": true,
+                "message": "Successfull retrived data",
+                "data": listOfUser
+            }
+
+
+
+            res.status(200).send(responseData);
+        }
+
+    })
+
+
+    console.log("<--getUserData");
+}
 module.exports.updateUserStatus = function (req, res) {
     console.log("updateUserStatus-->");
     var responseData;
@@ -254,6 +282,56 @@ module.exports.updateUserStatus = function (req, res) {
 
     console.log("<--updateUserStatus");
 }
+module.exports.updateStudStatus = function (req, res) {
+    console.log("updateStudStatus-->");
+    var responseData;
+    if (general.emptyCheck(req.body.id)) {
+
+        var obj = {
+            '_id': ObjectId(req.body.id)
+        }
+        var updatedJson = {
+
+            "status": req.body.status
+        }
+        stud.update(obj, { $set: updatedJson }, { multi: true }, function (err, data) {
+
+            if (err) {
+
+                responseData = {
+                    "status": false,
+                    "message": "Failed to get Data",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "Successfull updated status",
+                    "data": data
+                }
+
+
+
+                res.status(200).send(responseData);
+            }
+
+        })
+    }
+    else {
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "empty value found",
+            "data": userData
+        }
+        res.status(400).send(responseData);
+
+    }
+
+    console.log("<--updateStudStatus");
+}
 
 module.exports.deleteUser = function (req, res) {
     console.log("deleteUser-->");
@@ -263,6 +341,47 @@ module.exports.deleteUser = function (req, res) {
             "_id": ObjectId(req.body.id)
         }
         user.remove(id, function (err, data) {
+            if (err) {
+                console.log("Failed to delete  data");
+                responseData = {
+                    "status": false,
+                    "message": "Failed to delete",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "Deleted Sucessfully",
+                    "data": data
+                }
+                res.status(200).send(responseData);
+            }
+        })
+
+
+    }
+    else {
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "empty value found"
+
+        }
+        res.status(400).send(responseData);
+
+    }
+    console.log("<--deleteUser");
+}
+module.exports.deleteStud = function (req, res) {
+    console.log("deleteUser-->");
+    var responseData;
+    if (general.emptyCheck(req.body.id)) {
+        var id = {
+            "_id": ObjectId(req.body.id)
+        }
+        stud.remove(id, function (err, data) {
             if (err) {
                 console.log("Failed to delete  data");
                 responseData = {
@@ -445,3 +564,49 @@ module.exports.studentInsert = function (req, res) {
     console.log("<--studentInsert");
 
 }
+
+module.exports.teacherdetail = function (req, res) {
+    console.log("teacherdetail-->");
+    if(general.emptyCheck(req.params.id)){
+        var id = {
+            "userId": req.params.id
+        }
+        user.find(id).toArray(function (err, data) {
+            console.log("data: "+JSON.stringify(data));
+            if (err) {
+    
+                responseData = {
+                    "status": false,
+                    "message": "Failed to get Data",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "Registeration Successfull",
+                    "data": data
+                }
+    
+    
+    
+                res.status(200).send(responseData);
+            }
+    
+        })
+    
+    }
+    else{
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "there is no userId to find",
+           
+        }
+        res.status(400).send(responseData);
+    }
+    console.log("<--teacherdetail");
+}
+
+
