@@ -114,6 +114,7 @@ function logVC() {
 }
 
 function sessionSet(data) {
+    console.log("data in session: "+JSON.stringify(data));
     if (typeof (Storage) !== "undefined") {
         var userData = {
             "userName": data.data.userName,
@@ -128,6 +129,7 @@ function sessionSet(data) {
         localStorage.setItem("loginType", data.loginType);
         localStorage.setItem("id", data.data._id);
         // Retrieve
+        console.log("userData: "+JSON.stringify(userData));
         var info = localStorage.getItem("userData");
 
         userName = info.userName;
