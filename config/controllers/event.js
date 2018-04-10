@@ -1,5 +1,7 @@
 var db = require('../dbConfig.js').getDb();
+var user = db.collection('user');/* ### Teacher collection  ### */
 var event = db.collection('event');
+var stud = db.collection('student');/* ### student collection  ### */
 var general = require('../general.js');
 var ObjectId = require('mongodb').ObjectID;
 
@@ -9,7 +11,7 @@ var nodemailer = require('nodemailer');
 
 
 var transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    service: 'gmail',
     auth: {
         user: 'logeswari.careator@gmail.com',
         pass: 'iloveindia'
@@ -21,10 +23,10 @@ var transporter = nodemailer.createTransport({
 module.exports.eventSend = function (req, res) {
     console.log("eventSend-->");
     var responseData;
-    console.log("req.body.studName: "+req.body.studName);
-    console.log("req.body.studId: "+req.body.studId);
-    console.log("req.body.reason: "+req.body.reason);
-    console.log("req.body.email: "+req.body.email);
+    console.log("req.body.studName: " + req.body.studName);
+    console.log("req.body.studId: " + req.body.studId);
+    console.log("req.body.reason: " + req.body.reason);
+    console.log("req.body.email: " + req.body.email);
     if (general.emptyCheck(req.body.studName) && general.emptyCheck(req.body.studId) && general.emptyCheck(req.body.reason) && general.emptyCheck(req.body.email)) {
         var password = 'abc';
         var userData = {
@@ -40,6 +42,7 @@ module.exports.eventSend = function (req, res) {
             "endAt": req.body.endAt,
             "primColor": req.body.primColor,
             "url": req.body.url,
+            "remoteCalendarId": req.body.remoteCalendarId,
             "password": password
 
         }
@@ -59,7 +62,7 @@ module.exports.eventSend = function (req, res) {
 
 
                 var mailOptions = {
-                    from: "info@vc4all.in",
+                    from: "logeswari.careator@gmail.com",
                     to: req.body.email,
                     subject: "Regarding School Meeting",
                     html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to +" + req.body.endAt + " +</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
@@ -117,47 +120,47 @@ module.exports.eventSend = function (req, res) {
 module.exports.eventGet = function (req, res) {
     console.log("getEvent-->");
     var responseData;
+     console.log("req.params.id: "+req.params.id)
     // var id ={
     //     userId = req.params.id
     // } 
-if(general.emptyCheck(req.params.id)){
-    var id = {
-        "userId": req.params.id
-    }
-    event.find(id).toArray(function (err, listOfevents) {
-        if (err) {
+    if (general.emptyCheck(req.params.id)) {
+     
+        event.find({ $or: [ { "userId": req.params.id }, { "remoteCalendarId": req.params.id } ] }).toArray(function (err, listOfevents) {
+            console.log("listOfevents: "+JSON.stringify(listOfevents))
+            if (err) {
 
-            responseData = {
-                "status": false,
-                "message": "Failed to get Data",
-                "data": data
+                responseData = {
+                    "status": false,
+                    "message": "Failed to get Data",
+                    "data": data
+                }
+                res.status(400).send(responseData);
             }
-            res.status(400).send(responseData);
-        }
-        else {
-            responseData = {
-                "status": true,
-                "message": "Registeration Successfull",
-                "data": listOfevents
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "Registeration Successfull",
+                    "data": listOfevents
+                }
+
+
+
+                res.status(200).send(responseData);
             }
 
+        })
 
-
-            res.status(200).send(responseData);
-        }
-
-    })
-
-}
-else{
-    console.log("Epty value found");
-    responseData = {
-        "status": false,
-        "message": "there is no userId to find",
-       
     }
-    res.status(400).send(responseData);
-}
+    else {
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "there is no userId to find",
+
+        }
+        res.status(400).send(responseData);
+    }
 
 }
 
@@ -197,12 +200,12 @@ module.exports.parentCredential = function (req, res) {
     console.log("parentCredential-->");
     var responseData;
     if (general.emptyCheck(req.body.url) && general.emptyCheck(req.body.pswd)) {
-        
-        event.find({'url':req.body.url}).toArray(function (err, data) {
+
+        event.find({ 'url': req.body.url }).toArray(function (err, data) {
             if (data.length > 0) {
-                console.log("data[0].password: "+data[0].password);
-                console.log("data[0].url: "+data[0].url);
-                console.log("req.body.pswd: "+req.body.pswd);
+                console.log("data[0].password: " + data[0].password);
+                console.log("data[0].url: " + data[0].url);
+                console.log("req.body.pswd: " + req.body.pswd);
                 if (data[0].password == req.body.pswd) {
                     console.log("Successfully Logged in");
                     responseData = {
@@ -212,7 +215,7 @@ module.exports.parentCredential = function (req, res) {
                     }
                     res.status(200).send(responseData);
                 }
-                else{
+                else {
                     console.log("Password is not matching");
                     responseData = {
                         "status": true,
@@ -223,7 +226,7 @@ module.exports.parentCredential = function (req, res) {
 
                 }
             }
-            else{
+            else {
                 responseData = {
                     "status": false,
                     "errorCode": "No Match",
@@ -244,4 +247,106 @@ module.exports.parentCredential = function (req, res) {
         res.status(400).send(responseData);
     }
     console.log("<--parentCredential");
+}
+
+module.exports.getStudListForCS = function (req, res) {
+    console.log("getStudListForCS-->");
+    //console.log("req.params.: "+JSON.stringify(req.params.cssRef));
+    console.log("class: " + req.params.clas + "section: " + req.params.section);
+    if (general.emptyCheck(req.params.clas) && general.emptyCheck(req.params.section)) {
+        var obj = {
+            "class": req.params.clas,
+            "section": req.params.section
+        };
+        // var id = {
+        //     "userId": req.params.id
+        // }
+        stud.find({ "cs": obj }).toArray(function (err, data) {
+            console.log("data: "+JSON.stringify(data));
+            if (err) {
+
+                responseData = {
+                    "status": false,
+                    "message": "Failed to get Data",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "Registeration Successfull",
+                    "data": data
+                }
+
+                console.log("data:" + JSON.stringify(data));
+
+                res.status(200).send(responseData);
+            }
+
+        })
+
+    }
+    else {
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "there is no userId to find",
+
+        }
+        res.status(400).send(responseData);
+    }
+    console.log("<--getStudListForCS");
+
+}
+
+module.exports.getTeacherListForCS = function (req, res) {
+    console.log("getTeacherListForCS-->");
+    //console.log("req.params.css: "+JSON.stringify(req.params.cssRef));
+    console.log("class: " + req.params.clas + "section: " + req.params.section);
+    if (general.emptyCheck(req.params.clas) && general.emptyCheck(req.params.section)) {
+        console.log("value not empty");
+        var clas= req.params.clas;
+          var section = req.params.section;
+        
+        // var id = {
+        //     "userId": req.params.id
+        // }
+        user.find({"css":{ $elemMatch:{"class" : clas,"section" : section}}}).toArray(function (err, data) {
+            console.log("getTeacherListForCS data: "+JSON.stringify(data));
+            if (err) {
+
+                responseData = {
+                    "status": false,
+                    "message": "Failed to get Data",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "Data Captured Successfully",
+                    "data": data
+                }
+
+                console.log("data:" + JSON.stringify(data));
+
+                res.status(200).send(responseData);
+            }
+
+        })
+
+    }
+    else {
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "there is no userId to find",
+
+        }
+        res.status(400).send(responseData);
+    }
+    console.log("<--getTeacherListForCS");
+
 }

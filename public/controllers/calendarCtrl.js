@@ -1,17 +1,17 @@
 app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, httpFactory, moment, calendarConfig, $uibModal) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
-
-  // if(localStorage.getItem("loginType")!='teacher'){
-
-  //   window.location.href="https://vc4all.in";
-
-
-  // }
+  $scope.timesTable=function(id){
+    console.log("timeTable-->");
+    $scope.getUserData=$scope.userData[id]
+    console.log("<--timeTable");
+  }
+  
   $scope.getTeacherData = function () {
     console.log("getTeacherData-->");
     var id = localStorage.getItem("id");
-    
-    var api = "https://vc4all.in/vc/teacherdetail" + "/" + id;
+
+    var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+    //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
@@ -19,7 +19,9 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       console.log("data--" + JSON.stringify(data.data));
       if (checkStatus) {
         $scope.teacherData = data.data.data;
-        console.log("teacherData: " + JSON.stringify(teacherData));
+        console.log("teacherData: " + JSON.stringify($scope.teacherData));
+        //   $scope.css = $scope.teacherData[0].css;
+        //   console.log("$scope.css: " + JSON.stringify($scope.css));
       }
       else {
 
@@ -28,6 +30,194 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("<--getTeacherData");
   }
 
+  $scope.getStudentData = function () {
+    console.log("getTeacherData-->");
+    var id = localStorage.getItem("id");
+    var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
+    console.log("api: " + api);
+    $scope.teacherList = [];
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.studentData = data.data.data;
+        console.log("studentData: " + JSON.stringify($scope.studentData));
+
+        $scope.studClass = $scope.studentData[0].cs[0].class;
+        $scope.studSection = $scope.studentData[0].cs[0].section;
+        var api = "https://vc4all.in/vc/getTeacherListForCS" + "/" + $scope.studClass + "/" + $scope.studSection;
+
+        console.log("api: " + api);
+        httpFactory.get(api).then(function (data) {
+          var checkStatus = httpFactory.dataValidation(data);
+          console.log("data--" + JSON.stringify(data.data));
+          if (checkStatus) {
+            $scope.teacherListForStudent = data.data.data;
+            console.log("teacherListForStudent: " + JSON.stringify($scope.teacherListForStudent));
+            for (var x = 0; x < $scope.teacherListForStudent.length; x++) {
+
+              for (var y = 0; y < $scope.teacherListForStudent[x].css.length; y++) {
+                if ($scope.teacherListForStudent[x].css[y].class == $scope.studClass && $scope.teacherListForStudent[x].css[y].section == $scope.studSection)
+                  $scope.teacherList.push({ "id": $scope.teacherListForStudent[x]._id, "name": $scope.teacherListForStudent[x].teacherName, "teacherId": $scope.teacherListForStudent[x].teacherId, "subject": $scope.teacherListForStudent[x].css[y].subject });
+              }
+
+
+            }
+            console.log(" $scope.teacherList: " + $scope.teacherList);
+            // console.log(" $scope.studList.length: " + $scope.studList.length);
+            //   $scope.css = $scope.teacherData[0].css;
+            //   console.log("$scope.css: " + JSON.stringify($scope.css));
+          }
+          else {
+            console.log("sorry");
+          }
+        })
+        console.log("studClass: " + JSON.stringify($scope.studClass));
+        console.log("studSection: " + JSON.stringify($scope.studSection));
+        console.log("studentData: " + JSON.stringify($scope.studentData));
+
+      }
+      else {
+      }
+    })
+    console.log("<--getTeacherData");
+  }
+
+  $scope.getSelectedTeacherPersonalData = function (id) {
+    console.log("getSelectedTeacherPersonalData-->");
+    var api = "https://vc4all.in/vc/teacherPersonalData" + "/" + id;
+    console.log("api: " + api);
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.teacherPersonalData = data.data.data;
+        console.log("$scope.teacherPersonalData: " + JSON.stringify($scope.teacherPersonalData));
+      }
+      else {
+        //alert("Event get Failed");
+      }
+
+    })
+    console.log("<--getSelectedTeacherPersonalData");
+  }
+
+  $scope.getSelectedStudentPersonalData = function (id) {
+    console.log("get Selected Student PersonalData-->");
+    var api = "https://vc4all.in/vc/studentPersonalData" + "/" + id;
+    console.log("api: " + api);
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.studentPersonalData = data.data.data;
+        console.log("$scope.studentPersonalData: " + JSON.stringify($scope.studentPersonalData));
+      }
+      else {
+        //alert("Event get Failed");
+      }
+
+    })
+    console.log("<--get Selected Student PersonalData");
+  }
+
+  $scope.getStudentCalendar = function (css) {
+    console.log("getStudentCalendar-->");
+    console.log("css" + css.id);
+    console.log("JSON.css" + JSON.stringify(css));
+    $scope.remoteCalendarId = css.id;
+    $scope.getSelectedStudentPersonalData($scope.remoteCalendarId);
+    var api = "https://vc4all.in/vc/eventGet" + "/" + css.id;
+    console.log("api: " + api);
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.calendarOwner=css.name;
+        $scope.specificTED = data.data.data;/* ### Note:Function Name specificTED --> specificTeachEventData(specificTED) ### */
+        console.log("$scope.specificTED.length: " + $scope.specificTED.length);
+        for (var x = 0; x < $scope.specificTED.length; x++) {
+          console.log("$scope.specificTED[" + x + "]: " + JSON.stringify($scope.specificTED[x]));
+          var obj = {
+            'id': $scope.specificTED[x]._id,
+            'title': $scope.specificTED[x].title,
+            'color': $scope.specificTED[x].primColor,
+            'startsAt': new Date($scope.specificTED[x].start),
+            'endsAt': new Date($scope.specificTED[x].end),
+            'draggable': true,
+            'resizable': true,
+            'actions': actions,
+            'url': $scope.specificTED[x].url,
+            "studentName": $scope.specificTED[x].studName,
+            "studendtId": $scope.specificTED[x].studId,
+            "title": $scope.specificTED[x].title,
+            "reason": $scope.specificTED[x].reason,
+            "email": $scope.specificTED[x].email
+          }
+          console.log(" obj" + JSON.stringify(obj))
+          vm.events = [];
+          // vm.events.push(obj);
+          vm.events.push(obj);
+        }
+      }
+      else {
+        //alert("Event get Failed");
+      }
+
+    })
+
+    console.log("<--getStudentCalendar");
+  }
+
+  $scope.getTeacherCalendar = function (css) {
+    console.log("getTeacherCalendar-->");
+    console.log("css" + css.id);
+    console.log("JSON.css" + JSON.stringify(css));
+    $scope.remoteCalendarId = css.id;
+    $scope.getSelectedTeacherPersonalData($scope.remoteCalendarId);
+    var api = "https://vc4all.in/vc/eventGet" + "/" + css.id;
+    console.log("api: " + api);
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.calendarOwner=css.name;
+        $scope.specificTED = data.data.data;/* ### Note:Function Name specificTED --> specificTeachEventData(specificTED) ### */
+        console.log("$scope.specificTED.length: " + $scope.specificTED.length);
+        for (var x = 0; x < $scope.specificTED.length; x++) {
+          console.log("$scope.specificTED[" + x + "]: " + JSON.stringify($scope.specificTED[x]));
+          var obj = {
+            'id': $scope.specificTED[x]._id,
+            'title': $scope.specificTED[x].title,
+            'color': $scope.specificTED[x].primColor,
+            'startsAt': new Date($scope.specificTED[x].start),
+            'endsAt': new Date($scope.specificTED[x].end),
+            'draggable': true,
+            'resizable': true,
+            'actions': actions,
+            'url': $scope.specificTED[x].url,
+            "studentName": $scope.specificTED[x].studName,
+            "studendtId": $scope.specificTED[x].studId,
+            "title": $scope.specificTED[x].title,
+            "reason": $scope.specificTED[x].reason,
+            "email": $scope.specificTED[x].email
+          }
+          console.log(" obj" + JSON.stringify(obj));
+          // vm.events.push(obj);
+          vm.events = [];
+
+          vm.events.push(obj);
+
+        }
+      }
+      else {
+        //alert("Event get Failed");
+      }
+
+    })
+
+    console.log("<--getTeacherCalendar");
+  }
 
   if (localStorage.getItem("loginType") == 'admin') {
     console.log("loginType: " + localStorage.getItem("loginType"));
@@ -41,9 +231,55 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
 
   }
+  else if (localStorage.getItem("loginType") == 'studParent') {
+    document.getElementById('userAuth').style.display = "none";
+    $scope.userLoginType = 'studParent';
+    $scope.getStudentData();
+
+  }
   else {
     window.location.href = "https://vc4all.in";
   }
+
+  $scope.getStudListForCS = function (css) {
+
+    console.log("getStudListForCS-->");
+    // console.log("$scope.cssSelect: "+JSON.stringify($scope.cssSelect));
+    console.log("css" + css);
+    console.log("JSON.css" + JSON.stringify(css));
+    var clas = css.class;
+    var section = css.section;
+    $scope.studList = [];
+    // var cssRef = [{"clas":css.class, "section": css.section}];
+    // console.log("cssRef: "+JSON.stringify(cssRef));
+
+    var api = "https://vc4all.in/vc/getStudListForCS" + "/" + clas + "/" + section;
+    //var api = "http://localhost:5000/vc/getStudListForCS" + "/" + clas + "/" + section;
+    //var api = "https://vc4all.in/vc/getStudListForCS";
+
+    console.log("api: " + api);
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.studentList = data.data.data;
+        console.log("studentList: " + JSON.stringify($scope.studentList));
+        for (var x = 0; x < $scope.studentList.length; x++) {
+          $scope.studList.push({ "id": $scope.studentList[x]._id, "name": $scope.studentList[x].studName, "studId": $scope.studentList[x].studId });
+
+        }
+        console.log(" $scope.studList.length: " + $scope.studList.length);
+        //   $scope.css = $scope.teacherData[0].css;
+        //   console.log("$scope.css: " + JSON.stringify($scope.css));
+      }
+      else {
+        console.log("sorry");
+      }
+    })
+    console.log("<--getStudListForCS");
+
+  }
+
 
   $scope.eventColors = ['red', 'green', 'blue'];
 
@@ -110,6 +346,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("obj: " + JSON.stringify(obj));
 
     var api = "https://vc4all.in/vc/eventUpdate" + "/" + id;
+    //var api = "http://localhost:5000/vc/eventUpdate" + "/" + id;
 
     httpFactory.post(api, obj).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -129,17 +366,17 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("<--updatedEvent");
   }
 
-  $scope.save = function (date, sd, ed, s, e, sFiltered, eFiltered, title) {
+  $scope.save = function (date, sd, ed, s, e, sFiltered, eFiltered, title, reason) {
     console.log("s: " + s);
     console.log("e: " + e);
     console.log("sd: " + sd);
     console.log("ed: " + ed);
 
     var res = $filter('limitTo')(s, 2);
-
     console.log("res: " + res);
     console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
     console.log("$scope.endDate with filter: " + $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'"));
+
     $scope.title = title;
     $scope.date = date,
       $scope.sd = sd,
@@ -152,24 +389,36 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
     $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
     $scope.urlDate = $filter('date')(s, "EEEMMMddyHHmmss");
-
     console.log("$scope.endDate: " + $scope.endDate);
     console.log("$scope.urlDate: " + $scope.urlDate);
     console.log("$scope.endDate: " + $scope.endDate);
     console.log("$scope.endDateRes: " + $scope.endDateRes);
+
+    if ($scope.userLoginType == 'studParent') {
+      var senderName = $scope.studentData[0].studName;
+      var studId = $scope.studentData[0].studId;
+      var email = $scope.teacherPersonalData[0].teacherEmail;/* ### Note: teacher email Id ### */
+
+      $scope.eventSend(reason, senderName, studId, email);
+    }
+    if ($scope.userLoginType == 'teacher') {
+      var teacherName = $scope.teacherData[0].teacherName;
+      var teacherId = $scope.teacherData[0].teacherId;
+      var email = $scope.studentPersonalData[0].parentEmail;/* ### Note: parentEmail email Id ### */
+      $scope.eventSend(reason, teacherName, teacherId, email);
+    }
+
+
   }
 
-  $scope.eventSend = function (res, name, id, primColor) {
-    //$scope.eventSend = function (a, b) {
-    //alert("a: "+a+"b: "+b);
+  $scope.eventSend = function (res, name, id, email) {
     console.log("eventSend-->");
-
     var SIGNALING_SERVER = "https://vc4all.in";
+    //var SIGNALING_SERVER = "http://localhost:5000";
     var queryLink = null;
     var peerNew_id = null;
     var url;
     signaling_socket = io(SIGNALING_SERVER);
-
     signaling_socket.on('connect', function () {
       console.log("signaling_socket connect-->");
 
@@ -184,7 +433,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
         var api = "https://vc4all.in/vc/eventSend";
         //var api = "http://localhost:5000/vc/eventSend";
         console.log("api: " + api);
-        var email = document.getElementById('eventEmails').value;
+        // var email = document.getElementById('eventEmails').value;
         var obj = {
           "userId": localStorage.getItem("id"),
           "title": $scope.title,
@@ -196,12 +445,12 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
           "end": $scope.endDateRes,
           "startAt": $scope.startFiltered,
           "endAt": $scope.endFiltered, /* ###Note: have work and this is unwanted */
-          "primColor": primColor,
+          "primColor": "red",
           "url": url,
           "date": $scope.date,
           "sd": $scope.sd,
-          "ed": $scope.ed
-
+          "ed": $scope.ed,
+          "remoteCalendarId": $scope.remoteCalendarId
         }
         console.log("obj: " + JSON.stringify(obj));
 
@@ -209,7 +458,6 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
           var checkStatus = httpFactory.dataValidation(data);
           console.log("data--" + JSON.stringify(data.data));
           if (checkStatus) {
-
             console.log("data" + JSON.stringify(data.data))
             // $window.location.href = $scope.propertyJson.R082;
             alert("Successfully sent the event " + data.data.message);
@@ -247,8 +495,8 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("eventGet-->");
     var id = localStorage.getItem("id");
     var api = "https://vc4all.in/vc/eventGet" + "/" + id;
-    //var api = "http://localhost:5000/vc/eventGet";
-
+    //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
+    $scope.calendarOwner="Your";
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
       console.log("data--" + JSON.stringify(data.data));
@@ -287,10 +535,14 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   $scope.eventGet();
 
   var vm = this;
-
   //These variables MUST be set as a minimum for the calendar to work
-  vm.calendarView = 'month';
-  vm.viewDate = new Date();
+  // vm.calendarView = 'month';
+  // vm.viewDate = new Date();
+  vm.calendarView = 'day';
+  vm.viewDate = moment().startOf('day').toDate();
+  var originalFormat = calendarConfig.dateFormats.hour;
+  calendarConfig.dateFormats.hour = 'HH:mm';
+
   var actions = [{
     label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
     onClick: function (args) {
@@ -434,27 +686,62 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     $event.stopPropagation();
     event[field] = !event[field];
   };
+  vm.timespanClicked = function (date) {
+    console.log("timespanClicked-->");
 
-  vm.timespanClicked = function (date, cell) {
+    vm.lastDateClicked = date;
+    // alert("date: "+moment(date).startOf('day')+"date*: "+moment().startOf('day'));
+    // alert('Edited', args.calendarEvent);
+    // console.log("args.calendarEvent: " + args.calendarEvent);
+    // console.log("JSON args.calendarEvent: " + JSON.stringify(args.calendarEvent));
+    var eClicked = $uibModal.open({
+      scope: $scope,
+      templateUrl: '/html/templates/dayEventBook.html',
+      windowClass: 'show',
+      backdropClass: 'show',
+      controller: function ($scope, $uibModalInstance) {
+        // moment().startOf('day').toDate()
+        var dt = new Date();
+        $scope.eventDetails = {
 
-    if (vm.calendarView === 'month') {
-      if ((vm.cellIsOpen && moment(date).startOf('day').isSame(moment(vm.viewDate).startOf('day'))) || cell.events.length === 0 || !cell.inMonth) {
-        vm.cellIsOpen = false;
-      } else {
-        vm.cellIsOpen = true;
-        vm.viewDate = date;
+          "startsAt": date.toDate()
+
+        }
+
+        console.log("$scope.eventDetails: " + $scope.eventDetails);
       }
-    } else if (vm.calendarView === 'year') {
-      if ((vm.cellIsOpen && moment(date).startOf('month').isSame(moment(vm.viewDate).startOf('month'))) || cell.events.length === 0) {
-        vm.cellIsOpen = false;
-      } else {
-        vm.cellIsOpen = true;
-        vm.viewDate = date;
-      }
-    }
+    })
+    // alert.show('Edited', args.calendarEvent);
 
+
+    console.log("<--timespanClicked");
   };
 
+  // vm.timespanClicked = function (date, cell) {
+
+  //   if (vm.calendarView === 'month') {
+  //     if ((vm.cellIsOpen && moment(date).startOf('day').isSame(moment(vm.viewDate).startOf('day'))) || cell.events.length === 0 || !cell.inMonth) {
+  //       vm.cellIsOpen = false;
+  //     } else {
+  //       vm.cellIsOpen = true;
+  //       vm.viewDate = date;
+  //     }
+  //   } else if (vm.calendarView === 'year') {
+  //     if ((vm.cellIsOpen && moment(date).startOf('month').isSame(moment(vm.viewDate).startOf('month'))) || cell.events.length === 0) {
+  //       vm.cellIsOpen = false;
+  //     } else {
+  //       vm.cellIsOpen = true;
+  //       vm.viewDate = date;
+  //     }
+  //   }
+
+
+  // };
+  // vm.timeClick = function (event) {
+  //   alert("timeClick-->");
+  //   console.log("cliecked: " + JSON.stringify(event));
+
+  // }
 
 
 

@@ -3,36 +3,29 @@
         <h2>Student Data Insert</h2>
 
         <form>
-            <input type="text" ng-model="schoolName" placeholder="Enter school Name">
-            <br>
-            <br>
-            <input type="text" ng-model="studId" placeholder="Enter Student id">
-            <br>
-            <br>
-            <input type="text" ng-model="studName" placeholder="Enter Student Name">
-            <br>
-            <br>
-            <input type="text" ng-model="parentName" placeholder="Enter parent/guardian Name">
-            <br>
-            <br>
-            <input type="email" ng-model="parentEmail" placeholder="Enter parent/guardian Email">
-            <br>
-            <br>
-            <input type="text" ng-model="mobileNum" placeholder="Enter parent/guardian mobile number">
-            <br>
-            <br>
-            <div ng-repeat="x in css">
-                <input type="text" ng-model="x.class" placeholder="Enter Class">
-                <br>
-                <br>
-                <input type="text" ng-model="x.section" placeholder="Enter Section">
-                <br>
-                <br>
-            </div>
+            <input type="text" ng-model="schoolName" placeholder="Enter school Name"><hr>
+
+            <input type="text" ng-model="studId" placeholder="Enter Student id"><hr>
           
-            <input type="password" ng-model="pswd" placeholder="Enter password">
-            <br>
-            <br>
+            <input type="text" ng-model="studName" placeholder="Enter Student Name"><hr>
+           
+            <div>
+                <input type="text" ng-model="class" placeholder="Enter Class">
+          
+                <input type="text" ng-model="section" placeholder="Enter Section">
+          
+            </div><hr>
+          
+            <input type="text" ng-model="parentName" placeholder="Enter parent Name"><hr>
+          
+            <input type="email" ng-model="parentEmail" placeholder="Enter  Email"><hr>
+          
+            <input type="text" ng-model="mobileNum" placeholder="Enter mobile number"><hr>
+         
+
+
+            <input type="password" ng-model="pswd" placeholder="Enter password"><hr>
+       
 
             <button ng-click="saveStudent()">Submit</button>
         </form>

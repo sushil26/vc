@@ -10,7 +10,7 @@ var nodemailer = require('nodemailer');
 // var randomstring = require("randomstring");
 
 var transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    service: 'gmail',
     auth: {
         user: 'logeswari.careator@gmail.com',
         pass: 'iloveindia'
@@ -90,14 +90,17 @@ module.exports.login4VC = function (req, res) {
                 adminData = {
                     "userName": "admin",
                     "status": "active",
-                    "email": "admin123@gmail.com"
+                    "email": "admin123@gmail.com",
+                    "loginType": "admin"
+
                 }
                 responseData = {
                     "status": true,
                     "message": "Login Successfully",
-                    "loginType": "admin",
+                  
                     "data": adminData
                 }
+                console.log("responseData: "+JSON.stringify(responseData));
                 res.status(200).send(responseData);
             }
             else {
@@ -110,50 +113,99 @@ module.exports.login4VC = function (req, res) {
 
         }
         else {
-            user.find({ 'teacherEmail': req.body.email }).toArray(function (err, data) {
-                if (data.length > 0) {
-                    if (data[0].password == req.body.pswd) {
-                        if (data[0].status == 'active') {
-                            console.log("Successfully Logged in");
-                            responseData = {
-                                "status": true,
-                                "message": "Login Successfully",
-                                "loginType": "teacher",
-                                "data": data[0]
+            if(req.body.loginType=='teacher'){
+                user.find({ 'teacherEmail': req.body.email }).toArray(function (err, data) {
+                    if (data.length > 0) {
+                        if (data[0].password == req.body.pswd) {
+                            if (data[0].status == 'active') {
+                                console.log("Successfully Logged in");
+                                responseData = {
+                                    "status": true,
+                                    "message": "Login Successfully",
+                                    "loginType": "teacher",
+                                    "data": data[0]
+                                }
+                                res.status(200).send(responseData);
                             }
-                            res.status(200).send(responseData);
+                            else {
+                                console.log("Profile Inactive");
+                                responseData = {
+                                    "status": false,
+                                    "message": "Profile Inactive",
+                                    "data": data[0]
+                                }
+                                res.status(200).send(responseData);
+    
+                            }
+    
                         }
                         else {
-                            console.log("Profile Inactive");
                             responseData = {
                                 "status": false,
-                                "message": "Profile Inactive",
-                                "data": data[0]
+                                "errorCode": "E005",
+                                "message": "Password is wrong"
                             }
                             res.status(200).send(responseData);
-
                         }
-
                     }
                     else {
                         responseData = {
                             "status": false,
-                            "errorCode": "E005",
-                            "message": "Password is wrong"
+                            "errorCode": "No Match",
+                            "message": "There is no match for this EMail id from Teacher database"
                         }
                         res.status(200).send(responseData);
+    
                     }
-                }
-                else {
-                    responseData = {
-                        "status": false,
-                        "errorCode": "No Match",
-                        "message": "There is no match for this EMail id from student database"
+                })
+            }
+            else{
+                stud.find({ 'parentEmail': req.body.email }).toArray(function (err, data) {
+                    if (data.length > 0) {
+                        if (data[0].password == req.body.pswd) {
+                            if (data[0].status == 'active') {
+                                console.log("Successfully Logged in");
+                                responseData = {
+                                    "status": true,
+                                    "message": "Login Successfully",
+                                    "loginType": "teacher",
+                                    "data": data[0]
+                                }
+                                res.status(200).send(responseData);
+                            }
+                            else {
+                                console.log("Profile Inactive");
+                                responseData = {
+                                    "status": false,
+                                    "message": "Profile Inactive",
+                                    "data": data[0]
+                                }
+                                res.status(200).send(responseData);
+    
+                            }
+    
+                        }
+                        else {
+                            responseData = {
+                                "status": false,
+                                "errorCode": "E005",
+                                "message": "Password is wrong"
+                            }
+                            res.status(200).send(responseData);
+                        }
                     }
-                    res.status(200).send(responseData);
-
-                }
-            })
+                    else {
+                        responseData = {
+                            "status": false,
+                            "errorCode": "No Match",
+                            "message": "There is no match for this EMail id from student database"
+                        }
+                        res.status(200).send(responseData);
+    
+                    }
+                })
+            }
+           
         }
     }
     else {
@@ -492,6 +544,7 @@ module.exports.teacherInsert = function (req, res) {
         "mobileNum": req.body.mobileNum,
         "css": req.body.css,
         "pswd": req.body.pswd,
+        "timeTable":req.body.timetabletech,
         "status": "inactive",
         "loginType": "teacher"
     }
@@ -532,7 +585,7 @@ module.exports.studentInsert = function (req, res) {
         "parentName": req.body.parentName,
         "parentEmail": req.body.parentEmail,
         "mobileNum": req.body.mobileNum,
-        "css": req.body.css,
+        "cs": req.body.cs,
         "pswd": req.body.pswd,
         "status": "inactive",
         "loginType": "studParent"
@@ -565,11 +618,11 @@ module.exports.studentInsert = function (req, res) {
 
 }
 
-module.exports.teacherdetail = function (req, res) {
+module.exports.teacherDetail = function (req, res) {
     console.log("teacherdetail-->");
     if(general.emptyCheck(req.params.id)){
         var id = {
-            "userId": req.params.id
+            "_id": ObjectId(req.params.id)
         }
         user.find(id).toArray(function (err, data) {
             console.log("data: "+JSON.stringify(data));
@@ -585,7 +638,7 @@ module.exports.teacherdetail = function (req, res) {
             else {
                 responseData = {
                     "status": true,
-                    "message": "Registeration Successfull",
+                    "message": "get data successfully",
                     "data": data
                 }
     
@@ -609,4 +662,136 @@ module.exports.teacherdetail = function (req, res) {
     console.log("<--teacherdetail");
 }
 
+module.exports.studentDetail = function (req, res) {
+    console.log("teacherdetail-->");
+    if(general.emptyCheck(req.params.id)){
+        var id = {
+            "_id": ObjectId(req.params.id)
+        }
+        stud.find(id).toArray(function (err, data) {
+            console.log("data: "+JSON.stringify(data));
+            if (err) {
+    
+                responseData = {
+                    "status": false,
+                    "message": "Failed to get Data",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "get data successfully",
+                    "data": data
+                }
+    
+    
+    
+                res.status(200).send(responseData);
+            }
+    
+        })
+    
+    }
+    else{
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "there is no userId to find",
+           
+        }
+        res.status(400).send(responseData);
+    }
+    console.log("<--teacherdetail");
+}
 
+module.exports.teacherPersonalData = function (req, res) {
+console.log("teacherPersonalData-->");
+console.log("req.params.id: "+req.params.id);
+if(general.emptyCheck(req.params.id)){
+    var id = {
+        "_id": ObjectId(req.params.id)
+    }
+    user.find(id).toArray(function (err, data) {
+        console.log("data: "+JSON.stringify(data));
+        if (err) {
+
+            responseData = {
+                "status": false,
+                "message": "Failed to get Data",
+                "data": data
+            }
+            res.status(400).send(responseData);
+        }
+        else {
+            responseData = {
+                "status": true,
+                "message": "get data successfully",
+                "data": data
+            }
+
+
+
+            res.status(200).send(responseData);
+        }
+
+    })
+
+}
+else{
+    console.log("Epty value found");
+    responseData = {
+        "status": false,
+        "message": "there is no userId to find",
+       
+    }
+    res.status(400).send(responseData);
+}
+console.log("<--teacherPersonalData");
+}
+
+module.exports.studentPersonalData = function (req, res) {
+    console.log("studentPersonalData-->");
+    console.log("req.params.id: "+req.params.id);
+    if(general.emptyCheck(req.params.id)){
+        var id = {
+            "_id": ObjectId(req.params.id)
+        }
+        stud.find(id).toArray(function (err, data) {
+            console.log("data: "+JSON.stringify(data));
+            if (err) {
+    
+                responseData = {
+                    "status": false,
+                    "message": "Failed to get Data",
+                    "data": data
+                }
+                res.status(400).send(responseData);
+            }
+            else {
+                responseData = {
+                    "status": true,
+                    "message": "get data successfully",
+                    "data": data
+                }
+    
+    
+    
+                res.status(200).send(responseData);
+            }
+    
+        })
+    
+    }
+    else{
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "there is no userId to find",
+           
+        }
+        res.status(400).send(responseData);
+    }
+    console.log("<--studentPersonalData");
+    }

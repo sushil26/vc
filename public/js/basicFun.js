@@ -20,7 +20,7 @@ if (localStorage.getItem("userData")) {
         document.getElementById("appLogout").style.display = 'block';
         document.getElementById("userAuth").style.display = 'block';
     }
-    else if (loginType == 'parent') {
+    else if (loginType == 'studParent') {
         document.getElementById("appLogin").style.display = 'none';
         document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
@@ -64,10 +64,13 @@ function logVC() {
     console.log("email: " + document.getElementById("crdEmail").value);
     var email = document.getElementById("crdEmail").value;
     var Password = document.getElementById('crdPswd').value;
+    alert($("input[name=loginType]:checked").val());
+    var loginType = $("input[name=loginType]:checked").val();
     console.log("email: " + email);
     var obj = {
         "email": email,
-        "password": Password
+        "password": Password,
+        "loginType": loginType
     };
     console.log("obj: " + JSON.stringify(obj));
     console.log("logVC");
@@ -104,8 +107,9 @@ function logVC() {
                 document.getElementById("appLogin").style.display = 'none';
                 document.getElementById("appReg").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
-               
-
+            }
+            else{
+                document.getElementById("userAuth").style.display = 'none';
             }
         }
 
@@ -113,22 +117,19 @@ function logVC() {
 
 }
 
+
 function sessionSet(data) {
-    console.log("data in session: "+JSON.stringify(data));
+    console.log("sessionSet-->");
+    console.log("data: "+JSON.stringify(data));
     if (typeof (Storage) !== "undefined") {
-        var userData = {
-            "userName": data.data.userName,
-            "status": data.data.status,
-            "email": data.data.email,
-            "loginType": data.loginType
-        }
-        localStorage.setItem("userData", userData);
-        localStorage.setItem("userName", data.data.userName);
-        localStorage.setItem("status", data.data.status);
-        localStorage.setItem("email", data.data.email);
-        localStorage.setItem("loginType", data.loginType);
-        
+      
         if(data.data.loginType=='teacher'){
+            var userData = {
+                "userName": data.data.teacherName,
+                "status": data.data.status,
+                "email": data.data.teacherEmail,
+                "loginType": data.loginType
+            }
             localStorage.setItem("userData", userData);
             localStorage.setItem("userName", data.data.teacherName);
             localStorage.setItem("status", data.data.status);
@@ -137,17 +138,37 @@ function sessionSet(data) {
             localStorage.setItem("id", data.data._id);
             
         }
+        else{
+            var userData = {
+                "userName": data.data.userName,
+                "status": data.data.status,
+                "email": data.data.email,
+                "loginType": data.data.loginType
+            }
+            localStorage.setItem("userData", userData);
+            localStorage.setItem("userName", data.data.userName);
+            localStorage.setItem("status", data.data.status);
+            localStorage.setItem("email", data.data.email);
+            localStorage.setItem("loginType", data.data.loginType);
+            document.getElementById('userAuth').style.display = "block";
+        }
+        if(data.data.loginType=='studParent'){
+            localStorage.setItem("id", data.data._id);
+        }
+        
+
         
         // Retrieve
-        console.log("userData: "+JSON.stringify(userData));
         var info = localStorage.getItem("userData");
-
+console.log("info: "+JSON.stringify(info));
         userName = info.userName;
 
     } else {
         alert("Sorry, your browser does not support Web Storage...");
 
     }
+
+    console.log("<--sessionSet");
 }
 function regVc() {
     console.log("regVc");

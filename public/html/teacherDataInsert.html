@@ -1,25 +1,1017 @@
 <div style="margin-top: 85px;" ng-controller="teacherInsertCtrl">
     <div class="container">
         <h2>Teacher Data Insert</h2>
-  
 
-    <form>
+
+        <form>
+
+            <input type="text" ng-model="schoolName" placeholder="Enter school Name">
+            <br>
+            <br>
+            <input type="text" ng-model="teacherId" placeholder="Enter teacher id">
+            <br>
+            <br>
+            <input type="text" ng-model="teacherName" placeholder="Enter Teacher Name">
+            <br>
+            <br>
+            <input type="email" ng-model="teacherEmail" placeholder="Enter Teacher Email">
+            <br>
+            <br>
+            <input type="text" ng-model="mobileNum" placeholder="Enter Teacher mobile number">
+            <br>
+            <br>
+            <div ng-repeat="x in css">
+                <input type="text" ng-model="x.class" placeholder="Enter Class">
+                <br>
+                <br>
+                <input type="text" ng-model="x.section" placeholder="Enter Section">
+                <br>
+                <br>
+                <input type="text" ng-model="x.subject" placeholder="Enter Subject">
+                <br>
+                <br>
+            </div>
+            <button ng-click="addSCC()">Add Class-Section-Subject</button>
+            <br>
+            <br>
+
+            <input type="password" ng-model="pswd" placeholder="Enter password">
+            <br>
+            <br>
+            <table class="table table-bordered">
+
+                <thead>
+                    <tr style="background: darkturquoise;">
+                        <th>Timeing</th>
+
+                        <th>09:00-09:45</th>
+                        <th>9:45-10:30</th>
+                        <th>10:30-11:15</th>
+                        <th>11:15-12:00</th>
+                        <th>01:00-01:45</th>
+                        <th>01:45-02:30</th>
+                        <th>02:30-03:15</th>
+                        <th>03:15-04:00</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mon</td>
+                        <td>
+                            <select ng-model="selectedClass1">
+                                <option value="" disabled selected>Class</option>
+                                <option value="10">10th</option>
+                                <option value="9">9th</option>
+                                <option value="8">8th</option>
+                                <option value="7">7th</option>
+                                <option value="Free">Free</option>
+
+                            </select>
+                            <select ng-model="selectedSection1">
+                                <option value="" disabled selected>Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                            <input type="text" ng-model="subj1" placeholder="Subject">
+                        </td>
+                        <td>
+                            <select ng-model="selectedClass2">
+                                <option value="" disabled selected>Class</option>
+                                <option value="10">10th</option>
+                                <option value="9">9th</option>
+                                <option value="8">8th</option>
+                                <option value="7">7th</option>
+                                <option value="Free">Free</option>
+
+                            </select>
+                            <select ng-model="selectedSection2">
+                                <option value="" disabled selected>Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                            <input type="text" ng-model="subj2" placeholder="Subject">
+                        </td>
+                        <td>
+                            <select ng-model="selectedClass3">
+                                <option value="" disabled selected>Class</option>
+                                <option value="10">10th</option>
+                                <option value="9">9th</option>
+                                <option value="8">8th</option>
+                                <option value="7">7th</option>
+                                <option value="Free">Free</option>
+
+                            </select>
+                            <select ng-model="selectedSection3">
+                                <option value="" disabled selected>Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                            <input type="text" ng-model="subj3" placeholder="Subject">
+                        </td>
+                        <td>
+                            <select ng-model="selectedClass4">
+                                <option value="" disabled selected>Class</option>
+                                <option value="10">10th</option>
+                                <option value="9">9th</option>
+                                <option value="8">8th</option>
+                                <option value="7">7th</option>
+                                <option value="Free">Free</option>
+
+                            </select>
+                            <select ng-model="selectedSection4">
+                                <option value="" disabled selected>Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                            <input type="text" ng-model="subj4" placeholder="Subject">
+                        </td>
+                        <td>
+                            <select ng-model="selectedClass5">
+                                <option value="" disabled selected>Class</option>
+                                <option value="10">10th</option>
+                                <option value="9">9th</option>
+                                <option value="8">8th</option>
+                                <option value="7">7th</option>
+                                <option value="Free">Free</option>
+
+                            </select>
+                            <select ng-model="selectedSection5">
+                                <option value="" disabled selected>Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                            <input type="text" ng-model="subj5" placeholder="Subject">
+                        </td>
+                        <td>
+                            <select ng-model="selectedClass6">
+                                <option value="" disabled selected>Class</option>
+                                <option value="10">10th</option>
+                                <option value="9">9th</option>
+                                <option value="8">8th</option>
+                                <option value="7">7th</option>
+                                <option value="Free">Free</option>
+
+                            </select>
+                            <select ng-model="selectedSection6">
+                                <option value="" disabled selected>Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                            <input type="text" ng-model="subj6" placeholder="Subject">
+                        </td>
+                        <td>
+                            <select ng-model="selectedClass7">
+                                <option value="" disabled selected>Class</option>
+                                <option value="10">10th</option>
+                                <option value="9">9th</option>
+                                <option value="8">8th</option>
+                                <option value="7">7th</option>
+                                <option value="Free">Free</option>
+
+                            </select>
+                            <select ng-model="selectedSection7">
+                                <option value="" disabled selected>Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                            <input type="text" ng-model="subj7" placeholder="Subject">
+                        </td>
+                        <td>
+                            <select ng-model="selectedClass8">
+                                <option value="" disabled selected>Class</option>
+                                <option value="10">10th</option>
+                                <option value="9">9th</option>
+                                <option value="8">8th</option>
+                                <option value="7">7th</option>
+                                <option value="Free">Free</option>
+
+                            </select>
+                            <select ng-model="selectedSection8">
+                                <option value="" disabled selected>Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                            <input type="text" ng-model="subj8" placeholder="Subject">
+                        </td>
+
+
+
+
+                    </tr><tr>
+                            <td>Tue</td>
+                            <td>
+                                <select ng-model="selectedClass9">
+                                    <option value="" disabled selected>Class</option>
+                                    <option value="10">10th</option>
+                                    <option value="9">9th</option>
+                                    <option value="8">8th</option>
+                                    <option value="7">7th</option>
+                                    <option value="Free">Free</option>
+    
+                                </select>
+                                <select ng-model="selectedSection9">
+                                    <option value="" disabled selected>Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                <input type="text" ng-model="subj9" placeholder="Subject">
+                            </td>
+                            <td>
+                                <select ng-model="selectedClass10">
+                                    <option value="" disabled selected>Class</option>
+                                    <option value="10">10th</option>
+                                    <option value="9">9th</option>
+                                    <option value="8">8th</option>
+                                    <option value="7">7th</option>
+                                    <option value="Free">Free</option>
+    
+                                </select>
+                                <select ng-model="selectedSection10">
+                                    <option value="" disabled selected>Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                <input type="text" ng-model="subj10" placeholder="Subject">
+                            </td>
+                            <td>
+                                <select ng-model="selectedClass11">
+                                    <option value="" disabled selected>Class</option>
+                                    <option value="10">10th</option>
+                                    <option value="9">9th</option>
+                                    <option value="8">8th</option>
+                                    <option value="7">7th</option>
+                                    <option value="Free">Free</option>
+    
+                                </select>
+                                <select ng-model="selectedSection11">
+                                    <option value="" disabled selected>Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                <input type="text" ng-model="subj11" placeholder="Subject">
+                            </td>
+                            <td>
+                                <select ng-model="selectedClass12">
+                                    <option value="" disabled selected>Class</option>
+                                    <option value="10">10th</option>
+                                    <option value="9">9th</option>
+                                    <option value="8">8th</option>
+                                    <option value="7">7th</option>
+                                    <option value="Free">Free</option>
+    
+                                </select>
+                                <select ng-model="selectedSection12">
+                                    <option value="" disabled selected>Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                <input type="text" ng-model="subj12" placeholder="Subject">
+                            </td>
+                            <td>
+                                <select ng-model="selectedClass13">
+                                    <option value="" disabled selected>Class</option>
+                                    <option value="10">10th</option>
+                                    <option value="9">9th</option>
+                                    <option value="8">8th</option>
+                                    <option value="7">7th</option>
+                                    <option value="Free">Free</option>
+    
+                                </select>
+                                <select ng-model="selectedSection13">
+                                    <option value="" disabled selected>Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                <input type="text" ng-model="subj13" placeholder="Subject">
+                            </td>
+                            <td>
+                                <select ng-model="selectedClass14">
+                                    <option value="" disabled selected>Class</option>
+                                    <option value="10">10th</option>
+                                    <option value="9">9th</option>
+                                    <option value="8">8th</option>
+                                    <option value="7">7th</option>
+                                    <option value="Free">Free</option>
+    
+                                </select>
+                                <select ng-model="selectedSection14">
+                                    <option value="" disabled selected>Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                <input type="text" ng-model="subj14" placeholder="Subject">
+                            </td>
+                            <td>
+                                <select ng-model="selectedClass15">
+                                    <option value="" disabled selected>Class</option>
+                                    <option value="10">10th</option>
+                                    <option value="9">9th</option>
+                                    <option value="8">8th</option>
+                                    <option value="7">7th</option>
+                                    <option value="Free">Free</option>
+    
+                                </select>
+                                <select ng-model="selectedSection15">
+                                    <option value="" disabled selected>Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                <input type="text" ng-model="subj15" placeholder="Subject">
+                            </td>
+                            <td>
+                                <select ng-model="selectedClass16">
+                                    <option value="" disabled selected>Class</option>
+                                    <option value="10">10th</option>
+                                    <option value="9">9th</option>
+                                    <option value="8">8th</option>
+                                    <option value="7">7th</option>
+                                    <option value="Free">Free</option>
+    
+                                </select>
+                                <select ng-model="selectedSection16">
+                                    <option value="" disabled selected>Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                <input type="text" ng-model="subj16" placeholder="Subject">
+                            </td>
+    
+    
+    
+    
+                        </tr><tr>
+                                <td>Wed</td>
+                                <td>
+                                    <select ng-model="selectedClass17">
+                                        <option value="" disabled selected>Class</option>
+                                        <option value="10">10th</option>
+                                        <option value="9">9th</option>
+                                        <option value="8">8th</option>
+                                        <option value="7">7th</option>
+                                        <option value="Free">Free</option>
         
-        <input type="text" ng-model="schoolName" placeholder="Enter school Name"><br><br>
-        <input type="text" ng-model="teacherId" placeholder="Enter teacher id"><br><br>
-        <input type="text" ng-model="teacherName" placeholder="Enter Teacher Name"><br><br>
-        <input type="email" ng-model="teacherEmail" placeholder="Enter Teacher Email"><br><br>
-        <input type="text" ng-model="mobileNum" placeholder="Enter Teacher mobile number"><br><br>
-        <div ng-repeat="x in css">
-            <input type="text" ng-model="x.class" placeholder="Enter Class"><br><br>
-            <input type="text" ng-model="x.section" placeholder="Enter Section"><br><br>
-            <input type="text" ng-model="x.subject" placeholder="Enter Subject"><br><br>
-        </div>
-        <button ng-click="addSCC()">Add Class-Section-Subject</button><br><br>
-       
-        <input type="password" ng-model="pswd" placeholder="Enter password"><br><br>
+                                    </select>
+                                    <select ng-model="selectedSection17">
+                                        <option value="" disabled selected>Section</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <input type="text" ng-model="subj17" placeholder="Subject">
+                                </td>
+                                <td>
+                                    <select ng-model="selectedClass18">
+                                        <option value="" disabled selected>Class</option>
+                                        <option value="10">10th</option>
+                                        <option value="9">9th</option>
+                                        <option value="8">8th</option>
+                                        <option value="7">7th</option>
+                                        <option value="Free">Free</option>
+        
+                                    </select>
+                                    <select ng-model="selectedSection18">
+                                        <option value="" disabled selected>Section</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <input type="text" ng-model="subj18" placeholder="Subject">
+                                </td>
+                                <td>
+                                        <select ng-model="selectedClass19">
+                                            <option value="" disabled selected>Class</option>
+                                            <option value="10">10th</option>
+                                            <option value="9">9th</option>
+                                            <option value="8">8th</option>
+                                            <option value="7">7th</option>
+                                            <option value="Free">Free</option>
+            
+                                        </select>
+                                        <select ng-model="selectedSection19">
+                                            <option value="" disabled selected>Section</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                        <input type="text" ng-model="subj19" placeholder="Subject">
+                                    </td>
+                                <td>
+                                    <select ng-model="selectedClass20">
+                                        <option value="" disabled selected>Class</option>
+                                        <option value="10">10th</option>
+                                        <option value="9">9th</option>
+                                        <option value="8">8th</option>
+                                        <option value="7">7th</option>
+                                        <option value="Free">Free</option>
+        
+                                    </select>
+                                    <select ng-model="selectedSection20">
+                                        <option value="" disabled selected>Section</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <input type="text" ng-model="subj20" placeholder="Subject">
+                                </td>
+                                <td>
+                                    <select ng-model="selectedClass21">
+                                        <option value="" disabled selected>Class</option>
+                                        <option value="10">10th</option>
+                                        <option value="9">9th</option>
+                                        <option value="8">8th</option>
+                                        <option value="7">7th</option>
+                                        <option value="Free">Free</option>
+        
+                                    </select>
+                                    <select ng-model="selectedSection21">
+                                        <option value="" disabled selected>Section</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <input type="text" ng-model="subj21" placeholder="Subject">
+                                </td>
+                                <td>
+                                    <select ng-model="selectedClass22">
+                                        <option value="" disabled selected>Class</option>
+                                        <option value="10">10th</option>
+                                        <option value="9">9th</option>
+                                        <option value="8">8th</option>
+                                        <option value="7">7th</option>
+                                        <option value="Free">Free</option>
+        
+                                    </select>
+                                    <select ng-model="selectedSection22">
+                                        <option value="" disabled selected>Section</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <input type="text" ng-model="subj22" placeholder="Subject">
+                                </td>
+                                <td>
+                                    <select ng-model="selectedClass23">
+                                        <option value="" disabled selected>Class</option>
+                                        <option value="10">10th</option>
+                                        <option value="9">9th</option>
+                                        <option value="8">8th</option>
+                                        <option value="7">7th</option>
+                                        <option value="Free">Free</option>
+        
+                                    </select>
+                                    <select ng-model="selectedSection23">
+                                        <option value="" disabled selected>Section</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <input type="text" ng-model="subj23" placeholder="Subject">
+                                </td>
+                                <td>
+                                    <select ng-model="selectedClass24">
+                                        <option value="" disabled selected>Class</option>
+                                        <option value="10">10th</option>
+                                        <option value="9">9th</option>
+                                        <option value="8">8th</option>
+                                        <option value="7">7th</option>
+                                        <option value="Free">Free</option>
+        
+                                    </select>
+                                    <select ng-model="selectedSection24">
+                                        <option value="" disabled selected>Section</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <input type="text" ng-model="subj24" placeholder="Subject">
+                                </td>
+                               
+        
+        
+        
+        
+                            </tr><tr>
+                                    <td>Thu</td>
+                                    <td>
+                                        <select ng-model="selectedClass25">
+                                            <option value="" disabled selected>Class</option>
+                                            <option value="10">10th</option>
+                                            <option value="9">9th</option>
+                                            <option value="8">8th</option>
+                                            <option value="7">7th</option>
+                                            <option value="Free">Free</option>
+            
+                                        </select>
+                                        <select ng-model="selectedSection25">
+                                            <option value="" disabled selected>Section</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                        <input type="text" ng-model="subj25" placeholder="Subject">
+                                    </td>
+                                    <td>
+                                        <select ng-model="selectedClass26">
+                                            <option value="" disabled selected>Class</option>
+                                            <option value="10">10th</option>
+                                            <option value="9">9th</option>
+                                            <option value="8">8th</option>
+                                            <option value="7">7th</option>
+                                            <option value="Free">Free</option>
+            
+                                        </select>
+                                        <select ng-model="selectedSection26">
+                                            <option value="" disabled selected>Section</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                        <input type="text" ng-model="subj26" placeholder="Subject">
+                                    </td>
+                                    <td>
+                                        <select ng-model="selectedClass27">
+                                            <option value="" disabled selected>Class</option>
+                                            <option value="10">10th</option>
+                                            <option value="9">9th</option>
+                                            <option value="8">8th</option>
+                                            <option value="7">7th</option>
+                                            <option value="Free">Free</option>
+            
+                                        </select>
+                                        <select ng-model="selectedSection27">
+                                            <option value="" disabled selected>Section</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                        <input type="text" ng-model="subj27" placeholder="Subject">
+                                    </td>
+                                    <td>
+                                        <select ng-model="selectedClass28">
+                                            <option value="" disabled selected>Class</option>
+                                            <option value="10">10th</option>
+                                            <option value="9">9th</option>
+                                            <option value="8">8th</option>
+                                            <option value="7">7th</option>
+                                            <option value="Free">Free</option>
+            
+                                        </select>
+                                        <select ng-model="selectedSection28">
+                                            <option value="" disabled selected>Section</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                        <input type="text" ng-model="subj28" placeholder="Subject">
+                                    </td>
+                                    <td>
+                                        <select ng-model="selectedClass29">
+                                            <option value="" disabled selected>Class</option>
+                                            <option value="10">10th</option>
+                                            <option value="9">9th</option>
+                                            <option value="8">8th</option>
+                                            <option value="7">7th</option>
+                                            <option value="Free">Free</option>
+            
+                                        </select>
+                                        <select ng-model="selectedSection29">
+                                            <option value="" disabled selected>Section</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                        <input type="text" ng-model="subj29" placeholder="Subject">
+                                    </td>
+                                    <td>
+                                        <select ng-model="selectedClass30">
+                                            <option value="" disabled selected>Class</option>
+                                            <option value="10">10th</option>
+                                            <option value="9">9th</option>
+                                            <option value="8">8th</option>
+                                            <option value="7">7th</option>
+                                            <option value="Free">Free</option>
+            
+                                        </select>
+                                        <select ng-model="selectedSection30">
+                                            <option value="" disabled selected>Section</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                        <input type="text" ng-model="subj30" placeholder="Subject">
+                                    </td>
+                                    <td>
+                                        <select ng-model="selectedClass31">
+                                            <option value="" disabled selected>Class</option>
+                                            <option value="10">10th</option>
+                                            <option value="9">9th</option>
+                                            <option value="8">8th</option>
+                                            <option value="7">7th</option>
+                                            <option value="Free">Free</option>
+            
+                                        </select>
+                                        <select ng-model="selectedSection31">
+                                            <option value="" disabled selected>Section</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                        <input type="text" ng-model="subj31" placeholder="Subject">
+                                    </td>
+                                    <td>
+                                        <select ng-model="selectedClass32">
+                                            <option value="" disabled selected>Class</option>
+                                            <option value="10">10th</option>
+                                            <option value="9">9th</option>
+                                            <option value="8">8th</option>
+                                            <option value="7">7th</option>
+                                            <option value="Free">Free</option>
+            
+                                        </select>
+                                        <select ng-model="selectedSection32">
+                                            <option value="" disabled selected>Section</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                        <input type="text" ng-model="subj32" placeholder="Subject">
+                                    </td>
+            
+            
+            
+            
+                                </tr><tr>
+                                        <td>Fri</td>
+                                        <td>
+                                            <select ng-model="selectedClass33">
+                                                <option value="" disabled selected>Class</option>
+                                                <option value="10">10th</option>
+                                                <option value="9">9th</option>
+                                                <option value="8">8th</option>
+                                                <option value="7">7th</option>
+                                                <option value="Free">Free</option>
+                
+                                            </select>
+                                            <select ng-model="selectedSection33">
+                                                <option value="" disabled selected>Section</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                            </select>
+                                            <input type="text" ng-model="subj33" placeholder="Subject">
+                                        </td>
+                                        <td>
+                                            <select ng-model="selectedClass34">
+                                                <option value="" disabled selected>Class</option>
+                                                <option value="10">10th</option>
+                                                <option value="9">9th</option>
+                                                <option value="8">8th</option>
+                                                <option value="7">7th</option>
+                                                <option value="Free">Free</option>
+                
+                                            </select>
+                                            <select ng-model="selectedSection34">
+                                                <option value="" disabled selected>Section</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                            </select>
+                                            <input type="text" ng-model="subj34" placeholder="Subject">
+                                        </td>
+                                        <td>
+                                            <select ng-model="selectedClass35">
+                                                <option value="" disabled selected>Class</option>
+                                                <option value="10">10th</option>
+                                                <option value="9">9th</option>
+                                                <option value="8">8th</option>
+                                                <option value="7">7th</option>
+                                                <option value="Free">Free</option>
+                
+                                            </select>
+                                            <select ng-model="selectedSection35">
+                                                <option value="" disabled selected>Section</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                            </select>
+                                            <input type="text" ng-model="subj35" placeholder="Subject">
+                                        </td>
+                                        <td>
+                                            <select ng-model="selectedClass36">
+                                                <option value="" disabled selected>Class</option>
+                                                <option value="10">10th</option>
+                                                <option value="9">9th</option>
+                                                <option value="8">8th</option>
+                                                <option value="7">7th</option>
+                                                <option value="Free">Free</option>
+                
+                                            </select>
+                                            <select ng-model="selectedSection36">
+                                                <option value="" disabled selected>Section</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                            </select>
+                                            <input type="text" ng-model="subj36" placeholder="Subject">
+                                        </td>
+                                        <td>
+                                            <select ng-model="selectedClass37">
+                                                <option value="" disabled selected>Class</option>
+                                                <option value="10">10th</option>
+                                                <option value="9">9th</option>
+                                                <option value="8">8th</option>
+                                                <option value="7">7th</option>
+                                                <option value="Free">Free</option>
+                
+                                            </select>
+                                            <select ng-model="selectedSection37">
+                                                <option value="" disabled selected>Section</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                            </select>
+                                            <input type="text" ng-model="subj37" placeholder="Subject">
+                                        </td>
+                                        <td>
+                                            <select ng-model="selectedClass38">
+                                                <option value="" disabled selected>Class</option>
+                                                <option value="10">10th</option>
+                                                <option value="9">9th</option>
+                                                <option value="8">8th</option>
+                                                <option value="7">7th</option>
+                                                <option value="Free">Free</option>
+                
+                                            </select>
+                                            <select ng-model="selectedSection38">
+                                                <option value="" disabled selected>Section</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                            </select>
+                                            <input type="text" ng-model="subj38" placeholder="Subject">
+                                        </td>
+                                        <td>
+                                            <select ng-model="selectedClass39">
+                                                <option value="" disabled selected>Class</option>
+                                                <option value="10">10th</option>
+                                                <option value="9">9th</option>
+                                                <option value="8">8th</option>
+                                                <option value="7">7th</option>
+                                                <option value="Free">Free</option>
+                
+                                            </select>
+                                            <select ng-model="selectedSection39">
+                                                <option value="" disabled selected>Section</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                            </select>
+                                            <input type="text" ng-model="subj39" placeholder="Subject">
+                                        </td>
+                                        <td>
+                                            <select ng-model="selectedClass40">
+                                                <option value="" disabled selected>Class</option>
+                                                <option value="10">10th</option>
+                                                <option value="9">9th</option>
+                                                <option value="8">8th</option>
+                                                <option value="7">7th</option>
+                                                <option value="Free">Free</option>
+                
+                                            </select>
+                                            <select ng-model="selectedSection40">
+                                                <option value="" disabled selected>Section</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                            </select>
+                                            <input type="text" ng-model="subj40" placeholder="Subject">
+                                        </td>
+                
+                
+                
+                
+                                    </tr><tr>
+                                            <td>Sat</td>
+                                            <td>
+                                                <select ng-model="selectedClass41">
+                                                    <option value="" disabled selected>Class</option>
+                                                    <option value="10">10th</option>
+                                                    <option value="9">9th</option>
+                                                    <option value="8">8th</option>
+                                                    <option value="7">7th</option>
+                                                    <option value="Free">Free</option>
+                    
+                                                </select>
+                                                <select ng-model="selectedSection41">
+                                                    <option value="" disabled selected>Section</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                                <input type="text" ng-model="subj41" placeholder="Subject">
+                                            </td>
+                                            <td>
+                                                <select ng-model="selectedClass42">
+                                                    <option value="" disabled selected>Class</option>
+                                                    <option value="10">10th</option>
+                                                    <option value="9">9th</option>
+                                                    <option value="8">8th</option>
+                                                    <option value="7">7th</option>
+                                                    <option value="Free">Free</option>
+                    
+                                                </select>
+                                                <select ng-model="selectedSection42">
+                                                    <option value="" disabled selected>Section</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                                <input type="text" ng-model="subj42" placeholder="Subject">
+                                            </td>
+                                            <td>
+                                                <select ng-model="selectedClass43">
+                                                    <option value="" disabled selected>Class</option>
+                                                    <option value="10">10th</option>
+                                                    <option value="9">9th</option>
+                                                    <option value="8">8th</option>
+                                                    <option value="7">7th</option>
+                                                    <option value="Free">Free</option>
+                    
+                                                </select>
+                                                <select ng-model="selectedSection43">
+                                                    <option value="" disabled selected>Section</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                                <input type="text" ng-model="subj43" placeholder="Subject">
+                                            </td>
+                                            <td>
+                                                <select ng-model="selectedClass44">
+                                                    <option value="" disabled selected>Class</option>
+                                                    <option value="10">10th</option>
+                                                    <option value="9">9th</option>
+                                                    <option value="8">8th</option>
+                                                    <option value="7">7th</option>
+                                                    <option value="Free">Free</option>
+                    
+                                                </select>
+                                                <select ng-model="selectedSection44">
+                                                    <option value="" disabled selected>Section</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                                <input type="text" ng-model="subj44" placeholder="Subject">
+                                            </td>
+                                            <td>
+                                                <select ng-model="selectedClass45">
+                                                    <option value="" disabled selected>Class</option>
+                                                    <option value="10">10th</option>
+                                                    <option value="9">9th</option>
+                                                    <option value="8">8th</option>
+                                                    <option value="7">7th</option>
+                                                    <option value="Free">Free</option>
+                    
+                                                </select>
+                                                <select ng-model="selectedSection45">
+                                                    <option value="" disabled selected>Section</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                                <input type="text" ng-model="subj45" placeholder="Subject">
+                                            </td>
+                                            <td>
+                                                <select ng-model="selectedClass46">
+                                                    <option value="" disabled selected>Class</option>
+                                                    <option value="10">10th</option>
+                                                    <option value="9">9th</option>
+                                                    <option value="8">8th</option>
+                                                    <option value="7">7th</option>
+                                                    <option value="Free">Free</option>
+                    
+                                                </select>
+                                                <select ng-model="selectedSection46">
+                                                    <option value="" disabled selected>Section</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                                <input type="text" ng-model="subj46" placeholder="Subject">
+                                            </td>
+                                            <td>
+                                                <select ng-model="selectedClass47">
+                                                    <option value="" disabled selected>Class</option>
+                                                    <option value="10">10th</option>
+                                                    <option value="9">9th</option>
+                                                    <option value="8">8th</option>
+                                                    <option value="7">7th</option>
+                                                    <option value="Free">Free</option>
+                    
+                                                </select>
+                                                <select ng-model="selectedSection47">
+                                                    <option value="" disabled selected>Section</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                                <input type="text" ng-model="subj47" placeholder="Subject">
+                                            </td>
+                                            <td>
+                                                <select ng-model="selectedClass48">
+                                                    <option value="" disabled selected>Class</option>
+                                                    <option value="10">10th</option>
+                                                    <option value="9">9th</option>
+                                                    <option value="8">8th</option>
+                                                    <option value="7">7th</option>
+                                                    <option value="Free">Free</option>
+                    
+                                                </select>
+                                                <select ng-model="selectedSection48">
+                                                    <option value="" disabled selected>Section</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                                <input type="text" ng-model="subj48" placeholder="Subject">
+                                            </td>
+                    
+                    
+                    
+                    
+                                        </tr>
 
-        <button ng-click="saveTeacher()">Submit</button>
-    </form>
-</div>
+                </tbody>
+
+            </table>
+
+            <button ng-click="saveTeacher()">Submit</button>
+        </form>
+    </div>
 </div>

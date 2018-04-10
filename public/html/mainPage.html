@@ -29,6 +29,7 @@
     <script src="/controllers/userAuthCtrl.js"></script>
     <script src="/controllers/teacherInsertCtrl.js"></script>
     <script src="/controllers/studentInsertCtrl.js"></script>
+    
     <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
     <link href="/home/css/style.css" rel="stylesheet">
@@ -52,8 +53,28 @@
         background-color: blue;
     }
     </style>
-   
-
+    <!-- Dropdown with search -->
+   <script>
+       
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        
+        function filterFunction() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("myDropdown");
+            a = div.getElementsByTagName("a");
+            for (i = 0; i < a.length; i++) {
+                if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
+            }
+        }
+        </script>
    
 </head>
 
