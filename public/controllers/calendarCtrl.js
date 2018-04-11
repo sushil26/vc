@@ -541,25 +541,26 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   var actions = [{
     label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
     onClick: function (args) {
-      alert('Edited', args.calendarEvent);
+      alert("Edit Event Comming Soon");
       console.log("args.calendarEvent: " + args.calendarEvent);
       console.log("JSON args.calendarEvent: " + JSON.stringify(args.calendarEvent));
-      var eClicked = $uibModal.open({
-        scope: $scope,
-        templateUrl: '/html/templates/eventDetails_edit.html',
-        windowClass: 'show',
-        backdropClass: 'show',
-        controller: function ($scope, $uibModalInstance) {
-          $scope.eventDetails = args.calendarEvent;
-          console.log("$scope.eventDetails: " + $scope.eventDetails);
-        }
-      })
+      // var eClicked = $uibModal.open({
+      //   scope: $scope,
+      //   templateUrl: '/html/templates/eventDetails_edit.html',
+      //   windowClass: 'show',
+      //   backdropClass: 'show',
+      //   controller: function ($scope, $uibModalInstance) {
+      //     $scope.eventDetails = args.calendarEvent;
+      //     console.log("$scope.eventDetails: " + $scope.eventDetails);
+      //   }
+      // })
       // alert.show('Edited', args.calendarEvent);
     }
   }, {
     label: '<i class=\'glyphicon glyphicon-remove\'></i>',
     onClick: function (args) {
-      alert.show('Deleted', args.calendarEvent);
+      // alert.show('Deleted', args.calendarEvent);
+      alert("Delete Event Comming Soon");
     }
   }];
   vm.events = [
