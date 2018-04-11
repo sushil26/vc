@@ -9,20 +9,20 @@ if (localStorage.getItem("userData")) {
     console.log("loginType: " + loginType);
     if (loginType == 'teacher') {
         document.getElementById("appLogin").style.display = 'none';
-        document.getElementById("appReg").style.display = 'none';
+        // document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
         document.getElementById("userAuth").style.display = 'none';
        
     }
     else if(loginType == 'admin'){
         document.getElementById("appLogin").style.display = 'none';
-        document.getElementById("appReg").style.display = 'none';
+        // document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
         document.getElementById("userAuth").style.display = 'block';
     }
     else if (loginType == 'studParent') {
         document.getElementById("appLogin").style.display = 'none';
-        document.getElementById("appReg").style.display = 'none';
+        // document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
         document.getElementById("userAuth").style.display = 'none';
    }
@@ -43,7 +43,7 @@ else {
             userName = localStorage.getItem("userName");
             // startVideoAction();
             document.getElementById("appLogin").style.display = 'none';
-            document.getElementById("appReg").style.display = 'none';
+            // document.getElementById("appReg").style.display = 'none';
             document.getElementById("appLogout").style.display = 'block';
        }
         else {
@@ -90,7 +90,7 @@ function logVC() {
                 alert("Logged in Successfull");
                 sessionSet(data);
                 document.getElementById("appLogin").style.display = 'none';
-                document.getElementById("appReg").style.display = 'none';
+                // document.getElementById("appReg").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
                 userName = data.data.userName;
             }
@@ -105,7 +105,7 @@ function logVC() {
                 sessionSet(data);
                 document.getElementById("userAuth").style.display = 'block';
                 document.getElementById("appLogin").style.display = 'none';
-                document.getElementById("appReg").style.display = 'none';
+                // document.getElementById("appReg").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
             }
             else{
@@ -221,6 +221,6 @@ function vcLogout() {
     document.getElementById("userAuth").style.display = 'none';
     document.getElementById("appLogout").style.display = 'none';
     document.getElementById("appLogin").style.display = 'block';
-    document.getElementById("appReg").style.display = 'block';
+    // document.getElementById("appReg").style.display = 'block';
    
 }

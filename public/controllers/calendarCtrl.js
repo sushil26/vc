@@ -468,7 +468,6 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
               'resizable': true,
               'actions': actions,
               'url': obj.url
-
             });
             // $scope.eventGet();
           }
