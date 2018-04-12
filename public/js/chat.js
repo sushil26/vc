@@ -231,7 +231,7 @@ signaling_socket.on('newTextMsg', function (data) {
 
 function playAudioForNotify() {
     console.log("playAudioForNotify-->");
-    var snd = new Audio("./click.mp3"); // buffers automatically when created
+    var snd = new Audio("./home/img/alrt.mp3"); // buffers automatically when created
     snd.play();
     console.log("<--playAudioForNotify");
 }
