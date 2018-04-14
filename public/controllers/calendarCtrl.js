@@ -136,7 +136,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
           var obj = {
             'id': $scope.specificTED[x]._id,
             'title': $scope.specificTED[x].title,
-            'color': $scope.specificTED[x].primColor,
+            'color': red,
             'startsAt': new Date($scope.specificTED[x].start),
             'endsAt': new Date($scope.specificTED[x].end),
             'draggable': true,
@@ -150,7 +150,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
             "email": $scope.specificTED[x].email
           }
           console.log(" obj" + JSON.stringify(obj))
-          vm.events = [];
+          // vm.events = [];
           // vm.events.push(obj);
           vm.events.push(obj);
         }
