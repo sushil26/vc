@@ -43,8 +43,8 @@ if (localStorage.getItem("userData")) {
     document.getElementById("userAuth").style.display = "none";
     // document.getElementById("appLogin").style.display = 'none';
     // document.getElementById("appReg").style.display = 'none';
+    //document.getElementById("appLogout").style.display = "block";
     document.getElementById("LoginUrl").style.display = "none";
-    document.getElementById("appLogout").style.display = "block";
     document.getElementById("videoConferenceUrl").style.display = "block";
     document.getElementById("scheduleMeeting").style.display = "block";
     document.getElementById("videoConferenceLinkExtention").style.display =
@@ -53,8 +53,8 @@ if (localStorage.getItem("userData")) {
     document.getElementById("userAuth").style.display = "none";
     // document.getElementById("appLogin").style.display = 'none';
     // document.getElementById("appReg").style.display = 'none';
+    //document.getElementById("appLogout").style.display = "none";
     document.getElementById("LoginUrl").style.display = "none";
-    document.getElementById("appLogout").style.display = "none";
     document.getElementById("videoConferenceUrl").style.display = "none";
     document.getElementById("scheduleMeeting").style.display = "block";
     document.getElementById("videoConferenceLinkExtention").style.display =
@@ -81,8 +81,8 @@ if (localStorage.getItem("userData")) {
       document.getElementById("userAuth").style.display = "none";
       // document.getElementById("appLogin").style.display = "none";
       // document.getElementById("appReg").style.display = "none";
+      //document.getElementById("appLogout").style.display = "none";
       document.getElementById("LoginUrl").style.display = "none";
-      document.getElementById("appLogout").style.display = "none";
       document.getElementById("videoConferenceUrl").style.display = "none";
       document.getElementById("scheduleMeeting").style.display = "none";
       document.getElementById("videoConferenceLinkExtention").style.display =
@@ -113,7 +113,7 @@ function saveName() {
     data: JSON.stringify(obj),
     contentType: "application/json",
     dataType: "json",
-    success: function(data) {
+    success: function (data) {
       var userData = {
         userName: userName,
         status: "instantActive",
@@ -127,8 +127,8 @@ function saveName() {
         document.getElementById("userAuth").style.display = "none";
         // document.getElementById("appLogin").style.display = "none";
         // document.getElementById("appReg").style.display = "none";
+        //document.getElementById("appLogout").style.display = "none";
         document.getElementById("LoginUrl").style.display = "none";
-        document.getElementById("appLogout").style.display = "none";
         document.getElementById("videoConferenceUrl").style.display = "none";
         document.getElementById("scheduleMeeting").style.display = "none";
         document.getElementById("videoConferenceLinkExtention").style.display =
@@ -141,8 +141,8 @@ function saveName() {
         document.getElementById("userAuth").style.display = "none";
         // document.getElementById("appLogin").style.display = "none";
         // document.getElementById("appReg").style.display = "none";
+        //document.getElementById("appLogout").style.display = "none";
         document.getElementById("LoginUrl").style.display = "none";
-        document.getElementById("appLogout").style.display = "none";
         document.getElementById("videoConferenceUrl").style.display = "none";
         document.getElementById("scheduleMeeting").style.display = "none";
         document.getElementById("videoConferenceLinkExtention").style.display =
@@ -171,7 +171,7 @@ function emailInvite() {
     data: JSON.stringify(obj),
     contentType: "application/json",
     dataType: "json",
-    success: function(data) {
+    success: function (data) {
       var userData = {
         email: email,
         url: URL
@@ -185,141 +185,141 @@ function emailInvite() {
   console.log("<--emailInvite");
 }
 
-function logVC() {
-  console.log("logVC from signalingSocket.js");
-  console.log("email: " + document.getElementById("crdEmail").value);
-  var email = document.getElementById("crdEmail").value;
-  var Password = document.getElementById("crdPswd").value;
-  console.log("email: " + email);
-  var obj = {
-    email: email,
-    password: Password
-  };
-  console.log("obj: " + JSON.stringify(obj));
-  console.log("logVC");
-  $.ajax({
-    url: "https://vc4all.in/vc/login4VC",
-    //  url: "http://localhost:5000/vc/login4VC",
-    type: "POST",
-    data: JSON.stringify(obj),
-    contentType: "application/json",
-    dataType: "json",
-    success: function(data) {
-      console.log("data: " + JSON.stringify(data));
-      if (data.message == "Profile Inactive") {
-        alert(
-          "Your Profile is inactive, inform your system admin to verify it"
-        );
-      } else if (data.message == "Login Successfully") {
-        alert("Logged in Successfull");
-        sessionSet(data);
-        document.getElementById("userAuth").style.display = "none";
-        document.getElementById("appLogin").style.display = "none";
-        document.getElementById("appReg").style.display = "none";
-        document.getElementById("LoginUrl").style.display = "none";
-        document.getElementById("appLogout").style.display = "block";
-        document.getElementById("videoConferenceUrl").style.display = "block";
-        document.getElementById("scheduleMeeting").style.display = "block";
-        document.getElementById("videoConferenceLinkExtention").style.display =
-          "block";
-        userName = data.data.userName;
-      } else if (data.message == "Password is wrong") {
-        alert("Password is wrong");
-      } else if (data.errorCode == "No Match") {
-        alert("There is no match for this EMail id from student database ");
-      }
+// function logVC() {
+//   console.log("logVC from signalingSocket.js");
+//   console.log("email: " + document.getElementById("crdEmail").value);
+//   var email = document.getElementById("crdEmail").value;
+//   var Password = document.getElementById("crdPswd").value;
+//   console.log("email: " + email);
+//   var obj = {
+//     email: email,
+//     password: Password
+//   };
+//   console.log("obj: " + JSON.stringify(obj));
+//   console.log("logVC");
+//   $.ajax({
+//     url: "https://vc4all.in/vc/login4VC",
+//     //  url: "http://localhost:5000/vc/login4VC",
+//     type: "POST",
+//     data: JSON.stringify(obj),
+//     contentType: "application/json",
+//     dataType: "json",
+//     success: function(data) {
+//       console.log("data: " + JSON.stringify(data));
+//       if (data.message == "Profile Inactive") {
+//         alert(
+//           "Your Profile is inactive, inform your system admin to verify it"
+//         );
+//       } else if (data.message == "Login Successfully") {
+//         alert("Logged in Successfull");
+//         sessionSet(data);
+//         document.getElementById("userAuth").style.display = "none";
+//         document.getElementById("appLogin").style.display = "none";
+//         document.getElementById("appReg").style.display = "none";
+//         document.getElementById("LoginUrl").style.display = "none";
+//         document.getElementById("appLogout").style.display = "block";
+//         document.getElementById("videoConferenceUrl").style.display = "block";
+//         document.getElementById("scheduleMeeting").style.display = "block";
+//         document.getElementById("videoConferenceLinkExtention").style.display =
+//           "block";
+//         userName = data.data.userName;
+//       } else if (data.message == "Password is wrong") {
+//         alert("Password is wrong");
+//       } else if (data.errorCode == "No Match") {
+//         alert("There is no match for this EMail id from student database ");
+//       }
 
-      if (data.loginType == "admin") {
-        sessionSet(data);
-        document.getElementById("userAuth").style.display = "block";
-        document.getElementById("appLogin").style.display = "none";
-        document.getElementById("appReg").style.display = "none";
-        document.getElementById("LoginUrl").style.display = "none";
-        document.getElementById("appLogout").style.display = "block";
-        document.getElementById("videoConferenceUrl").style.display = "block";
-        document.getElementById("scheduleMeeting").style.display = "block";
-        document.getElementById("videoConferenceLinkExtention").style.display =
-          "block";
-        window.location.href = "https://vc4all.in/mainPage#!/userAuth";
-      }
-    }
-  });
-}
+//       if (data.loginType == "admin") {
+//         sessionSet(data);
+//         document.getElementById("userAuth").style.display = "block";
+//         document.getElementById("appLogin").style.display = "none";
+//         document.getElementById("appReg").style.display = "none";
+//         document.getElementById("LoginUrl").style.display = "none";
+//         document.getElementById("appLogout").style.display = "block";
+//         document.getElementById("videoConferenceUrl").style.display = "block";
+//         document.getElementById("scheduleMeeting").style.display = "block";
+//         document.getElementById("videoConferenceLinkExtention").style.display =
+//           "block";
+//         window.location.href = "https://vc4all.in/mainPage#!/userAuth";
+//       }
+//     }
+//   });
+// }
 
-function sessionSet(data) {
-  if (typeof Storage !== "undefined") {
-    var userData = {
-      userName: data.data.userName,
-      status: data.data.status,
-      email: data.data.email,
-      loginType: data.loginType,
-      id: data.data._id
-    };
-    localStorage.setItem("userData", userData);
-    localStorage.setItem("userName", data.data.userName);
-    localStorage.setItem("status", data.data.status);
-    localStorage.setItem("email", data.data.email);
-    localStorage.setItem("loginType", data.loginType);
-    localStorage.setItem("id", data.data._id);
-    // Retrieve
-    var info = localStorage.getItem("userData");
+// function sessionSet(data) {
+//   if (typeof Storage !== "undefined") {
+//     var userData = {
+//       userName: data.data.userName,
+//       status: data.data.status,
+//       email: data.data.email,
+//       loginType: data.loginType,
+//       id: data.data._id
+//     };
+//     localStorage.setItem("userData", userData);
+//     localStorage.setItem("userName", data.data.userName);
+//     localStorage.setItem("status", data.data.status);
+//     localStorage.setItem("email", data.data.email);
+//     localStorage.setItem("loginType", data.loginType);
+//     localStorage.setItem("id", data.data._id);
+//     // Retrieve
+//     var info = localStorage.getItem("userData");
 
-    userName = info.userName;
-  } else {
-    alert("Sorry, your browser does not support Web Storage...");
-  }
-}
+//     userName = info.userName;
+//   } else {
+//     alert("Sorry, your browser does not support Web Storage...");
+//   }
+// }
 
-function vcLogout() {
-  console.log("vcLogout");
-  window.location = "https://vc4all.in/client";
-  localStorage.removeItem("userData");
-  localStorage.removeItem("userName");
-  localStorage.removeItem("status");
-  localStorage.removeItem("email");
-  document.getElementById("appLogin").style.display = "block";
-  document.getElementById("appReg").style.display = "none";
-  document.getElementById("LoginUrl").style.display = "block";
-  document.getElementById("appLogout").style.display = "none";
-  document.getElementById("videoConferenceUrl").style.display = "none";
-  document.getElementById("scheduleMeeting").style.display = "none";
-  document.getElementById("videoConferenceLinkExtention").style.display =
-    "none";
-}
+// function vcLogout() {
+//   console.log("vcLogout");
+//   window.location = "https://vc4all.in/client";
+//   localStorage.removeItem("userData");
+//   localStorage.removeItem("userName");
+//   localStorage.removeItem("status");
+//   localStorage.removeItem("email");
+//   document.getElementById("appLogin").style.display = "block";
+//   document.getElementById("appReg").style.display = "none";
+//   document.getElementById("LoginUrl").style.display = "block";
+//   document.getElementById("appLogout").style.display = "none";
+//   document.getElementById("videoConferenceUrl").style.display = "none";
+//   document.getElementById("scheduleMeeting").style.display = "none";
+//   document.getElementById("videoConferenceLinkExtention").style.display =
+//     "none";
+// }
 
-function regVc() {
-  console.log("regVc");
-  var un = document.getElementById("regVC_un").value;
-  var emId = document.getElementById("regVC_emailId").value;
-  var pswd = document.getElementById("regVC_pswd").value;
+// function regVc() {
+//   console.log("regVc");
+//   var un = document.getElementById("regVC_un").value;
+//   var emId = document.getElementById("regVC_emailId").value;
+//   var pswd = document.getElementById("regVC_pswd").value;
 
-  var obj = {
-    userName: un,
-    email: emId,
-    password: pswd
-  };
-  $.ajax({
-    url: "https://vc4all.in/vc/register4VC",
-    //url: "http://localhost:5000/vc/register4VC",
-    type: "POST",
-    data: JSON.stringify(obj),
-    contentType: "application/json",
-    dataType: "json",
-    success: function(data) {
-      // callback(data);
+//   var obj = {
+//     userName: un,
+//     email: emId,
+//     password: pswd
+//   };
+//   $.ajax({
+//     url: "https://vc4all.in/vc/register4VC",
+//     //url: "http://localhost:5000/vc/register4VC",
+//     type: "POST",
+//     data: JSON.stringify(obj),
+//     contentType: "application/json",
+//     dataType: "json",
+//     success: function(data) {
+//       // callback(data);
 
-      console.log("data: " + JSON.stringify(data));
-      if (
-        data.message == "Failed to Register" ||
-        data.message == "empty value found"
-      ) {
-        alert("Failed to register try again");
-      } else if (data.message == "Registeration Successfull") {
-        alert("Registeration Successfull");
-      }
-    }
-  });
-}
+//       console.log("data: " + JSON.stringify(data));
+//       if (
+//         data.message == "Failed to Register" ||
+//         data.message == "empty value found"
+//       ) {
+//         alert("Failed to register try again");
+//       } else if (data.message == "Registeration Successfull") {
+//         alert("Registeration Successfull");
+//       }
+//     }
+//   });
+// }
 
 // var MicGainController = function(){
 //     function a(a){
@@ -341,7 +341,7 @@ var ICE_SERVERS = [
     url: "turn:s2.xirsys.com:3478?transport=udp",
     credential: "3ed63738-3ca0-11e8-bcf4-9ad4e61d3f22",
     username: "3ed635ee-3ca0-11e8-a530-2288b20e5a3b"
-  },{
+  }, {
     url: "turn:s2.xirsys.com:80?transport=tcp",
     credential: "3ed63738-3ca0-11e8-bcf4-9ad4e61d3f22",
     username: "3ed635ee-3ca0-11e8-a530-2288b20e5a3b"
@@ -379,7 +379,7 @@ function startSession(id, date) {
     data: JSON.stringify(obj),
     contentType: "application/json",
     dataType: "json",
-    success: function(data) {
+    success: function (data) {
       console.log("data: " + JSON.stringify(data));
       console.log("data.status: " + data.status);
       if (data.status) {
@@ -396,7 +396,7 @@ function startSession(id, date) {
 
 //     console.log("init-->");
 
-signaling_socket.on("connect", function() {
+signaling_socket.on("connect", function () {
   console.log("signaling_socket connect-->");
   // console.log("1.1:peers: " + JSON.stringify(peers));
   // console.log("1.1:Connected to signaling server");
@@ -406,7 +406,7 @@ signaling_socket.on("connect", function() {
     disconnPeerId = null;
   }
 
-  signaling_socket.on("message", function(config) {
+  signaling_socket.on("message", function (config) {
     console.log("signaling_socket message-->");
     //console.log("Unique Peer Id: " + config.peer_id)
     queryLink = config.queryId;
@@ -473,25 +473,25 @@ signaling_socket.on("connect", function() {
 
       if (userName != undefined) {
         console.log("userName with localmedia setup call: " + userName);
-        setup_local_media(function() {
+        setup_local_media(function () {
           join__channel(DEFAULT_CHANNEL, { "whatever-you--here": "stuff" });
         });
       }
 
       document
         .getElementById("setNameId")
-        .addEventListener("click", function() {
+        .addEventListener("click", function () {
           console.log("setup_local_media calling**");
-          setup_local_media(function() {
+          setup_local_media(function () {
             join__channel(DEFAULT_CHANNEL, { "whatever-you--here": "stuff" });
           });
         });
 
       document
         .getElementById("crdsubmit")
-        .addEventListener("click", function() {
+        .addEventListener("click", function () {
           console.log("setup_local_media calling**");
-          setup_local_media(function() {
+          setup_local_media(function () {
             join__channel(DEFAULT_CHANNEL, { "whatever-you--here": "stuff" });
           });
         });
@@ -501,7 +501,7 @@ signaling_socket.on("connect", function() {
   console.log("<--signaling_socket connect");
 });
 
-signaling_socket.on("disconnect", function() {
+signaling_socket.on("disconnect", function () {
   console.log("signaling_socket.on disconnect-->");
   disconnPeerId = peerNew_id;
   // document.getElementById(peerNew_id).remove();
@@ -549,7 +549,7 @@ function part__channel(channel) {
  * in the channel you will connect directly to the other 5, so there will be a total of 15
  * connections in the network).
  */
-signaling_socket.on("addPeer", function(config) {
+signaling_socket.on("addPeer", function (config) {
   console.log("addPeer-->");
   console.log("addPeer 1: Signaling server said to add peer:", config);
   // console.log('Signaling server said to add peer:', JSON.stringify(config));
@@ -591,7 +591,7 @@ signaling_socket.on("addPeer", function(config) {
 
   peers[peer_id] = peer_connection;
 
-  peer_connection.onicecandidate = function(event) {
+  peer_connection.onicecandidate = function (event) {
     console.log("onicecandidate-->");
     if (event.candidate) {
       console.log("started to call server relayICECandidate--><--");
@@ -607,7 +607,7 @@ signaling_socket.on("addPeer", function(config) {
   };
   console.log("shareScreen != 'true'");
 
-  peer_connection.onaddstream = function(event) {
+  peer_connection.onaddstream = function (event) {
     console.log("onaddstream-->");
 
     var existing = document.getElementById(peer_id + "remoteContainer");
@@ -634,22 +634,22 @@ signaling_socket.on("addPeer", function(config) {
     // $('#' + peer_id + 'remoteVideoElement').append(remote_media);
     $("#portfolio-wrapper").append(
       '<div id="' +
-        peer_id +
-        'remoteContainer" class="portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3" ><div id="' +
-        peer_id +
-        'remoteVideoElement"></div><div class="details"><button id="' +
-        peer_id +
-        'fullscreenbtn2" class="btn fa fa-expand" style="float:left;  margin-top: 10px; margin-left: 10px;"></button><h4>' +
-        config.userName +
-        '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' +
-        peer_id +
-        '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' +
-        peer_id +
-        '" owner=' +
-        peer_id +
-        " name=" +
-        config.userName +
-        "></i><span>All is well</span></div></div>"
+      peer_id +
+      'remoteContainer" class="portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3" ><div id="' +
+      peer_id +
+      'remoteVideoElement"></div><div class="details"><button id="' +
+      peer_id +
+      'fullscreenbtn2" class="btn fa fa-expand" style="float:left;  margin-top: 10px; margin-left: 10px;"></button><h4>' +
+      config.userName +
+      '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' +
+      peer_id +
+      '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' +
+      peer_id +
+      '" owner=' +
+      peer_id +
+      " name=" +
+      config.userName +
+      "></i><span>All is well</span></div></div>"
     );
     $("#" + peer_id + "remoteVideoElement").append(remote_media);
 
@@ -663,7 +663,7 @@ signaling_socket.on("addPeer", function(config) {
 
       document
         .getElementById("closeThisConn" + peer_id)
-        .addEventListener("click", function() {
+        .addEventListener("click", function () {
           var removableId = document
             .getElementById("closeThisConn" + peer_id)
             .getAttribute("owner");
@@ -697,7 +697,7 @@ signaling_socket.on("addPeer", function(config) {
       }
     }
 
-    $("#" + peer_id + "fullscreenbtn2").click(function() {
+    $("#" + peer_id + "fullscreenbtn2").click(function () {
       console.log("sushil screen test");
       console.log("remove id videoElem111");
       $("#" + peer_id + "remoteVideoElement").addClass("fullscr");
@@ -721,7 +721,7 @@ signaling_socket.on("addPeer", function(config) {
       document.getElementById("header").style.display = "none";
       document.getElementById("btnrestore").style.display = "inline";
     });
-    $("#btnrestore").click(function() {
+    $("#btnrestore").click(function () {
       console.log("add id videoElem111");
       $("#" + peer_id + "remoteVideoElement").removeClass("fullscr");
       $("#" + peer_id + "remoteContainer").addClass(
@@ -829,12 +829,12 @@ signaling_socket.on("addPeer", function(config) {
     // console.log("creating offer from peer id: " + config.owner);
     // console.log("config: " + JSON.stringify(config));
     peer_connection.createOffer(
-      function(local_description) {
+      function (local_description) {
         console.log("local_description-->");
         console.log("Local offer description is: ", local_description);
         peer_connection.setLocalDescription(
           local_description,
-          function() {
+          function () {
             // console.log("local_description: " + JSON.stringify(local_description));
             signaling_socket.emit("relaySessionDescription", {
               peer_id: peer_id,
@@ -846,13 +846,13 @@ signaling_socket.on("addPeer", function(config) {
             });
             console.log("Offer setLocalDescription succeeded");
           },
-          function() {
+          function () {
             alert("Offer setLocalDescription failed!");
           }
         );
         console.log("<--local_description");
       },
-      function(error) {
+      function (error) {
         console.log("Error sending offer: ", error);
       },
       { iceRestart: true }
@@ -869,7 +869,7 @@ signaling_socket.on("addPeer", function(config) {
  * the 'offerer' sends a description to the 'answerer' (with type
  * "offer"), then the answerer sends one back (with type "answer").
  */
-signaling_socket.on("sessionDescription", function(config) {
+signaling_socket.on("sessionDescription", function (config) {
   console.log("sessionDescription-->");
   console.log("SD 1: Remote description received: ", config);
   console.log("config.peer_id: " + config.peer_id);
@@ -884,7 +884,7 @@ signaling_socket.on("sessionDescription", function(config) {
     // document.getElementById('textChat').style.display = 'block';
     var stuff = peer.setRemoteDescription(
       desc,
-      function() {
+      function () {
         console.log("setRemoteDescription succeeded");
         if (remote_description.type == "offer") {
           console.log("Creating answer");
@@ -892,12 +892,12 @@ signaling_socket.on("sessionDescription", function(config) {
           // console.log("++++config.peerIdForAuth: "+config.peerIdForAuth);
 
           peer.createAnswer(
-            function(local_description) {
+            function (local_description) {
               console.log("Answer description is: ", local_description);
               console.log("local_description: " + local_description);
               peer.setLocalDescription(
                 local_description,
-                function() {
+                function () {
                   signaling_socket.emit("relaySessionDescription", {
                     peer_id: peer_id,
                     session_description: local_description,
@@ -908,19 +908,19 @@ signaling_socket.on("sessionDescription", function(config) {
                   });
                   console.log("Answer setLocalDescription succeeded");
                 },
-                function() {
+                function () {
                   console.log("Answer setLocalDescription failed!");
                 }
               );
             },
-            function(error) {
+            function (error) {
               console.log("Error creating answer: ", error);
               console.log(peer);
             }
           );
         }
       },
-      function(error) {
+      function (error) {
         console.log("setRemoteDescription error: ", error);
       }
     );
@@ -937,7 +937,7 @@ signaling_socket.on("sessionDescription", function(config) {
  * The offerer will send a number of ICE Candidate blobs to the answerer so they
  * can begin trying to find the best path to one another on the net.
  */
-signaling_socket.on("iceCandidate", function(config) {
+signaling_socket.on("iceCandidate", function (config) {
   console.log("iceCandidate-->");
   // console.log("iceCandidate: " + JSON.stringify(config));
   var peer = peers[config.peer_id];
@@ -957,7 +957,7 @@ signaling_socket.on("iceCandidate", function(config) {
  * signaling_socket.on('disconnect') code will kick in and tear down
  * all the peer sessions.
  */
-signaling_socket.on("removePeer", function(config) {
+signaling_socket.on("removePeer", function (config) {
   console.log("Signaling server said to remove peer:", config);
   var peer_id = config.peer_id;
   if (peer_id in peer_media_elements) {
@@ -976,7 +976,7 @@ signaling_socket.on("removePeer", function(config) {
 });
 
 /* Note: When video hoster want to remove perticular peer this functionality will work */
-signaling_socket.on("authorizedForClose", function(config) {
+signaling_socket.on("authorizedForClose", function (config) {
   console.log("authorizedForClose-->");
 
   if (queryLink == config.queryId) {
@@ -1034,7 +1034,7 @@ function setup_local_media(callback, errorback) {
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia;
 
-  attachMediaStream = function(element, stream) {
+  attachMediaStream = function (element, stream) {
     console.log("attachMediaStream-->");
     // console.log('DEPRECATED, attachMediaStream  will soon be removed.');
     element.srcObject = stream;
@@ -1042,7 +1042,7 @@ function setup_local_media(callback, errorback) {
   };
   navigator.getUserMedia(
     { audio: USE_AUDIO, video: USE_VIDEO },
-    function(stream) {
+    function (stream) {
       /* user accepted access to a/v */
       console.log("Access granted to audio/video");
       console.log("stream: " + stream);
@@ -1064,14 +1064,14 @@ function setup_local_media(callback, errorback) {
       // $('#videosAttach').append(local_media);
       $("#portfolio-wrapper").append(
         '<div id="videoElem111" class="portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' +
-          userName +
-          "</h4><span>All is well</span></div></div>"
+        userName +
+        "</h4><span>All is well</span></div></div>"
       );
       $("#videosAttach").append(local_media);
 
       document
         .getElementById("videoElem")
-        .addEventListener("click", function() {
+        .addEventListener("click", function () {
           console.log("screem size change request-->");
           var videoElem = document.getElementById("videoElem");
           var isFullScreen =
@@ -1100,11 +1100,11 @@ function setup_local_media(callback, errorback) {
         });
       document
         .getElementById("audio_btn")
-        .addEventListener("click", function() {
+        .addEventListener("click", function () {
           console.log("audio_btn-->");
           console.log(
             "stream.getAudioTracks()[0].enabled: " +
-              stream.getAudioTracks()[0].enabled
+            stream.getAudioTracks()[0].enabled
           );
           stream.getAudioTracks()[0].enabled = !stream.getAudioTracks()[0]
             .enabled;
@@ -1120,7 +1120,7 @@ function setup_local_media(callback, errorback) {
 
           console.log(
             "stream.getAudioTracks()[0].enabled: " +
-              stream.getAudioTracks()[0].enabled
+            stream.getAudioTracks()[0].enabled
           );
           console.log("<--audio_btn");
         });
@@ -1129,7 +1129,7 @@ function setup_local_media(callback, errorback) {
 
       if (callback) callback();
     },
-    function() {
+    function () {
       /* user denied access to a/v */
       console.log("Access denied for audio/video");
       alert(
@@ -1141,15 +1141,15 @@ function setup_local_media(callback, errorback) {
 
   document
     .getElementById("screenShareBtn")
-    .addEventListener("click", function() {
+    .addEventListener("click", function () {
       console.log("screenShare-->");
-      getScreenId(function(error, sourceId, screen_constraints) {
+      getScreenId(function (error, sourceId, screen_constraints) {
         navigator.getUserMedia(
           screen_constraints,
-          function(stream) {
+          function (stream) {
             navigator.getUserMedia(
               { audio: true },
-              function(audioStream) {
+              function (audioStream) {
                 stream.addTrack(audioStream.getAudioTracks()[0]);
                 // shareScreen = peerNew_id;
                 var local_media = document.getElementById("videoElem");
@@ -1158,7 +1158,7 @@ function setup_local_media(callback, errorback) {
                   let stream = videoElem.srcObject;
                   let tracks = stream.getTracks();
 
-                  tracks.forEach(function(track) {
+                  tracks.forEach(function (track) {
                     track.stop();
                   });
 
@@ -1201,7 +1201,7 @@ function setup_local_media(callback, errorback) {
                   let stream = screenShareElem.srcObject;
                   let tracks = stream.getTracks();
 
-                  tracks.forEach(function(track) {
+                  tracks.forEach(function (track) {
                     track.stop();
                   });
 
@@ -1214,7 +1214,7 @@ function setup_local_media(callback, errorback) {
                   /* ######   ###### */
                   navigator.getUserMedia(
                     { audio: USE_AUDIO, video: USE_VIDEO },
-                    function(stream) {
+                    function (stream) {
                       /* user accepted access to a/v */
                       console.log("Access granted to audio/video");
                       console.log("stream: " + stream);
@@ -1237,7 +1237,7 @@ function setup_local_media(callback, errorback) {
 
                       if (callback) callback();
                     },
-                    function() {
+                    function () {
                       /* user denied access to a/v */
                       console.log("Access denied for audio/video");
                       alert(
@@ -1256,13 +1256,13 @@ function setup_local_media(callback, errorback) {
 
                 // share this "MediaStream" object using RTCPeerConnection API
               },
-              function(error) {
+              function (error) {
                 console.error(error);
                 if (errorback) errorback();
               }
             );
           },
-          function(error) {
+          function (error) {
             var msg =
               "You Must Need to Install  Screen Share Extention, Click ok to install";
             var newLine = "\r\n";
@@ -1285,7 +1285,7 @@ function setup_local_media(callback, errorback) {
   console.log("<--setup_local_media");
 }
 
-signaling_socket.on("stateChangedToClient", function(data) {
+signaling_socket.on("stateChangedToClient", function (data) {
   console.log("newstateChangedToClientTextMsg-->");
   console.log("data.userId: " + data.userId);
   console.log("peerNew_id: " + peerNew_id);
@@ -1307,8 +1307,8 @@ function scrollDown() {
 // getScreenId.js
 // <script src="https://cdn.WebRTC-Experiment.com/getScreenId.js"></script>
 
-(function() {
-  window.getScreenId = function(callback) {
+(function () {
+  window.getScreenId = function (callback) {
     // for Firefox:
     // sourceId == 'firefox'
     // screen_constraints = {...}
@@ -1399,9 +1399,9 @@ function scrollDown() {
   var iframe;
 
   // this function is used in RTCMultiConnection v3
-  window.getScreenConstraints = function(callback) {
-    loadIFrame(function() {
-      getScreenId(function(error, sourceId, screen_constraints) {
+  window.getScreenConstraints = function (callback) {
+    loadIFrame(function () {
+      getScreenId(function (error, sourceId, screen_constraints) {
         if (!screen_constraints) {
           screen_constraints = {
             video: true
@@ -1420,7 +1420,7 @@ function scrollDown() {
     }
 
     iframe = document.createElement("iframe");
-    iframe.onload = function() {
+    iframe.onload = function () {
       iframe.isLoaded = true;
 
       loadCallback();
@@ -1430,7 +1430,7 @@ function scrollDown() {
     (document.body || document.documentElement).appendChild(iframe);
   }
 
-  window.getChromeExtensionStatus = function(callback) {
+  window.getChromeExtensionStatus = function (callback) {
     // for Firefox:
     if (!!navigator.mozGetUserMedia) {
       callback("installed-enabled");
@@ -1473,7 +1473,7 @@ function scrollDown() {
   }
 })();
 // Header fixed and Back to top button
-$(window).scroll(function() {
+$(window).scroll(function () {
   if ($(this).scrollTop() > 100) {
     $(".back-to-top").fadeIn("slow");
     $("#header").addClass("header-fixed");
@@ -1482,7 +1482,7 @@ $(window).scroll(function() {
     $("#header").removeClass("header-fixed");
   }
 });
-$(".back-to-top").click(function() {
+$(".back-to-top").click(function () {
   $("html, body").animate({ scrollTop: 0 }, 1500, "easeInOutExpo");
   return false;
 });

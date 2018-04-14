@@ -7,7 +7,10 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   
     // }
   
-  
+    
+    //{"schoolName" : "dempo2", "studId" : "demos0001", "studName" : "demos1", "parentName" : "demofather", "parentEmail" : "shirdhi@careator.com", "mobileNum" : "99999999","MotherName" : "demomother","MotherEmail" : "shirdhi@Careator.com","MotherNum" : "88888888","cs" : [{"class" : "8","section" : "A" }], "pswd" : "abc", "status" : "active", "loginType" : "studParent"}
+
+
     if (localStorage.getItem("loginType") == 'admin') {
       console.log("loginType: " + localStorage.getItem("loginType"));
       document.getElementById('userAuth').style.display = "block";

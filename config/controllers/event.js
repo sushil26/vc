@@ -11,14 +11,14 @@ var nodemailer = require('nodemailer');
 
 
 var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'logeswari.careator@gmail.com',
-        pass: 'iloveindia'
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
+    service: "godaddy",
+  auth: {
+    user: "info@vc4all.in",
+    pass: "ctpl@123"
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 module.exports.eventSend = function (req, res) {
     console.log("eventSend-->");
@@ -62,10 +62,10 @@ module.exports.eventSend = function (req, res) {
 
 
                 var mailOptions = {
-                    from: "logeswari.careator@gmail.com",
+                    from: "info@vc4all.in",
                     to: req.body.email,
                     subject: "Regarding School Meeting",
-                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to +" + req.body.endAt + " +</p><p>Here your link and password for meeting " + req.body.url + " Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p>Here your link and password for meeting <a href="+req.body.url+">"+req.body.url+"</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                 };
                 console.log("mailOptions: " + JSON.stringify(mailOptions));
 

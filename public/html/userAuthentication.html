@@ -1,14 +1,13 @@
 <div style="margin-top: 85px;" ng-controller="userAuthCtrl">
   <div class="container" ng-if="userLoginType=='admin'">
-
-    <h2>Teacher Time Table</h2>
+<div ng-if="getUserData.timeTable[0].Monday">
+    <h2>{{getUserData.teacherName}} Time Table</h2>
     <!-- ##### Start the Teacher List ##### -->
     <table class="table table-bordered">
 
       <thead>
         <tr style="background: darkturquoise;">
-          <th>Timeing</th>
-
+          <th>Timing</th>
           <th>09:00-09:45</th>
           <th>9:45-10:30</th>
           <th>10:30-11:15</th>
@@ -17,7 +16,6 @@
           <th>01:45-02:30</th>
           <th>02:30-03:15</th>
           <th>03:15-04:00</th>
-
         </tr>
       </thead>
       <tbody>
@@ -48,6 +46,8 @@
       </tbody>
 
     </table>
+
+  </div>
 
 
 
@@ -102,10 +102,13 @@
       <thead>
         <tr style="background: darkturquoise;">
           <th>Sr.no</th>
-          <th>Student Name</th>
           <th>Student Id</th>
-          <th>Parent Name</th>
-          <th>Parent Email</th>
+          <th>Student Name</th>
+        
+          <th>Father Name</th>
+          <th>Father Email</th>
+          <th>Mother Name</th>
+          <th>Mother Email</th>
           <th>Status</th>
           <th>Activation</th>
           <th>Delete</th>
@@ -115,13 +118,17 @@
       <tbody>
         <tr ng-repeat="sd in studData">
           <td style="background-color:aliceblue;">{{$index+1}}.</td>
+          <td style="background-color:aliceblue;">{{sd.studId}}</td>
           <td style="background-color:aliceblue;">
             <button type="button" class="btn-info " data-toggle="modal" data-target="#myModal">{{sd.studName}}</button>
             <!-- Modal -->
           </td>
-          <td style="background-color:aliceblue;">{{sd.studId}}</td>
+          
+   
           <td style="background-color:aliceblue;">{{sd.parentName}}</td>
           <td style="background-color:aliceblue;">{{sd.parentEmail}}</td>
+          <td style="background-color:aliceblue;">{{sd.MotherName}}</td>
+          <td style="background-color:aliceblue;">{{sd.MotherEmail}}</td>
           <td ng-if="sd.status=='active'" style="background-color:aliceblue;">{{sd.status}}</td>
           <td ng-if="sd.status=='inactive'" style="background-color:tomato;">{{sd.status}}</td>
           <td style="background-color:aliceblue;">

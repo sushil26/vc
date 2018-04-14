@@ -455,7 +455,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
           if (checkStatus) {
             console.log("data" + JSON.stringify(data.data))
             // $window.location.href = $scope.propertyJson.R082;
-            alert("Successfully sent the event " + data.data.message);
+            alert("Successfully sent the event");
             vm.events.splice(0, 1);
             var eventPostedData = data.data.data;
             vm.events.push({
@@ -553,13 +553,13 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       //     console.log("$scope.eventDetails: " + $scope.eventDetails);
       //   }
       // })
-      // alert.show('Edited', args.calendarEvent);
+     
     }
   }, {
     label: '<i class=\'glyphicon glyphicon-remove\'></i>',
     onClick: function (args) {
-      // alert.show('Deleted', args.calendarEvent);
       alert("Delete Event Comming Soon");
+      // alert.show('Deleted', args.calendarEvent);
     }
   }];
   vm.events = [
@@ -648,7 +648,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       backdropClass: 'show',
       controller: function ($scope, $uibModalInstance) {
         $scope.eventDetails = event;
-        console.log("$scope.eventDetails: " + $scope.eventDetails);
+        console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
       }
     })
     console.log("<--eventClicked");
