@@ -136,7 +136,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
           var obj = {
             'id': $scope.specificTED[x]._id,
             'title': $scope.specificTED[x].title,
-            'color': red,
+            'color': $scope.specificTED[x].primColor,
             'startsAt': new Date($scope.specificTED[x].start),
             'endsAt': new Date($scope.specificTED[x].end),
             'draggable': true,
@@ -150,7 +150,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
             "email": $scope.specificTED[x].email
           }
           console.log(" obj" + JSON.stringify(obj))
-          // vm.events = [];
+          vm.events = [];
           // vm.events.push(obj);
           vm.events.push(obj);
         }
@@ -455,7 +455,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
           if (checkStatus) {
             console.log("data" + JSON.stringify(data.data))
             // $window.location.href = $scope.propertyJson.R082;
-            alert("Successfully sent the event");
+            alert("Successfully sent the event " + data.data.message);
             vm.events.splice(0, 1);
             var eventPostedData = data.data.data;
             vm.events.push({
@@ -553,13 +553,13 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       //     console.log("$scope.eventDetails: " + $scope.eventDetails);
       //   }
       // })
-     
+      // alert.show('Edited', args.calendarEvent);
     }
   }, {
     label: '<i class=\'glyphicon glyphicon-remove\'></i>',
     onClick: function (args) {
-      alert("Delete Event Comming Soon");
       // alert.show('Deleted', args.calendarEvent);
+      alert("Delete Event Comming Soon");
     }
   }];
   vm.events = [
@@ -648,7 +648,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       backdropClass: 'show',
       controller: function ($scope, $uibModalInstance) {
         $scope.eventDetails = event;
-        console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+        console.log("$scope.eventDetails: " + $scope.eventDetails);
       }
     })
     console.log("<--eventClicked");
