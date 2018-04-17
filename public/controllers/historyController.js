@@ -4,7 +4,7 @@ app.controller('historyController', function ($scope, $window, httpFactory,  $ui
     $scope.eventGet = function () {
         console.log("eventGet-->");
         var id = localStorage.getItem("id");
-        var api = "https://vc4all.in/vc/eventGet" + "/" + id;
+        var api = "https://norecruits.com/vc/eventGet" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
         $scope.calendarOwner = "Your";
 

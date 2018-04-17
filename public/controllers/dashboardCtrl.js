@@ -13,7 +13,7 @@ app.controller('dashboardController', function ($scope, $window, httpFactory) {
         localStorage.removeItem("loginType");
         localStorage.removeItem("id");
         localStorage.removeItem("css");
-        window.location.href = "https://vc4all.in";
+        window.location.href = "https://norecruits.com";
         console.log("<--logOut");
     }
 

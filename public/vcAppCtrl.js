@@ -10,7 +10,7 @@ app.controller("vcAppCtrl", function(
 
   $scope.vcLogout = function() {
     console.log("vcLogout");
-    window.location = "https://vc4all.in/client";
+    window.location = "https://norecruits.com/client";
     localStorage.removeItem("userData");
     localStorage.removeItem("userName");
     localStorage.removeItem("status");

@@ -1,6 +1,6 @@
 /** CONFIG **/
 console.log("Signaling Socket.js from calendar");
-var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "https://norecruits.com";
 //var SIGNALING_SERVER = "http://localhost:5000";
 //var SIGNALING_SERVER = "https://svcapp.herokuapp.com";
 // var SIGNALING_SERVER = "https://logchat.herokuapp.com";
@@ -18,7 +18,7 @@ if (localStorage.getItem("userData")) {
 
 function vcLogout() {
     console.log("vcLogout");
-    window.location = "https://vc4all.in/client";
+    window.location = "https://norecruits.com/client";
     localStorage.removeItem("userData");
     document.getElementById("appLogin").style.display = 'block';
     document.getElementById("appLogout").style.display = 'none';
@@ -80,9 +80,9 @@ function init() {
             queryLink = config.queryId;
             peerNew_id = config.peer_id;
 
-                    document.getElementById('linkToShare').innerHTML += "https://vc4all.in/client/" + peerNew_id;
-                    //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id);
-                    document.getElementById('linkToShare').setAttribute('href', "https://vc4all.in/client/" + peerNew_id);
+                    document.getElementById('linkToShare').innerHTML += "https://norecruits.com/client/" + peerNew_id;
+                    //document.getElementById('videoConferenceUrl').setAttribute('href', "https://norecruits.com/client/" + peerNew_id);
+                    document.getElementById('linkToShare').setAttribute('href', "https://norecruits.com/client/" + peerNew_id);
 
 
         })

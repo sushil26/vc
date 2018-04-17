@@ -9,7 +9,7 @@ app.controller('dashboardPersonalDetailController', function ($scope, $window, h
         console.log("getTeacherData-->");
         var id = localStorage.getItem("id");
 
-        var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+        var api = "https://norecruits.com/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";
         console.log("api: " + api);
@@ -33,7 +33,7 @@ app.controller('dashboardPersonalDetailController', function ($scope, $window, h
     $scope.getStudentDetails = function (id) {
         console.log("getTeacherData-->");
         var id = localStorage.getItem("id");
-        var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
+        var api = "https://norecruits.com/vc/studentDetail" + "/" + id;
         console.log("api: " + api);
         $scope.teacherList = [];
         httpFactory.get(api).then(function (data) {

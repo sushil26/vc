@@ -75,7 +75,7 @@ function logVC() {
     console.log("obj: " + JSON.stringify(obj));
     console.log("logVC");
     $.ajax({
-        url: "https://vc4all.in/vc/login4VC",
+        url: "https://norecruits.com/vc/login4VC",
         //  url: "http://localhost:5000/vc/login4VC",
         type: "POST",
         data: JSON.stringify(obj),
@@ -203,7 +203,7 @@ function regVc() {
         "password": pswd
     };
     $.ajax({
-        url: "https://vc4all.in/vc/register4VC",
+        url: "https://norecruits.com/vc/register4VC",
         //url: "http://localhost:5000/vc/register4VC",
         type: "POST",
         data: JSON.stringify(obj),
