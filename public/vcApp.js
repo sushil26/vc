@@ -26,7 +26,7 @@ var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 
                  
               }
                else{
-                  $window.location.href='https://norecruits.com';
+                  $window.location.href='https://vc4all.in';
                }
              
              
@@ -44,7 +44,7 @@ var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 
                  
               }
                else{
-                  $window.location.href='https://norecruits.com';
+                  $window.location.href='https://vc4all.in';
                }
              
              
@@ -62,7 +62,7 @@ var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 
                  
               }
                else{
-                  $window.location.href='https://norecruits.com';
+                  $window.location.href='https://vc4all.in';
                }
                    
           }}
@@ -99,7 +99,7 @@ var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 
                  
               }
                else{
-                  $window.location.href='https://norecruits.com';
+                  $window.location.href='https://vc4all.in';
                }
              
              

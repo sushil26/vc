@@ -3,7 +3,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
   
     // if(localStorage.getItem("loginType")!='teacher'){
   
-    //   window.location.href="https://norecruits.com";
+    //   window.location.href="https://vc4all.in";
   
     // }
   
@@ -22,14 +22,14 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
       $scope.userLoginType = 'teacher';
     }
     else {
-      window.location.href = "https://norecruits.com";
+      window.location.href = "https://vc4all.in";
     }
   
     $scope.eventColors = ['red', 'green', 'blue'];
   
     $scope.deleteEvent = function (id, index) {
       console.log("deleteEvent-->");
-      var api = "https://norecruits.com/vc/deleteEvent";
+      var api = "https://vc4all.in/vc/deleteEvent";
       //var api = "http://localhost:5000/vc/deleteEvent";
       vm.events.splice(index, 1);
       var obj = {
@@ -75,7 +75,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
       // console.log("$scope.endDateRes: "+$scope.endDateRes);
       alert("a and b: "+a+" "+b);
   
-      var SIGNALING_SERVER = "https://norecruits.com";
+      var SIGNALING_SERVER = "https://vc4all.in";
       var queryLink = null;
       var peerNew_id = null;
       var url;
@@ -90,9 +90,9 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
       //     queryLink = config.queryId;
       //     peerNew_id = config.peer_id;
   
-      //     url = "https://norecruits.com/client/" + peerNew_id + "/" + $scope.urlDate;
+      //     url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
   
-      //     var api = "https://norecruits.com/vc/eventSend";
+      //     var api = "https://vc4all.in/vc/eventSend";
       //     //var api = "http://localhost:5000/vc/eventSend";
       //     console.log("api: " + api);
       //     var email = document.getElementById('eventEmails').value;
@@ -145,7 +145,7 @@ app.controller('calendarCtrl', function ($scope, $window, $filter, httpFactory, 
     // $scope.eventGet = function () {
     //   console.log("eventGet-->");
     //   var id = localStorage.getItem("id");
-    //   var api = "https://norecruits.com/vc/eventGet"+ "/" + id;
+    //   var api = "https://vc4all.in/vc/eventGet"+ "/" + id;
     //   //var api = "http://localhost:5000/vc/eventGet";
   
     //   httpFactory.get(api).then(function (data) {
