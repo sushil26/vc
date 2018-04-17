@@ -3,22 +3,22 @@ var http = require('http');
 var bodyParser = require('body-parser')
 var nodemailer = require('nodemailer');
 var fs = require('fs'),
-url = require('url'),
-path = require('path');
-var app =express();
-app.use(bodyParser.urlencoded({extended:true}));
+    url = require('url'),
+    path = require('path');
+var app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({
     limit: '100mb'
 }));
 
-module.exports = function(app, config) {
-	//app.set('view engine','html');
-	
-    
-	// app.use(session({secret: "Your secret key"}));
-	//app.use(multer({ dest: './config'}));
+module.exports = function (app, config) {
+    //app.set('view engine','html');
 
-	
+
+    // app.use(session({secret: "Your secret key"}));
+    //app.use(multer({ dest: './config'}));
+
+
 }
 
 
@@ -38,7 +38,7 @@ var time = null;
 //     require('./config/express')(app);
 //     // require('./config/server_socket')(io);
 //     require('./config/server_socket')(io);
-   
+
 //     require('./config/router')(app);
 // });
 
@@ -52,17 +52,12 @@ var server = app.listen('5000', function () {
 });
 
 // var server = app.listen("8080");
-   
-var io = require('socket.io').listen(server);
-    
-    // server.timeout = 9999999999;
-mongoConfig.connectToServer(function(err) {
 
-    
-    // require('./config/express')(app);
-    // require('./config/server_socket')(io);
-  
-   
+var io = require('socket.io').listen(server);
+
+// server.timeout = 9999999999;
+mongoConfig.connectToServer(function (err) {
+
     require('./config/router')(app);
 
 })
@@ -70,21 +65,18 @@ app.use(express.static(__dirname + '/public'));
 //app.use(express.static(__dirname + '/public/bower_components'));
 // app.use(express.static(__dirname + '/node_modules'));
 app.get('/', function (req, res) {
-
     res.sendFile(__dirname + '/public/index.html');
-    
 });
 
 // require('./config/server_socket')(io);
 
 app.get("/client", function (req, res) {
-   
+
     queryId = null;
-   
+
     console.log("start to render page");
     res.sendFile(__dirname + '/public/client.html');
 });
-
 
 app.get("/client/:id/:time", function (req, res) {
     queryId = req.params.id;
@@ -95,11 +87,10 @@ app.get("/client/:id/:time", function (req, res) {
 });
 
 app.get("/mainPage", function (req, res) {
-    // queryId = req.params.id;
- 
     console.log("start to render page");
     res.sendFile(__dirname + '/public/html/mainPage.html');
 });
+
 
 
 /*************************/
@@ -125,7 +116,6 @@ var sessionHeaderId = null;
  * information. After all of that happens, they'll finally be able to complete
  * the peer connection and will be streaming audio/video between eachother.
  */
-
 io.sockets.on('connection', function (socket) {
 
     console.log("connection started-->");
@@ -441,5 +431,9 @@ io.sockets.on('connection', function (socket) {
 
     console.log("<--connection Ended");
 });
+
+
+
+
 
 

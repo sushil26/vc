@@ -1,0 +1,173 @@
+<div ng-controller="userAuthCtrl">
+  <section id="main-content">
+    <section class="wrapper">
+      <div class="modal fade" id="myModalt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:auto;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">{{getUserData.teacherName}} Time Table</h4>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive" ng-if="getUserData.timeTable[0].Monday">
+
+                <table class="table">
+
+                  <thead>
+                    <tr>
+                      <th>Timing</th>
+                      <th>09:00-09:45</th>
+                      <th>9:45-10:30</th>
+                      <th>10:30-11:15</th>
+                      <th>11:15-12:00</th>
+                      <th>01:00-01:45</th>
+                      <th>01:45-02:30</th>
+                      <th>02:30-03:15</th>
+                      <th>03:15-04:00</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="active">
+                      <td>Monday</td>
+                      <td ng-repeat="mtt in getUserData.timeTable[0].Monday">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</td>
+                    </tr>
+                    <tr class="warning">
+                      <td>Tuesday</td>
+                      <td ng-repeat="mtt in getUserData.timeTable[1].Tues">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</td>
+                    </tr>
+                    <tr class="danger">
+                      <td>Wednesday</td>
+                      <td ng-repeat="mtt in getUserData.timeTable[2].Wed">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</td>
+                    </tr>
+                    <tr class="success">
+                      <td>Thursday</td>
+                      <td ng-repeat="mtt in getUserData.timeTable[3].Thurs">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</td>
+                    </tr>
+                    <tr class="active">
+                      <td>Friday</td>
+                      <td ng-repeat="mtt in getUserData.timeTable[4].Fri">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</td>
+                    </tr>
+                    <tr class="warning">
+                      <td>Saturday</td>
+                      <td ng-repeat="mtt in getUserData.timeTable[5].Sat">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              Teacher List
+            </header>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Teacher Name</th>
+                    <th>Teacher Id</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>Status</th>
+                    <th>Activation</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="ud in userData">
+                    <td style="background-color:aliceblue;">{{$index+1}}.</td>
+                    <td style="background-color:aliceblue;">
+                      <a class="btn-info" ng-click="tableForTimes($index)">{{ud.teacherName}}</a>
+                    </td>
+                    <td style="background-color:aliceblue;">{{ud.teacherId}}</td>
+                    <td style="background-color:aliceblue;">{{ud.teacherEmail}}</td>
+                    <td style="background-color:aliceblue;">{{ud.mobileNum}}</td>
+                    <td ng-if="ud.status=='active'" style="background-color:aliceblue;">{{ud.status}}</td>
+                    <td ng-if="ud.status=='inactive'" style="background-color:tomato;">{{ud.status}}</td>
+                    <td style="background-color:aliceblue;">
+                      <button class="btn" ng-if="ud.status=='active'" ng-click="updateUserStatus(ud._id,'inactive',$index)" style="width: 70px;">Dectivate</button>
+                      <button class="btn" ng-if="ud.status=='inactive'" ng-click="updateUserStatus(ud._id,'active',$index)" style="width: 70px;">Activate</button>
+                    </td>
+                    <td style="background-color:aliceblue;">
+                      <button class="btn" ng-click="deleteUser(ud._id, $index)">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </section>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="row">
+        <div class="col-sm-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <h2>Student List</h2>
+            </header>
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Student Id</th>
+                  <th>Student Name</th>
+
+                  <th>Father Name</th>
+                  <th>Father Email</th>
+                  <th>Mother Name</th>
+                  <th>Mother Email</th>
+                  <th>Status</th>
+                  <th>Activation</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="sd in studData">
+                  <td style="background-color:aliceblue;">{{$index+1}}.</td>
+                  <td style="background-color:aliceblue;">{{sd.studId}}</td>
+                  <td style="background-color:aliceblue;">
+                    <button type="button" class="btn-info " data-toggle="modal" data-target="#myModal">{{sd.studName}}</button>
+                    <!-- Modal -->
+                  </td>
+
+
+                  <td style="background-color:aliceblue;">{{sd.parentName}}</td>
+                  <td style="background-color:aliceblue;">{{sd.parentEmail}}</td>
+                  <td style="background-color:aliceblue;">{{sd.MotherName}}</td>
+                  <td style="background-color:aliceblue;">{{sd.MotherEmail}}</td>
+                  <td ng-if="sd.status=='active'" style="background-color:aliceblue;">{{sd.status}}</td>
+                  <td ng-if="sd.status=='inactive'" style="background-color:tomato;">{{sd.status}}</td>
+                  <td style="background-color:aliceblue;">
+                    <button class="btn" ng-if="sd.status=='active'" ng-click="updateStudStatus(sd._id,'inactive',$index)" style="width: 70px;">Dectivate</button>
+                    <button class="btn" ng-if="sd.status=='inactive'" ng-click="updateStudStatus(sd._id,'active',$index)" style="width: 70px;">Activate</button>
+                  </td>
+                  <td style="background-color:aliceblue;">
+                    <button class="btn" ng-click="deleteStud(sd._id, $index)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+      </div>
+
+    </section>
+  </section>
+</div>
+<!-- </html> -->

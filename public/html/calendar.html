@@ -1,4 +1,5 @@
 <div style="margin-left:5%;margin-right:5%" ng-controller="calendarCtrl as vm">
+<link href="https://unpkg.com/bootstrap@3/dist/css/bootstrap.css" rel="stylesheet">
   <!-- <a href="" id="linkToShare"></a> -->
   <!-- <div id='calendar' style="margin-top:10%;"></div> -->
   <h2 class="text-center" style="margin-top:95px;">{{ vm.calendarTitle }}</h2>
@@ -28,27 +29,29 @@
         .day-event {
           width: 90% !important;
         }
-        .cal-day-open{
-    background: #ff7777; 
-}
+
+        .cal-day-open {
+          background: #ff7777;
+        }
       </style>
       <b>
-        <h2>{{calendarOwner}} Calendar</h2>
+        <h2 ng-if="calendarOwner!='Your'">{{calendarOwner}} Calendar</h2>
+        <h2 ng-if="calendarOwner=='Your'">{{calendarOwner}} Calendar <i>Only for Reading</i></h2>
       </b>
       <!-- <mwl-calendar events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)"
       on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
       cell-is-open="vm.cellIsOpen" day-view-start="09:00" day-view-end="15:00" day-view-split="15" cell-modifier="vm.modifyCell(calendarCell)"
-      cell-auto-open-disabled="true" on-timespan-click="vm.timespanClicked(calendarDate)" on-date-range-select="vm.rangeSelected(calendarRangeStartDate, calendarRangeEndDate)" ng-click="vm.timeClick(calendarEvent)">
+      cell-auto-open-disabled="true" on-timespan-click="vm.timespanClicked(calendarDate)" on-date-range-select="vm.rangeSelected(calendarRangeStartDate, calendarRangeEndDate)" >
     </mwl-calendar> -->
-    <mwl-calendar ng-if="calendarOwner=='Your'" events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)"
-        on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+      <mwl-calendar ng-if="calendarOwner=='Your'" events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate"
+        on-event-click="vm.eventClicked(calendarEvent)" on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
         cell-is-open="vm.cellIsOpen" day-view-start="09:00" day-view-end="15:00" day-view-split="15" cell-modifier="vm.modifyCell(calendarCell)"
-        cell-auto-open-disabled="true"  ng-click="vm.timeClick(calendarEvent)">
+        cell-auto-open-disabled="true" ng-click="vm.timeClick(calendarEvent)">
       </mwl-calendar>
-      <mwl-calendar ng-if="calendarOwner!='Your'" events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" 
+      <mwl-calendar ng-if="calendarOwner!='Your'" events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate"
         on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
         cell-is-open="vm.cellIsOpen" day-view-start="09:00" day-view-end="15:00" day-view-split="15" cell-modifier="vm.modifyCell(calendarCell)"
-        cell-auto-open-disabled="true" on-date-range-select="vm.rangeSelected(calendarRangeStartDate, calendarRangeEndDate)" ng-click="vm.timeClick(calendarEvent)">
+        cell-auto-open-disabled="true" on-date-range-select="vm.rangeSelected(calendarRangeStartDate, calendarRangeEndDate)">
       </mwl-calendar>
     </div>
 
@@ -92,22 +95,21 @@
                     ng-options="cs as cs.name + '-' + cs.studId for cs in studList">
                     <option value="" disabled selected>Student</option>
                   </select>
-                  <select ng-if="userLoginType=='studParent'" class="btn btn-primary" placeholder="select" ng-model="csSelect" ng-change="getTeacherCalendar(csSelect)"
+                  <select ng-if="userLoginType=='studParent'" class="btn btn-primary" placeholder="select" ng-model="cssSelect" ng-change="getTeacherCalendar(cssSelect)"
                     ng-options="cs as cs.name + '-' + cs.teacherId+'-'+cs.subject for cs in teacherList">
                     <option value="" disabled selected>Teacher</option>
                   </select>
                   <button class="btn btn-primary" ng-if="calendarOwner!='Your'" ng-click="eventGet()">My Calendar</button>
-                  <button class="btn btn-primary" ng-if="calendarOwner=='Your' && userLoginType=='studParent'" ng-click="getSelectedTeacherPersonalData(csSelect.id)">{{csSelect.name}} Calendar</button>
-                  <button class="btn btn-primary" ng-if="calendarOwner=='Your' && userLoginType=='teacher'" ng-click="getSelectedStudentPersonalData(csSelect.id)">{{csSelect.name}} Calendar</button>
+                  <button class="btn btn-primary" ng-if="calendarOwner=='Your' && userLoginType=='studParent' && teacherPersonalData[0].teacherName != null"
+                    ng-click="getSTCalendar()">{{teacherPersonalData[0].teacherName}} Calendar</button>
+                  <button class="btn btn-primary" ng-if="calendarOwner=='Your' && userLoginType=='teacher' && studentPersonalData[0].studName != null" ng-click="getSSCalendar()">{{studentPersonalData[0].studName}} Calendar</button>
                 </form>
               </div>
             </div>
     </div>
-
     <br>
     <br>
     <br>
-
     <div class="col-md-12 col-sm-12 col-lg-12">
       <br>
       <br>

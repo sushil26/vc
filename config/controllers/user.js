@@ -152,7 +152,7 @@ module.exports.login4VC = function(req, res) {
                 responseData = {
                   status: true,
                   message: "Login Successfully",
-                  loginType: "Parent",
+                  loginType: "studParent",
                   data: data[0]
                 };
                 res.status(200).send(responseData);
@@ -332,7 +332,6 @@ module.exports.updateStudStatus = function(req, res) {
 
   console.log("<--updateStudStatus");
 };
-
 module.exports.deleteUser = function(req, res) {
   console.log("deleteUser-->");
   var responseData;
@@ -403,7 +402,6 @@ module.exports.deleteStud = function(req, res) {
   }
   console.log("<--deleteUser");
 };
-
 module.exports.emailInvite = function(req, res) {
   console.log("emailInvite-->");
   var mailOptions = {
@@ -439,7 +437,6 @@ module.exports.emailInvite = function(req, res) {
   });
   console.log("<--emailInvite");
 };
-
 module.exports.sessionCreate = function(req, res) {
   console.log("sessionCreate-->");
   var responseData;
@@ -463,7 +460,6 @@ module.exports.sessionCreate = function(req, res) {
   }
   console.log("<--sessionCreate");
 };
-
 module.exports.teacherInsert = function(req, res) {
   console.log("teacherInsert-->");
   var responseData;
@@ -692,3 +688,41 @@ module.exports.studentPersonalData = function(req, res) {
   }
   console.log("<--studentPersonalData");
 };
+
+module.exports.getLoginData = function(req, res) {
+  console.log("getLoginData-->");
+  console.log("req.params.id: " + req.params.id);
+  if (general.emptyCheck(req.params.id)) {
+    var id = {
+      _id: ObjectId(req.params.id)
+    };
+    user.find(id).toArray(function(err, data) {
+      console.log("data: " + JSON.stringify(data));
+      if (err) {
+        responseData = {
+          status: false,
+          message: "Failed to get Data",
+          data: data
+        };
+        res.status(400).send(responseData);
+      } else {
+        responseData = {
+          status: true,
+          message: "get data successfully",
+          data: data
+        };
+
+        res.status(200).send(responseData);
+      }
+    });
+  } else {
+    console.log("Epty value found");
+    responseData = {
+      status: false,
+      message: "there is no userId to find"
+    };
+    res.status(400).send(responseData);
+  }
+  console.log("<--getLoginData");
+};
+

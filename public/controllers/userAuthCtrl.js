@@ -1,14 +1,6 @@
 app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
     console.log("userAuthCtrl==>: " + localStorage.getItem("userData"));
 
-    if (localStorage.getItem("loginType") == 'admin') {
-        console.log("loginType: " + localStorage.getItem("loginType"));
-        document.getElementById('userAuth').style.display = "none";
-        $scope.userLoginType = 'admin';
-    }
-    else {
-        window.location.href = "https://vc4all.in";
-    }
 
 
     $scope.getUser = function () {
@@ -169,8 +161,8 @@ app.controller('userAuthCtrl', function ($scope, $window, httpFactory) {
 
         console.log("<--deleteUser");
     }
-
     $scope.tableForTimes = function (id) {
+        $('#myModalt').modal('show');
         console.log("timeTable-->");
         $scope.getUserData = $scope.userData[id];
         console.log("$scope.getUserData: " + JSON.stringify($scope.getUserData));

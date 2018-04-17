@@ -114,6 +114,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #header #logo {
   float: left;
+  margin-top: -15px;
   
 }
 
@@ -132,7 +133,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header #logo img {
-  width: 65px;
+  width: 63px;
   padding: 0;
   margin: 0;
   
@@ -142,18 +143,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
+  .btn{
+    font-size: 8px ! important;
+  }
   #header #logo h1 {
     font-size: 26px;
   }
   #header #logo img {
     width: 46px;
   }
+  #header #mm{
+    margin-top: -1px !important;
+  }
 }
 
 #header.header-fixed {
-  background: rgba(52, 59, 64, 0.9);
+  background: #1a2732;
   padding: 20px 0;
-  height: 72px;
+  height: 60px;
   transition: all 0.5s;
 }
 
@@ -304,7 +311,7 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: none;
   display: inline-block;
   color: #fff;
-   font-weight: 400;
+   font-weight: 100;
   text-transform: uppercase;
   /* font-size: 13px; */
   outline: none;
@@ -370,12 +377,12 @@ h1, h2, h3, h4, h5, h6 {
 #mobile-nav-toggle {
   position: fixed;
   right: 0;
-  top: 0;
+  top: -6px;
   z-index: 999;
   margin: 20px 20px 0 0;
   border: 0;
   background: none;
-  font-size: 24px;
+  font-size: 20px;
   display: none;
   transition: all 0.4s;
   outline: none;
@@ -602,10 +609,9 @@ background: darkturquoise;
   padding: 50px 20px;
   margin-bottom: 50px;
   text-align: center;
-  border: 1px solid #e6e6e6;
   height: 200px;
   position: relative;
-  background: #fafafa;
+  background-image: url(/home/img/bc.jpg);
 }
 
 #services .icon {

@@ -20,10 +20,13 @@ module.exports = function (app) {
     app.get('/vc/studentDetail/:id', user.studentDetail);
     app.get('/vc/teacherPersonalData/:id', user.teacherPersonalData);
     app.get('/vc/studentPersonalData/:id',user.studentPersonalData);
+    app.get('/vc/getLoginData/:id',user.getLoginData);
+
     app.get('/vc/getStudListForCS/:clas/:section', event.getStudListForCS);
     app.get('/vc/getTeacherListForCS/:clas/:section', event.getTeacherListForCS);
     app.post('/vc/eventSend', event.eventSend);
     app.get('/vc/eventGet/:id', event.eventGet);
+    app.get('/vc/upcomingEventGet/:id/:currentDateTime', event.upcomingEventGet);
     app.post('/vc/deleteEvent', event.deleteEvent);
     app.post('/vc/parentCredential', event.parentCredential);
     app.post('/vc/eventUpdate/:id', event.eventUpdate);

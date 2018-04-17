@@ -46,6 +46,10 @@
                     <li>
                         <a href="/" style="text-shadow: 2px 2px 4px #000000;">Home</a>
                     </li>
+                    <li id="dashboard" style="display:block;">
+                            <a href="https://vc4all.in/mainPage#!/dashboard/personalDetail"style="text-shadow: 2px 2px 4px #000000;">Dashboard
+                            </a>
+                    </li>
 
                     <!-- <li>
                         <a href="#contact" style="text-shadow: 2px 2px 4px #000000;">Contact Us</a>
@@ -93,12 +97,12 @@
                                 </button>
                             </a>
                             <br>
-                            <a id="scheduleMeeting" href="/mainPage" style="display:none;">
+                            <!-- <a id="scheduleMeeting" href="/mainPage" style="display:none;">
                                 <button id="scheduleStart" class="btn fa fa-calendar">
                                     &nbsp
                                     <b>Schedule Meeting</b>
                                 </button>
-                            </a>
+                            </a> -->
 
                             <!-- <li id="videoConfStart">  <a id="videoConferenceUrl">Start Video Conference </a></li> -->
 
@@ -279,8 +283,8 @@
                                 </div>
                             </div>
                             <audio id="myAudio">
-                                    <source src="/home/img/alrt.mp3">
-                                </audio>
+                                <source src="/home/img/alrt.mp3">
+                            </audio>
                             <div class="popup-messages-footer">
                                 <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
                                 <div class="btn-footer ">
@@ -294,7 +298,7 @@
                                             <input id="fileselect" type="file" name="fileselect" />
                                         </div>
                                     </button>
-                                    <button class="btn"  id="sndmgs" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
+                                    <button class="btn" id="sndmgs" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
                                         <span class="fa fa-paper-plane"></span>
 
                                     </button>
@@ -450,12 +454,12 @@
 
     <script src="/js/chat.js"></script>
     <script>
-            $("#message").keyup(function (event) {
-                if (event.keyCode === 13) {
-                    $("#sndmgs").click();
-                }
-            });
-        </script>
+        $("#message").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#sndmgs").click();
+            }
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $("#openChat").click(function () {
@@ -471,6 +475,7 @@
     </script>
     <style>
         /* mirror Affect */
+
         #videosAttach {
             transform: rotateY(180deg);
             -webkit-transform: rotateY(180deg);

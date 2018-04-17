@@ -18,6 +18,7 @@
   <!-- Main Stylesheet File -->
   <link href="/home/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/chatZone.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
 
 </head>
 
@@ -31,7 +32,13 @@
         <!-- Uncomment below if you prefer to use a text logo -->
         <span>
           <img style="float:left;" src="/home/img/fav.png" />
-          <h1 style="color:azure;float:left;  text-shadow: 2px 2px 4px #000000;">&nbspVC4ALL</h1>
+          <a href="/"  id="mm" style="font-size: 22px;
+          font-weight: 500;
+          color: #a8cf44;
+          float: left;
+          margin-top: 8px;
+          text-transform: uppercase;">VC<span style="color: #5ca5e5;">4ALL</span></a>
+          <!-- <h1 style="color:azure;float:left;  text-shadow: 2px 2px 4px #000000;">&nbspVC4ALL</h1> -->
 
         </span>
       </div>
@@ -41,15 +48,25 @@
           <li>
             <a href="client" class="btn-get-started" style="text-shadow: 2px 2px 4px #000000;">Go to Conference</a>
           </li>
-          <li id="userAuth" style="display:none;text-shadow: 2px 2px 4px #000000;">
+          <!-- <li id="userAuth" style="display:none;text-shadow: 2px 2px 4px #000000;">
             <a href="https://vc4all.in/mainPage#!/userAuth">Teacher List</a>
-          </li>
+          </li> -->
           <li>
             <a href="#services" style="text-shadow: 2px 2px 4px #000000;">Features</a>
           </li>
           <li>
             <a href="#contact" style="text-shadow: 2px 2px 4px #000000;">About Us</a>
           </li>
+
+
+          <li id="dashboard" style="display:block;">
+              <a href="https://vc4all.in/mainPage#!/dashboard/personalDetail"style="text-shadow: 2px 2px 4px #000000;">Dashboard
+              </a>
+            </li>
+
+
+
+
           <li id="appLogin" style="display:block;">
             <a href="#" data-target="#crdntl" data-toggle="modal" style="text-shadow: 2px 2px 4px #000000;">Login</a>
           </li>
@@ -130,7 +147,8 @@
             <div class="box">
               <div class="icon">
                 <a href="">
-                  <i class="fa fa-desktop"></i>
+                    <i class="fa fa-calendar"></i>
+                 
                 </a>
               </div>
               <h4 class="title">
@@ -143,7 +161,7 @@
             <div class="box">
               <div class="icon">
                 <a href="">
-                  <i class="fa fa-bar-chart"></i>
+                    <i class="fa fa-comments"></i>
                 </a>
               </div>
               <h4 class="title">
@@ -157,7 +175,7 @@
             <div class="box">
               <div class="icon">
                 <a href="">
-                  <i class="fa fa-paper-plane"></i>
+                  <i class="fa fa-keyboard-o"></i>
                 </a>
               </div>
               <h4 class="title">
@@ -184,7 +202,7 @@
             <div class="box">
               <div class="icon">
                 <a href="">
-                  <i class="fa fa-road"></i>
+                  <i class="fa fa-pencil"></i>
                 </a>
               </div>
               <h4 class="title">
@@ -197,7 +215,7 @@
             <div class="box">
               <div class="icon">
                 <a href="">
-                  <i class="fa fa-shopping-bag"></i>
+                  <i class="fa fa-bullhorn"></i>
                 </a>
               </div>
               <h4 class="title">
@@ -726,8 +744,7 @@
   <script src="/home/lib/superfish/superfish.min.js"></script>
   <script src="/home/lib/counterup/counterup.min.js"></script>
 
-  <!-- Contact Form JavaScript File -->
-  <script src="/home/contactform/contactform.js"></script>
+
 
   <!-- Template Main Javascript File -->
   <script src="/home/js/main.js"></script>
