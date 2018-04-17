@@ -592,13 +592,12 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       //     console.log("$scope.eventDetails: " + $scope.eventDetails);
       //   }
       // })
-
     }
   }, {
     label: '<i class=\'glyphicon glyphicon-remove\'></i>',
     onClick: function (args) {
-      alert("Delete Event Comming Soon");
       // alert.show('Deleted', args.calendarEvent);
+      alert("Delete Event Comming Soon");
     }
   }];
   vm.events = [
@@ -687,7 +686,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
       backdropClass: 'show',
       controller: function ($scope, $uibModalInstance) {
         $scope.eventDetails = event;
-        console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+        console.log("$scope.eventDetails: " + $scope.eventDetails);
       }
     })
     console.log("<--eventClicked");
