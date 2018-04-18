@@ -1,3 +1,16 @@
+
+// var encUrl = localStorage.getItem("encUrl");
+// var encPswd = localStorage.getItem("encPswd");
+// var decryptedUrl = CryptoJS.AES.decrypt(encUrl, "url");
+// var decryptedPswd = CryptoJS.AES.decrypt(encPswd, "pswd");
+// console.log("decryptedUrl: "+decryptedUrl.toString(CryptoJS.enc.Utf8));
+// console.log("decryptedPswd: "+decryptedPswd.toString(CryptoJS.enc.Utf8));
+
+// ];
+var sesionEnc = localStorage.getItem("sessionEnc");
+// console.log("sesionEnc: "+sesionEnc);
+
+
 /** CONFIG **/
 console.log("Signaling Socket.js");
 var SIGNALING_SERVER = "https://vc4all.in";
@@ -29,9 +42,7 @@ var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = "some-global-ch-name";
 var MUTE_AUDIO_BY_DEFAULT = false;
-// var x = localStorage.getItem("secrecy");
-// var decrypted = CryptoJS.AES.decrypt(x, x);
-// console.log("Value##**: "+decrypted);
+
 if (localStorage.getItem("userData")) {
   console.log("User Name from session: " + localStorage.getItem("userData"));
   var userData = JSON.stringify(localStorage.getItem("userData"));
@@ -48,7 +59,7 @@ if (localStorage.getItem("userData")) {
     //document.getElementById("appLogout").style.display = "block";
     document.getElementById("LoginUrl").style.display = "none";
     document.getElementById("videoConferenceUrl").style.display = "block";
-    document.getElementById("scheduleMeeting").style.display = "block";
+    // document.getElementById("scheduleMeeting").style.display = "block";
     document.getElementById("videoConferenceLinkExtention").style.display =
       "block";
   } else if (loginType == "studParent") {
@@ -58,7 +69,7 @@ if (localStorage.getItem("userData")) {
     //document.getElementById("appLogout").style.display = "none";
     document.getElementById("LoginUrl").style.display = "none";
     document.getElementById("videoConferenceUrl").style.display = "none";
-    document.getElementById("scheduleMeeting").style.display = "block";
+    // document.getElementById("scheduleMeeting").style.display = "block";
     document.getElementById("videoConferenceLinkExtention").style.display =
       "block";
   }
@@ -86,7 +97,7 @@ if (localStorage.getItem("userData")) {
       //document.getElementById("appLogout").style.display = "none";
       document.getElementById("LoginUrl").style.display = "none";
       document.getElementById("videoConferenceUrl").style.display = "none";
-      document.getElementById("scheduleMeeting").style.display = "none";
+      // document.getElementById("scheduleMeeting").style.display = "none";
       document.getElementById("videoConferenceLinkExtention").style.display =
         "block";
     } else {
@@ -132,7 +143,7 @@ function saveName() {
         //document.getElementById("appLogout").style.display = "none";
         document.getElementById("LoginUrl").style.display = "none";
         document.getElementById("videoConferenceUrl").style.display = "none";
-        document.getElementById("scheduleMeeting").style.display = "none";
+        // document.getElementById("scheduleMeeting").style.display = "none";
         document.getElementById("videoConferenceLinkExtention").style.display =
           "block";
       } else {
@@ -146,7 +157,7 @@ function saveName() {
         //document.getElementById("appLogout").style.display = "none";
         document.getElementById("LoginUrl").style.display = "none";
         document.getElementById("videoConferenceUrl").style.display = "none";
-        document.getElementById("scheduleMeeting").style.display = "none";
+        // document.getElementById("scheduleMeeting").style.display = "none";
         document.getElementById("videoConferenceLinkExtention").style.display =
           "block";
         // $('#setName').trigger('click');
@@ -189,25 +200,66 @@ function emailInvite() {
 
 /** You should probably use a different stun server doing commercial stuff **/
 /** Also see: https://gist.github.com/zziuni/3741933 **/
-var ICE_SERVERS = [
-  { url: "stun:stun.l.google.com:19302" },
-  { url: "stun:s2.xirsys.com" },
-  {
-    url: "turn:s2.xirsys.com:80?transport=udp",
-    credential: "3ed63738-3ca0-11e8-bcf4-9ad4e61d3f22",
-    username: "3ed635ee-3ca0-11e8-a530-2288b20e5a3b"
-  },
-  {
-    url: "turn:s2.xirsys.com:3478?transport=udp",
-    credential: "3ed63738-3ca0-11e8-bcf4-9ad4e61d3f22",
-    username: "3ed635ee-3ca0-11e8-a530-2288b20e5a3b"
-  }, {
-    url: "turn:s2.xirsys.com:80?transport=tcp",
-    credential: "3ed63738-3ca0-11e8-bcf4-9ad4e61d3f22",
-    username: "3ed635ee-3ca0-11e8-a530-2288b20e5a3b"
-  }
+// var ICE_SERVERS = [
+//   { url: "stun:stun.l.google.com:19302" },
+//   { url: "stun:s2.xirsys.com" },
+//   {
+//     url: "turn:s2.xirsys.com:80?transport=udp",
+//     credential: "3ed63738-3ca0-11e8-bcf4-9ad4e61d3f22",
+//     username: "3ed635ee-3ca0-11e8-a530-2288b20e5a3b"
+//   },
+//   {
+//     url: "turn:s2.xirsys.com:3478?transport=udp",
+//     credential: "3ed63738-3ca0-11e8-bcf4-9ad4e61d3f22",
+//     username: "3ed635ee-3ca0-11e8-a530-2288b20e5a3b"
+//   }, {
+//     url: "turn:s2.xirsys.com:80?transport=tcp",
+//     credential: "3ed63738-3ca0-11e8-bcf4-9ad4e61d3f22",
+//     username: "3ed635ee-3ca0-11e8-a530-2288b20e5a3b"
+//   }
 
-];
+
+// for(var x=0;x<sesionEnc.length;x++){
+//   console.log("")
+//   ICE_SERVERS[x]=sesionEnc[x];
+// }
+// var ICE_SERVERS = JSON.stringify(sesionEnc).slice();
+// var ICE_SERVERS =sesionEnc.slice();
+// console.log("ICE_SERVERS: "+JSON.stringify(ICE_SERVERS));
+
+var ICE_SERVERS =[{ url: "stun:stun.l.google.com:19302" },
+{ url: "stun:s3.xirsys.com" },
+{
+  url: "turn:s3.xirsys.com:80?transport=udp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+
+},  {
+  url: "turn:s3.xirsys.com:3478?transport=udp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+
+},  {
+  url: "turn:s3.xirsys.com:80?transport=tcp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+
+},  {
+  url: "turn:s3.xirsys.com:3478?transport=tcp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+
+},  {
+  url: "turns:s3.xirsys.com:443?transport=tcp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+
+},  {
+  url: "turns:s3.xirsys.com:5349?transport=tcp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+
+}];
 
 function disconnecSession() {
   console.log("disconnecSession-->");

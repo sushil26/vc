@@ -1,6 +1,7 @@
 app.controller('historyController', function ($scope, $window, httpFactory,  $uibModal) {
     console.log("historyController==>");
     $scope.events = [];
+    $scope.today = new Date();
     $scope.eventGet = function () {
         console.log("eventGet-->");
         var id = localStorage.getItem("id");

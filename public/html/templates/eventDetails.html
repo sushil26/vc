@@ -45,11 +45,17 @@
         <div class="col-lg-3">
             <p style="color:green">{{eventDetails.reason}}</p>
         </div>
+        <label class="control-label col-lg-3">Date</label>
+
+
+        <div class="col-lg-3">
+            <p style="color:green">{{eventDetails.startsAt | date:'M/d/yy'}}</p>
+        </div>
         <label class="control-label col-lg-3">Time</label>
 
 
         <div class="col-lg-3">
-            <p style="color:green">{{eventDetails.startsAt | date:'M/d/yy'}}-{{eventDetails.endsAt | date:'h:mm a'}}</p>
+            <p style="color:green">{{eventDetails.startsAt | date:'h:mm a'}}-{{eventDetails.endsAt | date:'h:mm a'}}</p>
         </div>
     </div>
     <header class="panel-heading">

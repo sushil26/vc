@@ -129,8 +129,7 @@ module.exports.eventGet = function (req, res) {
     //     userId = req.params.id
     // } 
     if (general.emptyCheck(req.params.id)) {
-     
-        event.find({ $or: [ { "userId": req.params.id }, { "remoteCalendarId": req.params.id } ] }).toArray(function (err, listOfevents) {
+           event.find({ $or: [ { "userId": req.params.id }, { "remoteCalendarId": req.params.id } ] }).toArray(function (err, listOfevents) {
             console.log("listOfevents: "+JSON.stringify(listOfevents))
             if (err) {
 

@@ -1,6 +1,7 @@
 app.controller('upcomingEventController', function ($scope, $window, httpFactory, $uibModal) {
     console.log("upcomingEventController==>");
     $scope.events = [];
+    $scope.today = new Date(); /* ###Note: Current Date ### */
     $scope.eventGet = function () {
         console.log("eventGet-->");
         var id = localStorage.getItem("id");
@@ -41,7 +42,7 @@ app.controller('upcomingEventController', function ($scope, $window, httpFactory
                     console.log(" obj" + JSON.stringify(obj))
                     // ownerEvents.push(obj);
                     $scope.events.push(obj);
-                  
+
 
                 }
             }
@@ -52,36 +53,55 @@ app.controller('upcomingEventController', function ($scope, $window, httpFactory
     }
     $scope.eventGet();
 
-    $scope.viewDetail = function(id){
+    $scope.viewDetail = function (id) {
         console.log("viewDetail-->");
-        console.log("id: "+id);
+        console.log("id: " + id);
         var eClicked = $uibModal.open({
             scope: $scope,
             templateUrl: '/html/templates/eventDetails.html',
             windowClass: 'show',
             backdropClass: 'show',
             controller: function ($scope, $uibModalInstance) {
-              $scope.eventDetails = $scope.events[id];
-              console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+                $scope.eventDetails = $scope.events[id];
+                console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
             }
-          })
-          console.log("<--viewDetail");
+        })
+        console.log("<--viewDetail");
     }
 
-    $scope.rescheduleEvent = function(id){
+    $scope.rescheduleEvent = function (id) {
         console.log("reschedule-->");
-        console.log("id: "+id);
-        alert("Coming Soon");
+        console.log("id: " + id);
+        console.log("events[" + id + "]: " + JSON.stringify($scope.events[id]));
+        var date = $scope.events[id].startsAt;
+        var reqDate = date.getDate() - 1;
+        var reqMonth = date.getMonth();
+        var reqYear = date.getFullYear();
+        var reqHr = date.getHours();
+        var reqMin = date.getMinutes();
+        var reqSec = date.getSeconds();
+        var consolidateDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
+        console.log("consolidateDate: " + consolidateDate);
+        console.log("$scope.events[id].startsAt: " + $scope.events[id].startsAt);
+        console.log("$scope.today: "+$scope.today);
+        if (consolidateDate >= $scope.today) {
+            alert("Coming Soon");
+        }
+        else {
+            alert("Sorry you are not allow to edit event");
+        }
+
+
         console.log("<--reschedule");
     }
 
-    $scope.deleteEvent = function(id){
+    $scope.deleteEvent = function (id) {
         console.log("deleteEvent-->");
-        console.log("id: "+id);
+        console.log("id: " + id);
         alert("Coming Soon");
         console.log("<--deleteEvent");
     }
-   
+
 
 
 
@@ -127,7 +147,7 @@ app.controller('upcomingEventController', function ($scope, $window, httpFactory
     //                 console.log(" obj" + JSON.stringify(obj))
     //                 // ownerEvents.push(obj);
     //                 $scope.events.push(obj);
-                  
+
 
     //             }
     //         }
@@ -137,7 +157,7 @@ app.controller('upcomingEventController', function ($scope, $window, httpFactory
     //     })
     // }
     // $scope.upcomingEventGet();
-  
+
 
 
 

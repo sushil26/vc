@@ -24,7 +24,7 @@
                                     <i class="icon_cogs"></i> Action</th>
                                
                             </tr>
-                            <tr ng-repeat="event in events track by $index">
+                            <tr ng-repeat="event in events  | orderBy:'-startsAt'"  ng-if="event.startsAt<today">
                               
                                 <td>{{event.title}}</td>
                                 <td>{{event.startsAt | date:'MMM d, y'}}</td>

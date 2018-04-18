@@ -3,7 +3,7 @@
         <section class="wrapper">
             <div class="col-lg-12">
                 <h3 class="page-header">
-                    <i class="fa fa-user-md"></i>Comming Event</h3>
+                    <i class="fa fa-user-md"></i>Upcoming Event</h3>
             </div>
 
           
@@ -19,13 +19,13 @@
                                             <th>
                                                 <i class="icon_mail_alt"></i> Start Time</th>
                                             <th>
-                                                <i class="icon_pin_alt"></i> End Time</th>
+                                                <i class="icon_clock"></i> End Time</th>
                                                 <th>
                                                     <i class="icon_cogs"></i> Detail</th>
                                             <th>
                                                 <i class="icon_cogs"></i> Action</th>
                                 </tr>
-                                <tr ng-repeat="event in events track by $index">
+                                <tr ng-repeat="event in events | orderBy:'startsAt'" ng-if="event.startsAt>=today">
                                         <td>{{event.title}}</td>
                                         <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                         <td>{{event.startsAt  | date:'h:mm a'}}</td>
@@ -41,9 +41,9 @@
                                             <a class="btn btn-success" href="" ng-click="rescheduleEvent($index)">
                                                 <i class="fa fa-pencil"></i>&nbsp;Reschedule
                                             </a>
-                                            <a class="btn btn-danger" href="" ng-click="deleteEvent($index)">
+                                            <!-- <a class="btn btn-danger" href="" ng-click="deleteEvent($index)">
                                                 <i class="icon_close_alt2"></i>&nbsp;Delete
-                                            </a>
+                                            </a> -->
                                         </div>
                                     </td>
                                 </tr>

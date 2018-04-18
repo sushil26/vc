@@ -20,7 +20,7 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-module.exports.register4VC = function(req, res) {
+module.exports.register4VC = function (req, res) {
   console.log("Regisyer==>");
   console.log("dB: " + db);
   var responseData;
@@ -38,7 +38,7 @@ module.exports.register4VC = function(req, res) {
       status: "inactive"
     };
     console.log("userData: " + JSON.stringify(userData));
-    user.insertOne(userData, function(err, data) {
+    user.insertOne(userData, function (err, data) {
       console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {
@@ -69,7 +69,7 @@ module.exports.register4VC = function(req, res) {
   console.log("<<==Register");
 };
 
-module.exports.login4VC = function(req, res) {
+module.exports.login4VC = function (req, res) {
   console.log("login==>");
   var responseData;
   if (
@@ -104,7 +104,7 @@ module.exports.login4VC = function(req, res) {
       if (req.body.loginType == "teacher") {
         user
           .find({ teacherEmail: req.body.email })
-          .toArray(function(err, data) {
+          .toArray(function (err, data) {
             if (data.length > 0) {
               if (data[0].password == req.body.pswd) {
                 if (data[0].status == "active") {
@@ -113,6 +113,7 @@ module.exports.login4VC = function(req, res) {
                     status: true,
                     message: "Login Successfully",
                     loginType: "teacher",
+                    sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
                     data: data[0]
                   };
                   res.status(200).send(responseData);
@@ -144,7 +145,7 @@ module.exports.login4VC = function(req, res) {
             }
           });
       } else {
-        stud.find({$or :[{ parentEmail: req.body.email },{ MotherEmail: req.body.email }]}).toArray(function(err, data) {
+        stud.find({ $or: [{ parentEmail: req.body.email }, { MotherEmail: req.body.email }] }).toArray(function (err, data) {
           if (data.length > 0) {
             if (data[0].password == req.body.pswd) {
               if (data[0].status == "active") {
@@ -198,10 +199,10 @@ module.exports.login4VC = function(req, res) {
   console.log("<==login");
 };
 
-module.exports.getUserData = function(req, res) {
+module.exports.getUserData = function (req, res) {
   console.log("getUserData-->");
   var responseData;
-  user.find().toArray(function(err, listOfUser) {
+  user.find().toArray(function (err, listOfUser) {
     if (err) {
       responseData = {
         status: false,
@@ -222,10 +223,10 @@ module.exports.getUserData = function(req, res) {
 
   console.log("<--getUserData");
 };
-module.exports.getStudData = function(req, res) {
+module.exports.getStudData = function (req, res) {
   console.log("getUserData-->");
   var responseData;
-  stud.find().toArray(function(err, listOfUser) {
+  stud.find().toArray(function (err, listOfUser) {
     if (err) {
       responseData = {
         status: false,
@@ -246,7 +247,7 @@ module.exports.getStudData = function(req, res) {
 
   console.log("<--getUserData");
 };
-module.exports.updateUserStatus = function(req, res) {
+module.exports.updateUserStatus = function (req, res) {
   console.log("updateUserStatus-->");
   var responseData;
   if (general.emptyCheck(req.body.id)) {
@@ -256,7 +257,7 @@ module.exports.updateUserStatus = function(req, res) {
     var updatedJson = {
       status: req.body.status
     };
-    user.update(obj, { $set: updatedJson }, { multi: true }, function(
+    user.update(obj, { $set: updatedJson }, { multi: true }, function (
       err,
       data
     ) {
@@ -289,7 +290,7 @@ module.exports.updateUserStatus = function(req, res) {
 
   console.log("<--updateUserStatus");
 };
-module.exports.updateStudStatus = function(req, res) {
+module.exports.updateStudStatus = function (req, res) {
   console.log("updateStudStatus-->");
   var responseData;
   if (general.emptyCheck(req.body.id)) {
@@ -299,7 +300,7 @@ module.exports.updateStudStatus = function(req, res) {
     var updatedJson = {
       status: req.body.status
     };
-    stud.update(obj, { $set: updatedJson }, { multi: true }, function(
+    stud.update(obj, { $set: updatedJson }, { multi: true }, function (
       err,
       data
     ) {
@@ -332,14 +333,14 @@ module.exports.updateStudStatus = function(req, res) {
 
   console.log("<--updateStudStatus");
 };
-module.exports.deleteUser = function(req, res) {
+module.exports.deleteUser = function (req, res) {
   console.log("deleteUser-->");
   var responseData;
   if (general.emptyCheck(req.body.id)) {
     var id = {
       _id: ObjectId(req.body.id)
     };
-    user.remove(id, function(err, data) {
+    user.remove(id, function (err, data) {
       if (err) {
         console.log("Failed to delete  data");
         responseData = {
@@ -367,14 +368,14 @@ module.exports.deleteUser = function(req, res) {
   }
   console.log("<--deleteUser");
 };
-module.exports.deleteStud = function(req, res) {
+module.exports.deleteStud = function (req, res) {
   console.log("deleteUser-->");
   var responseData;
   if (general.emptyCheck(req.body.id)) {
     var id = {
       _id: ObjectId(req.body.id)
     };
-    stud.remove(id, function(err, data) {
+    stud.remove(id, function (err, data) {
       if (err) {
         console.log("Failed to delete  data");
         responseData = {
@@ -402,18 +403,18 @@ module.exports.deleteStud = function(req, res) {
   }
   console.log("<--deleteUser");
 };
-module.exports.emailInvite = function(req, res) {
+module.exports.emailInvite = function (req, res) {
   console.log("emailInvite-->");
   var mailOptions = {
     from: "info@vc4all.in",
     to: req.body.email,
     subject: "Regarding School Instance Meeting",
     html:
-      "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link <a href="+req.body.url+">"+req.body.url+"</a> and password: abc</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+      "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link <a href=" + req.body.url + ">" + req.body.url + "</a> and password: abc</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
   };
   console.log("mailOptions: " + JSON.stringify(mailOptions));
 
-  transporter.sendMail(mailOptions, function(error, info) {
+  transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
       responseData = {
@@ -437,7 +438,7 @@ module.exports.emailInvite = function(req, res) {
   });
   console.log("<--emailInvite");
 };
-module.exports.sessionCreate = function(req, res) {
+module.exports.sessionCreate = function (req, res) {
   console.log("sessionCreate-->");
   var responseData;
   console.log("req.body.url: " + req.body.url);
@@ -460,7 +461,7 @@ module.exports.sessionCreate = function(req, res) {
   }
   console.log("<--sessionCreate");
 };
-module.exports.teacherInsert = function(req, res) {
+module.exports.teacherInsert = function (req, res) {
   console.log("teacherInsert-->");
   var responseData;
   var userData = {
@@ -477,7 +478,7 @@ module.exports.teacherInsert = function(req, res) {
   };
 
   console.log("userData: " + JSON.stringify(userData));
-  user.insertOne(userData, function(err, data) {
+  user.insertOne(userData, function (err, data) {
     console.log("data: " + JSON.stringify(data));
     if (err) {
       responseData = {
@@ -500,7 +501,7 @@ module.exports.teacherInsert = function(req, res) {
   console.log("<--teacherInsert");
 };
 
-module.exports.studentInsert = function(req, res) {
+module.exports.studentInsert = function (req, res) {
   console.log("studentInsert-->");
   var responseData;
   var userData = {
@@ -520,7 +521,7 @@ module.exports.studentInsert = function(req, res) {
   };
 
   console.log("userData: " + JSON.stringify(userData));
-  stud.insertOne(userData, function(err, data) {
+  stud.insertOne(userData, function (err, data) {
     console.log("data: " + JSON.stringify(data));
     if (err) {
       responseData = {
@@ -543,13 +544,13 @@ module.exports.studentInsert = function(req, res) {
   console.log("<--studentInsert");
 };
 
-module.exports.teacherDetail = function(req, res) {
+module.exports.teacherDetail = function (req, res) {
   console.log("teacherdetail-->");
   if (general.emptyCheck(req.params.id)) {
     var id = {
       _id: ObjectId(req.params.id)
     };
-    user.find(id).toArray(function(err, data) {
+    user.find(id).toArray(function (err, data) {
       console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {
@@ -579,13 +580,13 @@ module.exports.teacherDetail = function(req, res) {
   console.log("<--teacherdetail");
 };
 
-module.exports.studentDetail = function(req, res) {
+module.exports.studentDetail = function (req, res) {
   console.log("teacherdetail-->");
   if (general.emptyCheck(req.params.id)) {
     var id = {
       _id: ObjectId(req.params.id)
     };
-    stud.find(id).toArray(function(err, data) {
+    stud.find(id).toArray(function (err, data) {
       console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {
@@ -615,14 +616,14 @@ module.exports.studentDetail = function(req, res) {
   console.log("<--teacherdetail");
 };
 
-module.exports.teacherPersonalData = function(req, res) {
+module.exports.teacherPersonalData = function (req, res) {
   console.log("teacherPersonalData-->");
   console.log("req.params.id: " + req.params.id);
   if (general.emptyCheck(req.params.id)) {
     var id = {
       _id: ObjectId(req.params.id)
     };
-    user.find(id).toArray(function(err, data) {
+    user.find(id).toArray(function (err, data) {
       console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {
@@ -652,14 +653,14 @@ module.exports.teacherPersonalData = function(req, res) {
   console.log("<--teacherPersonalData");
 };
 
-module.exports.studentPersonalData = function(req, res) {
+module.exports.studentPersonalData = function (req, res) {
   console.log("studentPersonalData-->");
   console.log("req.params.id: " + req.params.id);
   if (general.emptyCheck(req.params.id)) {
     var id = {
       _id: ObjectId(req.params.id)
     };
-    stud.find(id).toArray(function(err, data) {
+    stud.find(id).toArray(function (err, data) {
       console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {
@@ -689,14 +690,14 @@ module.exports.studentPersonalData = function(req, res) {
   console.log("<--studentPersonalData");
 };
 
-module.exports.getLoginData = function(req, res) {
+module.exports.getLoginData = function (req, res) {
   console.log("getLoginData-->");
   console.log("req.params.id: " + req.params.id);
   if (general.emptyCheck(req.params.id)) {
     var id = {
       _id: ObjectId(req.params.id)
     };
-    user.find(id).toArray(function(err, data) {
+    user.find(id).toArray(function (err, data) {
       console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {

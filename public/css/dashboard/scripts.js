@@ -42,12 +42,14 @@ function initializeJS() {
             if (wSize <= 768) {
                 jQuery('#container').addClass('sidebar-close');
                 jQuery('#sidebar > ul').hide();
+               
             }
 
             if (wSize > 768) {
                 jQuery('#container').removeClass('sidebar-close');
                 jQuery('#sidebar > ul').show();
             }
+       
         }
         jQuery(window).on('load', responsiveView);
         jQuery(window).on('resize', responsiveView);
