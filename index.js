@@ -85,6 +85,21 @@ app.get("/client/:id/:time", function (req, res) {
     console.log("start to render page");
     res.sendFile(__dirname + '/public/client.html');
 });
+app.get("/creator", function (req, res) {
+
+    queryId = null;
+
+    console.log("start to render page");
+    res.sendFile(__dirname + '/public/careator.html');
+});
+
+app.get("/careator/:id/:time", function (req, res) {
+    queryId = req.params.id;
+    time = req.params.id;
+    console.log("queryId: " + req.params.id);
+    console.log("start to render page");
+    res.sendFile(__dirname + '/public/careator.html');
+});
 
 app.get("/mainPage", function (req, res) {
     console.log("start to render page");
