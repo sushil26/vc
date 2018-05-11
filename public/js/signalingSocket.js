@@ -46,10 +46,10 @@ var MUTE_AUDIO_BY_DEFAULT = false;
 if (localStorage.getItem("userData")) {
   console.log("User Name from session: " + localStorage.getItem("userData"));
   var userData = JSON.stringify(localStorage.getItem("userData"));
-  userName = localStorage.getItem("userName");
+  //userName = localStorage.getItem("userName");
   //loginType = localStorage.getItem("loginType");
-  
-login = "teacher";
+  userName = "admin";
+  loginType = "teacher";
   console.log("userData: " + userData);
   console.log("userName: " + userName);
   console.log("loginType: " + loginType);
