@@ -77,6 +77,7 @@ if (localStorage.getItem("userName")) {
     //document.getElementById("userAuth").style.display = "block";
   }
 } else {
+
   var url = window.location.href;
   var stuff = url.split("/");
   var id1 = stuff[stuff.length - 2];
@@ -106,6 +107,10 @@ if (localStorage.getItem("userName")) {
       //    userName="logu";
       //     init();
     }
+  }
+  else{
+    document.getElementById("LoginUrl").style.display = "none";
+    document.getElementById("videoConferenceUrl").style.display = "none";
   }
 }
 
