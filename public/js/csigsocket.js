@@ -280,6 +280,7 @@ function disconnecSession() {
 
 function startSession(id, date) {
   console.log("startSession-->");
+  window.location.href =  "https://vc4all.in/careator/" + id + "/" + date; 
   var url = "https://vc4all.in/careator/" + id + "/" + date;
   var obj = {
     "url": url
