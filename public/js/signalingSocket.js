@@ -47,8 +47,9 @@ if (localStorage.getItem("userData")) {
   console.log("User Name from session: " + localStorage.getItem("userData"));
   var userData = JSON.stringify(localStorage.getItem("userData"));
   userName = localStorage.getItem("userName");
-  loginType = localStorage.getItem("loginType");
-
+  //loginType = localStorage.getItem("loginType");
+  
+login = "teacher";
   console.log("userData: " + userData);
   console.log("userName: " + userName);
   console.log("loginType: " + loginType);
