@@ -43,7 +43,7 @@ var USE_VIDEO = true;
 var DEFAULT_CHANNEL = "some-global-ch-name";
 var MUTE_AUDIO_BY_DEFAULT = false;
 
-if (localStorage.getItem("userData")) {
+if (localStorage.getItem("userName")) {
   console.log("User Name from session: " + localStorage.getItem("userData"));
   var userData = JSON.stringify(localStorage.getItem("userData"));
   userName = localStorage.getItem("userName");
