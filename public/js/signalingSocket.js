@@ -53,7 +53,7 @@ if (localStorage.getItem("userData")) {
   console.log("userName: " + userName);
   console.log("loginType: " + loginType);
   if (loginType == "teacher" || loginType == "admin") {
-    document.getElementById("userAuth").style.display = "none";
+    // document.getElementById("userAuth").style.display = "none";
     // document.getElementById("appLogin").style.display = 'none';
     // document.getElementById("appReg").style.display = 'none';
     //document.getElementById("appLogout").style.display = "block";
