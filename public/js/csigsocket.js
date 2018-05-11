@@ -53,7 +53,7 @@ if (localStorage.getItem("userData")) {
   console.log("userName: " + userName);
   console.log("loginType: " + loginType);
   if (loginType == "teacher" || loginType == "admin") {
-    document.getElementById("userAuth").style.display = "none";
+    //document.getElementById("userAuth").style.display = "none";
     // document.getElementById("appLogin").style.display = 'none';
     // document.getElementById("appReg").style.display = 'none';
     //document.getElementById("appLogout").style.display = "block";
@@ -63,7 +63,7 @@ if (localStorage.getItem("userData")) {
     document.getElementById("videoConferenceLinkExtention").style.display =
       "block";
   } else if (loginType == "studParent") {
-    document.getElementById("userAuth").style.display = "none";
+    //document.getElementById("userAuth").style.display = "none";
     // document.getElementById("appLogin").style.display = 'none';
     // document.getElementById("appReg").style.display = 'none';
     //document.getElementById("appLogout").style.display = "none";
@@ -74,7 +74,7 @@ if (localStorage.getItem("userData")) {
       "block";
   }
   if (loginType == "admin") {
-    document.getElementById("userAuth").style.display = "block";
+    //document.getElementById("userAuth").style.display = "block";
   }
 } else {
   var url = window.location.href;
@@ -91,7 +91,7 @@ if (localStorage.getItem("userData")) {
       );
       userName = localStorage.getItem("userName");
       // startVideoAction();
-      document.getElementById("userAuth").style.display = "none";
+     // document.getElementById("userAuth").style.display = "none";
       // document.getElementById("appLogin").style.display = "none";
       // document.getElementById("appReg").style.display = "none";
       //document.getElementById("appLogout").style.display = "none";
@@ -137,7 +137,7 @@ function saveName() {
         localStorage.setItem("userName", userName);
         localStorage.setItem("status", "instantActive");
         localStorage.setItem("loginType", "parent");
-        document.getElementById("userAuth").style.display = "none";
+        //document.getElementById("userAuth").style.display = "none";
         // document.getElementById("appLogin").style.display = "none";
         // document.getElementById("appReg").style.display = "none";
         //document.getElementById("appLogout").style.display = "none";
@@ -151,7 +151,7 @@ function saveName() {
         localStorage.setItem("userName", userName);
         localStorage.setItem("status", "instantActive");
         localStorage.setItem("loginType", "parent");
-        document.getElementById("userAuth").style.display = "none";
+       // document.getElementById("userAuth").style.display = "none";
         // document.getElementById("appLogin").style.display = "none";
         // document.getElementById("appReg").style.display = "none";
         //document.getElementById("appLogout").style.display = "none";
