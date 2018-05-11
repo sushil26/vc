@@ -280,7 +280,7 @@ function disconnecSession() {
 
 function startSession(id, date) {
   console.log("startSession-->");
-  var url = "https://vc4all.in/client/" + id + "/" + date;
+  var url = "https://vc4all.in/careator/" + id + "/" + date;
   var obj = {
     "url": url
   };
@@ -342,7 +342,7 @@ signaling_socket.on("connect", function () {
       // $('#crdbuttn').trigger('click');
       console.log("message: config.peer_id: " + config.peer_id);
 
-      //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+      //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/careator/" + peerNew_id + "/" + date);
       document
         .getElementById("videoConferenceUrl")
         .setAttribute(
@@ -353,10 +353,10 @@ signaling_socket.on("connect", function () {
         .getElementById("linkToShare")
         .setAttribute(
           "href",
-          "https://vc4all.in/client/" + peerNew_id + "/" + date
+          "https://vc4all.in/careator/" + peerNew_id + "/" + date
         );
       document.getElementById("linkToShare").innerHTML =
-        "https://vc4all.in/client/" + peerNew_id + "/" + date;
+        "https://vc4all.in/careator/" + peerNew_id + "/" + date;
     } else {
       console.log("query id nt null");
 
@@ -364,10 +364,10 @@ signaling_socket.on("connect", function () {
         .getElementById("linkToShare")
         .setAttribute(
           "href",
-          "https://vc4all.in/client/" + queryLink + "/" + date
+          "https://vc4all.in/careator/" + queryLink + "/" + date
         );
       document.getElementById("linkToShare").innerHTML =
-        "https://vc4all.in/client/" + queryLink + "/" + date;
+        "https://vc4all.in/careator/" + queryLink + "/" + date;
       document.getElementById("screenBtns").style.display = "inline";
       document.getElementById("videoConfStart").style.display = "none";
       document.getElementById("openChat").style.display = "inline";
@@ -863,8 +863,8 @@ signaling_socket.on("iceCandidate", function (config) {
  * When a user leaves a channel (or is disconnected from the
  * signaling server) everyone will recieve a 'removePeer' message
  * telling them to trash the media channels they have open for those
- * that peer. If it was this client that left a channel, they'll also
- * receive the removePeers. If this client was disconnected, they
+ * that peer. If it was this careator that left a channel, they'll also
+ * receive the removePeers. If this careator was disconnected, they
  * wont receive removePeers, but rather the
  * signaling_socket.on('disconnect') code will kick in and tear down
  * all the peer sessions.
@@ -1197,14 +1197,14 @@ function setup_local_media(callback, errorback) {
   console.log("<--setup_local_media");
 }
 
-signaling_socket.on("stateChangedToClient", function (data) {
-  console.log("newstateChangedToClientTextMsg-->");
+signaling_socket.on("stateChangedTocareator", function (data) {
+  console.log("newstateChangedTocareatorTextMsg-->");
   console.log("data.userId: " + data.userId);
   console.log("peerNew_id: " + peerNew_id);
   if (data.userId == peerNew_id) {
     window.location.reload(true);
   }
-  console.log("<--newstateChangedToClientTextMsg");
+  console.log("<--newstateChangedTocareatorTextMsg");
 });
 
 function scrollDown() {
