@@ -85,7 +85,7 @@ app.get("/client/:id/:time", function (req, res) {
     console.log("start to render page");
     res.sendFile(__dirname + '/public/client.html');
 });
-app.get("/creator", function (req, res) {
+app.get("/careator", function (req, res) {
 
     queryId = null;
 
