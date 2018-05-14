@@ -8,7 +8,7 @@ app.controller('adminCreateCtl', function ($scope, $filter, $window, httpFactory
             "schoolRegNumber": $scope.schoolRegNumber,
             "firstName": $scope.firstName,
             "lastName": $scope.lastName,
-            "dob": $filter('date')($scope.dob , "d MMM  y"),
+            "dor": $filter('date')($scope.dor , "d MMM  y"),
             "email": $scope.email,
             "mobNumber": $scope.mobNumber,
             "address": $scope.address,

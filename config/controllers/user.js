@@ -791,6 +791,7 @@ module.exports.adminCreate = function (req, res) {
   var schoolObj = {
     "schoolName": req.body.schoolName,
     "schoolRegNumber": req.body.schoolRegNumber,
+    "dor": req.body.dor,
     "address": req.body.address,
     "email": req.body.email,
     "mobNumber": req.body.mobNumber,
@@ -806,7 +807,6 @@ module.exports.adminCreate = function (req, res) {
   var adminObj = {
     "firstName": req.body.firstName,
     "lastName": req.body.lastName,
-    "dob": req.body.dob,
     "email": req.body.email,
     "schoolName": req.body.schoolName,
     "mobNumber": req.body.mobNumber,
