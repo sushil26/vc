@@ -1,4 +1,4 @@
-app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, $window, $filter, httpFactory, moment, calendarConfig, $uibModal) {
+app.controller('dashboardScheduleCtrl', function ($scope, $state, $rootScope, $compile, $window, $filter, httpFactory, sessionAuthFactory, moment, calendarConfig, $uibModal) {
   console.log("dashboardScheduleCtrl==>");
 
   var dayEventmodal; /* ### Note: open model for event send ###  */
@@ -7,11 +7,96 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
   var ownerEvents = []; /* ### Note: logged in person all events ### */
   var remoteEvent = []; /* ### Note:receiver all events ### */
   $scope.timeForPeriods = $rootScope.TimeTable_timing;
+  $scope.userData = sessionAuthFactory.getAccess();
+  var schoolName = $scope.userData.schoolName;
+  $scope.eventGet = function () {
+    console.log("eventGet-->");
+    var id = $scope.userData.id
+    var api = "https://norecruits.com/vc/eventGet" + "/" + id;
+    //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
+    $scope.calendarOwner = "Your";
+
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        $scope.eventData = data.data.data;
+        vm.events = [];
+        ownerEvents = [];
+        for (var x = 0; x < $scope.eventData.length; x++) {
+          console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
+          var obj = {
+            'id': $scope.eventData[x]._id,
+            'userId': $scope.eventData[x]._userId,
+            "student_cs": $scope.eventData[x].student_cs,
+            "student_id": $scope.eventData[x].student_id,
+            "student_Name": $scope.eventData[x].student_Name,
+            'title': $scope.eventData[x].title,
+            'color': $scope.eventData[x].primColor,
+            'startsAt': new Date($scope.eventData[x].start),
+            'endsAt': new Date($scope.eventData[x].end),
+            'draggable': true,
+            'resizable': true,
+            'actions': actions,
+            'url': $scope.eventData[x].url,
+            "senderName": $scope.eventData[x].senderName,
+            "senderId": $scope.eventData[x].senderId,
+            "senderMN": $scope.eventData[x].senderMN,
+            "senderLoginType": $scope.eventData[x].senderLoginType,
+            "title": $scope.eventData[x].title,
+            "reason": $scope.eventData[x].reason,
+            "receiverEmail": $scope.eventData[x].receiverEmail,
+            "receiverName": $scope.eventData[x].receiverName,
+            "receiverId": $scope.eventData[x].receiverId,
+            "receiverMN": $scope.eventData[x].receiverMN,
+            "remoteCalendarId": $scope.eventData[x].remoteCalendarId
+          }
+          console.log(" obj" + JSON.stringify(obj))
+          ownerEvents.push(obj);
+          vm.events.push(obj);
+
+        }
+      }
+      else {
+        //alert("Event get Failed");
+
+      }
+
+    })
+  }
+
+  $scope.getToDate = function () {
+    console.log("Get To Date-->");
+    var api = "https://norecruits.com/vc/getToDate";
+    httpFactory.get(api).then(function (data) {
+      var checkStatus = httpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        console.log("data.data.data.date: " + data.data.data.date);
+        var todayDate = new Date(data.data.data.date);
+        console.log("todayDate: " + todayDate);
+        var reqDate = todayDate.getDate();
+        console.log("reqDate: " + reqDate);
+        var reqMonth = todayDate.getMonth();
+        var reqYear = todayDate.getFullYear();
+        var reqHr = todayDate.getHours();
+        var reqMin = todayDate.getMinutes();
+        var reqSec = todayDate.getSeconds();
+        $scope.todayDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
+        console.log("consolidateDate: " + $scope.consolidateDate);
+        $scope.eventGet();
+      }
+      else {
+      }
+    })
+    console.log("<--Get To Date");
+  }
+  $scope.getToDate();
 
   $scope.getTeacherData = function () {
     console.log("getTeacherData-->");
-    var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+    var id = $scope.userData.id;
+    var api = "https://norecruits.com/vc/teacherDetail" + "/" + id;
     //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
     console.log("api: " + api);
@@ -23,11 +108,9 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
         $scope.teacherPersonalData = data.data.data;
         console.log("teacherData: " + JSON.stringify($scope.teacherData));
         console.log("teacherPersonalData: " + JSON.stringify($scope.teacherPersonalData));
-        //   $scope.css = $scope.teacherData[0].css;
-        //   console.log("$scope.css: " + JSON.stringify($scope.css));
+       
       }
       else {
-
       }
     })
     console.log("<--getTeacherData");
@@ -35,8 +118,8 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
 
   $scope.getStudentData = function () {
     console.log("getTeacherData-->");
-    var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
+    var id = $scope.userData.id;
+    var api = "https://norecruits.com/vc/studentDetail" + "/" + id;
     console.log("api: " + api);
     $scope.teacherList = [];
     httpFactory.get(api).then(function (data) {
@@ -48,7 +131,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
 
         $scope.studClass = $scope.studentData[0].cs[0].class;
         $scope.studSection = $scope.studentData[0].cs[0].section;
-        var api = "https://vc4all.in/vc/getTeacherListForCS" + "/" + $scope.studClass + "/" + $scope.studSection;
+        var api = "https://norecruits.com/vc/getTeacherListForCS" + "/" + schoolName + "/" + $scope.studClass + "/" + $scope.studSection;
 
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
@@ -57,14 +140,18 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
           if (checkStatus) {
             $scope.teacherListForStudent = data.data.data;
             console.log("teacherListForStudent: " + JSON.stringify($scope.teacherListForStudent));
+            console.log("teacherListForStudent.length: " + $scope.teacherListForStudent.length);
             for (var x = 0; x < $scope.teacherListForStudent.length; x++) {
 
               for (var y = 0; y < $scope.teacherListForStudent[x].css.length; y++) {
+                console.log("$scope.teacherListForStudent[x]: "+JSON.stringify($scope.teacherListForStudent[x].css));
                 if ($scope.teacherListForStudent[x].css[y].class == $scope.studClass && $scope.teacherListForStudent[x].css[y].section == $scope.studSection)
-                  $scope.teacherList.push({ "id": $scope.teacherListForStudent[x]._id, "name": $scope.teacherListForStudent[x].teacherName, "teacherId": $scope.teacherListForStudent[x].teacherId, "subject": $scope.teacherListForStudent[x].css[y].subject });
+                var un = $scope.teacherListForStudent[x].firstName +" "+ $scope.teacherListForStudent[x].lastName;
+                  $scope.teacherList.push({ "id": $scope.teacherListForStudent[x]._id, "name": un, "teacherId": $scope.teacherListForStudent[x].schoolId, "subject": $scope.teacherListForStudent[x].css[y].subject });
+                  break;
               }
             }
-            console.log(" $scope.teacherList: " + $scope.teacherList);
+            console.log(" $scope.teacherList: " + JSON.stringify($scope.teacherList));
             // console.log(" $scope.studList.length: " + $scope.studList.length);
             //   $scope.css = $scope.teacherData[0].css;
             //   console.log("$scope.css: " + JSON.stringify($scope.css));
@@ -86,7 +173,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
 
   $scope.getSelectedTeacherPersonalData = function (id) {
     console.log("getSelectedTeacherPersonalData-->");
-    var api = "https://vc4all.in/vc/teacherPersonalData" + "/" + id;
+    var api = "https://norecruits.com/vc/teacherPersonalData" + "/" + id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -106,7 +193,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
 
   $scope.getSelectedStudentPersonalData = function (id) {
     console.log("get Selected Student PersonalData-->");
-    var api = "https://vc4all.in/vc/studentPersonalData" + "/" + id;
+    var api = "https://norecruits.com/vc/studentPersonalData" + "/" + id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -130,7 +217,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
     console.log("JSON.css" + JSON.stringify(css));
     $scope.remoteCalendarId = css.id;
     $scope.getSelectedStudentPersonalData($scope.remoteCalendarId);
-    var api = "https://vc4all.in/vc/eventGet" + "/" + css.id;
+    var api = "https://norecruits.com/vc/eventGet" + "/" + css.id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -181,7 +268,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
     console.log("JSON.css" + JSON.stringify(css));
     $scope.remoteCalendarId = css.id;
     $scope.getSelectedTeacherPersonalData($scope.remoteCalendarId);
-    var api = "https://vc4all.in/vc/eventGet" + "/" + css.id;
+    var api = "https://norecruits.com/vc/eventGet" + "/" + css.id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -249,27 +336,23 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
     $scope.getSelectedTeacherPersonalData($scope.remoteCalendarId);
     console.log("<--getSTCalendar");
   }
-
-  if (localStorage.getItem("loginType") == 'admin') {
+  $scope.userData = sessionAuthFactory.getAccess("userData");
+  var loginType = $scope.userData.loginType;
+  if (loginType == 'admin') {
     console.log("loginType: " + localStorage.getItem("loginType"));
-    // document.getElementById('userAuth').style.display = "block";
     $scope.userLoginType = 'admin';
   }
-  else if (localStorage.getItem("loginType") == 'teacher') {
-    // document.getElementById('userAuth').style.display = "none";
+  else if (loginType == 'teacher') {
     $scope.userLoginType = 'teacher';
     $scope.getTeacherData();
-
-
   }
-  else if (localStorage.getItem("loginType") == 'studParent') {
-    //document.getElementById('userAuth').style.display = "none";
+  else if (loginType == 'studParent') {
     $scope.userLoginType = 'studParent';
     $scope.getStudentData();
   }
   else {
-    console.log("localStorage.getItem('loginType'): " + localStorage.getItem("loginType"));
-    // window.location.href = "https://vc4all.in";
+    console.log("loginType" + loginType);
+    // window.location.href = "https://norecruits.com";
   }
 
   $scope.getStudListForCS = function (css) {
@@ -284,9 +367,9 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
     // var cssRef = [{"clas":css.class, "section": css.section}];
     // console.log("cssRef: "+JSON.stringify(cssRef));
 
-    var api = "https://vc4all.in/vc/getStudListForCS" + "/" + clas + "/" + section;
+    var api = "https://norecruits.com/vc/getStudListForCS" + "/" + schoolName + "/" + clas + "/" + section;
     //var api = "http://localhost:5000/vc/getStudListForCS" + "/" + clas + "/" + section;
-    //var api = "https://vc4all.in/vc/getStudListForCS";
+    //var api = "https://norecruits.com/vc/getStudListForCS";
 
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
@@ -296,7 +379,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
         $scope.studentList = data.data.data;
         console.log("studentList: " + JSON.stringify($scope.studentList));
         for (var x = 0; x < $scope.studentList.length; x++) {
-          $scope.studList.push({ "id": $scope.studentList[x]._id, "name": $scope.studentList[x].studName, "studId": $scope.studentList[x].studId });
+          $scope.studList.push({ "id": $scope.studentList[x]._id, "name": $scope.studentList[x].firstName, "studId": $scope.studentList[x].schoolId });
 
         }
         console.log(" $scope.studList.length: " + $scope.studList.length);
@@ -315,7 +398,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
 
   $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");
-    var api = "https://vc4all.in/vc/deleteEvent";
+    var api = "https://norecruits.com/vc/deleteEvent";
     //var api = "http://localhost:5000/vc/deleteEvent";
     vm.events.splice(index, 1);
     var obj = {
@@ -327,10 +410,11 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
       if (checkStatus) {
         //  console.log("data" + JSON.stringify(data.data))
         // $window.location.href = $scope.propertyJson.R082;
-        alert(data.data.message);
+        // alert(data.data.message);
       }
       else {
-        alert("Event Delete Failed");
+      
+        //alert("Event Delete Failed");
 
       }
     })
@@ -375,20 +459,40 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
     }
     console.log("obj: " + JSON.stringify(obj));
 
-    var api = "https://vc4all.in/vc/eventUpdate" + "/" + id;
+    var api = "https://norecruits.com/vc/eventUpdate" + "/" + id;
     //var api = "http://localhost:5000/vc/eventUpdate" + "/" + id;
 
     httpFactory.post(api, obj).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
       console.log("data--" + JSON.stringify(data.data));
       if (checkStatus) {
+        var loginAlert = $uibModal.open({
+          scope: $scope,
+          templateUrl: '/html/templates/dashboardsuccess.html',
+          windowClass: 'show',
+          backdropClass: 'static',
+          keyboard: false,
+          controller: function ($scope, $uibModalInstance) {
+            $scope.message = "Successfully event updated";
+          }
+        })
 
         console.log("data" + JSON.stringify(data.data))
         // $window.location.href = $scope.propertyJson.R082;
-        alert("Successfully event updated" + data.data.message);
+        // alert("Successfully event updated" + data.data.message);
       }
       else {
-        alert("Event Send Failed");
+        var loginAlert = $uibModal.open({
+          scope: $scope,
+          templateUrl: '/html/templates/dashboardwarning.html',
+          windowClass: 'show',
+          backdropClass: 'static',
+          keyboard: false,
+          controller: function ($scope, $uibModalInstance) {
+            $scope.message = "Event Send Failed";
+          }
+        })
+        // alert("Event Send Failed");
 
       }
 
@@ -426,33 +530,48 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
     dayEventmodal.close('resetModel');
 
     if ($scope.userLoginType == 'studParent') {
-      var senderName = $scope.studentData[0].studName;
+      var un = $scope.studentData[0].firstName +" "+ $scope.studentData[0].lastName;
+      var teacherName = $scope.teacherPersonalData[0].firstName +" "+ $scope.teacherPersonalData[0].lastName;
+      var senderName = un;
+      var stud_name = un;
+      var stud_cs = $scope.studentData[0].cs;
+      var stud_id = $scope.studentData[0].schoolId;
       var senderMN = $scope.teacherPersonalData[0].mobileNum;
-      var studId = $scope.studentData[0].studId;
-      var email = $scope.teacherPersonalData[0].teacherEmail;/* ### Note: teacher email Id ### */
-      var receiverName = $scope.teacherPersonalData[0].teacherName;
-      var receiverId = $scope.teacherPersonalData[0].teacherId;
+      var studId = $scope.studentData[0].schoolId;
+      var email = $scope.teacherPersonalData[0].email;/* ### Note: teacher email Id ### */
+      var receiverName = teacherName;
+      var receiverId = $scope.teacherPersonalData[0].schoolId;
       var receiverMN = $scope.teacherPersonalData[0].mobileNum;
-      $scope.eventSend(reason, senderName, studId, email, senderMN, receiverName, receiverId, receiverMN);
+      var studUserId = $scope.userData.id;
+      $scope.eventSend(reason, senderName, studId, studUserId, email, senderMN, receiverName, receiverId, receiverMN, stud_id, stud_cs, stud_name);
     }
     if ($scope.userLoginType == 'teacher') {
-
-      var teacherName = $scope.teacherData[0].teacherName;
+      console.log("$scope.studentPersonalData[0]: " + JSON.stringify($scope.studentPersonalData[0]));
+      var un = $scope.teacherData[0].firstName +" "+ $scope.teacherData[0].lastName;
+      var studName = $scope.studentPersonalData[0].firstName +" "+ $scope.studentPersonalData[0].lastName;
+      
+      var teacherName = un;
       var senderMN = $scope.teacherData[0].mobileNum;
-      var teacherId = $scope.teacherData[0].teacherId;
+      var teacherId = $scope.teacherData[0].schoolId;
       var email = $scope.studentPersonalData[0].parentEmail;/* ### Note: parentEmail email Id ### */
-      var receiverName = $scope.studentPersonalData[0].studName;
-      var receiverId = $scope.studentPersonalData[0].studId;
+      var receiverName = studName;
+      var receiverId = $scope.studentPersonalData[0].schoolId;
       var receiverMN = $scope.studentPersonalData[0].mobileNum;
-      $scope.eventSend(reason, teacherName, teacherId, email, senderMN, receiverName, receiverId, receiverMN);
+      var stud_name = studName;
+      var stud_cs = $scope.studentPersonalData[0].cs;
+      var stud_id = $scope.studentPersonalData[0].schoolId;
+      var studUserId = $scope.studentPersonalData[0]._id;
+      console.log("$scope.studentPersonalData[0]: " + $scope.studentPersonalData[0].schoolId);
+      console.log("stud_id: " + stud_id);
+      $scope.eventSend(reason, teacherName, teacherId, studUserId, email, senderMN, receiverName, receiverId, receiverMN, stud_id, stud_cs, stud_name);
     }
 
 
   }
 
-  $scope.eventSend = function (res, name, id, email, senderMN, receiverName, receiverId, receiverMN) {
+  $scope.eventSend = function (res, name, id, studUserId, email, senderMN, receiverName, receiverId, receiverMN, stud_id, stud_cs, stud_name) {
     console.log("eventSend-->");
-    var SIGNALING_SERVER = "https://vc4all.in";
+    var SIGNALING_SERVER = "https://norecruits.com";
     //var SIGNALING_SERVER = "http://localhost:5000";
     var queryLink = null;
     var peerNew_id = null;
@@ -467,20 +586,20 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
         queryLink = config.queryId;
         peerNew_id = config.peer_id;
 
-        url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
-
-        var api = "https://vc4all.in/vc/eventSend";
+        url = "https://norecruits.com/client/" + peerNew_id + "/" + $scope.urlDate;
+        var api = "https://norecruits.com/vc/eventSend";
         //var api = "http://localhost:5000/vc/eventSend";
         console.log("api: " + api);
         // var email = document.getElementById('eventEmails').value;
         var obj = {
-          "userId": localStorage.getItem("id"),
-          "senderLoginType": localStorage.getItem("loginType"),
+          "userId": $scope.userData.id,
+          "senderLoginType": $scope.userData.loginType,
           "title": $scope.title,
           "reason": res,
+          "studUserId": studUserId,
           "senderName": name,
           "senderId": id,
-          "senderMN":senderMN,
+          "senderMN": senderMN,
           "receiverEmail": email,
           "start": $scope.startD,
           "end": $scope.endDateRes,
@@ -491,10 +610,14 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
           "date": $scope.date,
           "sd": $scope.sd,
           "ed": $scope.ed,
-          "receiverName":receiverName, 
-          "receiverId":receiverId, 
-          "receiverMN":receiverMN,
-          "remoteCalendarId": $scope.remoteCalendarId
+          "receiverName": receiverName,
+          "receiverId": receiverId,
+          "receiverMN": receiverMN,
+          "remoteCalendarId": $scope.remoteCalendarId,
+          "student_cs": stud_cs,
+          "student_id": stud_id,
+          "student_Name": stud_name,
+          "schoolName": schoolName
         }
         console.log("obj: " + JSON.stringify(obj));
 
@@ -504,33 +627,61 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
           if (checkStatus) {
             // console.log("data" + JSON.stringify(data.data))
             // $window.location.href = $scope.propertyJson.R082;
-            alert("Successfully sent the event");
+            
+            var loginAlert = $uibModal.open({
+              scope: $scope,
+              templateUrl: '/html/templates/dashboardsuccess.html',
+              windowClass: 'show',
+              backdropClass: 'static',
+              keyboard: false,
+              controller: function ($scope, $uibModalInstance) {
+                $scope.message = "Successfully sent the event";
+              }
+            })
+
+
+
+            // alert("Successfully sent the event");
             // vm.events.splice(0, 1);
             var eventPostedData = data.data.data;
-           var objData = {
+            var objData = {
               'id': obj.userId,
               'title': obj.title,
               'color': obj.primColor,
-              'startsAt': obj.start,
-              'endsAt': obj.end,
+              'startsAt': $filter('date')($scope.startFiltered, "h:mm a"),
+              'endsAt': $filter('date')($scope.endFiltered, "h:mm a"),
               'draggable': true,
               'resizable': true,
               'actions': actions,
               'url': obj.url,
               "reason": res,
               "senderName": name,
-            "senderId": id,
-            "senderMN":senderMN,
-            "receiverEmail": email,
-            "receiverName": receiverName, 
-            "receiverId": receiverId, 
-            "receiverMN": receiverMN,
-            /*  */           }
+              "senderId": id,
+              "senderMN": senderMN,
+              "receiverEmail": email,
+              "receiverName": receiverName,
+              "receiverId": receiverId,
+              "receiverMN": receiverMN,
+              /*  */
+            }
             ownerEvents.push(objData);
             vm.events.push(objData);
           }
           else {
-            alert("Event Send Failed");
+
+
+            var loginAlert = $uibModal.open({
+              scope: $scope,
+              templateUrl: '/html/templates/dashboardwarning.html',
+              windowClass: 'show',
+              backdropClass: 'static',
+              keyboard: false,
+              controller: function ($scope, $uibModalInstance) {
+                $scope.message = "Event Send Failed";
+              }
+            })
+
+            // alert("Event Send Failed");
           }
 
         })
@@ -545,15 +696,21 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
   $scope.timeTableForEventBook = function (day, id) {
     console.log("timeTableForEventBook-->");
     console.log("id: " + id + " day: " + day);
-    console.log("$scope.timeForPeriods[id].startsAt: " + $scope.timeForPeriods[id].startsAt);
-    console.log("$scope.timeForPeriods[id].endsAt: " + $scope.timeForPeriods[id].endsAt);
+    console.log("$scope.teacherPersonalData[0].timeTable[0].timing[id].startsAt: " + $scope.teacherPersonalData[0].timeTable[0].timing[id].startsAt);
+    console.log("$scope.teacherPersonalData[0].timeTable[0].timing[id].endsAt: " +$scope.teacherPersonalData[0].timeTable[0].timing[id].endsAt);
 
-    // $scope.startDate = $filter('date')(s, "EEE MMM dd y");
-    // $scope.endDate = $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'");
-    // $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
-    var sd = $scope.timeForPeriods[id].startsAt + ' ' + $scope.timeForPeriods[id].meridian;
-    var ed = $scope.timeForPeriods[id].endsAt + ' ' + $scope.timeForPeriods[id].meridian;
-    console.log("sd: " + new Date(sd) + " ed: " + new Date(ed));
+    var sd = $scope.teacherPersonalData[0].timeTable[0].timing[id].startsAt;
+    var ed = $scope.teacherPersonalData[0].timeTable[0].timing[id].endsAt;
+    console.log("sd: "+sd+" ed: "+ed);
+    // console.log("$scope.timeForPeriods[id].startsAt: " + $scope.timeForPeriods[id].startsAt);
+    // console.log("$scope.timeForPeriods[id].endsAt: " + $scope.timeForPeriods[id].endsAt);
+
+    // // $scope.startDate = $filter('date')(s, "EEE MMM dd y");
+    // // $scope.endDate = $filter('date')(e, "HH:mm:ss 'GMT'Z (IST)'");
+    // // $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
+    // var sd = $scope.timeForPeriods[id].startsAt + ' ' + $scope.timeForPeriods[id].meridian;
+    // var ed = $scope.timeForPeriods[id].endsAt + ' ' + $scope.timeForPeriods[id].meridian;
+   console.log("sd: " + new Date(sd) + " ed: " + new Date(ed));
     $scope.startDate = $filter('date')($scope.selectedDate, "EEE MMM dd y");
     $scope.startTime = $filter('date')(sd, "h:mm:ss a");
     $scope.EndTime = $filter('date')(ed, "h:mm:ss a");
@@ -566,97 +723,90 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
     var red = new Date(resultedEndDate);
     var PersonalRemoteCombineCal = ownerEvents.concat(remoteEvent);
 
-    var conflicts = PersonalRemoteCombineCal.some(function (event) {
-      //   return (event.startsAt <= s && s <= event.endsAt) ||
-      //   event.startsAt <= e && e <= event.endsAt ||
-      //   s <= event.startsAt && event.startsAt <= e ||
-      //   s <= event.endsAt && event.endsAt <= e
-      // });
-      return (event.startsAt <= rsd && rsd < event.endsAt) ||
-        event.startsAt < red && red < event.endsAt ||
-        rsd <= event.startsAt && event.startsAt < red ||
-        rsd < event.endsAt && event.endsAt < red
-    });
-    console.log("conflicts: " + conflicts);
-    if (conflicts) {
-      console.log("conflicts is there");
-      alert("ON this time you/student not free, try on other time");
+    var reqDate = rsd.getDate() - 1;
+    var reqMonth = rsd.getMonth();
+    var reqYear = rsd.getFullYear();
+    var reqHr = rsd.getHours();
+    var reqMin = rsd.getMinutes();
+    var reqSec = rsd.getSeconds();
+    var consolidateDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
+    console.log("consolidateDate: " + consolidateDate + " $scope.todayDate: " + $scope.todayDate);
+    if (consolidateDate > $scope.todayDate) {
+      var conflicts = PersonalRemoteCombineCal.some(function (event) {
+        //   return (event.startsAt <= s && s <= event.endsAt) ||event.startsAt <= e && e <= event.endsAt || s <= event.startsAt && event.startsAt <= e ||s <= event.endsAt && event.endsAt <= e});
+        return (event.startsAt <= rsd && rsd < event.endsAt) ||
+          event.startsAt < red && red < event.endsAt ||
+          rsd <= event.startsAt && event.startsAt < red ||
+          rsd < event.endsAt && event.endsAt < red
+      });
+      console.log("conflicts: " + conflicts);
+      if (conflicts) {
+        console.log("conflicts is there");
+        $('#timeTable_modal').modal('hide');
+        // alert("ON this time you/student not free, try on other time");
+
+        var loginAlert = $uibModal.open({
+          scope: $scope,
+          templateUrl: '/html/templates/dashboardwarning.html',
+          windowClass: 'show',
+          backdropClass: 'static',
+          keyboard: false,
+          controller: function ($scope, $uibModalInstance) {
+            $scope.message = "ON this time any one of you not free, try on other time";
+          }
+        })
+      }
+      else {
+        $('#timeTable_modal').modal('hide');
+
+        var reqDateWithoutMinus = rsd.getDate();
+        var reqBy5min = rsd.getMinutes() + 5;
+        var reqHr_ed = red.getHours();
+        var reqMin_ed = red.getMinutes() - 5;
+        var reqSec_ed = red.getSeconds();
+        var rsd_alt = new Date(reqYear, reqMonth, reqDateWithoutMinus, reqHr, reqBy5min, reqSec);
+        var red_alt = new Date(reqYear, reqMonth, reqDateWithoutMinus, reqHr_ed, reqMin_ed, reqSec_ed);
+        console.log("rsd: " + rsd);
+        console.log("rsd_alt: " + rsd_alt);
+        console.log("red: " + red);
+        console.log("red_alt: " + red_alt);
+
+        dayEventmodal = $uibModal.open({
+          scope: $scope,
+          templateUrl: '/html/templates/dayEventBook.html',
+          windowClass: 'show',
+          backdropClass: 'show',
+          controller: function ($scope, $uibModalInstance) {
+            var dt = new Date();
+            $scope.eventDetails = {
+              "startsAt": rsd_alt,
+              "endsAt": red_alt
+            }
+            console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+          }
+        })
+      }
     }
     else {
       $('#timeTable_modal').modal('hide');
-      dayEventmodal = $uibModal.open({
+      var loginAlert = $uibModal.open({
         scope: $scope,
-        templateUrl: '/html/templates/dayEventBook.html',
+        templateUrl: '/html/templates/dashboardwarning.html',
         windowClass: 'show',
-        backdropClass: 'show',
+        backdropClass: 'static',
+        keyboard: false,
         controller: function ($scope, $uibModalInstance) {
-          // moment().startOf('day').toDate()
-          var dt = new Date();
-          $scope.eventDetails = {
-            "startsAt": rsd,
-            "endsAt": red
-
-          }
-          console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+          $scope.message = "Sorry you have to book the event 24Hrs before of your current date";
         }
       })
+      
+      // alert("Sorry you have to book the event 24Hrs before of your current date");
     }
     console.log("<--timeTableForEventBook");
   }
 
 
-  $scope.eventGet = function () {
-    console.log("eventGet-->");
-    var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/eventGet" + "/" + id;
-    //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
-    $scope.calendarOwner = "Your";
 
-    httpFactory.get(api).then(function (data) {
-      var checkStatus = httpFactory.dataValidation(data);
-      console.log("data--" + JSON.stringify(data.data));
-      if (checkStatus) {
-        $scope.eventData = data.data.data;
-        vm.events = [];
-        ownerEvents = [];
-        for (var x = 0; x < $scope.eventData.length; x++) {
-          console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
-          var obj = {
-            'id': $scope.eventData[x]._id,
-            'title': $scope.eventData[x].title,
-            'color': $scope.eventData[x].primColor,
-            'startsAt': new Date($scope.eventData[x].start),
-            'endsAt': new Date($scope.eventData[x].end),
-            'draggable': true,
-            'resizable': true,
-            'actions': actions,
-            'url': $scope.eventData[x].url,
-            "senderName": $scope.eventData[x].senderName,
-            "senderId": $scope.eventData[x].senderId,
-            "senderMN": $scope.eventData[x].senderMN,
-            "senderLoginType": $scope.eventData[x].senderLoginType,
-            "title": $scope.eventData[x].title,
-            "reason": $scope.eventData[x].reason,
-            "receiverEmail": $scope.eventData[x].receiverEmail,
-            "receiverName": $scope.eventData[x].receiverName, 
-            "receiverId": $scope.eventData[x].receiverId, 
-            "receiverMN": $scope.eventData[x].receiverMN,
-            "remoteCalendarId": $scope.eventData[x].remoteCalendarId
-          }
-          console.log(" obj" + JSON.stringify(obj))
-          ownerEvents.push(obj);
-          vm.events.push(obj);
-
-        }
-      }
-      else {
-        //alert("Event get Failed");
-
-      }
-
-    })
-  }
-  $scope.eventGet();
 
 
   var vm = this;
@@ -667,35 +817,73 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
   vm.viewDate = moment().startOf('day').toDate();
   var originalFormat = calendarConfig.dateFormats.hour;
   calendarConfig.dateFormats.hour = 'HH:mm';
+  if ($scope.userData.loginType == 'teacher') {
+    var actions = [{
+      // label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
+      label: 'Re-Schedule',
+      onClick: function (args) {
+        // alert("Edit Event Comming Soon");
+        console.log("args.calendarEvent: " + args.calendarEvent);
+        console.log("JSON args.calendarEvent: " + JSON.stringify(args.calendarEvent));
+        var date = args.calendarEvent.startsAt;
+        var reqDate = date.getDate() - 1;
+        var reqMonth = date.getMonth();
+        var reqYear = date.getFullYear();
+        var reqHr = date.getHours();
+        var reqMin = date.getMinutes();
+        var reqSec = date.getSeconds();
+        var consolidateDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
+        console.log("args.calendarEvent.id: " + args.calendarEvent.id);
+        console.log("args.calendarEvent: " + JSON.stringify(args.calendarEvent));
+        if (consolidateDate > $scope.todayDate) {
+          // alert("Edit Started-->");
+          var id = args.calendarEvent.id;
+          //   var cs= $scope.events[id].student_cs;
 
-  var actions = [{
-    // label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
-    label: 'Edit',
-    onClick: function (args) {
-      alert("Edit Event Comming Soon");
-      console.log("args.calendarEvent: " + args.calendarEvent);
-      console.log("JSON args.calendarEvent: " + JSON.stringify(args.calendarEvent));
-      // var eClicked = $uibModal.open({
-      //   scope: $scope,
-      //   templateUrl: '/html/templates/eventDetails_edit.html',
-      //   windowClass: 'show',
-      //   backdropClass: 'show',
-      //   controller: function ($scope, $uibModalInstance) {
-      //     $scope.eventDetails = args.calendarEvent;
-      //     console.log("$scope.eventDetails: " + $scope.eventDetails);
+          //   var stud_id = $scope.events[id].student_id; 
+          //   var name = $scope.events[id].student_Name;
+
+          console.log("id: " + id);
+          $state.go('dashboard.eventReschedule', { 'id': id });
+        }
+        else {
+          var loginAlert = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardwarning.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = "Sorry you not allow to edit";
+            }
+          })
+          // alert("Sorry you not allow to edit");
+        }
+        // var eClicked = $uibModal.open({
+        //   scope: $scope,
+        //   templateUrl: '/html/templates/eventDetails_edit.html',
+        //   windowClass: 'show',
+        //   backdropClass: 'show',
+        //   controller: function ($scope, $uibModalInstance) {
+        //     $scope.eventDetails = args.calendarEvent;
+        //     console.log("$scope.eventDetails: " + $scope.eventDetails);
+        //   }
+        // })
+
+      }
+    }
+      // {
+
+      //   label: 'Delete',
+      //   onClick: function (args) {
+      //     alert("Delete Event Comming Soon");
+      //     console.log("args: " + args);
+
       //   }
-      // })
+      // }
+    ];
+  }
 
-    }
-  }, {
-    // label: '<i class=\'glyphicon glyphicon-remove\'></i>',
-    label: 'Delete',
-    onClick: function (args) {
-      alert("Delete Event Comming Soon");
-      console.log("args: " + args);
-      // alert.show('Deleted', args.calendarEvent);
-    }
-  }];
   vm.events = [
     // {
     //   title: 'An event',
@@ -772,25 +960,25 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
   };
 
   $scope.eventClicked = function (event) {
-    alert("clicked: " + event);
+    // alert("clicked: " + event);
     console.log("cliecked: " + event);
     //  alert.show('Clicked', event);
   };
 
   vm.eventEdited = function (event) {
-    alert("eventEdited");
+    // alert("eventEdited");
     console.log("cliecked: " + event);
     // alert.show('Edited', event);
   };
 
   vm.eventDeleted = function (event) {
-    alert("eventDeleted");
+    // alert("eventDeleted");
     console.log("deleted");
     // alert.show('Deleted', event);
   };
 
   vm.eventTimesChanged = function (event) {
-    alert.show('Dropped or resized', event);
+    // alert.show('Dropped or resized', event);
   };
 
   vm.toggle = function ($event, field, event) {
@@ -820,7 +1008,18 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
     console.log("conflicts: " + conflicts);
     if (conflicts) {
       console.log("conflicts is there");
-      alert("ON this time you/student not free, try on other time");
+
+      var loginAlert = $uibModal.open({
+        scope: $scope,
+        templateUrl: '/html/templates/dashboardwarning.html',
+        windowClass: 'show',
+        backdropClass: 'static',
+        keyboard: false,
+        controller: function ($scope, $uibModalInstance) {
+          $scope.message = "ON this time any one of you not free,try other time";
+        }
+      })
+      // alert("ON this time any one of you not free,try on other time");
     }
     else {
       console.log("No conflicts");
@@ -850,22 +1049,58 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $compile, 
     console.log("<--rangeSelected");
   };
 
-  vm.timespanClicked = function (date) {
+  vm.timespanClicked = function (date, css) {
     console.log("timespanClicked-->");
     console.log("date: " + date);
     console.log("teacherPersonalData: " + JSON.stringify($scope.teacherPersonalData));
     $scope.selectedDateForEvent = $filter('date')(date, "EEE");
     console.log("selectedDateForEvent: " + $scope.selectedDateForEvent);
+
     $scope.selectedDate = date;
-    // if ($scope.userLoginType = "teacher") {
-    //   console.log("loginType: "+localStorage.getItem("loginType"));
-    //   $scope.getTeacherData();
-    // }
-    // else {
+    if ($scope.remoteCalendarId) {
+      $('#timeTable_modal').modal('show');
 
-    // }
+    }
+    else {
+      if ($scope.userData.loginType == 'teacher') {
+        var loginAlert = $uibModal.open({
+          scope: $scope,
+          templateUrl: '/html/templates/dashboardwarning.html',
+          windowClass: 'show',
+          backdropClass: 'static',
+          keyboard: false,
+          controller: function ($scope, $uibModalInstance) {
+            $scope.message = "Select Student";
+           
+         
+          }
+        })
+        console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+        //alert("Select Student");
+      }
+      else {
+        var loginAlert = $uibModal.open({
+          scope: $scope,
+          templateUrl: '/html/templates/dashboardwarning.html',
+          windowClass: 'show',
+          backdropClass: 'static',
+          keyboard: false,
+          controller: function ($scope, $uibModalInstance) {
+            $scope.message = "Select Teacher";
+            console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+            // $scope.close = function(){
+            //   loginAlert.close('resetModel');
+             
+            // }
+          }
+        })
+        //alert("Select Teacher");
+      }
 
-    $('#timeTable_modal').modal('show');
+    }
+
+
+
     // if (vm.calendarView === 'month') {
     //   if ((vm.cellIsOpen && moment(date).startOf('day').isSame(moment(vm.viewDate).startOf('day'))) || cell.events.length === 0 || !cell.inMonth) {
     //     vm.cellIsOpen = false;

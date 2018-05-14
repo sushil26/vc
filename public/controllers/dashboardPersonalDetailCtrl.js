@@ -1,15 +1,18 @@
-app.controller('dashboardPersonalDetailController', function ($scope, $window, httpFactory) {
+app.controller('dashboardPersonalDetailController', function ($scope, $window,$uibModal, httpFactory, sessionAuthFactory) {
     console.log("dashboardController==>");
-
-    var id = localStorage.getItem("id");
-    $scope.loginType = localStorage.getItem("loginType");
-    $scope.userName = localStorage.getItem("userName");
-
-    $scope.getTeacherDetails = function (id) {
+    $scope.userData = sessionAuthFactory.getAccess("userData");
+    console.log(" $scope.userData: " + JSON.stringify($scope.userData));
+    $scope.loginType = $scope.userData.loginType;
+    $scope.userName = $scope.userData.userName;
+    var id = $scope.userData.id;
+    $scope.getUserDetails = function (id) {
         console.log("getTeacherData-->");
-        var id = localStorage.getItem("id");
-
-        var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+        if ($scope.loginType == 'teacher' || $scope.loginType == 'admin' || $scope.loginType == 'vc4allAdmin') {
+            var api = "https://norecruits.com/vc/teacherDetail" + "/" + id;
+        }
+        else if ($scope.loginType == 'studParent') {
+            var api = "https://norecruits.com/vc/studentDetail" + "/" + id;
+        }
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";
         console.log("api: " + api);
@@ -29,41 +32,5 @@ app.controller('dashboardPersonalDetailController', function ($scope, $window, h
         })
         console.log("<--getTeacherData");
     }
-
-    $scope.getStudentDetails = function (id) {
-        console.log("getTeacherData-->");
-        var id = localStorage.getItem("id");
-        var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
-        console.log("api: " + api);
-        $scope.teacherList = [];
-        httpFactory.get(api).then(function (data) {
-            var checkStatus = httpFactory.dataValidation(data);
-            //console.log("data--" + JSON.stringify(data.data));
-            if (checkStatus) {
-                $scope.userData = data.data.data;
-                console.log("studentData: " + JSON.stringify($scope.userData));
-            }
-            else {
-
-            }
-        })
-    }
-
-    if (localStorage.getItem("loginType") == 'teacher') {
-        $scope.getTeacherDetails(id);
-        console.log("teacher login");
-
-    }
-    else if (localStorage.getItem("loginType") == 'studParent') {
-        $scope.getStudentDetails(id);
-        console.log("studParent login");
-    }
-    else if (localStorage.getItem("loginType") == 'admin') {
-        console.log("admin Login");
-    }
-
-
-
-
-
+    $scope.getUserDetails(id);
 })

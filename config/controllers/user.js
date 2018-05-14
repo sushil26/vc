@@ -1,6 +1,7 @@
 var db = require("../dbConfig.js").getDb();
 var user = db.collection("user"); /* ### Teacher collection  ### */
 var stud = db.collection("student"); /* ### student collection  ### */
+var school = db.collection("school"); /* ### school collection  ### */
 
 var general = require("../general.js");
 var util = require("util");
@@ -72,61 +73,34 @@ module.exports.register4VC = function (req, res) {
 module.exports.login4VC = function (req, res) {
   console.log("login==>");
   var responseData;
-  if (
-    general.emptyCheck(req.body.email) &&
-    general.emptyCheck(req.body.password)
-  ) {
-    if (req.body.email == "admin123@gmail.com") {
-      var adminData;
-      if (req.body.password == "admin123") {
-        adminData = {
-          userName: "admin",
-          status: "active",
-          email: "admin123@gmail.com",
-          loginType: "admin"
-        };
-        responseData = {
-          status: true,
-          message: "Login Successfully",
 
-          data: adminData
-        };
-        console.log("responseData: " + JSON.stringify(responseData));
-        res.status(200).send(responseData);
-      } else {
-        responseData = {
-          status: false,
-          message: "Password is wrong"
-        };
-        res.status(400).send(responseData);
-      }
-    } else {
-      if (req.body.loginType == "teacher") {
-        user
-          .find({ teacherEmail: req.body.email })
-          .toArray(function (err, data) {
-            if (data.length > 0) {
-              if (data[0].password == req.body.pswd) {
-                if (data[0].status == "active") {
-                  console.log("Successfully Logged in");
-                  responseData = {
-                    status: true,
-                    message: "Login Successfully",
-                    loginType: "teacher",
-                    sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
-                    data: data[0]
-                  };
-                  res.status(200).send(responseData);
-                } else {
-                  console.log("Profile Inactive");
-                  responseData = {
-                    status: false,
-                    message: "Profile Inactive",
-                    data: data[0]
-                  };
-                  res.status(200).send(responseData);
-                }
-              } else {
+  if (general.emptyCheck(req.body.email) && general.emptyCheck(req.body.password)) {
+    if (req.body.loginType == "teacher") {
+      console.log("logintype: " + req.body.loginType);
+      user.find({ email: req.body.email }).toArray(function (err, data) {
+        console.log("data: " + JSON.stringify(data));
+        if (err) {
+          responseData = {
+            status: false,
+            message: "Failed to get Data",
+            data: schoolStatus
+          };
+        }
+        else {
+          console.log("data.length: " + data.length);
+          if (data.length > 0) {
+            if (data[0].loginType == 'vc4allAdmin') {
+              console.log("login-->:vc4allAdmin");
+              if (data[0].pswd == req.body.password) {
+                responseData = {
+                  status: true,
+                  message: "Login Successfully",
+                  sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
+                  data: data[0]
+                };
+                res.status(200).send(responseData);
+              }
+              else {
                 responseData = {
                   status: false,
                   errorCode: "E005",
@@ -134,58 +108,143 @@ module.exports.login4VC = function (req, res) {
                 };
                 res.status(200).send(responseData);
               }
-            } else {
-              responseData = {
-                status: false,
-                errorCode: "No Match",
-                message:
-                  "There is no match for this EMail id from Teacher database"
-              };
-              res.status(200).send(responseData);
             }
-          });
-      } else {
-        stud.find({ $or: [{ parentEmail: req.body.email }, { MotherEmail: req.body.email }] }).toArray(function (err, data) {
-          if (data.length > 0) {
-            if (data[0].password == req.body.pswd) {
-              if (data[0].status == "active") {
-                console.log("Successfully Logged in");
+            else if (data[0].loginType == 'teacher') {
+              console.log("login-->: teacher: " + data[0].pswd + "req.body.password: " + req.body.password);
+              if (data[0].pswd == req.body.password) {
                 responseData = {
                   status: true,
                   message: "Login Successfully",
-                  loginType: "studParent",
-                  data: data[0]
-                };
-                res.status(200).send(responseData);
-              } else {
-                console.log("Profile Inactive");
-                responseData = {
-                  status: false,
-                  message: "Profile Inactive",
+                  sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
                   data: data[0]
                 };
                 res.status(200).send(responseData);
               }
+              else {
+                responseData = {
+                  status: false,
+                  errorCode: "E005",
+                  message: "Password is wrong"
+                };
+                res.status(200).send(responseData);
+              }
+            }
+            else {
+              console.log("data[0].schoolName: " + data[0].schoolName);
+              var sn = {
+                "schoolName": data[0].schoolName
+              }
+              school.find(sn).toArray(function (err, schoolStatus) {
+                console.log("second query status: " + schoolStatus[0].status);
+
+                if (err) {
+                  responseData = {
+                    status: false,
+                    message: "Failed to get Data",
+                    data: schoolStatus
+                  };
+                  res.status(400).send(responseData);
+                } else {
+                  if (schoolStatus[0].status == "active") {
+                    if (data[0].pswd == req.body.password) {
+                      if (data[0].status == "active") {
+                        console.log("Successfully Logged in");
+                        responseData = {
+                          status: true,
+                          message: "Login Successfully",
+                          sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
+                          data: data[0]
+                        };
+                        res.status(200).send(responseData);
+                      } else {
+                        console.log("Profile Inactive");
+                        responseData = {
+                          status: false,
+                          message: "Profile Inactive",
+                          data: data[0]
+                        };
+                        res.status(200).send(responseData);
+                      }
+                    } else {
+                      responseData = {
+                        status: false,
+                        errorCode: "E005",
+                        message: "Password is wrong"
+                      };
+                      res.status(200).send(responseData);
+                    }
+                  }
+                  else {
+                    responseData = {
+                      status: false,
+                      message: "Your not allow to login",
+                      data: data[0]
+                    };
+                    res.status(200).send(responseData);
+                  }
+
+                }
+              })
+            }
+
+          }
+          else {
+            console.log("There is no match for this EMail id from Teacher database");
+            responseData = {
+              status: false,
+              errorCode: "No Match",
+              message:
+                "There is no match for this EMail id from Teacher database"
+            };
+            res.status(200).send(responseData);
+          }
+        }
+
+      });
+
+    }
+    else {
+      stud.find({ $or: [{ parentEmail: req.body.email }, { MotherEmail: req.body.email }] }).toArray(function (err, data) {
+        if (data.length > 0) {
+          if (data[0].pswd == req.body.password) {
+            if (data[0].status == "active") {
+              console.log("Successfully Logged in");
+              responseData = {
+                status: true,
+                message: "Login Successfully",
+                loginType: "studParent",
+                data: data[0]
+              };
+              res.status(200).send(responseData);
             } else {
+              console.log("Profile Inactive");
               responseData = {
                 status: false,
-                errorCode: "E005",
-                message: "Password is wrong"
+                message: "Profile Inactive",
+                data: data[0]
               };
               res.status(200).send(responseData);
             }
           } else {
             responseData = {
               status: false,
-              errorCode: "No Match",
-              message:
-                "There is no match for this EMail id from student database"
+              errorCode: "E005",
+              message: "Password is wrong"
             };
             res.status(200).send(responseData);
           }
-        });
-      }
+        } else {
+          responseData = {
+            status: false,
+            errorCode: "No Match",
+            message:
+              "There is no match for this EMail id from student database"
+          };
+          res.status(200).send(responseData);
+        }
+      });
     }
+
   } else {
     console.log("Epty value found");
     responseData = {
@@ -551,7 +610,7 @@ module.exports.teacherDetail = function (req, res) {
       _id: ObjectId(req.params.id)
     };
     user.find(id).toArray(function (err, data) {
-      console.log("data: " + JSON.stringify(data));
+      //console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {
           status: false,
@@ -587,7 +646,7 @@ module.exports.studentDetail = function (req, res) {
       _id: ObjectId(req.params.id)
     };
     stud.find(id).toArray(function (err, data) {
-      console.log("data: " + JSON.stringify(data));
+      //console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {
           status: false,
@@ -624,7 +683,7 @@ module.exports.teacherPersonalData = function (req, res) {
       _id: ObjectId(req.params.id)
     };
     user.find(id).toArray(function (err, data) {
-      console.log("data: " + JSON.stringify(data));
+      // console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {
           status: false,
@@ -661,7 +720,7 @@ module.exports.studentPersonalData = function (req, res) {
       _id: ObjectId(req.params.id)
     };
     stud.find(id).toArray(function (err, data) {
-      console.log("data: " + JSON.stringify(data));
+      // console.log("data: " + JSON.stringify(data));
       if (err) {
         responseData = {
           status: false,
@@ -726,4 +785,73 @@ module.exports.getLoginData = function (req, res) {
   }
   console.log("<--getLoginData");
 };
+
+module.exports.adminCreate = function (req, res) {
+  console.log("adminCreate-->");
+  var schoolObj = {
+    "schoolName": req.body.schoolName,
+    "schoolRegNumber": req.body.schoolRegNumber,
+    "address": req.body.address,
+    "email": req.body.email,
+    "mobNumber": req.body.mobNumber,
+    "streetName": req.body.streetName,
+    "city": req.body.city,
+    "state": req.body.state,
+    "pinCode": req.body.pinCode,
+    "country": req.body.country,
+    "status": "active",
+    "css": [],
+    "timeTable_timing": []
+  }
+  var adminObj = {
+    "firstName": req.body.firstName,
+    "lastName": req.body.lastName,
+    "dob": req.body.dob,
+    "email": req.body.email,
+    "schoolName": req.body.schoolName,
+    "mobNumber": req.body.mobNumber,
+    "pswd": req.body.pswd,
+    "status": "active",
+    "loginType": "admin"
+  }
+  console.log("schoolObj: " + JSON.stringify(schoolObj));
+  console.log("adminObj: " + JSON.stringify(adminObj));
+  school.insertOne(schoolObj, function (err, data) {
+    console.log("data: " + JSON.stringify(data.ops[0]));
+    if (err) {
+      responseData = {
+        status: false,
+        message: "Failed to Insert",
+        data: data
+      };
+      res.status(400).send(responseData);
+    } else {
+      adminObj.schoolId = data.ops[0]._id;
+
+      user.insertOne(adminObj, function (err, data) {
+        console.log("data: " + JSON.stringify(data));
+        if (err) {
+          responseData = {
+            status: false,
+            message: "Failed to Insert",
+            data: data
+          };
+          res.status(400).send(responseData);
+        } else {
+          responseData = {
+            status: true,
+            errorCode: 200,
+            message: "Insert Successfull",
+
+          };
+          res.status(200).send(responseData);
+        }
+      });
+    }
+
+
+    console.log("<--adminCreate");
+  })
+
+}
 

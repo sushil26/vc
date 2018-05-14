@@ -85,6 +85,47 @@ app.factory('httpFactory', function($http, $q, $rootScope) {
                 return false;
             }
         },
+        csvUpload:function(obj, uploadUrl){
+            var dfd = $q.defer();
+            // var postUrl = $rootScope.propertyJson.BASE_URL+uploadUrl;
+            
+            var fd = new FormData();
+            console.log("obj.file: "+obj.file);
+            
+            fd.append('img', obj.file);
+           
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).then(function(response) {
+                console.log("lego--"+response)
+                dfd.resolve(response);
+            },function(error){
+                console.log(error);
+                dfd.resolve(error);
+            });
+            return dfd.promise;
+        },
+        imageUpload:function(file, uploadUrl){
+            var dfd = $q.defer();
+            // var postUrl = $rootScope.propertyJson.BASE_URL+uploadUrl;
+            var fd = new FormData();
+            console.log("file: "+file);
+            
+            fd.append('img', file);
+            console.log("fd: "+fd);
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).then(function(response) {
+                console.log("lego--"+response)
+                dfd.resolve(response);
+            },function(error){
+                console.log(error);
+                dfd.resolve(error);
+            });
+            return dfd.promise;
+        },
         getFile: function(fileAddress) {
            // var dfd = $q.defer();
             $http({

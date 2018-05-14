@@ -1,11 +1,41 @@
-app.controller('upcomingEventController', function ($scope, $window, httpFactory, $uibModal) {
+app.controller('upcomingEventController', function ($scope, $state, $window, httpFactory, $uibModal, $filter, sessionAuthFactory) {
     console.log("upcomingEventController==>");
+    $scope.userData = sessionAuthFactory.getAccess("userData");
+    $scope.loginType = $scope.userData.loginType;
     $scope.events = [];
-    $scope.today = new Date(); /* ###Note: Current Date ### */
+
+    $scope.getToDate = function () {
+        console.log("Get To Date-->");
+        var api = "https://norecruits.com/vc/getToDate";
+        httpFactory.get(api).then(function (data) {
+            var checkStatus = httpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                console.log("data.data.data.date: " + data.data.data.date);
+                var todayDate = new Date(data.data.data.date);
+                console.log("todayDate: " + todayDate);
+                var reqDate = todayDate.getDate();
+                console.log("reqDate: " + reqDate);
+                var reqMonth = todayDate.getMonth();
+                var reqYear = todayDate.getFullYear();
+                var reqHr = todayDate.getHours();
+                var reqMin = todayDate.getMinutes();
+                var reqSec = todayDate.getSeconds();
+                $scope.todayDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
+                console.log("consolidateDate: " + $scope.consolidateDate);
+                $scope.eventGet();
+            }
+            else {
+            }
+        })
+        console.log("<--Get To Date");
+    }
+    $scope.getToDate();
+
     $scope.eventGet = function () {
         console.log("eventGet-->");
-        var id = localStorage.getItem("id");
-        var api = "https://vc4all.in/vc/eventGet" + "/" + id;
+        var id = $scope.userData.id;
+        var api = "https://norecruits.com/vc/eventGet" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
         $scope.calendarOwner = "Your";
 
@@ -20,6 +50,11 @@ app.controller('upcomingEventController', function ($scope, $window, httpFactory
                     console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
                     var obj = {
                         'id': $scope.eventData[x]._id,
+                        'userId': $scope.eventData[x]._userId,
+                        'studUserId': $scope.eventData[x].studUserId,
+                        "student_cs": $scope.eventData[x].student_cs, 
+                        "student_id":$scope.eventData[x].student_id, 
+                        "student_Name":$scope.eventData[x].student_Name, 
                         'title': $scope.eventData[x].title,
                         'color': $scope.eventData[x].primColor,
                         'startsAt': new Date($scope.eventData[x].start),
@@ -51,7 +86,6 @@ app.controller('upcomingEventController', function ($scope, $window, httpFactory
             }
         })
     }
-    $scope.eventGet();
 
     $scope.viewDetail = function (id) {
         console.log("viewDetail-->");
@@ -71,8 +105,6 @@ app.controller('upcomingEventController', function ($scope, $window, httpFactory
 
     $scope.rescheduleEvent = function (id) {
         console.log("reschedule-->");
-        console.log("id: " + id);
-        console.log("events[" + id + "]: " + JSON.stringify($scope.events[id]));
         var date = $scope.events[id].startsAt;
         var reqDate = date.getDate() - 1;
         var reqMonth = date.getMonth();
@@ -81,39 +113,92 @@ app.controller('upcomingEventController', function ($scope, $window, httpFactory
         var reqMin = date.getMinutes();
         var reqSec = date.getSeconds();
         var consolidateDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
-        console.log("consolidateDate: " + consolidateDate);
-        console.log("$scope.events[id].startsAt: " + $scope.events[id].startsAt);
-        console.log("$scope.today: "+$scope.today);
-        if (consolidateDate >= $scope.today) {
-            alert("Coming Soon");
+        console.log(" $scope.events[id].id: " + $scope.events[id].id);
+        console.log("$scope.events[id]: "+JSON.stringify($scope.events[id]));
+        if (consolidateDate > $scope.todayDate) {
+           // alert("Edit Started-->");
+           var id = $scope.events[id].id;
+        //   var cs= $scope.events[id].student_cs;
+          
+        //   var stud_id = $scope.events[id].student_id; 
+        //   var name = $scope.events[id].student_Name;
+           
+            console.log("id: "+id);
+            $state.go('dashboard.eventReschedule', { 'id': id});
         }
         else {
-            alert("Sorry you are not allow to edit event");
+            var loginAlert = $uibModal.open({
+                scope: $scope,
+                templateUrl: '/html/templates/dashboardwarning.html',
+                windowClass: 'show',
+                backdropClass: 'static',
+                keyboard: false,
+                controller: function ($scope, $uibModalInstance) {
+                  $scope.message = "Sorry you not allow to edit";
+                }
+              })
+            //alert("Sorry you not allow to edit");
         }
+        // var api = "https://norecruits.com/vc/rescheduleEvent/:id";
 
+        // httpFactory.post(api, obj).then(function (data) {
+        //     var checkStatus = httpFactory.dataValidation(data);
+        //     //console.log("data--" + JSON.stringify(data.data));
+        //     if (checkStatus) {
+        //       console.log("data" + JSON.stringify(data.data));
+        //       // $window.location.href = $scope.propertyJson.R082;
+        //       alert("Successfully sent the event");
+        //       // vm.events.splice(0, 1);
+        //       var eventPostedData = data.data.data;
 
+        //       ownerEvents.push(objData);
+        //       vm.events.push(objData);
+        //     }
+        //     else {
+        //       alert("Event Send Failed");
+        //     }
+        // })
         console.log("<--reschedule");
+    }
+
+    $scope.waitForTime = function(time){
+        console.log("waitForTime-->");
+        var loginAlert = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardwarning.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = "Wait till "+time;
+            }
+          })
+        console.log("<--waitForTime");
+    }
+
+    $scope.conferenceStart = function(url, id){
+        console.log("conferenceStart-->");
+        console.log("id: "+id+"url: "+url);
+        localStorage.setItem("id", id);
+        localStorage.setItem("schoolName", $scope.userData.schoolName);
+       
+        $window.open(url, '_blank');
+        console.log("<--conferenceStart");
     }
 
     $scope.deleteEvent = function (id) {
         console.log("deleteEvent-->");
         console.log("id: " + id);
-        alert("Coming Soon");
+      //  alert("Coming Soon");
         console.log("<--deleteEvent");
     }
-
-
-
-
-
-
 
     // $scope.upcomingEventGet = function () {
     //     console.log("eventGet-->");
     //     var id = localStorage.getItem("id");
     //     var currentDateTime = new Date();
     //     console.log("currentDateTime: "+currentDateTime);
-    //     var api = "https://vc4all.in/vc/upcomingEventGet" + "/" + id+"/"+currentDateTime;
+    //     var api = "https://norecruits.com/vc/upcomingEventGet" + "/" + id+"/"+currentDateTime;
     //     httpFactory.get(api).then(function (data) {
     //         var checkStatus = httpFactory.dataValidation(data);
     //         console.log("data--" + JSON.stringify(data.data));

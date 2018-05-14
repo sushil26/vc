@@ -10,7 +10,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("getTeacherData-->");
     var id = localStorage.getItem("id");
 
-    var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+    var api = "https://norecruits.com/vc/teacherDetail" + "/" + id;
     //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
     console.log("api: " + api);
@@ -33,7 +33,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   $scope.getStudentData = function () {
     console.log("getTeacherData-->");
     var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
+    var api = "https://norecruits.com/vc/studentDetail" + "/" + id;
     console.log("api: " + api);
     $scope.teacherList = [];
     httpFactory.get(api).then(function (data) {
@@ -45,7 +45,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
         $scope.studClass = $scope.studentData[0].cs[0].class;
         $scope.studSection = $scope.studentData[0].cs[0].section;
-        var api = "https://vc4all.in/vc/getTeacherListForCS" + "/" + $scope.studClass + "/" + $scope.studSection;
+        var api = "https://norecruits.com/vc/getTeacherListForCS" + "/" + $scope.studClass + "/" + $scope.studSection;
 
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
@@ -83,7 +83,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.getSelectedTeacherPersonalData = function (id) {
     console.log("getSelectedTeacherPersonalData-->");
-    var api = "https://vc4all.in/vc/teacherPersonalData" + "/" + id;
+    var api = "https://norecruits.com/vc/teacherPersonalData" + "/" + id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -102,7 +102,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.getSelectedStudentPersonalData = function (id) {
     console.log("get Selected Student PersonalData-->");
-    var api = "https://vc4all.in/vc/studentPersonalData" + "/" + id;
+    var api = "https://norecruits.com/vc/studentPersonalData" + "/" + id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -126,7 +126,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("JSON.css" + JSON.stringify(css));
     $scope.remoteCalendarId = css.id;
     $scope.getSelectedStudentPersonalData($scope.remoteCalendarId);
-    var api = "https://vc4all.in/vc/eventGet" + "/" + css.id;
+    var api = "https://norecruits.com/vc/eventGet" + "/" + css.id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -175,7 +175,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("JSON.css" + JSON.stringify(css));
     $scope.remoteCalendarId = css.id;
     $scope.getSelectedTeacherPersonalData($scope.remoteCalendarId);
-    var api = "https://vc4all.in/vc/eventGet" + "/" + css.id;
+    var api = "https://norecruits.com/vc/eventGet" + "/" + css.id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -260,7 +260,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     $scope.getStudentData();
   }
   else {
-    window.location.href = "https://vc4all.in";
+    window.location.href = "https://norecruits.com";
   }
 
   $scope.getStudListForCS = function (css) {
@@ -275,9 +275,9 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     // var cssRef = [{"clas":css.class, "section": css.section}];
     // console.log("cssRef: "+JSON.stringify(cssRef));
 
-    var api = "https://vc4all.in/vc/getStudListForCS" + "/" + clas + "/" + section;
+    var api = "https://norecruits.com/vc/getStudListForCS" + "/" + clas + "/" + section;
     //var api = "http://localhost:5000/vc/getStudListForCS" + "/" + clas + "/" + section;
-    //var api = "https://vc4all.in/vc/getStudListForCS";
+    //var api = "https://norecruits.com/vc/getStudListForCS";
 
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
@@ -306,7 +306,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");
-    var api = "https://vc4all.in/vc/deleteEvent";
+    var api = "https://norecruits.com/vc/deleteEvent";
     //var api = "http://localhost:5000/vc/deleteEvent";
     vm.events.splice(index, 1);
     var obj = {
@@ -366,7 +366,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     }
     console.log("obj: " + JSON.stringify(obj));
 
-    var api = "https://vc4all.in/vc/eventUpdate" + "/" + id;
+    var api = "https://norecruits.com/vc/eventUpdate" + "/" + id;
     //var api = "http://localhost:5000/vc/eventUpdate" + "/" + id;
 
     httpFactory.post(api, obj).then(function (data) {
@@ -435,7 +435,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.eventSend = function (res, name, id, email) {
     console.log("eventSend-->");
-    var SIGNALING_SERVER = "https://vc4all.in";
+    var SIGNALING_SERVER = "https://norecruits.com";
     //var SIGNALING_SERVER = "http://localhost:5000";
     var queryLink = null;
     var peerNew_id = null;
@@ -450,9 +450,9 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
         queryLink = config.queryId;
         peerNew_id = config.peer_id;
 
-        url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
+        url = "https://norecruits.com/client/" + peerNew_id + "/" + $scope.urlDate;
 
-        var api = "https://vc4all.in/vc/eventSend";
+        var api = "https://norecruits.com/vc/eventSend";
         //var api = "http://localhost:5000/vc/eventSend";
         console.log("api: " + api);
         // var email = document.getElementById('eventEmails').value;
@@ -523,7 +523,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   $scope.eventGet = function () {
     console.log("eventGet-->");
     var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/eventGet" + "/" + id;
+    var api = "https://norecruits.com/vc/eventGet" + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
     $scope.calendarOwner = "Your";
 

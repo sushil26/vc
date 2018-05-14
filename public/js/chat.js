@@ -104,17 +104,10 @@ else {
 }
 function sendMessage() {
     console.log("sendMsg-->");
-
     var msg = document.getElementById('message').value;
-
-
     // var file = e.target.files[0];
     if (userName != null) {
-
         if (msg != null) {
-
-
-
             console.log("msg: " + msg);
             if (msg) {
                 console.log("Start to emit message  ");
@@ -122,7 +115,6 @@ function sendMessage() {
                 signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
                 document.getElementById('message').value = "";
             }
-
         }
         else {
             console.log("You Didn't type any message")
@@ -130,9 +122,7 @@ function sendMessage() {
         if (file) {
             console.log("file.type.substring(0,5): " + file.type.substring(0, 5));
             console.log("file.type.substring(0,4): " + file.type.substring(0, 4));
-
             // if (file.type.substring(0, 5) === 'image' || file.type.substring(0, 5) === 'video' || file.type.substring(0, 4) === 'docx') {
-
             console.log("file.size: " + file.size);
             console.log("MAX_UPLOAD_SIZE * 1000: " + MAX_UPLOAD_SIZE * 1000);
             console.log("MAX_UPLOAD_SIZE: " + MAX_UPLOAD_SIZE + "MAX_UPLOAD_SIZE * 1000 * 1000: " + MAX_UPLOAD_SIZE * 1000 * 1000);
@@ -155,16 +145,13 @@ function sendMessage() {
                 console.log("other from sendMessage");
                 fileReader.readAsDataURL(file);
             }
-
             // }
             // else {
             //     alert("Sorry, you an only share images or videos or html Files");
             // }
-
             // reset select box and file object 
             $('#fileselect').val('');
             file = '';
-
         }
         else {
             console.log("You haven't selected any file to share");
@@ -175,17 +162,13 @@ function sendMessage() {
        // $('#setName').trigger('click');
     }
     console.log("<--Upload");
-
     console.log("<--sendMsg");
     return false; // don't reload the page
-
-
 }
 
 signaling_socket.on('newTextMsg', function (data) {
 
     console.log("newTextMsg-->");
-
     console.log("data.message: " + data.message);
     console.log("data.userId: " + data.userId);
     console.log("data.queryId: " + data.queryId);
@@ -193,40 +176,30 @@ signaling_socket.on('newTextMsg', function (data) {
     console.log("queryLink: " + queryLink);
     if (data.queryId == queryLink) {
 
-
         /* ##### Start Calling Get Time  ##### */
         var time = DisplayCurrentTime();
         /* ##### End Calling Get Time  ##### */
-
 
         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
             + data.userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + data.message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + time + '</span></div>'
         autoLinkNeed();
         scrollDown();
-
         var chatOpen = $("#qnimate").hasClass("popup-box-on");
         if (chatOpen) {
             document.getElementById('chatNotification').style.display = 'none';
-
         }
         else {
             count = count + 1;
-
             document.getElementById('chatNotification').style.display = 'inline';
             document.getElementById('chatNotification').innerHTML = '(' + count + ')';
             var x = document.getElementById("myAudio");
             x.play();
         }
-
-
     }
     else {
-
         console.log("newTextMsg: Sorry");
     }
-
     console.log("<--newTextMsg");
-
 })
 
 function playAudioForNotify() {

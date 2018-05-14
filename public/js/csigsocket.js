@@ -43,7 +43,7 @@ var USE_VIDEO = true;
 var DEFAULT_CHANNEL = "some-global-ch-name";
 var MUTE_AUDIO_BY_DEFAULT = false;
 
-if (localStorage.getItem("userData")) {
+if (localStorage.getItem("userName")) {
   console.log("User Name from session: " + localStorage.getItem("userData"));
   var userData = JSON.stringify(localStorage.getItem("userData"));
   userName = localStorage.getItem("userName");
@@ -77,6 +77,7 @@ if (localStorage.getItem("userData")) {
     //document.getElementById("userAuth").style.display = "block";
   }
 } else {
+
   var url = window.location.href;
   var stuff = url.split("/");
   var id1 = stuff[stuff.length - 2];
@@ -106,6 +107,10 @@ if (localStorage.getItem("userData")) {
       //    userName="logu";
       //     init();
     }
+  }
+  else{
+    document.getElementById("LoginUrl").style.display = "none";
+    document.getElementById("videoConferenceUrl").style.display = "none";
   }
 }
 

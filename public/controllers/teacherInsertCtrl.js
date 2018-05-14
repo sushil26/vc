@@ -1,4 +1,4 @@
-app.controller("teacherInsertCtrl", function($scope, $window, httpFactory) {
+app.controller("teacherInsertCtrl", function($scope, $window, httpFactory, $uibModal) {
   console.log("teacherInsertCtrl==>");
 
   $scope.class = ["1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
@@ -282,7 +282,7 @@ app.controller("teacherInsertCtrl", function($scope, $window, httpFactory) {
     };
     console.log("obj: " + JSON.stringify(obj));
 
-    var api = "https://vc4all.in/vc/teacherInsert";
+    var api = "https://norecruits.com/vc/teacherInsert";
     //var api = "http://localhost:5000/vc/teacherInsert";
     httpFactory.post(api, obj).then(function(data) {
       var checkStatus = httpFactory.dataValidation(data);

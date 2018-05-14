@@ -1,61 +1,53 @@
+<link rel="stylesheet" href="././dashboard_Lib/css/style.css" />
+<link rel="stylesheet" href="././dashboard_Lib/css/style-responsive.css" />
+<!-- <link rel="stylesheet" href="././dashboard_Lib/css/bootstrap.min.css" /> -->
+<!-- <link rel="stylesheet" href="././dashboard_Lib/css/bootstrap-theme.css" /> -->
+<link rel="stylesheet" href="././dashboard_Lib/css/elegant-icons-style.css" />
+<!-- <script>
+        function onReady(callback) {
+          var intervalID = window.setInterval(checkReady, 1000);
+      
+          function checkReady() {
+            if (document.getElementsByTagName('body')[0] !== undefined) {
+              window.clearInterval(intervalID);
+              callback.call(this);
+            }
+          }
+        }
+      
+        function show(id, value) {
+          document.getElementById(id).style.display = value ? 'block' : 'none';
+        }
+      
+        onReady(function () {
+          show('page', true);
+          show('loading', false);
+        });
+      </script> -->
+
 <div ng-controller="dashboardController">
-
-
-    <!--external css-->
-    <!-- font icon -->
-    <link href="././css/dashboard/elegant-icons-style.css" rel="stylesheet" />
-    <!-- Custom styles -->
-    <link href="././css/dashboard/style.css" rel="stylesheet">
-    <link href="././css/dashboard/style-responsive.css" rel="stylesheet" />
-
-
-
-
-    <!-- Bootstrap CSS -->
-    <link href="././css/dashboard/bootstrap.min.css" rel="stylesheet">
-    <link href="././css/dashboard/bootstrap-theme.css" rel="stylesheet">
-    <link href="././css/dashboard/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <!-- <link href="././css/dashboard/widgets.css" rel="stylesheet"> -->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
-    <!--[if lt IE 9]>
-              <script src="js/html5shiv.js"></script>
-              <script src="js/respond.min.js"></script>
-              <script src="js/lte-ie7.js"></script>
-            <![endif]-->
-
-    <!-- =======================================================
-              Theme Name: NiceAdmin
-              Theme URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-              Author: BootstrapMade
-              Author URL: https://bootstrapmade.com
-            ======================================================= -->
     <!-- container section start -->
     <section id="container" class="">
         <!--header start-->
         <header class="header dark-bg">
             <div class="toggle-nav">
                 <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom">
-                    <i class="icon_menu"></i>
+                    <i class="icon_menu" ng-click="iconMenuClick()"></i>
                 </div>
             </div>
 
             <!--logo start-->
-            <img style="float:left;width: 63px;margin-top: 5px" src="././home/img/fav.png"/>
-            <a href="/" class="logo">VC<span class="lite">4ALL</span></a>
+            <img ng-click="homeClick()" style="float:left;width: 63px;margin-top: 5px" src="././home/img/fav.png" />
+            <a ng-click="homeClick()" class="logo" style="text-shadow: 2px 2px 4px #000000;">VC
+                <span class="lite">4ALL</span>
+            </a>
             <!--logo end-->
-
 
             <div class="top-nav notification-row">
                 <ul class="nav pull-right top-menu">
-
-
-
-
                     <!-- alert notification start-->
-                    <li id="alert_notificatoin_bar" class="dropdown">
+                    <!-- <li id="alert_notificatoin_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle">
-
                             <i class="icon-bell-l"></i>
                             <span class="badge bg-important">2</span>
                         </a>
@@ -66,14 +58,11 @@
                             </li>
                             <li>
                                 <a href="#" style="word-wrap: break-word; text-overflow: hidden;">
-
                                     <span class="label label-primary">
                                         <i class="icon_profile"></i>
                                     </span>
                                     Math teacher scheduled meeting on 12/12/12 at 12:00pm
-
                                     <span class="small italic pull-right">5 mins</span>
-
                             </li>
                             <li>
                                 <a href="#" style="word-wrap: break-word; text-overflow: hidden;">
@@ -88,37 +77,40 @@
                                 <a href="#">See all notifications</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                     <!-- alert notification end-->
                     <!-- user login dropdown start-->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle">
-                            <span class="profile-ava">
-                                <img alt="" src="././css/dashboard/img.jpg">
-                            </span>
-                            <span class="username">{{userName}}</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu extended logout">
+                        <!-- <a data-toggle="dropdown" class="dropdown-toggle"> -->
+                        <!-- <span class="profile-ava">
+                                <img alt="" src="/dashboard_Lib/img/img.jpg">
+                            </span> -->
+
+                        <span ng-if="hour <'12' && min<='59' && sec<='59' && hour >='0'" class="username"> &nbspGood Morning&nbsp{{userName}}</span>
+                        <span ng-if="hour >='12' && hour < '17'" class="username">  Good Afternoon&nbsp{{userName}}</span>
+                        <span ng-if="hour >='17' && min<='59' && sec<='59' && hour <='23'" class="username">Good Evening&nbsp{{userName}}</span>
+                        <br>
+                        
+                        <span class="username" style="color: white;">
+                             {{clock | date:' d MMM yyyy h:mm a'}}</span>
+
+                        <!-- <b class="caret"></b> -->
+                        <!-- </a> -->
+                        <!-- <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
                             <li class="eborder-top">
-                                <a href="/mainPage#!/dashboard/personalDetail">
-                                    <i class="icon_profile"></i> My Profile</a>
+                                <a href="/#!/dashboard/personalDetail">
+                                    <i style="font-size:15px;" class="icon_profile"></i> My Profile</a>
                             </li>
-
-
-
-
-
                             <li>
                                 <a href="documentation.html">
-                                    <i class="icon_key_alt"></i> Account Setting</a>
+                                    <i style="font-size:15px;" class="icon_key_alt"></i> Account Setting</a>
                             </li>
                             <li ng-click="logOut()">
                                 <a>
-                                    <i class="icon_key_alt"></i> Log Out</a>
+                                    <i style="font-size:15px;" class="icon_key_alt"></i> Log Out</a>
                             </li>
-                        </ul>
+                        </ul> -->
                     </li>
                     <!-- user login dropdown end -->
                 </ul>
@@ -130,98 +122,200 @@
         <aside>
             <div id="sidebar" class="nav-collapse" style="margin-top: 60px;">
                 <!-- sidebar menu start-->
-                <ul class="sidebar-menu">
-                    <li>
-                        <a href="/">
-                            <i class="fa fa-home"></i>
-                            <span>HOME</span>
+                <ul class="sidebar-menu" ng-hide="sideBarMenu">
+                    <li id="alink">
+                        <a ng-click="homeClick()" class="home">
+                            <i style="font-size:15px;" class="fa fa-home">
+                                <span>&nbspHOME</span>
+                            </i>
                         </a>
                     </li>
-
                     <li>
-                        <a href="/mainPage#!/dashboard/personalDetail">
-                            <i class="fa fa-user-circle"></i>
-                            <span>PROFILE</span>
+                        <a href="#!/dashboard/personalDetail">
+                            <i style="font-size:15px;" class="fa fa-user-circle">
+                                <span>&nbspPROFILE</span>
+                            </i>
                         </a>
                     </li>
                     <li ng-if="loginType == 'teacher' || loginType == 'studParent'">
-                        <a href="/mainPage#!/dashboard/eventShedule">
-                            <i class="fa fa-pencil"></i>
-                            <span>SCHEDULER</span>
-                        </a>
-                    </li>
+                        <a href="#!/dashboard/eventShedule">
+                            <i style="font-size:15px;" class="fa fa-pencil">
+                                <span>&nbspSCHEDULER</span>
+                            </i>
 
-                    <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
-                        <a class="">
-                            <i class="fa fa-calendar"></i>
-                            <span>EVENTS</span>
-                            <span class="menu-arrow arrow_carrot-right"></span>
                         </a>
-                        <ul class="sub">
+                    </li>
+                    <!-- ##### Start teacher/student Event  ##### -->
+                    <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'" style="color:aquamarine;">
+                        <a ng-click="eventClick('events_subMenu')">
+                            <i style="font-size:15px;" class="fa fa-calendar">
+                                <span>&nbspEVENTS</span>
+                            </i>
+
+                            <span ng-if="events_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
+                            <span ng-if="events_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
+                        </a>
+                        <ul ng-hide="events_subMenu">
                             <li>
-                                <a class="" href="/mainPage#!/dashboard/upcomingEvent">UPCOMING</a>
+                                <a class="" href="#!/dashboard/upcomingEvent">UPCOMING</a>
                             </li>
                             <li>
-                                <a class="" href="/mainPage#!/dashboard/history">HISTORY</a>
+                                <a class="" href="#!/dashboard/history">HISTORY</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
-                        <a>
-                            <i class="fa fa-clipboard"></i>
-                            <span>ACADEMIC</span>
-                            <span class="menu-arrow arrow_carrot-right"></span>
+                    <!-- ##### Start teacher/student Event  ##### -->
+
+                    <!-- ##### Start teacher/student Acdemic  ##### -->
+                    <li class="sub-menu" ng-if="loginType=='teacher' || loginType=='studParent'">
+                        <a ng-click="eventClick('academic_subMenu')">
+                            <i style="font-size:15px;" class="fa fa-clipboard">
+                                <span>&nbspACADEMIC</span>
+                            </i>
+
+                            <span ng-if="academic_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
+                            <span ng-if="academic_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
                         </a>
-                        <ul class="sub">
+                        <ul ng-hide="academic_subMenu">
                             <li>
-                                <a class="" href="/mainPage#!/dashboard/comingSoon">ATTANDENCE</a>
+                                <a class="" href="#!/dashboard/attendanceView">ATTENDANCE</a>
                             </li>
                             <li>
-                                <a class="" href="/mainPage#!/dashboard/comingSoon">RESULT</a>
+                                <a class="" href="#!/dashboard/markView">RESULT</a>
                             </li>
                             <li>
-                                <a class="" href="/mainPage#!/dashboard/comingSoon">FEE</a>
+                                <a class="" href="#!/dashboard/comingSoon">FEE</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
-                        <a>
-                            <i class="fa fa-cog"></i>
-                            <span>SETTINGS</span>
-                            <span class="menu-arrow arrow_carrot-right"></span>
+                    <!-- ##### End teacher/student Acdemic  ##### -->
+
+                    <!-- ##### Start teacher/student  Setting  ##### -->
+                    <li class="sub-menu" ng-if="loginType=='teacher' || loginType=='studParent'">
+                        <a ng-click="eventClick('setting_subMenu')">
+                            <i style="font-size:15px;" class="fa fa-cog">
+                                <span>&nbspSETTINGS</span>
+                            </i>
+                            <span ng-if="setting_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
+                            <span ng-if="setting_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
                         </a>
-                        <ul class="sub">
+                        <ul ng-hide="setting_subMenu">
                             <li>
-                                <a class="" href="/mainPage#!/dashboard/comingSoon">CHANGE PASSWORD</a>
-                            </li>
-                            <li>
-                                <a class="" href="/mainPage#!/dashboard/comingSoon">ACCOUNT SETTINGS</a>
-                            </li>
-                            <li ng-if="loginType=='vc4allAdmin'">
-                                <a class="" href="/mainPage#!/dashboard/comingSoon">CREATE ADMIN</a>
-                            </li>
-                            <li ng-if="loginType=='admin'">
-                                <a class="" href="/mainPage#!/dashboard/teacherI">CREATE TEACHER</a>
-                            </li>
-                            <li ng-if="loginType=='admin'">
-                                <a class="" href="/mainPage#!/dashboard/studentI">CREATE STUDENT</a>
-                            </li>
-                            <li ng-if="loginType=='admin'">
-                                <a class="" href="/mainPage#!/dashboard/userAuth">AUTHENTICATION</a>
+                                <a class="" href="#!/dashboard/comingSoon">CHANGE PASSWORD</a>
                             </li>
                             <li>
-                                <a class="" href="/mainPage#!/dashboard/comingSoon">CONFERENCE</a>
+                                <a class="" href="#!/dashboard/comingSoon">ACCOUNT SETTINGS</a>
                             </li>
                         </ul>
                     </li>
+                    <!-- ##### Start teacher/student  Setting  ##### -->
+
+
+                    <!-- ##### Start school admin Acdemic  ##### -->
+                    <li class="sub-menu" ng-if="loginType=='admin'">
+                        <a ng-click="eventClick('academic_subMenu')">
+                            <i style="font-size:15px;" class="fa fa-clipboard">
+                                <span>&nbspACADEMIC</span>
+                            </i>
+
+                            <span ng-if="academic_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
+                            <span ng-if="academic_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
+                        </a>
+                        <ul ng-hide="academic_subMenu">
+                            <li>
+                                <a class="" href="#!/dashboard/reportsUpload">REPORTS UPLOAD</a>
+                            </li>
+                            <li>
+                                <a class="" href="#!/dashboard/reportsUpdate">REPORTS UPDATE</a>
+                            </li>
+                            <!-- <li>
+                                <a class="" href="#!/dashboard/attendanceView">ATTENDANCE</a>
+                            </li>
+                            <li>
+                                <a class="" href="#!/dashboard/comingSoon">RESULT</a>
+                            </li>
+                            <li>
+                                <a class="" href="#!/dashboard/comingSoon">FEE</a>
+                            </li> -->
+                        </ul>
+                    </li>
+                    <!-- ##### End school admin Acdemic  ##### -->
+                    <!-- ##### Start school admin Setting  ##### -->
+                    <li class="sub-menu" ng-if="loginType=='admin'">
+                        <a ng-click="eventClick('setting_subMenu')">
+                            <i style="font-size:15px;" class="fa fa-cog">
+                                <span>&nbspSETTINGS</span>
+                            </i>
+
+                            <span ng-if="setting_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
+                            <span ng-if="setting_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
+                        </a>
+                        <ul ng-hide="setting_subMenu">
+                            <li>
+                                <a class="" href="#!/dashboard/comingSoon">CHANGE PASSWORD</a>
+                            </li>
+                            <li>
+                                <a class="" href="#!/dashboard/comingSoon">ACCOUNT SETTINGS</a>
+                            </li>
+                            <!-- <li ng-if="loginType=='admin'">
+                                <a class="" href="#!/dashboard/teacherI">CREATE TEACHER</a>
+                            </li>
+                            <li ng-if="loginType=='admin'">
+                                <a class="" href="#!/dashboard/studentI">CREATE STUDENT</a>
+                            </li> -->
+                            <li ng-if="loginType=='admin'">
+                                <a class="" href="#!/dashboard/userAuth">AUTHENTICATION</a>
+                            </li>
+                            <!-- <li>
+                                    <a class="" href="#!/dashboard/comingSoon">CONFERENCE</a>
+                                </li> -->
+                        </ul>
+                    </li>
+                    <!-- ##### End school admin Setting  ##### -->
+
+
+                    <!-- ##### Start VC4ALL admin Setting  ##### -->
+                    <li class="sub-menu" ng-if="loginType=='vc4allAdmin'">
+                        <a ng-click="eventClick('setting_subMenu')">
+                            <i style="font-size:15px;" class="fa fa-cog">
+                                <span>&nbspSETTINGS</span>
+                            </i>
+                            <span ng-if="setting_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
+                            <span ng-if="setting_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
+                        </a>
+                        <ul ng-hide="setting_subMenu">
+                            <li>
+                                <a class="" href="#!/dashboard/comingSoon">CHANGE PASSWORD</a>
+                            </li>
+                            <li>
+                                <a class="" href="#!/dashboard/comingSoon">ACCOUNT SETTINGS</a>
+                            </li>
+
+                            <li>
+                                <a class="" href="#!/dashboard/allUser">ALL USER</a>
+                            </li>
+                            <li>
+                                <a class="" href="#!/dashboard/allAdmin">ALL Admin</a>
+                            </li>
+                            <li>
+                                <a class="" href="#!/dashboard/allSchool">ALL School</a>
+                            </li>
+
+                            <li>
+                                <a class="" href="#!/dashboard/adminCreate">CREATE ADMIN</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- ##### End VC4ALL admin Setting  ##### -->
+
 
                     <li>
-                        <a href="#" ng-click="vcLogout()">
-                            <i class="fa fa-sign-out"></i>
-                            <span>LOGOUT</span>
+                        <a href="#" ng-click="logOut()">
+                            <i style="font-size:15px;" class="fa fa-sign-out">
+                                <span>&nbspLOGOUT</span>
+                            </i>
                         </a>
                     </li>
-
                 </ul>
                 <!-- sidebar menu end-->
             </div>
@@ -229,68 +323,18 @@
         <!--sidebar end-->
         <div ui-view class="user-body">
 
-
         </div>
-
         <!--main content end-->
     </section>
 
-    <!-- javascripts -->
-    <script src="././css/dashboard/jquery.js"></script>
-    <script src="././css/dashboard/jquery-ui-1.10.4.min.js"></script>
-    <script src="././css/dashboard/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="././css/dashboard/jquery-ui-1.9.2.custom.min.js"></script>
-    <!-- bootstrap -->
-    <script src="././css/dashboard/bootstrap.min.js"></script>
-
-    <!-- nice scroll -->
-    <script src="././css/dashboard/jquery.scrollTo.min.js"></script>
-    <script src="././css/dashboard/jquery.nicescroll.js" type="text/javascript"></script>
-    <!-- jquery knob -->
-    <script src="././css/dashboard/jquery.knob.js"></script>
-    <!--custome script for all page-->
-    <script src="././css/dashboard/scripts.js"></script>
-
-    <script>
-        //knob
-        $(".knob").knob();
-    </script>
-
-
-    <!-- <div class="row">
-        <div class="col-sm-12 col-md-12 user-details">
-            <div class="user-image">
-                <img src="" alt="Sushil Kumar singh" title="Sushil Kumar Singh" class="img-circle">
-            </div>
-            <div class="user-info-block">
-                <div class="user-heading">
-                    <h3>Sushil Kumar Singh</h3>
-                    <span class="help-block">Bangalore, IN</span>
-                </div>
-                <ul class="navigation">
-                    <li class="active">
-                        <a href="/mainPage#!/dashboard/personalDetail">
-                            <span class="glyphicon glyphicon-user"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="/mainPage#!/dashboard/editDetails">
-                            <span class="glyphicon glyphicon-cog"></span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/mainPage#!/dashboard/event">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </a>
-                    </li>
-                </ul>
-
-                <div ui-view class="user-body">
-                 
-
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>
+
+<script src="././dashboard_Lib/js/jquery.js"></script>
+<!-- <script src="././dashboard_Lib/jquery-ui-1.10.4.min.js"></script>
+<script src="././dashboard_Lib/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="././dashboard_Lib/jquery-ui-1.9.2.custom.min.js"></script> -->
+
+<script src="././dashboard_Lib/js/bootstrap.min.js"></script>
+<script src="././dashboard_Lib/js/jquery.nicescroll.js"></script>
+<script src="././dashboard_Lib/js/jquery.scrollTo.min.js"></script>
+<script src="././dashboard_Lib/js/scripts.js"></script>

@@ -19,10 +19,26 @@
     <link rel="stylesheet" href="/css/chatZone.css" />
 
     <script src="/js/clientmain.js"></script>
+    <!-- <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"></script> -->
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
+    <script src="/js/studentMarkAtt_automation.js"></script>
+    <!-- <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>-->
+    <!-- <link rel="stylesheet" href="https://cdn.webrtc-experiment.com/style.css"> -->
 
-    <!-- <script src="/controllers/clientCtrl.js"></script>-->
+    <!-- <style>
+        input {
+            border: 1px solid rgb(46, 189, 235);
+            border-radius: 3px;
+            font-size: 1em;
+            outline: none;
+            padding: .2em .4em;
+            width: 60px;
+            text-align: center;
+        }
+    </style> -->
+
+
 </head>
 
 <body>
@@ -30,32 +46,47 @@
     <!-- <script  src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script> -->
 
     <!-- ### Start header #### -->
-    <header id="header" style="background: rgba(52, 59, 64, 0.9);">
+    <header id="header" style="background:#1a2732;">
         <!-- <header id="header" style="background: rgba(52, 59, 64, 0.9);padding: 20px; height: 72px;transition: all 0.5s;"> -->
         <div class="container">
 
             <div id="logo" class="pull-left">
                 <span>
                     <img style="float:left;" src="/home/img/fav.png" />
-                    <h1 style="color:azure;float:left;text-shadow: 2px 2px 4px #000000;">&nbspVC4ALL</h1>
+                    <a href="/" id="mm" style="font-size: 22px;
+                    font-weight: 500;
+                    color: #a8cf44;
+                    float: left;
+                    margin-top: 8px;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;">VC<span style="color:#2577be;">4ALL</span>
+                    <!-- <h1 style="color:azure;float:left;text-shadow: 2px 2px 4px #000000; margin-top: 13px;">&nbspVC4ALL</h1> -->
                 </span>
             </div>
 
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
                     <li>
-                        <a href="/" style="text-shadow: 2px 2px 4px #000000;">Home</a>
+                        <a href="/">Home</a>
+                    </li>
+                    <!-- <li id="dashboard" style="display:block;">
+                        <a href="https://norecruits.com/#!dashboard/personalDetail">Dashboard
+                        </a>
+                    </li> -->
+                    <li id="dashboard" style="display:block;">
+                        <a href="#" onclick="attendance()">Attendance
+                        </a>
                     </li>
                     <li id="dashboard" style="display:block;">
-                            <a href="https://vc4all.in/mainPage#!/dashboard/personalDetail"style="text-shadow: 2px 2px 4px #000000;">Dashboard
-                            </a>
+                        <a href="#" onclick="result()">Result
+                        </a>
                     </li>
 
                     <!-- <li>
                         <a href="#contact" style="text-shadow: 2px 2px 4px #000000;">Contact Us</a>
                     </li> -->
                     <li id="userAuth" style="display:none; text-shadow: 2px 2px 4px #000000;">
-                        <a href="https://vc4all.in/mainPage#!/userAuth">Teacher List</a>
+                        <a href="https://norecruits.com/mainPage#!/userAuth">Teacher List</a>
                     </li>
                     <!-- <li id="appLogin" style="display:block;">
                         <a href="#" data-target="#crdntl" data-toggle="modal" style="text-shadow: 2px 2px 4px #000000;">Login</a>
@@ -79,16 +110,16 @@
       Portfolio Section
     ============================-->
     <main>
-        <section id="portfolio" style="background: darkturquoise; min-height:100vh;">
+        <section id="portfolio" style="min-height:100vh; color: #797979;background: #eeeeee;">
             <div class="container wow">
                 <div id="downloadVideo"> </div>
                 <div class="row">
                     <div class="col-lg-12">
 
                         <center style="margin:5%;">
-                            <a id="LoginUrl">
+                            <!-- <a id="LoginUrl">
                                 <h2 style="margin-top: 45vh;">Please use Your credential/Login to Start</h2>
-                            </a>
+                            </a> -->
 
                             <a id="videoConferenceUrl" style="display:none;">
                                 <button id="videoConfStart" class="btn fa fa-play-circle">
@@ -105,6 +136,23 @@
                             </a> -->
 
                             <!-- <li id="videoConfStart">  <a id="videoConferenceUrl">Start Video Conference </a></li> -->
+                            <!-- <a id="start-recording" class="">
+                                    <button id="screenBtns" style="display:none;color:black;" class="btn fa fa-window-restore">&nbspstart-recording</button>
+                                </a>
+                                <a id="stop-recording" style="display:none;">
+                                    <button id="screenBtns" class="btn fa fa-stop" style="color:red">&nbsp
+                                        <b style="color:black">stop-recording</b>
+                                    </button>
+                                </a>
+                                <a id="pause-recording" class="">
+                                        <button id="screenBtns" style="display:none;color:black;" class="btn fa fa-window-restore">&nbsppause-recording</button>
+                                    </a>
+                                    <a id="add-stream" style="display:none;">
+                                        <button id="screenBtns" class="btn fa fa-stop" style="color:red">&nbsp
+                                            <b style="color:black">Stop Sharing</b>
+                                        </button>
+                                    </a> -->
+
 
                             <a id="screenShareBtn" class="">
                                 <button id="screenBtns" style="display:none;color:black;" class="btn fa fa-window-restore">&nbspScreenShare</button>
@@ -114,6 +162,15 @@
                                     <b style="color:black">Stop Sharing</b>
                                 </button>
                             </a>
+
+                            <!-- <a id="screenRecordBtn" class="">
+                                <button class="btn fa fa-window-restore">&nbspRecordStart</button>
+                            </a>
+                            <a id="screenRecordStop">
+                                <button class="btn fa fa-stop" style="color:red">&nbsp
+                                    <b style="color:black">Stop Recording</b>
+                                </button>
+                            </a> -->
 
 
 
@@ -145,7 +202,22 @@
                                     <b style="color:black;">Disconnect</b>
                                 </button>
                             </a>
-
+                            <section class="experiment" style="padding: 5px;">
+                                <!-- <label for="time-interval">Time Interval (milliseconds):</label>
+                                <input type="text" id="time-interval" value="5000">ms -->
+                    
+                                <!-- <button id="start-recording">Start</button> -->
+                                <button id="stop-recording" >Stop</button>
+                    
+                                <!-- <button id="pause-recording" disabled>Pause</button>
+                                <button id="resume-recording" disabled>Resume</button>
+                                
+                                <button id="add-stream" disabled>Add another video</button> -->
+                            </section>
+                    
+                            <section class="experiment">
+                                <div id="container"></div>
+                            </section>
                             <hr style="border-top:0;">
 
 
@@ -239,6 +311,19 @@
                                             border-color:  white;
                                         ">
                                                 Screen Sharing</button>
+                                        </a>
+                                    </h6>
+                                    <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
+                                </div>
+                                <div class="col-sm-12">
+                                    <h6>
+                                        <b>Chrome</b> user need to install Only this extension for Screen Recording
+                                        <a href="https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn" target="_blank">
+                                            <button class="btnn fa fa-download" style="
+                                                border-radius: 5px;
+                                                border-color:  white;
+                                            ">
+                                                Screen Recording</button>
                                         </a>
                                     </h6>
                                     <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
@@ -509,7 +594,7 @@
             z-index: 1;
         }
     </style>
-
+   
 </body>
 
 </html>

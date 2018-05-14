@@ -1,4 +1,4 @@
-app.controller("studentInsertCtrl", function($scope, $window, httpFactory) {
+app.controller("studentInsertCtrl", function($scope, $window, $uibModal, httpFactory) {
   console.log("studInsertCtrl==>");
   console.log("$scope.parentName: " + $scope.parentName);
 
@@ -30,13 +30,12 @@ app.controller("studentInsertCtrl", function($scope, $window, httpFactory) {
       motherName: $scope.mName,
       motherEmail: $scope.mEmail,
       motherNum: $scope.mothermobileNum,
-
       cs: $scope.cs,
       pswd: $scope.pswd
     };
     console.log("obj: " + JSON.stringify(obj));
 
-    var api = "https://vc4all.in/vc/studentInsert";
+    var api = "https://norecruits.com/vc/studentInsert";
     //var api = "http://localhost:5000/vc/studentInsert";
 
     httpFactory.post(api, obj).then(function(data) {
