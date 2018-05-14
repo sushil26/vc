@@ -6,7 +6,7 @@ app.controller('upcomingEventController', function ($scope, $state, $window, htt
 
     $scope.getToDate = function () {
         console.log("Get To Date-->");
-        var api = "https://norecruits.com/vc/getToDate";
+        var api = "https://vc4all.in/vc/getToDate";
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -35,7 +35,7 @@ app.controller('upcomingEventController', function ($scope, $state, $window, htt
     $scope.eventGet = function () {
         console.log("eventGet-->");
         var id = $scope.userData.id;
-        var api = "https://norecruits.com/vc/eventGet" + "/" + id;
+        var api = "https://vc4all.in/vc/eventGet" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
         $scope.calendarOwner = "Your";
 
@@ -139,7 +139,7 @@ app.controller('upcomingEventController', function ($scope, $state, $window, htt
               })
             //alert("Sorry you not allow to edit");
         }
-        // var api = "https://norecruits.com/vc/rescheduleEvent/:id";
+        // var api = "https://vc4all.in/vc/rescheduleEvent/:id";
 
         // httpFactory.post(api, obj).then(function (data) {
         //     var checkStatus = httpFactory.dataValidation(data);
@@ -198,7 +198,7 @@ app.controller('upcomingEventController', function ($scope, $state, $window, htt
     //     var id = localStorage.getItem("id");
     //     var currentDateTime = new Date();
     //     console.log("currentDateTime: "+currentDateTime);
-    //     var api = "https://norecruits.com/vc/upcomingEventGet" + "/" + id+"/"+currentDateTime;
+    //     var api = "https://vc4all.in/vc/upcomingEventGet" + "/" + id+"/"+currentDateTime;
     //     httpFactory.get(api).then(function (data) {
     //         var checkStatus = httpFactory.dataValidation(data);
     //         console.log("data--" + JSON.stringify(data.data));

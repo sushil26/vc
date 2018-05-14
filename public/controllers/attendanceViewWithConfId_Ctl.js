@@ -5,7 +5,7 @@ app.controller('attendanceViewWithConfId_Ctl', function ($scope, $state, $window
     console.log("studSchoolId: "+id+" schoolName: "+schoolName);
     $scope.getAttendance = function (id) {
         console.log("getAttendance-->");
-        var api = "https://norecruits.com/vc/getStudentAttendance" + "/" + id;
+        var api = "https://vc4all.in/vc/getStudentAttendance" + "/" + id;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);

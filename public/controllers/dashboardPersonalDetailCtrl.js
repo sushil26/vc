@@ -8,10 +8,10 @@ app.controller('dashboardPersonalDetailController', function ($scope, $window,$u
     $scope.getUserDetails = function (id) {
         console.log("getTeacherData-->");
         if ($scope.loginType == 'teacher' || $scope.loginType == 'admin' || $scope.loginType == 'vc4allAdmin') {
-            var api = "https://norecruits.com/vc/teacherDetail" + "/" + id;
+            var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
         }
         else if ($scope.loginType == 'studParent') {
-            var api = "https://norecruits.com/vc/studentDetail" + "/" + id;
+            var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
         }
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";

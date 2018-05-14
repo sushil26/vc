@@ -8,7 +8,7 @@ app.controller('attendanceViewCtl', function ($scope, $window, httpFactory, $com
     $scope.getTeacherData = function () {
         console.log("getTeacherData-->");
         var id = $scope.userData.id;
-        var api = "https://norecruits.com/vc/teacherDetail" + "/" + id;
+        var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";
         console.log("api: " + api);
@@ -28,7 +28,7 @@ app.controller('attendanceViewCtl', function ($scope, $window, httpFactory, $com
 
     $scope.getAttendance = function (id) {
         console.log("getAttendance-->");
-        var api = "https://norecruits.com/vc/getStudentAttendance" + "/" + id;
+        var api = "https://vc4all.in/vc/getStudentAttendance" + "/" + id;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
@@ -100,7 +100,7 @@ app.controller('attendanceViewCtl', function ($scope, $window, httpFactory, $com
         var section = css.section;
         $scope.studList = [];
 
-        var api = "https://norecruits.com/vc/getStudListForCS" + "/" + schoolName + "/" + clas + "/" + section;
+        var api = "https://vc4all.in/vc/getStudListForCS" + "/" + schoolName + "/" + clas + "/" + section;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);

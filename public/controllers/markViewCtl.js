@@ -8,7 +8,7 @@ app.controller('markViewCtl', function ($scope, $window, $uibModal, httpFactory,
     $scope.getTeacherData = function () {
         console.log("getTeacherData-->");
         var id = $scope.userData.id;
-        var api = "https://norecruits.com/vc/teacherDetail" + "/" + id;
+        var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";
         console.log("api: " + api);
@@ -33,7 +33,7 @@ app.controller('markViewCtl', function ($scope, $window, $uibModal, httpFactory,
 //     }
     $scope.getMarks = function (id) {
         console.log("getMarks-->");
-        var api = "https://norecruits.com/vc/getStudentAttendance" + "/" + id;
+        var api = "https://vc4all.in/vc/getStudentAttendance" + "/" + id;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
@@ -106,7 +106,7 @@ app.controller('markViewCtl', function ($scope, $window, $uibModal, httpFactory,
         var section = css.section;
         $scope.studList = [];
 
-        var api = "https://norecruits.com/vc/getStudListForCS" + "/" + schoolName + "/" + clas + "/" + section;
+        var api = "https://vc4all.in/vc/getStudListForCS" + "/" + schoolName + "/" + clas + "/" + section;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);

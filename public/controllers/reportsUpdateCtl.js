@@ -10,7 +10,7 @@ app.controller('reportsUpdateCtl', function ($scope, $window, $state, httpFactor
   $scope.monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   $scope.events = [];
   $scope.getAllTeacherList = function () {
-    var api = "https://norecruits.com/vc/getAllTeacherList" + "/" + schoolName;
+    var api = "https://vc4all.in/vc/getAllTeacherList" + "/" + schoolName;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -29,7 +29,7 @@ app.controller('reportsUpdateCtl', function ($scope, $window, $state, httpFactor
   $scope.getSchoolData = function () {
     console.log("getSchoolData-->");
     $scope.cssList = [];
-    var api = "https://norecruits.com/vc/getSchoolData/" + schoolName;
+    var api = "https://vc4all.in/vc/getSchoolData/" + schoolName;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       console.log("data--" + JSON.stringify(data.data));
@@ -93,7 +93,7 @@ app.controller('reportsUpdateCtl', function ($scope, $window, $state, httpFactor
 
 
 
-    // var api = "https://norecruits.com/vc/uploadMark";
+    // var api = "https://vc4all.in/vc/uploadMark";
     // httpFactory.imageUpload(file, api).then(function (data) {
     //   var checkStatus = httpFactory.dataValidation(data);
     //   console.log("data--" + JSON.stringify(data.data));
@@ -138,10 +138,10 @@ app.controller('reportsUpdateCtl', function ($scope, $window, $state, httpFactor
       "file": file,
     }
     if (uploadType == "Teacher Details") {
-      var api = "https://norecruits.com/vc/updateTeacherMaster/" + schoolName + "/" + id;
+      var api = "https://vc4all.in/vc/updateTeacherMaster/" + schoolName + "/" + id;
     }
     else if (uploadType == "Student Details") {
-      var api = "https://norecruits.com/vc/updateStudentMaster/" + schoolName + "/" + id;
+      var api = "https://vc4all.in/vc/updateStudentMaster/" + schoolName + "/" + id;
     }
     console.log("api: " + api);
     httpFactory.csvUpload(obj, api).then(function (data) {
@@ -162,7 +162,7 @@ app.controller('reportsUpdateCtl', function ($scope, $window, $state, httpFactor
     console.log("studentSelect-->");
     console.log("s: " + JSON.stringify(s));
     var id = s.id;
-    var api = "https://norecruits.com//vc/studentDetail/" + id;
+    var api = "https://vc4all.in//vc/studentDetail/" + id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -228,7 +228,7 @@ app.controller('reportsUpdateCtl', function ($scope, $window, $state, httpFactor
     var section = section;
     $scope.studList = [];
 
-    var api = "https://norecruits.com/vc/getStudListForCS" + "/" + schoolName + "/" + clas + "/" + section;
+    var api = "https://vc4all.in/vc/getStudListForCS" + "/" + schoolName + "/" + clas + "/" + section;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -255,7 +255,7 @@ app.controller('reportsUpdateCtl', function ($scope, $window, $state, httpFactor
     var obj = {
       "file": file
     }
-    var api = "https://norecruits.com/vc/updateTeacher_timeTable/" + id;
+    var api = "https://vc4all.in/vc/updateTeacher_timeTable/" + id;
     console.log("api: " + api);
     httpFactory.csvUpload(obj, api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -297,7 +297,7 @@ app.controller('reportsUpdateCtl', function ($scope, $window, $state, httpFactor
       "file": file
     }
     console.log("clas: "+clas+"section: "+section+"reportType: "+reportType+"month: "+month)
-    var api = "https://norecruits.com/vc/attendanceUpdate/"+schoolName+"/"+ clas + "/" + section + "/" + reportType + "/" + month;
+    var api = "https://vc4all.in/vc/attendanceUpdate/"+schoolName+"/"+ clas + "/" + section + "/" + reportType + "/" + month;
     console.log("api: " + api);
     httpFactory.csvUpload(obj, api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -341,17 +341,17 @@ app.controller('reportsUpdateCtl', function ($scope, $window, $state, httpFactor
     console.log("uploadType: " + uploadType);
     console.log("reportType: " + reportType);
     if (uploadType == "Mark Report") {
-      var api = "https://norecruits.com/vc/uploadMark";
+      var api = "https://vc4all.in/vc/uploadMark";
     }
     else if (uploadType == "Attendance") {
       var month = list;
-      var api = "https://norecruits.com/vc/uploadAttendance/" + reportType + "/" + month;
+      var api = "https://vc4all.in/vc/uploadAttendance/" + reportType + "/" + month;
     }
     else if (uploadType == "Payment") {
-      var api = "https://norecruits.com/vc/uploadPayment";
+      var api = "https://vc4all.in/vc/uploadPayment";
     }
     else if (uploadType == "Student Details") {
-      var api = "https://norecruits.com/vc/uploadStudentMaster";
+      var api = "https://vc4all.in/vc/uploadStudentMaster";
     }
     console.log("api: " + api);
     httpFactory.csvUpload(obj, api).then(function (data) {

@@ -5,15 +5,15 @@ app.controller('viewUserController', function ($scope, $state, $window, httpFact
     $scope.getTeacherDetails = function (id) {
         console.log("getTeacherData-->");
         if (loginT == 'teacher') {
-            var api = "https://norecruits.com/vc/teacherDetail" + "/" + id;
+            var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
         }
         else if(loginT == 'school')
         {
-            var api = "https://norecruits.com/vc/getSchoolDataById" + "/" + id;
+            var api = "https://vc4all.in/vc/getSchoolDataById" + "/" + id;
            
         }
         else {
-            var api = "https://norecruits.com/vc/studentDetail" + "/" + id;
+            var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
         }
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";
