@@ -567,11 +567,21 @@
         #videosAttach {
             transform: rotateY(180deg);
             -webkit-transform: rotateY(180deg);
-            /* Safari and Chrome */
             -moz-transform: rotateY(180deg);
             z-index: 2;
             position: fixed;
-            /* Firefox */
+          
+        }
+        .fullscr {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: fill;
+            z-index: 1;
         }
 
 
@@ -585,21 +595,6 @@
             width: 75%;
         }
     </style>
-
-    <style>
-        .fullscr {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: fill;
-            z-index: 1;
-        }
-    </style>
-
 </body>
 
 </html>
