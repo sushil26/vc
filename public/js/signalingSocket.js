@@ -449,6 +449,7 @@ signaling_socket.on("addPeer", function (config) {
   var peer_id = config.peer_id;
   sessionHeader = config.sessionHeaderId;
   console.log("sessionHeader: " + sessionHeader);
+  document.getElementById("btnrestore").click();
   // console.log("addPeer 1.1: peers: " + JSON.stringify(peers));
   // console.log("addPeer 1.2: peer_id: " + peer_id);
   // console.log("addPeer : config.parentPeer: " + config.parentPeer);
