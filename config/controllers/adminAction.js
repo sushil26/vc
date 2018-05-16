@@ -932,7 +932,7 @@ module.exports.uploadAttendance = function (req, res) {
 };
 /* ### Start upload daily attendance status  ### */
 module.exports.dailyData = function (data, callback) {
-    console.log('inside dailyData saving')
+    console.log('inside dailyData insert saving')
     var day;
     var attndnce;
     //var dateString = data.Date;
@@ -970,7 +970,7 @@ module.exports.dailyData = function (data, callback) {
         }
         else {
             if (isThereData.length > 0) {
-                stud.find(studIdForFindQry,{"attendance.dateAttendance.date": attndnce.date},(function (err, findData) {
+                stud.find(studIdForFindQry,{"attendance.dateAttendance.date": attndnce.date},function (err, findData) {
                     console.log("*1st query findData: " + JSON.stringify(findData));
                     // console.log("1st query findData.length: " + findData.attendance);
                     if (err) {
@@ -978,17 +978,7 @@ module.exports.dailyData = function (data, callback) {
                         if (callback) callback();
                     }
                     else {
-                        
-                        // for(var x=0;x<12;x++){
-                        //     if(findData.attendance[x].month==month)
-                        //     {
-                        //         for(var y=0;y<findData.attendance[x].dateAttendance.length;y++)
-                        //         {
-                        //             findData.attendance[x].dateAttendance[]
-                        //         }
-                                
-                        //     }
-                        // }
+                       
                         if (findData.length == 0) {
                             stud.update(studIdForUpdateQry, { $push: { "attendance.$.dateAttendance": attndnce } }, function (err, data) {
                                 console.log("2nd query started: " + JSON.stringify(data));
