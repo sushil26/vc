@@ -951,7 +951,7 @@ module.exports.dailyData = function (data, callback) {
         "schoolId": data.StudentID,
         "schoolName": schoolName,
         "attendance.month": month,
-        "attendance.dateAttendance.date": attndnce.date
+        "attendance.dateAttendance.date": day,
     }
     console.log("studIdForFindQry: " + JSON.stringify(studIdForFindQry));
     var studIdForUpdateQry = {
@@ -973,7 +973,7 @@ module.exports.dailyData = function (data, callback) {
             if (isThereData.length > 0) {
                 stud.find(studIdForFindQry).toArray(function (err, findData) {
                     console.log("1st query findData: " + JSON.stringify(findData));
-                    console.log("1st query findData.length: " + findData.length);
+                    console.log("1st query findData.length: " + findData.attendance[]);
                     if (err) {
                         marker = true;
                         if (callback) callback();
