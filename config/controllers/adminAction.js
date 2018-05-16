@@ -951,7 +951,7 @@ module.exports.dailyData = function (data, callback) {
         "schoolId": data.StudentID,
         "schoolName": schoolName,
         "attendance.month": month,
-        "attendance.dateAttendance.date": day,
+        "attendance.dateAttendance.date": day
     }
     console.log("studIdForFindQry: " + JSON.stringify(studIdForFindQry));
     var studIdForUpdateQry = {
