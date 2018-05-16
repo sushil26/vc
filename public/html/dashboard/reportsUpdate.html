@@ -7,7 +7,7 @@
                 <section class="panel">
                     <div class="panel-heading" style="background: #3a4a58">
                         <i class="fa fa-user-circle"></i>
-                        <span style="color:white;">&nbspREPORTS UPLOAD</span>
+                        <span style="color:white;">&nbspREPORTS UPDATE</span>
                     </div>
                     <div class="panel-body bio-graph-info" style="padding: 1px;">
                         <div style="margin:20px !important;">
@@ -72,19 +72,18 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <label ng-if="up.uploadType=='Teacher Details' || up.uploadType=='Time Table'" class="control-label col-lg-3">Teacher
+                                    <div class="form-group" ng-if="(up.uploadType=='Teacher Details' || up.uploadType=='Time Table') && up.teacherSelect!=''">
+                                        <label class="control-label col-lg-3">Teacher
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-lg-3">
-                                            <select ng-if="(up.uploadType=='Teacher Details' || up.uploadType=='Time Table') && up.teacherSelect!=''" class="form-control m-bot15"
-                                                placeholder="select" ng-model="up.teacherSelect" ng-options="t as t.firstName +'-'+ t.schoolId for t in teacherList">
+                                            <select class="form-control m-bot15" placeholder="select" ng-model="up.teacherSelect" ng-options="t as t.firstName +'-'+ t.schoolId for t in teacherList">
                                                 <option value="" disabled selected>Teacher</option>
                                             </select>
                                         </div>
                                     </div>
                                     <!--##### Start teacher data #####-->
-                                    <div ng-if="up.uploadType=='Teacher Details'" class="form-group">
+                                    <div ng-if="up.uploadType=='Teacher Details' && up.teacherSelect" class="form-group">
                                         <section class="panel">
                                             <div class="form-group">
                                                 <div class="panel-heading" style="background: #3a4a58">
@@ -125,7 +124,7 @@
                                     </div>
                                     <!--##### End teacher data #####-->
                                     <!-- ##### Start Time Table  ##### -->
-                                    <div ng-if="up.uploadType=='Time Table'" class="form-group">
+                                    <div ng-if="up.uploadType=='Time Table' && up.teacherSelect" class="form-group">
                                         <table class="table table-responsive">
                                             <thead>
                                                 <tr>
@@ -195,41 +194,40 @@
                                     </div>
                                     <!-- #####  End Time Table  ##### -->
 
-                                    <div class="form-group ">
-                                        <label ng-if="up.uploadType!='Teacher Details' && up.uploadType!='Time Table' && up.uploadType!=''" class="control-label col-lg-3">Class
+                                    <div class="form-group" ng-if="up.uploadType!='Teacher Details' && up.uploadType!='Time Table' && up.uploadType!=''">
+                                        <label class="control-label col-lg-3">Class
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-lg-3">
-                                            <select ng-if="up.uploadType!='Teacher Details' && up.uploadType!='Time Table' && up.uploadType!=''" class="form-control m-bot15"
-                                                placeholder="select" ng-model="up.cSelect" ng-options="c as c.class for c in cssList">
+                                            <select class="form-control m-bot15" placeholder="select" ng-model="up.cSelect" ng-options="c as c.class for c in cssList">
                                                 <option value="" disabled selected>Class</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <label ng-if="up.uploadType!='Teacher Details' && up.uploadType!=''" class=" control-label col-lg-3">Section
+                                    <div class="form-group" ng-if="up.cSelect && up.uploadType!='Teacher Details' && up.uploadType!='Time Table' && up.uploadType!=''">
+                                        <label class=" control-label col-lg-3">Section
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-lg-3">
-                                            <select ng-if="up.uploadType!='Teacher Details' && up.uploadType!='' " class="form-control m-bot15" placeholder="select"
-                                                ng-model="up.subSelect" ng-options="s as s for s in up.cSelect.section" ng-change="getStudListForCS(up.cSelect, up.subSelect)">
+                                            <select class="form-control m-bot15" placeholder="select" ng-model="up.subSelect" ng-options="s as s for s in up.cSelect.section"
+                                                ng-change="getStudListForCS(up.cSelect, up.subSelect)">
                                                 <option value="" disabled selected>Section</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label ng-if="up.uploadType!='Teacher Details' && up.uploadType!='Attendance'" && up.uploadType!='Time Table' && up.uploadType!=''" class="control-label col-lg-3">Select Student
+                                    <div class="form-group" ng-if="up.subSelect && up.uploadType!='Teacher Details' && up.uploadType!='Attendance' && up.uploadType!='Time Table' && up.uploadType!='Mark Report' && up.uploadType!=''">
+                                        <label class="control-label col-lg-3">Select Student
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-lg-3">
-                                            <select class="btn" ng-if="up.uploadType!='Teacher Details' && up.uploadType!='Attendance'" && up.uploadType!='Time Table' && up.uploadType!=''" placeholder="select" ng-model="sSelect" ng-options="cs as cs.name + '-' + cs.studId for cs in studList"
-                                                ng-change="studentDetailById(sSelect)">
+                                            <select class="btn" placeholder="select" ng-model="up.sSelect" ng-options="cs as cs.name + '-' + cs.studId for cs in studList"
+                                                ng-change="studentDetailById(up.sSelect)">
                                                 <option value="" disabled selected>Student</option>
                                             </select>
                                         </div>
                                     </div>
                                     <!--##### Start Student data #####-->
-                                    <section ng-if="up.uploadType=='Student Details'" class="panel">
+                                    <section ng-if="up.uploadType=='Student Details' && up.sSelect" class="panel">
                                         <div class="form-group">
                                             <div class="panel-heading" style="background: #3a4a58;">
                                                 <i class="fa fa-user-circle"></i>
@@ -271,43 +269,169 @@
                                     <!-- <select class="btn col-lg-3" placeholder="select" ng-model="up.studSelect" ng-options="cs as cs.name + '-' + cs.studId for cs in studList">
                                                     <option value="" disabled selected>Student</option>
                                                 </select> -->
-                                    <div class="form-group ">
-                                        <label class="control-label col-lg-3" ng-if="up.uploadType=='Mark Report'">Type of Test
+                                    <div class="form-group " ng-if="up.uploadType=='Mark Report'">
+                                        <label class="control-label col-lg-3">Type of Test
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-lg-3">
-                                            <select class="form-control m-bot15" ng-if="up.uploadType=='Mark Report'" placeholder="select" ng-model="up.ttSelect" ng-options="tt as tt for tt in testTypes">
+                                            <select class="form-control m-bot15" placeholder="select" ng-model="up.ttSelect" ng-options="tt as tt for tt in testTypes"
+                                                ng-change="testDateFetch(up.ttSelect)">
                                                 <option value="" disabled selected>Type of Test</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <label class="control-label col-lg-3" ng-if="up.uploadType=='Mark Report'">Test Start Date
+                                    <div class="form-group " ng-if="up.uploadType=='Mark Report' && testStartDate.length>0">
+                                        <label class="control-label col-lg-3">Test Start Date
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-lg-3">
-                                            <input class="form-control m-bot15" ng-if="up.uploadType=='Mark Report'" type="date" ng-model="up.testDate" placeholder="Select date of test start"
-                                                value="date">
+                                            <select class="form-control m-bot15" placeholder="select" ng-model="up.testDate" ng-options="tsd as tsd.date for tsd in testStartDate">
+                                                <option value="" disabled selected>Select date of test start</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <label class="control-label col-lg-3" ng-if="up.uploadType=='Attendance'">Attendance report</label>
+                                    <!--##### Start Mark data #####-->
+                                    <section ng-if="up.testDate && up.uploadType=='Mark Report'" class="panel">
+                                        <div class="form-group">
+                                            <div class="panel-heading" style="background: #3a4a58;">
+                                                <i class="fa fa-user-circle"></i>
+                                                <span style="color:white;">&nbsp;Mark List</span>
+                                            </div>
+                                            <table class="table">
+                                                <thead class="panel-heading">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Student Id</th>
+                                                        <th>Student Name</th>
+                                                        <th>Subjects with marks</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="sd in studentList">
+                                                        <td style="background-color:white;">{{$index+1}}.</td>
+                                                        <td style="background-color:white;">{{sd.schoolId}}</td>
+                                                        <td style="background-color:white;">
+                                                            {{sd.firstName + " " + sd.lastName}}
+                                                        </td>
+                                                        <!-- <th style="background-color:white;" ng-repeat=" (key, value) in up.testDate.mark">{{value}}</th> -->
+                                                        <td style="background-color:white;" ng-repeat="mark in sd.mark">
+                                                            <div ng-if="mark.testType==up.ttSelect" ng-repeat="swm in mark.subjectWithMark">
+                                                                <div ng-if="swm.date==up.testDate.date" ng-repeat="(key, value) in swm.mark">{{key}}:{{value}}
+                                                                    <br>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </section>
+                                    <!--##### End Mark data #####-->
+                                    <div class="form-group" ng-if="up.uploadType=='Attendance'">
+                                        <label class="control-label col-lg-3">Attendance report</label>
                                         <div class="col-lg-3">
-                                            <select class="form-control m-bot15" ng-if="up.uploadType=='Attendance'" placeholder="select" ng-model="up.atSelect" ng-options="at as at for at in attendanceTypes">
+                                            <select class="form-control m-bot15" placeholder="select" ng-model="up.atSelect" ng-options="at as at for at in attendanceTypes">
                                                 <option value="" disabled selected>Attendance report</option>
                                             </select>
                                         </div>
                                     </div>
-          
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-3" ng-if="up.uploadType=='Attendance'">Month</label>
+                                    <div class="form-group" ng-if="up.uploadType=='Attendance' && up.atSelect=='Daily'">
+                                        <label class="control-label col-lg-3">Date</label>
                                         <div class="col-lg-3">
-                                            <select class="form-control m-bot15" ng-if="up.uploadType=='Attendance'" placeholder="select" ng-model="up.mSelect" ng-options="ml as ml for ml in monthList" ng-click="att_monthSelected(up.mSelect)">
+                                            <input type="date" ng-model="up.attDate" ng-change="attDailyDate(up.attDate)"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="up.uploadType=='Attendance' && up.atSelect=='Monthly'">
+                                        <label class="control-label col-lg-3">Month</label>
+                                        <div class="col-lg-3">
+                                            <select class="form-control m-bot15" placeholder="select" ng-model="up.mSelect" ng-options="ml as ml for ml in monthList"
+                                                ng-click="att_monthSelected(up.mSelect)">
                                                 <option value="" disabled selected>Month</option>
                                             </select>
                                         </div>
                                     </div>
+                                    <!--##### Start Daily Attendance data #####-->
+                                    <section ng-if="up.uploadType=='Attendance' && up.atSelect=='Daily' && up.attDate" class="panel">
+                                        <div class="form-group">
+                                            <div class="panel-heading" style="background: #3a4a58;">
+                                                <i class="fa fa-user-circle"></i>
+                                                <span style="color:white;">&nbsp;Attendance </span>
+                                            </div>
+                                            <table class="table">
+                                                <thead class="panel-heading">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Student Id</th>
+                                                        <th>Student Name</th>
+                                                        <td>
+                                                            {{up.attDate | date:'MMM d'}}
+                                                        </td>
 
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="sd in studentList">
+                                                        <td style="background-color:white;">{{$index+1}}.</td>
+                                                        <td style="background-color:white;">{{sd.schoolId}}</td>
+                                                        <td style="background-color:white;">
+                                                            {{sd.firstName + " " + sd.lastName}}
+                                                        </td>
+                                                        <td style="background-color:white;" ng-repeat="attendance in sd.attendance" ng-init="mn=up.attDate|date:'MMM'">
+                                                            <span style="background-color: green;color: white;margin-right:1%;" ng-if="attendance.month==dailyMonth" ng-repeat="dateAtt in attendance.dateAttendance"><span ng-if="dateAtt.date==dailyDate">{{dateAtt.status}}</span>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </section>
+                                    <!--##### End Daily Attendance data #####-->
+                                    <!--##### Start Monthly Attendance data #####-->
+                                    <section ng-if="up.uploadType=='Attendance' && up.atSelect=='Monthly' && up.mSelect" class="panel">
+                                        <div class="form-group">
+                                            <div class="panel-heading" style="background: #3a4a58;">
+                                                <i class="fa fa-user-circle"></i>
+                                                <span style="color:white;">&nbsp;Attendance List</span>
+                                            </div>
+                                            <table class="table">
+                                                <thead class="panel-heading">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Student Id</th>
+                                                        <th>Student Name</th>
+                                                        <!-- <td ng-if="up.mSelect=='Jan'||up.mSelect=='Mar'||up.mSelect=='May'||up.mSelect=='Jul'||up.mSelect=='Aug'||up.mSelect=='Oct'||up.mSelect=='Dec'">
+                                                            <span ng-repeat="day in thirtyOne">{{day}}</span>
+                                                        </td>
+                                                        <td ng-if="up.mSelect=='Apr'||up.mSelect=='Jun'||up.mSelect=='Sep'||up.mSelect=='Nov'" >
+                                                            <span ng-repeat="day in thirty">{{day}}</span>
+                                                        </td>
+                                                        <td ng-if="up.mSelect=='Feb'" ng-repeat="day in twentyEight">
+                                                            <span></span>
+                                                            {{day}}
+                                                        </td> -->
+                                                        <td>
+                                                            Days with attendance
+                                                        </td>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="sd in studentList">
+                                                        <td style="background-color:white;">{{$index+1}}.</td>
+                                                        <td style="background-color:white;">{{sd.schoolId}}</td>
+                                                        <td style="background-color:white;">
+                                                            {{sd.firstName + " " + sd.lastName}}
+                                                        </td>
+                                                        <td style="background-color:white;" ng-repeat="attendance in sd.attendance">
+                                                            <span style="background-color: green;color: white;margin-right:1%;" ng-if="attendance.month==up.mSelect" ng-repeat="dateAtt in attendance.dateAttendance">{{dateAtt.date}}:{{dateAtt.status}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </section>
+                                    <!--##### End Monthly Attendance data #####-->
                                     <!-- <div class="form-group" ng-if="up.uploadType=='Attendance' && openCalendarTemplate==true">
                                         <mwl-calendar events="events" view-title="calendarTitle" view="calendarView" view-date="viewDate">
                                         </mwl-calendar>
@@ -321,7 +445,6 @@
                                         </div>
                                     </div> -->
                                     <div class="form-group">
-
                                         <p class="col-lg-offset-2 col-lg-10">
                                             <span>
                                                 <input type="file" style="margin-left: -10px;     width: 166px;
@@ -336,11 +459,15 @@
 
                                     <div class="form-group">
                                         <div class="col-lg-offset-2 col-lg-10">
-                                            <button ng-if="up.uploadType=='Attendance'" type="reset" class=" bcontrol-label  btn btn-success" ng-click="attendanceUpdate(up.uploadDoc,up.cSelect.class,up.subSelect, up.atSelect, up.mSelect)">Save</button>
+                                            <button ng-if="up.uploadType=='Attendance' && up.atSelect=='Monthly'" type="reset" class=" bcontrol-label  btn btn-success"
+                                                ng-click="attendanceUpdate(up.uploadDoc,up.cSelect.class,up.subSelect, up.atSelect, up.mSelect)">Save</button>
+                                            <button ng-if="up.uploadType=='Attendance' && up.atSelect=='Daily'" type="reset" class=" bcontrol-label  btn btn-success"
+                                                ng-click="attendanceUpdate(up.uploadDoc,up.cSelect.class,up.subSelect, up.atSelect, up.attDate | date:'MMM-d')">Save</button>
+                                            <!-- <button ng-if="up.uploadType=='Attendance'" type="reset" class=" bcontrol-label  btn btn-success" ng-click="attendanceUpdate(up.uploadDoc,up.cSelect.class,up.subSelect, up.atSelect, up.mSelect)">Save</button> -->
                                             <button ng-if="up.uploadType=='Student Details'" type="reset" class=" bcontrol-label btn btn-success" ng-click="teacherUpdate(up.uploadDoc,up.uploadType, studentDetail[0]._id)">Save</button>
                                             <button ng-if="up.uploadType=='Teacher Details'" type="reset" class="  bcontrol-label btn btn-success" ng-click="teacherUpdate(up.uploadDoc,up.uploadType, up.teacherSelect._id)">Save</button>
                                             <button ng-if="up.uploadType=='Time Table'" type="reset" class=" bcontrol-label  btn btn-success" ng-click="timeTableFileupdate(up.uploadDoc,up.teacherSelect._id)">Save</button>
-                                            <button ng-if="up.uploadType=='Mark Report'" type="reset" class="bcontrol-label btn btn-success" ng-click="uploadMarkFile(up.uploadDoc,up.ttSelect,up.testDate| date:'dd-MM-yy',up.cSelect.class,up.sSelect)">Save</button>
+                                            <button ng-if="up.uploadType=='Mark Report'" type="reset" class="bcontrol-label btn btn-success" ng-click="markFileUpdate(up.uploadDoc, up.testDate.date, up.ttSelect, up.cSelect.class,up.subSelect)">Save</button>
                                             <button type="reset" class="bcontrol-label btn btn-danger">Cancel</button>
                                         </div>
                                     </div>

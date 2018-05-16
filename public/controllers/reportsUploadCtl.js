@@ -4,7 +4,7 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
   var schoolName = $scope.userData.schoolName;
   console.log(" $scope.userData : " + JSON.stringify($scope.userData));
   $scope.file = {}; /* ### Note: Upload file declaration ### */
-  $scope.uploadTypes = ["Teacher Details", "Student Details", "Time Table", "Attendance", "Payment", "Mark Report"];
+  $scope.uploadTypes = ["Teacher Details", "Student Details", "Time Table", "Attendance", "Mark Report"];
   $scope.testTypes = ["AT", "UT", "MT", "TT", "AT"];
   $scope.attendanceTypes = ["Monthly", "Daily"];
   $scope.monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -14,7 +14,7 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
   $scope.getSchoolData = function () {
     console.log("getSchoolData-->");
     $scope.cssList = [];
-    var api = "https://vc4all.in/vc/getSchoolData/" + schoolName;
+    var api = "https://norecruits.com/vc/getSchoolData/" + schoolName;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       console.log("data--" + JSON.stringify(data.data));
@@ -53,7 +53,7 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
     console.log("getTeacherList-->");
     $scope.teacherList = [];
     $scope.teacherList_noTT = []; /* ### Note: teacher list without time table(teacherList_noTT-teacher list no timetable) ###*/
-    var api = "https://vc4all.in/vc/getSchoolUser/" + schoolName;
+    var api = "https://norecruits.com/vc/getSchoolUser/" + schoolName;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -114,7 +114,7 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
     var obj = {
       "file": file
     }
-    var api = "https://vc4all.in/vc/uploadMarkFile/" + schoolName + "/" + testType + "/" + date + "/" + clas + "/" + section;
+    var api = "https://norecruits.com/vc/uploadMarkFile/" + schoolName + "/" + testType + "/" + date + "/" + clas + "/" + section;
     console.log("api: " + api);
     httpFactory.imageUpload(file, api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -157,10 +157,10 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
       "file": file
     }
     if (fileType == 'css') {
-      var api = "https://vc4all.in/vc/uploadClassFile/" + schoolName;
+      var api = "https://norecruits.com/vc/uploadClassFile/" + schoolName;
     }
     if (fileType == 'periods') {
-      var api = "https://vc4all.in/vc/uploadPeriodsFile/" + schoolName;
+      var api = "https://norecruits.com/vc/uploadPeriodsFile/" + schoolName;
     }
 
     console.log("api: " + api);
@@ -204,7 +204,7 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
     var obj = {
       "file": file
     }
-    var api = "https://vc4all.in/vc/uploadTeacher_timeTable/" + schoolName + "/" + data._id;
+    var api = "https://norecruits.com/vc/uploadTeacher_timeTable/" + schoolName + "/" + data._id;
     console.log("api: " + api);
     httpFactory.csvUpload(obj, api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -251,26 +251,28 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
     console.log("uploadType: " + uploadType);
     console.log("reportType: " + reportType);
     if (uploadType == "Mark Report") {
-      var api = "https://vc4all.in/vc/uploadMark";
+      var api = "https://norecruits.com/vc/uploadMark";
     }
     else if (uploadType == "Attendance") {
       var month = list;
-      var api = "https://vc4all.in/vc/uploadAttendance/" + schoolName + "/" + clas + "/" + section + "/" + reportType + "/" + month;
+      console.log("month: "+month);
+      var api = "https://norecruits.com/vc/uploadAttendance/" + schoolName + "/" + clas + "/" + section + "/" + reportType + "/" + month;
     }
     else if (uploadType == "Payment") {
-      var api = "https://vc4all.in/vc/uploadPayment";
+      var api = "https://norecruits.com/vc/uploadPayment";
     }
     else if (uploadType == "Student Details") {
-      var api = "https://vc4all.in/vc/uploadStudentMaster/" + schoolName + "/" + clas + "/" + section;
+      var api = "https://norecruits.com/vc/uploadStudentMaster/" + schoolName + "/" + clas + "/" + section;
     }
     else if (uploadType == "Teacher Details") {
-      var api = "https://vc4all.in/vc/uploadTeacherMaster/" + schoolName;
+      var api = "https://norecruits.com/vc/uploadTeacherMaster/" + schoolName;
     }
     console.log("api: " + api);
     httpFactory.csvUpload(obj, api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
       console.log("data--" + JSON.stringify(data.data));
       if (checkStatus) {
+        console.log("checkStatus: "+checkStatus);
         if (uploadType == "Attendance") {
           if (data.data.data.length > 0) {
             var loginAlert = $uibModal.open({
@@ -315,10 +317,11 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
         }
       }
       else {
+        console.log("checkStatus: "+checkStatus);
         if (uploadType == "Attendance") {
-          console.log("Sorry! you already updated for this month");
-          if (data.data.message == "Sorry! you already updated for this month") {
-
+          console.log("data.data.message: "+ data.data.message);
+          if (data.data.message == "Sorry! you already updated for this month" ) {
+            console.log("Sorry! you already updated for this month");
             var loginAlert = $uibModal.open({
               scope: $scope,
               templateUrl: '/html/templates/dashboardwarning.html',
@@ -345,6 +348,19 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
               keyboard: false,
               controller: function ($scope, $uibModalInstance) {
                 $scope.message = msg;
+              }
+            })
+          }
+          else 
+          {
+            var loginAlert = $uibModal.open({
+              scope: $scope,
+              templateUrl: '/html/templates/dashboardwarning.html',
+              windowClass: 'show',
+              backdropClass: 'static',
+              keyboard: false,
+              controller: function ($scope, $uibModalInstance) {
+                $scope.message = data.data.message;
               }
             })
           }
@@ -383,9 +399,9 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
   //   // var cssRef = [{"clas":css.class, "section": css.section}];
   //   // console.log("cssRef: "+JSON.stringify(cssRef));
 
-  //   var api = "https://vc4all.in/vc/getStudListForCS" + "/" + clas + "/" + section;
+  //   var api = "https://norecruits.com/vc/getStudListForCS" + "/" + clas + "/" + section;
   //   //var api = "http://localhost:5000/vc/getStudListForCS" + "/" + clas + "/" + section;
-  //   //var api = "https://vc4all.in/vc/getStudListForCS";
+  //   //var api = "https://norecruits.com/vc/getStudListForCS";
 
   //   console.log("api: " + api);
   //   httpFactory.get(api).then(function (data) {
@@ -422,7 +438,7 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
   //   //     "message": message
   //   // }
   //   if (file != undefined) {
-  //     var uploadURL = "https://vc4all.in/vc/uploadAttendance";
+  //     var uploadURL = "https://norecruits.com/vc/uploadAttendance";
   //     console.log("$scope.file from : alumRegCtr.js: " + $scope.file);
   //     httpFactory.imageUpload(file, uploadURL).then(function (data) {
   //       var checkStatus = httpFactory.dataValidation(data);

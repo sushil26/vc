@@ -8,7 +8,7 @@ app.controller('adminCreateCtl', function ($scope, $filter, $window, httpFactory
             "schoolRegNumber": $scope.schoolRegNumber,
             "firstName": $scope.firstName,
             "lastName": $scope.lastName,
-            "dor": $filter('date')($scope.dor , "d MMM  y"),
+            "dor": $filter('date')($scope.dob , "d MMM  y"),
             "email": $scope.email,
             "mobNumber": $scope.mobNumber,
             "address": $scope.address,
@@ -20,7 +20,7 @@ app.controller('adminCreateCtl', function ($scope, $filter, $window, httpFactory
             "pswd": $scope.pswd
         }
         console.log("objJson: " + JSON.stringify(objJson));
-        var api = "https://vc4all.in/vc/adminCreate";
+        var api = "https://norecruits.com/vc/adminCreate";
         httpFactory.post(api, objJson).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));

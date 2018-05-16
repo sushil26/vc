@@ -28,7 +28,7 @@ app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, 
     };
     console.log("obj: " + JSON.stringify(obj));
     console.log("logVC");
-    var api = "https://vc4all.in/vc/login4VC";
+    var api = "https://norecruits.com/vc/login4VC";
     //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
     console.log("api: " + api);

@@ -5,7 +5,7 @@ app.controller('allAdminCtl', function ($scope, $state, $uibModal,$window, httpF
 
     $scope.getAllAdmin = function () {
         console.log("getAllAdmin-->");
-        var api = "https://vc4all.in/vc/getAllAdmin";
+        var api = "https://norecruits.com/vc/getAllAdmin";
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -28,7 +28,7 @@ app.controller('allAdminCtl', function ($scope, $state, $uibModal,$window, httpF
     $scope.getAllAdmin();
     $scope.updateAdminStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
-        var api = "https://vc4all.in/vc/updateUserStatus";
+        var api = "https://norecruits.com/vc/updateUserStatus";
         //var api = "http://localhost:5000/vc/updateUserStatus";
 
         var obj = {

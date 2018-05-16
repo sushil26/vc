@@ -258,6 +258,245 @@ module.exports.login4VC = function (req, res) {
   console.log("<==login");
 };
 
+module.exports.checkPassword = function (req, res) {
+  console.log("checkPassword-->");
+  var responseData;
+  var loginType = req.params.loginType;
+  var id = req.params.id;
+  console.log("loginType: " + loginType + " id" + id);
+  if (general.emptyCheck(id) && general.emptyCheck(loginType)) {
+
+    if (general.emptyCheck(req.body.pswd)) {
+      if (loginType == 'admin' || loginType == 'teacher' || loginType == 'vc4allAdmin') {
+        var findQuery = {
+          "_id": ObjectId(id)
+        }
+        user.find(findQuery).toArray(function (err, userData) {
+          console.log("find query status: " + JSON.stringify(userData));
+          console.log("find query status length: " + userData.length);
+
+          if (err) {
+            responseData = {
+              status: false,
+              message: "Failed to get Data"
+                         };
+            res.status(400).send(responseData);
+          } else {
+            if (userData.length > 0) {
+              if (userData[0].pswd == req.body.pswd) {
+                responseData = {
+                  status: true,
+                  message: "Password Matched"
+                                };
+                res.status(200).send(responseData);
+              }
+              else{
+                responseData = {
+                  status: false,
+                  message: "Password Not Matched"
+                };
+                res.status(400).send(responseData);
+              }
+            }
+            else {
+              responseData = {
+                status: false,
+                message: "There is no data for this Id"
+              };
+              res.status(400).send(responseData);
+            }
+          }
+        })
+      }
+      else if (loginType == 'studParent') {
+        var findQuery = {
+          "_id": ObjectId(id)
+        }
+        stud.find(findQuery).toArray(function (err, userData) {
+          console.log("find query status: " + JSON.stringify(userData));
+          console.log("find query status length: " + userData.length);
+          if (err) {
+            responseData = {
+              status: false,
+              message: "Failed to get Data"
+            };
+            res.status(400).send(responseData);
+          } else {
+            if (userData.length > 0) {
+              if (userData[0].pswd == req.body.pswd) {
+                responseData = {
+                  status: true,
+                  message: "Password Matched"
+                };
+                res.status(200).send(responseData);
+              }
+              else{
+                responseData = {
+                  status: false,
+                  message: "Password Not Matched"
+                };
+                res.status(400).send(responseData);
+              }
+            }
+            else {
+              responseData = {
+                status: false,
+                message: "There is no data for this Id"
+              };
+              res.status(400).send(responseData);
+            }
+          }
+        })
+      }
+    }
+    else {
+      responseData = {
+        status: false,
+        message: "There is no password to check"
+      };
+      res.status(400).send(responseData);
+    }
+
+  }
+  else {
+    responseData = {
+      status: false,
+      message: "There is no Id and LoginType to check"
+    };
+    res.status(400).send(responseData);
+  }
+  console.log("<--checkPassword");
+}
+module.exports.passwordUpdate= function (req, res) {
+console.log("passwordUpdate-->");
+var responseData;
+  var loginType = req.params.loginType;
+  var id = req.params.id;
+  console.log("loginType: " + loginType + " id" + id);
+  if (general.emptyCheck(id) && general.emptyCheck(loginType)) {
+
+    if (general.emptyCheck(req.body.currentPswd) && general.emptyCheck(req.body.newPswd)) {
+      if (loginType == 'admin' || loginType == 'teacher' || loginType == 'vc4allAdmin') {
+        var findQuery = {
+          "_id": ObjectId(id),
+          "pswd":req.body.currentPswd
+        }
+        user.find(findQuery).toArray(function (err, userData) {
+          console.log("find query status: " + JSON.stringify(userData));
+          console.log("find query status length: " + userData.length);
+
+          if (err) {
+            responseData = {
+              status: false,
+              message: "Failed to get Data"
+                         };
+            res.status(400).send(responseData);
+          } else {
+            if (userData.length > 0) {
+           
+                user.update(findQuery,{$set:{"pswd":req.body.newPswd}},function (err, userData) {
+                  console.log("find query status: " + JSON.stringify(userData));
+                  // console.log("find query status length: " + userData.length);
+        
+                  if (err) {
+                    responseData = {
+                      status: false,
+                      message: "Failed to get Data"
+                                 };
+                    res.status(400).send(responseData);
+                  } else {
+                    
+                        responseData = {
+                          status: true,
+                          message: "Password Updated"
+                                        };
+                        res.status(200).send(responseData);
+                      }
+                    })
+               
+                  }
+              else{
+                responseData = {
+                  status: false,
+                  message: "Password Not Matched"
+                };
+                res.status(400).send(responseData);
+              }
+            
+           
+          }
+        })
+      }
+      else if (loginType == 'studParent') {
+        var findQuery = {
+          "_id": ObjectId(id),
+          "pswd":req.body.currentPswd
+        }
+        user.find(findQuery).toArray(function (err, userData) {
+          console.log("find query status: " + JSON.stringify(userData));
+          console.log("find query status length: " + userData.length);
+
+          if (err) {
+            responseData = {
+              status: false,
+              message: "Failed to get Data"
+                         };
+            res.status(400).send(responseData);
+          } else {
+            if (userData.length > 0) {
+           
+                stud.update(findQuery,{$set:{"pswd":req.body.newPswd}}, function (err, userData) {
+                  console.log("find query status: " + JSON.stringify(userData));
+                  //console.log("find query status length: " + userData.length);
+        
+                  if (err) {
+                    responseData = {
+                      status: false,
+                      message: "Failed to get Data"
+                                 };
+                    res.status(400).send(responseData);
+                  } else {
+                    
+                        responseData = {
+                          status: true,
+                          message: "Password Updated"
+                                        };
+                        res.status(200).send(responseData);
+                      }
+                    })
+                  }
+              
+              else{
+                responseData = {
+                  status: false,
+                  message: "Password Not Matched"
+                };
+                res.status(400).send(responseData);
+              }
+            
+           
+          }
+        })
+      }
+    }
+    else {
+      responseData = {
+        status: false,
+        message: "There is no password to check"
+      };
+      res.status(400).send(responseData);
+    }
+
+  }
+  else {
+    responseData = {
+      status: false,
+      message: "There is no Id and LoginType to check"
+    };
+    res.status(400).send(responseData);
+  }
+console.log("<--passwordUpdate");
+}
 module.exports.getUserData = function (req, res) {
   console.log("getUserData-->");
   var responseData;

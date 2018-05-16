@@ -5,7 +5,7 @@ app.controller('allSchoolCtl', function ($scope, $state, $window, $uibModal, htt
 
     $scope.getAllSchool = function () {
         console.log("getAllSchool-->");
-        var api = "https://vc4all.in/vc/getAllSchool";
+        var api = "https://norecruits.com/vc/getAllSchool";
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -32,7 +32,7 @@ app.controller('allSchoolCtl', function ($scope, $state, $window, $uibModal, htt
 
     $scope.updateSchoolStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
-        var api = "https://vc4all.in/vc/updateSchoolStatus";
+        var api = "https://norecruits.com/vc/updateSchoolStatus";
         //var api = "http://localhost:5000/vc/updateUserStatus";
         var obj = {
             "id": id,

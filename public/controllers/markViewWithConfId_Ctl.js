@@ -6,7 +6,7 @@ app.controller('markViewWithConfId_Ctl', function ($scope, $state, $window, $uib
 
     $scope.getMarks = function (id) {
         console.log("getMarks-->");
-        var api = "https://vc4all.in/vc/getStudentAttendance" + "/" + id;
+        var api = "https://norecruits.com/vc/getStudentAttendance" + "/" + id;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);

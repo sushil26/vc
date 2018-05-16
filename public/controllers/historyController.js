@@ -5,7 +5,7 @@ app.controller('historyController', function ($scope, $window, httpFactory, sess
    // $scope.today = new Date();
     $scope.getToDate = function () {
         console.log("Get To Date-->");
-        var api = "https://vc4all.in/vc/getToDate";
+        var api = "https://norecruits.com/vc/getToDate";
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -33,7 +33,7 @@ app.controller('historyController', function ($scope, $window, httpFactory, sess
     $scope.eventGet = function () {
         console.log("eventGet-->");
         var id = $scope.userData.id;
-        var api = "https://vc4all.in/vc/eventGet" + "/" + id;
+        var api = "https://norecruits.com/vc/eventGet" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
         $scope.calendarOwner = "Your";
 
