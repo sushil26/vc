@@ -1319,7 +1319,7 @@ module.exports.dailyDataUpdate = function (data, callback) {
         }
         else {
             if (isThereData.length > 0) {
-                stud.find(studIdForFindQry,{"attendance.$.subject":1},function (err, findData) {
+                stud.find(studIdForFindQry,{"attendance.$.dateAttendance.date":1},function (err, findData) {
                     console.log("1st query findData: " + JSON.stringify(findData));
                     console.log("1st query findData.length: " + findData.length);
                     if (err) {
