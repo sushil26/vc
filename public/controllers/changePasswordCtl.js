@@ -11,7 +11,7 @@ app.controller('changePasswordCtl', function ($scope, $filter, $window, httpFact
             "pswd":$scope.currentPswd
         }
         console.log("objJson: "+JSON.stringify(objJson));
-        var api = "https://norecruits.com/vc/checkPassword/"+id+"/"+loginType;
+        var api = "https://vc4all.in/vc/checkPassword/"+id+"/"+loginType;
         console.log("api: "+api);
         httpFactory.post(api, objJson).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
@@ -36,7 +36,7 @@ app.controller('changePasswordCtl', function ($scope, $filter, $window, httpFact
             "newPswd":$scope.newPswd
         }
         console.log("objJson: " + JSON.stringify(objJson));
-        var api = "https://norecruits.com/vc/passwordUpdate/"+id+"/"+loginType;
+        var api = "https://vc4all.in/vc/passwordUpdate/"+id+"/"+loginType;
         console.log("api: "+api);
         httpFactory.post(api, objJson).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);

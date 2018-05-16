@@ -5,7 +5,7 @@ app.controller('allUserCtl', function ($scope, $state, $window,$uibModal, httpFa
 
     $scope.getSchoolList = function () {
         console.log("getSchoolList-->");
-        var api = "https://norecruits.com/vc/getSchoolList";
+        var api = "https://vc4all.in/vc/getSchoolList";
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -29,7 +29,7 @@ app.controller('allUserCtl', function ($scope, $state, $window,$uibModal, httpFa
 
     $scope.schoolUserData = function (schoolName) {
         console.log("schoolUserData-->");
-        var api = "https://norecruits.com/vc/getSchoolUser/" + schoolName;
+        var api = "https://vc4all.in/vc/getSchoolUser/" + schoolName;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
@@ -53,7 +53,7 @@ app.controller('allUserCtl', function ($scope, $state, $window,$uibModal, httpFa
 
     $scope.updateAdminStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
-        var api = "https://norecruits.com/vc/updateUserStatus";
+        var api = "https://vc4all.in/vc/updateUserStatus";
         //var api = "http://localhost:5000/vc/updateUserStatus";
 
         var obj = {
