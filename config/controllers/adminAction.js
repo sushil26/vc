@@ -879,7 +879,7 @@ module.exports.uploadAttendance = function (req, res) {
             module.exports.dailyData(data, function (err) {
                 console.log("savedatInitiate");
                 // TODO: handle error
-
+                console.log("unknownData: " + JSON.stringify(unknownData));
                 parser.resume();
             });
         }
