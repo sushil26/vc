@@ -950,8 +950,7 @@ module.exports.dailyData = function (data, callback) {
     var studIdForFindQry = {
         "schoolId": data.StudentID,
         "schoolName": schoolName,
-        "attendance.month": month,
-        "attendance.dateAttendance.date": attndnce.date
+        "attendance.month": month
     }
     console.log("studIdForFindQry: " + JSON.stringify(studIdForFindQry));
     var studIdForUpdateQry = {
@@ -971,8 +970,8 @@ module.exports.dailyData = function (data, callback) {
         }
         else {
             if (isThereData.length > 0) {
-                stud.find(studIdForFindQry).toArray(function (err, findData) {
-                    console.log("1st query findData: " + JSON.stringify(findData));
+                stud.find(studIdForFindQry,{"attendance.dateAttendance.date": attndnce.date},(function (err, findData) {
+                    console.log("*1st query findData: " + JSON.stringify(findData));
                     // console.log("1st query findData.length: " + findData.attendance);
                     if (err) {
                         marker = true;
@@ -980,19 +979,16 @@ module.exports.dailyData = function (data, callback) {
                     }
                     else {
                         
-                        for(var x=0;x<12;x++){
-                            if(findData.attendance[x].month==month)
-                            {
-                                for(var y=0;y<findData.attendance[x].dateAttendance.length;y++)
-                                {
-                                    if(findData.attendance[x].dateAttendance[y].date==day)
-                                    {
-
-                                    }
-                                }
+                        // for(var x=0;x<12;x++){
+                        //     if(findData.attendance[x].month==month)
+                        //     {
+                        //         for(var y=0;y<findData.attendance[x].dateAttendance.length;y++)
+                        //         {
+                        //             findData.attendance[x].dateAttendance[]
+                        //         }
                                 
-                            }
-                        }
+                        //     }
+                        // }
                         if (findData.length == 0) {
                             stud.update(studIdForUpdateQry, { $push: { "attendance.$.dateAttendance": attndnce } }, function (err, data) {
                                 console.log("2nd query started: " + JSON.stringify(data));
@@ -1319,8 +1315,8 @@ module.exports.dailyDataUpdate = function (data, callback) {
         }
         else {
             if (isThereData.length > 0) {
-                stud.find(studIdForFindQry,{"attendance.$.dateAttendance.date":1},function (err, findData) {
-                    console.log("1st* query findData: " + JSON.stringify(findData));
+                stud.find(studIdForFindQry).toArray(function (err, findData) {
+                    console.log("1st query findData: " + JSON.stringify(findData));
                     console.log("1st query findData.length: " + findData.length);
                     if (err) {
                         marker = true;
