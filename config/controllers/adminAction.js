@@ -970,7 +970,7 @@ module.exports.dailyData = function (data, callback) {
         }
         else {
             if (isThereData.length > 0) {
-                stud.find(studIdForFindQry,{"attendance.dateAttendance.date": attndnce.date},function (err, findData) {
+                stud.find(studIdForFindQry,{"attendance.dateAttendance.date": attndnce.date}).toArray(function (err, findData) {
                     console.log("*1st query findData: " + JSON.stringify(findData));
                     // console.log("1st query findData.length: " + findData.attendance);
                     if (err) {
