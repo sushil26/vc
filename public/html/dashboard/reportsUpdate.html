@@ -35,12 +35,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-if="timeTable_timing.length==0 && cssList.length!=0">
+                            <!-- <div ng-if="timeTable_timing.length==0 && cssList.length!=0">
                                 <div class="form-group ">
                                     <label class="control-label col-lg-3">Upload Periods Detail</label>
                                 </div>
                                 <div class="form-group">
-
                                     <p class="col-lg-offset-2 col-lg-10">
                                         <span>
                                             <input type="file" style="margin-left: -10px;     width: 166px;
@@ -50,17 +49,13 @@
                                         </span>
                                     </p>
                                 </div>
-                                <!-- <img ng-show="image.src" ng-src="{{image.src}}" tyle="width:40%; margin-top: 2%;" /> -->
-
-                                <!-- <button ng-if="up.uploadType=='Attendance'" type="submit" class="btn btn-warning" ng-click="uploadFile(up.uploadDoc,up.uploadType,up.ttSelect,up.mSelect)">Upload</button> -->
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
                                         <button type="submit" class="btn btn-info" ng-click="upload_classPeriodsFile(periodsUploadDoc,'periods')">Save</button>
                                     </div>
                                 </div>
-                            </div>
-                            <form ng-if="cssList.length!=0 && timeTable_timing.length!=0" role="form" name="uploadForm" encType="multipart/form-data"
-                                novalidate>
+                            </div> -->
+                            <form ng-if="cssList.length!=0" role="form" name="uploadForm" encType="multipart/form-data" novalidate>
                                 <div ng-repeat="up in uploadReports">
                                     <div class="form-group">
                                         <label class="control-label col-lg-3">Upload Type
@@ -339,7 +334,7 @@
                                     <div class="form-group" ng-if="up.uploadType=='Attendance' && up.atSelect=='Daily'">
                                         <label class="control-label col-lg-3">Date</label>
                                         <div class="col-lg-3">
-                                            <input type="date" ng-model="up.attDate" ng-change="attDailyDate(up.attDate)"/>
+                                            <input type="date" ng-model="up.attDate" ng-change="attDailyDate(up.attDate)" />
                                         </div>
                                     </div>
                                     <div class="form-group" ng-if="up.uploadType=='Attendance' && up.atSelect=='Monthly'">
@@ -378,7 +373,8 @@
                                                             {{sd.firstName + " " + sd.lastName}}
                                                         </td>
                                                         <td style="background-color:white;" ng-repeat="attendance in sd.attendance" ng-init="mn=up.attDate|date:'MMM'">
-                                                            <span style="background-color: green;color: white;margin-right:1%;" ng-if="attendance.month==dailyMonth" ng-repeat="dateAtt in attendance.dateAttendance"><span ng-if="dateAtt.date==dailyDate">{{dateAtt.status}}</span>
+                                                            <span style="background-color: green;color: white;margin-right:1%;" ng-if="attendance.month==dailyMonth" ng-repeat="dateAtt in attendance.dateAttendance">
+                                                                <span ng-if="dateAtt.date==dailyDate">{{dateAtt.status}}</span>
                                                             </span>
                                                         </td>
                                                     </tr>
