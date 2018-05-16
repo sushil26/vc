@@ -973,13 +973,27 @@ module.exports.dailyData = function (data, callback) {
             if (isThereData.length > 0) {
                 stud.find(studIdForFindQry).toArray(function (err, findData) {
                     console.log("1st query findData: " + JSON.stringify(findData));
-                    console.log("1st query findData.length: " + findData.length);
+                    // console.log("1st query findData.length: " + findData.attendance);
                     if (err) {
                         marker = true;
                         if (callback) callback();
                     }
                     else {
-                        if (findData.length ==0) {
+                        
+                        for(var x=0;x<12;x++){
+                            if(findData.attendance[x].month==month)
+                            {
+                                for(var y=0;y<findData.attendance[x].dateAttendance.length;y++)
+                                {
+                                    if(findData.attendance[x].dateAttendance[y].date==day)
+                                    {
+
+                                    }
+                                }
+                                
+                            }
+                        }
+                        if (findData.length == 0) {
                             stud.update(studIdForUpdateQry, { $push: { "attendance.$.dateAttendance": attndnce } }, function (err, data) {
                                 console.log("2nd query started: " + JSON.stringify(data));
                                 console.log("2nd query data.length: " + data.length);
@@ -1305,7 +1319,7 @@ module.exports.dailyDataUpdate = function (data, callback) {
         }
         else {
             if (isThereData.length > 0) {
-                stud.find(studIdForFindQry).toArray(function (err, findData) {
+                stud.find(studIdForFindQry,{"attendance.$.dateAttendance":1}).toArray(function (err, findData) {
                     console.log("1st query findData: " + JSON.stringify(findData));
                     console.log("1st query findData.length: " + findData.length);
                     if (err) {
