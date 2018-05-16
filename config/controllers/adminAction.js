@@ -1004,7 +1004,13 @@ module.exports.dailyData = function (data, callback) {
                 })
             }
             else {
-
+                console.log("unknown started");
+                var obj = {
+                    "StudentID": data.StudentID,
+                    "StudentName": data.StudentName
+                }
+                unknownData.push(obj);
+                if (callback) callback();
             }
         }
     })
