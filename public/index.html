@@ -176,7 +176,7 @@
     z-index: 100;
     width: 100vw;
     height: 100vh;
-    background-color:green;
+    background-color: green;
     background-image: url("gears-animation.gif");
     background-repeat: no-repeat;
     background-position: center;
@@ -212,13 +212,13 @@
 <body>
 
 
-    <div id="loading"></div>
+  <div id="loading"></div>
 
-  <div   ng-app="vcApp" ng-controller="vcAppCtrl">
+  <div ng-app="vcApp" ng-controller="vcAppCtrl">
 
 
-    <div  id="page"  ui-view>
-    
+    <div id="page" ui-view>
+
 
 
       <!--==========================
@@ -486,25 +486,34 @@
               <div class="ssk" style="height: 36px;width: 100%;"></div>
               <div class="col-sm-5">
                 <div class="info">
-                  <div id="logo" class="pull-left">
-                    <!-- Uncomment below if you prefer to use a text logo -->
-                    <span>
-                      <img style="width: 60px;" src="/home/img/fav.png" />
-                      <a href="/" id="mm" style="font-size: 22px;
+                  <table>
+                    <tr>
+                      <td>
+                        <div id="logo" class="pull-left">
+                          <!-- Uncomment below if you prefer to use a text logo -->
+                          <span>
+                            <img style="width: 60px;" src="/home/img/fav.png" />
+                            <a href="/" id="mm" style="font-size: 22px;
                       font-weight: 500;
                       color: #a8cf44;
                       margin-top: 8px;
                       text-transform: uppercase;">VC
-                        <span style="color: #5ca5e5;">4ALL</span>
-                      </a>
-                    </span>
-                  </div>
-                  <br>
-                  <div>
-                    <i class="fa fa-map-marker"></i>
-                    <p>Careator Technologies Private Limited
-                      <br>Bangalore ,560076</p>
-                  </div>
+                              <span style="color: #5ca5e5;">4ALL</span>
+                            </a>
+                          </span>
+
+
+                        </div>
+                      </td>
+                    </tr>
+                    <br>
+                    <div>
+                      <i class="fa fa-map-marker"></i>
+                      <p>Careator Technologies Private Limited
+                        <br>Bangalore ,560076</p>
+                    </div>
+                  </table>
+
                 </div>
               </div>
               <div class="col-sm-4">
