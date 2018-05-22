@@ -107,8 +107,8 @@ module.exports.pswdGenerate = function (req, res) {
                                 to: email,
                                 subject: 'VC4ALL Credentiall',
                                 html:
-                                "<html><head><p><b>Dear Careator Employee, </b></p><p>Please note, Your email Id is verified successfully,  you can access the below link by using given password.<p>Here your link <a href=https://norecruits.com/careator>https://norecruits.com/careator</a><p>Password: "+password+"</p></p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
-                               
+                                    "<html><head><p><b>Dear Careator Employee, </b></p><p>Please note, Your email Id is verified successfully,  you can access the below link by using given password.<p>Here your link <a href=https://norecruits.com/careator>https://norecruits.com/careator</a><p>Password: " + password + "</p></p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+
                             };
                             transporter.sendMail(mailOptions, function (error, info) {
                                 if (error) {
@@ -150,7 +150,8 @@ module.exports.pswdGenerate = function (req, res) {
                                 from: "info@vc4all.in",
                                 to: email,
                                 subject: 'VC4ALL Credentiall',
-                                text: "Your email Id is verified successfully, you can access the link https://norecruits.com/careator by using password: " + password
+                                html:
+                                    "<html><head><p><b>Dear Careator Employee, </b></p><p>Please note, Your email Id is verified successfully,  you can access the below link by using given password.<p>Here your link <a href=https://norecruits.com/careator>https://norecruits.com/careator</a><p>Password: " + password + "</p></p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                             };
                             transporter.sendMail(mailOptions, function (error, info) {
                                 if (error) {
