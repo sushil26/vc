@@ -1,4 +1,4 @@
-app.controller('clientCtrl', function($scope, httpFactory, $window) {
+app.controller('clientCtrl', function($scope, $rootScope, httpFactory, $window) {
     console.log("client controller==>");
     $scope.title = "VC4ALL";
 

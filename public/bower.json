@@ -19,6 +19,7 @@
     "angular-ui-router": "^1.0.15",
     "angular-bootstrap-calendar": "^1.0.0",
     "angular-bootstrap": "^2.5.0",
-    "angular-cookies": "^1.6.9"
+    "angular-cookies": "^1.6.9",
+    "ng-image-input-with-preview": "^0.0.7"
   }
 }

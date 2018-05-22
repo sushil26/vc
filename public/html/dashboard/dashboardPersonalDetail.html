@@ -1,0 +1,202 @@
+<div ng-controller="dashboardPersonalDetailController">
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel">
+                    <div class="panel-heading" style="background: #3a4a58">
+                        <i class="fa fa-user-circle"></i>
+                        <span style="color:white;">&nbspPROFILE</span>
+                        <notification displayType="{{notificationType}}" message="{{notification}}"></notification>
+
+                    </div>
+                    <div class="panel-body bio-graph-info" style="padding: 1px;">
+                        <div ng-if="loginType!='vc4allAdmin'" class="row" style="margin:20px!important;">
+                            <div class="bio-row" ng-if="loginType=='admin'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Name</b>
+                                    </span>: {{userData[0].firstName +" "+ userData[0].lastName}} </p>
+                            </div>
+
+                            <div class="bio-row" ng-if="loginType!='vc4allAdmin'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">School Name</b>
+                                    </span>: {{userData[0].schoolName}} </p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;"> Student Name</b>
+                                    </span>: {{userData[0].firstName +" "+ userData[0].lastName}}</p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='teacher'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Teacher Name</b>
+                                    </span>: {{userData[0].firstName +" "+ userData[0].lastName}}</p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='teacher'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">ID</b>
+                                    </span>: {{userData[0].schoolId}} </p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">ID</b>
+                                    </span>: {{userData[0].schoolId}} </p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='teacher'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Mobile Number</b>
+                                    </span>: {{userData[0].mobNumber}} </p>
+                            </div>
+
+
+
+
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Class</b>
+
+                                    </span> :
+                                    <span ng-repeat="cs in userData[0].cs">{{cs.class}}-{{cs.section}}</span>
+                                </p>
+                            </div>
+
+                            <div class="bio-row" ng-if="loginType=='studParent' || loginType=='teacher'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Date of birth</b>
+                                    </span>: {{userData[0].dob | date:' d MMM yyyy'}}</p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Date of Joining</b>
+                                    </span>: {{userData[0].doj | date:' d MMM yyyy'}}</p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='teacher' || loginType=='admin'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">E-Mail</b>
+                                    </span>: {{userData[0].email}}</p>
+                            </div>
+
+
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Father Name</b>
+                                    </span>: {{userData[0].parentName}}</p>
+                            </div>
+
+
+
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Father Email</b>
+                                    </span>: {{userData[0].parentEmail}}</p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Father Phone</b>
+                                    </span>: {{userData[0].mobileNum}}</p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Mother Name</b>
+                                    </span>: {{userData[0].motherName}}</p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;"> Mother Email</b>
+                                    </span>: {{userData[0].motherEmail}}</p>
+                            </div>
+                            <div class="bio-row" ng-if="loginType=='studParent'">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Mother Phone</b>
+                                    </span>: {{userData[0].mobileNum}}</p>
+                            </div>
+
+                            <!-- <div class="form-group row" ng-if="loginType=='teacher'" style=" float: left !important;
+
+                        margin-bottom: 10px !important;
+                      
+                        padding: 0 15px !important;">
+                                <p>
+                                    <span>
+                                          <b style="color:teal;">Class Handles</b>
+                                    </span>:
+                                  
+                                </p>  <span class="col-sm-3" ng-repeat="css in userData[0].css"> {{css.class}}-{{css.section}}-{{css.subject}}</span>
+
+                            </div> -->
+
+                        </div>
+                        <div style="margin: 20px !important;" class="row" ng-if="loginType=='teacher'">
+                            <div class=" bio-row">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Classes Handle</b>
+                                    </span>
+
+                                </p>
+
+                                <table class="table table-sm">
+                                    <thead style="background: white;">
+                                        <tr>
+                                            <th>Class</th>
+                                            <th>Section</th>
+                                            <th>Subject</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody style="background: white;">
+                                        <tr ng-repeat="css in userData[0].css">
+                                            <td>{{css.class}}</td>
+                                            <td>{{css.section}}</td>
+                                            <td>{{css.subject}}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div ng-if="loginType=='vc4allAdmin'" class="row">
+                            <div class="bio-row">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Name</b>
+                                    </span>: {{userData[0].firstName +" "+ userData[0].lastName}} </p>
+                            </div>
+                            <div class="bio-row">
+                                <p>
+                                    <span>
+                                        <b style="color:teal;">Email</b>
+                                    </span>: {{userData[0].email}} </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+
+        </section>
+    </section>
+
+</div>

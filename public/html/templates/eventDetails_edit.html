@@ -1,0 +1,52 @@
+<div class="modal fade" id="myModalt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="$close()" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Event Details</h4>
+            </div>
+            <div class="modal-body">
+                <label>Timing</label>
+                <p class="input-group">
+                    <input type="text" style="margin-bottom: -4px;" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="eventDetails.startsAt"
+                        is-open="event.startOpen" close-text="Close">
+                    <span class="input-group-btn">
+                        <button type="button" style="margin-top: 0px;height: 33px;" class="btn btn-default" ng-click="vm.toggle($event, 'startOpen', event)">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </p>
+                <div class="row" style="padding:2%">
+
+                    <div uib-timepicker ng-model="eventDetails.startsAt" hour-step="1" minute-step="10" show-meridian="true">
+                    </div>
+                    &nbspTo&nbsp
+                    <div uib-timepicker ng-model="eventDetails.endsAt" hour-step="1" minute-step="10" show-meridian="true">
+                    </div>
+                </div>
+                <!-- <label>Student Name</label>
+    <br>
+    <input type="text" ng-model="eventDetails.studentName"><br>
+    <label>Student Id</label>
+    <br>
+    <input type="text" ng-model="eventDetails.studendtId"><br> -->
+                <!-- <label>Email</label>
+    <br>
+        <input type="email" ng-model="eventDetails.email"><br> -->
+                <label>Message</label>
+                <br>
+                <textarea type="text" ng-model="eventDetails.reason"></textarea>
+                <br>
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default loginpopUp_footerBtn" type="button" ng-click="$close()">Close</button>
+                <button class="btn btn-primary" style="width: 80px;" ng-click="updateSave(eventDetails.startsAt, eventDetails.endsAt, eventDetails.startsAt | date:'M/d/yy h:mm a', eventDetails.endsAt | date:'M/d/yy h:mm a', eventDetails.id, eventDetails.reason, eventDetails.email, eventDetails.url)">
+                    Save
+                </button>
+                <!-- <button type="submit" class="btn btn-default loginpopUp_footerBtn" ng-click="specOffSub(speOff_uploadForm, speOffTitle, speOffMsg, file.upload)">Upload</button> -->
+            </div>
+        </div>
+    </div>
+</div>

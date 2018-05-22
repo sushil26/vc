@@ -2,33 +2,28 @@ var express = require('express');
 var http = require('http');
 var bodyParser = require('body-parser')
 var nodemailer = require('nodemailer');
+var fileUpload = require('express-fileupload');
+
 var fs = require('fs'),
-url = require('url'),
-path = require('path');
-var app =express();
-app.use(bodyParser.urlencoded({extended:true}));
+    url = require('url'),
+    path = require('path');
+var app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({
     limit: '100mb'
 }));
 
-module.exports = function(app, config) {
-	//app.set('view engine','html');
-	
-    
-	// app.use(session({secret: "Your secret key"}));
-	//app.use(multer({ dest: './config'}));
+app.use(fileUpload());
 
-	
+module.exports = function (app, config) {
+    //app.set('view engine','html');
+    // app.use(session({secret: "Your secret key"}));
+    //app.use(multer({ dest: './config'}));
 }
-
-
-
 var queryId = null;
 var userName = null;
 var time = null;
-
-// var mongoConfig = require('./config/dbConfig.js');
-
+// var mongoConfig = require('./config/dbConfig.js')
 // mongoConfig.connectToServer(function(err) {
 //     var server = app.listen("8080");
 //     var io = require('socket.io').listen(server);
@@ -38,10 +33,9 @@ var time = null;
 //     require('./config/express')(app);
 //     // require('./config/server_socket')(io);
 //     require('./config/server_socket')(io);
-   
+
 //     require('./config/router')(app);
 // });
-
 var mongoConfig = require('./config/dbConfig.js');
 //app.set('port', (process.env.PORT || 5000));
 // main.listen(main.get('port'), function() {
@@ -52,17 +46,12 @@ var server = app.listen('5000', function () {
 });
 
 // var server = app.listen("8080");
-   
-var io = require('socket.io').listen(server);
-    
-    // server.timeout = 9999999999;
-mongoConfig.connectToServer(function(err) {
 
-    
-    // require('./config/express')(app);
-    // require('./config/server_socket')(io);
-  
-   
+var io = require('socket.io').listen(server);
+
+// server.timeout = 9999999999;
+mongoConfig.connectToServer(function (err) {
+
     require('./config/router')(app);
 
 })
@@ -70,22 +59,16 @@ app.use(express.static(__dirname + '/public'));
 //app.use(express.static(__dirname + '/public/bower_components'));
 // app.use(express.static(__dirname + '/node_modules'));
 app.get('/', function (req, res) {
-
     res.sendFile(__dirname + '/public/index.html');
-    
 });
-
 
 // require('./config/server_socket')(io);
 
 app.get("/client", function (req, res) {
-   
     queryId = null;
-    console.log("queryId: "+queryId);
     console.log("start to render page");
     res.sendFile(__dirname + '/public/client.html');
 });
-
 
 app.get("/client/:id/:time", function (req, res) {
     queryId = req.params.id;
@@ -95,13 +78,33 @@ app.get("/client/:id/:time", function (req, res) {
     res.sendFile(__dirname + '/public/client.html');
 });
 
-app.get("/mainPage", function (req, res) {
-    // queryId = req.params.id;
- 
-    console.log("start to render page");
-    res.sendFile(__dirname + '/public/html/mainPage.html');
+app.get("/clientNew", function (req, res) {
+    res.sendFile(__dirname + '/public/client1.html');
 });
 
+app.get("/clientNew/:id/:time", function (req, res) {
+    res.sendFile(__dirname + '/public/client1.html');
+});
+
+app.get("/careator", function (req, res) {
+
+    queryId = null;
+
+    console.log("start to render page");
+    res.sendFile(__dirname + '/public/careator.html');
+});
+
+app.get("/careator/:id/:time", function (req, res) {
+    queryId = req.params.id;
+    time = req.params.id;
+    console.log("queryId: " + req.params.id);
+    console.log("start to render page");
+    res.sendFile(__dirname + '/public/careator.html');
+});
+// app.get("/mainPage", function (req, res) {
+//     console.log("start to render page");
+//     res.sendFile(__dirname + '/public/html/mainPage.html');
+// });
 
 /*************************/
 /*** INTERESTING STUFF ***/
@@ -126,7 +129,6 @@ var sessionHeaderId = null;
  * information. After all of that happens, they'll finally be able to complete
  * the peer connection and will be streaming audio/video between eachother.
  */
-
 io.sockets.on('connection', function (socket) {
 
     console.log("connection started-->");
@@ -237,9 +239,9 @@ io.sockets.on('connection', function (socket) {
             // console.log("channels[channel][id] " + channels[channel][id]);
             console.log("start to call client addPeer--><--");
 
-            channels[channel][id].emit('addPeer', { 'peer_id': socket.id, 'should_create_offer': false, 'owner': socket.id, 'queryId': queryId, 'time' : time, 'userName': peerWithUserName[socket.id], 'sessionHeaderId': sessionHeaderId });
+            channels[channel][id].emit('addPeer', { 'peer_id': socket.id, 'should_create_offer': false, 'owner': socket.id, 'queryId': queryId, 'time': time, 'userName': peerWithUserName[socket.id], 'sessionHeaderId': sessionHeaderId });
 
-            socket.emit('addPeer', { 'peer_id': id, 'should_create_offer': true, 'owner': socket.id, 'queryId': queryId,'time' : time, 'userName': peerWithUserName[id], 'sessionHeaderId': sessionHeaderId });
+            socket.emit('addPeer', { 'peer_id': id, 'should_create_offer': true, 'owner': socket.id, 'queryId': queryId, 'time': time, 'userName': peerWithUserName[id], 'sessionHeaderId': sessionHeaderId });
         }
 
         channels[channel][socket.id] = socket;
@@ -306,7 +308,7 @@ io.sockets.on('connection', function (socket) {
 
                     // var x = queryId;
                     // console.log("peerTrackForVideo[x].indexOf(sockets.id): "+peerTrackForVideo[x].indexOf(sockets.id));
-                    sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner': config.owner, 'queryId': config.queryLink, 'time':config.timeLink, 'sendTo': peer_id });
+                    sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner': config.owner, 'queryId': config.queryLink, 'time': config.timeLink, 'sendTo': peer_id });
                     // if(peerTrackForVideo[x].indexOf(sockets.id)>=0)
                     //  {
                     //     sockets[peer_id].emit('sessionDescription', { 'peer_id': socket.id, 'session_description': session_description, 'owner':config.owner, });
@@ -332,7 +334,7 @@ io.sockets.on('connection', function (socket) {
 
         if (queryId == config.queryLink && time == config.timeLink) {
             console.log("queryId and config.queryLink are equal so gonna tell to client");
-            io.sockets.emit('authorizedForClose', { "removableId": config.removableId, "removableName": config.removableName, "controllerId": config.peerNew_id, "queryLink": config.queryLink, 'timeLink':config.timeLink, "queryId": queryId });
+            io.sockets.emit('authorizedForClose', { "removableId": config.removableId, "removableName": config.removableName, "controllerId": config.peerNew_id, "queryLink": config.queryLink, 'timeLink': config.timeLink, "queryId": queryId });
         }
         console.log("<--closeThisConn")
     });
@@ -349,7 +351,7 @@ io.sockets.on('connection', function (socket) {
 
 
         if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
-            io.sockets.emit('newTextMsg', { 'message': data.message, 'userId': data.userId, 'queryId': peerWithQueryId[data.userId],'time':peerWithTimeId[data.userId], 'userName': data.userName });
+            io.sockets.emit('newTextMsg', { 'message': data.message, 'userId': data.userId, 'queryId': peerWithQueryId[data.userId], 'time': peerWithTimeId[data.userId], 'userName': data.userName });
             // io.sockets.emit('userDetail', {'userId': data.userId,'userName': data.userName });
         }
         else {
@@ -413,9 +415,9 @@ io.sockets.on('connection', function (socket) {
         console.log("data.type: " + data.type);
         if (peerWithQueryId[data.userId] == data.queryLink && peerWithTimeId[data.userId] == data.timeLink) {
 
-            io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'time':data.timeLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
+            io.sockets.emit('file', { 'userId': data.peerNew_id, 'queryId': data.queryLink, 'time': data.timeLink, 'userName': data.userName, 'dataURI': data.dataURI, 'type': data.type });
         }
-        else{
+        else {
             console.log("Sorry from server from file socket");
         }
         // var to = user.peers;
@@ -442,5 +444,9 @@ io.sockets.on('connection', function (socket) {
 
     console.log("<--connection Ended");
 });
+
+
+
+
 
 
