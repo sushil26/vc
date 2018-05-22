@@ -83,13 +83,13 @@ app.controller('dashboardController', function ($scope, $rootScope, $window, htt
         console.log("logOut-->");
         sessionAuthFactory.clearAccess();
         $scope.userData = sessionAuthFactory.getAccess("userData");
-        window.location.href = "https://vc4all.in";
+        window.location.href = "https://norecruits.com";
         console.log("<--logOut");
     }
 
     $scope.homeClick = function () {
         console.log("homeClick-->");
-        window.location.href = "https://vc4all.in";
+        window.location.href = "https://norecruits.com";
         console.log("<--homeClick");
     }
 

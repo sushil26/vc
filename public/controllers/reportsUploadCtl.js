@@ -468,9 +468,9 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
   //   // var cssRef = [{"clas":css.class, "section": css.section}];
   //   // console.log("cssRef: "+JSON.stringify(cssRef));
 
-  //   var api = "https://vc4all.in/vc/getStudListForCS" + "/" + clas + "/" + section;
+  //   var api = "https://norecruits.com/vc/getStudListForCS" + "/" + clas + "/" + section;
   //   //var api = "http://localhost:5000/vc/getStudListForCS" + "/" + clas + "/" + section;
-  //   //var api = "https://vc4all.in/vc/getStudListForCS";
+  //   //var api = "https://norecruits.com/vc/getStudListForCS";
 
   //   console.log("api: " + api);
   //   httpFactory.get(api).then(function (data) {
@@ -507,7 +507,7 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
   //   //     "message": message
   //   // }
   //   if (file != undefined) {
-  //     var uploadURL = "https://vc4all.in/vc/uploadAttendance";
+  //     var uploadURL = "https://norecruits.com/vc/uploadAttendance";
   //     console.log("$scope.file from : alumRegCtr.js: " + $scope.file);
   //     httpFactory.imageUpload(file, uploadURL).then(function (data) {
   //       var checkStatus = httpFactory.dataValidation(data);
