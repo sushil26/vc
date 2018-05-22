@@ -106,7 +106,7 @@ module.exports.pswdGenerate = function (req, res) {
                                 from: "info@vc4all.in",
                                 to: email,
                                 subject: 'VC4ALL Credentiall',
-                                text: "Your email Id is verified successfully, you can access the link https://norecruits.com/careator by using password: " + password
+                                text: "Your email Id is verified successfully, you can access the link https://vc4all.in/careator by using password: " + password
                             };
                             transporter.sendMail(mailOptions, function (error, info) {
                                 if (error) {
@@ -148,7 +148,7 @@ module.exports.pswdGenerate = function (req, res) {
                                 from: "info@vc4all.in",
                                 to: email,
                                 subject: 'VC4ALL Credentiall',
-                                text: "Your email Id is verified successfully, you can access the link https://norecruits.com/careator by using password: " + password
+                                text: "Your email Id is verified successfully, you can access the link https://vc4all.in/careator by using password: " + password
                             };
                             transporter.sendMail(mailOptions, function (error, info) {
                                 if (error) {
