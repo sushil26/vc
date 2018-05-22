@@ -8,14 +8,14 @@
                                     <i class="fa fa-user-circle"></i>
                                     <span style="color:white;">&nbspSCHOOL LIST</span>
                                 </div>
-                        <table class="table table-condensed">
+                        <table class="table table-sm">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Registration Number</th>
                                     <th>School Name</th>
-                                    <th>Email</th>
-                                    <th>Phone Number</th>
+                                    <!-- <th>Email</th>
+                                    <th>Phone Number</th> -->
                                     <th>Status</th>
 
                                     <th>Action</th>
@@ -27,8 +27,8 @@
                                    <td style="background-color:white;">{{$index+1}}</td>
                                    <td style="background-color:white;">{{sd.schoolRegNumber}}</td>
                                    <td style="background-color:white;">{{sd.schoolName}}</td>
-                                   <td style="background-color:white;">{{sd.email}}</td>
-                                   <td style="background-color:white;">{{sd.mobNumber}}</td>
+                                   <!-- <td style="background-color:white;">{{sd.email}}</td>
+                                   <td style="background-color:white;">{{sd.mobNumber}}</td> -->
                                     <td style="color:green;background-color:white;" ng-if="sd.status=='active'" >Active</td>
                                     <td style="color:red;background-color:white;" ng-if="sd.status=='inactive'" >Inactive</td>
                                    <td style="background-color:white;">

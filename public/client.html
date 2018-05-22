@@ -23,7 +23,19 @@
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
     <script src="/js/studentMarkAtt_automation.js"></script>
-   
+    <!-- <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>-->
+    <!-- <link rel="stylesheet" href="https://cdn.webrtc-experiment.com/style.css"> -->
+    <!-- <style>
+        input {
+            border: 1px solid rgb(46, 189, 235);
+            border-radius: 3px;
+            font-size: 1em;
+            outline: none;
+            padding: .2em .4em;
+            width: 60px;
+            text-align: center;
+        }
+    </style> -->
 </head>
 
 <body>
@@ -44,8 +56,7 @@
                     float: left;
                     margin-top: 8px;
                     letter-spacing: 1px;
-                    text-transform: uppercase;">VC
-                        <span style="color:#2577be;">4ALL</span>
+                    text-transform: uppercase;">VC<span style="color:#2577be;">4ALL</span>
                         <!-- <h1 style="color:azure;float:left;text-shadow: 2px 2px 4px #000000; margin-top: 13px;">&nbspVC4ALL</h1> -->
                 </span>
             </div>
@@ -102,20 +113,20 @@
                 <div class="row">
                     <div class="col-lg-12">
 
-                        <center style="margin:5%;">
+                        <center>
                             <!-- <a id="LoginUrl">
                                 <h2 style="margin-top: 45vh;">Please use Your credential/Login to Start</h2>
                             </a> -->
 
                             <a id="videoConferenceUrl" style="display:none;">
-                                <button id="videoConfStart" class="btn fa fa-play-circle">
+                                <button id="videoConfStart" class="bouncy fa fa-play-circle">
                                     &nbsp
                                     <b>Start Video Conference</b>
                                 </button>
                             </a>
                             <br>
                             <!-- <a id="scheduleMeeting" href="/mainPage" style="display:none;">
-                                <button id="scheduleStart" class="btn fa fa-calendar">
+                                <button id="scheduleStart" class=" fa fa-calendar">
                                     &nbsp
                                     <b>Schedule Meeting</b>
                                 </button>
@@ -123,37 +134,37 @@
 
                             <!-- <li id="videoConfStart">  <a id="videoConferenceUrl">Start Video Conference </a></li> -->
                             <!-- <a id="start-recording" class="">
-                                    <button id="screenBtns" style="display:none;color:black;" class="btn fa fa-window-restore">&nbspstart-recording</button>
+                                    <button id="screenBtns" style="display:none;color:black;" class=" fa fa-window-restore">&nbspstart-recording</button>
                                 </a>
                                 <a id="stop-recording" style="display:none;">
-                                    <button id="screenBtns" class="btn fa fa-stop" style="color:red">&nbsp
+                                    <button id="screenBtns" class=" fa fa-stop" style="color:red">&nbsp
                                         <b style="color:black">stop-recording</b>
                                     </button>
                                 </a>
                                 <a id="pause-recording" class="">
-                                        <button id="screenBtns" style="display:none;color:black;" class="btn fa fa-window-restore">&nbsppause-recording</button>
+                                        <button id="screenBtns" style="display:none;color:black;" class=" fa fa-window-restore">&nbsppause-recording</button>
                                     </a>
                                     <a id="add-stream" style="display:none;">
-                                        <button id="screenBtns" class="btn fa fa-stop" style="color:red">&nbsp
+                                        <button id="screenBtns" class=" fa fa-stop" style="color:red">&nbsp
                                             <b style="color:black">Stop Sharing</b>
                                         </button>
                                     </a> -->
 
 
                             <a id="screenShareBtn" class="">
-                                <button id="screenBtns" style="display:none;color:black;" class="btn fa fa-window-restore">&nbspScreenShare</button>
+                                <button id="screenBtns" style="display:none;color:black;" class="bouncy fa fa-window-restore">&nbspScreenShare</button>
                             </a>
                             <a id="screenShareStop" style="display:none;">
-                                <button id="screenBtns" class="btn fa fa-stop" style="color:red">&nbsp
+                                <button id="screenBtns" class="bouncy fa fa-stop" style="color:red">&nbsp
                                     <b style="color:black">Stop Sharing</b>
                                 </button>
                             </a>
 
                             <!-- <a id="screenRecordBtn" class="">
-                                <button class="btn fa fa-window-restore">&nbspRecordStart</button>
+                                <button class=" fa fa-window-restore">&nbspRecordStart</button>
                             </a>
                             <a id="screenRecordStop">
-                                <button class="btn fa fa-stop" style="color:red">&nbsp
+                                <button class=" fa fa-stop" style="color:red">&nbsp
                                     <b style="color:black">Stop Recording</b>
                                 </button>
                             </a> -->
@@ -161,7 +172,7 @@
 
 
                             <a id="addChatWindow" class="">
-                                <button style="display:none;;color:black;" id="openChat" class="btn fa fa-comments">&nbsp
+                                <button style="display:none;;color:black;" id="openChat" class="bouncy fa fa-comments">&nbsp
                                     <b>Chat
                                         <span id="chatNotification" style="display:none;color:rgb(226, 101, 73);"></span>
                                     </b>
@@ -172,20 +183,21 @@
 
                             <a id="audio_btn" style="display:none">
 
-                                <button id="audioMute_btn" class="btn fa fa-microphone-slash" style="color:black">&nbsp
+                                <button id="audioMute_btn" class="bouncy fa fa-microphone-slash" style="color:black">&nbsp
                                     <b>Mute</b>
                                 </button>
-                                <button id="audioUnmute_btn" style="display:none;color:black" class="btn fa fa-microphone">
+                                <button id="audioUnmute_btn" style="display:none;color:black" class="bouncy fa fa-microphone">
                                     &nbsp
                                     <b>Unmute</b>
                                 </button>
                             </a>
 
                             <!-- <a class="" style="display:none;" href="/client" id="diconnect_btn" > -->
-                            <a class="" style="display:none;" id="diconnect_btn" href="/client" onclick="disconnecSession()">
-                                <button class="btn fa fa-power-off" style="color:red;">
 
-                                    <b style="color:black;">Disconnect</b>
+                            <a href="#" data-target="#mom" data-toggle="modal" style="display:none;" id="diconnect_btn" href="/client" onclick="disconnecSession()">
+                                <button class="bouncy fa fa-power-off" style="color:red;">
+
+                                    <b>Call Close</b>
                                 </button>
                             </a>
                             <!-- <section class="experiment" style="padding: 5px;"> -->
@@ -238,7 +250,7 @@
                                             <input type="password" class="form-control" placeholder="Enter your Password" id="P_pswd">
                                         </div>
                                         <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                            <button id="setNameId" type="button" onclick="saveName()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
+                                            <button id="setNameId" type="button" onclick="saveName()" style="background-color: #29b6bd;color:#f1f1f1" class="" data-dismiss="modal">Submit</button>
 
                                         </div>
                                 </center>
@@ -269,7 +281,7 @@
                                 <div class="col-sm-12" style="display:none" id="emailInvitation">
                                     <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
 
-                                    <button type="button" class="btn" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
+                                    <button type="button" class="" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
 
                                     <br>
                                     <label id="info"></label>
@@ -299,7 +311,7 @@
                                                 Screen Sharing</button>
                                         </a>
                                     </h6>
-                                    <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
+                                    <!-- <button type="button" id="screenShareBtn" class="" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
                                 </div>
                                 <div class="col-sm-12">
                                     <h6>
@@ -312,7 +324,7 @@
                                                 Screen Recording</button>
                                         </a>
                                     </h6>
-                                    <!-- <button type="button" id="screenShareBtn" class="btn" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
+                                    <!-- <button type="button" id="screenShareBtn" class="" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
                                 </div>
                             </div>
                         </div>
@@ -382,11 +394,38 @@
         </section>
         <!-- #portfolio -->
     </main>
-    <div class="modal fade" id="crdntl" role="dialog">
+    <div class="modal fade" id="mom" role="dialog">
         <div class="modal-dialog">
             <center>
-                <!-- Modal content Login -->
                 <div class="modal-content" style="
+                max-width: 350px;
+                background: #00000075; color:#777; border: 0px;">
+                    <div class="modal-header" style="background-color: darkturquoise;     border-bottom: 0px;">
+                        <h4 class="modal-title" style="margin-left: 2px;">Summary</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <textarea ng-keyup="$event.keyCode == 13 && momVC()" style="
+                      background:  #ddd;
+                      border-radius: inherit;
+                      border: #ddd;" rows="4" cols="50" id="momtext" class="form-control" placeholder="enter text here" ng-model="mom">
+                        </textarea>
+                    </div>
+                    <div class="modal-footer" style="border-top:0px; padding: 15px;">
+                        <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
+                            onclick="momVC()" data-dismiss="modal">Submit</button>
+                    </div>
+
+
+                </div>
+            </center>
+        </div>
+    </div>
+    <!-- <div class="modal fade" id="crdntl" role="dialog">
+        <div class="modal-dialog">
+            <center> -->
+    <!-- Modal content Login -->
+    <!-- <div class="modal-content" style="
                 max-width: 350px;
                 background: #00000075; color:#777; border: 0px;">
                     <div class="modal-header" style="background-color: darkturquoise;     border-bottom: 0px;">
@@ -417,13 +456,13 @@
                     </p>
                 </div>
             </center>
-        </div>
-    </div>
+        </div> -->
+    <!-- </div>
     <div class="modal fade" id="regVC" role="dialog">
-        <div class="modal-dialog">
-            <center>
-                <!-- Modal content Register -->
-                <div class="modal-content" style="
+        <div class="modal-dialog"> -->
+    <!-- <center> -->
+    <!-- Modal content Register -->
+    <!-- <div class="modal-content" style="
                 max-width: 350px;
                 background: #00000075; color:#777; border: 0px;">
                     <div class="modal-header" style="background-color: darkturquoise;border-bottom: 0px;">
@@ -461,10 +500,10 @@
                     <p style="font-size:12px;" class="message">Already Registered ?
                         <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#crdntl">Login Here</a>
                     </p>
-                </div>
-            </center>
+                </div> -->
+    <!-- </center>
         </div>
-    </div>
+    </div> -->
 
     <!--==========================
           Footer

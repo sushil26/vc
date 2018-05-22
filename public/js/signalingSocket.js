@@ -1,4 +1,3 @@
-
 // var encUrl = localStorage.getItem("encUrl");
 // var encPswd = localStorage.getItem("encPswd");
 // var decryptedUrl = CryptoJS.AES.decrypt(encUrl, "url");
@@ -43,7 +42,7 @@ var USE_AUDIO = true;
 var USE_VIDEO = true;
 var DEFAULT_CHANNEL = "some-global-ch-name";
 var MUTE_AUDIO_BY_DEFAULT = false;
-var loginType= "admin";
+var loginType = "admin";
 if (localStorage.getItem("userData")) {
   console.log("User Name from session: " + localStorage.getItem("userData"));
   var userData = JSON.stringify(localStorage.getItem("userData"));
@@ -93,8 +92,8 @@ if (localStorage.getItem("userData")) {
       userName = localStorage.getItem("userName");
       // startVideoAction();
       document.getElementById("userAuth").style.display = "none";
-     
-     // document.getElementById("LoginUrl").style.display = "none";
+
+      // document.getElementById("LoginUrl").style.display = "none";
       document.getElementById("videoConferenceUrl").style.display = "none";
       // document.getElementById("scheduleMeeting").style.display = "none";
       document.getElementById("videoConferenceLinkExtention").style.display =
@@ -226,8 +225,12 @@ function emailInvite() {
 // var ICE_SERVERS =sesionEnc.slice();
 // console.log("ICE_SERVERS: "+JSON.stringify(ICE_SERVERS));
 
-var ICE_SERVERS = [{ url: "stun:stun.l.google.com:19302" },
-{ url: "stun:s3.xirsys.com" },
+var ICE_SERVERS = [{
+  url: "stun:stun.l.google.com:19302"
+},
+{
+  url: "stun:s3.xirsys.com"
+},
 {
   url: "turn:s3.xirsys.com:80?transport=udp",
   credential: sesionEnc,
@@ -258,7 +261,66 @@ var ICE_SERVERS = [{ url: "stun:stun.l.google.com:19302" },
   credential: sesionEnc,
   username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
 
-}];
+}
+];
+
+function momVC() {
+  console.log("momVC-->");
+  var mom = document.getElementById("momtext").value;
+  console.log("mom:" + mom);
+  var eventId = localStorage.getItem("eventId");
+  if (localStorage.getItem("teacherLoginId")) {
+    var teacherLoginId = localStorage.getItem("teacherLoginId");
+    console.log("teacherLoginId: " + teacherLoginId);
+    var url = "https://vc4all.in/vc/updateEventMOM/" + eventId;
+    var obj = {
+      "mom": mom,
+      "momCreatedBy": "teacher"
+    };
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: JSON.stringify(obj),
+      contentType: "application/json",
+      dataType: "json",
+      success: function (data) {
+        console.log("data: " + JSON.stringify(data));
+        console.log("data.status: " + data.status);
+        if (data.status) {
+          //window.location.href = data.data.url;
+        } else {
+          alert("refresh your page and try again");
+        }
+      }
+    });
+  }
+  else if (localStorage.getItem("studLoginId")) {
+    var studLoginId = localStorage.getItem("studLoginId");
+    console.log("studLoginId: " + studLoginId);
+    var url = "https://vc4all.in/updateEventMOM/" + eventId;
+    var obj = {
+      "mom": mom,
+      "momCreatedBy": "parent"
+    };
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: JSON.stringify(obj),
+      contentType: "application/json",
+      dataType: "json",
+      success: function (data) {
+        console.log("data: " + JSON.stringify(data));
+        console.log("data.status: " + data.status);
+        if (data.status) {
+          //window.location.href = data.data.url;
+        } else {
+          alert("refresh your page and try again");
+        }
+      }
+    });
+  }
+  console.log("<--momVC");
+}
 
 function disconnecSession() {
   console.log("disconnecSession-->");
@@ -342,10 +404,8 @@ signaling_socket.on("connect", function () {
       console.log("message: config.peer_id: " + config.peer_id);
 
       //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
-      document.getElementById("videoConferenceUrl").setAttribute("onclick", "startSession('" + peerNew_id + "' , '" + date + "')"
-      );
-      document.getElementById("linkToShare").setAttribute("href", "https://vc4all.in/client/" + peerNew_id + "/" + date
-      );
+      document.getElementById("videoConferenceUrl").setAttribute("onclick", "startSession('" + peerNew_id + "' , '" + date + "')");
+      document.getElementById("linkToShare").setAttribute("href", "https://vc4all.in/client/" + peerNew_id + "/" + date);
       document.getElementById("linkToShare").innerHTML = "https://vc4all.in/client/" + peerNew_id + "/" + date;
     } else {
       console.log("query id nt null");
@@ -369,21 +429,27 @@ signaling_socket.on("connect", function () {
       if (userName != undefined) {
         console.log("userName with localmedia setup call: " + userName);
         setup_local_media(function () {
-          join__channel(DEFAULT_CHANNEL, { "whatever-you--here": "stuff" });
+          join__channel(DEFAULT_CHANNEL, {
+            "whatever-you--here": "stuff"
+          });
         });
       }
 
       document.getElementById("setNameId").addEventListener("click", function () {
         console.log("setup_local_media calling**");
         setup_local_media(function () {
-          join__channel(DEFAULT_CHANNEL, { "whatever-you--here": "stuff" });
+          join__channel(DEFAULT_CHANNEL, {
+            "whatever-you--here": "stuff"
+          });
         });
       });
 
       document.getElementById("crdsubmit").addEventListener("click", function () {
         console.log("setup_local_media calling**");
         setup_local_media(function () {
-          join__channel(DEFAULT_CHANNEL, { "whatever-you--here": "stuff" });
+          join__channel(DEFAULT_CHANNEL, {
+            "whatever-you--here": "stuff"
+          });
         });
       });
     }
@@ -398,7 +464,7 @@ signaling_socket.on("disconnect", function () {
   // document.getElementById(peerNew_id).remove();
 
   /* Tear down all of our peer connections and remove all the
-         * media divs when we disconnect */
+   * media divs when we disconnect */
   for (peer_id in peer_media_elements) {
     peer_media_elements[peer_id].remove();
     peer_userName_elements[peer_id].remove();
@@ -414,6 +480,7 @@ signaling_socket.on("disconnect", function () {
   // peer_media_sselements = {};
   console.log("<--signaling_socket.on disconnect");
 });
+
 function join__channel(channel, userdata) {
   console.log("join__channel-->");
 
@@ -428,6 +495,7 @@ function join__channel(channel, userdata) {
 
   console.log("<--join__channel");
 }
+
 function part__channel(channel) {
   console.log("part__channel-->");
   signaling_socket.emit("part", channel);
@@ -456,13 +524,16 @@ signaling_socket.on("addPeer", function (config) {
     console.log("addPeer 1.3: Already connected to peer ", peer_id);
     // return;
   }
-  var peer_connection = new RTCPeerConnection(
-    { iceServers: ICE_SERVERS },
-    {
-      optional: [{ DtlsSrtpKeyAgreement: true }]
-    } /* this will no longer be needed by chrome
-                                                                        * eventually (supposedly), but is necessary 
-                                                                        * for now to get firefox to talk to chrome */
+  var peer_connection = new RTCPeerConnection({
+    iceServers: ICE_SERVERS
+  }, {
+      optional: [{
+        DtlsSrtpKeyAgreement: true
+      }]
+    }
+    /* this will no longer be needed by chrome
+     * eventually (supposedly), but is necessary 
+     * for now to get firefox to talk to chrome */
   );
 
   console.log("peer_connection: " + peer_connection);
@@ -572,6 +643,7 @@ signaling_socket.on("addPeer", function (config) {
 
     fullscreenbtn = document.getElementById("fullscreenbtn");
     fullscreenbtn.addEventListener("click", toggleFullScreen, false);
+
     function toggleFullScreen() {
       console.log();
       if (vid.requestFullScreen) {
@@ -590,13 +662,23 @@ signaling_socket.on("addPeer", function (config) {
       $("#" + peer_id + "remoteContainer").removeClass(
         "portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"
       );
-      $("#" + peer_id + "Remote").css({ height: "100vh" });
+      $("#" + peer_id + "Remote").css({
+        height: "100vh"
+      });
+      $
       $("#videoElem").css({
         height: "auto",
         width: "20%"
       });
       $("#videoElem111").removeClass(
         "portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"
+      );
+      $("#videosAttach").css({
+        position: "absolute",
+        left: "-13pc",
+        top: "1px"
+      }
+
       );
       document.getElementById("header").style.display = "none";
       document.getElementById("btnrestore").style.display = "inline";
@@ -607,9 +689,18 @@ signaling_socket.on("addPeer", function (config) {
       $("#" + peer_id + "remoteContainer").addClass(
         "portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"
       );
-      $("#" + peer_id + "Remote").css({ height: "200px" });
+      $("#" + peer_id + "Remote").css({
+        height: "200px"
+      });
+      $("#videosAttach").css({
+        position: "",
+        left: "",
+        top: ""
+      }
+
+      );
       $("#videoElem").css({
-     
+
         height: "",
         width: ""
       });
@@ -641,6 +732,7 @@ signaling_socket.on("addPeer", function (config) {
 
     fullscreenbtn = document.getElementById("fullscreenbtn");
     fullscreenbtn.addEventListener("click", toggleFullScreen3, false);
+
     function toggleFullScreen3() {
       if (vid3.requestFullScreen) {
         vid3.requestFullScreen();
@@ -697,10 +789,10 @@ signaling_socket.on("addPeer", function (config) {
   }
 
   /* Only one side of the peer connection should create the
-         * offer, the signaling server picks one to be the offerer. 
-         * The other user will get a 'sessionDescription' event and will
-         * create an offer, then send back an answer 'sessionDescription' to us
-         */
+   * offer, the signaling server picks one to be the offerer. 
+   * The other user will get a 'sessionDescription' event and will
+   * create an offer, then send back an answer 'sessionDescription' to us
+   */
   if (config.should_create_offer) {
     console.log("Create offer-->");
     // console.log("creating offer from peer id: " + config.owner);
@@ -731,8 +823,9 @@ signaling_socket.on("addPeer", function (config) {
       },
       function (error) {
         console.log("Error sending offer: ", error);
-      },
-      { iceRestart: true }
+      }, {
+        iceRestart: true
+      }
     );
     console.log("<--Create offer");
   }
@@ -899,7 +992,7 @@ function setup_local_media(callback, errorback) {
     return;
   }
   /* Ask user for permission to use the computers microphone and/or camera, 
-     * attach it to an <audio> or <video> tag if they give us access. */
+   * attach it to an <audio> or <video> tag if they give us access. */
   console.log("Requesting access to local audio / video inputs");
 
   navigator.getUserMedia =
@@ -913,7 +1006,10 @@ function setup_local_media(callback, errorback) {
     video.srcObject = stream;
     console.log("<--attachMediaStream");
   };
-  navigator.getUserMedia({ audio: USE_AUDIO, video: USE_VIDEO },
+  navigator.getUserMedia({
+    audio: USE_AUDIO,
+    video: USE_VIDEO
+  },
     function (stream) {
       /* user accepted access to a/v */
       console.log("Access granted to audio/video");
@@ -1006,11 +1102,14 @@ function setup_local_media(callback, errorback) {
     console.log("screenShare-->");
     getScreenId(function (error, sourceId, screen_constraints) {
       navigator.getUserMedia(screen_constraints, function (stream) {
-        navigator.getUserMedia({ audio: true }, function (audioStream) {
+        navigator.getUserMedia({
+          audio: true
+        }, function (audioStream) {
           stream.addTrack(audioStream.getAudioTracks()[0]);
           // shareScreen = peerNew_id;
           var local_media = document.getElementById("videoElem");
           stopVideo(local_media);
+
           function stopVideo(local_media) {
             let stream = videoElem.srcObject;
             let tracks = stream.getTracks();
@@ -1030,9 +1129,9 @@ function setup_local_media(callback, errorback) {
 
           //local_media_stream = stream;
           local_media_shareStream = stream;
-          var local_mediaScreenShare = USE_VIDEO
-            ? $("<video>")
-            : $("<audio>");
+          var local_mediaScreenShare = USE_VIDEO ?
+            $("<video>") :
+            $("<audio>");
           //local_mediaScreenShare.attr("autoplay", "autoplay");
           local_mediaScreenShare.attr(
             "muted",
@@ -1069,8 +1168,10 @@ function setup_local_media(callback, errorback) {
             }
             $("#videosAttach").empty();
             /* ######   ###### */
-            navigator.getUserMedia(
-              { audio: USE_AUDIO, video: USE_VIDEO },
+            navigator.getUserMedia({
+              audio: USE_AUDIO,
+              video: USE_VIDEO
+            },
               function (stream) {
                 /* user accepted access to a/v */
                 console.log("Access granted to audio/video");
@@ -1154,8 +1255,9 @@ signaling_socket.on("stateChangedToClient", function (data) {
 
 function scrollDown() {
   console.log("scrollDown-->");
-  $("#popupMsg").animate(
-    { scrollTop: $("#popupMsg").prop("scrollHeight") },
+  $("#popupMsg").animate({
+    scrollTop: $("#popupMsg").prop("scrollHeight")
+  },
     500
   );
   console.log("<--scrollDown");
@@ -1245,10 +1347,9 @@ function scrollDown() {
       return;
     }
 
-    iframe.contentWindow.postMessage(
-      {
-        captureSourceId: true
-      },
+    iframe.contentWindow.postMessage({
+      captureSourceId: true
+    },
       "*"
     );
   }
@@ -1321,10 +1422,9 @@ function scrollDown() {
       return;
     }
 
-    iframe.contentWindow.postMessage(
-      {
-        getChromeExtensionStatus: true
-      },
+    iframe.contentWindow.postMessage({
+      getChromeExtensionStatus: true
+    },
       "*"
     );
   }
@@ -1340,6 +1440,8 @@ $(window).scroll(function () {
   }
 });
 $(".back-to-top").click(function () {
-  $("html, body").animate({ scrollTop: 0 }, 1500, "easeInOutExpo");
+  $("html, body").animate({
+    scrollTop: 0
+  }, 1500, "easeInOutExpo");
   return false;
 });

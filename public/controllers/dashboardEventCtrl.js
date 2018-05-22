@@ -1,4 +1,4 @@
-app.controller('dashboardEventController', function ($scope, $window, httpFactory) {
+app.controller('dashboardEventController', function ($scope, $rootScope, $window, httpFactory) {
     console.log("dashboardController==>");
 
 

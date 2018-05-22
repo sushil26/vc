@@ -1,11 +1,12 @@
-app.controller('allSchoolCtl', function ($scope, $state, $window, $uibModal, httpFactory, sessionAuthFactory) {
+app.controller('allSchoolCtl', function ($scope, $rootScope, $state, $window, $uibModal, httpFactory, sessionAuthFactory) {
     console.log("allSchoolCtl==>");
     $scope.userData = sessionAuthFactory.getAccess("userData");
     console.log(" $scope.userData : " + JSON.stringify($scope.userData));
+    $scope.propertyJson = $rootScope.propertyJson;
 
     $scope.getAllSchool = function () {
         console.log("getAllSchool-->");
-        var api = "https://vc4all.in/vc/getAllSchool";
+        var api = $scope.propertyJson.VC_getAllSchool;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -32,8 +33,7 @@ app.controller('allSchoolCtl', function ($scope, $state, $window, $uibModal, htt
 
     $scope.updateSchoolStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
-        var api = "https://vc4all.in/vc/updateSchoolStatus";
-        //var api = "http://localhost:5000/vc/updateUserStatus";
+        var api = $scope.propertyJson.VC_updateSchoolStatus;
         var obj = {
             "id": id,
             "status": status
@@ -43,7 +43,6 @@ app.controller('allSchoolCtl', function ($scope, $state, $window, $uibModal, htt
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
                 $scope.allSchool[index].status = status;
-
                 var loginAlert = $uibModal.open({
                     scope: $scope,
                     templateUrl: '/html/templates/dashboardsuccess.html',
@@ -51,11 +50,9 @@ app.controller('allSchoolCtl', function ($scope, $state, $window, $uibModal, htt
                     backdropClass: 'static',
                     keyboard: false,
                     controller: function ($scope, $uibModalInstance) {
-                      $scope.message = "Updated Status Successfully";
+                        $scope.message = "Updated Status Successfully";
                     }
-                  })
-          
-               // alert("Updated Status Successfully");
+                })
             }
             else {
                 var loginAlert = $uibModal.open({
@@ -65,10 +62,9 @@ app.controller('allSchoolCtl', function ($scope, $state, $window, $uibModal, htt
                     backdropClass: 'static',
                     keyboard: false,
                     controller: function ($scope, $uibModalInstance) {
-                      $scope.message = "Status updated failed, try again ";
+                        $scope.message = "Status updated failed, try again ";
                     }
-                  })
-               // alert("Status updated failed, try again ");
+                })
             }
         })
         console.log("<--updateUserStatus");

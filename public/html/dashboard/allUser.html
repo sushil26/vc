@@ -17,13 +17,13 @@
                             <i class="fa fa-user-circle"></i>
                             <span style="color:white;">&nbspADMIN</span>
                         </div>
-                        <table class="table table-condensed">
+                        <table class="table table-sm">
                             <thead class="panel-heading">
                                 <tr>
                                     <th>#</th>
 
                                     <th>Admin Name</th>
-                                    <th>Email</th>
+                                    <!-- <th>Email</th> -->
                                     <th>Phone Number</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -35,7 +35,7 @@
                                 <tr ng-repeat="ad in teacherData" ng-if="ad.loginType=='admin'">
                                     <td style="background-color:white;">{{$index+1}}.</td>
                                     <td style="background-color:white;">{{ad.firstName + " " + ad.lastName}}</td>
-                                    <td style="background-color:white;">{{ad.email}}</td>
+                                    <!-- <td style="background-color:white;">{{ad.email}}</td> -->
                                     <td style="background-color:white;">{{ad.mobNumber}}</td>
                                     <td style=" background-color:white; color:red;" ng-if="ad.status=='inactive'">Inactive</td>
                                     <td style=" background-color:white; color:green;" ng-if="ad.status=='active'">Active</td>
@@ -45,7 +45,7 @@
 
                                         <button class="btn btn-warning" ng-click="viewUser(ad._id, 'teacher')">View</button>
 
-                                        <button class="btn btn-danger" ng-click="deleteStud(ad._id, $index)">Delete</button>
+                                        <!-- <button class="btn btn-danger" ng-click="deleteStud(ad._id, $index)">Delete</button> -->
                                     </td>
                                 </tr>
                             </tbody>
@@ -58,13 +58,13 @@
                             <i class="fa fa-user-circle"></i>
                             <span style="color:white;">&nbspTEACHER</span>
                         </div>
-                        <table class="table">
+                        <table class="table table-sm">
                             <thead class="panel-heading">
                                 <tr>
                                     <th>#</th>
                                     <th>Teacher Id</th>
                                     <th>Teacher Name</th>
-                                    <th>Email</th>
+                                    <!-- <th>Email</th> -->
                                     <th>Mobile Number</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -77,8 +77,8 @@
                                     <td style="background-color:white;">{{td.firstName + " " + td.lastName}}
                                         <!-- <a class="btn-info" ng-click="tableForTimes($index)">{{td.firstName + " " + td.lastName}}</a> -->
                                     </td>
-                                    <td style="background-color:white;">{{td.email}}</td>
-                                    <td style="background-color:white;">{{td.mobileNum}}</td>
+                                    <!-- <td style="background-color:white;">{{td.email}}</td> -->
+                                    <td style="background-color:white;">{{td.mobNumber}}</td>
                                     <td style=" background-color:white; color:red;" ng-if="td.status=='inactive'">Inactive</td>
                                     <td style=" background-color:white; color:green;" ng-if="td.status=='active'">Active</td>
                                     <td style="background-color:white;">
@@ -95,14 +95,13 @@
                             <i class="fa fa-user-circle"></i>
                             <span style="color:white;">&nbsp;STUDENT</span>
                         </div>
-                        <table class="table">
+                        <table class="table table-sm">
                             <thead class="panel-heading">
                                 <tr>
                                     <th>#</th>
                                     <th>Student Id</th>
                                     <th>Student Name</th>
                                     <th>Class</th>
-                                    <th>Section</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -114,8 +113,8 @@
                                     <td style="background-color:white;">
                                         {{sd.firstName + " " + sd.lastName}}
                                     </td>
-                                    <td style="background-color:white;">{{sd.cs[0].class}}</td>
-                                    <td style="background-color:white;">{{sd.cs[0].section}}</td>
+                                    <td style="background-color:white;">{{sd.cs[0].class}}-{{sd.cs[0].section}}</td>
+                                 
                                     <td style=" background-color:white; color:red;" ng-if="sd.status=='inactive'">Inactive</td>
                                     <td style=" background-color:white; color:green;" ng-if="sd.status=='active'">Active</td>
                                     <td style="background-color:white;">

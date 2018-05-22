@@ -1,11 +1,12 @@
-app.controller('allAdminCtl', function ($scope, $state, $uibModal,$window, httpFactory, sessionAuthFactory) {
+app.controller('allAdminCtl', function ($scope, $rootScope, $state, $uibModal, $window, httpFactory, sessionAuthFactory) {
     console.log("allAdminCtl==>");
     $scope.userData = sessionAuthFactory.getAccess("userData");
     console.log(" $scope.userData : " + JSON.stringify($scope.userData));
+    $scope.propertyJson = $rootScope.propertyJson;
 
     $scope.getAllAdmin = function () {
         console.log("getAllAdmin-->");
-        var api = "https://vc4all.in/vc/getAllAdmin";
+        var api = $scope.propertyJson.VC_getAllAdmin;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -28,9 +29,7 @@ app.controller('allAdminCtl', function ($scope, $state, $uibModal,$window, httpF
     $scope.getAllAdmin();
     $scope.updateAdminStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
-        var api = "https://vc4all.in/vc/updateUserStatus";
-        //var api = "http://localhost:5000/vc/updateUserStatus";
-
+        var api = $scope.propertyJson.VC_updateUserStatus;
         var obj = {
             "id": id,
             "status": status
@@ -48,11 +47,9 @@ app.controller('allAdminCtl', function ($scope, $state, $uibModal,$window, httpF
                     backdropClass: 'static',
                     keyboard: false,
                     controller: function ($scope, $uibModalInstance) {
-                      $scope.message = "Updated Status Successfully";
+                        $scope.message = "Updated Status Successfully";
                     }
-                  })
-
-               // alert("Updated Status Successfully");
+                })
             }
             else {
                 var loginAlert = $uibModal.open({
@@ -62,29 +59,21 @@ app.controller('allAdminCtl', function ($scope, $state, $uibModal,$window, httpF
                     backdropClass: 'static',
                     keyboard: false,
                     controller: function ($scope, $uibModalInstance) {
-                      $scope.message = "Status updated failed, try again";
+                        $scope.message = "Status updated failed, try again";
                     }
-                  })
-
-               // alert("Status updated failed, try again ");
-
+                })
             }
-
         })
-
         console.log("<--updateUserStatus");
     }
-
-    $scope.viewUser = function(id,loginT){
+    $scope.viewUser = function (id, loginT) {
         console.log("viewUser-->");
-        if(loginT=='teacher')
-        {
-            $state.go('dashboard.viewUser', { 'id': id, 'loginType':loginT});
+        if (loginT == 'teacher') {
+            $state.go('dashboard.viewUser', { 'id': id, 'loginType': loginT });
         }
-        else{
-            $state.go('dashboard.viewUser', { 'id': id, 'loginType':loginT});
+        else {
+            $state.go('dashboard.viewUser', { 'id': id, 'loginType': loginT });
         }
-       
         console.log("<--viewUser");
     }
 })

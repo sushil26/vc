@@ -1,20 +1,21 @@
-app.controller('historyController', function ($scope, $window, httpFactory, sessionAuthFactory, $uibModal) {
+app.controller('historyController', function ($scope, $rootScope, $window, httpFactory, sessionAuthFactory, $uibModal) {
     console.log("historyController==>");
     $scope.events = [];
     $scope.userData = sessionAuthFactory.getAccess("userData");
-   // $scope.today = new Date();
+    $scope.propertyJson = $rootScope.propertyJson;
+    // $scope.today = new Date();
     $scope.getToDate = function () {
         console.log("Get To Date-->");
-        var api = "https://vc4all.in/vc/getToDate";
+        var api = $scope.propertyJson.VC_getToDate;
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
                 console.log("data.data.data.date: " + data.data.data.date);
-                var todayDate =new Date(data.data.data.date);
-                console.log("todayDate: "+todayDate);
+                var todayDate = new Date(data.data.data.date);
+                console.log("todayDate: " + todayDate);
                 var reqDate = todayDate.getDate();
-                console.log("reqDate: "+reqDate);
+                console.log("reqDate: " + reqDate);
                 var reqMonth = todayDate.getMonth();
                 var reqYear = todayDate.getFullYear();
                 var reqHr = todayDate.getHours();
@@ -33,10 +34,9 @@ app.controller('historyController', function ($scope, $window, httpFactory, sess
     $scope.eventGet = function () {
         console.log("eventGet-->");
         var id = $scope.userData.id;
-        var api = "https://vc4all.in/vc/eventGet" + "/" + id;
+        var api = $scope.propertyJson.VC_eventGet + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
         $scope.calendarOwner = "Your";
-
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -68,10 +68,7 @@ app.controller('historyController', function ($scope, $window, httpFactory, sess
                         "remoteCalendarId": $scope.eventData[x].remoteCalendarId
                     }
                     console.log(" obj" + JSON.stringify(obj))
-                    // ownerEvents.push(obj);
                     $scope.events.push(obj);
-                  
-
                 }
             }
             else {
@@ -80,20 +77,19 @@ app.controller('historyController', function ($scope, $window, httpFactory, sess
         })
     }
     // $scope.eventGet();
-    $scope.viewDetail = function(id){
+    $scope.viewDetail = function (id) {
         console.log("viewDetail-->");
-        console.log("id: "+id);
+        console.log("id: " + id);
         var eClicked = $uibModal.open({
             scope: $scope,
             templateUrl: '/html/templates/eventDetails.html',
             windowClass: 'show',
             backdropClass: 'show',
             controller: function ($scope, $uibModalInstance) {
-              $scope.eventDetails = $scope.events[id];
-              console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+                $scope.eventDetails = $scope.events[id];
+                console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
             }
-          })
-          console.log("<--viewDetail");
+        })
+        console.log("<--viewDetail");
     }
-
 })

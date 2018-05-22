@@ -1,44 +1,36 @@
-app.controller('dashboardController', function ($scope, $window, httpFactory, $uibModal, sessionAuthFactory, $filter, $timeout) {
+app.controller('dashboardController', function ($scope, $rootScope, $window, httpFactory, $uibModal, sessionAuthFactory, $filter, $timeout) {
 
     console.log("dashboardController==>");
-
-
     $scope.clock = "loading clock..."; // initialise the time variable
     $scope.tickInterval = 1000 //ms
+    $scope.propertyJson = $rootScope.propertyJson;
+    
     var tick = function () {
         $scope.clock = new Date()
         $scope.hour = $filter('date')($scope.clock, 'HH');
         $scope.min = $filter('date')($scope.clock, 'mm');
         $scope.sec = $filter('date')($scope.clock, 'ss');
-
         $timeout(tick, $scope.tickInterval); // reset the timer
     }
-
     // Start the timer
     $timeout(tick, $scope.tickInterval);
-
     $scope.userData = sessionAuthFactory.getAccess("userData");
     $scope.loginType = $scope.userData.loginType;
     $scope.userName = $scope.userData.userName;
-
     /* ##### Start dashboard submenu hide declaration ##### */
     $scope.sideBarMenu = false;
     $scope.events_subMenu = true;
     $scope.academic_subMenu = true;
     $scope.setting_subMenu = true;
 
-
-
-
-
-
-
-
     $scope.iconMenuClick = function () {
         console.log("iconMenuClick--> ");
         var element = document.getElementById("container");
-
+        var x = window.matchMedia("(max-width: 768px)")
         if (element.classList.contains("sidebar-closed")) {
+            if (x.matches) {
+                document.getElementById("profile").style.marginTop = "195px";
+            }
             console.log("if is true");
             element.classList.remove("sidebar-closed");
             $scope.sideBarMenu = false;
@@ -49,10 +41,11 @@ app.controller('dashboardController', function ($scope, $window, httpFactory, $u
             console.log("if is false");
             $scope.sideBarMenu = true;
             element.classList.add("sidebar-closed");
+            document.getElementById("profile").style.marginTop = "0px";
         }
         console.log("<--iconMenuClick");
     }
-
+    //$scope.iconMenuClick();
     $scope.eventClick = function (submenu) {
         console.log("eventClick-->: " + submenu);
         if (submenu == "events_subMenu") {
@@ -81,13 +74,10 @@ app.controller('dashboardController', function ($scope, $window, httpFactory, $u
             }
             $scope.events_subMenu = true;
             $scope.academic_subMenu = true;
-
         }
         console.log("<--eventClick: " + submenu);
     }
     /* ##### End dashboard submenu hide declaration ##### */
-
-
 
     $scope.logOut = function () {
         console.log("logOut-->");

@@ -1,16 +1,17 @@
-app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, httpFactory, moment, calendarConfig, $uibModal) {
+app.controller('calendarCtrl', function ($scope, $rootScope, $compile, $window, $filter, httpFactory, moment, calendarConfig, $uibModal) {
   console.log("calendarCtrl==>: " + localStorage.getItem("userData"));
 
   var dayEventmodal; /* ### Note: open model for event send ###  */
   var studEvents = []; /* ### Note: selected student events ### */
   var teacherEvents = []; /* ### Note: selected teacher events ### */
   var ownerEvents = []; /* ### Note: logged in person all events ### */
+  $scope.propertyJson = $rootScope.propertyJson;
 
   $scope.getTeacherData = function () {
     console.log("getTeacherData-->");
     var id = localStorage.getItem("id");
 
-    var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+    var api = $scope.propertyJson.VC_teacherDetail+ "/" + id;
     //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet";
     console.log("api: " + api);
@@ -33,7 +34,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   $scope.getStudentData = function () {
     console.log("getTeacherData-->");
     var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
+    var api = $scope.propertyJson.VC_studentDetail + "/" + id;
     console.log("api: " + api);
     $scope.teacherList = [];
     httpFactory.get(api).then(function (data) {
@@ -45,8 +46,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
         $scope.studClass = $scope.studentData[0].cs[0].class;
         $scope.studSection = $scope.studentData[0].cs[0].section;
-        var api = "https://vc4all.in/vc/getTeacherListForCS" + "/" + $scope.studClass + "/" + $scope.studSection;
-
+        var api = $scope.propertyJson.VC_getTeacherListForCS + "/" + $scope.studClass + "/" + $scope.studSection;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
           var checkStatus = httpFactory.dataValidation(data);
@@ -83,7 +83,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.getSelectedTeacherPersonalData = function (id) {
     console.log("getSelectedTeacherPersonalData-->");
-    var api = "https://vc4all.in/vc/teacherPersonalData" + "/" + id;
+    var api = $scope.propertyJson.VC_teacherPersonalData + "/" + id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -102,7 +102,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.getSelectedStudentPersonalData = function (id) {
     console.log("get Selected Student PersonalData-->");
-    var api = "https://vc4all.in/vc/studentPersonalData" + "/" + id;
+    var api = $scope.propertyJson.VC_studentPersonalData + "/" + id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -126,7 +126,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("JSON.css" + JSON.stringify(css));
     $scope.remoteCalendarId = css.id;
     $scope.getSelectedStudentPersonalData($scope.remoteCalendarId);
-    var api = "https://vc4all.in/vc/eventGet" + "/" + css.id;
+    var api =  $scope.propertyJson.VC_eventGet + "/" + css.id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -175,7 +175,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     console.log("JSON.css" + JSON.stringify(css));
     $scope.remoteCalendarId = css.id;
     $scope.getSelectedTeacherPersonalData($scope.remoteCalendarId);
-    var api = "https://vc4all.in/vc/eventGet" + "/" + css.id;
+    var api = $scope.propertyJson.VC_eventGet + "/" + css.id;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -275,7 +275,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     // var cssRef = [{"clas":css.class, "section": css.section}];
     // console.log("cssRef: "+JSON.stringify(cssRef));
 
-    var api = "https://vc4all.in/vc/getStudListForCS" + "/" + clas + "/" + section;
+    var api = $scope.propertyJson.VC_getStudListForCS + "/" + clas + "/" + section;
     //var api = "http://localhost:5000/vc/getStudListForCS" + "/" + clas + "/" + section;
     //var api = "https://vc4all.in/vc/getStudListForCS";
 
@@ -306,7 +306,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
   $scope.deleteEvent = function (id, index) {
     console.log("deleteEvent-->");
-    var api = "https://vc4all.in/vc/deleteEvent";
+    var api = $scope.propertyJson.VC_deleteEvent;
     //var api = "http://localhost:5000/vc/deleteEvent";
     vm.events.splice(index, 1);
     var obj = {
@@ -366,7 +366,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
     }
     console.log("obj: " + JSON.stringify(obj));
 
-    var api = "https://vc4all.in/vc/eventUpdate" + "/" + id;
+    var api = $scope.propertyJson.VC_eventUpdate + "/" + id;
     //var api = "http://localhost:5000/vc/eventUpdate" + "/" + id;
 
     httpFactory.post(api, obj).then(function (data) {
@@ -452,7 +452,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
 
         url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
 
-        var api = "https://vc4all.in/vc/eventSend";
+        var api = $scope.propertyJson.VC_eventSend;
         //var api = "http://localhost:5000/vc/eventSend";
         console.log("api: " + api);
         // var email = document.getElementById('eventEmails').value;
@@ -523,7 +523,7 @@ app.controller('calendarCtrl', function ($scope, $compile, $window, $filter, htt
   $scope.eventGet = function () {
     console.log("eventGet-->");
     var id = localStorage.getItem("id");
-    var api = "https://vc4all.in/vc/eventGet" + "/" + id;
+    var api = $scope.propertyJson.VC_eventGet + "/" + id;
     //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
     $scope.calendarOwner = "Your";
 

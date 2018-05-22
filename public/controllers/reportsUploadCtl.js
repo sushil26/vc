@@ -1,8 +1,9 @@
-app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessionAuthFactory, $uibModal) {
+app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFactory, sessionAuthFactory, $uibModal) {
   console.log("attendanceCtl==>");
   $scope.userData = sessionAuthFactory.getAccess("userData");
   var schoolName = $scope.userData.schoolName;
   console.log(" $scope.userData : " + JSON.stringify($scope.userData));
+  $scope.propertyJson = $rootScope.propertyJson;
   $scope.file = {}; /* ### Note: Upload file declaration ### */
   $scope.uploadTypes = ["Teacher Details", "Student Details", "Time Table", "Attendance", "Mark Report"];
   $scope.testTypes = ["AT", "UT", "MT", "TT", "AT"];
@@ -10,11 +11,14 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
   $scope.monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   $scope.sma = []; /* ### Note:sma-Subject Mark Attendant  */
-
+  $scope.reset = function () {
+    console.log("reset-->");
+    $scope.uploadReports = [{ uploadType: "", csSelect: "", ttSelect: "", uploadDoc: "" }];
+   }
   $scope.getSchoolData = function () {
     console.log("getSchoolData-->");
     $scope.cssList = [];
-    var api = "https://vc4all.in/vc/getSchoolData/" + schoolName;
+    var api = $scope.propertyJson.VC_getSchoolData + "/" + schoolName;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       console.log("data--" + JSON.stringify(data.data));
@@ -53,7 +57,7 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
     console.log("getTeacherList-->");
     $scope.teacherList = [];
     $scope.teacherList_noTT = []; /* ### Note: teacher list without time table(teacherList_noTT-teacher list no timetable) ###*/
-    var api = "https://vc4all.in/vc/getSchoolUser/" + schoolName;
+    var api = $scope.propertyJson.VC_getSchoolUser + "/" + schoolName;
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
       var checkStatus = httpFactory.dataValidation(data);
@@ -114,40 +118,59 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
     var obj = {
       "file": file
     }
-    var api = "https://vc4all.in/vc/uploadMarkFile/" + schoolName + "/" + testType + "/" + date + "/" + clas + "/" + section;
-    console.log("api: " + api);
-    httpFactory.imageUpload(file, api).then(function (data) {
-      var checkStatus = httpFactory.dataValidation(data);
-      console.log("data--" + JSON.stringify(data.data));
-      if (checkStatus) {
-        //alert(data.data.message);
-        var loginAlert = $uibModal.open({
-          scope: $scope,
-          templateUrl: '/html/templates/dashboardsuccess.html',
-          windowClass: 'show',
-          backdropClass: 'static',
-          keyboard: false,
-          controller: function ($scope, $uibModalInstance) {
-            $scope.message = data.data.message;
-          }
-        })
+    if (testType && date && clas && section) {
+      var api = $scope.propertyJson.VC_uploadMarkFile + "/" + schoolName + "/" + testType + "/" + date + "/" + clas + "/" + section;
+      $scope.reset();
+    }
+    else {
+      $uibModal.open({
+        scope: $scope,
+        templateUrl: '/html/templates/dashboardwarning.html',
+        windowClass: 'show',
+        backdropClass: 'static',
+        keyboard: false,
+        controller: function ($scope, $uibModalInstance) {
+          $scope.message = "Test Type, Class, Section and Date are required"
+        }
+      })
+    }
 
-        up[0].ttSelect = null;
-      }
-      else {
-        var loginAlert = $uibModal.open({
-          scope: $scope,
-          templateUrl: '/html/templates/dashboardwarning.html',
-          windowClass: 'show',
-          backdropClass: 'static',
-          keyboard: false,
-          controller: function ($scope, $uibModalInstance) {
-            $scope.message = data.data.message;
-          }
-        })
-        //alert(data.data.message);
-      }
-    })
+    console.log("api: " + api);
+    if (api) {
+      httpFactory.imageUpload(file, api).then(function (data) {
+        var checkStatus = httpFactory.dataValidation(data);
+        console.log("data--" + JSON.stringify(data.data));
+        if (checkStatus) {
+          //alert(data.data.message);
+          var loginAlert = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardsuccess.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = data.data.message;
+            }
+          })
+
+          up[0].ttSelect = null;
+        }
+        else {
+          var loginAlert = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardwarning.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = data.data.message;
+            }
+          })
+          //alert(data.data.message);
+        }
+      })
+    }
+
     console.log("<--uploadMarkFile");
   }
 
@@ -157,10 +180,10 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
       "file": file
     }
     if (fileType == 'css') {
-      var api = "https://vc4all.in/vc/uploadClassFile/" + schoolName;
+      var api = $scope.propertyJson.VC_uploadClassFile + "/" + schoolName;
     }
     if (fileType == 'periods') {
-      var api = "https://vc4all.in/vc/uploadPeriodsFile/" + schoolName;
+      var api = $scope.propertyJson.VC_uploadPeriodsFile + "/" + schoolName;
     }
 
     console.log("api: " + api);
@@ -204,39 +227,58 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
     var obj = {
       "file": file
     }
-    var api = "https://vc4all.in/vc/uploadTeacher_timeTable/" + schoolName + "/" + data._id;
+    if (data._id) {
+      var api = $scope.propertyJson.VC_uploadTeacher_timeTable + "/" + schoolName + "/" + data._id;
+      $scope.reset();
+    }
+    else {
+      $uibModal.open({
+        scope: $scope,
+        templateUrl: '/html/templates/dashboardwarning.html',
+        windowClass: 'show',
+        backdropClass: 'static',
+        keyboard: false,
+        controller: function ($scope, $uibModalInstance) {
+          $scope.message = "Teacher is required"
+        }
+      })
+    }
+
     console.log("api: " + api);
-    httpFactory.csvUpload(obj, api).then(function (data) {
-      var checkStatus = httpFactory.dataValidation(data);
-      console.log("data--" + JSON.stringify(data.data));
-      if (checkStatus) {
-        // $window.location.href = $scope.propertyJson.R082;
-        var loginAlert = $uibModal.open({
-          scope: $scope,
-          templateUrl: '/html/templates/dashboardsuccess.html',
-          windowClass: 'show',
-          backdropClass: 'static',
-          keyboard: false,
-          controller: function ($scope, $uibModalInstance) {
-            $scope.message = data.data.message;
-          }
-        })
-        //alert(data.data.message);
-        $scope.getSchoolData();
-      } else {
-        var loginAlert = $uibModal.open({
-          scope: $scope,
-          templateUrl: '/html/templates/dashboardwarning.html',
-          windowClass: 'show',
-          backdropClass: 'static',
-          keyboard: false,
-          controller: function ($scope, $uibModalInstance) {
-            $scope.message = "Update Fail";
-          }
-        })
-        //alert("Update Fail");
-      }
-    });
+    if (api) {
+      httpFactory.csvUpload(obj, api).then(function (data) {
+        var checkStatus = httpFactory.dataValidation(data);
+        console.log("data--" + JSON.stringify(data.data));
+        if (checkStatus) {
+          // $window.location.href = $scope.propertyJson.R082;
+          var loginAlert = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardsuccess.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = data.data.message;
+            }
+          })
+          //alert(data.data.message);
+          $scope.getSchoolData();
+        } else {
+          var loginAlert = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardwarning.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = "Update Fail";
+            }
+          })
+          //alert("Update Fail");
+        }
+      });
+    }
+
 
     console.log("<--uploadTimeTableFile");
   }
@@ -250,42 +292,84 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
     }
     console.log("uploadType: " + uploadType);
     console.log("reportType: " + reportType);
-    if (uploadType == "Mark Report") {
-      var api = "https://vc4all.in/vc/uploadMark";
-    }
-    else if (uploadType == "Attendance") {
+    if (uploadType == "Attendance") {
       var month = list;
-      console.log("month: "+month);
-      var api = "https://vc4all.in/vc/uploadAttendance/" + schoolName + "/" + clas + "/" + section + "/" + reportType + "/" + month;
+      console.log("month: " + month);
+      if (clas && section && reportType && month) {
+        var api = $scope.propertyJson.VC_uploadAttendance + "/" + schoolName + "/" + clas + "/" + section + "/" + reportType + "/" + month;
+      }
+      else {
+        $uibModal.open({
+          scope: $scope,
+          templateUrl: '/html/templates/dashboardwarning.html',
+          windowClass: 'show',
+          backdropClass: 'static',
+          keyboard: false,
+          controller: function ($scope, $uibModalInstance) {
+            $scope.message = "Class, Section, report Type and Date are required"
+          }
+        })
+      }
+
     }
     else if (uploadType == "Payment") {
-      var api = "https://vc4all.in/vc/uploadPayment";
+      var api = $scope.propertyJson.VC_uploadPayment;
     }
     else if (uploadType == "Student Details") {
-      var api = "https://vc4all.in/vc/uploadStudentMaster/" + schoolName + "/" + clas + "/" + section;
+      if (clas && section) {
+        var api = $scope.propertyJson.VC_uploadStudentMaster + "/" + schoolName + "/" + clas + "/" + section;
+      }
+      else {
+        $uibModal.open({
+          scope: $scope,
+          templateUrl: '/html/templates/dashboardwarning.html',
+          windowClass: 'show',
+          backdropClass: 'static',
+          keyboard: false,
+          controller: function ($scope, $uibModalInstance) {
+            $scope.message = "Class and Section are required"
+          }
+        })
+      }
     }
     else if (uploadType == "Teacher Details") {
-      var api = "https://vc4all.in/vc/uploadTeacherMaster/" + schoolName;
+      var api = $scope.propertyJson.VC_uploadTeacherMaster + "/" + schoolName;
     }
     console.log("api: " + api);
-    httpFactory.csvUpload(obj, api).then(function (data) {
-      var checkStatus = httpFactory.dataValidation(data);
-      console.log("data--" + JSON.stringify(data.data));
-      if (checkStatus) {
-        console.log("checkStatus: "+checkStatus);
-        if (uploadType == "Attendance") {
-          if (data.data.data.length > 0) {
-            var loginAlert = $uibModal.open({
-              scope: $scope,
-              templateUrl: '/html/templates/dashboardsuccess.html',
-              windowClass: 'show',
-              backdropClass: 'static',
-              keyboard: false,
-              controller: function ($scope, $uibModalInstance) {
-                $scope.message = data.data.message + " But we have found unknown statudent detail " + data.data.data[0].StudentName + "-" + data.data.data[0].StudentID
-              }
-            })
-            //alert(data.data.message + " But we have found unknown statudent detail " + data.data.data[0].StudentName + "-" + data.data.data[0].StudentID);
+    if (api) {
+      httpFactory.csvUpload(obj, api).then(function (data) {
+        var checkStatus = httpFactory.dataValidation(data);
+        console.log("data--" + JSON.stringify(data.data));
+        if (checkStatus) {
+          console.log("checkStatus: " + checkStatus);
+          if (uploadType == "Attendance") {
+            if (data.data.data.length > 0) {
+              var loginAlert = $uibModal.open({
+                scope: $scope,
+                templateUrl: '/html/templates/dashboardsuccess.html',
+                windowClass: 'show',
+                backdropClass: 'static',
+                keyboard: false,
+                controller: function ($scope, $uibModalInstance) {
+                  $scope.message = data.data.message + " But we have found unknown statudent detail " + data.data.data[0].StudentName + "-" + data.data.data[0].StudentID
+                }
+              })
+              //alert(data.data.message + " But we have found unknown statudent detail " + data.data.data[0].StudentName + "-" + data.data.data[0].StudentID);
+            }
+            else {
+              var loginAlert = $uibModal.open({
+                scope: $scope,
+                templateUrl: '/html/templates/dashboardsuccess.html',
+                windowClass: 'show',
+                backdropClass: 'static',
+                keyboard: false,
+                controller: function ($scope, $uibModalInstance) {
+                  $scope.message = data.data.message
+                }
+              })
+              //alert(data.data.message);
+            }
+
           }
           else {
             var loginAlert = $uibModal.open({
@@ -300,46 +384,56 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
             })
             //alert(data.data.message);
           }
-
         }
         else {
-          var loginAlert = $uibModal.open({
-            scope: $scope,
-            templateUrl: '/html/templates/dashboardsuccess.html',
-            windowClass: 'show',
-            backdropClass: 'static',
-            keyboard: false,
-            controller: function ($scope, $uibModalInstance) {
-              $scope.message = data.data.message
+          console.log("checkStatus: " + checkStatus);
+          if (uploadType == "Attendance") {
+            console.log("data.data.message: " + data.data.message);
+            if (data.data.message == "Sorry! you already updated for this month") {
+              console.log("Sorry! you already updated for this month");
+              var loginAlert = $uibModal.open({
+                scope: $scope,
+                templateUrl: '/html/templates/dashboardwarning.html',
+                windowClass: 'show',
+                backdropClass: 'static',
+                keyboard: false,
+                controller: function ($scope, $uibModalInstance) {
+                  $scope.message = data.data.message
+                }
+              })
+              //alert(data.data.message + " If you want to update, try update reports option");
             }
-          })
-          //alert(data.data.message);
-        }
-      }
-      else {
-        console.log("checkStatus: "+checkStatus);
-        if (uploadType == "Attendance") {
-          console.log("data.data.message: "+ data.data.message);
-          if (data.data.message == "Sorry! you already updated for this month" ) {
-            console.log("Sorry! you already updated for this month");
-            var loginAlert = $uibModal.open({
-              scope: $scope,
-              templateUrl: '/html/templates/dashboardwarning.html',
-              windowClass: 'show',
-              backdropClass: 'static',
-              keyboard: false,
-              controller: function ($scope, $uibModalInstance) {
-                $scope.message = data.data.message
-              }
-            })
-            //alert(data.data.message + " If you want to update, try update reports option");
+            else if (data.data.note == "upload not satisfied") {
+              console.log("data: " + data.message);
+              console.log("data: " + data.data.message);
+              var msg = data.data.message;
+              console.log("msg: " + msg);
+              // alert(data.data.message);
+              var loginAlert = $uibModal.open({
+                scope: $scope,
+                templateUrl: '/html/templates/dashboardsuccess.html',
+                windowClass: 'show',
+                backdropClass: 'static',
+                keyboard: false,
+                controller: function ($scope, $uibModalInstance) {
+                  $scope.message = msg;
+                }
+              })
+            }
+            else {
+              var loginAlert = $uibModal.open({
+                scope: $scope,
+                templateUrl: '/html/templates/dashboardwarning.html',
+                windowClass: 'show',
+                backdropClass: 'static',
+                keyboard: false,
+                controller: function ($scope, $uibModalInstance) {
+                  $scope.message = data.data.message;
+                }
+              })
+            }
           }
-          else if (data.data.note == "upload not satisfied") {
-            console.log("data: " + data.message);
-            console.log("data: " + data.data.message);
-            var msg = data.data.message;
-            console.log("msg: " + msg);
-           // alert(data.data.message);
+          else {
             var loginAlert = $uibModal.open({
               scope: $scope,
               templateUrl: '/html/templates/dashboardsuccess.html',
@@ -347,41 +441,16 @@ app.controller('reportsUploadCtl', function ($scope, $window, httpFactory, sessi
               backdropClass: 'static',
               keyboard: false,
               controller: function ($scope, $uibModalInstance) {
-                $scope.message = msg;
-              }
-            })
-          }
-          else 
-          {
-            var loginAlert = $uibModal.open({
-              scope: $scope,
-              templateUrl: '/html/templates/dashboardwarning.html',
-              windowClass: 'show',
-              backdropClass: 'static',
-              keyboard: false,
-              controller: function ($scope, $uibModalInstance) {
                 $scope.message = data.data.message;
               }
             })
+            //alert(data.data.message);
           }
-        }
-        else {
-          var loginAlert = $uibModal.open({
-            scope: $scope,
-            templateUrl: '/html/templates/dashboardsuccess.html',
-            windowClass: 'show',
-            backdropClass: 'static',
-            keyboard: false,
-            controller: function ($scope, $uibModalInstance) {
-              $scope.message = data.data.message;
-            }
-          })
-          //alert(data.data.message);
-        }
 
-      }
-    })
-
+        }
+      })
+      $scope.reset();
+    }
     console.log("<--uploadFile");
   }
 

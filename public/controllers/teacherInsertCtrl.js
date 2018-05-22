@@ -1,9 +1,11 @@
-app.controller("teacherInsertCtrl", function($scope, $window, httpFactory, $uibModal) {
+app.controller("teacherInsertCtrl", function($scope, $rootScope, $window, httpFactory, $uibModal) {
   console.log("teacherInsertCtrl==>");
 
   $scope.class = ["1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
   $scope.section = ["A", "B", "C", "D", "E"];
   $scope.css = [];
+  $scope.propertyJson = $rootScope.propertyJson;
+
   $scope.addSCC = function() {
     console.log("addSCC-->");
 
@@ -282,7 +284,7 @@ app.controller("teacherInsertCtrl", function($scope, $window, httpFactory, $uibM
     };
     console.log("obj: " + JSON.stringify(obj));
 
-    var api = "https://vc4all.in/vc/teacherInsert";
+    var api = $scope.propertyJson.VC_teacherInsert;
     //var api = "http://localhost:5000/vc/teacherInsert";
     httpFactory.post(api, obj).then(function(data) {
       var checkStatus = httpFactory.dataValidation(data);

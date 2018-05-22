@@ -1,5 +1,6 @@
-app.controller('adminCreateCtl', function ($scope, $filter, $window, httpFactory, sessionAuthFactory,$uibModal) {
+app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window, httpFactory, sessionAuthFactory, $uibModal) {
     console.log("adminCreateCtl==>");
+    $scope.propertyJson = $rootScope.propertyJson;
 
     $scope.adminCreate = function () {
         console.log("adminCreate-->");
@@ -8,7 +9,7 @@ app.controller('adminCreateCtl', function ($scope, $filter, $window, httpFactory
             "schoolRegNumber": $scope.schoolRegNumber,
             "firstName": $scope.firstName,
             "lastName": $scope.lastName,
-            "dor": $filter('date')($scope.dob , "d MMM  y"),
+            "dor": $filter('date')($scope.dor, "d MMM  y"),
             "email": $scope.email,
             "mobNumber": $scope.mobNumber,
             "address": $scope.address,
@@ -20,7 +21,7 @@ app.controller('adminCreateCtl', function ($scope, $filter, $window, httpFactory
             "pswd": $scope.pswd
         }
         console.log("objJson: " + JSON.stringify(objJson));
-        var api = "https://vc4all.in/vc/adminCreate";
+        var api = $scope.propertyJson.VC_adminCreate;
         httpFactory.post(api, objJson).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -32,12 +33,27 @@ app.controller('adminCreateCtl', function ($scope, $filter, $window, httpFactory
                     backdropClass: 'static',
                     keyboard: false,
                     controller: function ($scope, $uibModalInstance) {
-                      $scope.message = data.data.message;
+                        $scope.message = data.data.message;
                     }
-                  })
+                })
+
+                $scope.schoolName = "";
+                $scope.schoolRegNumber = "";
+                $scope.firstName = "";
+                $scope.lastName = "";
+                $scope.dor = "";
+                $scope.email = "";
+                $scope.mobNumber = "";
+                $scope.address = "";
+                $scope.streetName = "";
+                $scope.city = "";
+                $scope.state = "";
+                $scope.pinCode = "";
+                $scope.country = "";
+                $scope.pswd = ""
                 // alert(data.data.message);
             }
-            else{
+            else {
                 var loginAlert = $uibModal.open({
                     scope: $scope,
                     templateUrl: '/html/templates/dashboardwarning.html',
@@ -45,10 +61,10 @@ app.controller('adminCreateCtl', function ($scope, $filter, $window, httpFactory
                     backdropClass: 'static',
                     keyboard: false,
                     controller: function ($scope, $uibModalInstance) {
-                      $scope.message = "Failed to create";
+                        $scope.message = data.data.message;
                     }
-                  })
-             //   alert("Failed to create");
+                })
+                //   alert("Failed to create");
             }
         })
         console.log("<--adminCreate");

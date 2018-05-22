@@ -3,9 +3,13 @@ var event = require('./controllers/event');
 var image = require('./controllers/image');
 var adminAction = require('./controllers/adminAction');
 var school = require('./controllers/school');
-
+var careator = require('./controllers/careator');
 
 module.exports = function (app) {
+
+    app.post('/careator/pswdGenerate', careator.pswdGenerate);
+    app.post('/careator/pswdCheck', careator.pswdCheck);
+    app.post('/careator/emailInvite', careator.emailInvite);
 
     app.post('/vc/register4VC', user.register4VC);
     app.post('/vc/login4VC', user.login4VC);
@@ -60,8 +64,10 @@ module.exports = function (app) {
     app.get('/vc/getEventById/:id', event.getEventById);
     app.get('/vc/getStudentAttendance/:id', event.getStudentAttendance);
     app.post('/vc/deleteEvent', event.deleteEvent);
+    app.post('/vc/updateEventMOM/:eventId', event.updateEventMOM);
     app.post('/vc/parentCredential', event.parentCredential);
     app.post('/vc/eventUpdate/:id', event.eventUpdate);
+
 
 
 

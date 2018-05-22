@@ -4473,6 +4473,7 @@ a.thumbnail:focus {
   background-size: 40px 40px;
 }
 .progress.active .progress-bar {
+  width: auto;
   -webkit-animation: progress-bar-stripes 2s linear infinite;
   -moz-animation: progress-bar-stripes 2s linear infinite;
   -ms-animation: progress-bar-stripes 2s linear infinite;

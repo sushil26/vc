@@ -1,6 +1,6 @@
-app.controller('userAuthCtrl', function ($scope, $state, $window, httpFactory,$uibModal) {
+app.controller('userAuthCtrl', function ($scope, $rootScope, $state, $window, httpFactory,$uibModal) {
     console.log("userAuthCtrl==>: " + localStorage.getItem("userData"));
-
+    $scope.propertyJson = $rootScope.propertyJson;
 
     $scope.viewUser = function (id, loginT) {
         console.log("viewUser-->");
@@ -12,7 +12,7 @@ app.controller('userAuthCtrl', function ($scope, $state, $window, httpFactory,$u
     }
     $scope.getUser = function () {
         console.log("getUser-->");
-        var api = "https://vc4all.in/vc/getUserData";
+        var api = $scope.propertyJson.VC_getUserData;
         //var api = "http://localhost:5000/vc/getUserData";
 
         httpFactory.get(api).then(function (data) {
@@ -35,7 +35,7 @@ app.controller('userAuthCtrl', function ($scope, $state, $window, httpFactory,$u
 
     $scope.getStudentList = function () {
         console.log("getStudentList-->");
-        var api = "https://vc4all.in/vc/getStudData";
+        var api = $scope.propertyJson.VC_getStudData;
         //var api = "http://localhost:5000/vc/getUserData";
 
         httpFactory.get(api).then(function (data) {
@@ -57,14 +57,12 @@ app.controller('userAuthCtrl', function ($scope, $state, $window, httpFactory,$u
 
     $scope.updateUserStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
-        var api = "https://vc4all.in/vc/updateUserStatus";
+        var api = $scope.propertyJson.VC_updateUserStatus;
         //var api = "http://localhost:5000/vc/updateUserStatus";
-
         var obj = {
             "id": id,
             "status": status
         }
-
         httpFactory.post(api, obj).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -103,13 +101,11 @@ app.controller('userAuthCtrl', function ($scope, $state, $window, httpFactory,$u
     }
     $scope.deleteUser = function (id, index) {
         console.log("deleteUser-->");
-        var api = "https://vc4all.in/vc/deleteUser";
+        var api = $scope.propertyJson.VC_deleteUser;
         //var api = "http://localhost:5000/vc/updateUserStatus";
-
         var obj = {
             "id": id
         }
-
         httpFactory.post(api, obj).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -151,7 +147,7 @@ app.controller('userAuthCtrl', function ($scope, $state, $window, httpFactory,$u
 
     $scope.updateStudStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
-        var api = "https://vc4all.in/vc/updateStudStatus";
+        var api = $scope.propertyJson.VC_updateStudStatus;
         //var api = "http://localhost:5000/vc/updateUserStatus";
 
         var obj = {
@@ -197,13 +193,11 @@ app.controller('userAuthCtrl', function ($scope, $state, $window, httpFactory,$u
     }
     $scope.deleteStud = function (id, index) {
         console.log("deleteUser-->");
-        var api = "https://vc4all.in/vc/deleteStud";
+        var api = $scope.propertyJson.VC_deleteStud;
         //var api = "http://localhost:5000/vc/updateUserStatus";
-
         var obj = {
             "id": id
         }
-
         httpFactory.post(api, obj).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));

@@ -7,6 +7,31 @@
 /* Import fonts */
 
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+/* #sidebar > ul > li:hover > a::before,
+#sidebar > ul > li > a:hover::before {
+  background: #3db2e1;
+}
+
+#sidebar > ul > li.active > a {
+  color: #dff2fa;
+}
+#sidebar > ul > li:hover > a,
+#sidebar > ul > li > a:hover {
+  color: #dff2fa;
+  -webkit-transform: rotateX(90deg) translateY(-23px);
+  -moz-transform: rotateX(90deg) translateY(-23px);
+  transform: rotateX(90deg) translateY(-23px);
+  -ms-transform: none;
+} */
+
+/* 
+table th {
+
+  word-break: break-all;
+}
+table td {
+  word-break: break-all;
+} */
 
 @import url(line-icons.css);
 p {
@@ -617,13 +642,13 @@ ul.sidebar-menu li a:hover,
 ul.sidebar-menu li a:focus {
   color: black;
 
-  border-bottom: 1px solid #d0d8df;
+  /* border-bottom: 1px solid #d0d8df; */
 }
 
 /*ul.sidebar-menu li.active a,*/
 ul.sidebar-menu .sub-menu li.active a {
-  border-bottom: 1px solid #d0d8df;
-}
+  /* border-bottom: 1px solid #d0d8df;
+*/}
 
 ul.sidebar-menu li a i {
   font-size: 18px;

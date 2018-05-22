@@ -1,19 +1,21 @@
-app.controller('viewUserController', function ($scope, $state, $window, httpFactory,$uibModal) {
+app.controller('viewUserController', function ($scope, $rootScope, $state, $window, httpFactory,$uibModal) {
     console.log("viewUserController==>");
     var id = $state.params.id;
     var loginT = $state.params.loginType;
+    $scope.propertyJson = $rootScope.propertyJson;
+
     $scope.getTeacherDetails = function (id) {
         console.log("getTeacherData-->");
         if (loginT == 'teacher') {
-            var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+            var api = $scope.propertyJson.VC_teacherDetail + "/" + id;
         }
         else if(loginT == 'school')
         {
-            var api = "https://vc4all.in/vc/getSchoolDataById" + "/" + id;
+            var api = $scope.propertyJson.VC_getSchoolDataById + "/" + id;
            
         }
         else {
-            var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
+            var api = $scope.propertyJson.VC_studentDetail + "/" + id;
         }
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";

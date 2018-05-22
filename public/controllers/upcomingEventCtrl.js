@@ -1,12 +1,13 @@
-app.controller('upcomingEventController', function ($scope, $state, $window, httpFactory, $uibModal, $filter, sessionAuthFactory) {
+app.controller('upcomingEventController', function ($scope, $rootScope, $state, $window, httpFactory, $uibModal, $filter, sessionAuthFactory) {
     console.log("upcomingEventController==>");
     $scope.userData = sessionAuthFactory.getAccess("userData");
     $scope.loginType = $scope.userData.loginType;
     $scope.events = [];
+    $scope.propertyJson = $rootScope.propertyJson;
 
     $scope.getToDate = function () {
         console.log("Get To Date-->");
-        var api = "https://vc4all.in/vc/getToDate";
+        var api = $scope.propertyJson.VC_getToDate;
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -35,7 +36,7 @@ app.controller('upcomingEventController', function ($scope, $state, $window, htt
     $scope.eventGet = function () {
         console.log("eventGet-->");
         var id = $scope.userData.id;
-        var api = "https://vc4all.in/vc/eventGet" + "/" + id;
+        var api = $scope.propertyJson.VC_eventGet + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
         $scope.calendarOwner = "Your";
 
@@ -176,12 +177,19 @@ app.controller('upcomingEventController', function ($scope, $state, $window, htt
         console.log("<--waitForTime");
     }
 
-    $scope.conferenceStart = function(url, id){
+    $scope.conferenceStart = function(event_id, url, id){
         console.log("conferenceStart-->");
-        console.log("id: "+id+"url: "+url);
+        console.log(" event_id: "+event_id+" id: "+id+"url: "+url);
+
         localStorage.setItem("id", id);
         localStorage.setItem("schoolName", $scope.userData.schoolName);
-       
+        localStorage.setItem("eventId", event_id);
+       if($scope.loginType=='teacher'){
+        localStorage.setItem("teacherLoginId", $scope.userData.id);
+       }
+       else if($scope.loginType=='studParent'){
+        localStorage.setItem("studLoginId", $scope.userData.id);
+       }
         $window.open(url, '_blank');
         console.log("<--conferenceStart");
     }

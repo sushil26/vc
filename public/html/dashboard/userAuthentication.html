@@ -9,14 +9,14 @@
               <span style="color:white;">&nbspTEACHER</span>
             </div>
 
-            <table class="table">
+            <table class="table table-sm">
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Teacher Id</th>
                   <th>Teacher Name</th>
-                  <th>Email</th>
-                  <th>Mobile Number</th>
+                  <!-- <th>Email</th> -->
+                  <!-- <th>Mobile Number</th> -->
                   <th>Status</th>
                   <th>Action</th>
 
@@ -27,17 +27,21 @@
                   <td style="background-color:white;">{{$index+1}}.</td>
                   <td style="background-color:white;">{{ud.schoolId}}</td>
                   <td style="background-color:white;">
-                    {{ud.firstName + " " + ud.lastName}}
+                    <div style="word-wrap: break-word;">
+                      {{ud.firstName + " " + ud.lastName}}
+                    </div>
                   </td>
-                  <td style="background-color:white;">{{ud.email}}</td>
-                  <td style="background-color:white;">{{ud.mobileNum}}</td>
+                  <!-- <td style="background-color:white;">
+                    <div style="word-wrap: break-word;">{{ud.email}}</div>
+                  </td> -->
+                  <!-- <td style="background-color:white;">{{ud.mobileNum}}</td> -->
                   <td style=" background-color:white; color:red;" ng-if="ud.status=='inactive'">Inactive</td>
                   <td style=" background-color:white; color:green;" ng-if="ud.status=='active'">Active</td>
                   <td style="background-color:white;">
                     <button class="btn btn-danger" ng-if="ud.status=='active'" ng-click="updateUserStatus(ud._id,'inactive',$index)">Dectivate</button>
                     <button class="btn btn-info" ng-if="ud.status=='inactive'" ng-click="updateUserStatus(ud._id,'active',$index)">Activate</button>
-                    <button class="btn btn-warning" class="btn" ng-click="viewUser(ud._id, 'teacher')">View</button>
-                    <button class="btn btn-danger" ng-click="deleteUser(ud._id, $index)">Delete</button>
+                    <button class="btn btn-warning" class="btn" ng-click="viewUser(ud._id, 'teacher')">View Detail</button>
+                    <!-- <button class="btn btn-danger" ng-click="deleteUser(ud._id, $index)">Delete</button> -->
                   </td>
                 </tr>
               </tbody>
@@ -50,15 +54,15 @@
               <i class="fa fa-user-circle"></i>
               <span style="color:white;">&nbspSTUDENT</span>
             </div>
-            <table class="table">
+            <table class="table table-sm">
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Student Id</th>
                   <th>Student Name</th>
                   <th>Class-Section</th>
-                  <th>Father Email</th>
-                  <th>Mother Email</th>
+                  <!-- <th>Father Email</th>
+                  <th>Mother Email</th> -->
                   <th>Status</th>
                   <th>Action</th>
 
@@ -69,21 +73,26 @@
                   <td style="background-color:white;">{{$index+1}}.</td>
                   <td style="background-color:white;">{{sd.schoolId}}</td>
                   <td style="background-color:white;">
-                    {{sd.firstName + " " + sd.lastName}}
-                    <!-- Modal -->
+                    <div style="word-wrap: break-word;">
+                      {{sd.firstName + " " + sd.lastName}}
+                    </div>
                   </td>
-                  <td style="background-color:white;">{{sd.cs[0].class +" "+ sd.cs[0].section}}</td>
-                  <td style="background-color:white;">{{sd.parentEmail}}</td>
-                  <td style="background-color:white;">{{sd.motherEmail}}</td>
+                  <td style="background-color:white;">
+                    <div style="word-wrap: break-word;">{{sd.cs[0].class +" "+ sd.cs[0].section}}</div>
+                  </td>
+                  <!-- <td style="background-color:white;">
+                    <div style="word-wrap: break-word;">{{sd.parentEmail}}</div>
+                  </td>
+                  <td style="background-color:white;"><div style="word-wrap: break-word;">{{sd.motherEmail}}</div></td> -->
                   <td style=" background-color:white; color:red;" ng-if="sd.status=='inactive'">Inactive</td>
                   <td style=" background-color:white; color:green;" ng-if="sd.status=='active'">Active</td>
                   <td style="background-color:white;">
                     <button class="btn btn-danger" ng-if="sd.status=='active'" ng-click="updateStudStatus(sd._id,'inactive',$index)">Dectivate</button>
                     <button class="btn btn-info" ng-if="sd.status=='inactive'" ng-click="updateStudStatus(sd._id,'active',$index)">Activate</button>
 
-                    <button class="btn btn-warning" ng-click="viewUser(sd._id,'studParent')">View</button>
+                    <button class="btn btn-warning" ng-click="viewUser(sd._id,'studParent')">View Detail</button>
 
-                    <button class="btn btn-danger" ng-click="deleteStud(sd._id, $index)">Delete</button>
+                    <!-- <button class="btn btn-danger" ng-click="deleteStud(sd._id, $index)">Delete</button> -->
                   </td>
                 </tr>
               </tbody>

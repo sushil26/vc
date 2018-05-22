@@ -1,14 +1,15 @@
-app.controller('attendanceViewCtl', function ($scope, $window, httpFactory, $compile, $uibModal,sessionAuthFactory, moment, calendarConfig) {
+app.controller('attendanceViewCtl', function ($scope, $rootScope, $window, httpFactory, $compile, $uibModal, sessionAuthFactory, moment, calendarConfig) {
     console.log("attendanceViewCtl==>");
 
     $scope.userData = sessionAuthFactory.getAccess();
     var schoolName = $scope.userData.schoolName;
     console.log("$scope.userData: " + JSON.stringify($scope.userData));
+    $scope.propertyJson = $rootScope.propertyJson;
 
     $scope.getTeacherData = function () {
         console.log("getTeacherData-->");
         var id = $scope.userData.id;
-        var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+        var api = $scope.propertyJson.VC_teacherDetail + "/" + id;
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";
         console.log("api: " + api);
@@ -28,7 +29,7 @@ app.controller('attendanceViewCtl', function ($scope, $window, httpFactory, $com
 
     $scope.getAttendance = function (id) {
         console.log("getAttendance-->");
-        var api = "https://vc4all.in/vc/getStudentAttendance" + "/" + id;
+        var api = $scope.propertyJson.VC_getStudentAttendance + "/" + id;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
@@ -62,7 +63,7 @@ app.controller('attendanceViewCtl', function ($scope, $window, httpFactory, $com
                         if ($scope.attendance[x].dateAttendance[y].status == "P") {
                             obj.color = calendarConfig.colorTypes.info;
                         }
-                       else if ($scope.attendance[x].dateAttendance[y].status == "L") {
+                        else if ($scope.attendance[x].dateAttendance[y].status == "L") {
                             obj.color = calendarConfig.colorTypes.warning;
                         }
                         else {
@@ -74,7 +75,6 @@ app.controller('attendanceViewCtl', function ($scope, $window, httpFactory, $com
                     }
                 }
                 console.log("$scope.events: " + JSON.stringify($scope.events));
-
             }
             else {
                 console.log("sorry");
@@ -91,16 +91,13 @@ app.controller('attendanceViewCtl', function ($scope, $window, httpFactory, $com
         $scope.getAttendance($scope.userData.id);
     }
     $scope.getStudListForCS = function (css) {
-
         console.log("getStudListForCS-->");
-        // console.log("$scope.cssSelect: "+JSON.stringify($scope.cssSelect));
         console.log("css" + css);
         console.log("JSON.css" + JSON.stringify(css));
         var clas = css.class;
         var section = css.section;
         $scope.studList = [];
-
-        var api = "https://vc4all.in/vc/getStudListForCS" + "/" + schoolName + "/" + clas + "/" + section;
+        var api = $scope.propertyJson.VC_getStudListForCS + "/" + schoolName + "/" + clas + "/" + section;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
@@ -118,16 +115,13 @@ app.controller('attendanceViewCtl', function ($scope, $window, httpFactory, $com
             }
         })
         console.log("<--getStudListForCS");
-
     }
 
     var vm = this;
-
     $scope.calendarView = 'month';
     $scope.viewDate = moment().startOf('day').toDate();
     var originalFormat = calendarConfig.dateFormats.hour;
     calendarConfig.dateFormats.hour = 'HH:mm';
-
     var actions = [{
         // label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
         label: 'Re-Schedule',

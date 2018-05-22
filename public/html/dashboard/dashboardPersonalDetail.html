@@ -8,7 +8,7 @@
                         <i class="fa fa-user-circle"></i>
                         <span style="color:white;">&nbspPROFILE</span>
                         <notification displayType="{{notificationType}}" message="{{notification}}"></notification>
-                     
+
                     </div>
                     <div class="panel-body bio-graph-info" style="padding: 1px;">
                         <div ng-if="loginType!='vc4allAdmin'" class="row" style="margin:20px!important;">
@@ -53,7 +53,7 @@
                                 <p>
                                     <span>
                                         <b style="color:teal;">Mobile Number</b>
-                                    </span>: {{userData[0].mobileNum}} </p>
+                                    </span>: {{userData[0].mobNumber}} </p>
                             </div>
 
 
@@ -73,21 +73,14 @@
                                 <p>
                                     <span>
                                         <b style="color:teal;">Date of birth</b>
-                                    </span>: {{userData[0].dob}}</p>
+                                    </span>: {{userData[0].dob | date:' d MMM yyyy'}}</p>
                             </div>
                             <div class="bio-row" ng-if="loginType=='studParent'">
                                 <p>
                                     <span>
                                         <b style="color:teal;">Date of Joining</b>
-                                    </span>: {{userData[0].doj}}</p>
+                                    </span>: {{userData[0].doj | date:' d MMM yyyy'}}</p>
                             </div>
-                            <!-- <div class="bio-row" ng-if="loginType=='teacher'">
-                                <p>
-                                    <span>
-                                        <b style="color:teal;">Mobile Number</b>
-                                    </span>: {{userData[0].mobNumber}}</p>
-                            </div> -->
-
                             <div class="bio-row" ng-if="loginType=='teacher' || loginType=='admin'">
                                 <p>
                                     <span>
@@ -159,26 +152,26 @@
                                     </span>
 
                                 </p>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead style="background: white;">
-                                            <tr>
-                                                <th>Class</th>
-                                                <th>Section</th>
-                                                <th>Subject</th>
-                                            </tr>
 
-                                        </thead>
-                                        <tbody style="background: white;">
-                                            <tr ng-repeat="css in userData[0].css">
-                                                <td>{{css.class}}</td>
-                                                <td>{{css.section}}</td>
-                                                <td>{{css.subject}}</td>
-                                            </tr>
+                                <table class="table table-sm">
+                                    <thead style="background: white;">
+                                        <tr>
+                                            <th>Class</th>
+                                            <th>Section</th>
+                                            <th>Subject</th>
+                                        </tr>
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </thead>
+                                    <tbody style="background: white;">
+                                        <tr ng-repeat="css in userData[0].css">
+                                            <td>{{css.class}}</td>
+                                            <td>{{css.section}}</td>
+                                            <td>{{css.subject}}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
                             </div>
                         </div>
 

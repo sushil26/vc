@@ -1,30 +1,6 @@
 <link rel="stylesheet" href="././dashboard_Lib/css/style.css" />
 <link rel="stylesheet" href="././dashboard_Lib/css/style-responsive.css" />
-<!-- <link rel="stylesheet" href="././dashboard_Lib/css/bootstrap.min.css" /> -->
-<!-- <link rel="stylesheet" href="././dashboard_Lib/css/bootstrap-theme.css" /> -->
 <link rel="stylesheet" href="././dashboard_Lib/css/elegant-icons-style.css" />
-<!-- <script>
-        function onReady(callback) {
-          var intervalID = window.setInterval(checkReady, 1000);
-      
-          function checkReady() {
-            if (document.getElementsByTagName('body')[0] !== undefined) {
-              window.clearInterval(intervalID);
-              callback.call(this);
-            }
-          }
-        }
-      
-        function show(id, value) {
-          document.getElementById(id).style.display = value ? 'block' : 'none';
-        }
-      
-        onReady(function () {
-          show('page', true);
-          show('loading', false);
-        });
-      </script> -->
-
 <div ng-controller="dashboardController">
     <!-- container section start -->
     <section id="container" class="">
@@ -35,86 +11,26 @@
                     <i class="icon_menu" ng-click="iconMenuClick()"></i>
                 </div>
             </div>
-
             <!--logo start-->
             <img ng-click="homeClick()" style="float:left;width: 63px;margin-top: 5px" src="././home/img/fav.png" />
-            <a ng-click="homeClick()" class="logo" style="text-shadow: 2px 2px 4px #000000;">VC
-                <span class="lite">4ALL</span>
+            <a ng-click="homeClick()" class="logo" style="text-shadow: 2px 2px 4px #000000;">VC<span class="lite">4ALL</span>
             </a>
             <!--logo end-->
-
             <div class="top-nav notification-row">
                 <ul class="nav pull-right top-menu">
-                    <!-- alert notification start-->
-                    <!-- <li id="alert_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle">
-                            <i class="icon-bell-l"></i>
-                            <span class="badge bg-important">2</span>
-                        </a>
-                        <ul class="dropdown-menu extended notification">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            <li>
-                                <p class="blue">You have 2 new notifications</p>
-                            </li>
-                            <li>
-                                <a href="#" style="word-wrap: break-word; text-overflow: hidden;">
-                                    <span class="label label-primary">
-                                        <i class="icon_profile"></i>
-                                    </span>
-                                    Math teacher scheduled meeting on 12/12/12 at 12:00pm
-                                    <span class="small italic pull-right">5 mins</span>
-                            </li>
-                            <li>
-                                <a href="#" style="word-wrap: break-word; text-overflow: hidden;">
-                                    <span class="label label-warning">
-                                        <i class="icon_pin"></i>
-                                    </span>
-                                    Sushil's father Request for meeting on 12/12/12 at 13:00
-                                    <span class="small italic pull-right">50 mins</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">See all notifications</a>
-                            </li>
-                        </ul>
-                    </li> -->
-                    <!-- alert notification end-->
                     <!-- user login dropdown start-->
                     <li class="dropdown">
-                        <!-- <a data-toggle="dropdown" class="dropdown-toggle"> -->
-                        <!-- <span class="profile-ava">
-                                <img alt="" src="/dashboard_Lib/img/img.jpg">
-                            </span> -->
-
                         <span ng-if="hour <'12' && min<='59' && sec<='59' && hour >='0'" class="username"> &nbspGood Morning&nbsp{{userName}}</span>
-                        <span ng-if="hour >='12' && hour < '17'" class="username">  Good Afternoon&nbsp{{userName}}</span>
+                        <span ng-if="hour >='12' && hour < '17'" class="username"> Good Afternoon&nbsp{{userName}}</span>
                         <span ng-if="hour >='17' && min<='59' && sec<='59' && hour <='23'" class="username">Good Evening&nbsp{{userName}}</span>
                         <br>
-                        
                         <span class="username" style="color: white;">
-                             {{clock | date:' d MMM yyyy h:mm a'}}</span>
-
-                        <!-- <b class="caret"></b> -->
-                        <!-- </a> -->
-                        <!-- <ul class="dropdown-menu extended logout">
-                            <div class="log-arrow-up"></div>
-                            <li class="eborder-top">
-                                <a href="/#!/dashboard/personalDetail">
-                                    <i style="font-size:15px;" class="icon_profile"></i> My Profile</a>
-                            </li>
-                            <li>
-                                <a href="documentation.html">
-                                    <i style="font-size:15px;" class="icon_key_alt"></i> Account Setting</a>
-                            </li>
-                            <li ng-click="logOut()">
-                                <a>
-                                    <i style="font-size:15px;" class="icon_key_alt"></i> Log Out</a>
-                            </li>
-                        </ul> -->
+                            {{clock | date:' d MMM yyyy h:mm a'}}</span>
                     </li>
                     <!-- user login dropdown end -->
                 </ul>
             </div>
+
         </header>
         <!--header end-->
 
@@ -146,12 +62,11 @@
                         </a>
                     </li>
                     <!-- ##### Start teacher/student Event  ##### -->
-                    <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'" style="color:aquamarine;">
+                    <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
                         <a ng-click="eventClick('events_subMenu')">
                             <i style="font-size:15px;" class="fa fa-calendar">
                                 <span>&nbspEVENTS</span>
                             </i>
-
                             <span ng-if="events_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
                             <span ng-if="events_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
                         </a>
@@ -165,14 +80,12 @@
                         </ul>
                     </li>
                     <!-- ##### Start teacher/student Event  ##### -->
-
                     <!-- ##### Start teacher/student Acdemic  ##### -->
                     <li class="sub-menu" ng-if="loginType=='teacher' || loginType=='studParent'">
                         <a ng-click="eventClick('academic_subMenu')">
                             <i style="font-size:15px;" class="fa fa-clipboard">
                                 <span>&nbspACADEMIC</span>
                             </i>
-
                             <span ng-if="academic_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
                             <span ng-if="academic_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
                         </a>
@@ -189,7 +102,6 @@
                         </ul>
                     </li>
                     <!-- ##### End teacher/student Acdemic  ##### -->
-
                     <!-- ##### Start teacher/student  Setting  ##### -->
                     <li class="sub-menu" ng-if="loginType=='teacher' || loginType=='studParent'">
                         <a ng-click="eventClick('setting_subMenu')">
@@ -203,21 +115,18 @@
                             <li>
                                 <a class="" href="#!/dashboard/passwordChange">CHANGE PASSWORD</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a class="" href="#!/dashboard/comingSoon">ACCOUNT SETTINGS</a>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                     <!-- ##### Start teacher/student  Setting  ##### -->
-
-
                     <!-- ##### Start school admin Acdemic  ##### -->
                     <li class="sub-menu" ng-if="loginType=='admin'">
                         <a ng-click="eventClick('academic_subMenu')">
                             <i style="font-size:15px;" class="fa fa-clipboard">
                                 <span>&nbspACADEMIC</span>
                             </i>
-
                             <span ng-if="academic_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
                             <span ng-if="academic_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
                         </a>
@@ -228,15 +137,6 @@
                             <li>
                                 <a class="" href="#!/dashboard/reportsUpdate">REPORTS UPDATE</a>
                             </li>
-                            <!-- <li>
-                                <a class="" href="#!/dashboard/attendanceView">ATTENDANCE</a>
-                            </li>
-                            <li>
-                                <a class="" href="#!/dashboard/comingSoon">RESULT</a>
-                            </li>
-                            <li>
-                                <a class="" href="#!/dashboard/comingSoon">FEE</a>
-                            </li> -->
                         </ul>
                     </li>
                     <!-- ##### End school admin Acdemic  ##### -->
@@ -254,26 +154,15 @@
                             <li>
                                 <a class="" href="#!/dashboard/passwordChange">CHANGE PASSWORD</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a class="" href="#!/dashboard/comingSoon">ACCOUNT SETTINGS</a>
-                            </li>
-                            <!-- <li ng-if="loginType=='admin'">
-                                <a class="" href="#!/dashboard/teacherI">CREATE TEACHER</a>
-                            </li>
-                            <li ng-if="loginType=='admin'">
-                                <a class="" href="#!/dashboard/studentI">CREATE STUDENT</a>
                             </li> -->
                             <li ng-if="loginType=='admin'">
                                 <a class="" href="#!/dashboard/userAuth">AUTHENTICATION</a>
                             </li>
-                            <!-- <li>
-                                    <a class="" href="#!/dashboard/comingSoon">CONFERENCE</a>
-                                </li> -->
                         </ul>
                     </li>
                     <!-- ##### End school admin Setting  ##### -->
-
-
                     <!-- ##### Start VC4ALL admin Setting  ##### -->
                     <li class="sub-menu" ng-if="loginType=='vc4allAdmin'">
                         <a ng-click="eventClick('setting_subMenu')">
@@ -287,9 +176,9 @@
                             <li>
                                 <a class="" href="#!/dashboard/passwordChange">CHANGE PASSWORD</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a class="" href="#!/dashboard/comingSoon">ACCOUNT SETTINGS</a>
-                            </li>
+                            </li> -->
 
                             <li>
                                 <a class="" href="#!/dashboard/allUser">ALL USER</a>
@@ -307,8 +196,6 @@
                         </ul>
                     </li>
                     <!-- ##### End VC4ALL admin Setting  ##### -->
-
-
                     <li>
                         <a href="#" ng-click="logOut()">
                             <i style="font-size:15px;" class="fa fa-sign-out">
@@ -322,7 +209,6 @@
         </aside>
         <!--sidebar end-->
         <div ui-view class="user-body">
-
         </div>
         <!--main content end-->
     </section>
@@ -330,10 +216,6 @@
 </div>
 
 <script src="././dashboard_Lib/js/jquery.js"></script>
-<!-- <script src="././dashboard_Lib/jquery-ui-1.10.4.min.js"></script>
-<script src="././dashboard_Lib/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="././dashboard_Lib/jquery-ui-1.9.2.custom.min.js"></script> -->
-
 <script src="././dashboard_Lib/js/bootstrap.min.js"></script>
 <script src="././dashboard_Lib/js/jquery.nicescroll.js"></script>
 <script src="././dashboard_Lib/js/jquery.scrollTo.min.js"></script>

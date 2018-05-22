@@ -1,17 +1,19 @@
-app.controller('dashboardPersonalDetailController', function ($scope, $window,$uibModal, httpFactory, sessionAuthFactory) {
+app.controller('dashboardPersonalDetailController', function ($scope, $rootScope, $window,$uibModal, httpFactory, sessionAuthFactory) {
     console.log("dashboardController==>");
     $scope.userData = sessionAuthFactory.getAccess("userData");
     console.log(" $scope.userData: " + JSON.stringify($scope.userData));
     $scope.loginType = $scope.userData.loginType;
     $scope.userName = $scope.userData.userName;
     var id = $scope.userData.id;
+    $scope.propertyJson = $rootScope.propertyJson;
+
     $scope.getUserDetails = function (id) {
         console.log("getTeacherData-->");
         if ($scope.loginType == 'teacher' || $scope.loginType == 'admin' || $scope.loginType == 'vc4allAdmin') {
-            var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+            var api =  $scope.propertyJson.VC_teacherDetail + "/" + id;
         }
         else if ($scope.loginType == 'studParent') {
-            var api = "https://vc4all.in/vc/studentDetail" + "/" + id;
+            var api = $scope.propertyJson.VC_studentDetail + "/" + id;
         }
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";

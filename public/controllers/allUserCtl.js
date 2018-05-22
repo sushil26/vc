@@ -1,11 +1,12 @@
-app.controller('allUserCtl', function ($scope, $state, $window,$uibModal, httpFactory, sessionAuthFactory) {
+app.controller('allUserCtl', function ($scope, $rootScope, $state, $window, $uibModal, httpFactory, sessionAuthFactory) {
     console.log("allUserCtl==>");
     $scope.userData = sessionAuthFactory.getAccess("userData");
     console.log(" $scope.userData : " + JSON.stringify($scope.userData));
+    $scope.propertyJson = $rootScope.propertyJson;
 
     $scope.getSchoolList = function () {
         console.log("getSchoolList-->");
-        var api = "https://vc4all.in/vc/getSchoolList";
+        var api = $scope.propertyJson.VC_getSchoolList;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -14,29 +15,25 @@ app.controller('allUserCtl', function ($scope, $state, $window,$uibModal, httpFa
             if (checkStatus) {
                 $scope.schoolList = data.data.data;
                 console.log("schoolList: " + JSON.stringify($scope.schoolList));
-
                 console.log(data.data.message);
             }
             else {
                 console.log("Sorry");
             }
-
         })
-
         console.log("<--getSchoolList");
     }
     $scope.getSchoolList();
 
     $scope.schoolUserData = function (schoolName) {
         console.log("schoolUserData-->");
-        var api = "https://vc4all.in/vc/getSchoolUser/" + schoolName;
+        var api = $scope.propertyJson.VC_getSchoolUser + "/" + schoolName;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
                 var schoolUser = data.data.data;
-                // console.log("schoolList: " + JSON.stringify(schoolUser));
                 $scope.teacherData = schoolUser.schoolTeacherList;
                 $scope.studentData = schoolUser.schoolStudentList;
                 console.log(" $scope.teacherData: " + JSON.stringify($scope.teacherData));
@@ -46,16 +43,13 @@ app.controller('allUserCtl', function ($scope, $state, $window,$uibModal, httpFa
             else {
                 console.log("Sorry");
             }
-
         })
         console.log("<--schoolUserData");
     }
 
     $scope.updateAdminStatus = function (id, status, index) {
         console.log("updateUserStatus-->");
-        var api = "https://vc4all.in/vc/updateUserStatus";
-        //var api = "http://localhost:5000/vc/updateUserStatus";
-
+        var api = $scope.propertyJson.VC_updateUserStatus;
         var obj = {
             "id": id,
             "status": status
@@ -73,10 +67,9 @@ app.controller('allUserCtl', function ($scope, $state, $window,$uibModal, httpFa
                     backdropClass: 'static',
                     keyboard: false,
                     controller: function ($scope, $uibModalInstance) {
-                      $scope.message = "Updated Status Successfully";
+                        $scope.message = "Updated Status Successfully";
                     }
-                  })
-              //  alert("Updated Status Successfully");
+                })
             }
             else {
                 var loginAlert = $uibModal.open({
@@ -86,15 +79,11 @@ app.controller('allUserCtl', function ($scope, $state, $window,$uibModal, httpFa
                     backdropClass: 'static',
                     keyboard: false,
                     controller: function ($scope, $uibModalInstance) {
-                      $scope.message = "Status updated failed, try again ";
+                        $scope.message = "Status updated failed, try again ";
                     }
-                  })
-               // alert("Status updated failed, try again ");
-
+                })
             }
-
         })
-
         console.log("<--updateUserStatus");
     }
 

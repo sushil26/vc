@@ -1,6 +1,7 @@
 var db = require('../dbConfig.js').getDb();
 var user = db.collection('user');/* ### Teacher collection  ### */
 var event = db.collection('event');
+//var student = require("./schemas/student.js");
 var stud = db.collection('student');/* ### student collection  ### */
 var general = require('../general.js');
 var ObjectId = require('mongodb').ObjectID;
@@ -199,7 +200,7 @@ module.exports.eventGet = function (req, res) {
 
     if (general.emptyCheck(req.params.id)) {
         event.find({ $or: [{ "userId": req.params.id }, { "remoteCalendarId": req.params.id }] }).sort({ "startAt": 1 }).toArray(function (err, listOfevents) {
-             console.log("listOfevents: "+JSON.stringify(listOfevents))
+            console.log("listOfevents: " + JSON.stringify(listOfevents))
             if (err) {
 
                 responseData = {
@@ -273,6 +274,60 @@ module.exports.getEventById = function (req, res) {
 
 
     console.log("<--EventGetById");
+}
+
+module.exports.updateEventMOM = function (req, res) {
+    console.log("updateEventMOM-->");
+    var responseData;
+
+    console.log("req.params.eventId: " + req.params.eventId);
+
+    if (general.emptyCheck(req.params.eventId)) {
+        var id = {
+            "_id": ObjectId(req.params.eventId)
+        }
+        var updateData;
+        if (req.body.momCreatedBy == 'teacher') {
+            console.log("req.body.momCreatedBy: " + req.body.momCreatedBy);
+            updateData = {
+                "teacher_mom": req.body.mom,
+            }
+        }
+        else if (req.body.momCreatedBy == 'parent') {
+            updateData = {
+                "parent_mom": req.body.mom,
+            }
+        }
+        event.update(id, { $set: updateData }), function (err, data) {
+            console.log("data: " + JSON.stringify(data));
+            if (err) {
+                responseData = {
+                    status: false,
+                    message: "Failed to Update MoM Data",
+                    data: data
+                };
+                res.status(400).send(responseData);
+            } else {
+                responseData = {
+                    status: true,
+                    message: "MoM Updated successfully",
+                    data: data
+                };
+                res.status(200).send(responseData);
+            }
+        }
+    }
+    else {
+        console.log("Epty value found");
+        responseData = {
+            status: false,
+            message: "there is no eventId to update"
+        };
+        res.status(400).send(responseData);
+    }
+
+
+    console.log("<--updateEventMOM");
 }
 
 module.exports.deleteEvent = function (req, res) {
@@ -372,7 +427,7 @@ module.exports.getStudListForCS = function (req, res) {
                 "section": req.params.section
             }]
         };
-
+        console.log("obj: " + JSON.stringify(obj));
         // var id = {
         //     "userId": req.params.id
         // }
@@ -469,7 +524,7 @@ module.exports.getTeacherListForCS = function (req, res) {
 module.exports.getStudentAttendance = function (req, res) {
     console.log("getStudentAttendance-->");
     if (general.emptyCheck(req.params.id)) {
-        stud.find({"_id":ObjectId(req.params.id)}).toArray(function (err, data) {
+        stud.find({ "_id": ObjectId(req.params.id) }).toArray(function (err, data) {
             console.log("data: " + JSON.stringify(data));
             if (err) {
 

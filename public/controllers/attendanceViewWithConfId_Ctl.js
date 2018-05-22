@@ -1,11 +1,13 @@
-app.controller('attendanceViewWithConfId_Ctl', function ($scope, $state, $window, httpFactory, $compile, $uibModal,sessionAuthFactory, moment, calendarConfig) {
+app.controller('attendanceViewWithConfId_Ctl', function ($scope, $rootScope, $state, $window, httpFactory, $compile, $uibModal,sessionAuthFactory, moment, calendarConfig) {
     console.log("markViewCtl==>");
     var id = $state.params.id;
     var schoolName = $state.params.schoolName;
     console.log("studSchoolId: "+id+" schoolName: "+schoolName);
+    $scope.propertyJson = $rootScope.propertyJson;
+
     $scope.getAttendance = function (id) {
         console.log("getAttendance-->");
-        var api = "https://vc4all.in/vc/getStudentAttendance" + "/" + id;
+        var api = $scope.propertyJson.VC_getStudentAttendance + "/" + id;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);

@@ -1,6 +1,7 @@
-app.controller("studentInsertCtrl", function($scope, $window, $uibModal, httpFactory) {
+app.controller("studentInsertCtrl", function($scope, $rootScope, $window, $uibModal, httpFactory) {
   console.log("studInsertCtrl==>");
   console.log("$scope.parentName: " + $scope.parentName);
+  $scope.propertyJson = $rootScope.propertyJson;
 
   $scope.classS = [
     "1",
@@ -35,7 +36,7 @@ app.controller("studentInsertCtrl", function($scope, $window, $uibModal, httpFac
     };
     console.log("obj: " + JSON.stringify(obj));
 
-    var api = "https://vc4all.in/vc/studentInsert";
+    var api = $scope.propertyJson.VC_studentInsert;
     //var api = "http://localhost:5000/vc/studentInsert";
 
     httpFactory.post(api, obj).then(function(data) {

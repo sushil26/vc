@@ -33,18 +33,18 @@
                                     </span>: {{userDetail[0].schoolId}} </p>
                             </div>
 
-                            <div class="bio-row" ng-if="loginType!='vc4allAdmin' && loginType!='studParent' && loginType!='teacher'">
+                            <div class="bio-row" ng-if="loginType!='vc4allAdmin' && loginType!='studParent'">
                                 <p>
                                     <span>
                                         <b style="color:teal;">Mobile Number</b>
                                     </span>: {{userDetail[0].mobNumber}} </p>
                             </div>
-                            <div class="bio-row" ng-if="loginType=='teacher'">
+                            <!-- <div class="bio-row" ng-if="loginType=='teacher'">
                                 <p>
                                     <span>
                                         <b style="color:teal;">Mobile Number</b>
-                                    </span>: {{userDetail[0].mobileNum}} </p>
-                            </div>
+                                    </span>: {{userDetail[0].mobNumber}} </p>
+                            </div> -->
                             <div class="bio-row" ng-if="loginType=='studParent'">
                                 <p>
                                     <span>
@@ -59,13 +59,13 @@
                                 <p>
                                     <span>
                                         <b style="color:teal;">Date of birth</b>
-                                    </span>: {{userDetail[0].dob}}</p>
+                                    </span>: {{userDetail[0].dob |date:"MMM-d-yyyy"}}</p>
                             </div>
                             <div class="bio-row" ng-if="loginType=='studParent'">
                                 <p>
                                     <span>
                                         <b style="color:teal;">Date of Join</b>
-                                    </span>: {{userDetail[0].doj}}</p>
+                                    </span>: {{userDetail[0].doj |date:"MMM-d-yyyy"}}</p>
                             </div>
 
                             <div class="bio-row" ng-if="loginType!='studParent'">
@@ -127,8 +127,8 @@
                                     </span>
 
                                 </p>
-                                <div class="table-responsive">
-                                    <table class="table">
+                                
+                                    <table class="table table-sm">
                                         <thead style="background: white;">
                                             <tr>
                                                 <th>Class</th>
@@ -146,7 +146,7 @@
 
                                         </tbody>
                                     </table>
-                                </div>
+                              
                             </div>
                         </div>
                         <div ng-if="loginType=='school'" class="row" style="margin: 20px !important;">

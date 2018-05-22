@@ -4,13 +4,13 @@
   Author: BootstrapMade.com
   License: https://bootstrapmade.com/license/
 */
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
 /* Trouble Shoot Section
 --------------------------------*/
-
-
 
 @import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
 /* .elementToFadeInAndOut {
@@ -30,37 +30,127 @@
 50% { opacity: 1; }
 } */
 
+/* .bouncy:hover {
+  animation: bouncy 1s infinite linear;
+  background: gold;
+} */
 
 
-.bt{
-  border:none;
+
+
+
+
+
+
+
+.bouncy {
+
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff ! important;
+  text-align: center;
+
+  padding: 10px;
+  margin: 5px;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: #109bce;
+  background-image: linear-gradient(bottom, rgb(14, 137, 182) 0%, rgb(22, 179, 236) 100%);
+  border-radius: 5px;
+  box-shadow: inset 0px 1px 0px #2ab7ec, 0px 1px 0px 0px #07526e, 0px 5px 5px #999;
+}
+
+bouncy:active {
+  top: 3px;
+  box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #07526e, 0px 5px 3px #999;
+}
+
+bouncy:before {
+  font-family: 'socialfont';
+  font-size: 50px;
+  line-height: 1em;
+  font-weight: normal;
+  color: #fff;
+  content: "\F020";
+  width: 85px;
+  height: 90px;
+  display: block;
+  position: absolute;
+  padding-top: 10px;
+  top: 10px;
+  text-shadow: 1px 1px 2px #07526e;
+}
+
+bouncy:active:before {
+  top: 7px;
+  font-size: 50px;
+  text-shadow: 0px 3px 0px #07526e, 0px 5px 1px #07526e/*, 3px 0px 1px #07526e, 3px 3px 1px #07526e,
+     -2px 0px 1px #68cff2*/
+  ;
+}
+
+.bouncy {
+  position: relative;
+}
+
+@keyframes bouncy {
+  0% {
+    top: 0em;
+  }
+  40% {
+    top: 0em;
+  }
+  43% {
+    top: -0.9em;
+  }
+  46% {
+    top: 0em;
+  }
+  48% {
+    top: -0.4em;
+  }
+  50% {
+    top: 0em;
+  }
+  100% {
+    top: 0em;
+  }
+}
+
+.bt {
+  border: none;
   background-color: transparent;
 }
 
-.cancelColrChange:hover { 
+.cancelColrChange:hover {
   color: rgb(218, 148, 160);
 }
+
 #troubleShooting {
   background: #fff;
   background-size: cover;
   padding: 80px 0 60px 0;
 }
-video{
-  width:100%;
+
+video {
+  width: 100%;
   height: 200px;
   background: #004085;
-
 }
+
 body {
+  background-image: url("bc.jpg");
   background: #fff;
   color: #666666;
   font-family: Oswald !important;
-  padding:0 !important;
+  padding: 0 !important;
 }
 
-
-
-a:hover, a:active, a:focus {
+a:hover,
+a:active,
+a:focus {
   color: #ffffff;
   outline: none;
   text-decoration: none;
@@ -69,23 +159,25 @@ a:hover, a:active, a:focus {
 p {
   padding: 0;
   margin: 0 0 30px 0;
- 
 }
 
-h1, h2, h3, h4, h5, h6 {
-
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 400;
   margin: 0 0 20px 0;
   padding: 0;
 }
-.btn{
 
+.btn {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-
-
 /* Back to top button */
+
 .back-to-top {
   position: fixed;
   display: none;
@@ -120,6 +212,7 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
+
 #header {
   padding: 30px 0;
   height: 60px;
@@ -133,22 +226,21 @@ h1, h2, h3, h4, h5, h6 {
 
 #header #logo {
   /* float: left; */
-  margin-top: -25px;
+  margin-top: -15px;
   margin-left: 5px;
-  
 }
 
 #header #logo h1 {
   font-size: 22px;
   margin: 0;
-
   line-height: 1;
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
-#header #logo h1 a, #header #logo h1 a:hover {
+#header #logo h1 a,
+#header #logo h1 a:hover {
   color: #fff;
 }
 
@@ -156,14 +248,14 @@ h1, h2, h3, h4, h5, h6 {
   width: 63px;
   padding: 0;
   margin: 0;
-  
 }
-.cicon{
+
+.cicon {
   max-height: 40px;
 }
 
 @media (max-width: 768px) {
-  .btn{
+  .btn {
     font-size: 8px ! important;
   }
   #header #logo h1 {
@@ -172,7 +264,7 @@ h1, h2, h3, h4, h5, h6 {
   #header #logo img {
     width: 62px;
   }
-  #header #mm{
+  #header #mm {
     margin-top: 9px !important;
   }
 }
@@ -187,6 +279,7 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
+
 #hero {
   display: table;
   width: 100%;
@@ -209,7 +302,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 48px;
   font-weight: 700;
   line-height: 56px;
- 
   color: #fff;
 }
 
@@ -235,7 +327,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #hero .btn-get-started {
-  
   text-transform: uppercase;
   font-weight: 500;
   font-size: 16px;
@@ -257,8 +348,11 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
+
 /* Nav Menu Essentials */
-.nav-menu, .nav-menu * {
+
+.nav-menu,
+.nav-menu * {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -277,12 +371,12 @@ h1, h2, h3, h4, h5, h6 {
   white-space: nowrap;
 }
 
-.nav-menu > li {
+.nav-menu>li {
   float: left;
 }
 
-.nav-menu li:hover > ul,
-.nav-menu li.sfHover > ul {
+.nav-menu li:hover>ul,
+.nav-menu li.sfHover>ul {
   display: block;
 }
 
@@ -296,6 +390,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Nav Menu Arrows */
+
 .sf-arrows .sf-with-ul {
   padding-right: 30px;
 }
@@ -314,6 +409,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Nav Meu Container */
+
 #nav-menu-container {
   float: right;
   margin: 0;
@@ -326,22 +422,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Nav Meu Styling */
+
 .nav-menu a {
   padding: 0 8px 10px 8px;
   text-decoration: none;
   display: inline-block;
   color: #fff;
-   font-weight: 100;
+  font-weight: 100;
   text-transform: uppercase;
   /* font-size: 13px; */
   outline: none;
 }
 
-.nav-menu > li {
+.nav-menu>li {
   margin-left: 10px;
 }
 
-.nav-menu > li > a:before {
+.nav-menu>li>a:before {
   content: "";
   position: absolute;
   width: 100%;
@@ -356,7 +453,9 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease-in-out 0s;
 }
 
-.nav-menu a:hover:before, .nav-menu li:hover > a:before, .nav-menu .menu-active > a:before {
+.nav-menu a:hover:before,
+.nav-menu li:hover>a:before,
+.nav-menu .menu-active>a:before {
   visibility: visible;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
@@ -394,6 +493,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Mobile Nav Toggle */
+
 #mobile-nav-toggle {
   position: fixed;
   right: 0;
@@ -420,6 +520,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Mobile Nav Styling */
+
 #mobile-nav {
   position: fixed;
   top: 0;
@@ -492,6 +593,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Mobile Nav body classes */
+
 body.mobile-nav-active {
   overflow: hidden;
 }
@@ -507,8 +609,10 @@ body.mobile-nav-active #mobile-nav-toggle {
 /*--------------------------------------------------------------
 # Sections
 --------------------------------------------------------------*/
+
 /* Sections Header
 --------------------------------*/
+
 .section-header .section-title {
   font-size: 32px;
   color: #111;
@@ -520,12 +624,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .section-header .section-description {
   text-align: center;
-
   color: #999;
 }
 
 /* About Us Section
 --------------------------------*/
+
 #about {
   background: #fff;
 }
@@ -539,8 +643,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 #about .about-container .content {
   background: #fff;
 }
-
-
 
 #about .about-container .title {
   color: #333;
@@ -611,14 +713,14 @@ body.mobile-nav-active #mobile-nav-toggle {
 #facts .counters p {
   padding: 0;
   margin: 0 0 20px 0;
-  
   font-size: 14px;
 }
 
 /* Services Section
 --------------------------------*/
+
 #services {
-background: darkturquoise;
+  background: darkturquoise;
   background-size: cover;
   padding: 80px 0 60px 0;
 }
@@ -685,6 +787,7 @@ background: darkturquoise;
 
 /* Call To Action Section
 --------------------------------*/
+
 #call-to-action {
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../call-to-action-bg.jpg) fixed center center;
   background-size: cover;
@@ -710,7 +813,7 @@ background: darkturquoise;
   }
 }
 
-#call-to-action .cta-btn {  
+#call-to-action .cta-btn {
   text-transform: uppercase;
   font-weight: 500;
   font-size: 16px;
@@ -722,7 +825,7 @@ background: darkturquoise;
   margin: 10px;
   border: 2px solid #fff;
   color: #fff;
-position: inherit !important;
+  position: inherit !important;
 }
 
 #call-to-action .cta-btn:hover {
@@ -732,7 +835,9 @@ position: inherit !important;
 
 /* Portfolio Section
 --------------------------------*/
+
 #portfolio {
+  background-image: url(././bc.jpg);
   background: #f7f7f7;
   padding: 80px 0;
 }
@@ -763,7 +868,8 @@ position: inherit !important;
   transition: all 0.3s ease-in-out;
 }
 
-#portfolio #portfolio-flters li:hover, #portfolio #portfolio-flters li.filter-active {
+#portfolio #portfolio-flters li:hover,
+#portfolio #portfolio-flters li.filter-active {
   background: #2dc997;
   color: #fff;
 }
@@ -789,7 +895,6 @@ position: inherit !important;
 }
 
 #portfolio .portfolio-items .details {
-
   height: 50px;
   background: #2dc997;
   position: absolute;
@@ -824,6 +929,7 @@ position: inherit !important;
 
 /* Team Section
 --------------------------------*/
+
 #team {
   background: #fff;
   padding: 80px 0 60px 0;
@@ -875,6 +981,7 @@ position: inherit !important;
 
 /* Contact Section
 --------------------------------*/
+
 #contact {
   background: darkturquoise;
   /* padding: 80px 0 40px 0; */
@@ -950,7 +1057,9 @@ position: inherit !important;
   margin-bottom: 15px;
 }
 
-#contact .form #sendmessage.show, #contact .form #errormessage.show, #contact .form .show {
+#contact .form #sendmessage.show,
+#contact .form #errormessage.show,
+#contact .form .show {
   display: block;
 }
 
@@ -962,7 +1071,8 @@ position: inherit !important;
   font-size: 13px;
 }
 
-#contact .form input, #contact .form textarea {
+#contact .form input,
+#contact .form textarea {
   border-radius: 0;
   box-shadow: none;
   font-size: 14px;
@@ -975,7 +1085,7 @@ position: inherit !important;
   color: #fff;
   transition: 0.4s;
   margin: 1%;
-float: left;
+  float: left;
 }
 
 #contact .form button[type="submit"]:hover {
@@ -985,6 +1095,7 @@ float: left;
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
+
 #footer {
   background: #343b40;
   padding: 15px 0;
@@ -994,8 +1105,8 @@ float: left;
 
 #footer .copyright {
   font-family: sans-serif;
-    font-weight: 100;
-    font-size: 12px;
+  font-weight: 100;
+  font-size: 12px;
   text-align: center;
 }
 

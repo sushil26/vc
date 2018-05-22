@@ -1,14 +1,15 @@
-app.controller('markViewCtl', function ($scope, $window, $uibModal, httpFactory, $compile, sessionAuthFactory) {
+app.controller('markViewCtl', function ($scope, $rootScope, $window, $uibModal, httpFactory, $compile, sessionAuthFactory) {
     console.log("markViewCtl==>");
 
     $scope.userData = sessionAuthFactory.getAccess();
     var schoolName = $scope.userData.schoolName;
     console.log("$scope.userData: " + JSON.stringify($scope.userData));
+    $scope.propertyJson = $rootScope.propertyJson;
 
     $scope.getTeacherData = function () {
         console.log("getTeacherData-->");
         var id = $scope.userData.id;
-        var api = "https://vc4all.in/vc/teacherDetail" + "/" + id;
+        var api = $scope.propertyJson.VC_teacherDetail + "/" + id;
         //var api = "http://localhost:5000/vc/teacherDetail" + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet";
         console.log("api: " + api);
@@ -25,15 +26,10 @@ app.controller('markViewCtl', function ($scope, $window, $uibModal, httpFactory,
         })
         console.log("<--getTeacherData");
     }
-//     $scope.getStudentMarks_forThisType = function (m) {
-//         console.log("getStudentMarks_forThisType-->");
-// console.log("marks: "+JSON.stringify(m));
-// $scope.mark
-//         console.log("<--getStudentMarks_forThisType");
-//     }
+
     $scope.getMarks = function (id) {
         console.log("getMarks-->");
-        var api = "https://vc4all.in/vc/getStudentAttendance" + "/" + id;
+        var api =  $scope.propertyJson.VC_getStudentAttendance+ "/" + id;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
@@ -106,7 +102,7 @@ app.controller('markViewCtl', function ($scope, $window, $uibModal, httpFactory,
         var section = css.section;
         $scope.studList = [];
 
-        var api = "https://vc4all.in/vc/getStudListForCS" + "/" + schoolName + "/" + clas + "/" + section;
+        var api = $scope.propertyJson.VC_getStudListForCS + "/" + schoolName + "/" + clas + "/" + section;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
@@ -124,7 +120,6 @@ app.controller('markViewCtl', function ($scope, $window, $uibModal, httpFactory,
             }
         })
         console.log("<--getStudListForCS");
-
     }
     $scope.getStudentMarks = function (cs) {
         console.log("getStudentMarks-->");
