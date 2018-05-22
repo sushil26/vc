@@ -537,12 +537,12 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
       var stud_name = un;
       var stud_cs = $scope.studentData[0].cs;
       var stud_id = $scope.studentData[0].schoolId;
-      var senderMN = $scope.teacherPersonalData[0].mobNumber;
+      var senderMN = $scope.studentData[0].mobileNum;
       var studId = $scope.studentData[0].schoolId;
       var email = $scope.teacherPersonalData[0].email;/* ### Note: teacher email Id ### */
       var receiverName = teacherName;
       var receiverId = $scope.teacherPersonalData[0].schoolId;
-      var receiverMN = $scope.teacherPersonalData[0].mobileNum;
+      var receiverMN = $scope.teacherPersonalData[0].mobNumber;
       var studUserId = $scope.userData.id;
       $scope.eventSend(reason, senderName, studId, studUserId, email, senderMN, receiverName, receiverId, receiverMN, stud_id, stud_cs, stud_name);
     }
