@@ -271,7 +271,7 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
             backdropClass: 'static',
             keyboard: false,
             controller: function ($scope, $uibModalInstance) {
-              $scope.message = data.message;
+              $scope.message = data.data.message;
             }
           })
           //alert("Update Fail");
