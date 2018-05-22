@@ -5139,8 +5139,7 @@ button.close {
 
 @media (min-width: 576px) {
   .modal-dialog {
-    min-width: 320px;
-    max-width: fit-content;
+    max-width: 500px;
     margin: 30px auto;
   }
   .modal-sm {

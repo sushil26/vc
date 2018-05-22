@@ -9,22 +9,22 @@ if (localStorage.getItem("userData")) {
     console.log("loginType: " + loginType);
     if (loginType == 'teacher') {
         document.getElementById("appLogin").style.display = 'none';
-        // document.getElementById("appReg").style.display = 'none';
+        document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
-        //document.getElementById("userAuth").style.display = 'none';
+        document.getElementById("userAuth").style.display = 'none';
        
     }
     else if(loginType == 'admin'){
         document.getElementById("appLogin").style.display = 'none';
-        // document.getElementById("appReg").style.display = 'none';
+        document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
-        //document.getElementById("userAuth").style.display = 'block';
+        document.getElementById("userAuth").style.display = 'block';
     }
-    else if (loginType == 'studParent') {
+    else if (loginType == 'parent') {
         document.getElementById("appLogin").style.display = 'none';
-        // document.getElementById("appReg").style.display = 'none';
+        document.getElementById("appReg").style.display = 'none';
         document.getElementById("appLogout").style.display = 'block';
-        //document.getElementById("userAuth").style.display = 'none';
+        document.getElementById("userAuth").style.display = 'none';
    }
 
 }
@@ -43,7 +43,7 @@ else {
             userName = localStorage.getItem("userName");
             // startVideoAction();
             document.getElementById("appLogin").style.display = 'none';
-            // document.getElementById("appReg").style.display = 'none';
+            document.getElementById("appReg").style.display = 'none';
             document.getElementById("appLogout").style.display = 'block';
        }
         else {
@@ -64,13 +64,10 @@ function logVC() {
     console.log("email: " + document.getElementById("crdEmail").value);
     var email = document.getElementById("crdEmail").value;
     var Password = document.getElementById('crdPswd').value;
-    alert($("input[name=loginType]:checked").val());
-    var loginType = $("input[name=loginType]:checked").val();
     console.log("email: " + email);
     var obj = {
         "email": email,
-        "password": Password,
-        "loginType": loginType
+        "password": Password
     };
     console.log("obj: " + JSON.stringify(obj));
     console.log("logVC");
@@ -90,7 +87,7 @@ function logVC() {
                 alert("Logged in Successfull");
                 sessionSet(data);
                 document.getElementById("appLogin").style.display = 'none';
-                // document.getElementById("appReg").style.display = 'none';
+                document.getElementById("appReg").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
                 userName = data.data.userName;
             }
@@ -103,13 +100,12 @@ function logVC() {
 
             if (data.loginType == 'admin') {
                 sessionSet(data);
-               // document.getElementById("userAuth").style.display = 'block';
+                document.getElementById("userAuth").style.display = 'block';
                 document.getElementById("appLogin").style.display = 'none';
-                // document.getElementById("appReg").style.display = 'none';
+                document.getElementById("appReg").style.display = 'none';
                 document.getElementById("appLogout").style.display = 'block';
-            }
-            else{
-               // document.getElementById("userAuth").style.display = 'none';
+               
+
             }
         }
 
@@ -117,85 +113,29 @@ function logVC() {
 
 }
 
-
 function sessionSet(data) {
-    console.log("sessionSet-->");
-    console.log("data: "+JSON.stringify(data));
-
-console.log(" data.sessionData: "+data.sessionData);
-
-   
-    // var encryptedUrl = CryptoJS.AES.encrypt(data.sessionData.url,"url");
-    // var encryptedPswd = CryptoJS.AES.encrypt(data.sessionData.pswd,"pswd");
-    
-    // localStorage.setItem("encUrl",encryptedUrl); 
-    // localStorage.setItem("encPswd",encryptedPswd);
-
-    localStorage.setItem("sessionEnc",data.sessionData); 
-
     if (typeof (Storage) !== "undefined") {
-      
-        if(data.data.loginType=='teacher'){
-            var userData = {
-                "userName": data.data.teacherName,
-                "status": data.data.status,
-                "email": data.data.teacherEmail,
-                "loginType": data.loginType
-            }
-            localStorage.setItem("userData", userData);
-            localStorage.setItem("userName", data.data.teacherName);
-            localStorage.setItem("status", data.data.status);
-            localStorage.setItem("email", data.data.teacherEmail);
-            localStorage.setItem("loginType", data.loginType);
-            localStorage.setItem("id", data.data._id);
-            
+        var userData = {
+            "userName": data.data.userName,
+            "status": data.data.status,
+            "email": data.data.email,
+            "loginType": data.loginType
         }
-        else if(data.data.loginType=='studParent'){
-            var userData = {
-                "userName": data.data.studName,
-                "status": data.data.status,
-                "email": data.data.parentEmail,
-                "loginType": data.loginType
-            }
-            localStorage.setItem("userData", userData);
-            localStorage.setItem("userName", data.data.studName);
-            localStorage.setItem("status", data.data.status);
-            localStorage.setItem("email", data.data.parentEmail);
-            localStorage.setItem("loginType", data.loginType);
-            localStorage.setItem("id", data.data._id);
-            
-        }
-        else{
-            var userData = {
-                "userName": data.data.userName,
-                "status": data.data.status,
-                "email": data.data.email,
-                "loginType": data.data.loginType
-            }
-            localStorage.setItem("userData", userData);
-            localStorage.setItem("userName", data.data.userName);
-            localStorage.setItem("status", data.data.status);
-            localStorage.setItem("email", data.data.email);
-            localStorage.setItem("loginType", data.data.loginType);
-            //document.getElementById('userAuth').style.display = "block";
-        }
-        // if(data.data.loginType=='studParent'){
-        //     localStorage.setItem("id", data.data._id);
-        // }
-        
-
-        
+        localStorage.setItem("userData", userData);
+        localStorage.setItem("userName", data.data.userName);
+        localStorage.setItem("status", data.data.status);
+        localStorage.setItem("email", data.data.email);
+        localStorage.setItem("loginType", data.loginType);
+        localStorage.setItem("id", data.data._id);
         // Retrieve
         var info = localStorage.getItem("userData");
-console.log("info: "+JSON.stringify(info));
+
         userName = info.userName;
 
     } else {
         alert("Sorry, your browser does not support Web Storage...");
 
     }
-
-    console.log("<--sessionSet");
 }
 function regVc() {
     console.log("regVc");
@@ -241,13 +181,9 @@ function vcLogout() {
     localStorage.removeItem("userName");
     localStorage.removeItem("status");
     localStorage.removeItem("email");
-    localStorage.removeItem("loginType");
-    localStorage.removeItem("id");
-    localStorage.removeItem("css");
-
-    
+    document.getElementById("userAuth").style.display = 'none';
     document.getElementById("appLogout").style.display = 'none';
     document.getElementById("appLogin").style.display = 'block';
-    // document.getElementById("appReg").style.display = 'block';
+    document.getElementById("appReg").style.display = 'block';
    
 }

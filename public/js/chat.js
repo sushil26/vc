@@ -1,5 +1,4 @@
-//var MAX_UPLOAD_SIZE = 0.5; // in MB
-var MAX_UPLOAD_SIZE = 0.09; // in MB
+var MAX_UPLOAD_SIZE = 1.5; // in MB
 // var socket = io();
 var count = 0;
 var imageReader = new FileReader();
@@ -104,10 +103,17 @@ else {
 }
 function sendMessage() {
     console.log("sendMsg-->");
+
     var msg = document.getElementById('message').value;
+
+
     // var file = e.target.files[0];
     if (userName != null) {
+
         if (msg != null) {
+
+
+
             console.log("msg: " + msg);
             if (msg) {
                 console.log("Start to emit message  ");
@@ -115,6 +121,7 @@ function sendMessage() {
                 signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
                 document.getElementById('message').value = "";
             }
+
         }
         else {
             console.log("You Didn't type any message")
@@ -122,12 +129,12 @@ function sendMessage() {
         if (file) {
             console.log("file.type.substring(0,5): " + file.type.substring(0, 5));
             console.log("file.type.substring(0,4): " + file.type.substring(0, 4));
+
             // if (file.type.substring(0, 5) === 'image' || file.type.substring(0, 5) === 'video' || file.type.substring(0, 4) === 'docx') {
+
             console.log("file.size: " + file.size);
-            console.log("MAX_UPLOAD_SIZE * 1000: " + MAX_UPLOAD_SIZE * 1000);
             console.log("MAX_UPLOAD_SIZE: " + MAX_UPLOAD_SIZE + "MAX_UPLOAD_SIZE * 1000 * 1000: " + MAX_UPLOAD_SIZE * 1000 * 1000);
-            /* &&&& MAX_UPLOAD_SIZE was in a if condition is-->MAX_UPLOAD_SIZE * 1000 * 1000, i have changed for test purpose as--> MAX_UPLOAD_SIZE * 1000 &&&& */
-            if (file.size > MAX_UPLOAD_SIZE * 1000*1000) {
+            if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
                 alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
             }
             else if (file.type.substring(0, 5) === 'image') {
@@ -145,13 +152,16 @@ function sendMessage() {
                 console.log("other from sendMessage");
                 fileReader.readAsDataURL(file);
             }
+
             // }
             // else {
             //     alert("Sorry, you an only share images or videos or html Files");
             // }
+
             // reset select box and file object 
             $('#fileselect').val('');
             file = '';
+
         }
         else {
             console.log("You haven't selected any file to share");
@@ -162,13 +172,17 @@ function sendMessage() {
        // $('#setName').trigger('click');
     }
     console.log("<--Upload");
+
     console.log("<--sendMsg");
     return false; // don't reload the page
+
+
 }
 
 signaling_socket.on('newTextMsg', function (data) {
 
     console.log("newTextMsg-->");
+
     console.log("data.message: " + data.message);
     console.log("data.userId: " + data.userId);
     console.log("data.queryId: " + data.queryId);
@@ -176,40 +190,100 @@ signaling_socket.on('newTextMsg', function (data) {
     console.log("queryLink: " + queryLink);
     if (data.queryId == queryLink) {
 
+
         /* ##### Start Calling Get Time  ##### */
         var time = DisplayCurrentTime();
         /* ##### End Calling Get Time  ##### */
+
 
         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
             + data.userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + data.message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + time + '</span></div>'
         autoLinkNeed();
         scrollDown();
+
         var chatOpen = $("#qnimate").hasClass("popup-box-on");
         if (chatOpen) {
             document.getElementById('chatNotification').style.display = 'none';
+
         }
         else {
             count = count + 1;
+
             document.getElementById('chatNotification').style.display = 'inline';
             document.getElementById('chatNotification').innerHTML = '(' + count + ')';
-            var x = document.getElementById("myAudio");
-            x.play();
         }
+
+
     }
     else {
+
         console.log("newTextMsg: Sorry");
     }
+
     console.log("<--newTextMsg");
+
 })
+
+
+function emailInvite() {
+    console.log("emailInvite-->");
+    var email = document.getElementById('emailInvite').value;
+    var URL = document.getElementById('linkToShare').innerHTML;
+    console.log("email: " + email);
+    console.log("URL: " + URL);
+    if (email) {
+        console.log("Start to emit email  ");
+        console.log("peerNew_id: " + peerNew_id);
+        signaling_socket.emit('emailCapture', { 'email': email, 'userId': peerNew_id, 'url': URL });
+    }
+    else {
+        console.log("empty email");
+    }
+
+    console.log("<--emailInvite");
+
+}
+
+signaling_socket.on('emailSendInfo', function (data) {
+    console.log("emailSendInfo-->");
+    console.log("peerNew_id: " + peerNew_id);
+    console.log("data.userId: " + data.userId);
+    console.log("data.info: " + data.info);
+    console.log("data.info: " + JSON.stringify(data));
+
+    if (peerNew_id == data.userId) {
+        // var label = document.createElement("label");
+        // var txtNode = document.createTextNode(data.info);
+        // label.appendChild(txtNode);
+
+        // label.value = data.info;
+        // console.log("label: "+label);
+
+        document.getElementById('info').innerHTML = data.info;
+    }
+    else {
+
+        console.log("emailSendInfo: Sorry");
+    }
+
+    console.log("<--emailSendInfo");
+
+})
+
 
 function playAudioForNotify() {
     console.log("playAudioForNotify-->");
-    var snd = new Audio("./home/img/alrt.mp3"); // buffers automatically when created
+    var snd = new Audio("./click.mp3"); // buffers automatically when created
     snd.play();
     console.log("<--playAudioForNotify");
 }
 
+
+
 /* #### Start File Sharing  ##### */
+
+
+
 
 // Appends either an image or a video file to user's  window
 function appendFile(URI, type, name, queryId) {
@@ -268,6 +342,8 @@ function appendFile(URI, type, name, queryId) {
 
     console.log("<--appendFile");
 }
+
+
 imageReader.onload = function (e) {
     console.log("imageReader.onload-->");
     scrollDown();
@@ -320,6 +396,8 @@ signaling_socket.on('file', function (data) {
 });
 
 /* #### End File Sharing  ##### */
+
+
 $(function () {
     $("#addChatWindow ").click(function () {
         console.log("addChatWindow-->");
