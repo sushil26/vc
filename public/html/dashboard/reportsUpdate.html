@@ -136,7 +136,7 @@
                                                                     <button class="btn" ng-if="mtt.class=='Free'">Schedule</button>
                                                                     <span ng-if="mtt.class!='Free'">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</span>
                                                                 </td> -->
-                                                    <td style="background-color:#f5f5f5!important" ng-repeat="mtt in up.teacherSelect.timeTable.css.Mon">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</td>
+                                                    <td style="background-color:#f5f5f5!important" ng-repeat="mtt in up.teacherSelect.timeTable[0].css.Mon">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</td>
                                                 </tr>
                                                 <tr class="warning">
                                                     <td>Tuesday</td>
