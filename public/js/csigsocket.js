@@ -234,10 +234,7 @@ function emailInvite() {
       console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
       alert(err.responseJSON.message);
     }
-
-
   });
-
   console.log("<--emailInvite");
 }
 
@@ -285,6 +282,10 @@ function disconnecSession() {
   console.log("disconnecSession-->");
   console.log("sessionHeader: " + sessionHeader);
   console.log("peerNew_id: " + peerNew_id);
+  localStorage.removeItem("careatorEmail");
+  localStorage.removeItem("careatorFriendName");
+userName=null;
+
   if (sessionHeader == peerNew_id) {
     console.log("start to disconnect the session");
     signaling_socket.emit("disconnectSession", {
