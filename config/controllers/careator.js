@@ -7,7 +7,6 @@ var nodemailer = require("nodemailer");
 var createdDate = new Date();
 var randomstring = require("randomstring");
 
-
 var transporter = nodemailer.createTransport({
     service: "godaddy",
     auth: {
