@@ -353,7 +353,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
   }
   else {
     console.log("loginType" + loginType);
-    // window.location.href = "https://norecruits.com";
+    // window.location.href = "https://vc4all.in";
   }
 
   $scope.getStudListForCS = function (css) {
@@ -370,7 +370,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
 
     var api = $scope.propertyJson.VC_getStudListForCS + "/" + schoolName + "/" + clas + "/" + section;
     //var api = "http://localhost:5000/vc/getStudListForCS" + "/" + clas + "/" + section;
-    //var api = "https://norecruits.com/vc/getStudListForCS";
+    //var api = "https://vc4all.in/vc/getStudListForCS";
 
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
@@ -572,7 +572,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
 
   $scope.eventSend = function (res, name, id, studUserId, email, senderMN, receiverName, receiverId, receiverMN, stud_id, stud_cs, stud_name) {
     console.log("eventSend-->");
-    var SIGNALING_SERVER = "https://norecruits.com";
+    var SIGNALING_SERVER = "https://vc4all.in";
     //var SIGNALING_SERVER = "http://localhost:5000";
     var queryLink = null;
     var peerNew_id = null;
@@ -587,7 +587,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
         queryLink = config.queryId;
         peerNew_id = config.peer_id;
 
-        url = "https://norecruits.com/client/" + peerNew_id + "/" + $scope.urlDate;
+        url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
         var api = $scope.propertyJson.VC_eventSend;
         //var api = "http://localhost:5000/vc/eventSend";
         console.log("api: " + api);
