@@ -3,7 +3,7 @@ var event = require('./controllers/event');
 var image = require('./controllers/image');
 var adminAction = require('./controllers/adminAction');
 var school = require('./controllers/school');
-var careator = require('./controllers/careator');
+//var careator = require('./controllers/careator');
 
 module.exports = function (app) {
 
