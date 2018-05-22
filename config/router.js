@@ -7,9 +7,9 @@ var careator = require('./controllers/careator');
 
 module.exports = function (app) {
 
-    app.post('/careator/pswdGenerate', careator.pswdGenerate);
-    app.post('/careator/pswdCheck', careator.pswdCheck);
-    app.post('/careator/emailInvite', careator.emailInvite);
+    // app.post('/careator/pswdGenerate', careator.pswdGenerate);
+    // app.post('/careator/pswdCheck', careator.pswdCheck);
+    // app.post('/careator/emailInvite', careator.emailInvite);
 
     app.post('/vc/register4VC', user.register4VC);
     app.post('/vc/login4VC', user.login4VC);
