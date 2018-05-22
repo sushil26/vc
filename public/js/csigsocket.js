@@ -53,18 +53,17 @@ console.log("id2**: " + id2);
 if (stuff.length > 5) {
 
   if (localStorage.getItem("careatorEmail")) {
-
     var userNameEmail = localStorage.getItem("careatorEmail");
     var emailIdSplit = userNameEmail.split('@');
     userName = emailIdSplit[0];
     document.getElementById("videoConferenceUrl").style.display = "block";
-    document.getElementById("invitePeople_container").style.display = "block";
+    document.getElementById("emailInvitation").style.display = "block";
   }
   else if (localStorage.getItem("careatorFriendName")) {
     userName = localStorage.getItem("careatorFriendName");
     careatorFriendName = true;
     document.getElementById("videoConferenceUrl").style.display = "none";
-    document.getElementById("invitePeople_container").style.display = "none";
+    document.getElementById("emailInvitation").style.display = "none";
   }
   else {
     console.log("No user data from session");
@@ -82,7 +81,7 @@ else {
     console.log("2 cond: emailIdSplit: " + JSON.stringify(emailIdSplit));
     userName = emailIdSplit[0];
     document.getElementById("videoConferenceUrl").style.display = "block";
-    document.getElementById("videoConferenceLinkExtention").style.display = "block";
+
   }
   else {
     console.log("enterEmail: -->");
@@ -143,7 +142,7 @@ function checkPassword() {
   };
   console.log("obj: " + JSON.stringify(obj));
   if (password != "" && careatorEmail != "") {
-   
+
     $.ajax({
       url: "https://vc4all.in/careator/pswdCheck",
       type: "POST",
@@ -166,7 +165,7 @@ function checkPassword() {
         var userNameEmail = localStorage.getItem("careatorEmail");
         var emailIdSplit = userNameEmail.split('@');
         userName = emailIdSplit[0];
-        console.log("userName: "+userName);
+        console.log("userName: " + userName);
         document.getElementById("videoConferenceUrl").style.display = "block";
         $('#myPasswordModal').modal('hide');
       },
@@ -196,7 +195,7 @@ function saveName() {
   userName = localStorage.getItem("careatorFriendName");
   careatorFriendName = true;
   document.getElementById("videoConferenceUrl").style.display = "none";
-  document.getElementById("invitePeople_container").style.display = "none";
+  document.getElementById("emailInvitation").style.display = "none";
 
 
 }
@@ -225,8 +224,11 @@ function emailInvite() {
         url: URL
       };
       console.log("data: " + JSON.stringify(data));
-
       document.getElementById("info").innerHTML = data.message;
+      setTimeout(function() {
+        $('#info').fadeOut('fast');
+    }, 3000);
+     // document.getElementById("info").innerHTML = data.message;
     },
     error: function (err) {
       console.log("err: " + JSON.stringify(err));
@@ -284,7 +286,7 @@ function disconnecSession() {
   console.log("peerNew_id: " + peerNew_id);
   localStorage.removeItem("careatorEmail");
   localStorage.removeItem("careatorFriendName");
-userName=null;
+  userName = null;
 
   if (sessionHeader == peerNew_id) {
     console.log("start to disconnect the session");
@@ -386,8 +388,6 @@ signaling_socket.on("connect", function () {
 
       document.getElementById("audio_btn").style.display = "inline";
       document.getElementById("diconnect_btn").style.display = "inline";
-      document.getElementById("videoConferenceLinkExtention").style.display =
-        "inline";
 
       document.getElementById("linkToShare").style.display = "block";
       document.getElementById("emailInvitation").style.display = "inline";
