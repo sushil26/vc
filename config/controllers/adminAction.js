@@ -384,7 +384,7 @@ module.exports.uploadTeacher_timeTable = function (req, res) {
                             res.status(200).send(responseData);
                         }
                         else {
-                            user.update({ "_id": ObjectId(id), "schoolName": schoolName }, { $push: { "timeTable": { $each: consolidateTT } } }, function (err, updatedData) {
+                            user.findOneAndUpdate({ "_id": ObjectId(id), "schoolName": schoolName }, { $push: { "timeTable": { $each: consolidateTT } } }, { new: true }, function (err, updatedData) {
                                 console.log("data: " + JSON.stringify(updatedData));
                                 if (err) {
                                     responseData = {
@@ -497,6 +497,7 @@ module.exports.updateTeacher_timeTable = function (req, res) {
                         responseData = {
                             status: false,
                             message: err
+
                         };
                         res.status(400).send(responseData);
                     } else {
