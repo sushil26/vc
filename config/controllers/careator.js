@@ -106,7 +106,9 @@ module.exports.pswdGenerate = function (req, res) {
                                 from: "info@vc4all.in",
                                 to: email,
                                 subject: 'VC4ALL Credentiall',
-                                text: "Your email Id is verified successfully, you can access the link https://vc4all.in/careator by using password: " + password
+                                html:
+                                    "<html><head><p><b>Dear Careator Employee, </b></p><p>Please note, Your email Id is verified successfully,  you can access the below link by using given password.<p>Here your link <a href=https://norecruits.com/careator>https://norecruits.com/careator</a><p>Password: " + password + "</p></p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+
                             };
                             transporter.sendMail(mailOptions, function (error, info) {
                                 if (error) {
@@ -148,7 +150,8 @@ module.exports.pswdGenerate = function (req, res) {
                                 from: "info@vc4all.in",
                                 to: email,
                                 subject: 'VC4ALL Credentiall',
-                                text: "Your email Id is verified successfully, you can access the link https://vc4all.in/careator by using password: " + password
+                                html:
+                                    "<html><head><p><b>Dear Careator Employee, </b></p><p>Please note, Your email Id is verified successfully,  you can access the below link by using given password.<p>Here your link <a href=https://norecruits.com/careator>https://norecruits.com/careator</a><p>Password: " + password + "</p></p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                             };
                             transporter.sendMail(mailOptions, function (error, info) {
                                 if (error) {
@@ -197,13 +200,13 @@ module.exports.pswdGenerate = function (req, res) {
 }
 
 module.exports.emailInvite = function (req, res) {
-    console.log("emailInvite-->");
+    console.log("careator email Invite-->");
     var mailOptions = {
         from: "info@vc4all.in",
         to: req.body.email,
         subject: "Regarding Instance Meeting",
         html:
-            "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link <a href=" + req.body.url + ">" + req.body.url + "</a> </p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+            "<html><head><p><b>Dear Team, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link <a href=" + req.body.url + ">" + req.body.url + "</a> </p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
     };
     console.log("mailOptions: " + JSON.stringify(mailOptions));
 
@@ -226,3 +229,4 @@ module.exports.emailInvite = function (req, res) {
     });
 
 }
+
