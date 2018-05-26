@@ -62,7 +62,7 @@ module.exports = function (app) {
     app.get('/vc/getToDate', function(req,res){event.getToDate});
     app.post('/vc/eventSend', function(req,res){event.eventSend});
     app.get('/vc/eventGet/:id',  function(req,res){event.eventGet});
-    app.post('/vc/eventReSchedule/:id', function(req,res){event.eventReSchedule});
+    //app.post('/vc/eventReSchedule/:id', function(req,res){event.eventReSchedule});
     app.get('/vc/getEventById/:id', function(req,res){event.getEventById});
     app.get('/vc/getStudentAttendance/:id', function(req,res){event.getStudentAttendance});
     app.post('/vc/deleteEvent', function(req,res){event.deleteEvent});
