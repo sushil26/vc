@@ -119,8 +119,11 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
       "file": file
     }
     if (testType && date && clas && section) {
+      console.log("api creating");
       var api = $scope.propertyJson.VC_uploadMarkFile + "/" + schoolName + "/" + testType + "/" + date + "/" + clas + "/" + section;
       $scope.reset();
+      console.log("api: "+api);
+      
     }
     else {
       $uibModal.open({
@@ -137,7 +140,7 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
 
     console.log("api: " + api);
     if (api) {
-      httpFactory.imageUpload(file, api).then(function (data) {
+      httpFactory.csvUpload(file, api).then(function (data) {
         var checkStatus = httpFactory.dataValidation(data);
         console.log("data--" + JSON.stringify(data.data));
         if (checkStatus) {
