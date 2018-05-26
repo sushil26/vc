@@ -68,7 +68,7 @@ module.exports = function (app) {
     app.post('/vc/deleteEvent', function(req,res){event.deleteEvent});
     app.post('/vc/updateEventMOM/:eventId', function(req,res){event.updateEventMOM});
     app.post('/vc/parentCredential', function(req,res){event.parentCredential});
-    app.post('/vc/eventUpdate/:id', function(req,res){event.eventUpdate});
+    //app.post('/vc/eventUpdate/:id', function(req,res){event.eventUpdate});
 
 
     // app.get('/vc/teacherGet/:id', function(req,res){event.teacherGet);
