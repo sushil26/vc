@@ -496,3 +496,58 @@ module.exports.getStudentAttendance = function (req, res) {
     }
     console.log("<--getStudentAttendance");
 }
+
+module.exports.eventReSchedule = function (req, res) {
+    console.log("eventReSchedule-->");
+    console.log("requested updated id: " + req.params.id);
+    var responseData;
+    var obj = {
+        "title": req.body.title,
+        "reason": req.body.reason,
+        "start": req.body.start,
+        "end": req.body.end,
+        "startAt": req.body.startAt,
+        "endAt": req.body.endAt
+    }
+    console.log("updating value: " + JSON.stringify(obj));
+    var id = {
+        "_id": ObjectId(req.params.id)
+    }
+    //    var id = req.params.id;
+    //     console.log("id: " + id);
+    // console.log("ObjectId(req.params.id): " +ObjectId(id));
+
+    if (general.emptyCheck(req.params.id)) {
+        console.log("No Empty");
+        event.update(id, { $set: obj }, { multi: true }, function (err, data) {
+            console.log("data: " + JSON.stringify(data));
+
+            if (err) {
+                responseData = {
+                    status: false,
+                    message: "Failed to update",
+                    data: data
+                };
+                res.status(400).send(responseData);
+            } else {
+                responseData = {
+                    status: true,
+                    message: "Rescheduled successfully",
+                    data: data
+                };
+
+                res.status(200).send(responseData);
+            }
+        })
+    }
+    else {
+        console.log("Epty value found");
+        responseData = {
+            status: false,
+            message: "there is no userId to find"
+        };
+        res.status(400).send(responseData);
+    }
+    console.log("<--eventReSchedule");
+}
+

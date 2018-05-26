@@ -64,7 +64,7 @@ module.exports = function (app) {
     app.get('/vc/getToDate', event.getToDate);
     app.post('/vc/eventSend', event.eventSend);
     app.get('/vc/eventGet/:id',  event.eventGet);
-
+    app.post('/vc/eventReSchedule/:id', event.eventReSchedule);
     app.get('/vc/getEventById/:id', event.getEventById);
     app.get('/vc/getStudentAttendance/:id', event.getStudentAttendance);
     app.post('/vc/deleteEvent', event.deleteEvent);
