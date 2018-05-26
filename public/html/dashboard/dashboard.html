@@ -53,13 +53,22 @@
                             </i>
                         </a>
                     </li>
-                    <li ng-if="loginType == 'teacher' || loginType == 'studParent'">
-                        <a href="#!/dashboard/eventShedule">
-                            <i style="font-size:15px;" class="fa fa-pencil">
-                                <span>&nbspSCHEDULER</span>
+                    <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
+                        <a ng-click="eventClick('comm_subMenu')">
+                            <i style="font-size:15px;" class="fa fa-globe">
+                                <span>&nbspCOMMUNICATION</span>
                             </i>
-
+                            <span ng-if="comm_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
+                            <span ng-if="comm_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
                         </a>
+                        <ul ng-hide="comm_subMenu">
+                            <li>
+                                <a class="" href="#!/dashboard/eventShedule">SCHEDULE MEETING</a>
+                            </li>
+                            <li>
+                                <a class="" href="#!/dashboard/quickMsg">QUICK MESSAGE</a>
+                            </li>
+                        </ul>
                     </li>
                     <!-- ##### Start teacher/student Event  ##### -->
                     <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
@@ -80,6 +89,25 @@
                         </ul>
                     </li>
                     <!-- ##### Start teacher/student Event  ##### -->
+                     <!-- ##### Start teacher/student Quick Message  ##### -->
+                     <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
+                        <a ng-click="eventClick('quickMsg_subMenu')">
+                            <i style="font-size:15px;" class="fa fa-envelope">
+                                <span>&nbspMESSAGE</span>
+                            </i>
+                            <span ng-if="quickMsg_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
+                            <span ng-if="quickMsg_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
+                        </a>
+                        <ul ng-hide="quickMsg_subMenu">
+                            <li>
+                                <a class="" href="#!/dashboard/incomingMsg">INBOX</a>
+                            </li>
+                            <li>
+                                <a class="" href="#!/dashboard/outgoingMsg">OUTBOX</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- ##### Start teacher/student Quick Message  ##### -->
                     <!-- ##### Start teacher/student Acdemic  ##### -->
                     <li class="sub-menu" ng-if="loginType=='teacher' || loginType=='studParent'">
                         <a ng-click="eventClick('academic_subMenu')">
@@ -132,10 +160,10 @@
                         </a>
                         <ul ng-hide="academic_subMenu">
                             <li>
-                                <a class="" href="#!/dashboard/reportsUpload">REPORTS UPLOAD</a>
+                                <a class="" href="#!/dashboard/reportsUpload">UPLOAD</a>
                             </li>
                             <li>
-                                <a class="" href="#!/dashboard/reportsUpdate">REPORTS UPDATE</a>
+                                <a class="" href="#!/dashboard/reportsUpdate">UPDATE</a>
                             </li>
                         </ul>
                     </li>
@@ -184,10 +212,10 @@
                                 <a class="" href="#!/dashboard/allUser">ALL USER</a>
                             </li>
                             <li>
-                                <a class="" href="#!/dashboard/allAdmin">ALL Admin</a>
+                                <a class="" href="#!/dashboard/allAdmin">ALL ADMIN</a>
                             </li>
                             <li>
-                                <a class="" href="#!/dashboard/allSchool">ALL School</a>
+                                <a class="" href="#!/dashboard/allSchool">ALL SCHOOL</a>
                             </li>
 
                             <li>

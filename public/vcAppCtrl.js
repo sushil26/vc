@@ -1,5 +1,6 @@
 app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, $timeout, $state, $http, $uibModal, sessionAuthFactory, $uibModal) {
   console.log("controller==>");
+  //document.getElementById('mobile-nav').style.display='none';
   var loginModal; /* ### Note: get login modal instance on this variable ###*/
   var userName;
   httpFactory.getFile('property.json');
@@ -12,13 +13,6 @@ app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, 
     console.log("userName: " + userName);
     console.log("loginType: " + $scope.userData.loginType);
   }
-//   $scope.keypressHandler = function(event, nextIdx){
-//     if(event.keyCode == 13){
-//         angular.element(
-//             document.querySelector('#f_'+nextIdx))[0].focus();
-
-//     }
-// }
   $scope.logVC = function (loginType, email, Password) {
     console.log("logVC from ");
     // loginModal.close('resetModel');
@@ -59,11 +53,6 @@ app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, 
           console.log("Login Successfully");
          
           $scope.sessionSet(datas);
-          // alert("Logged in Successfull");
-
-
-          // document.getElementById("appLogin").style.display = 'none';
-          // document.getElementById("appLogout").style.display = 'block';
           userName = data.data.userName;
         }
         else  {
@@ -82,36 +71,8 @@ app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, 
               }
             }
           })
-          //alert("Password is wrong");
+        
         }
-        // else if (data.data.errorCode == 'No Match') {
-        //   var loginAlert = $uibModal.open({
-        //     scope: $scope,
-        //     templateUrl: '/html/templates/loginAlert.html',
-        //     windowClass: 'show',
-        //     backdropClass: 'static',
-        //     keyboard: false,
-        //     controller: function ($scope, $uibModalInstance) {
-        //       $scope.message = data.data.message;
-        //       console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
-        //       $scope.close = function(){
-        //         loginAlert.close('resetModel');
-               
-        //       }
-        //     }
-        //   })
-        //   alert(data.data.message);
-        // }
-        // else if(data.data.message == 'Your not allow to login')
-        // {
-        //   alert(data.data.message);
-        // }
-        // if (data.data.loginType == 'admin') {
-        //   $scope.sessionSet(datas);
-        //   // document.getElementById("appLogin").style.display = 'none';
-        //   // document.getElementById("appLogout").style.display = 'block';
-        // }
-
       }
       else {
         console.log("sorry");
@@ -213,7 +174,6 @@ console.log("localStorage.getItem(sessionEnc): "+localStorage.getItem("sessionEn
           $scope.message = "Sorry, your browser does not support Web Storage...";
         }
       })
-      //alert("Sorry, your browser does not support Web Storage...");
     }
     console.log("<--sessionSet");
   }
@@ -229,13 +189,6 @@ console.log("localStorage.getItem(sessionEnc): "+localStorage.getItem("sessionEn
       }
     })
   }
-  // $scope.vcLogout = function () {
-  //   console.log("vcLogout-->");
-  //   sessionAuthFactory.clearAccess();
-  //   $scope.userData = sessionAuthFactory.getAccess("userData");
-   
-  //   console.log("<--vcLogout");
-  // };
   $rootScope.TimeTable_timing = [
     { "startsAt": "09:00", "endsAt": "09:45", "meridian": 'AM' },
     { "startsAt": "9:45", "endsAt": "10:30", "meridian": 'AM' },

@@ -66,10 +66,6 @@
           </div>
           <div class="panel-body bio-graph-info" style="padding: 1px;">
             <div style="margin:20px !important;">
-
-
-              <!-- <h2 ng-if="userLoginType=='teacher'" class="text-center">Select Student</h2>
-      <h2 ng-if="userLoginType=='studParent'" class="text-center">Select Teacher</h2> -->
               <div class="row" ng-if="userLoginType=='admin' || userLoginType=='teacher' || userLoginType=='studParent'">
                 <div class="col-md-9 col-sm-12 col-lg-9 col-xs-12 portlets">
                   <div class="panel panel-default">
@@ -97,14 +93,6 @@
 
                         <div style="float:right; position: absolute;
                 right: 0;">
-
-                          <!-- <button class="btn btn-primary" style="float:right;" ng-if="calendarOwner!='Your' && teacherPersonalData[0].teacherName != null"
-                    data-target="#timeTable_modal" data-toggle="modal">Teacher Time Table</button> -->
-                          <!--  <button class="btn btn-primary" ng-if="calendarOwner!='Your'" ng-click="eventGet()">My Calendar</button>
-                  <button class="btn btn-primary" ng-if="calendarOwner=='Your' && userLoginType=='studParent' && teacherPersonalData[0].teacherName != null"
-                    ng-click="getSTCalendar()">{{teacherPersonalData[0].teacherName}} Calendar</button>
-                  <button class="btn btn-primary" ng-if="calendarOwner=='Your' && userLoginType=='teacher' && studentPersonalData[0].studName != null"
-                    ng-click="getSSCalendar()">{{studentPersonalData[0].studName}} Calendar</button> -->
 
                         </div>
                       </div>
@@ -137,45 +125,20 @@
                   right: 0;">
                           <label class="btn btn-info" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
                           <label class="btn btn-info" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
-                          <!-- <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" ng-click="vm.cellIsOpen = false">Week</label> -->
-                          <!-- <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" ng-click="vm.cellIsOpen = false">Day</label> -->
                         </div>
                       </div>
-
                     </div>
-
                     <div class="panel-body">
                       <!-- Widget content -->
                       <mwl-calendar events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)"
                         on-view-change-click="false" on-timespan-click="vm.timespanClicked(calendarDate)">
                       </mwl-calendar>
-                      <!-- <mwl-calendar events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)"
-                on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-                cell-is-open="vm.cellIsOpen" day-view-start="09:00" day-view-end="15:00" day-view-split="15" cell-modifier="vm.modifyCell(calendarCell)"
-                cell-auto-open-disabled="true" on-date-range-select="vm.rangeSelected(calendarRangeStartDate, calendarRangeEndDate)"
-                on-timespan-click="vm.timespanClicked(calendarDate)">
-              </mwl-calendar> -->
-                      <!-- Below line produces calendar. I am using FullCalendar plugin. -->
-                      <!-- <mwl-calendar ng-if="calendarOwner=='Your'" events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate"
-                on-event-click="vm.eventClicked(calendarEvent)" on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-                cell-is-open="vm.cellIsOpen" day-view-start="09:00" day-view-end="15:00" day-view-split="15" cell-modifier="vm.modifyCell(calendarCell)"
-                cell-auto-open-disabled="true" ng-click="vm.timeClick(calendarEvent)">
-              </mwl-calendar>
-              <mwl-calendar ng-if="calendarOwner!='Your'" events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate"
-                on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-                cell-is-open="vm.cellIsOpen" day-view-start="09:00" day-view-end="15:00" day-view-split="15" cell-modifier="vm.modifyCell(calendarCell)"
-                cell-auto-open-disabled="true" on-date-range-select="vm.rangeSelected(calendarRangeStartDate, calendarRangeEndDate)">
-              </mwl-calendar> -->
 
                     </div>
                   </div>
-
                 </div>
               </div>
-
-
               <!-- ##### Start Time Table  ##### -->
-
               <div class="modal fade" id="timeTable_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" style="width:auto;">
                   <div class="modal-content">
@@ -184,119 +147,16 @@
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-
-
-                      <!-- <table class="table table-sm">
-
-                        <thead>
-                          <tr>
-                            <th>Timing</th>
-
-                            <th ng-repeat="tt in teacherPersonalData[0].timeTable[0].timing">
-                              <div style="word-wrap: break-word;">{{tt.startsAt}}-{{tt.endsAt}}</div>
-                            </th>
-
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr class="active">
-                            <td>Mon</td>
-
-                            <td ng-if="selectedDateForEvent=='Mon'" style="background-color:#ccc!important;cursor: pointer;" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Mon"
-                              ng-click="timeTableForEventBook('mon',$index)">
-                              <div style="word-wrap: break-word;">
-                                <button class="btn" ng-if="mtt.class=='Free'">Schedule</button>
-                                <span ng-if="mtt.class!='Free'">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</span>
-                              </div>
-                            </td>
-                            <td ng-if="selectedDateForEvent!='Mon'" style="background-color:#f5f5f5!important" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Mon">
-                              <div style="word-wrap: break-word;">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</div>
-                            </td>
-                          </tr>
-                          <tr class="warning">
-                            <td>Tue</td>
-                            <td ng-if="selectedDateForEvent=='Tue'" style="background-color:#ccc!important;cursor: pointer;" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Tue"
-                              ng-click="timeTableForEventBook('tue',$index)">
-                              <div style="word-wrap: break-word;">
-                                <button class="btn" ng-if="mtt.class=='Free'">Schedule</button>
-                                <span ng-if="mtt.class!='Free'">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</span>
-                              </div>
-                            </td>
-                            <td ng-if="selectedDateForEvent!='Tue'" style="background-color:#f5f5f5!important" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Tue">
-                              <div style="word-wrap: break-word;">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</div>
-                            </td>
-                          </tr>
-                          <tr class="danger">
-                            <td>Wed</td>
-                            <td ng-if="selectedDateForEvent=='Wed'" style="background-color:#ccc!important;cursor: pointer;" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Wed"
-                              ng-click="timeTableForEventBook('wed',$index)">
-                              <button class="btn" ng-if="mtt.class=='Free'">Schedule</button>
-                              <span ng-if="mtt.class!='Free'">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</span>
-                            </td>
-                            <td ng-if="selectedDateForEvent!='Wed'" style="background-color:#f5f5f5!important" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Wed">
-                              <div style="word-wrap: break-word;">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}
-                              </div>
-                            </td>
-                          </tr>
-                          <tr class="success">
-                            <td>Thu</td>
-                            <td ng-if="selectedDateForEvent=='Thu'" style="background-color:#ccc!important;cursor: pointer;" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Thu"
-                              ng-click="timeTableForEventBook('thu',$index)">
-                              <div style="word-wrap: break-word;">
-                                <button class="btn" ng-if="mtt.class=='Free'">Schedule</button>
-                                <span ng-if="mtt.class!='Free'">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</span>
-                              </div>
-                            </td>
-                            <td ng-if="selectedDateForEvent!='Thu'" style="background-color:#f5f5f5!important" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Thu">
-                              <div style="word-wrap: break-word;">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}
-                              </div>
-                            </td>
-                          </tr>
-                          <tr class="active">
-                            <td>Fri</td>
-                            <td ng-if="selectedDateForEvent=='Fri'" style="background-color:#ccc!important;cursor: pointer;" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Fri"
-                              ng-click="timeTableForEventBook('fri',$index)">
-                              <div style="word-wrap: break-word;">
-                                <button class="btn" ng-if="mtt.class=='Free'">Schedule</button>
-                                <span ng-if="mtt.class!='Free'">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</span>
-                              </div>
-                            </td>
-                            <td ng-if="selectedDateForEvent!='Fri'" style="background-color:#f5f5f5!important" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Fri">
-                              <div style="word-wrap: break-word;">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}
-                              </div>
-                            </td>
-                          </tr>
-                          <tr class="warning">
-                            <td>Sat</td>
-                            <td ng-if="selectedDateForEvent=='Sat'" style="background-color:#ccc!important;cursor: pointer;" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Sat"
-                              ng-click="timeTableForEventBook('sat',$index)">
-                              <div style="word-wrap: break-word;">
-                                <button class="btn" ng-if="mtt.class=='Free'">Schedule</button>
-                                <span ng-if="mtt.class!='Free'">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</span>
-                              </div>
-                            </td>
-                            <td ng-if="selectedDateForEvent!='Sat'" style="background-color:#f5f5f5!important" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Sat">
-                              <div style="word-wrap: break-word;">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-
-                      </table> -->
-
                       <table class="table table-sm table-bordered">
-
                         <thead>
                           <tr>
-
                             <th>Timing</th>
                             <th>Subject</th>
                           </tr>
                         </thead>
-
                         <tbody>
                           <tr>
-                            <td >
+                            <td>
                               <table>
                                 <tr style="background-color:#ccc!important;cursor: pointer;" ng-repeat="tt in teacherPersonalData[0].timeTable[0].timing">
                                   <td>{{tt.startsAt}}-{{tt.endsAt}}</td>
@@ -341,12 +201,12 @@
                                   </td>
                                 </tr>
                                 <tr ng-if="selectedDateForEvent=='Sat'" style="background-color:#ccc!important;cursor: pointer;" ng-repeat="mtt in teacherPersonalData[0].timeTable[0].css.Sat"
-                                ng-click="timeTableForEventBook('sat',$index)">
-                                <td>
-                                  <button ng-if="mtt.class=='Free'">Schedule</button>
-                                  <span ng-if="mtt.class!='Free'">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</span>
-                                </td>
-                              </tr>
+                                  ng-click="timeTableForEventBook('sat',$index)">
+                                  <td>
+                                    <button ng-if="mtt.class=='Free'">Schedule</button>
+                                    <span ng-if="mtt.class!='Free'">{{mtt.class}}&nbsp{{mtt.section}}&nbsp{{mtt.subject}}</span>
+                                  </td>
+                                </tr>
                               </table>
                             </td>
                           </tr>

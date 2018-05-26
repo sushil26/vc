@@ -40,43 +40,7 @@ app.controller('markViewCtl', function ($scope, $rootScope, $window, $uibModal, 
                 console.log("studData: " + JSON.stringify(studData));
                 console.log("$scope.mark: " + JSON.stringify($scope.mark));
                 console.log("$scope.mark.length: " + $scope.mark.length);
-                // for (var x = 0; x < $scope.mark.length; x++) {
-                // $scope.test
-                //                 }
-                // for (var x = 0; x < $scope.mark.length; x++) {
-                //     console.log("$scope.mark[x]: " + JSON.stringify($scope.mark[x]));
-                //     var year = "2018";
-                //     var mon = $scope.attendance[x].month;
-                //     console.log("$scope.attendance[x].dateAttendance.length: " + $scope.attendance[x].dateAttendance.length);
-                //     for (var y = 0; y < $scope.attendance[x].dateAttendance.length; y++) {
-                //         console.log("$scope.attendance[x].dateAttendance[y]: " + JSON.stringify($scope.attendance[x].dateAttendance[y]));
-                //         var day = $scope.attendance[x].dateAttendance[y].date;
-                //         console.log("day: " + day + "month: " + mon + "year: " + year);
-                //         var resultDate = new Date(year + " " + mon + " " + day);
-                //         console.log("resultDate: " + resultDate);
-                //         console.log("moment().subtract(1, 'day').toDate(): " + moment().subtract(1, 'day').toDate());
-
-                //         var obj = {
-                //             'title': $scope.attendance[x].dateAttendance[y].status,
-                //             'startsAt': resultDate,
-                //             'endsAt': resultDate,
-                //             'draggable': true,
-                //             'resizable': true,
-                //             'incrementsBadgeTotal': false
-                //         }
-                //         if ($scope.attendance[x].dateAttendance[y].status == "P") {
-                //             obj.color = calendarConfig.colorTypes.info;
-                //         }
-                //         else {
-                //             obj.color = calendarConfig.colorTypes.important;
-                //         }
-                //         console.log("obj: " + JSON.stringify(obj));
-                //         $scope.events.push(obj);
-
-                //     }
-                // }
-                // console.log("$scope.events: " + JSON.stringify($scope.events));
-
+                $scope.mark.push({"testType":"ALL"}); /* ### Note: option for view all test result  ### */
             }
             else {
                 console.log("sorry");

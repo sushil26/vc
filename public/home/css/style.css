@@ -136,7 +136,7 @@ bouncy:active:before {
 
 video {
   width: 100%;
-  height: 200px;
+  height: auto;
   background: #004085;
 }
 
@@ -843,7 +843,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #portfolio #portfolio-wrapper {
-  padding-right: 15px;
+  /* padding-right: 15px; */
 }
 
 #portfolio #portfolio-flters {

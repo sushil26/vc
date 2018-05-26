@@ -106,17 +106,18 @@ app.factory('httpFactory', function ($http, $q, $rootScope) {
             });
             return dfd.promise;
         },
-        imageUpload: function (file, uploadUrl) {
+        imageUpload: function (uploadUrl, file) {
             var dfd = $q.defer();
             var postUrl = $rootScope.propertyJson.BASE_URL + uploadUrl;
             var fd = new FormData();
             console.log("file: " + file);
+            console.log("file: " + file.upload);
 
-            fd.append('img', file);
+            fd.append('logo', file.upload);
             console.log("fd: " + fd);
             $http.post(postUrl, fd, {
                 transformRequest: angular.identity,
-                headers: { 'Content-Type': undefined }
+                headers: { 'Content-Type': undefined}
             }).then(function (response) {
                 console.log("lego--" + response)
                 dfd.resolve(response);

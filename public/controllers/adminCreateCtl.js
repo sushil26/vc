@@ -1,6 +1,49 @@
 app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window, httpFactory, sessionAuthFactory, $uibModal) {
     console.log("adminCreateCtl==>");
     $scope.propertyJson = $rootScope.propertyJson;
+    $scope.file = {};/* ### Note Upload file declaration ### */
+
+    $scope.schoolLogoStorage = function () {
+        console.log("schoolLogoStorage-->");
+        /* #####  Start Upload File ###### */
+        console.log("$scope.file: " + $scope.file);
+        console.log("$scope.file: " + $scope.file.upload);
+        //    if ($scope.file.upload) {
+        var uploadURL = $scope.propertyJson.VC_schoolLogo;
+        console.log("uploadURL: " + uploadURL);
+        console.log("$scope.file.upload from : alumRegCtr.js: " + $scope.file.upload);
+        httpFactory.imageUpload(uploadURL, $scope.file).then(function (data) {
+            console.log("hello " + JSON.stringify(data));
+            var checkStatus = httpFactory.dataValidation(data);
+            console.log("checkStatus: " + checkStatus);
+            console.log("data.data.success: " + data.data.success);
+            if (checkStatus) {
+                console.log("$scope.photo" + JSON.stringify(data));
+                $scope.getUpdateofImage = data;
+                console.log("$scope.getUpdateofImage" + JSON.stringify($scope.getUpdateofImage));
+                $scope.message = data.data.message;
+                $scope.filePath = data.data.fileFullPath;
+                $scope.status = data.data.success;
+
+                // // console.log("JSON.stringify($scope.postJson): " + JSON.stringify(postJson));
+                $scope.adminCreate();
+            } else {
+                $scope.status = data.data.status;
+                $scope.message = data.data.message;
+                console.log("image is not uploaded");
+                $scope.adminCreate();
+                // console.log("JSON.stringify($scope.postJson): " + JSON.stringify(postJson));
+                // $scope.savePost();
+
+            }
+        });
+        //}
+        /* #####  End Upload File ###### */
+        // else{
+        //     alert("logo is required");
+        // }
+        console.log("<--schoolLogoStorage");
+    }
 
     $scope.adminCreate = function () {
         console.log("adminCreate-->");
@@ -18,8 +61,12 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
             "state": $scope.state,
             "pinCode": $scope.pinCode,
             "country": $scope.country,
-            "pswd": $scope.pswd
+            "pswd": $scope.pswd,
         }
+        if ($scope.filePath) {
+            objJson.logoPath = $scope.filePath;
+        }
+       
         console.log("objJson: " + JSON.stringify(objJson));
         var api = $scope.propertyJson.VC_adminCreate;
         httpFactory.post(api, objJson).then(function (data) {
@@ -52,8 +99,7 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
                 $scope.country = "";
                 $scope.pswd = ""
                 // alert(data.data.message);
-            }
-            else {
+            } else {
                 var loginAlert = $uibModal.open({
                     scope: $scope,
                     templateUrl: '/html/templates/dashboardwarning.html',
@@ -69,6 +115,23 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
         })
         console.log("<--adminCreate");
     }
+
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function () {
+        readURL(this);
+    });
+
+
 
     // $scope.userData = sessionAuthFactory.getAccess("userData");
     // $scope.loginType = $scope.userData.loginType;

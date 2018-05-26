@@ -23,6 +23,7 @@ var teacherSchema = new Schema({
     pswd: { type: String, required: true },
     status: { type: String, required: true },
     loginType: { type: String, required: true },
+    logoPath: { type: String },
     created_at: Date,
 });
 

@@ -2,16 +2,33 @@
 var db = require("../dbConfig.js").getDb();
 var student = require("./schemas/student.js");
 var teacher = require("./schemas/teacher.js");
-var user = db.collection("user"); /* ### Teacher collection  ### */
-var stud = db.collection("student"); /* ### student collection  ### */
-var school = db.collection("school"); /* ### school collection  ### */
+var monkey = require("./schemas/monkey.js");
 
+var user = db.collection("user"); /* ### Teacher collection  ### */
+var stud = db.collection("students"); /* ### student collection  ### */
+//var studCheck = db.collection("students"); /* ### student collection  ### */
+var school = db.collection("school"); /* ### school collection  ### */
 var general = require("../general.js");
 var ObjectId = require("mongodb").ObjectID;
 var bodyParser = require('body-parser');
-
 var csv = require('fast-csv');
 var d = new Date();
+var fileUpload = require('express-fileupload');
+
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+    service: "godaddy",
+    auth: {
+        user: "info@vc4all.in",
+        pass: "ctpl@123"
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+
+var fs = require("fs");
 var message;
 var month;
 var marker; /* ### Note: marker is used for identify the status of update query ###*/
@@ -26,6 +43,13 @@ var counter = 0; /* ### Note: Used while uploading marksheet  ### */
 var expectedMessage; /* ### Note:Attendance month validation  ### */
 var id; /* ### Note:Attendance Update based on id  ### */
 var createdDate = new Date();
+var ids = []; /* ### All valid ids storage for studentMaster  ### */
+var csData = []; /* ### Class and Section for studentMaster### */
+var objJson = []; /* ### Storage for student master valid data ### */
+var studentFileValidationMessage = null; /* ### Notification for student master invalid data ### */
+var teacherFileValidationMessage = null; /* ### Notification for student master invalid data ### */
+var allStudentEmailIds = [];  /* ### storage for all parents email ids ### */
+var allTeacherEmailIds = [];  /* ### storage for all teacher email ids ### */
 
 module.exports.updateSchoolStatus = function (req, res) {
     console.log("updateSchoolStatus-->");
@@ -1635,10 +1659,12 @@ module.exports.uploadStudentMaster = function (req, res) {
     console.log("uploadStudentMaster-->");
     var responseData;
     var marker;
-    var objJson = [];
+
+    schoolName = req.params.schoolName;
     // var cs = [{"class":req.params.class,"section":req.params.section}];
     var fileName = req.files.img.name;
     var fileNameSeparate = fileName.split('_');
+
     if (fileNameSeparate[0] == 'Student') {
         if (!req.files)
             return res.status(400).send('No files were uploaded.');
@@ -1650,207 +1676,201 @@ module.exports.uploadStudentMaster = function (req, res) {
             ignoreEmpty: true
         }).on("data", function (data) {
             console.log("data: " + JSON.stringify(data));
-            var csData = [{ "class": req.params.clas, "section": req.params.section }];
-            var userData = {
-                schoolName: req.params.schoolName,
-                schoolId: data.StudentID,
-                firstName: data.FirstName,
-                lastName: data.LastName,
-                parentName: data.FatherName,
-                parentEmail: data.FatherEmailId,
-                mobileNum: data.FatherPhoneNumber,
-                motherName: data.MotherName,
-                motherEmail: data.MotherEmailid,
-                motherNum: data.MotherPhoneNumber,
-                cs: csData,
-                dob: data.DOB,
-                doj: data.DOJ,
-                pswd: "abc",
-                status: "active",
-                loginType: "studParent",
-                attendance: [
-                    { "month": "Jan", "dateAttendance": [] },
-                    { "month": "Feb", "dateAttendance": [] },
-                    { "month": "Mar", "dateAttendance": [] },
-                    { "month": "Apr", "dateAttendance": [] },
-                    { "month": "May", "dateAttendance": [] },
-                    { "month": "Jun", "dateAttendance": [] },
-                    { "month": "Jul", "dateAttendance": [] },
-                    { "month": "Aug", "dateAttendance": [] },
-                    { "month": "Sep", "dateAttendance": [] },
-                    { "month": "Oct", "dateAttendance": [] },
-                    { "month": "Nov", "dateAttendance": [] },
-                    { "month": "Dec", "dateAttendance": [] }
-                ],
-                mark: [
-                    { "testType": "AT", "subjectWithMark": [] },
-                    { "testType": "UT", "subjectWithMark": [] },
-                    { "testType": "MT", "subjectWithMark": [] },
-                    { "testType": "TT", "subjectWithMark": [] },
-                    { "testType": "AT", "subjectWithMark": [] },
-                ],
-                created_at: createdDate
-            };
-
-            objJson.push(userData);
-            console.log("userData: " + JSON.stringify(userData));
+            csData = [{ "class": req.params.clas, "section": req.params.section }];
+            parser.pause();
+            if (studentFileValidationMessage == null) {
+                module.exports.studentMasterValidation(data, function (err) {
+                    console.log("savedatInitiate");
+                    // TODO: handle error
+                    console.log("studentFileValidationFunction start-->: " + studentFileValidationMessage);
+                    parser.resume();
+                });
+            }
+            else {
+                // parser.end();
+                parser.resume();
+            }
         })
             .on("end", function () {
                 console.log("end marker: " + marker);
                 console.log("objJson: " + JSON.stringify(objJson));
-                // stud.find({ "cs": { "class": req.params.clas, "section": req.params.section } }).toArray(function (err, studentClassList) {
-                //     console.log("studentClassList.length: " + studentClassList.length);
-                //     if (err) {
-                //         responseData = {
-                //             status: false,
-                //             message: "Failed to get Data",
-
-                //         };
-                //         res.status(400).send(responseData);
-                //     } else {
-                //         if (studentClassList.length == 0) {
-                student.create(objJson, function (err, data) {
-                    console.log("data: " + JSON.stringify(data));
-                    // console.log("err: " + JSON.stringify(err));
-                    if (err) {
-                        console.log("err: " + JSON.stringify(err));
-                        // console.log("err.code: " + err.code+" err.index: "+err.index+" err.errmsg: "+err.errmsg+" err.op: "+err.op);
-                        console.log("err.op: " + JSON.stringify(err.op));
-                        if (err.code == 11000) {
-                            console.log("err: " + JSON.stringify(err.errmsg));
-                            var errmsg = err.errmsg;
-                            var splitErrMsg = errmsg.split(':');
-                            var nextSplit = splitErrMsg[4].split('}');
-                            console.log("splitErrMsg: " + splitErrMsg + " nextSplit: " + nextSplit);
-                            responseData = {
-                                status: false,
-                                message: nextSplit[0] + " Already exist"
-                            };
-                            res.status(400).send(responseData);
-                        }
-                        else {
-                            console.log("err.errors.name: " + err.name);
-                            console.log("err.errors: " + err.errors);
-                            if (err.name == 'ValidationError') {
-                                var message;
-                                if (err.errors.mobileNum) {
-                                    console.log("mobile Number has to be Number");
-                                    responseData = {
-                                        status: false,
-                                        message: "Mobile Number is required as a Number"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.schoolName) {
-                                    responseData = {
-                                        status: false,
-                                        message: "SchoolName is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.schoolId) {
-                                    responseData = {
-                                        status: false,
-                                        message: "SchoolId is required"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.firstName) {
-                                    responseData = {
-                                        status: false,
-                                        message: "FirstName is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.lastName) {
-                                    responseData = {
-                                        status: false,
-                                        message: "LastName is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.parentName) {
-                                    responseData = {
-                                        status: false,
-                                        message: "parentName is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.parentEmail) {
-                                    responseData = {
-                                        status: false,
-                                        message: "parentEmail is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.mobileNum) {
-                                    responseData = {
-                                        status: false,
-                                        message: "Father mobile number is required"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.motherName) {
-                                    responseData = {
-                                        status: false,
-                                        message: "motherName is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.motherEmail) {
-                                    responseData = {
-                                        status: false,
-                                        message: "MotherEmail is required"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.motherNum) {
-                                    responseData = {
-                                        status: false,
-                                        message: "Mother mobile number is required"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-
-                                else if (err.errors.dob) {
-                                    responseData = {
-                                        status: false,
-                                        message: "dob is required"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.doj) {
-                                    responseData = {
-                                        status: false,
-                                        message: "doj is required"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-
-
+                console.log("studentFileValidationMessage: " + studentFileValidationMessage);
+                if (studentFileValidationMessage != null) {
+                    responseData = {
+                        status: false,
+                        message: studentFileValidationMessage
+                    };
+                    res.status(400).send(responseData);
+                    console.log("responseData: " + JSON.stringify(responseData));
+                    console.log("ids: " + ids + " studentFileValidationMessage: " + studentFileValidationMessage + " objJson: " + JSON.stringify(objJson));
+                    ids = [];
+                    studentFileValidationMessage = null;
+                    objJson = [];
+                    console.log("ids: " + ids + " studentFileValidationMessage: " + studentFileValidationMessage + " objJson: " + JSON.stringify(objJson));
+                }
+                else {
+                    student.create(objJson, function (err, data) {
+                        console.log("data: " + JSON.stringify(data));
+                        // console.log("err: " + JSON.stringify(err));
+                        if (err) {
+                            console.log("err: " + JSON.stringify(err));
+                            // console.log("err.code: " + err.code+" err.index: "+err.index+" err.errmsg: "+err.errmsg+" err.op: "+err.op);
+                            console.log("err.op: " + JSON.stringify(err.op));
+                            if (err.code == 11000) {
+                                console.log("err: " + JSON.stringify(err.errmsg));
+                                var errmsg = err.errmsg;
+                                var splitErrMsg = errmsg.split(':');
+                                var nextSplit = splitErrMsg[4].split('}');
+                                console.log("splitErrMsg: " + splitErrMsg + " nextSplit: " + nextSplit);
+                                responseData = {
+                                    status: false,
+                                    message: nextSplit[0] + " Already exist"
+                                };
+                                res.status(400).send(responseData);
                             }
-                        }
-                    } else {
-                        responseData = {
-                            status: true,
-                            errorCode: 200,
-                            message: "Insert Successfull",
-                            data: data
-                        };
-                        res.status(200).send(responseData);
-                    }
-                });
-                // }
-                // else {
-                //     responseData = {
-                //         status: false,
-                //         message: "Sorry! you already inserted data for this class, further insertion you have to use reports update option",
+                            else {
+                                console.log("err.errors.name: " + err.name);
+                                console.log("err.errors: " + err.errors);
+                                if (err.name == 'ValidationError') {
+                                    var message;
+                                    if (err.errors.mobileNum) {
+                                        console.log("mobile Number has to be Number");
+                                        responseData = {
+                                            status: false,
+                                            message: "Mobile Number is required as a Number"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.schoolName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "SchoolName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.schoolId) {
+                                        responseData = {
+                                            status: false,
+                                            message: "SchoolId is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.firstName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "FirstName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.lastName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "LastName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.parentName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "parentName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.parentEmail) {
+                                        responseData = {
+                                            status: false,
+                                            message: "parentEmail is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.mobileNum) {
+                                        responseData = {
+                                            status: false,
+                                            message: "Father mobile number is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.motherName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "motherName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.motherEmail) {
+                                        responseData = {
+                                            status: false,
+                                            message: "MotherEmail is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.motherNum) {
+                                        responseData = {
+                                            status: false,
+                                            message: "Mother mobile number is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
 
-                //     };
-                //     res.status(400).send(responseData);
-                // }
-                // }
-                // });
+                                    else if (err.errors.dob) {
+                                        responseData = {
+                                            status: false,
+                                            message: "dob is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.doj) {
+                                        responseData = {
+                                            status: false,
+                                            message: "doj is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+
+
+                                }
+                            }
+                        } else {
+
+                            allStudentEmailIds.forEach(function (to, i, array) {
+                                console.log("i: "+i);
+                                console.log("to: "+to);
+                                console.log("array: "+JSON.stringify(array));
+                                var mailOptions = {
+                                    from: "info@vc4all.in",
+                                    to: to.email,
+                                    subject: "Regarding School Meeting",
+                                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Parents,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: "+to.pswd+" </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
+                                    // html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                                };
+                                console.log("mailOptions: " + JSON.stringify(mailOptions));
+                                transporter.sendMail(mailOptions, function (error, info) {
+                                    if (error) {
+                                        console.log(error);
+                                       console.log("err");
+                                    } else {
+                                        console.log('Email sent: ' + info.response);
+                                        console.log("info");
+                                    }
+            
+                                });
+                            })
+                            ids = [];
+                            studentFileValidationMessage = null;
+                            objJson = [];
+                            responseData = {
+                                status: true,
+                                message: "Insert Successfull",
+                                data: data
+                            };
+                            res.status(200).send(responseData);
+                            console.log("responseData: " + JSON.stringify(responseData));
+                            console.log("ids: " + ids + " studentFileValidationMessage: " + studentFileValidationMessage + " objJson: " + JSON.stringify(objJson));
+
+                        }
+                    });
+                }
+
             });
     }
     else {
@@ -1861,6 +1881,95 @@ module.exports.uploadStudentMaster = function (req, res) {
         res.status(400).send(responseData);
     }
     console.log("<--uploadStudentMaster");
+}
+module.exports.studentMasterValidation = function (data, callback) {
+    console.log("studentMasterValidation-->");
+    if (studentFileValidationMessage == null) {
+        var findId = { "schoolName": schoolName, "schoolId": data.StudentID };
+        console.log("findId: " + JSON.stringify(findId));
+        stud.find(findId).toArray(function (err, idLength) {
+            console.log("idLength.length: " + idLength.length);
+            if (err) {
+                responseData = {
+                    status: fasle,
+                    message: err
+                };
+                res.status(400).send(responseData);
+                if (callback) callback();
+            }
+            else {
+                if (idLength.length == 0) {
+                    console.log("ids.indexOf(data.StudentID): " + ids.indexOf(data.StudentID));
+                    if (ids.indexOf(data.StudentID) == -1) {
+                        ids.push(data.StudentID);
+                        var userData = {
+                            schoolName: schoolName,
+                            schoolId: data.StudentID,
+                            firstName: data.FirstName,
+                            lastName: data.LastName,
+                            parentName: data.FatherName,
+                            parentEmail: data.FatherEmailId,
+                            mobileNum: data.FatherPhoneNumber,
+                            motherName: data.MotherName,
+                            motherEmail: data.MotherEmailid,
+                            motherNum: data.MotherPhoneNumber,
+                            cs: csData,
+                            dob: data.DOB,
+                            doj: data.DOJ,
+                            pswd: "abc",
+                            status: "active",
+                            loginType: "studParent",
+                            attendance: [
+                                { "month": "Jan", "dateAttendance": [] },
+                                { "month": "Feb", "dateAttendance": [] },
+                                { "month": "Mar", "dateAttendance": [] },
+                                { "month": "Apr", "dateAttendance": [] },
+                                { "month": "May", "dateAttendance": [] },
+                                { "month": "Jun", "dateAttendance": [] },
+                                { "month": "Jul", "dateAttendance": [] },
+                                { "month": "Aug", "dateAttendance": [] },
+                                { "month": "Sep", "dateAttendance": [] },
+                                { "month": "Oct", "dateAttendance": [] },
+                                { "month": "Nov", "dateAttendance": [] },
+                                { "month": "Dec", "dateAttendance": [] }
+                            ],
+                            mark: [
+                                { "testType": "AT", "subjectWithMark": [] },
+                                { "testType": "UT", "subjectWithMark": [] },
+                                { "testType": "MT", "subjectWithMark": [] },
+                                { "testType": "TT", "subjectWithMark": [] },
+                                { "testType": "AT", "subjectWithMark": [] },
+                            ],
+                            created_at: createdDate
+                        };
+                        allStudentEmailIds.push({"email":data.FatherEmailId, "pswd":"abc"});
+                        if (data.MotherEmailid) {
+                           allStudentEmailIds.push({"email":data.MotherEmailid, "pswd":"abc"});
+                        }
+                        objJson.push(userData);
+
+                        console.log("userData: " + JSON.stringify(userData));
+                        if (callback) callback();
+                    }
+                    else {
+                        studentFileValidationMessage = data.StudentID + " You Used More Than One Time";
+                        if (callback) callback();
+                    }
+                }
+                else {
+                    studentFileValidationMessage = "OOPS! "+"'" + data.StudentID +"'"+ " already Exist Or Not a Appropriate Class or Section"
+                    if (callback) callback();
+                }
+            }
+        })
+    }
+    else {
+        console.log("studentFileValidationMessage-->: " + studentFileValidationMessage);
+        if (callback) callback();
+
+    }
+    console.log("<--studentMasterValidation");
+
 }
 module.exports.updateStudentMaster = function (req, res) {
     console.log("updateStudentMaster-->");
@@ -1912,7 +2021,7 @@ module.exports.updateStudentMaster = function (req, res) {
                 console.log("id: " + JSON.stringify(id));
                 // console.log("queryData: " + JSON.stringify(queryData));
                 // stud.update(queryData, { $set: { $each: objJson } }, function (err, data) {
-                    student.update(id, { $set: objJson }, function (err, data) {
+                student.update(id, { $set: objJson }, function (err, data) {
                     console.log("data: " + JSON.stringify(data));
                     if (err) {
                         responseData = {
@@ -1947,7 +2056,8 @@ module.exports.uploadTeacherMaster = function (req, res) {
     var responseData;
     var marker;
     var css = [];
-    var objJson = [];
+  
+    schoolName = req.params.schoolName;
     // var cs = [{"class":req.params.class,"section":req.params.section}];
     var fileName = req.files.img.name;
     var fileNameSeparate = fileName.split('_');
@@ -1959,139 +2069,204 @@ module.exports.uploadTeacherMaster = function (req, res) {
         console.log("studentDataFile: " + studentDataFile);
         var parser = csv.fromString(studentDataFile.data.toString(), {
             headers: true,
-            ignoreEmpty: true
+            ignoreEmpty: true,
+            trim: true
         }).on("data", function (data) {
             console.log("data: " + JSON.stringify(data));
             // var csData = [{ "class": req.params.class, "section": req.params.section }];
-            var userData = {
-                schoolName: req.params.schoolName,
-                schoolId: data.TeacherID,
-                firstName: data.FirstName,
-                lastName: data.LastName,
-                email: data.Email,
-                mobNumber: data.PhoneNumber,
-                dob: data.DOB,
-                doj: data.DOJ,
-                pswd: "abc",
-                css: [],
-                timeTable: [],
-                status: "active",
-                loginType: "teacher",
-                created_at: createdDate
+            parser.pause();
+
+            if (teacherFileValidationMessage == null) {
+                module.exports.teacherMasterValidation(data, function (err) {
+                    console.log("savedatInitiate");
+                    // TODO: handle error
+                    console.log("teacherFileValidation function start-->: " + teacherFileValidationMessage);
+                    console.log("objJson: "+JSON.stringify(objJson));
+                    parser.resume();
+                });
             }
-            var cssParts = data.ClassSectionSubject.split(',');
-            console.log("cssParts: " + JSON.stringify(cssParts));
-            for (var x = 0; x < cssParts.length; x++) {
-                if (cssParts[x] != "") {
-                    console.log("cssParts[x]: " + cssParts[x]);
-                    var trimed = cssParts[x].trim();
-                    console.log("cssSeparate: " + trimed);
-                    var cssSeparate = trimed.split('-');
-                    console.log("cssSeparate: " + JSON.stringify(cssSeparate));
-                    userData.css.push({ "class": cssSeparate[0], "section": cssSeparate[1], "subject": cssSeparate[2] });
-                }
+            else {
+                // parser.end();
+                parser.resume();
             }
-            console.log("userData: " + JSON.stringify(userData));
-            objJson.push(userData);
         })
             .on("end", function () {
                 console.log("end marker: " + marker);
                 console.log("objJson: " + JSON.stringify(objJson));
-                teacher.create(objJson, function (err, data) {
-                    console.log("data: " + JSON.stringify(data));
-                    if (err) {
-                        if (err.code == 11000) {
-                            console.log("err: " + JSON.stringify(err.errmsg));
-                            var errmsg = err.errmsg;
-                            var splitErrMsg = errmsg.split(':');
-                            var nextSplit = splitErrMsg[4].split('}');
-                            console.log("splitErrMsg: " + splitErrMsg + " nextSplit: " + nextSplit);
-                            responseData = {
-                                status: false,
-                                message: nextSplit[0] + " Already exist"
-                            };
-                            res.status(400).send(responseData);
-                        }
-                        else {
-                            console.log("err.errors.name: " + err.name);
-                            console.log("err.errors: " + err.errors);
-                            if (err.name == 'ValidationError') {
-                                if (err.errors.mobileNum) {
-                                    console.log("mobile Number has to be Number");
-                                    responseData = {
-                                        status: false,
-                                        message: "Mobile Number is required as a Number"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.schoolName) {
-                                    responseData = {
-                                        status: false,
-                                        message: "SchoolName is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.schoolId) {
-                                    responseData = {
-                                        status: false,
-                                        message: "SchoolId is required"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.firstName) {
-                                    responseData = {
-                                        status: false,
-                                        message: "FirstName is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.lastName) {
-                                    responseData = {
-                                        status: false,
-                                        message: "LastName is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.email) {
-                                    responseData = {
-                                        status: false,
-                                        message: "Email is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.mobNumber) {
-                                    responseData = {
-                                        status: false,
-                                        message: "Mobile number is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.email) {
-                                    responseData = {
-                                        status: false,
-                                        message: "Email is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
-                                }
-                                else if (err.errors.mobNumber) {
-                                    responseData = {
-                                        status: false,
-                                        message: "Mobile number is required as a string"
-                                    };
-                                    res.status(400).send(responseData);
+                console.log("teacherFileValidationMessage: " + teacherFileValidationMessage);
+                if (teacherFileValidationMessage != null) {
+                    responseData = {
+                        status: false,
+                        message: teacherFileValidationMessage
+                    };
+                    res.status(400).send(responseData);
+                    console.log("responseData: " + JSON.stringify(responseData));
+                    console.log("ids: " + ids + " teacherFileValidationMessage: " + teacherFileValidationMessage + " objJson: " + JSON.stringify(objJson));
+                    ids = [];
+                    teacherFileValidationMessage = null;
+                    objJson = [];
+                    console.log("ids: " + ids + " teacherFileValidationMessage: " + teacherFileValidationMessage + " objJson: " + JSON.stringify(objJson));
+                }
+                else {
+                    console.log("ready for insert");
+                    teacher.create(objJson, function (err, data) {
+                        console.log("data: " + JSON.stringify(data));
+                        // console.log("err: " + JSON.stringify(err));
+                        if (err) {
+                            console.log("err: " + JSON.stringify(err));
+                            // console.log("err.code: " + err.code+" err.index: "+err.index+" err.errmsg: "+err.errmsg+" err.op: "+err.op);
+                            console.log("err.op: " + JSON.stringify(err.op));
+                            if (err.code == 11000) {
+                                console.log("err: " + JSON.stringify(err.errmsg));
+                                var errmsg = err.errmsg;
+                                var splitErrMsg = errmsg.split(':');
+                                var nextSplit = splitErrMsg[4].split('}');
+                                console.log("splitErrMsg: " + splitErrMsg + " nextSplit: " + nextSplit);
+                                responseData = {
+                                    status: false,
+                                    message: nextSplit[0] + " Already exist"
+                                };
+                                res.status(400).send(responseData);
+                            }
+                            else {
+                                console.log("err.errors.name: " + err.name);
+                                console.log("err.errors: " + err.errors);
+                                if (err.name == 'ValidationError') {
+                                    var message;
+                                    if (err.errors.mobileNum) {
+                                        console.log("mobile Number has to be Number");
+                                        responseData = {
+                                            status: false,
+                                            message: "Mobile Number is required as a Number"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.schoolName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "SchoolName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.schoolId) {
+                                        responseData = {
+                                            status: false,
+                                            message: "SchoolId is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.firstName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "FirstName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.lastName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "LastName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.parentName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "parentName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.parentEmail) {
+                                        responseData = {
+                                            status: false,
+                                            message: "parentEmail is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.mobileNum) {
+                                        responseData = {
+                                            status: false,
+                                            message: "Father mobile number is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.motherName) {
+                                        responseData = {
+                                            status: false,
+                                            message: "motherName is required as a string"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.motherEmail) {
+                                        responseData = {
+                                            status: false,
+                                            message: "MotherEmail is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.motherNum) {
+                                        responseData = {
+                                            status: false,
+                                            message: "Mother mobile number is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+
+                                    else if (err.errors.dob) {
+                                        responseData = {
+                                            status: false,
+                                            message: "dob is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else if (err.errors.doj) {
+                                        responseData = {
+                                            status: false,
+                                            message: "doj is required"
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
                                 }
                             }
+                        } else {
+                            allTeacherEmailIds.forEach(function (to, i, array) {
+                                console.log("i: "+i);
+                                console.log("to: "+to);
+                                console.log("array: "+JSON.stringify(array));
+                                var mailOptions = {
+                                    from: "info@vc4all.in",
+                                    to: to.email,
+                                    subject: "Regarding School Meeting",
+                                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Teachers,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: "+to.pswd+" </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
+                                    // html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                                };
+                                console.log("mailOptions: " + JSON.stringify(mailOptions));
+                                transporter.sendMail(mailOptions, function (error, info) {
+                                    if (error) {
+                                        console.log(error);
+                                       console.log("err");
+                                    } else {
+                                        console.log('Email sent: ' + info.response);
+                                        console.log("info");
+                                    }
+            
+                                });
+                            })
+                            ids = [];
+                            teacherFileValidationMessage = null;
+                            objJson = [];
+                            responseData = {
+                                status: true,
+                                message: "Insert Successfull",
+                                data: data
+                            };
+                            res.status(200).send(responseData);
+                            console.log("responseData: " + JSON.stringify(responseData));
+                            console.log("ids: " + ids + " teacherFileValidationMessage: " + teacherFileValidationMessage + " objJson: " + JSON.stringify(objJson));
+
                         }
-                    } else {
-                        responseData = {
-                            status: true,
-                            errorCode: 200,
-                            message: "Insert Successfull",
-                            data: data
-                        };
-                        res.status(200).send(responseData);
-                    }
-                });
+                    });
+                }
             });
     }
     else {
@@ -2102,8 +2277,86 @@ module.exports.uploadTeacherMaster = function (req, res) {
         res.status(400).send(responseData);
     }
 
-    console.log("<--uploadStudentMaster");
+    console.log("<--uploadteacherMaster");
 };
+module.exports.teacherMasterValidation = function (data, callback) {
+    console.log("teacherFileValidation-->");
+    if (teacherFileValidationMessage == null) {
+       // var findId = { "_id": ObjectId("5b0272d74a46530e1493371a") };
+        var findId = { "schoolName": schoolName, "schoolId": data.TeacherID };
+        console.log("findId: " + JSON.stringify(findId));
+        user.find(findId).toArray(function (err, idLength) {
+            console.log("idLength.length: " + idLength.length);
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                responseData = {
+                    status: fasle,
+                    message: err
+                };
+                res.status(400).send(responseData);
+                if (callback) callback();
+            }
+            else {
+                if (idLength.length == 0) {
+                    console.log("ids.indexOf(data.TeacherID): " + ids.indexOf(data.TeacherID));
+                    if (ids.indexOf(data.TeacherID) == -1) {
+                        ids.push(data.TeacherID);
+                        var userData =
+                            {
+                                schoolName: schoolName,
+                                schoolId: data.TeacherID,
+                                firstName: data.FirstName,
+                                lastName: data.LastName,
+                                email: data.Email,
+                                mobNumber: data.PhoneNumber,
+                                dob: data.DOB,
+                                doj: data.DOJ,
+                                pswd: "abc",
+                                css: [],
+                                timeTable: [],
+                                status: "active",
+                                loginType: "teacher",
+                                created_at: createdDate
+                            }
+                        var cssParts = data.ClassSectionSubject.split(',');
+                        console.log("cssParts: " + JSON.stringify(cssParts));
+                        for (var x = 0; x < cssParts.length; x++) {
+                            if (cssParts[x] != "") {
+                                console.log("cssParts[x]: " + cssParts[x]);
+                                var trimed = cssParts[x].trim();
+                                console.log("cssSeparate: " + trimed);
+                                var cssSeparate = trimed.split('-');
+                                console.log("cssSeparate: " + JSON.stringify(cssSeparate));
+                                userData.css.push({ "class": cssSeparate[0], "section": cssSeparate[1], "subject": cssSeparate[2] });
+                            }
+                        }
+                        console.log("userData: " + JSON.stringify(userData));
+                        allTeacherEmailIds.push({"email":data.Email, "pswd":"abc"});
+                        objJson.push(userData);
+
+                        console.log("objJson: " +objJson.length);
+                        if (callback) callback();
+                    }
+                    else {
+                        teacherFileValidationMessage = data.TeacherID + " You Used More Than One Time";
+                        if (callback) callback();
+                    }
+                }
+                else {
+                    teacherFileValidationMessage = "Sorry! " + data.TeacherID + " Already exist kindly check and update your csv file"
+                    if (callback) callback();
+                }
+            }
+        })
+    }
+    else {
+        console.log("teacherFileValidationMessage-->: " + teacherFileValidationMessage);
+        if (callback) callback();
+
+    }
+    console.log("<--teacherFileValidation");
+
+}
 module.exports.updateTeacherMaster = function (req, res) {
     console.log("updateTeacherMaster-->");
     var responseData;
@@ -2188,5 +2441,50 @@ module.exports.updateTeacherMaster = function (req, res) {
     }
 
     console.log("<--updateTeacherMaster");
+}
+
+module.exports.csvTest = function (req, res) {
+    console.log("csvTest-->");
+
+    var obj = [];
+    var studentDataFile = req.files.img;
+   
+    var parser = csv.fromString(studentDataFile.data.toString(), {
+        headers: true
+        // ignoreEmpty: true,
+        // trim: true
+    }) 
+    .validate(function (data, next) { 
+        console.log("CSV validate-->");
+        //console.log("data: "+JSON.stringify(data));
+        parser.end();
+        monkey.find({id: data.id}, function (err, model) {
+            if (err) {
+                console.log("CSV validate: mongoose err: "+err);
+                 next(err);
+            } else {
+               
+                console.log("CSV validate: mongoose model: "+JSON.stringify(model));
+                // next(null, !model); //valid if the model does not exist
+                next(null);
+               
+
+            }
+        });
+    })
+    .on("data-invalid", function(data){
+        console.log("CSV data-invalid--> "+JSON.stringify(data));
+        //do something with invalid row
+    })
+        .on("data", function (data) {
+            console.log("CSV data--> "+JSON.stringify(data));
+            console.log(data);
+        })
+        .on("end", function () {
+            console.log("CSV end-->");
+            console.log("done");
+        });
+
+    console.log("<--csvTest");
 }
 

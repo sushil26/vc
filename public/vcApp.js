@@ -1,5 +1,5 @@
 
-var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngCookies', 'ngImageInputWithPreview']);
+var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngCookies']);
 
 
 app.config(function ($stateProvider, $urlRouterProvider) {
@@ -102,6 +102,27 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       }
 
     })
+
+    .state('dashboard.quickMsg', {
+      url: quickMsg(),
+      templateUrl: '/html/dashboard/quickMsg.html',
+      controller: 'quickMsgCtl',
+      resolve: {
+        result: function (sessionAuthFactory, $window) {
+          var userData = sessionAuthFactory.getAccess("userData");
+          if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
+          }
+          else {
+            $window.location.href = 'https://vc4all.in';
+          }
+        }
+      }
+
+    })
+
+
+
+
     .state('dashboard.eventReschedule', {
       url: dashboardEventReschedule(),
       templateUrl: '/html/dashboard/rescheduler.html',
@@ -131,6 +152,36 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       url: upcomingEvent(),
       templateUrl: '/html/dashboard/upcomingEvent.html',
       controller: 'upcomingEventController',
+      resolve: {
+        result: function (sessionAuthFactory, $window) {
+          var userData = sessionAuthFactory.getAccess("userData");
+          if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
+          }
+          else {
+            $window.location.href = 'https://vc4all.in';
+          }
+        }
+      }
+    })
+    .state('dashboard.incomingMsg', {
+      url: incomingMsg(),
+      templateUrl: '/html/dashboard/incomingMsg.html',
+      controller: 'incomingMsgCtl',
+      resolve: {
+        result: function (sessionAuthFactory, $window) {
+          var userData = sessionAuthFactory.getAccess("userData");
+          if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
+          }
+          else {
+            $window.location.href = 'https://vc4all.in';
+          }
+        }
+      }
+    })
+    .state('dashboard.outgoingMsg', {
+      url: outgoingMsg(),
+      templateUrl: '/html/dashboard/outgoingMsg.html',
+      controller: 'outgoingMsgCtl',
       resolve: {
         result: function (sessionAuthFactory, $window) {
           var userData = sessionAuthFactory.getAccess("userData");
@@ -311,6 +362,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
+
+function quickMsg() {
+  return '/quickMsg';
+}
+
 function viewUser() {
   return '/viewUser/:id/:loginType';
 }
@@ -323,6 +379,12 @@ function dashboardEdit() {
 }
 function upcomingEvent() {
   return '/upcomingEvent';
+}
+function incomingMsg(){
+  return '/incomingMsg';
+}
+function outgoingMsg(){
+  return '/outgoingMsg'
 }
 function history() {
   return '/history';

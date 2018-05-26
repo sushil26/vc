@@ -1,6 +1,6 @@
 {
   "name": "ng-image-input-with-preview",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "authors": [
     "Deiwin Sarjas <deiwin.sarjas@gmail.com>"
   ],
@@ -31,14 +31,14 @@
     "package.json"
   ],
   "homepage": "https://github.com/deiwin/ngImageInputWithPreview",
-  "_release": "0.0.7",
+  "_release": "0.0.8",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.7",
-    "commit": "f8588ade9cb3f3ac1082ea168c896806d4edad4f"
+    "tag": "v0.0.8",
+    "commit": "09fc28b2ad988355e0ae603abeec6f2a938b3128"
   },
   "_source": "https://github.com/deiwin/ngImageInputWithPreview.git",
-  "_target": "^0.0.7",
+  "_target": "^0.0.8",
   "_originalSource": "ng-image-input-with-preview",
   "_direct": true
 }

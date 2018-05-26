@@ -7,10 +7,10 @@
                         <i class="fa fa-user-circle"></i>
                         <span style="color:white;">&nbspCREATE ADMIN</span>
                     </div>
-            
+
                     <div class="panel-body bio-graph-info" style="padding: 1px;">
                         <div style="margin:20px !important;">
-                            <form class="form-horizontal" role="form">
+                            <form class="form-horizontal" role="form" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">School Name</label>
                                     <div class="col-lg-6">
@@ -35,7 +35,14 @@
                                         <input type="text" class="form-control" id="l-name" placeholder=" " ng-model="lastName">
                                     </div>
                                 </div>
-
+                                <!-- <div class="form-group">
+                                    <label class="col-lg-2 control-label">School Logo</label>
+                                    <div class="col-lg-6">
+                                        <input type="file" id="imgInp" class="btnCont btnCont-uploadColor post_uploadFile" name="myImage" value="Upload" file-model="file.upload"
+                                            ng-model="image" accept="image/jpeg,image/png">
+                                        <img id="blah" src="#" style="width:  inherit;">
+                                    </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Date of Registration</label>
                                     <div class="col-lg-6">

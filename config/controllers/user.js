@@ -2,7 +2,7 @@ var db = require("../dbConfig.js").getDb();
 var teacher = require("./schemas/teacher.js");
 var schoolModel = require("./schemas/school.js");
 var user = db.collection("user"); /* ### Teacher collection  ### */
-var stud = db.collection("student"); /* ### student collection  ### */
+var stud = db.collection("students"); /* ### student collection  ### */
 var school = db.collection("school"); /* ### school collection  ### */
 
 // var logger = require('../log.js');
@@ -211,7 +211,7 @@ module.exports.login4VC = function (req, res) {
 
     }
     else {
-      stud.find({ $or: [{ parentEmail: req.body.email }, { MotherEmail: req.body.email }] }).toArray(function (err, data) {
+      stud.find({ $or: [{ parentEmail: req.body.email }, { motherEmail: req.body.email }] }).toArray(function (err, data) {
         if (data.length > 0) {
           if (data[0].pswd == req.body.password) {
             if (data[0].status == "active") {
@@ -1048,6 +1048,7 @@ module.exports.adminCreate = function (req, res) {
     "country": req.body.country,
     "status": "active",
     "css": [],
+    "logoPath": req.body.logoPath,
     "created_at": createdDate
   }
   var adminObj = {
@@ -1059,6 +1060,7 @@ module.exports.adminCreate = function (req, res) {
     "pswd": req.body.pswd,
     "status": "active",
     "loginType": "admin",
+    "logoPath": req.body.logoPath,
     "created_at": createdDate
   }
   console.log("schoolObj: " + JSON.stringify(schoolObj));

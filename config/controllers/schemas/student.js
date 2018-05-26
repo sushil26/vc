@@ -11,11 +11,11 @@ var studentSchema = new Schema({
   firstName: {type: String, required: true},
   lastName: {type: String, required: true},
   parentName: {type: String, required: true},
-  parentEmail: {type: String, required: true, unique: true},
-  mobileNum: {type: Number, required: true, unique: true},
+  parentEmail: {type: String, required: true},
+  mobileNum: {type: Number, required: true},
   motherName: {type: String, required: true},
-  motherEmail: {type: String, required: true, unique: true},
-  motherNum: {type: Number, required: true, unique: true},
+  motherEmail: {type: String, required: true},
+  motherNum: {type: Number, required: true},
   cs: [{
     "_id":false,
     "class": {type: String, required: true},
@@ -56,4 +56,4 @@ studentSchema.plugin(titlize, {
   paths: ['schoolName','firstName','lastName','parentName', 'motherName', 'cs.class', 'cs.section' ]
 });
 
-module.exports = mongoose.model('student',studentSchema, 'student');
+module.exports = mongoose.model('student',studentSchema);

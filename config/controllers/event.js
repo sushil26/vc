@@ -1,15 +1,15 @@
 var db = require('../dbConfig.js').getDb();
 var user = db.collection('user');/* ### Teacher collection  ### */
 var event = db.collection('event');
+var quickMessage = db.collection('quickMessage');
 //var student = require("./schemas/student.js");
-var stud = db.collection('student');/* ### student collection  ### */
+var stud = db.collection('students');/* ### student collection  ### */
 var general = require('../general.js');
 var ObjectId = require('mongodb').ObjectID;
 
 var bodyParser = require('body-parser');
 
 var nodemailer = require('nodemailer');
-
 
 var transporter = nodemailer.createTransport({
     service: "godaddy",
@@ -87,10 +87,10 @@ module.exports.eventSend = function (req, res) {
                     from: "info@vc4all.in",
                     to: req.body.receiverEmail,
                     subject: "Regarding School Meeting",
-                    html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Parents,</b></td></tr><tr><td><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p></td></tr></tbody></table>"
+                    // html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                 };
                 console.log("mailOptions: " + JSON.stringify(mailOptions));
-
                 transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
                         console.log(error);
@@ -101,8 +101,6 @@ module.exports.eventSend = function (req, res) {
                             "data": userData
                         }
                         res.status(200).send(responseData);
-
-
                     } else {
                         console.log('Email sent: ' + info.response);
                         responseData = {
@@ -116,18 +114,10 @@ module.exports.eventSend = function (req, res) {
                     }
 
                 });
-
-
-
             }
-
         })
-
-
-
     }
     else {
-
         console.log("Epty value found");
         responseData = {
             "status": false,
@@ -135,62 +125,7 @@ module.exports.eventSend = function (req, res) {
             "data": userData
         }
         res.status(400).send(responseData);
-
     }
-}
-
-module.exports.eventReSchedule = function (req, res) {
-    console.log("eventReSchedule-->");
-    console.log("requested updated id: " + req.params.id);
-    var responseData;
-    var obj = {
-        "title": req.body.title,
-        "reason": req.body.reason,
-        "start": req.body.start,
-        "end": req.body.end,
-        "startAt": req.body.startAt,
-        "endAt": req.body.endAt
-    }
-    console.log("updating value: " + JSON.stringify(obj));
-    var id = {
-        "_id": ObjectId(req.params.id)
-    }
-    //    var id = req.params.id;
-    //     console.log("id: " + id);
-    // console.log("ObjectId(req.params.id): " +ObjectId(id));
-
-    if (general.emptyCheck(req.params.id)) {
-        console.log("No Empty");
-        event.update(id, { $set: obj }, { multi: true }, function (err, data) {
-            console.log("data: " + JSON.stringify(data));
-
-            if (err) {
-                responseData = {
-                    status: false,
-                    message: "Failed to update",
-                    data: data
-                };
-                res.status(400).send(responseData);
-            } else {
-                responseData = {
-                    status: true,
-                    message: "Rescheduled successfully",
-                    data: data
-                };
-
-                res.status(200).send(responseData);
-            }
-        })
-    }
-    else {
-        console.log("Epty value found");
-        responseData = {
-            status: false,
-            message: "there is no userId to find"
-        };
-        res.status(400).send(responseData);
-    }
-    console.log("<--eventReSchedule");
 }
 
 module.exports.eventGet = function (req, res) {

@@ -1,0 +1,15 @@
+{
+  "name": "angular-spinners",
+  "homepage": "https://github.com/codetunnel/angular-spinners",
+  "version": "5.1.2",
+  "_release": "5.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v5.1.2",
+    "commit": "e272b27c4050799d7306bb90c0f7faf1edd46bd6"
+  },
+  "_source": "https://github.com/codetunnel/angular-spinners.git",
+  "_target": "^5.1.2",
+  "_originalSource": "angular-spinners",
+  "_direct": true
+}

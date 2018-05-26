@@ -9,7 +9,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
   $scope.userData = sessionAuthFactory.getAccess();
   var schoolName = $scope.userData.schoolName;
   $scope.propertyJson = $rootScope.propertyJson;
-  
+
   $scope.eventGet = function () {
     console.log("eventGet-->");
     var id = $scope.userData.id
@@ -55,14 +55,11 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
           console.log(" obj" + JSON.stringify(obj))
           ownerEvents.push(obj);
           vm.events.push(obj);
-
         }
       }
       else {
         //alert("Event get Failed");
-
       }
-
     })
   }
 
@@ -109,7 +106,6 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
         $scope.teacherPersonalData = data.data.data;
         console.log("teacherData: " + JSON.stringify($scope.teacherData));
         console.log("teacherPersonalData: " + JSON.stringify($scope.teacherPersonalData));
-       
       }
       else {
       }
@@ -145,11 +141,11 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
             for (var x = 0; x < $scope.teacherListForStudent.length; x++) {
 
               for (var y = 0; y < $scope.teacherListForStudent[x].css.length; y++) {
-                console.log("$scope.teacherListForStudent[x]: "+JSON.stringify($scope.teacherListForStudent[x].css));
+                console.log("$scope.teacherListForStudent[x]: " + JSON.stringify($scope.teacherListForStudent[x].css));
                 if ($scope.teacherListForStudent[x].css[y].class == $scope.studClass && $scope.teacherListForStudent[x].css[y].section == $scope.studSection)
-                var un = $scope.teacherListForStudent[x].firstName +" "+ $scope.teacherListForStudent[x].lastName;
-                  $scope.teacherList.push({ "id": $scope.teacherListForStudent[x]._id, "name": un, "teacherId": $scope.teacherListForStudent[x].schoolId, "subject": $scope.teacherListForStudent[x].css[y].subject });
-                  break;
+                  var un = $scope.teacherListForStudent[x].firstName + " " + $scope.teacherListForStudent[x].lastName;
+                $scope.teacherList.push({ "id": $scope.teacherListForStudent[x]._id, "name": un, "teacherId": $scope.teacherListForStudent[x].schoolId, "subject": $scope.teacherListForStudent[x].css[y].subject });
+                break;
               }
             }
             console.log(" $scope.teacherList: " + JSON.stringify($scope.teacherList));
@@ -414,7 +410,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
         // alert(data.data.message);
       }
       else {
-      
+
         //alert("Event Delete Failed");
 
       }
@@ -506,7 +502,6 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
     console.log("e: " + e);
     console.log("sd: " + sd);
     console.log("ed: " + ed);
-
     var res = $filter('limitTo')(s, 2);
     console.log("res: " + res);
     console.log("$scope.startDate with filter : " + $filter('date')(s, "EEE MMM dd y"));
@@ -531,8 +526,8 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
     dayEventmodal.close('resetModel');
 
     if ($scope.userLoginType == 'studParent') {
-      var un = $scope.studentData[0].firstName +" "+ $scope.studentData[0].lastName;
-      var teacherName = $scope.teacherPersonalData[0].firstName +" "+ $scope.teacherPersonalData[0].lastName;
+      var un = $scope.studentData[0].firstName + " " + $scope.studentData[0].lastName;
+      var teacherName = $scope.teacherPersonalData[0].firstName + " " + $scope.teacherPersonalData[0].lastName;
       var senderName = un;
       var stud_name = un;
       var stud_cs = $scope.studentData[0].cs;
@@ -548,9 +543,9 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
     }
     if ($scope.userLoginType == 'teacher') {
       console.log("$scope.studentPersonalData[0]: " + JSON.stringify($scope.studentPersonalData[0]));
-      var un = $scope.teacherData[0].firstName +" "+ $scope.teacherData[0].lastName;
-      var studName = $scope.studentPersonalData[0].firstName +" "+ $scope.studentPersonalData[0].lastName;
-      
+      var un = $scope.teacherData[0].firstName + " " + $scope.teacherData[0].lastName;
+      var studName = $scope.studentPersonalData[0].firstName + " " + $scope.studentPersonalData[0].lastName;
+
       var teacherName = un;
       var senderMN = $scope.teacherData[0].mobNumber;
       var teacherId = $scope.teacherData[0].schoolId;
@@ -628,7 +623,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
           if (checkStatus) {
             // console.log("data" + JSON.stringify(data.data))
             // $window.location.href = $scope.propertyJson.R082;
-            
+
             var loginAlert = $uibModal.open({
               scope: $scope,
               templateUrl: '/html/templates/dashboardsuccess.html',
@@ -698,11 +693,11 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
     console.log("timeTableForEventBook-->");
     console.log("id: " + id + " day: " + day);
     console.log("$scope.teacherPersonalData[0].timeTable[0].timing[id].startsAt: " + $scope.teacherPersonalData[0].timeTable[0].timing[id].startsAt);
-    console.log("$scope.teacherPersonalData[0].timeTable[0].timing[id].endsAt: " +$scope.teacherPersonalData[0].timeTable[0].timing[id].endsAt);
+    console.log("$scope.teacherPersonalData[0].timeTable[0].timing[id].endsAt: " + $scope.teacherPersonalData[0].timeTable[0].timing[id].endsAt);
 
     var sd = $scope.teacherPersonalData[0].timeTable[0].timing[id].startsAt;
     var ed = $scope.teacherPersonalData[0].timeTable[0].timing[id].endsAt;
-    console.log("sd: "+sd+" ed: "+ed);
+    console.log("sd: " + sd + " ed: " + ed);
     // console.log("$scope.timeForPeriods[id].startsAt: " + $scope.timeForPeriods[id].startsAt);
     // console.log("$scope.timeForPeriods[id].endsAt: " + $scope.timeForPeriods[id].endsAt);
 
@@ -711,7 +706,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
     // // $scope.endDateRes = $scope.startDate + ' ' + $scope.endDate;
     // var sd = $scope.timeForPeriods[id].startsAt + ' ' + $scope.timeForPeriods[id].meridian;
     // var ed = $scope.timeForPeriods[id].endsAt + ' ' + $scope.timeForPeriods[id].meridian;
-   console.log("sd: " + new Date(sd) + " ed: " + new Date(ed));
+    console.log("sd: " + new Date(sd) + " ed: " + new Date(ed));
     $scope.startDate = $filter('date')($scope.selectedDate, "EEE MMM dd y");
     $scope.startTime = $filter('date')(sd, "h:mm:ss a");
     $scope.EndTime = $filter('date')(ed, "h:mm:ss a");
@@ -800,7 +795,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
           $scope.message = "Sorry you have to book the event 24Hrs before of your current date";
         }
       })
-      
+
       // alert("Sorry you have to book the event 24Hrs before of your current date");
     }
     console.log("<--timeTableForEventBook");
@@ -1072,8 +1067,8 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
           keyboard: false,
           controller: function ($scope, $uibModalInstance) {
             $scope.message = "Select Student";
-           
-         
+
+
           }
         })
         console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
@@ -1091,7 +1086,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
             console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
             // $scope.close = function(){
             //   loginAlert.close('resetModel');
-             
+
             // }
           }
         })

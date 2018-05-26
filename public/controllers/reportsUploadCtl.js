@@ -283,6 +283,30 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
     console.log("<--uploadTimeTableFile");
   }
 
+  $scope.uploadCSVTEST = function(file){
+    console.log("uploadCSVTEST-->");
+    var obj = {
+      "file": file
+    }
+    var api = $scope.propertyJson.VC_csvTest;
+    console.log("api: " + api);
+    if (api) {
+      httpFactory.csvUpload(obj, api).then(function (data) {
+        var checkStatus = httpFactory.dataValidation(data);
+        console.log("data--" + JSON.stringify(data.data));
+        console.log("checkStatus: " + checkStatus);
+        if (checkStatus) {
+          console.log("checkStatus Pass-->"); 
+        }
+        else{
+          console.log("checkStatus Fails-->"); 
+
+        }
+      })
+    }
+    console.log("<--uploadCSVTEST");
+  }
+
   $scope.uploadFile = function (file, uploadType, clas, section, reportType, list) {
     console.log("uploadFile-->");
     console.log("file: " + file);
@@ -436,7 +460,7 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
           else {
             var loginAlert = $uibModal.open({
               scope: $scope,
-              templateUrl: '/html/templates/dashboardsuccess.html',
+              templateUrl: '/html/templates/dashboardwarning.html',
               windowClass: 'show',
               backdropClass: 'static',
               keyboard: false,

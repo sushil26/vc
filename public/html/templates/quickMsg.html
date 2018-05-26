@@ -1,0 +1,49 @@
+<div div class="modal-header loginpopUp_header">
+    <h4 class="modal-title">Message</h4>
+    <button type="button" class="close" data-dismiss="modal" ng-click="$close()" aria-hidden="true">&times;</button>
+</div>
+<div class="modal-body">
+
+    <table class="table table-sm">
+
+        <tr>
+            <td>
+                Time
+                <div style="color:green">{{eventDetails.startsAt | date:'M/d/yy'}} </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Subject
+                <div style="color:green">{{eventDetails.title}}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Message
+                <br>
+                <p style="color:green">{{eventDetails.reason}} </p>
+            </td>
+        </tr>
+        <tr ng-if="eventDetails.messageType=='wholeClass'">
+            <td>
+                Receiver Detail
+                <div style="color:green" ng-repeat="emails in eventDetails.receiverEmail">{{emails}} </div>
+            </td>
+        </tr>
+        <tr ng-if="eventDetails.messageType!='wholeClass'">
+            <td>
+                Receiver Detail
+                <br>
+                <i style="color:green">{{eventDetails.receiverName}} </i>
+                <br>
+                <i style="color:green">{{eventDetails.receiverMN}} </i>
+
+            </td>
+        </tr>
+
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default loginpopUp_footerBtn" type="button" ng-click="$close()">Close</button>
+</div>

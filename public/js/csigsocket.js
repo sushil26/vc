@@ -552,7 +552,7 @@ signaling_socket.on("addPeer", function (config) {
     $("#portfolio-wrapper").append(
       '<div id="' +
       peer_id +
-      'remoteContainer" class="portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3" ><div id="' +
+      'remoteContainer" class="portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3" ><div id="' +
       peer_id +
       'remoteVideoElement"></div><div class="details"><button id="' +
       peer_id +
@@ -615,7 +615,7 @@ signaling_socket.on("addPeer", function (config) {
       console.log("remove id videoElem111");
       $("#" + peer_id + "remoteVideoElement").addClass("fullscr");
       $("#" + peer_id + "remoteContainer").removeClass(
-        "portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        "portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3"
       );
       $("#" + peer_id + "Remote").css({
         height: "100vh"
@@ -626,12 +626,11 @@ signaling_socket.on("addPeer", function (config) {
         width: "20%"
       });
       $("#videoElem111").removeClass(
-        "portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        "portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3"
       );
       $("#videosAttach").css({
-        position: "absolute",
-        left: "-13pc",
-        top: "1px"
+        "z-index": "2",
+        "position": "fixed"
       }
 
       );
@@ -642,15 +641,14 @@ signaling_socket.on("addPeer", function (config) {
       console.log("add id videoElem111");
       $("#" + peer_id + "remoteVideoElement").removeClass("fullscr");
       $("#" + peer_id + "remoteContainer").addClass(
-        "portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        "portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3"
       );
       $("#" + peer_id + "Remote").css({
-        height: "200px"
+        height: "auto"
       });
       $("#videosAttach").css({
-        position: "",
-        left: "",
-        top: ""
+        "z-index": "",
+        "position": ""
       }
 
       );
@@ -660,7 +658,7 @@ signaling_socket.on("addPeer", function (config) {
         width: ""
       });
       $("#videoElem111").addClass(
-        "portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        "portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3"
       );
       document.getElementById("header").style.display = "inline";
       document.getElementById("btnrestore").style.display = "none";
@@ -975,13 +973,13 @@ function setup_local_media(callback, errorback) {
       var local_media = USE_VIDEO ? $("<video>") : $();
       local_media.attr("muted", "muted"); /* always mute ourselves by default */
       local_media.attr("id", "videoElem");
-      local_media.attr(
-        "style",
-        "border:1px solid skyblue;display:inline !important"
-      );
+      // local_media.attr(
+      //   "style",
+      //   "border:1px solid skyblue;display:inline !important"
+      // );
 
       $("#portfolio-wrapper").append(
-        '<div id="videoElem111" class="portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' +
+        '<div id="videoElem111" class="portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' +
         userName +
         "</h4><span>All is well</span></div></div>"
       );

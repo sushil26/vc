@@ -18,6 +18,7 @@ var schoolSchema = new Schema({
     country: { type: String, required: true },
     css: [],
     status: { type: String, required: true },
+    logoPath: { type: String},
     created_at: Date,
 });
 

@@ -19,6 +19,9 @@
 "VC_deleteEvent": "vc/deleteEvent",
 "VC_eventUpdate": "vc/eventUpdate",
 "VC_eventSend": "vc/eventSend",
+"VC_quickMsgSend": "vc/quickMsgSend",
+"VC_quickMsgGet": "vc/quickMsgGet",
+"VC_quickMsgGetForStud": "vc/quickMsgGetForStud",
 "VC_checkPassword": "vc/checkPassword",
 "VC_passwordUpdate": "vc/passwordUpdate",
 "VC_getToDate": "vc/getToDate",
@@ -47,6 +50,10 @@
 "VC_deleteUser": "vc/deleteUser",
 "VC_updateStudStatus": "vc/updateStudStatus",
 "VC_deleteStud": "vc/deleteStud",
-"VC_getSchoolDataById": "vc/getSchoolDataById"
+"VC_getSchoolDataById": "vc/getSchoolDataById",
+"VC_schoolLogo": "vc/schoolLogo",
+"VC_bulkEmail_quickMsg": "vc/bulkEmail_quickMsg",
+"VC_csvTest": "vc/csvTest"
+
 
 }
