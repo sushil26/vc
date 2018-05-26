@@ -31,7 +31,7 @@
                                     </thead>
                                     <tbody style="background: white" ng-if="loginType=='teacher'">
                                         <tr ng-repeat="event in events" ng-if="(loginType=='teacher' && event.remoteCalendarId && event.remoteCalendarId==userData.id)">
-                                            <td >{{event.title}}</td>
+                                            <td>{{event.title}}</td>
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>
                                                 <div class="btn-group">
@@ -41,8 +41,17 @@
                                         </tr>
                                     </tbody>
                                     <tbody style="background: white" ng-if="loginType=='studParent'">
-                                        <tr ng-repeat="event in events" ng-if="(event.messageType=='single' && event.remoteCalendarId==userData.id) ">
+                                        <tr ng-repeat="event in events" ng-if="event.messageType=='single' && event.remoteCalendarId==userData.id">
 
+                                            <td>{{event.title}}*</td>
+                                            <td>{{event.startsAt | date:'MMM d, y'}}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index)">View</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="event.messageType == 'wholeClass' && event.student_cs[0].class == studCS[0].class && event.student_cs[0].section == studCS[0].section)">
                                             <td>{{event.title}}*</td>
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>
