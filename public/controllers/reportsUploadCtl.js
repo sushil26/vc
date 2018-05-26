@@ -140,7 +140,7 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
 
     console.log("api: " + api);
     if (api) {
-      httpFactory.csvUpload(file, api).then(function (data) {
+      httpFactory.csvUpload(obj, api).then(function (data) {
         var checkStatus = httpFactory.dataValidation(data);
         console.log("data--" + JSON.stringify(data.data));
         if (checkStatus) {
