@@ -28,7 +28,7 @@
         <tr ng-if="eventDetails.messageType=='wholeClass'">
             <td>
                 Receiver Detail
-                <div style="color:green" ng-repeat="emails in eventDetails.receiverEmail">{{emails}} </div>
+                <div style="color:green" ng-repeat="emails in eventDetails.receiverEmail track by $index">{{emails}} </div>
             </td>
         </tr>
         <tr ng-if="eventDetails.messageType!='wholeClass'">
