@@ -100,7 +100,7 @@ module.exports.upload = function (req, res) {
             var responseData = {
                 "status": true,
                 "message": "date stored successfully",
-                "data": { "filePath": "/public/schoolLogo/" + fileName }
+                "data": { "filePath": "/schoolLogo/" + fileName }
             }
             res.status(200).send(responseData);
         }
