@@ -21,6 +21,6 @@
     "angular-bootstrap": "^2.5.0",
     "angular-cookies": "^1.6.9",
     "angular-spinners": "^5.1.2",
-    "ng-image-input-with-preview": "^0.0.8"
+    "ng-img-crop-full-extended": "ngImgCropFullExtended#^0.6.2"
   }
 }

@@ -1,7 +1,7 @@
 app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window, httpFactory, sessionAuthFactory, $uibModal) {
     console.log("adminCreateCtl==>");
     $scope.propertyJson = $rootScope.propertyJson;
-    $scope.file = {};/* ### Note Upload file declaration ### */
+    $scope.file = {}; /* ### Note Upload file declaration ### */
 
     $scope.schoolLogoStorage = function () {
         console.log("schoolLogoStorage-->");
@@ -12,7 +12,7 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
         var uploadURL = $scope.propertyJson.VC_schoolLogo;
         console.log("uploadURL: " + uploadURL);
         console.log("$scope.file.upload from : alumRegCtr.js: " + $scope.file.upload);
-        httpFactory.imageUpload(uploadURL, $scope.file).then(function (data) {
+        httpFactory.imageUpload(uploadURL, $scope.myImage.resBlob).then(function (data) {
             console.log("hello " + JSON.stringify(data));
             var checkStatus = httpFactory.dataValidation(data);
             console.log("checkStatus: " + checkStatus);
@@ -22,19 +22,17 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
                 $scope.getUpdateofImage = data;
                 console.log("$scope.getUpdateofImage" + JSON.stringify($scope.getUpdateofImage));
                 $scope.message = data.data.message;
-                $scope.filePath = data.data.fileFullPath;
-                $scope.status = data.data.success;
-
+                $scope.filePath = data.data.data.filePath;
+                console.log("$scope.filePath: " + $scope.filePath);
                 // // console.log("JSON.stringify($scope.postJson): " + JSON.stringify(postJson));
-                $scope.adminCreate();
+                // $scope.adminCreate();
             } else {
                 $scope.status = data.data.status;
                 $scope.message = data.data.message;
                 console.log("image is not uploaded");
-                $scope.adminCreate();
+                // $scope.adminCreate();
                 // console.log("JSON.stringify($scope.postJson): " + JSON.stringify(postJson));
                 // $scope.savePost();
-
             }
         });
         //}
@@ -47,6 +45,7 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
 
     $scope.adminCreate = function () {
         console.log("adminCreate-->");
+        if ($scope.filePath) {
         var objJson = {
             "schoolName": $scope.schoolName,
             "schoolRegNumber": $scope.schoolRegNumber,
@@ -62,11 +61,14 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
             "pinCode": $scope.pinCode,
             "country": $scope.country,
             "pswd": $scope.pswd,
+            "logoPath" : $scope.filePath
         }
-        if ($scope.filePath) {
-            objJson.logoPath = $scope.filePath;
+                 
         }
-       
+        else{
+            alert("upload file then click on save");
+        }
+
         console.log("objJson: " + JSON.stringify(objJson));
         var api = $scope.propertyJson.VC_adminCreate;
         httpFactory.post(api, objJson).then(function (data) {
@@ -116,24 +118,21 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
         console.log("<--adminCreate");
     }
 
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#blah').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
+    $scope.myImage = {
+        originalImage: '',
+        croppedImage: ''
     }
 
-    $("#imgInp").change(function () {
-        readURL(this);
-    });
-
-
-
-    // $scope.userData = sessionAuthFactory.getAccess("userData");
-    // $scope.loginType = $scope.userData.loginType;
-    // $scope.userName = $scope.userData.userName;
+    $scope.uploadFile = function (file) {
+        if (file) {
+            // ng-img-crop
+            var imageReader = new FileReader();
+            imageReader.onload = function (image) {
+                $scope.$apply(function ($scope) {
+                    $scope.myImage.originalImage = image.target.result;
+                });
+            };
+            imageReader.readAsDataURL(file);
+        }
+    };
 })

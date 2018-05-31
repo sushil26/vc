@@ -50,6 +50,8 @@ var studentFileValidationMessage = null; /* ### Notification for student master 
 var teacherFileValidationMessage = null; /* ### Notification for student master invalid data ### */
 var allStudentEmailIds = [];  /* ### storage for all parents email ids ### */
 var allTeacherEmailIds = [];  /* ### storage for all teacher email ids ### */
+var feeType;/* ### Note: Get reportType while uploading fee  ### */
+var fee_otherName; /* ### Note: Get fee_otherName while uploading fee  ### */
 
 module.exports.updateSchoolStatus = function (req, res) {
     console.log("updateSchoolStatus-->");
@@ -761,6 +763,171 @@ module.exports.uploadMarkSheet = function (data, callback) {
     })
 
 }
+module.exports.uploadFeeFile = function (req, res) {
+    console.log("uploadFeeFile-->");
+    schoolName = req.params.schoolName;
+    feeType = req.params.reportType;
+    clas = req.params.clas;
+    section = req.params.section;
+  
+    if(feeType=='Other'){
+        fee_otherName = req.params.fee_otherName;
+    }
+    else{
+
+    }
+    console.log("req.body.files: " + req.files.img);
+    var fileName = req.files.img.name;
+    var fileNameSeparate = fileName.split('_');
+    if (fileNameSeparate[0] == 'Fee') {
+        if (!req.files)
+            return res.status(400).send('No files were uploaded.');
+        var studentDataFile = req.files.img;
+        console.log("studentDataFile: " + JSON.stringify(studentDataFile));
+        var parser = csv.fromString(studentDataFile.data.toString(), {
+            headers: true,
+            ignoreEmpty: true
+        }).on("data", function (data) {
+            console.log("upload data: " + JSON.stringify(data));
+            parser.pause();
+            //var count = Object.keys(data).length;
+            var studIdForFindQry = {
+                "cs": [{ "class": clas, "section": section }]
+            }
+            stud.find(studIdForFindQry).toArray(function (err, findData) {
+                // console.log("class section query findData: " + JSON.stringify(findData));
+                //console.log("class section query findData.length: " + findData.length);
+                if (err) {
+                    marker = false;
+                    responseData = {
+                        status: false,
+                        message: err
+                    };
+                    res.status(400).send(responseData);
+                }
+                else {
+                    if (findData.length > 0) {
+                        parser.pause();
+                        module.exports.uploadFeeSheet(data, function (err) {
+                            console.log("savedatInitiate");
+                            parser.resume();
+                        });
+                    }
+                    else {
+                        responseData = {
+                            status: false,
+                            message: "There is no record for this class and section"
+                        };
+                        res.status(400).send(responseData);
+                    }
+                }
+            })
+        })
+            .on("end", function () {
+                console.log("end ");
+                console.log("end marker: " + marker);
+                if (marker == false) {
+                    responseData = {
+                        status: false,
+                        message: message
+                    };
+                    res.status(400).send(responseData);
+                }
+                else if (marker == true) {
+                    console.log("unknownData: " + JSON.stringify(unknownData));
+                    var unknownStud = unknownData;
+                    responseData = {
+                        status: true,
+                        message: "Successfull updated data",
+                        data: unknownStud
+                    };
+                    unknownData = [];
+                    res.status(200).send(responseData);
+                }
+            })
+    }
+    else {
+        responseData = {
+            status: false,
+            message: "Upload File Content is Mismatched"
+        };
+        res.status(400).send(responseData);
+    }
+    console.log("<--uploadFeeFile");
+}
+module.exports.uploadFeeSheet = function (data, callback) {
+    console.log('inside saving -->uploadMarkSheet')
+    // Simulate an asynchronous operation:
+    var date = testStartDate;
+    console.log("feeType: " + feeType);
+    counter = counter + 1;
+
+    var fee = [{
+        "paymentOption": data.PaymentOption,
+        "totalAmount": data.TotalAmount,
+        "amountPaid": data.AmountPaid,
+        "PaidDate": data.PaidDate,
+        "dueAmout": data.DueAmount,
+        "lastDateToPaid": data.LastDateToPaid
+    }];
+    if(feeType=='Other')
+    {
+        fee[0].fee_otherName = fee_otherName; 
+    }
+
+    var studIdForFindQry = {
+        "schoolId": data.StudentID,
+        "schoolName": schoolName
+    }
+    var studIdForUpdateQry = {
+        "schoolId": data.StudentID,
+        "schoolName": schoolName,
+        "fee.feeType": feeType,
+        "cs": [{ "class": clas, "section": section }]
+    }
+    console.log("studIdForFindQry: " + JSON.stringify(studIdForFindQry));
+    console.log("studIdForUpdateQry: " + JSON.stringify(studIdForUpdateQry));
+
+    stud.find(studIdForFindQry).toArray(function (err, findData) {
+        // console.log("1st query findData: " + JSON.stringify(findData));
+        console.log("1st query findData.length: " + findData.length);
+        if (err) {
+            marker = true;
+            if (callback) callback();
+        }
+        else {
+            if (findData.length > 0) {
+                console.log("fee: " + JSON.stringify(fee));
+                stud.update(studIdForUpdateQry, { $push: { "fee.$.details": { $each: fee } } }, function (err, updatedQryData) {
+                    console.log("2nd query started: " + JSON.stringify(updatedQryData));
+                    //console.log("2nd query data.length: " + updatedQryData.length);
+                    if (err) {
+                        marker = true;
+                        if (callback) callback();
+                    }
+                    else {
+                        marker = true;
+                        if (callback) callback();
+                    }
+                })
+            }
+            else {
+                console.log("NO Detail found for this id");
+                marker = true;
+                var obj = {
+                    "StudentID": data.StudentID,
+                    "StudentName": data.StudentName
+                }
+                unknownData.push(obj);
+                message = "Sorry! For this Id there is no student data";
+
+                if (callback) callback();
+            }
+        }
+    })
+
+}
+
 
 module.exports.markUpdate = function (req, res) {
     console.log("markUpdate-->");
@@ -849,6 +1016,167 @@ module.exports.markUpdate = function (req, res) {
     }
 
     console.log("<--markUpdate");
+}
+module.exports.feeUpdate = function (req, res) {
+    console.log("feeUpdate-->");
+    schoolName = req.params.schoolName;
+    feeType = req.params.reportType;
+    clas = req.params.clas;
+    section = req.params.section;
+    console.log("schoolName: " + schoolName + " feeType: " + feeType + " clas: " + clas + " section: " + section);
+    console.log("req.body.files: " + req.files.img);
+    var fileName = req.files.img.name;
+    var fileNameSeparate = fileName.split('_');
+    console.log("fileNameSeparate[0]: "+fileNameSeparate[0]);
+    if (fileNameSeparate[0] == 'FeeUpdate') {
+        if (!req.files)
+            return res.status(400).send('No files were uploaded.');
+        var studentDataFile = req.files.img;
+        console.log("studentDataFile: " + studentDataFile);
+        var parser = csv.fromString(studentDataFile.data.toString(), {
+            headers: true,
+            ignoreEmpty: true
+        }).on("data", function (data) {
+            console.log("upload data: " + JSON.stringify(data));
+            parser.pause();
+            //var count = Object.keys(data).length;
+            var studIdForFindQry = {
+                "cs": [{ "class": clas, "section": section }]
+            }
+            stud.find(studIdForFindQry).toArray(function (err, findData) {
+                //console.log("class section query findData: " + JSON.stringify(findData));
+                //console.log("class section query findData.length: " + findData.length);
+                if (err) {
+                    marker = false;
+                    responseData = {
+                        status: false,
+                        message: err
+                    };
+                    res.status(400).send(responseData);
+                }
+                else {
+                    if (findData.length > 0) {
+                        parser.pause();
+                        module.exports.updateFeeSheet(data, function (err) {
+                            console.log("savedatInitiate");
+                            parser.resume();
+                        });
+                    }
+                    else {
+                        responseData = {
+                            status: false,
+                            message: "There is no record for this class and section"
+                        };
+                        res.status(400).send(responseData);
+                    }
+                }
+            })
+        })
+            .on("end", function () {
+                console.log("end ");
+                console.log("end marker: " + marker);
+                if (marker == false) {
+                    responseData = {
+                        status: false,
+                        message: message
+                    };
+                    res.status(400).send(responseData);
+                }
+                else if (marker == true) {
+                    console.log("unknownData: " + JSON.stringify(unknownData));
+                    var unknownStud = unknownData;
+                    responseData = {
+                        status: true,
+                        message: "Successfull updated data",
+                        data: unknownStud
+                    };
+                    unknownData = [];
+                    res.status(200).send(responseData);
+                }
+            })
+    }
+    else {
+        responseData = {
+            status: false,
+            message: "Upload File Content is Mismatched"
+        };
+        res.status(400).send(responseData);
+    }
+
+    console.log("<--feeUpdate");
+}
+module.exports.updateFeeSheet = function (data, callback) {
+
+    console.log('inside saving -->updateFileSheet')
+    counter = counter + 1;
+    var fee = [{
+        "paymentOption": data.PaymentOption,
+        "totalAmount": data.TotalAmount,
+        "amountPaid": data.AmountPaid,
+        "PaidDate": data.PaidDate,
+        "dueAmout": data.DueAmount,
+        "lastDateToPaid": data.LastDateToPaid
+    }];
+    console.log("fee: " + JSON.stringify(fee));
+    var studIdForFindQry = {
+        "schoolId": data.StudentID,
+        "schoolName": schoolName
+    }
+    var studIdForUpdateQry = {
+        "schoolId": data.StudentID,
+        "schoolName": schoolName,
+        "fee.feeType": feeType,
+        "cs": [{ "class": clas, "section": section }]
+    }
+    console.log("studIdForFindQry: " + JSON.stringify(studIdForFindQry));
+    console.log("studIdForUpdateQry: " + JSON.stringify(studIdForUpdateQry));
+
+    stud.find(studIdForFindQry).toArray(function (err, findData) {
+        // console.log("1st query findData: " + JSON.stringify(findData));
+        console.log("1st query findData.length: " + findData.length);
+        if (err) {
+            marker = true;
+            if (callback) callback();
+        }
+        else {
+            if (findData.length > 0) {
+                //console.log("consolidateMS: " + JSON.stringify(consolidateMS));
+                stud.update(studIdForUpdateQry, { $set: { "fee.$.details": [] } }, function (err, pulledData) {
+                    console.log("2nd query data.length: " + JSON.stringify(pulledData));
+                    if (err) {
+                        marker = false;
+                        if (callback) callback();
+                    }
+                    else {
+                        stud.update(studIdForUpdateQry, { $push: { "fee.$.details": { $each: fee } } }, function (err, pulledData) {
+                            if (err) {
+                                marker = fasle;
+                                if (callback) callback();
+                            }
+                            else {
+                                marker = true;
+                                if (callback) callback();
+                            }
+                        })
+                    }
+                })
+            }
+            else {
+                console.log("NO Detail found for this id");
+                marker = true;
+                var obj = {
+                    "StudentID": data.StudentID,
+                    "StudentName": data.StudentName
+                }
+                unknownData.push(obj);
+                message = "Sorry! For this Id there is no student data";
+
+                if (callback) callback();
+            }
+        }
+    })
+
+    console.log("<--updateMarkSheet");
 }
 module.exports.updateMarkSheet = function (data, callback) {
 
@@ -1833,26 +2161,26 @@ module.exports.uploadStudentMaster = function (req, res) {
                         } else {
 
                             allStudentEmailIds.forEach(function (to, i, array) {
-                                console.log("i: "+i);
-                                console.log("to: "+to);
-                                console.log("array: "+JSON.stringify(array));
+                                console.log("i: " + i);
+                                console.log("to: " + to);
+                                console.log("array: " + JSON.stringify(array));
                                 var mailOptions = {
                                     from: "info@vc4all.in",
                                     to: to.email,
                                     subject: "Regarding School Meeting",
-                                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Parents,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: "+to.pswd+" </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
+                                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Parents,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: " + to.pswd + " </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
                                     // html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                                 };
                                 console.log("mailOptions: " + JSON.stringify(mailOptions));
                                 transporter.sendMail(mailOptions, function (error, info) {
                                     if (error) {
                                         console.log(error);
-                                       console.log("err");
+                                        console.log("err");
                                     } else {
                                         console.log('Email sent: ' + info.response);
                                         console.log("info");
                                     }
-            
+
                                 });
                             })
                             ids = [];
@@ -1940,11 +2268,18 @@ module.exports.studentMasterValidation = function (data, callback) {
                                 { "testType": "TT", "subjectWithMark": [] },
                                 { "testType": "AT", "subjectWithMark": [] },
                             ],
+                            fee: [
+                                { "feeType": "AF", "details": [] },
+                                { "feeType": "BF", "details": [] },
+                                { "feeType": "MF", "details": [] },
+                                { "feeType": "OF", "details": [] },
+                                { "feeType": "Other", "details": [] }
+                            ],
                             created_at: createdDate
                         };
-                        allStudentEmailIds.push({"email":data.FatherEmailId, "pswd":"abc"});
+                        allStudentEmailIds.push({ "email": data.FatherEmailId, "pswd": "abc" });
                         if (data.MotherEmailid) {
-                           allStudentEmailIds.push({"email":data.MotherEmailid, "pswd":"abc"});
+                            allStudentEmailIds.push({ "email": data.MotherEmailid, "pswd": "abc" });
                         }
                         objJson.push(userData);
 
@@ -1957,7 +2292,7 @@ module.exports.studentMasterValidation = function (data, callback) {
                     }
                 }
                 else {
-                    studentFileValidationMessage = "OOPS! "+"'" + data.StudentID +"'"+ " already Exist Or Not a Appropriate Class or Section"
+                    studentFileValidationMessage = "OOPS! " + "'" + data.StudentID + "'" + " already Exist Or Not a Appropriate Class or Section"
                     if (callback) callback();
                 }
             }
@@ -2056,7 +2391,7 @@ module.exports.uploadTeacherMaster = function (req, res) {
     var responseData;
     var marker;
     var css = [];
-  
+
     schoolName = req.params.schoolName;
     // var cs = [{"class":req.params.class,"section":req.params.section}];
     var fileName = req.files.img.name;
@@ -2081,7 +2416,7 @@ module.exports.uploadTeacherMaster = function (req, res) {
                     console.log("savedatInitiate");
                     // TODO: handle error
                     console.log("teacherFileValidation function start-->: " + teacherFileValidationMessage);
-                    console.log("objJson: "+JSON.stringify(objJson));
+                    console.log("objJson: " + JSON.stringify(objJson));
                     parser.resume();
                 });
             }
@@ -2230,26 +2565,26 @@ module.exports.uploadTeacherMaster = function (req, res) {
                             }
                         } else {
                             allTeacherEmailIds.forEach(function (to, i, array) {
-                                console.log("i: "+i);
-                                console.log("to: "+to);
-                                console.log("array: "+JSON.stringify(array));
+                                console.log("i: " + i);
+                                console.log("to: " + to);
+                                console.log("array: " + JSON.stringify(array));
                                 var mailOptions = {
                                     from: "info@vc4all.in",
                                     to: to.email,
                                     subject: "Regarding School Meeting",
-                                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Teachers,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: "+to.pswd+" </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
+                                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Teachers,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: " + to.pswd + " </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
                                     // html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                                 };
                                 console.log("mailOptions: " + JSON.stringify(mailOptions));
                                 transporter.sendMail(mailOptions, function (error, info) {
                                     if (error) {
                                         console.log(error);
-                                       console.log("err");
+                                        console.log("err");
                                     } else {
                                         console.log('Email sent: ' + info.response);
                                         console.log("info");
                                     }
-            
+
                                 });
                             })
                             ids = [];
@@ -2282,7 +2617,7 @@ module.exports.uploadTeacherMaster = function (req, res) {
 module.exports.teacherMasterValidation = function (data, callback) {
     console.log("teacherFileValidation-->");
     if (teacherFileValidationMessage == null) {
-       // var findId = { "_id": ObjectId("5b0272d74a46530e1493371a") };
+        // var findId = { "_id": ObjectId("5b0272d74a46530e1493371a") };
         var findId = { "schoolName": schoolName, "schoolId": data.TeacherID };
         console.log("findId: " + JSON.stringify(findId));
         user.find(findId).toArray(function (err, idLength) {
@@ -2331,10 +2666,10 @@ module.exports.teacherMasterValidation = function (data, callback) {
                             }
                         }
                         console.log("userData: " + JSON.stringify(userData));
-                        allTeacherEmailIds.push({"email":data.Email, "pswd":"abc"});
+                        allTeacherEmailIds.push({ "email": data.Email, "pswd": "abc" });
                         objJson.push(userData);
 
-                        console.log("objJson: " +objJson.length);
+                        console.log("objJson: " + objJson.length);
                         if (callback) callback();
                     }
                     else {
@@ -2442,42 +2777,41 @@ module.exports.updateTeacherMaster = function (req, res) {
 
     console.log("<--updateTeacherMaster");
 }
-
 module.exports.csvTest = function (req, res) {
     console.log("csvTest-->");
 
     var obj = [];
     var studentDataFile = req.files.img;
-   
+
     var parser = csv.fromString(studentDataFile.data.toString(), {
         headers: true
         // ignoreEmpty: true,
         // trim: true
-    }) 
-    .validate(function (data, next) { 
-        console.log("CSV validate-->");
-        //console.log("data: "+JSON.stringify(data));
-        parser.end();
-        monkey.find({id: data.id}, function (err, model) {
-            if (err) {
-                console.log("CSV validate: mongoose err: "+err);
-                 next(err);
-            } else {
-               
-                console.log("CSV validate: mongoose model: "+JSON.stringify(model));
-                // next(null, !model); //valid if the model does not exist
-                next(null);
-               
+    })
+        .validate(function (data, next) {
+            console.log("CSV validate-->");
+            //console.log("data: "+JSON.stringify(data));
+            parser.end();
+            monkey.find({ id: data.id }, function (err, model) {
+                if (err) {
+                    console.log("CSV validate: mongoose err: " + err);
+                    next(err);
+                } else {
 
-            }
-        });
-    })
-    .on("data-invalid", function(data){
-        console.log("CSV data-invalid--> "+JSON.stringify(data));
-        //do something with invalid row
-    })
+                    console.log("CSV validate: mongoose model: " + JSON.stringify(model));
+                    // next(null, !model); //valid if the model does not exist
+                    next(null);
+
+
+                }
+            });
+        })
+        .on("data-invalid", function (data) {
+            console.log("CSV data-invalid--> " + JSON.stringify(data));
+            //do something with invalid row
+        })
         .on("data", function (data) {
-            console.log("CSV data--> "+JSON.stringify(data));
+            console.log("CSV data--> " + JSON.stringify(data));
             console.log(data);
         })
         .on("end", function () {

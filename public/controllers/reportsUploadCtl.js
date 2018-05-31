@@ -5,8 +5,9 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
   console.log(" $scope.userData : " + JSON.stringify($scope.userData));
   $scope.propertyJson = $rootScope.propertyJson;
   $scope.file = {}; /* ### Note: Upload file declaration ### */
-  $scope.uploadTypes = ["Teacher Details", "Student Details", "Time Table", "Attendance", "Mark Report"];
+  $scope.uploadTypes = ["Teacher Details", "Student Details", "Time Table", "Attendance", "Mark Report", "Fee"];
   $scope.testTypes = ["AT", "UT", "MT", "TT", "AT"];
+  $scope.feeTypes = ["AF", "BF", "MF", "Other"];
   $scope.attendanceTypes = ["Monthly", "Daily"];
   $scope.monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -14,7 +15,7 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
   $scope.reset = function () {
     console.log("reset-->");
     $scope.uploadReports = [{ uploadType: "", csSelect: "", ttSelect: "", uploadDoc: "" }];
-   }
+  }
   $scope.getSchoolData = function () {
     console.log("getSchoolData-->");
     $scope.cssList = [];
@@ -122,8 +123,7 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
       console.log("api creating");
       var api = $scope.propertyJson.VC_uploadMarkFile + "/" + schoolName + "/" + testType + "/" + date + "/" + clas + "/" + section;
       $scope.reset();
-      console.log("api: "+api);
-      
+      console.log("api: " + api);
     }
     else {
       $uibModal.open({
@@ -286,7 +286,7 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
     console.log("<--uploadTimeTableFile");
   }
 
-  $scope.uploadCSVTEST = function(file){
+  $scope.uploadCSVTEST = function (file) {
     console.log("uploadCSVTEST-->");
     var obj = {
       "file": file
@@ -299,10 +299,10 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
         console.log("data--" + JSON.stringify(data.data));
         console.log("checkStatus: " + checkStatus);
         if (checkStatus) {
-          console.log("checkStatus Pass-->"); 
+          console.log("checkStatus Pass-->");
         }
-        else{
-          console.log("checkStatus Fails-->"); 
+        else {
+          console.log("checkStatus Fails-->");
 
         }
       })
@@ -481,6 +481,77 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
     console.log("<--uploadFile");
   }
 
+  $scope.uploadFeeFile = function (file, clas, section, reportType, fee_otherName) {
+    console.log("uploadFeeFile-->");
+    console.log("fee_otherName: " + fee_otherName);
+    console.log("testTYpe: " + reportType + " fee_otherName: " + fee_otherName + "clas: " + clas + "section: " + section);
+    var obj = {
+      "file": file
+    }
+
+    if (reportType && clas && section) {
+      console.log("api creating");
+      if (fee_otherName) {
+
+      }
+      else {
+        fee_otherName = null;
+      }
+      var api = $scope.propertyJson.VC_uploadFeeFile + "/" + schoolName + "/" + clas + "/" + section + "/" + reportType + "/" + fee_otherName;
+      // $scope.reset("api: "+api);
+      console.log("api: " + api);
+    }
+    else {
+      $uibModal.open({
+        scope: $scope,
+        templateUrl: '/html/templates/dashboardwarning.html',
+        windowClass: 'show',
+        backdropClass: 'static',
+        keyboard: false,
+        controller: function ($scope, $uibModalInstance) {
+          $scope.message = "Fee Type, Class and Section are required"
+        }
+      })
+    }
+
+    console.log("api: " + api);
+    if (api) {
+      httpFactory.csvUpload(obj, api).then(function (data) {
+        var checkStatus = httpFactory.dataValidation(data);
+        console.log("data--" + JSON.stringify(data.data));
+        if (checkStatus) {
+          //alert(data.data.message);
+          var loginAlert = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardsuccess.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = data.data.message;
+            }
+          })
+
+          up[0].ttSelect = null;
+        }
+        else {
+          var loginAlert = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardwarning.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = data.data.message;
+            }
+          })
+          //alert(data.data.message);
+        }
+      })
+    }
+
+    console.log("<--uploadFeeFile");
+  }
 
 
   // $scope.getStudListForCS = function (css) {

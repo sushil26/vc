@@ -111,9 +111,9 @@ app.factory('httpFactory', function ($http, $q, $rootScope) {
             var postUrl = $rootScope.propertyJson.BASE_URL + uploadUrl;
             var fd = new FormData();
             console.log("file: " + file);
-            console.log("file: " + file.upload);
+            // console.log("file: " + file.upload);
 
-            fd.append('logo', file.upload);
+            fd.append('logo', file);
             console.log("fd: " + fd);
             $http.post(postUrl, fd, {
                 transformRequest: angular.identity,

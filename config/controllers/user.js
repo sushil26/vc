@@ -155,7 +155,7 @@ module.exports.login4VC = function (req, res) {
                     if (data[0].pswd == req.body.password) {
                       if (data[0].status == "active") {
                         console.log("Successfully Logged in as " + (data[0].loginType));
-                      
+
                         responseData = {
                           status: true,
                           message: "Login Successfully",
@@ -503,6 +503,83 @@ module.exports.passwordUpdate = function (req, res) {
     res.status(400).send(responseData);
   }
   console.log("<--passwordUpdate");
+}
+module.exports.profilePicUpdate = function (req, res) {
+  console.log("profilePicUpdate-->");
+  var id = req.params.id;
+  if (general.emptyCheck(req.params.id)) {
+    var loginType = req.body.loginType;
+    if (loginType == 'user') {
+      var profilePic_path = req.body.profilePic_path;
+      user.update({ "_id": ObjectId(id) }, { $set: { "profilePic_path": profilePic_path } }, function (err, data) {
+        if (err) {
+          responseData = {
+            status: false,
+            message: "Failed to update"
+          };
+          res.status(400).send(responseData);
+        }
+        else {
+          responseData = {
+            status: false,
+            message: "update successful"
+          };
+          res.status(200).send(responseData);
+        }
+      })
+    }
+    else {
+      var updateJson;
+      console.log("req.body.profilePic_path: "+req.body.profilePic_path);
+      console.log("req.body.father_profilePic_path: "+req.body.father_profilePic_path);
+      console.log("req.body.mother_profilePic_path: "+req.body.mother_profilePic_path);
+      if (req.body.profilePic_path) {
+        console.log("req.body.profilePic_path: "+req.body.profilePic_path);
+        updateJson = {
+          "profilePic_path": req.body.profilePic_path
+        }
+      }
+      else if (req.body.father_profilePic_path) {
+        console.log("req.body.father_profilePic_path: "+req.body.father_profilePic_path);
+        updateJson = {
+          "father_profilePic_path": req.body.father_profilePic_path
+        }
+      }
+      else if (req.body.mother_profilePic_path) {
+        console.log("req.body.mother_profilePic_path: "+req.body.mother_profilePic_path);
+        updateJson = {
+          "mother_profilePic_path": req.body.mother_profilePic_path
+        }
+      }
+      console.log("updateJson: " + JSON.stringify(updateJson));
+      stud.update({ "_id": ObjectId(id) }, { $set: updateJson }, function (err, data) {
+        if (err) {
+          responseData = {
+            status: false,
+            message: "Failed to update"
+          };
+          res.status(400).send(responseData);
+        }
+        else {
+          responseData = {
+            status: false,
+            message: "update successful"
+          };
+          res.status(200).send(responseData);
+        }
+      })
+    }
+  }
+  else {
+    console.log("Empty value find");
+    responseData = {
+      status: false,
+      message: "empty id find"
+    };
+    res.status(400).send(responseData);
+  }
+
+  console.log("<--profilePicUpdate");
 }
 module.exports.getUserData = function (req, res) {
   console.log("getUserData-->");

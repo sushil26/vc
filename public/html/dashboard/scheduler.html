@@ -75,7 +75,7 @@
                 left: 0;">
 
                           <select class="btn btn-warning" ng-if="userLoginType=='teacher'" placeholder="select" ng-model="cssSelect" ng-change="getStudListForCS(cssSelect)"
-                            ng-options="css as css.class+ '-' + css.section + '-' + css.subject for css in teacherData[0].css">
+                            ng-options="css as css.class+ '-' + css.section for css in teacherData[0].css">
                             <option value="" disabled selected>Class</option>
                           </select>
 

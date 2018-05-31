@@ -67,6 +67,7 @@ module.exports.eventSend = function (req, res) {
             "student_cs": req.body.student_cs,
             "student_id": req.body.student_id,
             "student_Name": req.body.student_Name,
+            "notificationNeed": 'yes',
             "password": password
         }
         console.log("userData: " + JSON.stringify(userData));
@@ -128,16 +129,58 @@ module.exports.eventSend = function (req, res) {
     }
 }
 
+module.exports.eventNotificationOff = function (req, res) {
+    console.log("eventNotificationOff-->");
+    var responseData;
+    console.log("req.body.id: " + req.body.id);
+    if (general.emptyCheck(req.body.id)) {
+        var obj = {
+            "notificationNeed": "no"
+        }
+        var queryId = {
+            "_id": ObjectId(req.body.id)
+        }
+        console.log("queryId: " + JSON.stringify(queryId));
+        console.log("obj: " + JSON.stringify(obj));
+        event.update(queryId, { $set: obj },function (err, data) {
+            console.log("data: " + JSON.stringify(data));
+            if (err) {
+                responseData = {
+                    status: false,
+                    message: "Failed to get Data",
+                    data: data
+                };
+                res.status(400).send(responseData);
+            } else {
+                responseData = {
+                    status: true,
+                    message: "Successfully Updated",
+                    data: data
+                };
+                res.status(200).send(responseData);
+            }
+        })
+    }
+    else {
+        console.log("Epty value found");
+        responseData = {
+            "status": false,
+            "message": "empty value found",
+            "data": userData
+        }
+        res.status(400).send(responseData);
+    }
+}
+
 module.exports.eventGet = function (req, res) {
     console.log("getEvent-->");
     var responseData;
     console.log("req.params.id: " + req.params.id);
 
     if (general.emptyCheck(req.params.id)) {
-        event.find({ $or: [{ "userId": req.params.id }, { "remoteCalendarId": req.params.id }] }).sort({ "startAt": 1 }).toArray(function (err, listOfevents) {
+        event.find({ $or: [{ "userId": req.params.id }, { "remoteCalendarId": req.params.id }] }).sort({ "$natural": -1 }).toArray(function (err, listOfevents) {
             console.log("listOfevents: " + JSON.stringify(listOfevents))
             if (err) {
-
                 responseData = {
                     "status": false,
                     "message": "Failed to get Data",

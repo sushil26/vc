@@ -5,7 +5,7 @@ app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, 
   var userName;
   httpFactory.getFile('property.json');
   $scope.userData = sessionAuthFactory.getAccess("userData");
-  console.log(" $scope.userData : "+JSON.stringify( $scope.userData ));
+  console.log(" $scope.userData : " + JSON.stringify($scope.userData));
   if ($scope.userData) {
     userName = $scope.userData.userName;
     // $scope.loginType = $scope.userData.loginType;
@@ -48,15 +48,13 @@ app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, 
             }
           })
           //alert("Your Profile is inactive, inform your system admin to verify it");
-        }
-        else if (data.data.message == 'Login Successfully') {
+        } else if (data.data.message == 'Login Successfully') {
           console.log("Login Successfully");
-         
+
           $scope.sessionSet(datas);
           userName = data.data.userName;
-        }
-        else  {
-            var loginAlert = $uibModal.open({
+        } else {
+          var loginAlert = $uibModal.open({
             scope: $scope,
             templateUrl: '/html/templates/loginAlert.html',
             windowClass: 'show',
@@ -65,16 +63,15 @@ app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, 
             controller: function ($scope, $uibModalInstance) {
               $scope.message = data.data.message;
               console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
-              $scope.close = function(){
+              $scope.close = function () {
                 loginAlert.close('resetModel');
-               
+
               }
             }
           })
-        
+
         }
-      }
-      else {
+      } else {
         console.log("sorry");
       }
     });
@@ -90,10 +87,10 @@ app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, 
     // localStorage.setItem("encUrl",encryptedUrl); 
     // localStorage.setItem("encPswd",encryptedPswd);
     localStorage.setItem("sessionEnc", data.sessionData);
-console.log("localStorage.getItem(sessionEnc): "+localStorage.getItem("sessionEnc"));
+    console.log("localStorage.getItem(sessionEnc): " + localStorage.getItem("sessionEnc"));
     if (typeof (Storage) !== "undefined") {
       if (data.data.loginType == 'teacher') {
-        var un = data.data.firstName +" "+ data.data.lastName
+        var un = data.data.firstName + " " + data.data.lastName
         var userData = {
           "userName": un,
           "status": data.data.status,
@@ -102,7 +99,7 @@ console.log("localStorage.getItem(sessionEnc): "+localStorage.getItem("sessionEn
           "id": data.data._id,
           "schoolName": data.data.schoolName,
         }
-        console.log("userData: "+JSON.stringify(userData));
+        console.log("userData: " + JSON.stringify(userData));
         sessionAuthFactory.setAccess(userData);
 
         $scope.userData = sessionAuthFactory.getAccess("userData");
@@ -110,9 +107,8 @@ console.log("localStorage.getItem(sessionEnc): "+localStorage.getItem("sessionEn
         $scope.loginType = $scope.userData.loginType;
         $window.location.reload();
 
-      }
-      else if (data.data.loginType == 'studParent') {
-        var un = data.data.firstName +" "+ data.data.lastName
+      } else if (data.data.loginType == 'studParent') {
+        var un = data.data.firstName + " " + data.data.lastName
         var userData = {
           "userName": un,
           "status": data.data.status,
@@ -127,9 +123,8 @@ console.log("localStorage.getItem(sessionEnc): "+localStorage.getItem("sessionEn
         userName = $scope.userData.userName;
         $scope.loginType = $scope.userData.loginType;
         $window.location.reload();
-      }
-      else if(data.data.loginType == 'admin'){
-        var un = data.data.firstName +" "+ data.data.lastName
+      } else if (data.data.loginType == 'admin') {
+        var un = data.data.firstName + " " + data.data.lastName
         var userData = {
           "userName": un,
           "status": data.data.status,
@@ -138,25 +133,24 @@ console.log("localStorage.getItem(sessionEnc): "+localStorage.getItem("sessionEn
           "id": data.data._id,
           "schoolName": data.data.schoolName,
         }
-        console.log("userData: "+JSON.stringify(userData));
+        console.log("userData: " + JSON.stringify(userData));
         sessionAuthFactory.setAccess(userData);
 
         $scope.userData = sessionAuthFactory.getAccess("userData");
         userName = $scope.userData.userName;
         $scope.loginType = $scope.userData.loginType;
         $window.location.reload();
-      }
-      else{
-        var un = data.data.firstName +" "+ data.data.lastName
+      } else {
+        var un = data.data.firstName + " " + data.data.lastName
         var userData = {
           "userName": un,
           "status": data.data.status,
           "email": data.data.email,
           "loginType": data.data.loginType,
           "id": data.data._id
-         
+
         }
-        console.log("userData: "+JSON.stringify(userData));
+        console.log("userData: " + JSON.stringify(userData));
         sessionAuthFactory.setAccess(userData);
         $scope.userData = sessionAuthFactory.getAccess("userData");
         userName = $scope.userData.userName;
@@ -189,14 +183,48 @@ console.log("localStorage.getItem(sessionEnc): "+localStorage.getItem("sessionEn
       }
     })
   }
-  $rootScope.TimeTable_timing = [
-    { "startsAt": "09:00", "endsAt": "09:45", "meridian": 'AM' },
-    { "startsAt": "9:45", "endsAt": "10:30", "meridian": 'AM' },
-    { "startsAt": "10:30", "endsAt": "11:15", "meridian": 'AM' },
-    { "startsAt": "11:15", "endsAt": "12:00", "meridian": 'AM' },
-    { "startsAt": "01:00", "endsAt": "01:45", "meridian": 'PM' },
-    { "startsAt": "01:45", "endsAt": "02:30", "meridian": 'PM' },
-    { "startsAt": "02:30", "endsAt": "03:15", "meridian": 'PM' },
-    { "startsAt": "03:15", "endsAt": "04:00", "meridian": 'PM' }]
-    
+  $rootScope.TimeTable_timing = [{
+      "startsAt": "09:00",
+      "endsAt": "09:45",
+      "meridian": 'AM'
+    },
+    {
+      "startsAt": "9:45",
+      "endsAt": "10:30",
+      "meridian": 'AM'
+    },
+    {
+      "startsAt": "10:30",
+      "endsAt": "11:15",
+      "meridian": 'AM'
+    },
+    {
+      "startsAt": "11:15",
+      "endsAt": "12:00",
+      "meridian": 'AM'
+    },
+    {
+      "startsAt": "01:00",
+      "endsAt": "01:45",
+      "meridian": 'PM'
+    },
+    {
+      "startsAt": "01:45",
+      "endsAt": "02:30",
+      "meridian": 'PM'
+    },
+    {
+      "startsAt": "02:30",
+      "endsAt": "03:15",
+      "meridian": 'PM'
+    },
+    {
+      "startsAt": "03:15",
+      "endsAt": "04:00",
+      "meridian": 'PM'
+    }
+  ];
+
+
+
 });

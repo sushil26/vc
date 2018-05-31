@@ -586,6 +586,7 @@ app.controller('quickMsgCtl', function ($scope, $rootScope, $state, $rootScope, 
                         $scope.message = "Successfully sent the event";
                     }
                 })
+                $rootScope.$broadcast("SiblingMethod_quickMsgGet", {});
                 // var quickMsgPostedData = data.data.data;
                 var objData = {
                     'id': obj.userId,

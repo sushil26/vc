@@ -6,7 +6,7 @@
             <div id="profile">
                 <section class="panel">
                     <div class="panel-heading" style="background: #3a4a58">
-                        <i class="fa fa-user-circle"></i>
+                        <i class="fa fa-upload"></i>
                         <span style="color:white;">&nbspREPORTS UPLOAD</span>
                     </div>
                     <div class="panel-body bio-graph-info" style="padding: 1px;">
@@ -94,10 +94,25 @@
                                             </select>
                                         </div>
                                     </div>
-
-                                    <!-- <select class="btn col-lg-3" placeholder="select" ng-model="up.studSelect" ng-options="cs as cs.name + '-' + cs.studId for cs in studList">
-                                                    <option value="" disabled selected>Student</option>
-                                                </select> -->
+                                    <div class="form-group" ng-if="up.uploadType=='Fee'">
+                                        <label class="control-label col-lg-3">Fee Type
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-lg-3">
+                                            <select class="form-control m-bot15" placeholder="select" ng-model="up.ftSelect" ng-options="ft as ft for ft in feeTypes">
+                                                <option value="" disabled selected>Fee Type</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="up.ftSelect=='Other'">
+                                        <label class="control-label col-lg-3">Name
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-lg-3">
+                                            <input ng-model="up.fee_otherName" placeholder="Enter Name"/>
+                                        </div>
+                                    </div>
+                                    -------------{{up.fee_otherName}}
                                     <div class="form-group" ng-if="up.uploadType=='Mark Report'">
                                         <label class="control-label col-lg-3">Type of Test*
                                             <span class="required">*</span>
@@ -138,14 +153,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group" ng-if="up.uploadType=='Payment'">
-                                        <label class="control-label col-lg-3">Payment report</label>
-                                        <div class="col-lg-3">
-                                            <select class="form-control m-bot15" placeholder="select" ng-model="up.ttSelect" ng-options="tt as tt for tt in testTypes">
-                                                <option value="" disabled selected>Payment report</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="form-group">
 
                                         <p class="col-lg-offset-2 col-lg-10">
@@ -172,6 +179,7 @@
                                             <button ng-if="up.uploadType=='Teacher Details'" type="reset" class="  bcontrol-label btn btn-success" ng-click="uploadFile(up.uploadDoc,up.uploadType)">Save</button>
                                             <button ng-if="up.uploadType=='Time Table'" type="reset" class=" bcontrol-label  btn btn-success" ng-click="uploadTimeTableFile(up.uploadDoc,up.tSelect)">Save</button>
                                             <button ng-if="up.uploadType=='Mark Report'" type="reset" class="bcontrol-label btn btn-success" ng-click="uploadMarkFile(up.uploadDoc,up.ttSelect,up.testDate| date:'dd-MM-yy',up.cSelect.class,up.sSelect)">Save</button>
+                                            <button ng-if="up.uploadType=='Fee'" type="reset" class=" bcontrol-label  btn btn-success" ng-click="uploadFeeFile(up.uploadDoc, up.cSelect.class,up.sSelect, up.ftSelect, up.fee_otherName)">Save</button>
                                             <button type="reset" class="bcontrol-label btn btn-danger">Cancel</button>
                                         </div>
 

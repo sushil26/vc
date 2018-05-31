@@ -13,6 +13,34 @@
 --------------------------------*/
 
 @import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
+.quotes {
+  color: floralwhite;
+  -webkit-animation: mymo 4s infinite;
+  /* Safari 4.0 - 8.0 */
+  animation: mymo 4s infinite;
+}
+
+@-webkit-keyframes mymo {
+  from {font-size: 6vw;
+    color: floralwhite;
+  }
+  to {
+    font-size: 7vw;
+    color: orange;
+  }
+}
+
+@keyframes mymo {
+  from {
+    font-size: 6vw;
+    color: floralwhite;
+  }
+  to {
+    font-size: 7vw;
+    color: orange;
+  }
+}
+
 /* .elementToFadeInAndOut {
 
   background: red;
@@ -35,22 +63,12 @@
   background: gold;
 } */
 
-
-
-
-
-
-
-
-
 .bouncy {
-
   display: inline-block;
   font-size: 15px;
   font-weight: bold;
   color: #fff ! important;
   text-align: center;
-
   padding: 10px;
   margin: 5px;
   position: relative;
@@ -214,8 +232,9 @@ h6 {
 --------------------------------------------------------------*/
 
 #header {
+  background: #1a2732b5;
   padding: 30px 0;
-  height: 60px;
+  height: 75px;
   position: fixed;
   left: 0;
   top: 0;
@@ -707,7 +726,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 #facts .counters span {
   font-size: 48px;
   display: block;
-  color: #2dc997;
+  color: #2577be;
 }
 
 #facts .counters p {
@@ -720,7 +739,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 
 #services {
-  background: darkturquoise;
+  background: #1a3b56;
   background-size: cover;
   padding: 80px 0 60px 0;
 }
@@ -748,8 +767,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #services .icon a {
   display: inline-block;
-  background: #2dc997;
-  border: 2px solid #2dc997;
+  background: #2676bf;
+  border: 2px solid #2676bf;
   padding: 16px;
   border-radius: 50%;
   transition: 0.3s;
@@ -983,7 +1002,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 
 #contact {
-  background: darkturquoise;
+  background: #1a3b56;
   /* padding: 80px 0 40px 0; */
 }
 
@@ -993,12 +1012,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #contact .info {
-  color: #333333;
+  color: white;
 }
 
 #contact .info i {
   font-size: 32px;
-  color: #333333;
+  color: green;
   float: left;
 }
 

@@ -1,6 +1,5 @@
 {
 "BASE_URL": "https://vc4all.in/",
-
 "VC_teacherDetail": "vc/teacherDetail",
 "VC_studentDetail": "vc/studentDetail",
 "VC_adminCreate": "vc/adminCreate",
@@ -27,9 +26,12 @@
 "VC_getToDate": "vc/getToDate",
 "VC_eventReSchedule": "vc/eventReSchedule",
 "VC_getEventById": "vc/getEventById",
+"VC_eventNotificationOff": "vc/eventNotificationOff",
+"VC_quickMsgNotificationOff": "vc/quickMsgNotificationOff",
 "VC_getAllTeacherList": "vc/getAllTeacherList",
 "VC_getSchoolData": "vc/getSchoolData",
 "VC_markUpdate": "vc/markUpdate",
+"VC_feeUpdate": "vc/feeUpdate",
 "VC_updateTeacherMaster": "vc/updateTeacherMaster",
 "VC_updateStudentMaster": "vc/updateStudentMaster",
 "VC_updateTeacher_timeTable": "vc/updateTeacher_timeTable",
@@ -43,6 +45,7 @@
 "VC_uploadPeriodsFile": "vc/uploadPeriodsFile",
 "VC_uploadTeacher_timeTable": "vc/uploadTeacher_timeTable",
 "VC_uploadTeacherMaster": "vc/uploadTeacherMaster",
+"VC_uploadFeeFile": "vc/uploadFeeFile",
 "VC_studentInsert": "vc/studentInsert",
 "VC_teacherInsert": "vc/teacherInsert",
 "VC_getUserData": "vc/getUserData",
@@ -52,8 +55,8 @@
 "VC_deleteStud": "vc/deleteStud",
 "VC_getSchoolDataById": "vc/getSchoolDataById",
 "VC_schoolLogo": "vc/schoolLogo",
+"VC_profilePicupload": "vc/profilePicupload",
 "VC_bulkEmail_quickMsg": "vc/bulkEmail_quickMsg",
+"VC_updateProfilePic": "vc/updateProfilePic",
 "VC_csvTest": "vc/csvTest"
-
-
 }

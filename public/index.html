@@ -5,14 +5,7 @@
   <meta charset="UTF-8">
   <title>VC4ALL</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <!-- Favicons -->
-  <!-- <link href="/home/img/fav.png" rel="icon" size="32x32">
-  <script src="/home/lib/jquery/jquery.min.js"></script>
-  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/home/css/style.css" />
-  <link href="/home/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">-->
-  <!-- Favicons -->
+  <link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
   <link href="/home/img/fav.png" rel="icon" size="32x32">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet">
@@ -25,63 +18,34 @@
   <link href="/home/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/chatZone.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
-  <!-- <link href="https://raw.githubusercontent.com/JanStevens/angular-growl-2/master/build/angular-growl.min.css"></link> -->
-  <!-- <script src="https://raw.githubusercontent.com/JanStevens/angular-growl-2/master/build/angular-growl.min.js"></script> -->
-  <style>
-    .imm {
-      font-size: 16px;
-      color: #a8cf44;
-      padding: 12px;
-    }
-
-    /* #sidebar>ul>li>ul.sub {
-      display: block !important;
-    } */
-  </style>
-
-  <!--external css-->
-
-  <!-- <link rel="stylesheet" href="/dashboard_Lib/css/style.css" />
-  <link rel="stylesheet" href="/dashboard_Lib/css/style-responsive.css" /> -->
-  <!-- Bootstrap CSS -->
-  <!-- <link rel="stylesheet" href="/dashboard_Lib/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/dashboard_Lib/css/bootstrap-theme.css" /> -->
-  <!-- <link rel="stylesheet" href="/css/font-awesome.min.css"  /> -->
-
   <script src="/js/socket.io-1.4.5.js"></script>
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <!-- <script src="/bower_components/ng-image-input-with-preview/dist/ng-image-input-with-preview.js"></script> -->
-  <!-- <script src="/bower_components/angular-spinners/dist/src/spinner.service.js"></script> -->
   <!-- bootstrap -->
-
-
   <script src="vcApp.js"></script>
   <script src="vcAppCtrl.js"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
-
   <link rel="stylesheet" href="https://unpkg.com/angular-bootstrap-colorpicker@3/css/colorpicker.min.css" />
-  <!-- <link rel="stylesheet" href="https://unpkg.com/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" /> -->
   <script src="/common/httpFactory.js"></script>
   <script src="/common/socketFactory.js"></script>
   <script src="/common/sessionAuthFactory.js"></script>
   <script src="/common/fileModel.js"></script>
   <script src="/common/notification.js"></script>
-
-
   <script src="/bower_components/moment/min/moment.min.js"></script>
   <link rel="stylesheet" href="/bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
   <script src="/bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
   <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+  <link href="/bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop.css" rel="stylesheet">
+  <script src="/bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop.js"></script>
+  <!-- <script src="/bower_components/ui-cropper/source/js/ui-cropper.js"></script> -->
+
   <!-- <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script> -->
   <script src="/controllers/viewUserCtrl.js"></script>
   <script src="/controllers/calendarCtrl.js"></script>
   <script src="/controllers/userAuthCtrl.js"></script>
   <script src="/controllers/teacherInsertCtrl.js"></script>
   <script src="/controllers/studentInsertCtrl.js"></script>
-
   <script src="/controllers/dashboardCtrl.js"></script>
   <script src="/controllers/dashboardEventCtrl.js"></script>
   <script src="/controllers/dashboardEditCtrl.js"></script>
@@ -90,6 +54,7 @@
   <script src="/controllers/quickMsgCtl.js"></script>
   <script src="/controllers/dashboardRescheduleCtrl.js"></script>
   <script src="/controllers/dashboardConfCtrl.js"></script>
+  <script src="/controllers/analyticsCtl.js"></script>
   <script src="/controllers/upcomingEventCtrl.js"></script>
   <script src="/controllers/incomingMsgCtl.js"></script>
   <script src="/controllers/outgoingMsgCtl.js"></script>
@@ -103,38 +68,11 @@
   <script src="/controllers/allSchoolCtl.js"></script>
   <script src="/controllers/attendanceViewCtl.js"></script>
   <script src="/controllers/markViewCtl.js"></script>
+  <script src="/controllers/feeViewCtl.js"></script>
   <script src="/controllers/markViewWithConfId_Ctl.js"></script>
   <script src="/controllers/attendanceViewWithConfId_Ctl.js"></script>
   <script src="/controllers/changePasswordCtl.js"></script>
   <script src="/controllers/logoutCtl.js"></script>
-
-
-  <!-- <link href="/home/lib/animate/animate.min.css" rel="stylesheet"> -->
-  <!-- <link href="/home/css/style.css" rel="stylesheet"> -->
-
-  <!-- <link href="/home/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!-- <link href="https://unpkg.com/bootstrap@3/dist/css/bootstrap.css" rel="stylesheet"> -->
-  <!-- <link href="/home/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"> -->
-
-  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet"> -->
-
-
-
-  <!-- <style>
-.user-details {position: relative; padding: 0;}
-.user-details .user-image {position: relative;  z-index: 1; width: 100%; text-align: center;}
-.user-image img { clear: both; margin: auto; position: relative;}
-
-.user-details .user-info-block {width: 100%; position: absolute; top: 55px; background: rgb(255, 255, 255); z-index: 0; padding-top: 35px;}
-.user-info-block .user-heading {width: 100%; text-align: center; margin: 10px 0 0;}
-.user-info-block .navigation {float: left; width: 100%; margin: 0; padding: 0; list-style: none; border-bottom: 1px solid #428BCA; border-top: 1px solid #428BCA;}
-.navigation li {float: left; margin: 0; padding: 0;}
-.navigation li a {padding: 20px 30px; float: left;}
-.navigation li.active a {background: #428BCA; color: #fff;}
-.user-info-block .user-body {float: left; padding: 5%; width: 90%;}
-.user-body .tab-content > div {float: left; width: 100%;}
-.user-body .tab-content h4 {width: 100%; margin: 10px 0; color: #333;}
-</style> -->
   <style>
     .red {
       background-color: red;
@@ -147,7 +85,126 @@
     .blue {
       background-color: blue;
     }
+
+    .quotes {
+      display: none;
+    }
+
+    #loading {
+      display: block;
+      position: absolute !important;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      width: 100vw;
+      height: 100vh;
+      background-color: green;
+      background-image: url("gears-animation.gif");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #0a425f;
+      background-size: 175px;
+    }
   </style>
+  <style>
+    /* The outermost element*/
+
+    .header-wrapper {
+      overflow: hidden;
+    }
+
+    .zoominheader {
+      background: url("/home/img/op.jpg");
+      background-size: cover;
+      background-attachment: fixed;
+      background-repeat: repeat;
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-animation: zoomin 15s ease-in infinite;
+      animation: zoomin 15s ease-in infinite;
+      transition: all .5s ease-in-out;
+      overflow: hidden;
+    }
+
+    /* The innermost element*/
+
+    .zoomoutheader {
+      text-align: center;
+      background: none;
+      -webkit-animation: zoomout 10s ease-in infinite;
+      animation: zoomout 10s ease-in infinite;
+      transition: all .5s ease-in-out;
+      overflow: hidden;
+    }
+
+
+
+    /* Zoom in Keyframes */
+
+    @-webkit-keyframes zoomin {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes zoomin {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /*End of Zoom in Keyframes */
+
+    /* Zoom out Keyframes */
+
+    @-webkit-keyframes zoomout {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0.67);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes zoomout {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0.67);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /*End of Zoom out Keyframes */
+
+    .cropArea {
+      background: #E4E4E4;
+      overflow: hidden;
+      width: 325px;
+      height: 350px;
+    }
+  </style>
+
   <!-- Dropdown with search -->
   <script>
     function myFunction() {
@@ -168,98 +225,48 @@
         }
       }
     }
-  </script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119963672-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
+    function onReady(callback) {
+      var intervalID = window.setInterval(checkReady, 1000);
 
-    gtag('config', 'UA-119963672-1');
-  </script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-
-</head>
-<style>
-  #loading {
-    display: block;
-    position: absolute !important;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    width: 100vw;
-    height: 100vh;
-    background-color: green;
-    background-image: url("gears-animation.gif");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #0a425f;
-    background-size: 175px;
-  }
-</style>
-<script>
-  function onReady(callback) {
-    var intervalID = window.setInterval(checkReady, 1000);
-
-    function checkReady() {
-      if (document.getElementsByTagName('body')[0] !== undefined) {
-        window.clearInterval(intervalID);
-        callback.call(this);
+      function checkReady() {
+        if (document.getElementsByTagName('body')[0] !== undefined) {
+          window.clearInterval(intervalID);
+          callback.call(this);
+        }
       }
     }
-  }
 
-  function show(id, value) {
-    document.getElementById(id).style.display = value ? 'block' : 'none';
-  }
+    function show(id, value) {
+      document.getElementById(id).style.display = value ? 'block' : 'none';
+    }
 
-  onReady(function () {
-    show('page', true);
-    show('loading', false);
-  });
-</script>
-<style type="text/css" media="screen">
-  #veil {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    cursor: not-allowed;
-    background: url(../../assest/image/buterfly.gif) no-repeat center;
-  }
-</style>
+    onReady(function () {
+      show('page', true);
+      show('loading', false);
+    });
+  </script>
+
+</head>
 
 
 
 <body>
-
-
   <div id="loading"></div>
-
-
   <div ng-app="vcApp" ng-controller="vcAppCtrl">
-    <!-- <spinner name="spinner" id="veil"></spinner> -->
-
+    <spinner name="spinner" id="veil"></spinner>
     <div id="page" ui-view>
-
-
-
       <!--==========================
     Header
 ============================-->
       <header id="header">
         <div class="container ">
           <div id="logo" class="pull-left">
-            <!-- Uncomment below if you prefer to use a text logo -->
             <span>
               <img style="float:left;" src="/home/img/fav.png" />
               <a href="/" id="mm" style="font-size: 22px;
           font-weight: 500;
+          font-family: 'Allerta Stencil';
           color: #a8cf44 !important;
           float: left;
           margin-top: 8px;
@@ -267,19 +274,10 @@
           text-shadow: 2px 2px 4px #000000;">VC
                 <span style="color: #2577be;">4ALL</span>
               </a>
-              <!-- <h1 style="color:azure;float:left;  text-shadow: 2px 2px 4px #000000;">&nbspVC4ALL</h1> -->
-
             </span>
           </div>
-
           <nav id="nav-menu-container">
             <ul class="nav-menu">
-              <!-- <li>
-            <a href="client" class="btn-get-started" style="text-shadow: 2px 2px 4px #000000;">Go to Conference</a>
-          </li> -->
-              <!-- <li id="userAuth" style="display:none;text-shadow: 2px 2px 4px #000000;">
-            <a href="https://vc4all.in/mainPage#!/userAuth">Teacher List</a>
-          </li> -->
               <li ng-if="userData.loginType" id="dashboard" style="display:block;">
                 <a href="#!dashboard/personalDetail" style="text-shadow: 2px 2px 4px #000000;">Dashboard
                 </a>
@@ -290,28 +288,16 @@
               <li>
                 <a href="#contact" style="text-shadow: 2px 2px 4px #000000;">About Us</a>
               </li>
-              <!-- <li ng-if="!userData.loginType">
-                <a href="#" ng-click="vcLogin()" style="text-shadow: 2px 2px 4px #000000;">Login</a>
-              </li> -->
               <li ng-if="!userData.loginType">
                 <a href="#" data-target="#crdntl" data-toggle="modal" style="text-shadow: 2px 2px 4px #000000;">login</a>
               </li>
               <li ng-if="userData.loginType">
                 <a href="#!dashboard/logout" style="text-shadow: 2px 2px 4px #000000;">Logout</a>
               </li>
-              <!-- <li>
-            <a href="#portfolio">Portfolio</a>
-          </li>
-          <li>
-            <a href="#team">Team</a>
-          </li> -->
 
-              <!-- <li>
-            <a href="#contact">Contact Us</a>
-          </li> -->
             </ul>
           </nav>
-          <!-- #nav-menu-container -->
+
         </div>
       </header>
 
@@ -320,32 +306,48 @@
     Hero Section
   ============================-->
       <section id="hero">
-        <div class="hero-container">
-          <center>
-            <div class="element" style="color:white;width:100%;">
-              &nbsp
-              <!-- <marquee>The ultimate platform for instant messaging and video conferencing !</marquee> -->
-              <h1 style="position: absolute;
-        padding:2%;
-        border-radius: 2px;
-        background: #00ced166;
-        color:black;
-				font-weight:700;
-				font-size:50px;
-				top: 50%;
-				left: 50%;
-				margin-right: -50%;
-        transform: translate(-50%, -50%);
-        line-height: normal;
-				z-index: 1;" class="typewrite" data-period="2000" data-type='["Welcome to VC4ALL","The ultimate platform for Video Conferencing", " and Instant messaging"]'>
-                <span class="wrap"> </span>
-              </h1>
-            </div>
-          </center>
-
-          <!-- <a href="#about" class="btn-get-started">Start Journey</a> -->
-
-
+        <div class="hero-container ">
+          <div class="">
+            <center>
+              <h1 class="quotes" style="width: fit-content;
+            font-family: 'Allerta Stencil';
+            height: auto;
+            color: floralwhite;
+            font-weight: 300;
+            font-size:6vw;
+            line-height: 1;
+            text-shadow: 2px 2px 4px #000000;
+              ">Welcome to VC4ALL</h1>
+              <h1 class="quotes" style="width: fit-content;
+            font-family: 'Allerta Stencil';
+              height: auto;
+              color: yellow;
+              font-weight: 300;
+              font-size:6vw;
+              line-height: 1;
+              text-shadow: 2px 2px 4px #000000;
+                ">The Ultimate Platform</h1>
+              <h1 class="quotes" style="width: fit-content;
+            font-family: 'Allerta Stencil';
+                height: auto;
+                color: floralwhite;
+                font-weight: 300;
+                font-size:6vw;
+                line-height: 1;
+                text-shadow: 2px 2px 4px #000000;
+                  ">For Video Conferencing</h1>
+              <h1 class="quotes" style="width: fit-content;
+            font-family: 'Allerta Stencil';
+                  height: auto;
+                  color: floralwhite;
+                  font-weight: 300;
+                  font-size:6vw;
+                  line-height: 1;
+                  text-shadow: 2px 2px 4px #000000;
+                    ">And Instant Messaging</h1>
+              <!-- <a href="#about" class="btn-get-started">Start Journey</a> -->
+            </center>
+          </div>
         </div>
       </section>
       <!--==========================
@@ -371,7 +373,6 @@
                   <div class="icon">
                     <a href="">
                       <i class="fa fa-calendar"></i>
-
                     </a>
                   </div>
                   <h4 class="title">
@@ -516,7 +517,7 @@
           <div class="container wow">
             <div class="row justify-content-center">
               <div class="ssk" style="height: 36px;width: 100%;"></div>
-              <div class="col-sm-5">
+              <div class="col-sm-4">
                 <div class="info">
                   <table>
                     <tr>
@@ -525,26 +526,68 @@
                           <!-- Uncomment below if you prefer to use a text logo -->
                           <span>
                             <img style="width: 60px;margin-top: -20px;" src="/home/img/fav.png" />
-                            <a href="/" id="mm" style="font-size: 22px;
-                          font-weight: 500;
-                          color: #a8cf44;
-                          margin-top: 8px;
-                          text-transform: uppercase;">VC
-                              <span style="color: #5ca5e5;">4ALL</span>
+                            <a href="/" id="mm" style="
+                            font-size: 18px;
+                            font-family: 'Allerta Stencil';
+                            color: wb;
+                            font-size: 22px;
+                            font-weight: 500;
+                            color: #a8cf44;
+                            margin-top: 8px;
+                            text-transform: uppercase;
+                            ">VC
+                              <span style="color: #2577be;">4ALL</span>
                             </a>
                           </span>
-
 
                         </div>
                       </td>
                     </tr>
                     <tr>
+                      <td style="
+                      text-shadow: 2px 2px 4px #000000;
+                      font-size: 18px;
+                      font-family: sans-serif;
+                      color: #a8cf44;
+                      color: wb;
+                  "> Careator Technologies Private Limited</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="info">
+                  <table>
+                    <tr>
                       <td>
                         <div>
-                          <i class="fa fa-map-marker"></i>
-                          <p>Careator Technologies Private Limited
-                            <br>Bangalore ,560076</p>
+                          <i style="text-shadow: 2px 2px 2px #00000061;" class="fa fa-map-marker"></i>
+                          <p style="
+                            font-family:  sans-serif;
+                            font-size: 11px;font-weight: 100;
+                        "> SLJ TOWER, II FLOOR, BDA # 297, VII BLOCK, OUTER RING ROAD, KATHREGUPPE, BANASHANKARI 3RD STAGE,
+                            BENGALURU, KARNATAKA
+                            <br>560061</p>
                         </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="info">
+                  <table>
+                    <tr>
+                      <td>
+                        <div>
+                          <i style="text-shadow: 2px 2px 2px #00000061;" class="fa fa-map-marker"></i>
+                          <p style="
+                          font-family:  sans-serif;
+                          font-size: 11px;font-weight: 100;
+                      ">MR HOUSE, INDIAN AIRLINES COLONY, BEGUMPET, HYDRABAD,TELANGANA
+                            <br>500016</p>
+                        </div>
+
                       </td>
 
                     </tr>
@@ -552,41 +595,8 @@
 
                 </div>
               </div>
-              <div class="col-sm-4">
-                <div class="info">
 
-                  <div>
-                    <i class="fa fa-envelope"></i>
-                    <p>info@vc4all.com</p>
-                  </div>
-                  <div>
-                    <i class="fa fa-phone"></i>
-                    <p>+91 924 653 1986</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="info">
-
-                  <div>
-                    <p>
-                      <a href="#" style="color: #333333;">Contact Us</a>
-                    </p>
-
-                  </div>
-                  <div>
-                    <p>
-                      <a href="#" style="color: #333333;">Terms & Conditions</a>
-                    </p>
-
-                  </div>
-
-
-
-                </div>
-              </div>
             </div>
-
           </div>
         </section>
       </main>
@@ -603,9 +613,7 @@
                 <button class="btn-default fa fa-close" style="margin-top: 2px;    border-color: white;
               border-radius: 25%;" aria-hidden="true" type="reset" data-dismiss="modal"></button>
               </div>
-
               <div class="modal-body">
-
                 <div style="background:darkturquoise;
             /* border: 1px solid white; */
             border-radius: 5px;
@@ -631,8 +639,6 @@
                 <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
                   ng-click="logVC(loginType, email, Password)" data-dismiss="modal">Submit</button>
               </div>
-
-
             </div>
           </center>
         </div>
@@ -647,7 +653,8 @@
         <div class="container">
           <div class="copyright">
             &copy; Copyright
-            <strong>Careator</strong>. All Rights Reserved
+            <strong>Careator</strong>. All Rights Reserved,
+            <a href="#" style="color: #2676bf;">Terms & Conditions</a>
           </div>
         </div>
         <div class="container">
@@ -670,18 +677,12 @@
               </a>
             </span>
           </div>
-
         </div>
-
-
       </footer>
       <!-- #footer -->
       <a href="#" class="back-to-top">
         <i class="fa fa-chevron-up"></i>
       </a>
-
-
-
       <script src="/home/lib/jquery/jquery.min.js"></script>
       <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
       <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -693,112 +694,9 @@
       <script src="/home/lib/superfish/superfish.min.js"></script>
       <script src="/home/lib/counterup/counterup.min.js"></script>
       <script src="/home/js/main.js"></script>
-
-      <!-- Template Main Javascript File -->
-      <!-- <script>
-    $(function () {
-          $("modal-content").keypress(function (e) {
-            if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-              $('button[type=submit] .default').click();
-              return false;
-            } else {
-              return true;
-            }
-          });
-  </script> -->
-
-
-
     </div>
 
   </div>
-
-
-
-  <script>
-    var TxtType = function (el, toRotate, period) {
-      this.toRotate = toRotate;
-      this.el = el;
-      this.loopNum = 0;
-      this.period = parseInt(period, 5) || 2000;
-      this.txt = '';
-      this.tick();
-      this.isDeleting = false;
-    };
-
-    TxtType.prototype.tick = function () {
-      var i = this.loopNum % this.toRotate.length;
-      var fullTxt = this.toRotate[i];
-
-      if (this.isDeleting) {
-        this.txt = fullTxt.substring(0, this.txt.length - 1);
-      } else {
-        this.txt = fullTxt.substring(0, this.txt.length + 1);
-      }
-
-      this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
-
-      var that = this;
-      var delta = 175;
-
-      if (this.isDeleting) {
-        delta /= 10;
-      }
-
-      if (!this.isDeleting && this.txt === fullTxt) {
-        delta = this.period;
-        this.isDeleting = true;
-      } else if (this.isDeleting && this.txt === '') {
-        this.isDeleting = false;
-        this.loopNum++;
-        delta = 500;
-      }
-
-      setTimeout(function () {
-        that.tick();
-      }, delta);
-    };
-
-    window.onload = function () {
-      var elements = document.getElementsByClassName('typewrite');
-      for (var i = 0; i < elements.length; i++) {
-        var toRotate = elements[i].getAttribute('data-type');
-        var period = elements[i].getAttribute('data-period');
-        if (toRotate) {
-          new TxtType(elements[i], JSON.parse(toRotate), period);
-        }
-      }
-      // INJECT CSS
-      var css = document.createElement("style");
-      css.type = "text/css";
-      css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid black}";
-      document.body.appendChild(css);
-    };
-
-
-    // $(document).ready(function () {
-    //   $("#dashboard").click(function () {
-    //     console.log(" hide the extra");
-
-    //     // $("#mobile-body-overly").css("display", "none");
-    //     $("#mobile-nav").css("display", "none");
-
-    //   });
-    //   $("#mobile-nav-toggle").click(function () {
-    //     $("#mobile-body-overly").css("display", "block");
-
-    //     // $("#mobile-nav").css("display", "block");
-    //   });
-    // });
-  </script>
-
-
-
-  <!-- <script src="/js/basicFun.js"></script> -->
-
-
-
-
 </body>
 
 </html>

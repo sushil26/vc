@@ -30,3 +30,11 @@ exports.createdDate = function () {
   return createdDate;
   
 }
+
+exports.date = function(){
+  var date = new Date();
+
+  todayDate = date.getFullYear() + "_" + (parseInt(date.getMonth()) + 1) + "_" + date.getDate() + "_" + date.getHours() + "_" + date.getMinutes() + "_" + date.getSeconds();
+
+  return todayDate;
+}

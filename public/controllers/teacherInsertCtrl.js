@@ -1,6 +1,6 @@
-app.controller("teacherInsertCtrl", function($scope, $rootScope, $window, httpFactory, $uibModal) {
+app.controller("teacherInsertCtrl", function($scope, $rootScope, $window, httpFactory, $uibModal) 
+{
   console.log("teacherInsertCtrl==>");
-
   $scope.class = ["1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
   $scope.section = ["A", "B", "C", "D", "E"];
   $scope.css = [];
@@ -8,15 +8,12 @@ app.controller("teacherInsertCtrl", function($scope, $rootScope, $window, httpFa
 
   $scope.addSCC = function() {
     console.log("addSCC-->");
-
     $scope.css.push({ class: "", section: "", subject: "" });
-
     console.log("<--addSCC");
   };
 
   $scope.saveTeacher = function() {
     console.log("saveTeacher-->");
-
     var obj = {
       schoolName: $scope.schoolName,
       teacherId: $scope.teacherId,

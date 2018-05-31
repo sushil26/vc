@@ -9,10 +9,7 @@
                     </div>
                     <div class="panel-body bio-graph-info" style="padding: 1px;">
                         <div style="margin:20px !important;">
-
-
                             <div class="col-lg-12">
-
                                 <form class="navbar-form">
                                     <input class="form-control" placeholder="Search" type="text">
                                 </form>
@@ -22,9 +19,6 @@
                                             <th>
                                                 <span>
                                                     <i class="icon_profile"></i>Title</span>
-                                                <!-- 
-                                                <i class="arrow_up_alt pull-right"></i>
-                                                <i class="arrow_down_alt pull-right"></i> -->
                                             </th>
                                             <th>
                                                 <span>
@@ -50,7 +44,11 @@
                                     </thead>
                                     <tbody style="background: white">
                                         <tr ng-repeat="event in events" ng-if="event.startsAt>=todayDate">
-                                            <td>{{event.title}}</td>
+                                            <td ng-if="event.notificationNeed == 'yes'">
+                                                <a class="fa fa-envelope"></a>&nbsp;<b>{{event.title}}</b>
+                                            </td>
+                                            <td ng-if="event.notificationNeed != 'yes'">
+                                                <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}</td>
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>{{event.startsAt | date:'h:mm a'}}-{{event.endsAt | date:'h:mm a'}}</td>
 
@@ -58,14 +56,15 @@
                                                 <div class="btn-group">
                                                     <a ng-if="event.startsAt!=todayDate" class="btn btn-primary" target="_blank" ng-click="waitForTime(event.startsAt| date:'MMM d, y h:mm a')">
                                                         <i class="icon_headphones"></i>&nbspStart
-                                                    </a> 
-                                                    <a  ng-if="(event.startsAt==todayDate || event.endsAt==todayDate) || (event.startsAt>=todayDate && event.endsAt<=todayDate)" class="btn btn-primary"  ng-click="conferenceStart(event.id, event.url, event.studUserId)">
+                                                    </a>
+                                                    <a ng-if="(event.startsAt==todayDate || event.endsAt==todayDate) || (event.startsAt>=todayDate && event.endsAt<=todayDate)"
+                                                        class="btn btn-primary" ng-click="conferenceStart(event.id, event.url, event.studUserId)">
                                                         <i class="icon_headphones"></i>&nbspStart
                                                     </a>
                                                     <a ng-if="loginType=='teacher'" class="btn btn-success" href="" ng-click="rescheduleEvent($index)">
                                                         <i class="fa fa-pencil"></i>&nbsp;Reschedule
                                                     </a>
-                                                    <button class="btn btn-primary" ng-click="viewDetail($index)">View</button>
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id)">View</button>
                                                 </div>
                                             </td>
                                         </tr>

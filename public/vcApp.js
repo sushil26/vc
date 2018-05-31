@@ -1,5 +1,5 @@
 
-var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngCookies']);
+var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngCookies', 'ngImgCrop']);
 
 
 app.config(function ($stateProvider, $urlRouterProvider) {
@@ -274,6 +274,21 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('dashboard.feeView', {
+      url: feeView(),
+      templateUrl: '/html/dashboard/feeView.html',
+      controller: 'feeViewCtl',
+      resolve: {
+        result: function (sessionAuthFactory, $window) {
+          var userData = sessionAuthFactory.getAccess("userData");
+          if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
+          }
+          else {
+            $window.location.href = 'https://vc4all.in';
+          }
+        }
+      }
+    })
     .state('dashboard.automationResultView', {
       url: automationResultView(),
       templateUrl: '/html/dashboard/markViewWithConfId.html',
@@ -352,6 +367,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       controller: 'logoutCtl'
 
     })
+    .state('dashboard.analytics', {
+      url: analytics(),
+      templateUrl: '/html/dashboard/analytics.html',
+      controller: 'analyticsCtl'
+
+    })
     .state('dashboard.contact', {
       url: contact(),
       templateUrl: '/html/dashboard/contact.html',
@@ -362,7 +383,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
-
+function analytics(){
+  return '/analytics';
+}
 function quickMsg() {
   return '/quickMsg';
 }
@@ -448,6 +471,9 @@ function attendanceView() {
 }
 function markView() {
   return '/markView';
+}
+function feeView() {
+  return '/feeView';
 }
 function automationResultView() {
   return '/automationResultView/:id';

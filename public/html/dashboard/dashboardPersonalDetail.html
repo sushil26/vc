@@ -13,8 +13,8 @@
                         <div class="col-lg-3">
                             <center>
 
-                                <!-- <img style="max-height:150px; margin-left: 20px;" ng-src={{userData[0].logoPath}}> -->
-                                <img style="max-height:150px; margin-left: 20px;" src=logo.png>
+                                <img style="max-height:150px; margin-left: 20px;" ng-src="userData[0].logoPath">
+                                <!-- <img style="max-height:150px; margin-left: 20px;" src=logo.png> -->
                             </center>
 
                         </div>
@@ -38,7 +38,7 @@
 
                                     <tr>
                                         <td>
-                                            <img style="max-height:150px;" src="child.jpg">
+                                            <img style="max-width:100px;" src="{{userData[0].profilePic_path}}">
                                         </td>
                                     </tr>
                                     <tr style="background: sandybrown;">
@@ -95,7 +95,7 @@
 
                                     <tr>
                                         <td>
-                                            <img style="max-height:150px;" src="father.jpg">
+                                            <img style="max-width:100px;" src="{{userData[0].father_profilePic_path}}">
                                         </td>
                                     </tr>
                                     <tr style="background: sandybrown;">
@@ -133,7 +133,7 @@
 
                                     <tr>
                                         <td>
-                                            <img style="max-height:150px;" src="mother.jpg">
+                                            <img style="max-width:100px;" src="{{userData[0].mother_profilePic_path}}">
 
                                         </td>
                                     </tr>
@@ -172,7 +172,7 @@
 
                                     <tr>
                                         <td>
-                                            <img style="max-height:150px;" src="child.jpg">
+                                            <img style="max-width:100px;" src="{{userData[0].profilePic_path}}">
                                         </td>
                                     </tr>
                                     <tr style="background: sandybrown;">
@@ -253,16 +253,14 @@
                             <div class="col-md-6 col-lg-4 col-sm-6" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
                                 ng-if="loginType=='admin'">
                                 <table class="table table-sm">
-
                                     <tr>
                                         <td style="color:  lightcoral;font-size: 20px;font-family: -webkit-pictograph;">
                                             ADMINISTRATOR
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td>
-                                            <img style="max-height:150px;" src="child.jpg">
+                                            <img style="max-width:100px;" src="{{userData[0].profilePic_path}}">
                                         </td>
                                     </tr>
                                     <tr style="background: sandybrown;">
@@ -283,22 +281,11 @@
                                     <tr style="background: sandybrown;">
                                         <td>
                                             <b style="color:teal;">E-Mail</b>
-
                                         </td>
                                         <td>
                                             {{userData[0].email}}
                                         </td>
                                     </tr>
-
-                                    <!-- <tr style="background: sandybrown;">
-                                        <td>
-                                            <b style="color:teal;">D.O.Joining</b>
-                                        </td>
-                                        <td>
-                                            {{userData[0].doj | date:' d MMM yyyy'}}
-                                        </td>
-                                    </tr> -->
-
                                 </table>
                             </div>
                         </div>
@@ -314,7 +301,7 @@
 
                                     <tr>
                                         <td>
-                                            <img style="max-height:150px;" src="child.jpg">
+                                            <img style="max-width:100px;" src="{{userData[0].profilePic_path}}">
                                         </td>
                                     </tr>
                                     <tr style="background: sandybrown;">

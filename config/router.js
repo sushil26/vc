@@ -1,7 +1,7 @@
 var user = require('./controllers/user');
 var event = require('./controllers/event');
 var quickMsg = require('./controllers/quickMsg');
-//var image = require('./controllers/image');
+var image = require('./controllers/image');
 var adminAction = require('./controllers/adminAction');
 var school = require('./controllers/school');
 var careator = require('./controllers/careator');
@@ -12,10 +12,14 @@ module.exports = function (app) {
     app.post('/careator/pswdCheck', careator.pswdCheck);
     app.post('/careator/emailInvite', careator.emailInvite);
 
+    app.post('/vc/schoolLogo', image.upload);
+    app.post('/vc/profilePicupload', image.profilePicupload);
+
     app.post('/vc/register4VC', user.register4VC);
     app.post('/vc/login4VC', user.login4VC);
     app.post('/vc/checkPassword/:id/:loginType', user.checkPassword);
     app.post('/vc/passwordUpdate/:id/:loginType', user.passwordUpdate);
+    app.post('/vc/updateProfilePic/:id', user.profilePicUpdate);
     app.get('/vc/getUserData', user.getUserData);
     app.get('/vc/getStudData', user.getStudData);
     app.post('/vc/updateUserStatus', user.updateUserStatus);
@@ -52,9 +56,10 @@ module.exports = function (app) {
     app.post('/vc/updateTeacher_timeTable/:id', adminAction.updateTeacher_timeTable);
     app.post('/vc/attendanceUpdate/:schoolName/:clas/:section/:reportType/:month', adminAction.attendanceUpdate);
     app.post('/vc/markUpdate/:schoolName/:clas/:section/:testType/:date', adminAction.markUpdate);
-
-
+    app.post('/vc/feeUpdate/:schoolName/:clas/:section/:reportType', adminAction.feeUpdate);
+    app.post('/vc/uploadFeeFile/:schoolName/:clas/:section/:reportType/:fee_otherName', adminAction.uploadFeeFile);
     app.post('/vc/quickMsgSend', quickMsg.quickMsgSend);
+    app.post('/vc/quickMsgNotificationOff', quickMsg.quickMsgNotificationOff);
     app.get('/vc/quickMsgGet/:id', quickMsg.quickMsgGet);
     app.get('/vc/quickMsgGetForStud/:id/:clas/:section', quickMsg.quickMsgGetForStud);
     app.get('/vc/getQuickMsgById/:id', quickMsg.getQuickMsgById);
@@ -63,7 +68,9 @@ module.exports = function (app) {
     app.get('/vc/getTeacherListForCS/:schoolName/:clas/:section', event.getTeacherListForCS);
     app.get('/vc/getToDate', event.getToDate);
     app.post('/vc/eventSend', event.eventSend);
-    app.get('/vc/eventGet/:id',  event.eventGet);
+    app.post('/vc/eventNotificationOff', event.eventNotificationOff);
+    
+    app.get('/vc/eventGet/:id', event.eventGet);
     app.post('/vc/eventReSchedule/:id', event.eventReSchedule);
     app.get('/vc/getEventById/:id', event.getEventById);
     app.get('/vc/getStudentAttendance/:id', event.getStudentAttendance);

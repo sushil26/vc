@@ -104,4 +104,8 @@ app.controller('outgoingMsgCtl', function ($scope, $rootScope, $state, $window, 
         console.log("<--viewDetail");
     }
 
+    // $rootScope.$on("SiblingMethod_quickMsgGet", function () {
+    //     $scope.quickMsgGet();
+    // })
+
 })

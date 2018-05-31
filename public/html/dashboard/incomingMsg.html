@@ -25,13 +25,20 @@
                                                     <i class="icon_calendar"></i> Date</span>
                                             </th>
                                             <th>
-                                                <i class="icon_cogs"></i> Action
+                                                <a class="icon_cogs"></a> Action
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody style="background: white" ng-if="loginType=='teacher'">
                                         <tr ng-repeat="event in events" ng-if="(loginType=='teacher' && event.remoteCalendarId && event.remoteCalendarId==userData.id)">
-                                            <td>{{event.title}}</td>
+
+
+                                            <td ng-if="event.notificationNeed == 'yes'">
+                                                <a class="fa fa-envelope"></a>&nbsp;
+                                                <b>{{event.title}}</b>
+                                            </td>
+                                            <td ng-if="event.notificationNeed != 'yes'">
+                                                <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}</td>
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>
                                                 <div class="btn-group">
@@ -41,32 +48,21 @@
                                         </tr>
                                     </tbody>
                                     <tbody style="background: white" ng-if="loginType=='studParent'">
-                                        <tr ng-repeat="event in events" >
+                                        <tr ng-repeat="event in events">
 
-                                            <td>{{event.title}}*</td>
+                                            <td ng-if="event.notificationNeed == 'yes'">
+                                                <a class="fa fa-envelope"></a>&nbsp;
+                                                <b>{{event.title}}</b>
+                                            </td>
+                                            <td ng-if="event.notificationNeed != 'yes'">
+                                                <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}</td>
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <button class="btn btn-primary" ng-click="viewDetail($index)">View</button>
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id)">View</button>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!--                                             <td>{{event.title}}*</td>
-                                            <td>{{event.startsAt | date:'MMM d, y'}}</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button class="btn btn-primary" ng-click="viewDetail($index)">View</button>
-                                                </div>
-                                            </td>
-                                        </tr><tr ng-if="event.messageType == 'wholeClass' && event.student_cs[0].class == studCS[0].class && event.student_cs[0].section == studCS[0].section">
-                                            <td>{{event.title}}*</td>
-                                            <td>{{event.startsAt | date:'MMM d, y'}}</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button class="btn btn-primary" ng-click="viewDetail($index)">View</button>
-                                                </div>
-                                            </td>
-                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

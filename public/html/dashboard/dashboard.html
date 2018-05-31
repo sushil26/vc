@@ -12,9 +12,13 @@
                 </div>
             </div>
             <!--logo start-->
-            <img ng-click="homeClick()" style="float:left;width: 63px;margin-top: 5px" src="././home/img/fav.png" />
-            <a ng-click="homeClick()" class="logo" style="text-shadow: 2px 2px 4px #000000;">VC<span class="lite">4ALL</span>
-            </a>
+            <span>
+                <img ng-click="homeClick()" style="float:left;width: 63px;margin-top: 5px" src="././home/img/fav.png" />
+                <a ng-click="homeClick()" class="logo" style="text-shadow: 2px 2px 4px #000000;font-weight: 500; 
+            font-family: 'Allerta Stencil';">VC<span style="color: #2577be;font-family: 'Allerta Stencil';">4ALL</span>
+                </a>
+            </span>
+
             <!--logo end-->
             <div class="top-nav notification-row">
                 <ul class="nav pull-right top-menu">
@@ -76,12 +80,19 @@
                             <i style="font-size:15px;" class="fa fa-calendar">
                                 <span>&nbspEVENTS</span>
                             </i>
+                            <i ng-if="numberOfNotif_event>0" class="fa fa-circle llkk" style="font-size:10px"></i>
+
                             <span ng-if="events_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
                             <span ng-if="events_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
                         </a>
                         <ul ng-hide="events_subMenu">
                             <li>
-                                <a class="" href="#!/dashboard/upcomingEvent">UPCOMING</a>
+                                <a class="" href="#!/dashboard/upcomingEvent">UPCOMING &nbsp
+                                    <span style="    margin-right: 10px;
+                                    color: yellowgreen;
+                                    font-family: sans-serif;
+                                    float: right;" ng-if="numberOfNotif_event>0">({{numberOfNotif_event}})</span>
+                                </a>
                             </li>
                             <li>
                                 <a class="" href="#!/dashboard/history">HISTORY</a>
@@ -89,18 +100,24 @@
                         </ul>
                     </li>
                     <!-- ##### Start teacher/student Event  ##### -->
-                     <!-- ##### Start teacher/student Quick Message  ##### -->
-                     <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
+                    <!-- ##### Start teacher/student Quick Message  ##### -->
+                    <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
                         <a ng-click="eventClick('quickMsg_subMenu')">
                             <i style="font-size:15px;" class="fa fa-envelope">
                                 <span>&nbspMESSAGE</span>
                             </i>
+                            <i class="fa fa-circle llkk" style="font-size:10px" ng-if="numberOfNotif_quickMsg>0"></i>
                             <span ng-if="quickMsg_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
                             <span ng-if="quickMsg_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
                         </a>
                         <ul ng-hide="quickMsg_subMenu">
                             <li>
-                                <a class="" href="#!/dashboard/incomingMsg">INBOX</a>
+                                <a class="" href="#!/dashboard/incomingMsg">INBOX &nbsp
+                                    <span style="    margin-right: 10px;
+                                    color: yellowgreen;
+                                    font-family: sans-serif;
+                                    float: right;" ng-if="numberOfNotif_quickMsg>0">({{numberOfNotif_quickMsg}})</span>
+                                </a>
                             </li>
                             <li>
                                 <a class="" href="#!/dashboard/outgoingMsg">OUTBOX</a>
@@ -124,9 +141,9 @@
                             <li>
                                 <a class="" href="#!/dashboard/markView">RESULT</a>
                             </li>
-                            <!-- <li>
-                                <a class="" href="#!/dashboard/comingSoon">FEE</a>
-                            </li> -->
+                            <li>
+                                <a class="" href="#!/dashboard/feeView">FEE</a>
+                            </li>
                         </ul>
                     </li>
                     <!-- ##### End teacher/student Acdemic  ##### -->
@@ -135,7 +152,9 @@
                         <a ng-click="eventClick('setting_subMenu')">
                             <i style="font-size:15px;" class="fa fa-cog">
                                 <span>&nbspSETTINGS</span>
+
                             </i>
+
                             <span ng-if="setting_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
                             <span ng-if="setting_subMenu==false" class="menu-arrow arrow_carrot-down"></span>
                         </a>
@@ -222,6 +241,13 @@
                                 <a class="" href="#!/dashboard/adminCreate">CREATE ADMIN</a>
                             </li>
                         </ul>
+                    </li>
+                    <li id="analink" ng-if="loginType=='vc4allAdmin'">
+                        <a href="#!/dashboard/analytics" class="home">
+                            <i style="font-size:15px;" class="fa fa-line-chart">
+                                <span>&nbspANALYTICS</span>
+                            </i>
+                        </a>
                     </li>
                     <!-- ##### End VC4ALL admin Setting  ##### -->
                     <li>

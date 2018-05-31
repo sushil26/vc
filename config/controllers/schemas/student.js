@@ -46,7 +46,15 @@ mark: [
     { "_id":false, "testType": {type: String, required: true}, "subjectWithMark": [] },
     { "_id":false, "testType": {type: String, required: true}, "subjectWithMark": [] },
     { "_id":false, "testType": {type: String, required: true}, "subjectWithMark": [] },
-],  
+], 
+fee: [
+  { "_id":false, "feeType": {type: String, required: true}, "details": [] },
+  { "_id":false, "feeType": {type: String, required: true}, "details": [] },
+  { "_id":false, "feeType": {type: String, required: true}, "details": [] },
+  { "_id":false, "feeType": {type: String, required: true}, "details": [] },
+  { "_id":false, "feeType": {type: String, required: true}, "details": [] },
+  { "_id":false, "feeType": {type: String, required: true}, "details": [] }
+], 
   created_at: Date,
  
 });

@@ -5,43 +5,47 @@
 <div class="modal-body">
 
     <table class="table table-sm">
+        <tr style="font-size: 12px;color: black;font-family: sans-serif;">
 
-        <tr>
+            <td> Subject:
+                <span style="font-family: sans-serif;">
+                    <b>{{eventDetails.title}}</b>
+                </span>
+            </td>
             <td>
-                Time
-                <div style="color:green">{{eventDetails.startsAt | date:'M/d/yy'}} </div>
+                <div>
+                    <b>{{eventDetails.startsAt | date:'dd MMM yyyy'}}</b>
+                </div>
             </td>
         </tr>
+    </table>
+    <table class="table table-sm" style="min-height: 100px;
+    background: darkseagreen;
+    border-radius: 10px;">
         <tr>
-            <td>
-                Subject
-                <div style="color:green">{{eventDetails.title}}</div>
+            <td style="width: 300px;">
+                <p style="color:black; font-family:sans-serif; font-size: 12px;">{{eventDetails.reason}}</p>
             </td>
         </tr>
-        <tr>
-            <td>
-                Message
-                <br>
-                <p style="color:green">{{eventDetails.reason}} </p>
-            </td>
-        </tr>
+    </table>
+
+    <table class="table table-sm">
         <tr ng-if="eventDetails.messageType=='wholeClass'">
             <td>
                 Receiver Detail
-                <div style="color:green" ng-repeat="emailId in eventDetails.receiverEmail">{{emailId}} </div>
+                <div style="color:black" ng-repeat="emailId in eventDetails.receiverEmail">{{emailId}} </div>
             </td>
         </tr>
-        <tr ng-if="eventDetails.messageType!='wholeClass'">
+        <tr style="font-size: 12px;color: black;font-family: sans-serif;" ng-if="eventDetails.messageType!='wholeClass'">
             <td>
                 Receiver Detail
                 <br>
-                <i style="color:green">{{eventDetails.receiverName}} </i>
-                <br>
-                <i style="color:green">{{eventDetails.receiverMN}} </i>
-
+                <div style="color:black">
+                    <b>{{eventDetails.receiverName}}
+                        <br> {{eventDetails.receiverMN}}</b>
+                </div>
             </td>
         </tr>
-
     </table>
 </div>
 <div class="modal-footer">

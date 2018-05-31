@@ -5,8 +5,9 @@ app.controller('reportsUpdateCtl', function ($scope, $rootScope, $window, $filte
   $scope.propertyJson = $rootScope.propertyJson;
   console.log(" $scope.userData : " + JSON.stringify($scope.userData));
   $scope.file = {}; /* ### Note: Upload file declaration ### */
-  $scope.uploadTypes = ["Teacher Details", "Student Details", "Time Table", "Attendance", "Mark Report"];
+  $scope.uploadTypes = ["Teacher Details", "Student Details", "Time Table", "Attendance", "Mark Report", "Fee Report"];
   $scope.testTypes = ["AT", "UT", "MT", "TT", "AT"];
+  $scope.feeTypes = ["AF", "BF", "MF", "Other"];
   $scope.attendanceTypes = ["Monthly", "Daily"];
   $scope.thirtyOne = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
   $scope.thirty = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
@@ -119,44 +120,102 @@ app.controller('reportsUpdateCtl', function ($scope, $rootScope, $window, $filte
       })
     }
     console.log("api: " + api);
-    if(api){
-    httpFactory.csvUpload(obj, api).then(function (data) {
-      var checkStatus = httpFactory.dataValidation(data);
-      console.log("data--" + JSON.stringify(data.data));
-      if (checkStatus) {
-        $uibModal.open({
-          scope: $scope,
-          templateUrl: '/html/templates/dashboardsuccess.html',
-          windowClass: 'show',
-          backdropClass: 'static',
-          keyboard: false,
-          controller: function ($scope, $uibModalInstance) {
-            $scope.message = data.data.message
-          }
-        })
-       // alert(data.data.message);
-        //$scope.getAllTeacherList();
-        // $scope.up.uploadType= '';
-      }
-      else {
-        $uibModal.open({
-          scope: $scope,
-          templateUrl: '/html/templates/dashboardsuccess.html',
-          windowClass: 'show',
-          backdropClass: 'static',
-          keyboard: false,
-          controller: function ($scope, $uibModalInstance) {
-            $scope.message = data.data.message
-          }
-        })
-        //alert(data.data.message);
-      }
-    })
-    $scope.reset();
-  }
+    if (api) {
+      httpFactory.csvUpload(obj, api).then(function (data) {
+        var checkStatus = httpFactory.dataValidation(data);
+        console.log("data--" + JSON.stringify(data.data));
+        if (checkStatus) {
+          $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardsuccess.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = data.data.message
+            }
+          })
+          // alert(data.data.message);
+          //$scope.getAllTeacherList();
+          // $scope.up.uploadType= '';
+        }
+        else {
+          $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardsuccess.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = data.data.message
+            }
+          })
+          //alert(data.data.message);
+        }
+      })
+      $scope.reset();
+    }
     console.log("<--markFileUpdate");
   }
-
+  $scope.updateFeeFile = function (file, feeType, clas, section) {
+    console.log("updateFeeFile-->");
+    console.log(" feeType: " + feeType + " clas" + clas + " section: " + section);
+    var obj = {
+      "file": file,
+    }
+    if (clas && section && feeType) {
+      var api = $scope.propertyJson.VC_feeUpdate + "/" + schoolName + "/" + clas + "/" + section + "/" + feeType;
+    }
+    else {
+      $uibModal.open({
+        scope: $scope,
+        templateUrl: '/html/templates/dashboardwarning.html',
+        windowClass: 'show',
+        backdropClass: 'static',
+        keyboard: false,
+        controller: function ($scope, $uibModalInstance) {
+          $scope.message = "Class, Section, Test Type and Date are required"
+        }
+      })
+    }
+    console.log("api: " + api);
+    if (api) {
+      httpFactory.csvUpload(obj, api).then(function (data) {
+        var checkStatus = httpFactory.dataValidation(data);
+        console.log("data--" + JSON.stringify(data.data));
+        if (checkStatus) {
+          $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardsuccess.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = data.data.message
+            }
+          })
+          // alert(data.data.message);
+          //$scope.getAllTeacherList();
+          // $scope.up.uploadType= '';
+        }
+        else {
+          $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/dashboardsuccess.html',
+            windowClass: 'show',
+            backdropClass: 'static',
+            keyboard: false,
+            controller: function ($scope, $uibModalInstance) {
+              $scope.message = data.data.message
+            }
+          })
+          //alert(data.data.message);
+        }
+      })
+      $scope.reset();
+    }
+    console.log("<--updateFeeFile");
+  }
   /* ### Note: Teacher and student both are uploading through teacherUpdate ###*/
   $scope.teacherUpdate = function (file, uploadType, id) {
     console.log("updateTeacher to Master-->");
@@ -230,7 +289,7 @@ app.controller('reportsUpdateCtl', function ($scope, $rootScope, $window, $filte
               $scope.message = data.data.message
             }
           })
-         // alert(data.data.message);
+          // alert(data.data.message);
         }
         $scope.reset();
       })
@@ -315,10 +374,14 @@ app.controller('reportsUpdateCtl', function ($scope, $rootScope, $window, $filte
       if (checkStatus) {
         $scope.studentList = data.data.data;
         console.log("studentList: " + JSON.stringify($scope.studentList));
-
+        var otherName = [];
         for (var x = 0; x < $scope.studentList.length; x++) {
           $scope.studList.push({ "id": $scope.studentList[x]._id, "name": $scope.studentList[x].firstName, "studId": $scope.studentList[x].schoolId });
         }
+        // var feeOtherTypeLen = $scope.studentList[0].fee[5].length;
+        //   for (var y = 0; y < feeOtherTypeLen; y++) {
+        //     otherName.push($scope.studentList[x].fee.other[y].fee_otherName);
+        //   }
         console.log(" $scope.studList.length: " + $scope.studList.length);
       }
       else {

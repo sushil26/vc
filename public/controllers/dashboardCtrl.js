@@ -27,15 +27,110 @@ app.controller('dashboardController', function ($scope, $rootScope, $window, htt
     $scope.setting_subMenu = true;
     $scope.comm_subMenu = true;
     $scope.quickMsg_subMenu = true;
+    $scope.numberOfNotif_event = 0;
+    $scope.numberOfNotif_quickMsg = 0;
 
+    $scope.eventGet = function () {
+        console.log("eventGet-->");
+        var id = $scope.userData.id;
+        var api = $scope.propertyJson.VC_eventGet + "/" + id;
+        //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
+        $scope.calendarOwner = "Your";
+        httpFactory.get(api).then(function (data) {
+            $scope.numberOfNotif_event = 0;
+            var checkStatus = httpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                $scope.eventData = data.data.data;
+                // ownerEvents = [];
+                for (var x = 0; x < $scope.eventData.length; x++) {
+                    console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
+                    if ($scope.eventData[x].notificationNeed == 'yes') {
+                        if ($scope.eventData[x].userId != $scope.userData.id) {
+                            console.log("not equal");
+                            $scope.numberOfNotif_event = $scope.numberOfNotif_event + 1;
+                        }
+                    }
+                }
+            }
+            else {
+                //alert("Event get Failed");
+            }
+        })
+    }
+
+    $scope.eventGet();
+
+    $scope.getSelectedStudentPersonalData = function () {
+        console.log("get Selected Student PersonalData-->");
+        var id = $scope.userData.id;
+        var api = $scope.propertyJson.VC_studentPersonalData + "/" + id;
+        console.log("api: " + api);
+        httpFactory.get(api).then(function (data) {
+            var checkStatus = httpFactory.dataValidation(data);
+            // console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                $scope.studentPersonalData = data.data.data;
+                $scope.studCS = $scope.studentPersonalData[0].cs;
+                console.log("  $scope.studCS: " + JSON.stringify($scope.studCS));
+                console.log("$scope.studentPersonalData: " + JSON.stringify($scope.studentPersonalData));
+                $scope.quickMsgGet();
+            }
+            else {
+                //alert("Event get Failed");
+            }
+
+        })
+        console.log("<--get Selected Student PersonalData");
+    }
+
+    $scope.quickMsgGet = function () {
+        console.log("quickMsgGet-->");
+        var id = $scope.userData.id;
+        console.log("$scope.studCS: " + JSON.stringify($scope.studCS));
+        if ($scope.loginType == 'studParent') {
+            var clas = $scope.studCS[0].class;
+            var section = $scope.studCS[0].section;
+            var api = $scope.propertyJson.VC_quickMsgGetForStud + "/" + id + "/" + clas + "/" + section;
+        }
+        else if ($scope.loginType == 'teacher') {
+            var api = $scope.propertyJson.VC_quickMsgGet + "/" + id;
+        }
+
+        //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
+        $scope.calendarOwner = "Your";
+
+        httpFactory.get(api).then(function (data) {
+            $scope.numberOfNotif_quickMsg = 0;
+            var checkStatus = httpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                $scope.eventData = data.data.data;
+                for (var x = 0; x < $scope.eventData.length; x++) {
+                    console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
+
+                    if ($scope.eventData[x].notificationNeed == 'yes') {
+                        $scope.numberOfNotif_quickMsg = $scope.numberOfNotif_quickMsg + 1;
+                    }
+                }
+            }
+            else {
+                //alert("Event get Failed");
+            }
+        })
+    }
+    if ($scope.loginType == 'studParent') {
+        $scope.getSelectedStudentPersonalData();
+
+    }
+    else {
+
+        $scope.quickMsgGet();
+    }
     $scope.iconMenuClick = function () {
         console.log("iconMenuClick--> ");
         var element = document.getElementById("container");
-        // var x = window.matchMedia("(max-width: 768px)")
         if (element.classList.contains("sidebar-closed")) {
-            // if (x.matches) {
-            //     document.getElementById("profile").style.marginTop = "195px";
-            // }
             console.log("if is true");
             element.classList.remove("sidebar-closed");
             $scope.sideBarMenu = false;
@@ -128,11 +223,16 @@ app.controller('dashboardController', function ($scope, $rootScope, $window, htt
         console.log("<--homeClick");
     }
 
+    /* ##### Strat function call request from another controller  ##### */
+    $rootScope.$on("CallParent_quickMsgGet", function () {
 
+        $scope.quickMsgGet();
+    })
+    $rootScope.$on("CallParent_eventGet", function () {
 
+        $scope.eventGet();
+    })
 
-
-
-
+    /* ##### End function call request from another controller  ##### */
 
 })
