@@ -87,7 +87,7 @@ app.controller('dashboardController', function ($scope, $rootScope, $window, htt
     $scope.quickMsgGet = function () {
         console.log("quickMsgGet-->");
         var id = $scope.userData.id;
-        console.log("$scope.studCS: " + JSON.stringify($scope.studCS));
+        //console.log("$scope.studCS: " + JSON.stringify($scope.studCS));
         if ($scope.loginType == 'studParent') {
             var clas = $scope.studCS[0].class;
             var section = $scope.studCS[0].section;
@@ -225,14 +225,19 @@ app.controller('dashboardController', function ($scope, $rootScope, $window, htt
 
     /* ##### Strat function call request from another controller  ##### */
     $rootScope.$on("CallParent_quickMsgGet", function () {
-
-        $scope.quickMsgGet();
+        console.log("CallParent_quickMsgGet-->");
+        if ($scope.loginType == 'studParent')  {
+            console.log("CallParent_quickMsgGet with login Type: "+$scope.loginType);
+            $scope.getSelectedStudentPersonalData();
+        }
+        else if ($scope.loginType == 'teacher') {
+            console.log("CallParent_quickMsgGet with login Type: "+$scope.loginType);
+            $scope.quickMsgGet();
+        }
     })
     $rootScope.$on("CallParent_eventGet", function () {
-
         $scope.eventGet();
     })
-
     /* ##### End function call request from another controller  ##### */
 
 })

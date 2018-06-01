@@ -2,7 +2,6 @@
 var db = require("../dbConfig.js").getDb();
 var student = require("./schemas/student.js");
 var teacher = require("./schemas/teacher.js");
-var monkey = require("./schemas/monkey.js");
 
 var user = db.collection("user"); /* ### Teacher collection  ### */
 var stud = db.collection("students"); /* ### student collection  ### */
@@ -2776,49 +2775,5 @@ module.exports.updateTeacherMaster = function (req, res) {
     }
 
     console.log("<--updateTeacherMaster");
-}
-module.exports.csvTest = function (req, res) {
-    console.log("csvTest-->");
-
-    var obj = [];
-    var studentDataFile = req.files.img;
-
-    var parser = csv.fromString(studentDataFile.data.toString(), {
-        headers: true
-        // ignoreEmpty: true,
-        // trim: true
-    })
-        .validate(function (data, next) {
-            console.log("CSV validate-->");
-            //console.log("data: "+JSON.stringify(data));
-            parser.end();
-            monkey.find({ id: data.id }, function (err, model) {
-                if (err) {
-                    console.log("CSV validate: mongoose err: " + err);
-                    next(err);
-                } else {
-
-                    console.log("CSV validate: mongoose model: " + JSON.stringify(model));
-                    // next(null, !model); //valid if the model does not exist
-                    next(null);
-
-
-                }
-            });
-        })
-        .on("data-invalid", function (data) {
-            console.log("CSV data-invalid--> " + JSON.stringify(data));
-            //do something with invalid row
-        })
-        .on("data", function (data) {
-            console.log("CSV data--> " + JSON.stringify(data));
-            console.log(data);
-        })
-        .on("end", function () {
-            console.log("CSV end-->");
-            console.log("done");
-        });
-
-    console.log("<--csvTest");
 }
 
