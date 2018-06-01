@@ -10,10 +10,18 @@
                         <notification displayType="{{notificationType}}" message="{{notification}}"></notification>
                     </div>
                     <div class="row" style="margin:20px!important; background: #ffc107; padding: 10px;" ng-if="loginType!='vc4allAdmin'">
-                        <div class="col-lg-3">
+                        <div class="col-lg-3" ng-if="loginType=='admin'">
                             <center>
 
                                 <img style="max-height:150px; margin-left: 20px;" src="{{userData[0].logoPath}}">
+                                <!-- <img style="max-height:150px; margin-left: 20px;" src=logo.png> -->
+                            </center>
+
+                        </div>
+                        <div class="col-lg-3" ng-if="loginType!='admin'"> 
+                            <center>
+
+                                <img style="max-height:150px; margin-left: 20px;" src="{{schoolLogoPath}}">
                                 <!-- <img style="max-height:150px; margin-left: 20px;" src=logo.png> -->
                             </center>
 

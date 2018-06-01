@@ -39,6 +39,7 @@ module.exports = function (app) {
     app.get('/vc/getSchoolData/:schoolName', school.getSchoolData);
     app.get('/vc/getSchoolDataById/:id', school.getSchoolDataById);
     app.get('/vc/getSchoolList', school.getSchoolList);
+    //app.get('/vc/getschoollogoPath/:schoolName', school.getschoollogoPath);
     app.get('/vc/getSchoolUser/:schoolName', adminAction.getSchoolUser);
     app.get('/vc/getAllAdmin', adminAction.getAllAdmin);
     app.get('/vc/getAllSchool', adminAction.getAllSchool);

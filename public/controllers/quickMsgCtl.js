@@ -519,7 +519,7 @@ app.controller('quickMsgCtl', function ($scope, $rootScope, $state, $rootScope, 
                             "senderId": $scope.userData.id,
                             "senderMN": senderMN,
                             "receiverEmail": $scope.allStudentEmailIds,
-                            
+
                             /*  */
                         }
                         ownerEvents.push(objData);
@@ -754,13 +754,30 @@ app.controller('quickMsgCtl', function ($scope, $rootScope, $state, $rootScope, 
         console.log("timespanClicked-->");
         console.log("date: " + date);
         console.log("teacherPersonalData: " + JSON.stringify($scope.teacherPersonalData));
-        $scope.selectedDate_quickMsg = $filter('date')(date, "MMM d, y")
+        $scope.selectedDate_quickMsg = $filter('date')(date, "MMM d, y");
         $scope.selectedDateForEvent = $filter('date')(date, "EEE");
         console.log("selectedDateForEvent: " + $scope.selectedDateForEvent);
+        console.log(" $scope.todayDate: " + $filter('date')($scope.todayDate, "MMM d, y") + " date: " + $filter('date')(date, "MMM d, y"));
         $scope.selectedDate = date;
         if ($scope.remoteCalendarId) {
-            $('#quickMsg_modal').modal('show');
-            
+            var today = $filter('date')($scope.todayDate, "MMM d, y");
+            var clickedToday = $filter('date')(date, "MMM d, y");
+            if (today == clickedToday) {
+                $('#quickMsg_modal').modal('show');
+            }
+            else {
+                var loginAlert = $uibModal.open({
+                    scope: $scope,
+                    templateUrl: '/html/templates/dashboardwarning.html',
+                    windowClass: 'show',
+                    backdropClass: 'static',
+                    keyboard: false,
+                    controller: function ($scope, $uibModalInstance) {
+                        $scope.message = "Sorry! you can send message only on current date";
+                    }
+                })
+            }
+
         }
         else {
             if ($scope.userData.loginType == 'teacher') {
