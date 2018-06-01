@@ -34,6 +34,7 @@ app.controller('dashboardController', function ($scope, $rootScope, $window, htt
         console.log("eventGet-->");
         var id = $scope.userData.id;
         var api = $scope.propertyJson.VC_eventGet + "/" + id;
+        console.log("api: "+api);
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
         $scope.calendarOwner = "Your";
         httpFactory.get(api).then(function (data) {

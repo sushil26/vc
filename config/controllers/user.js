@@ -530,23 +530,23 @@ module.exports.profilePicUpdate = function (req, res) {
     }
     else {
       var updateJson;
-      console.log("req.body.profilePic_path: "+req.body.profilePic_path);
-      console.log("req.body.father_profilePic_path: "+req.body.father_profilePic_path);
-      console.log("req.body.mother_profilePic_path: "+req.body.mother_profilePic_path);
+      console.log("req.body.profilePic_path: " + req.body.profilePic_path);
+      console.log("req.body.father_profilePic_path: " + req.body.father_profilePic_path);
+      console.log("req.body.mother_profilePic_path: " + req.body.mother_profilePic_path);
       if (req.body.profilePic_path) {
-        console.log("req.body.profilePic_path: "+req.body.profilePic_path);
+        console.log("req.body.profilePic_path: " + req.body.profilePic_path);
         updateJson = {
           "profilePic_path": req.body.profilePic_path
         }
       }
       else if (req.body.father_profilePic_path) {
-        console.log("req.body.father_profilePic_path: "+req.body.father_profilePic_path);
+        console.log("req.body.father_profilePic_path: " + req.body.father_profilePic_path);
         updateJson = {
           "father_profilePic_path": req.body.father_profilePic_path
         }
       }
       else if (req.body.mother_profilePic_path) {
-        console.log("req.body.mother_profilePic_path: "+req.body.mother_profilePic_path);
+        console.log("req.body.mother_profilePic_path: " + req.body.mother_profilePic_path);
         updateJson = {
           "mother_profilePic_path": req.body.mother_profilePic_path
         }
@@ -1111,6 +1111,7 @@ module.exports.getLoginData = function (req, res) {
 
 module.exports.adminCreate = function (req, res) {
   console.log("adminCreate-->");
+
   var schoolObj = {
     "schoolName": req.body.schoolName,
     "schoolRegNumber": req.body.schoolRegNumber,
@@ -1242,10 +1243,10 @@ module.exports.adminCreate = function (req, res) {
 
         }
       }
-
-    } else {
+    }
+    else {
       adminObj.schoolId = data._id;
-
+      var password = "abc";
       teacher.create(adminObj, function (err, data) {
         console.log("data: " + JSON.stringify(data));
         if (err) {
@@ -1332,11 +1333,41 @@ module.exports.adminCreate = function (req, res) {
             }
           }
         } else {
+          var mailOptions = {
+            from: "info@vc4all.in",
+            to: req.body.email,
+            subject: "Regarding VC4ALL Credential",
+            html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Admin,</b></td></tr><tr><td><p>Please note, you have to use the following credential for login. <p style=background:gainsboro;>Here your link and credential for login.</p> <p> Link: <a href='https://vc4all.in'>https://vc4all.in/</a> </p><p> Email: "+req.body.email+"</p><p> Password: " + req.body.pswd + "</p></td></tr></tbody></table>"
+            // html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+          };
+          console.log("mailOptions: " + JSON.stringify(mailOptions));
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+              // responseData = {
+              //     "status": true,
+              //     "errorCode": 200,
+              //     "message": "Registeration Successfull and Failed to send mail",
+              //     "data": userData
+              // }
+              // res.status(200).send(responseData);
+            } else {
+              console.log('Email sent: ' + info.response);
+              // responseData = {
+              //     "status": true,
+              //     "errorCode": 200,
+              //     "message": "Registeration Successfull and sent mail",
+
+              //     "data": userData
+              // }
+              // res.status(200).send(responseData);
+            }
+
+          });
           responseData = {
             status: true,
             errorCode: 200,
             message: "Insert Successfull",
-
           };
           res.status(200).send(responseData);
         }

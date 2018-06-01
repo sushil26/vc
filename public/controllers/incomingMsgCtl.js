@@ -163,6 +163,7 @@ app.controller('incomingMsgCtl', function ($scope, $rootScope, $state, $window, 
             backdropClass: 'show',
             controller: function ($scope, $uibModalInstance) {
                 $scope.eventDetails = $scope.events[id];
+                $scope.viewType="incoming";
                 console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
             }
         })

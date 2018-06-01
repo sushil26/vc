@@ -760,6 +760,7 @@ app.controller('quickMsgCtl', function ($scope, $rootScope, $state, $rootScope, 
         $scope.selectedDate = date;
         if ($scope.remoteCalendarId) {
             $('#quickMsg_modal').modal('show');
+            
         }
         else {
             if ($scope.userData.loginType == 'teacher') {

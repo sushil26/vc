@@ -1055,7 +1055,6 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
     $scope.selectedDate = date;
     if ($scope.remoteCalendarId) {
       $('#timeTable_modal').modal('show');
-
     }
     else {
       if ($scope.userData.loginType == 'teacher') {
@@ -1067,8 +1066,6 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
           keyboard: false,
           controller: function ($scope, $uibModalInstance) {
             $scope.message = "Select Student";
-
-
           }
         })
         console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
