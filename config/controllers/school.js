@@ -128,3 +128,4 @@ module.exports.getSchoolDataById = function (req, res) {
 
     console.log("<--getAllClass");
 };
+

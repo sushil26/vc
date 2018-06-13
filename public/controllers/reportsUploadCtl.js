@@ -2,6 +2,7 @@ app.controller('reportsUploadCtl', function ($scope, $rootScope, $window, httpFa
   console.log("attendanceCtl==>");
   $scope.userData = sessionAuthFactory.getAccess("userData");
   var schoolName = $scope.userData.schoolName;
+  
   console.log(" $scope.userData : " + JSON.stringify($scope.userData));
   $scope.propertyJson = $rootScope.propertyJson;
   $scope.file = {}; /* ### Note: Upload file declaration ### */

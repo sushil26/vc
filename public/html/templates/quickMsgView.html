@@ -29,7 +29,7 @@
             </tr>
         </table>
     
-        <table class="table table-sm">
+        <table class="table table-sm" ng-if="viewType=='outgoing'">
             <tr ng-if="eventDetails.messageType=='wholeClass'">
                 <td>
                     Receiver Detail
@@ -43,6 +43,24 @@
                     <div style="color:black">
                         <b>{{eventDetails.receiverName}}
                             <br> {{eventDetails.receiverMN}}</b>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="table table-sm" ng-if="viewType=='incoming'">
+            <tr ng-if="eventDetails.messageType=='wholeClass'">
+                <td>
+                    Sender Detail
+                    <div style="color:black" ng-repeat="emailId in eventDetails.receiverEmail">{{emailId}} </div>
+                </td>
+            </tr>
+            <tr style="font-size: 12px;color: black;font-family: sans-serif;" ng-if="eventDetails.messageType!='wholeClass'">
+                <td>
+                    Sender Detail
+                    <br>
+                    <div style="color:black">
+                        <b>{{eventDetails.senderName}}
+                            <br> {{eventDetails.senderMN}}</b>
                     </div>
                 </td>
             </tr>

@@ -271,27 +271,30 @@
           float: left;
           margin-top: 8px;
           text-transform: uppercase;
-          text-shadow: 2px 2px 4px #000000;">VC<span style="color: #2577be;">4ALL</span>
+          text-shadow: 2px 2px 4px #000000;">
+                <span>
+                  <span id="vc">VC</span><span  id="4all" style="color: #2577be;">4ALL</span>
+                </span>
               </a>
             </span>
           </div>
           <nav id="nav-menu-container">
             <ul class="nav-menu">
               <li ng-if="userData.loginType" id="dashboard" style="display:block;">
-                <a href="#!dashboard/personalDetail" style="text-shadow: 2px 2px 4px #000000;">Dashboard
+                <a href="#!dashboard/personalDetail">DASHBOARD
                 </a>
               </li>
               <li>
-                <a href="#services" style="text-shadow: 2px 2px 4px #000000;">Features</a>
+                <a href="#services">FEATURES</a>
               </li>
               <li>
-                <a href="#contact" style="text-shadow: 2px 2px 4px #000000;">About Us</a>
+                <a href="#contact">ABOUT US</a>
               </li>
               <li ng-if="!userData.loginType">
-                <a href="#" data-target="#crdntl" data-toggle="modal" style="text-shadow: 2px 2px 4px #000000;">login</a>
+                <a href="#" data-target="#crdntl" data-toggle="modal">LOGIN</a>
               </li>
               <li ng-if="userData.loginType">
-                <a href="#!dashboard/logout" style="text-shadow: 2px 2px 4px #000000;">Logout</a>
+                <a href="#!dashboard/logout">LOGOUT</a>
               </li>
 
             </ul>
@@ -299,6 +302,7 @@
 
         </div>
       </header>
+
 
 
       <!--==========================
@@ -534,7 +538,8 @@
                             color: #a8cf44;
                             margin-top: 8px;
                             text-transform: uppercase;
-                            ">VC<span style="color: #2577be;">4ALL</span>
+                            ">VC
+                              <span style="color: #2577be;">4ALL</span>
                             </a>
                           </span>
 
@@ -544,11 +549,9 @@
                     <tr>
                       <td style="
                       text-shadow: 2px 2px 4px #000000;
-                      font-size: 18px;
+                      font-size: 15px;
                       font-family: sans-serif;
-                      color: #a8cf44;
-                      color: wb;
-                  "> Careator Technologies Private Limited</td>
+                      color: #a8cf44;"> Careator Technologies Private Limited</td>
                     </tr>
                   </table>
                 </div>

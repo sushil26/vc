@@ -98,6 +98,7 @@ app.controller('outgoingMsgCtl', function ($scope, $rootScope, $state, $window, 
             backdropClass: 'show',
             controller: function ($scope, $uibModalInstance) {
                 $scope.eventDetails = $scope.events[id];
+                $scope.viewType="outgoing";
                 console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
             }
         })

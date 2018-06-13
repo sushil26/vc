@@ -21,26 +21,25 @@
 }
 
 @-webkit-keyframes mymo {
-  from {font-size: 6vw;
+  from {
     color: floralwhite;
   }
   to {
-    font-size: 7vw;
+   
     color: orange;
   }
 }
 
 @keyframes mymo {
   from {
-    font-size: 6vw;
+    
     color: floralwhite;
   }
   to {
-    font-size: 7vw;
+    
     color: orange;
   }
 }
-
 /* .elementToFadeInAndOut {
 
   background: red;
@@ -234,7 +233,7 @@ h6 {
 #header {
   background: #1a2732b5;
   padding: 30px 0;
-  height: 75px;
+  height: 60px;
   position: fixed;
   left: 0;
   top: 0;
@@ -443,7 +442,7 @@ h6 {
 /* Nav Meu Styling */
 
 .nav-menu a {
-  padding: 0 8px 10px 8px;
+  padding: 0 8px 2px 8px;
   text-decoration: none;
   display: inline-block;
   color: #fff;
@@ -515,13 +514,13 @@ h6 {
 
 #mobile-nav-toggle {
   position: fixed;
-  right: 0;
-  top: -6px;
+  left: 20px;
+  top:0;
   z-index: 999;
   margin: 20px 20px 0 0;
   border: 0;
   background: none;
-  font-size: 16px;
+  font-size: 15px;
   display: none;
   transition: all 0.4s;
   outline: none;
@@ -543,10 +542,10 @@ h6 {
 #mobile-nav {
   position: fixed;
   top: 0;
-  padding-top: 18px;
+  padding-top:60px;
   bottom: 0;
   z-index: 998;
-  background: rgba(52, 59, 64, 0.9);
+  /* background: rgba(52, 59, 64, 0.9); */
   left: -260px;
   width: 260px;
   overflow-y: auto;
@@ -561,6 +560,7 @@ h6 {
 
 #mobile-nav ul li {
   position: relative;
+  background: linear-gradient(#212529c9, #343a40bd);
 }
 
 #mobile-nav ul li a {
@@ -607,7 +607,7 @@ h6 {
   top: 0;
   left: 0;
   position: fixed;
-  background: rgba(52, 59, 64, 0.9);
+  /* background: rgba(52, 59, 64, 0.9); */
   display: none;
 }
 
@@ -619,6 +619,7 @@ body.mobile-nav-active {
 
 body.mobile-nav-active #mobile-nav {
   left: 0;
+  width: 100%;
 }
 
 body.mobile-nav-active #mobile-nav-toggle {
