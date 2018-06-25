@@ -355,7 +355,7 @@ io.sockets.on('connection', function (socket) {
             console.log("peerWithQueryId: " + peerWithQueryId[data.userId]);
             console.log("peerWithQueryId: " + peerWithQueryId[data.userId]);
             var queryObj = {
-                "url": "https://norecruits.com/careator/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
+                "url": "https://vc4all.in/careator/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
             }
             console.log("queryObj: " + JSON.stringify(queryObj));
             var obj = {

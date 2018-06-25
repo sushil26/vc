@@ -171,7 +171,7 @@ app.controller('upcomingEventController', function ($scope, $rootScope, $state, 
             })
             //alert("Sorry you not allow to edit");
         }
-        // var api = "https://norecruits.com/vc/rescheduleEvent/:id";
+        // var api = "https://vc4all.in/vc/rescheduleEvent/:id";
 
         // httpFactory.post(api, obj).then(function (data) {
         //     var checkStatus = httpFactory.dataValidation(data);

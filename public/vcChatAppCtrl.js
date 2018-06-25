@@ -6,8 +6,8 @@ app.controller("vcChatAppCtrl", function ($scope, $http, $timeout) {
 
 
     $scope.getChatHistoryById = function () {
-        // var api = "https://norecruits.com/chatHistory/getHistoryByEmailId/" + email;
-        var api = "https://norecruits.com/chatHistory/getHistory";
+        // var api = "https://vc4all.in/chatHistory/getHistoryByEmailId/" + email;
+        var api = "https://vc4all.in/chatHistory/getHistory";
         console.log("api: " + api);
         $http({
             method: 'GET',

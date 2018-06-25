@@ -14,7 +14,7 @@ console.log("sesionEnc: " + sesionEnc);
 
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://norecruits.com";
+var SIGNALING_SERVER = "https://vc4all.in";
 //var SIGNALING_SERVER = "http://localhost:5000";
 var streamArray = [];
 var signaling_socket = null; /* our socket.io connection to our webserver */
@@ -120,7 +120,7 @@ function saveName() {
   };
 
   $.ajax({
-    url: "https://norecruits.com/vc/parentCredential",
+    url: "https://vc4all.in/vc/parentCredential",
     //  url: "http://localhost:5000/vc/login4VC",
     type: "POST",
     data: JSON.stringify(obj),
@@ -178,7 +178,7 @@ function emailInvite() {
     url: URL
   };
   $.ajax({
-    url: "https://norecruits.com/vc/emailInvite",
+    url: "https://vc4all.in/vc/emailInvite",
     //  url: "http://localhost:5000/vc/login4VC",
     type: "POST",
     data: JSON.stringify(obj),
@@ -308,7 +308,7 @@ function momVC() {
   if (localStorage.getItem("teacherLoginId")) {
     var teacherLoginId = localStorage.getItem("teacherLoginId");
     console.log("teacherLoginId: " + teacherLoginId);
-    var url = "https://norecruits.com/vc/updateEventMOM/" + eventId;
+    var url = "https://vc4all.in/vc/updateEventMOM/" + eventId;
     var obj = {
       "mom": mom,
       "momCreatedBy": "teacher"
@@ -334,7 +334,7 @@ function momVC() {
   } else if (localStorage.getItem("studLoginId")) {
     var studLoginId = localStorage.getItem("studLoginId");
     console.log("studLoginId: " + studLoginId);
-    var url = "https://norecruits.com/updateEventMOM/" + eventId;
+    var url = "https://vc4all.in/updateEventMOM/" + eventId;
     var obj = {
       "mom": mom,
       "momCreatedBy": "parent"
@@ -366,12 +366,12 @@ function momVC() {
 
 function startSession(id, date) {
   console.log("startSession-->");
-  var url = "https://norecruits.com/client/" + id + "/" + date;
+  var url = "https://vc4all.in/client/" + id + "/" + date;
   var obj = {
     "url": url
   };
   $.ajax({
-    url: "https://norecruits.com/vc/sessionCreate",
+    url: "https://vc4all.in/vc/sessionCreate",
     //  url: "http://localhost:5000/vc/login4VC",
     type: "POST",
     data: JSON.stringify(obj),
@@ -428,15 +428,15 @@ signaling_socket.on("connect", function () {
       // $('#crdbuttn').trigger('click');
       console.log("message: config.peer_id: " + config.peer_id);
 
-      //document.getElementById('videoConferenceUrl').setAttribute('href', "https://norecruits.com/client/" + peerNew_id + "/" + date);
+      //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
       document.getElementById("videoConferenceUrl").setAttribute("onclick", "startSession('" + peerNew_id + "' , '" + date + "')");
-      document.getElementById("linkToShare").setAttribute("href", "https://norecruits.com/client/" + peerNew_id + "/" + date);
-      document.getElementById("linkToShare").innerHTML = "https://norecruits.com/client/" + peerNew_id + "/" + date;
+      document.getElementById("linkToShare").setAttribute("href", "https://vc4all.in/client/" + peerNew_id + "/" + date);
+      document.getElementById("linkToShare").innerHTML = "https://vc4all.in/client/" + peerNew_id + "/" + date;
     } else {
       console.log("query id nt null");
 
-      document.getElementById("linkToShare").setAttribute("href", "https://norecruits.com/client/" + queryLink + "/" + date);
-      document.getElementById("linkToShare").innerHTML = "https://norecruits.com/client/" + queryLink + "/" + date;
+      document.getElementById("linkToShare").setAttribute("href", "https://vc4all.in/client/" + queryLink + "/" + date);
+      document.getElementById("linkToShare").innerHTML = "https://vc4all.in/client/" + queryLink + "/" + date;
       document.getElementById("screenBtns").style.display = "inline";
       document.getElementById("videoConfStart").style.display = "none";
       document.getElementById("openChat").style.display = "inline";
@@ -976,7 +976,7 @@ signaling_socket.on("authorizedForClose", function (config) {
   if (config.removableId == peerNew_id) {
     console.log("Removable alert should start");
     alert("Session creater removed you from conference");
-    window.location.href = "https://norecruits.com";
+    window.location.href = "https://vc4all.in";
   }
 
   // delete peer_media_sselements[config.peer_id];
@@ -1487,7 +1487,7 @@ document.querySelector('#stop-recording').onclick = function () {
   // }
   // $.ajax({
   //   type: 'POST',
-  //   url: "https://norecruits.com/record/recordVideo",
+  //   url: "https://vc4all.in/record/recordVideo",
   //   data: JSON.stringify(obj),
   //   contentType: "application/json"
   //   //     dataType: "json",
@@ -1538,7 +1538,7 @@ function storeRecordVideo() {
     fd.append('data', recordedURL);
     $.ajax({
       type: 'POST',
-      url: "https://norecruits.com/record/recordVideo",
+      url: "https://vc4all.in/record/recordVideo",
       data: JSON.stringify(obj),
       contentType: "application/json"
       //     dataType: "json",

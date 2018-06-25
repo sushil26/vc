@@ -1,6 +1,6 @@
 app.factory('signaling_socket', function ($rootScope) {
     // var socket = io.connect("http://localhost:8080");
-    var socket = io.connect("https://norecruits.com");
+    var socket = io.connect("https://vc4all.in");
     return {
       on: function (eventName, callback) {
         socket.on(eventName, function () {  
