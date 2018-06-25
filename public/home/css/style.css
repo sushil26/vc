@@ -868,6 +868,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   -webkit-transform: scale(1.1, 1.1);
   /* Safari */
   transform: scale(1.1, 1.1);
+  transition: all 0.2s;
 }
 
 #services .box:hover .icon a {
