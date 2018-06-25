@@ -1,3 +1,4 @@
+
 // var encUrl = localStorage.getItem("encUrl");
 // var encPswd = localStorage.getItem("encPswd");
 // var decryptedUrl = CryptoJS.AES.decrypt(encUrl, "url");
@@ -6,13 +7,14 @@
 // console.log("decryptedPswd: "+decryptedPswd.toString(CryptoJS.enc.Utf8));
 
 // ];
+var recordedURL; /* recoreurl storage variable */
 var sesionEnc = localStorage.getItem("sessionEnc");
 console.log("sesionEnc: " + sesionEnc);
 
 
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "https://norecruits.com";
 //var SIGNALING_SERVER = "http://localhost:5000";
 var streamArray = [];
 var signaling_socket = null; /* our socket.io connection to our webserver */
@@ -118,7 +120,7 @@ function saveName() {
   };
 
   $.ajax({
-    url: "https://vc4all.in/vc/parentCredential",
+    url: "https://norecruits.com/vc/parentCredential",
     //  url: "http://localhost:5000/vc/login4VC",
     type: "POST",
     data: JSON.stringify(obj),
@@ -176,7 +178,7 @@ function emailInvite() {
     url: URL
   };
   $.ajax({
-    url: "https://vc4all.in/vc/emailInvite",
+    url: "https://norecruits.com/vc/emailInvite",
     //  url: "http://localhost:5000/vc/login4VC",
     type: "POST",
     data: JSON.stringify(obj),
@@ -226,43 +228,77 @@ function emailInvite() {
 // console.log("ICE_SERVERS: "+JSON.stringify(ICE_SERVERS));
 
 var ICE_SERVERS = [{
-    url: "stun:stun.l.google.com:19302"
-  },
-  {
-    url: "stun:s3.xirsys.com"
-  },
-  {
-    url: "turn:s3.xirsys.com:80?transport=udp",
-    credential: sesionEnc,
-    username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+  url: "stun:stun.l.google.com:19302"
+},
+{
+  url: "stun:s3.xirsys.com"
+},
+{
+  url: "turn:s3.xirsys.com:80?transport=udp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
 
-  }, {
-    url: "turn:s3.xirsys.com:3478?transport=udp",
-    credential: sesionEnc,
-    username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+}, {
+  url: "turn:s3.xirsys.com:3478?transport=udp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
 
-  }, {
-    url: "turn:s3.xirsys.com:80?transport=tcp",
-    credential: sesionEnc,
-    username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+}, {
+  url: "turn:s3.xirsys.com:80?transport=tcp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
 
-  }, {
-    url: "turn:s3.xirsys.com:3478?transport=tcp",
-    credential: sesionEnc,
-    username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+}, {
+  url: "turn:s3.xirsys.com:3478?transport=tcp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
 
-  }, {
-    url: "turns:s3.xirsys.com:443?transport=tcp",
-    credential: sesionEnc,
-    username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+}, {
+  url: "turns:s3.xirsys.com:443?transport=tcp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
 
-  }, {
-    url: "turns:s3.xirsys.com:5349?transport=tcp",
-    credential: sesionEnc,
-    username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
+}, {
+  url: "turns:s3.xirsys.com:5349?transport=tcp",
+  credential: sesionEnc,
+  username: "79ea5156-3e67-11e8-9a2e-41c3c9d814b5"
 
-  }
+}
 ];
+
+function disconnecSession() {
+  console.log("disconnecSession-->");
+  console.log("sessionHeader: " + sessionHeader);
+  console.log("peerNew_id: " + peerNew_id);
+  /* ### Start: Stop Local media stream ### */
+  // var videoElem = document.getElementById('videoElem');
+  // let stream = videoElem.srcObject;
+  // let tracks = stream.getTracks();
+  // tracks.forEach(function (track) {
+  //   track.stop();
+  // });
+  // videoElem.srcObject = null;
+  /* ### End: Stop Local media stream ### */
+  localStorage.removeItem("careatorEmail");
+  localStorage.removeItem("careatorFriendName");
+  userName = null;
+  console.log("streamArray.length: " + streamArray.length);
+  if (sessionHeader == peerNew_id) {
+    console.log("start to disconnect the session");
+    signaling_socket.emit("disconnectSession", {
+      deleteSessionId: queryLink,
+      owner: peerNew_id
+    });
+  } else {
+    console.log("You are not session creater so you cant delete session");
+  }
+  if (streamArray.length >= 1) {
+    console.log("stop rec");
+    $('#stop-recording').trigger("click");
+  }
+
+  console.log("-->disconnecSession");
+}
 
 function momVC() {
   console.log("momVC-->");
@@ -272,11 +308,12 @@ function momVC() {
   if (localStorage.getItem("teacherLoginId")) {
     var teacherLoginId = localStorage.getItem("teacherLoginId");
     console.log("teacherLoginId: " + teacherLoginId);
-    var url = "https://vc4all.in/vc/updateEventMOM/" + eventId;
+    var url = "https://norecruits.com/vc/updateEventMOM/" + eventId;
     var obj = {
       "mom": mom,
       "momCreatedBy": "teacher"
     };
+
     $.ajax({
       url: url,
       type: "POST",
@@ -291,12 +328,13 @@ function momVC() {
         } else {
           alert("refresh your page and try again");
         }
+
       }
     });
   } else if (localStorage.getItem("studLoginId")) {
     var studLoginId = localStorage.getItem("studLoginId");
     console.log("studLoginId: " + studLoginId);
-    var url = "https://vc4all.in/updateEventMOM/" + eventId;
+    var url = "https://norecruits.com/updateEventMOM/" + eventId;
     var obj = {
       "mom": mom,
       "momCreatedBy": "parent"
@@ -315,37 +353,25 @@ function momVC() {
         } else {
           alert("refresh your page and try again");
         }
+
       }
     });
   }
+  disconnecSession();
+
   console.log("<--momVC");
 }
 
-function disconnecSession() {
-  console.log("disconnecSession-->");
-  console.log("sessionHeader: " + sessionHeader);
-  console.log("peerNew_id: " + peerNew_id);
-  if (sessionHeader == peerNew_id) {
-    console.log("start to disconnect the session");
-    signaling_socket.emit("disconnectSession", {
-      deleteSessionId: queryLink,
-      owner: peerNew_id
-    });
-  } else {
-    console.log("You are not session creater so you cant delete session");
-  }
 
-  console.log("-->disconnecSession");
-}
 
 function startSession(id, date) {
   console.log("startSession-->");
-  var url = "https://vc4all.in/client/" + id + "/" + date;
+  var url = "https://norecruits.com/client/" + id + "/" + date;
   var obj = {
     "url": url
   };
   $.ajax({
-    url: "https://vc4all.in/vc/sessionCreate",
+    url: "https://norecruits.com/vc/sessionCreate",
     //  url: "http://localhost:5000/vc/login4VC",
     type: "POST",
     data: JSON.stringify(obj),
@@ -402,15 +428,15 @@ signaling_socket.on("connect", function () {
       // $('#crdbuttn').trigger('click');
       console.log("message: config.peer_id: " + config.peer_id);
 
-      //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/client/" + peerNew_id + "/" + date);
+      //document.getElementById('videoConferenceUrl').setAttribute('href', "https://norecruits.com/client/" + peerNew_id + "/" + date);
       document.getElementById("videoConferenceUrl").setAttribute("onclick", "startSession('" + peerNew_id + "' , '" + date + "')");
-      document.getElementById("linkToShare").setAttribute("href", "https://vc4all.in/client/" + peerNew_id + "/" + date);
-      document.getElementById("linkToShare").innerHTML = "https://vc4all.in/client/" + peerNew_id + "/" + date;
+      document.getElementById("linkToShare").setAttribute("href", "https://norecruits.com/client/" + peerNew_id + "/" + date);
+      document.getElementById("linkToShare").innerHTML = "https://norecruits.com/client/" + peerNew_id + "/" + date;
     } else {
       console.log("query id nt null");
 
-      document.getElementById("linkToShare").setAttribute("href", "https://vc4all.in/client/" + queryLink + "/" + date);
-      document.getElementById("linkToShare").innerHTML = "https://vc4all.in/client/" + queryLink + "/" + date;
+      document.getElementById("linkToShare").setAttribute("href", "https://norecruits.com/client/" + queryLink + "/" + date);
+      document.getElementById("linkToShare").innerHTML = "https://norecruits.com/client/" + queryLink + "/" + date;
       document.getElementById("screenBtns").style.display = "inline";
       document.getElementById("videoConfStart").style.display = "none";
       document.getElementById("openChat").style.display = "inline";
@@ -524,8 +550,8 @@ signaling_socket.on("addPeer", function (config) {
     // return;
   }
   var peer_connection = new RTCPeerConnection({
-      iceServers: ICE_SERVERS
-    }, {
+    iceServers: ICE_SERVERS
+  }, {
       optional: [{
         DtlsSrtpKeyAgreement: true
       }]
@@ -674,9 +700,9 @@ signaling_socket.on("addPeer", function (config) {
         "portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3"
       );
       $("#videosAttach").css({
-          "z-index": "2",
-          "position": "fixed"
-        }
+        "z-index": "2",
+        "position": "fixed"
+      }
 
       );
       document.getElementById("header").style.display = "none";
@@ -693,9 +719,9 @@ signaling_socket.on("addPeer", function (config) {
         height: "auto"
       });
       $("#videosAttach").css({
-          "z-index": "",
-          "position": ""
-        }
+        "z-index": "",
+        "position": ""
+      }
 
       );
       $("#videoElem").css({
@@ -844,24 +870,24 @@ signaling_socket.on("sessionDescription", function (config) {
           // console.log("++++config.peerIdForAuth: "+config.peerIdForAuth);
 
           peer.createAnswer(function (local_description) {
-              console.log("Answer description is: ", local_description);
-              console.log("local_description: " + local_description);
-              peer.setLocalDescription(local_description, function () {
-                  signaling_socket.emit("relaySessionDescription", {
-                    peer_id: peer_id,
-                    session_description: local_description,
-                    from: "sessionDescription",
-                    owner: config.owner,
-                    queryLink: queryLink,
-                    timeLink: timeLink
-                  });
-                  console.log("Answer setLocalDescription succeeded");
-                },
-                function () {
-                  console.log("Answer setLocalDescription failed!");
-                }
-              );
+            console.log("Answer description is: ", local_description);
+            console.log("local_description: " + local_description);
+            peer.setLocalDescription(local_description, function () {
+              signaling_socket.emit("relaySessionDescription", {
+                peer_id: peer_id,
+                session_description: local_description,
+                from: "sessionDescription",
+                owner: config.owner,
+                queryLink: queryLink,
+                timeLink: timeLink
+              });
+              console.log("Answer setLocalDescription succeeded");
             },
+              function () {
+                console.log("Answer setLocalDescription failed!");
+              }
+            );
+          },
             function (error) {
               console.log("Error creating answer: ", error);
               console.log(peer);
@@ -950,7 +976,7 @@ signaling_socket.on("authorizedForClose", function (config) {
   if (config.removableId == peerNew_id) {
     console.log("Removable alert should start");
     alert("Session creater removed you from conference");
-    window.location.href = "https://vc4all.in";
+    window.location.href = "https://norecruits.com";
   }
 
   // delete peer_media_sselements[config.peer_id];
@@ -986,12 +1012,17 @@ function setup_local_media(callback, errorback) {
   attachMediaStream = function (video, stream) {
     console.log("attachMediaStream-->");
     video.srcObject = stream;
+    streamArray.push(stream);
+    // if (streamArray.length > 1) {
+    //   $('#start-recording').trigger("click");
+    // }
+    $('#start-recording').trigger("click");
     console.log("<--attachMediaStream");
   };
   navigator.getUserMedia({
-      audio: USE_AUDIO,
-      video: USE_VIDEO
-    },
+    audio: USE_AUDIO,
+    video: USE_VIDEO
+  },
     function (stream) {
       /* user accepted access to a/v */
       console.log("Access granted to audio/video");
@@ -1079,131 +1110,129 @@ function setup_local_media(callback, errorback) {
     }
   );
 
-
-
   document.getElementById("screenShareBtn").addEventListener("click", function () {
     console.log("screenShare-->");
     getScreenId(function (error, sourceId, screen_constraints) {
       navigator.getUserMedia(screen_constraints, function (stream) {
-          navigator.getUserMedia({
-              audio: true
-            }, function (audioStream) {
-              stream.addTrack(audioStream.getAudioTracks()[0]);
-              // shareScreen = peerNew_id;
-              var local_media = document.getElementById("videoElem");
-              stopVideo(local_media);
+        navigator.getUserMedia({
+          audio: true
+        }, function (audioStream) {
+          stream.addTrack(audioStream.getAudioTracks()[0]);
+          // shareScreen = peerNew_id;
+          var local_media = document.getElementById("videoElem");
+          stopVideo(local_media);
 
-              function stopVideo(local_media) {
-                let stream = videoElem.srcObject;
-                let tracks = stream.getTracks();
+          function stopVideo(local_media) {
+            let stream = videoElem.srcObject;
+            let tracks = stream.getTracks();
 
-                tracks.forEach(function (track) {
-                  track.stop();
-                });
+            tracks.forEach(function (track) {
+              track.stop();
+            });
 
-                videoElem.srcObject = null;
-                delete this;
-                $(this).remove();
+            videoElem.srcObject = null;
+            delete this;
+            $(this).remove();
 
-                local_media_stream = null;
-              }
+            local_media_stream = null;
+          }
 
-              $("#videosAttach").empty();
+          $("#videosAttach").empty();
 
-              //local_media_stream = stream;
-              local_media_shareStream = stream;
-              var local_mediaScreenShare = USE_VIDEO ?
-                $("<video>") :
-                $("<audio>");
-              //local_mediaScreenShare.attr("autoplay", "autoplay");
-              local_mediaScreenShare.attr(
-                "muted",
-                "muted"
-              ); /* always mute ourselves by default */
-              // local_mediaScreenShare.attr("controls", "");
-              local_mediaScreenShare.attr("id", "screenShareElem");
-              local_mediaScreenShare.attr("autoplay", "true");
-              // local_mediaScreenShare.attr(
-              //   "style",
-              //   "border:1px solid skyblue"
-              // );
+          //local_media_stream = stream;
+          local_media_shareStream = stream;
+          var local_mediaScreenShare = USE_VIDEO ?
+            $("<video>") :
+            $("<audio>");
+          //local_mediaScreenShare.attr("autoplay", "autoplay");
+          local_mediaScreenShare.attr(
+            "muted",
+            "muted"
+          ); /* always mute ourselves by default */
+          // local_mediaScreenShare.attr("controls", "");
+          local_mediaScreenShare.attr("id", "screenShareElem");
+          local_mediaScreenShare.attr("autoplay", "true");
+          // local_mediaScreenShare.attr(
+          //   "style",
+          //   "border:1px solid skyblue"
+          // );
 
-              //$('#portfolio-wrapper').append('<div id="'+id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-items"><div id="'+id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>All is well</span></div></div>');
-              $("#videosAttach").append(local_mediaScreenShare);
+          //$('#portfolio-wrapper').append('<div id="'+id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-items"><div id="'+id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>All is well</span></div></div>');
+          $("#videosAttach").append(local_mediaScreenShare);
 
-              attachMediaStream(local_mediaScreenShare[0], stream);
+          attachMediaStream(local_mediaScreenShare[0], stream);
 
-              /* ##### Start Stop Sharing ##### */
-              // var btn = document.createElement("input");
-              var btn = document.getElementById("screenShareStop");
+          /* ##### Start Stop Sharing ##### */
+          // var btn = document.createElement("input");
+          var btn = document.getElementById("screenShareStop");
 
-              btn.onclick = function stopVideo(local_mediaScreenShare) {
-                let stream = screenShareElem.srcObject;
-                let tracks = stream.getTracks();
+          btn.onclick = function stopVideo(local_mediaScreenShare) {
+            let stream = screenShareElem.srcObject;
+            let tracks = stream.getTracks();
 
-                tracks.forEach(function (track) {
-                  track.stop();
-                });
+            tracks.forEach(function (track) {
+              track.stop();
+            });
 
-                screenShareElem.srcObject = null;
-                var existing = document.getElementById("screenShareElem");
-                if (existing) {
-                  existing.parentNode.removeChild(existing);
-                }
-                $("#videosAttach").empty();
-                /* ######   ###### */
-                navigator.getUserMedia({
-                    audio: USE_AUDIO,
-                    video: USE_VIDEO
-                  },
-                  function (stream) {
-                    /* user accepted access to a/v */
-                    console.log("Access granted to audio/video");
-                    console.log("stream: " + stream);
-                    console.log("stream: " + JSON.stringify(stream));
-                    local_media_shareStream = null;
-                    local_media_stream = stream;
-                    // local_media_shareStream = stream;
-                    var local_media = USE_VIDEO ? $("<video>") : $();
-                    //local_media.attr("autoplay", "autoplay");
-                    local_media.attr(
-                      "muted",
-                      "muted"
-                    ); /* always mute ourselves by default */
-                    // local_media.attr("controls", "");
-                    local_media.attr("id", "videoElem");
-                    // local_media.attr("style", "border:1px solid skyblue");
-                    $("#videosAttach").append(local_media);
-
-                    attachMediaStream(local_media[0], stream);
-
-                    if (callback) callback();
-                  },
-                  function () {
-                    /* user denied access to a/v */
-                    console.log("Access denied for audio/video");
-                    alert(
-                      "You chose not to provide access to the camera/microphone, Video will not work."
-                    );
-                    if (errorback) errorback();
-                  }
-                );
-                /* ######   ###### */
-              };
-
-              /* ##### End Stop Sharing ##### */
-
-              if (callback) callback();
-              // document.querySelector('video').src = URL.createObjectURL(stream);
-
-              // share this "MediaStream" object using RTCPeerConnection API
-            },
-            function (error) {
-              console.error(error);
-              if (errorback) errorback();
+            screenShareElem.srcObject = null;
+            var existing = document.getElementById("screenShareElem");
+            if (existing) {
+              existing.parentNode.removeChild(existing);
             }
-          );
+            $("#videosAttach").empty();
+            /* ######   ###### */
+            navigator.getUserMedia({
+              audio: USE_AUDIO,
+              video: USE_VIDEO
+            },
+              function (stream) {
+                /* user accepted access to a/v */
+                console.log("Access granted to audio/video");
+                console.log("stream: " + stream);
+                console.log("stream: " + JSON.stringify(stream));
+                local_media_shareStream = null;
+                local_media_stream = stream;
+                // local_media_shareStream = stream;
+                var local_media = USE_VIDEO ? $("<video>") : $();
+                //local_media.attr("autoplay", "autoplay");
+                local_media.attr(
+                  "muted",
+                  "muted"
+                ); /* always mute ourselves by default */
+                // local_media.attr("controls", "");
+                local_media.attr("id", "videoElem");
+                // local_media.attr("style", "border:1px solid skyblue");
+                $("#videosAttach").append(local_media);
+
+                attachMediaStream(local_media[0], stream);
+
+                if (callback) callback();
+              },
+              function () {
+                /* user denied access to a/v */
+                console.log("Access denied for audio/video");
+                alert(
+                  "You chose not to provide access to the camera/microphone, Video will not work."
+                );
+                if (errorback) errorback();
+              }
+            );
+            /* ######   ###### */
+          };
+
+          /* ##### End Stop Sharing ##### */
+
+          if (callback) callback();
+          // document.querySelector('video').src = URL.createObjectURL(stream);
+
+          // share this "MediaStream" object using RTCPeerConnection API
         },
+          function (error) {
+            console.error(error);
+            if (errorback) errorback();
+          }
+        );
+      },
         function (error) {
           var msg =
             "You Must Need to Install  Screen Share Extention, Click ok to install";
@@ -1240,8 +1269,8 @@ signaling_socket.on("stateChangedToClient", function (data) {
 function scrollDown() {
   console.log("scrollDown-->");
   $("#popupMsg").animate({
-      scrollTop: $("#popupMsg").prop("scrollHeight")
-    },
+    scrollTop: $("#popupMsg").prop("scrollHeight")
+  },
     500
   );
   console.log("<--scrollDown");
@@ -1332,8 +1361,8 @@ function scrollDown() {
     }
 
     iframe.contentWindow.postMessage({
-        captureSourceId: true
-      },
+      captureSourceId: true
+    },
       "*"
     );
   }
@@ -1349,7 +1378,6 @@ function scrollDown() {
             video: true
           };
         }
-
         callback(error, screen_constraints.video);
       });
     });
@@ -1407,8 +1435,8 @@ function scrollDown() {
     }
 
     iframe.contentWindow.postMessage({
-        getChromeExtensionStatus: true
-      },
+      getChromeExtensionStatus: true
+    },
       "*"
     );
   }
@@ -1429,3 +1457,218 @@ $(".back-to-top").click(function () {
   }, 1500, "easeInOutExpo");
   return false;
 });
+
+
+// Record>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+function captureUserMedia(mediaConstraints, successCallback, errorCallback) {
+  navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(
+    errorCallback);
+}
+
+var mediaConstraints = {
+  audio: true,
+  video: true
+};
+
+document.querySelector('#start-recording').onclick = function () {
+  this.disabled = true;
+  captureUserMedia(mediaConstraints, onMediaSuccess, onMediaError);
+};
+
+document.querySelector('#stop-recording').onclick = function () {
+  console.log("stop-recording-->");
+  this.disabled = true;
+  multiStreamRecorder.stream.stop();
+  multiStreamRecorder.stop();
+  streamArray = [];
+  // var obj = {
+  //   "eventId": localStorage.getItem("eventId"),
+  //   "base64data": "stop"
+  // }
+  // $.ajax({
+  //   type: 'POST',
+  //   url: "https://norecruits.com/record/recordVideo",
+  //   data: JSON.stringify(obj),
+  //   contentType: "application/json"
+  //   //     dataType: "json",
+  // }).done(function (data) {
+  //   console.log(data);
+  // });
+
+  // 
+  // document.querySelector('#pause-recording').disabled = true;
+  document.querySelector('#start-recording').disabled = false;
+  // document.querySelector('#add-stream').disabled = true;
+
+};
+
+document.querySelector('#pause-recording').onclick = function () {
+  this.disabled = true;
+  multiStreamRecorder.pause();
+
+  document.querySelector('#resume-recording').disabled = false;
+};
+
+document.querySelector('#resume-recording').onclick = function () {
+  this.disabled = true;
+  multiStreamRecorder.resume();
+
+  document.querySelector('#pause-recording').disabled = false;
+};
+
+function storeRecordVideo() {
+  console.log("storeRecordVideo-->");
+
+  var reader = new FileReader();
+
+  reader.readAsDataURL(recordedURL);
+  reader.onloadend = function () {
+    console.log("reader.result: " + JSON.stringify(reader.result));
+    base64data = reader.result;
+    console.log("base64data: " + base64data);
+    var eventId = localStorage.getItem("eventId");
+    console.log("eventId: " + eventId);
+    var obj = {
+      "eventId": eventId,
+      "base64data": base64data
+    }
+    console.log("obj: " + JSON.stringify(obj));
+    var fd = new FormData();
+    //fd.append('fname', 'test.wav');
+    fd.append('data', recordedURL);
+    $.ajax({
+      type: 'POST',
+      url: "https://norecruits.com/record/recordVideo",
+      data: JSON.stringify(obj),
+      contentType: "application/json"
+      //     dataType: "json",
+    }).done(function (data) {
+      console.log(data);
+    });
+  }
+  //var resultedBlob = dataURItoBlob(recordedURL);
+  //var resultedBlob = dataURItoBlob(recordedURL);
+
+}
+
+var multiStreamRecorder;
+var audioVideoBlobs = {};
+var recordingInterval = 0;
+
+function onMediaSuccess(stream) {
+  console.log("stream-->");
+  var video = document.createElement('video');
+
+  video = mergeProps(video, {
+    controls: true,
+    muted: false
+  });
+  video.srcObject = stream;
+
+  video.addEventListener('loadedmetadata', function () {
+    console.log("addEventListener('loadedmetadata')-->");
+    if (multiStreamRecorder && multiStreamRecorder.stream) return;
+
+    multiStreamRecorder = new MultiStreamRecorder(streamArray);
+    multiStreamRecorder.stream = stream;
+    multiStreamRecorder.previewStream = function (stream) {
+      console.log("previewStream-->");
+      video.src = URL.createObjectURL(stream);
+      video.play();
+    };
+
+    multiStreamRecorder.ondataavailable = function (blob) {
+      console.log("ondataavailable-->blob: " + JSON.stringify(blob));
+      appendLink(blob);
+    };
+    var blobLinkTag = 0;
+
+    function appendLink(blob) {
+      console.log("appendLink-->");
+      blobLinkTag++;
+      console.log("blob.data: " + blob.data);
+      console.log("blob.type: " + blob.type);
+      console.log("blob.size: " + blob.size);
+      var a = document.createElement('a');
+      a.target = '_blank';
+      a.innerHTML = 'Open Recorded ' + (blob.type == 'audio/ogg' ?
+        'Audio' : 'Video') + ' No. ' + (index++) + ' (Size: ' +
+        bytesToSize(blob.size) + ') Time Length: ' + getTimeLength(
+          timeInterval);
+
+      a.href = URL.createObjectURL(blob);
+      recordedURL = blob;
+
+      // if(blob.size>=1000-100)
+      // {
+      //   storeRecordVideo();
+      // }
+
+      // console.log("recordedURL: " + JSON.stringify());
+      container.appendChild(a);
+      container.appendChild(document.createElement('hr'));
+
+      
+      if (blobLinkTag % 2 != 0) {
+        storeRecordVideo();
+      }
+
+    }
+
+    // var timeInterval = document.querySelector('#time-interval').value;
+    // if (timeInterval) timeInterval = parseInt(timeInterval);
+    // else timeInterval = 5 * 1000;
+  
+    // 30*60*1000 =180000
+    // 40*60*1000
+    // 60*60*1000
+    //15*60*1000 = 900000
+    // 3600000
+    timeInterval = 300000;
+
+
+    // get blob after specific time interval
+    multiStreamRecorder.start();
+
+    document.querySelector('#add-stream').disabled = false;
+    document.querySelector('#add-stream').onclick = function () {
+      if (!multiStreamRecorder || !multiStreamRecorder.stream) return;
+      multiStreamRecorder.addStream(multiStreamRecorder.stream);
+    };
+
+    document.querySelector('#stop-recording').disabled = false;
+    document.querySelector('#pause-recording').disabled = false;
+  }, false);
+
+  video.play();
+
+  // container.appendChild(video);
+  // container.appendChild(document.createElement('hr'));
+}
+
+function onMediaError(e) {
+  console.error('media error', e);
+}
+
+var container = document.getElementById('container');
+var index = 1;
+
+// below function via: http://goo.gl/B3ae8c
+function bytesToSize(bytes) {
+  var k = 1000;
+  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes === 0) return '0 Bytes';
+  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(k)), 10);
+  return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+}
+
+// below function via: http://goo.gl/6QNDcI
+function getTimeLength(milliseconds) {
+  var data = new Date(milliseconds);
+  return data.getUTCHours() + " hours, " + data.getUTCMinutes() + " minutes and " +
+    data.getUTCSeconds() + " second(s)";
+}
+
+window.onbeforeunload = function () {
+  document.querySelector('#start-recording').disabled = false;
+};

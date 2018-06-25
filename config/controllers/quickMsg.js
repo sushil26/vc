@@ -6,6 +6,7 @@ var quickMessage = db.collection('quickMessage');
 var general = require('../general.js');
 var ObjectId = require('mongodb').ObjectID;
 var bodyParser = require('body-parser');
+//var io = req.app.get('socketio');
 
 var nodemailer = require('nodemailer');
 
@@ -23,6 +24,7 @@ var transporter = nodemailer.createTransport({
 module.exports.quickMsgSend = function (req, res) {
     console.log("quickMsgSend-->");
     var responseData;
+    console.log("req.body.userId: " + req.body.userId+" req.body.remoteCalendarId: " + req.body.remoteCalendarId);
     console.log("req.body.senderName: " + req.body.senderName);
     console.log("req.body.senderId: " + req.body.senderId);
     console.log("req.body.reason: " + req.body.reason);
@@ -65,6 +67,8 @@ module.exports.quickMsgSend = function (req, res) {
                 res.status(400).send(responseData);
             }
             else {
+                var io = req.app.get('socketio');
+                io.emit('quickMsg_updated',{"id":req.body.userId, "remoteId":req.body.remoteCalendarId});
                 var mailOptions = {
                     from: "info@vc4all.in",
                     to: req.body.receiverEmail,
@@ -159,7 +163,7 @@ module.exports.quickMsgGet = function (req, res) {
 
     if (general.emptyCheck(req.params.id)) {
         quickMessage.find({ $or: [{ "userId": req.params.id }, { "remoteCalendarId": req.params.id }] }).sort({ "$natural": -1 }).toArray(function (err, listOfevents) {
-            console.log("listOfevents: " + JSON.stringify(listOfevents))
+            // console.log("listOfevents: " + JSON.stringify(listOfevents))
             if (err) {
 
                 responseData = {
@@ -200,7 +204,7 @@ module.exports.quickMsgGetForStud = function (req, res) {
     var cs = [{ "class": req.params.clas, "section": req.params.section }];
     if (general.emptyCheck(req.params.id) && general.emptyCheck(req.params.clas) && general.emptyCheck(req.params.section)) {
         quickMessage.find({ $or: [{ "userId": req.params.id }, { "remoteCalendarId": req.params.id }, { "student_cs": cs }] }).sort({ "$natural": -1 }).toArray(function (err, listOfevents) {
-            console.log("listOfevents: " + JSON.stringify(listOfevents))
+            // console.log("listOfevents: " + JSON.stringify(listOfevents))
             if (err) {
                 responseData = {
                     "status": false,

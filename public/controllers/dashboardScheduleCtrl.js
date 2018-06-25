@@ -1,4 +1,4 @@
-app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $rootScope, $compile, $window, $filter, httpFactory, sessionAuthFactory, moment, calendarConfig, $uibModal) {
+app.controller('dashboardScheduleCtrl', function ($scope, $q, $timeout, $rootScope, $state, $rootScope, $compile, $window, $filter, httpFactory, sessionAuthFactory, moment, calendarConfig, $uibModal) {
   console.log("dashboardScheduleCtrl==>");
   var dayEventmodal; /* ### Note: open model for event send ###  */
   var studEvents = []; /* ### Note: selected student events ### */
@@ -349,7 +349,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
   }
   else {
     console.log("loginType" + loginType);
-    // window.location.href = "https://vc4all.in";
+    // window.location.href = "https://norecruits.com";
   }
 
   $scope.getStudListForCS = function (css) {
@@ -366,7 +366,7 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
 
     var api = $scope.propertyJson.VC_getStudListForCS + "/" + schoolName + "/" + clas + "/" + section;
     //var api = "http://localhost:5000/vc/getStudListForCS" + "/" + clas + "/" + section;
-    //var api = "https://vc4all.in/vc/getStudListForCS";
+    //var api = "https://norecruits.com/vc/getStudListForCS";
 
     console.log("api: " + api);
     httpFactory.get(api).then(function (data) {
@@ -545,7 +545,6 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
       console.log("$scope.studentPersonalData[0]: " + JSON.stringify($scope.studentPersonalData[0]));
       var un = $scope.teacherData[0].firstName + " " + $scope.teacherData[0].lastName;
       var studName = $scope.studentPersonalData[0].firstName + " " + $scope.studentPersonalData[0].lastName;
-
       var teacherName = un;
       var senderMN = $scope.teacherData[0].mobNumber;
       var teacherId = $scope.teacherData[0].schoolId;
@@ -567,26 +566,17 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
 
   $scope.eventSend = function (res, name, id, studUserId, email, senderMN, receiverName, receiverId, receiverMN, stud_id, stud_cs, stud_name) {
     console.log("eventSend-->");
-    var SIGNALING_SERVER = "https://vc4all.in";
+
     //var SIGNALING_SERVER = "http://localhost:5000";
     var queryLink = null;
     var peerNew_id = null;
     var url;
-    signaling_socket = io(SIGNALING_SERVER);
-    signaling_socket.on('connect', function () {
-      console.log("signaling_socket connect-->");
-
-      signaling_socket.on('message', function (config) {
-        console.log("signaling_socket message-->");
-
-        queryLink = config.queryId;
-        peerNew_id = config.peer_id;
-
-        url = "https://vc4all.in/client/" + peerNew_id + "/" + $scope.urlDate;
+    $timeout(function() {
+      getSocketUrlFromServer().then(function(url) {
+        console.log("Back to function call-->");
+        console.log("url: "+url);
         var api = $scope.propertyJson.VC_eventSend;
-        //var api = "http://localhost:5000/vc/eventSend";
         console.log("api: " + api);
-        // var email = document.getElementById('eventEmails').value;
         var obj = {
           "userId": $scope.userData.id,
           "senderLoginType": $scope.userData.loginType,
@@ -616,14 +606,13 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
           "schoolName": schoolName
         }
         console.log("obj: " + JSON.stringify(obj));
-
         httpFactory.post(api, obj).then(function (data) {
           var checkStatus = httpFactory.dataValidation(data);
           //console.log("data--" + JSON.stringify(data.data));
           if (checkStatus) {
             // console.log("data" + JSON.stringify(data.data))
             // $window.location.href = $scope.propertyJson.R082;
-
+  
             var loginAlert = $uibModal.open({
               scope: $scope,
               templateUrl: '/html/templates/dashboardsuccess.html',
@@ -634,9 +623,6 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
                 $scope.message = "Successfully sent the event";
               }
             })
-
-
-
             // alert("Successfully sent the event");
             // vm.events.splice(0, 1);
             var eventPostedData = data.data.data;
@@ -658,14 +644,11 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
               "receiverName": receiverName,
               "receiverId": receiverId,
               "receiverMN": receiverMN,
-              /*  */
             }
             ownerEvents.push(objData);
             vm.events.push(objData);
           }
           else {
-
-
             var loginAlert = $uibModal.open({
               scope: $scope,
               templateUrl: '/html/templates/dashboardwarning.html',
@@ -676,19 +659,38 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
                 $scope.message = "Event Send Failed";
               }
             })
-
+  
             // alert("Event Send Failed");
           }
-
         })
-
-      })
-    })
+      });    
+    }, 0);
+  
 
     console.log("<--eventSend");
     // var url = document.getElementById('linkToShare').innerHTML;
   }
 
+  function getSocketUrlFromServer() {
+    console.log("getSocketUrlFromServer-->");
+    var dfd = $q.defer();
+    var SIGNALING_SERVER = "https://norecruits.com";
+    signaling_socket = io(SIGNALING_SERVER);
+    signaling_socket.on('connect', function () {
+      console.log("signaling_socket connect-->");
+
+      signaling_socket.on('message', function (config) {
+        console.log("signaling_socket message-->");
+
+        queryLink = config.queryId;
+        peerNew_id = config.peer_id;
+
+        var url = "https://norecruits.com/client/" + peerNew_id + "/" + $scope.urlDate;
+        dfd.resolve(url);
+      })
+    })
+    return dfd.promise;
+  }
   $scope.timeTableForEventBook = function (day, id) {
     console.log("timeTableForEventBook-->");
     console.log("id: " + id + " day: " + day);
@@ -800,10 +802,6 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
     }
     console.log("<--timeTableForEventBook");
   }
-
-
-
-
 
   var vm = this;
   //These variables MUST be set as a minimum for the calendar to work
@@ -1081,13 +1079,8 @@ app.controller('dashboardScheduleCtrl', function ($scope, $rootScope, $state, $r
           controller: function ($scope, $uibModalInstance) {
             $scope.message = "Select Teacher";
             console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
-            // $scope.close = function(){
-            //   loginAlert.close('resetModel');
-
-            // }
           }
         })
-        //alert("Select Teacher");
       }
 
     }

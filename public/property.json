@@ -1,5 +1,5 @@
 {
-"BASE_URL": "https://vc4all.in/",
+"BASE_URL": "https://norecruits.com/",
 "VC_teacherDetail": "vc/teacherDetail",
 "VC_studentDetail": "vc/studentDetail",
 "VC_adminCreate": "vc/adminCreate",
@@ -58,5 +58,8 @@
 "VC_profilePicupload": "vc/profilePicupload",
 "VC_bulkEmail_quickMsg": "vc/bulkEmail_quickMsg",
 "VC_updateProfilePic": "vc/updateProfilePic",
+"VC_captureImgSend": "vc/captureImgSend",
+"VC_getVideo": "record/getVideo",
+"VC_getRecordVideo": "getRecord/getRecordVideo",
 "VC_csvTest": "vc/csvTest"
 }

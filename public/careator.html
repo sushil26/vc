@@ -50,7 +50,7 @@
         a:hover {
 
             color: sienna !important;
-          
+
         }
     </style>
 </head>
@@ -70,7 +70,8 @@
                     float: left;
                     margin-top: 8px;
                     letter-spacing: 1px;
-                    text-transform: uppercase;">VC<span style="color:#2577be;">4ALL</span>
+                    text-transform: uppercase;">VC
+                        <span style="color:#2577be;">4ALL</span>
                         <!-- <h1 style="color:azure;float:left;text-shadow: 2px 2px 4px #000000; margin-top: 13px;">&nbspVC4ALL</h1> -->
                 </span>
             </div>
@@ -108,6 +109,7 @@
                                     &nbsp
                                     <b>Start Video Conference</b>
                                 </button>
+                             
                             </a>
                             <br>
 
@@ -341,19 +343,9 @@
                                         </div>
                                         <div class="popup-head-right pull-right">
                                             <div class="btn-group">
-                                                <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
-                                                    <i class="fa fa-cog" style="color:white"></i>
+                                                <button class="chat-header-button" data-toggle="dropdown"   onclick="chatExpand()" type="button" aria-expanded="false">
+                                                    <i class="fa fa-expand" style="color:white"></i>
                                                 </button>
-                                                <ul role="menu" class="dropdown-menu pull-right">
-                                                    <li>
-                                                        <a href="#">Media</a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a href="#">Clear Chat</a>
-                                                    </li>
-
-                                                </ul>
                                             </div>
 
                                             <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
@@ -425,90 +417,7 @@
             </center>
         </div>
     </div>
-    <!-- <div class="modal fade" id="crdntl" role="dialog">
-        <div class="modal-dialog">
-            <center> -->
-    <!-- Modal content Login -->
-    <!-- <div class="modal-content" style="
-                max-width: 350px;
-                background: #00000075; color:#777; border: 0px;">
-                    <div class="modal-header" style="background-color: darkturquoise;     border-bottom: 0px;">
-                        <h4 class="modal-title" style="margin-left: 2px;">Login</h4>
-                        <button class="btn-default fa fa-close" style="margin-top: 2px;border-color: white;border-radius: 25%;" aria-hidden="true"
-                            type="reset" data-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input style="
-                      background:  #ddd;
-                      border-radius: inherit;
-                      height: 50px;
-                      border: #ddd;" type="email" class="form-control" placeholder="Email" id="crdEmail">
-                        <br>
-                        <input style="
-                      background:  #ddd;
-                      border-radius: inherit;
-                      height: 50px;
-                      border: #ddd;" type="password" id="crdPswd" class="form-control" placeholder="Password">
-                    </div>
-                    <div class="modal-footer" style="border-top:0px; padding: 15px;">
-
-                        <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
-                            onclick="logVC()" data-dismiss="modal">Submit</button>
-                    </div>
-                    <p style="font-size:12px;" class="message">Not registered?
-                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#regVC">Register Here</a>
-                    </p>
-                </div>
-            </center>
-        </div> -->
-    <!-- </div>
-    <div class="modal fade" id="regVC" role="dialog">
-        <div class="modal-dialog"> -->
-    <!-- <center> -->
-    <!-- Modal content Register -->
-    <!-- <div class="modal-content" style="
-                max-width: 350px;
-                background: #00000075; color:#777; border: 0px;">
-                    <div class="modal-header" style="background-color: darkturquoise;border-bottom: 0px;">
-                        <h4 class="modal-title" style="margin-left: 2px;">Register</h4>
-                        <button class="btn-default fa fa-close" style="margin-top: 2px;border-color: white;border-radius: 25%;" aria-hidden="true"
-                            type="reset" data-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" style="background:  #ddd;
-                        border-radius: inherit;
-                        height: 50px;
-                        border: #ddd;" class="form-control" placeholder="Username" id="regVC_un">
-                        <br>
-                        <input style="
-                        background:  #ddd;
-                        border-radius: inherit;
-                        height: 50px;
-                        border: #ddd;" type="email" class="form-control" placeholder="Email" id="regVC_emailId">
-                        <br>
-                        <input style="background:  #ddd;
-                        border-radius: inherit;
-                        height: 50px;
-                        border: #ddd;" type="password" class="form-control" placeholder="Password" id="regVC_pswd">
-                        <br>
-                        <input type="password" style="background:  #ddd;
-                        border-radius: inherit;
-                        height: 50px;
-                        border: #ddd;" class="form-control" placeholder="Confirm Password" id="regVCCF_pswd">
-                    </div>
-                    <div class="modal-footer" style="border-top:0px; padding: 15px;">
-
-                        <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
-                            onclick="regVc()" data-dismiss="modal">Submit</button>
-                    </div>
-                    <p style="font-size:12px;" class="message">Already Registered ?
-                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#crdntl">Login Here</a>
-                    </p>
-                </div> -->
-    <!-- </center>
-        </div>
-    </div> -->
-
+   
     <!--==========================
           Footer
         ============================-->
@@ -568,6 +477,12 @@
 
     <script src="/js/chat.js"></script>
     <script>
+function chatExpand(){
+    window.location.href="https://norecruits.com/chatCrtr";
+
+}
+
+
         $("#message").keyup(function (event) {
             if (event.keyCode === 13) {
                 $("#sndmgs").click();
@@ -596,7 +511,6 @@
             -moz-transform: rotateY(180deg);
             /* z-index: 2;
             position: fixed; */
-
         }
 
         .fullscr {

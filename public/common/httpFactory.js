@@ -27,6 +27,7 @@ app.factory('httpFactory', function ($http, $q, $rootScope) {
         get: function (api) {
 
             var dfd = $q.defer();
+            // console.log("$rootScope.propertyJson: "+JSON.stringify($rootScope.propertyJson));
             var getUrl = $rootScope.propertyJson.BASE_URL + api;
             //console.log("getUrl"+getUrl);
             //var getUrl=api;
@@ -117,7 +118,7 @@ app.factory('httpFactory', function ($http, $q, $rootScope) {
             console.log("fd: " + fd);
             $http.post(postUrl, fd, {
                 transformRequest: angular.identity,
-                headers: { 'Content-Type': undefined}
+                headers: { 'Content-Type': undefined }
             }).then(function (response) {
                 console.log("lego--" + response)
                 dfd.resolve(response);
@@ -134,7 +135,9 @@ app.factory('httpFactory', function ($http, $q, $rootScope) {
                 method: 'GET',
                 url: fileAddress
             }).then(function (data) {
+              
                 $rootScope.propertyJson = data.data;
+                //console.log("data: "+JSON.stringify($rootScope.propertyJson));
                 return $rootScope.propertyJson;
             });
             // 

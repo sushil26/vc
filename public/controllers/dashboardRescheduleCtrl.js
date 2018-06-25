@@ -320,7 +320,7 @@ app.controller('dashboardRescheduleCtrl', function ($scope, $rootScope, $state, 
     }
     else {
         console.log("loginType" + loginType);
-        // window.location.href = "https://vc4all.in";
+        // window.location.href = "https://norecruits.com";
     }
 
     $scope.getStudListForCS = function (css) {
@@ -495,7 +495,7 @@ app.controller('dashboardRescheduleCtrl', function ($scope, $rootScope, $state, 
 
     $scope.eventSend = function (res) {
         console.log("eventSend-->");
-        var SIGNALING_SERVER = "https://vc4all.in";
+        var SIGNALING_SERVER = "https://norecruits.com";
         var queryLink = null;
         var peerNew_id = null;
         var url;

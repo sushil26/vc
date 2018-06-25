@@ -1,4 +1,4 @@
-app.controller('dashboardController', function ($scope, $rootScope, $window, httpFactory, $uibModal, sessionAuthFactory, $filter, $timeout) {
+app.controller('dashboardController', function ($scope, $rootScope, $timeout, $window, httpFactory, $uibModal, sessionAuthFactory, $filter, $timeout) {
 
     console.log("dashboardController==>");
 
@@ -30,23 +30,53 @@ app.controller('dashboardController', function ($scope, $rootScope, $window, htt
     $scope.numberOfNotif_event = 0;
     $scope.numberOfNotif_quickMsg = 0;
 
+    $scope.getToDate = function () {
+        console.log("Get To Date-->");
+        var api = $scope.propertyJson.VC_getToDate;
+        httpFactory.get(api).then(function (data) {
+            var checkStatus = httpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                console.log("data.data.data.date: " + data.data.data.date);
+                var todayDate = new Date(data.data.data.date);
+                console.log("todayDate: " + todayDate);
+                var reqDate = todayDate.getDate();
+                console.log("reqDate: " + reqDate);
+                var reqMonth = todayDate.getMonth();
+                var reqYear = todayDate.getFullYear();
+                var reqHr = todayDate.getHours();
+                var reqMin = todayDate.getMinutes();
+                var reqSec = todayDate.getSeconds();
+                $scope.todayDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
+                console.log("  $scope.todayDate: " + $scope.todayDate);
+                console.log("consolidateDate: " + $scope.consolidateDate);
+            }
+            else {
+            }
+        })
+        console.log("<--Get To Date");
+    }
+    $scope.getToDate();
+
     $scope.eventGet = function () {
         console.log("eventGet-->");
         var id = $scope.userData.id;
         var api = $scope.propertyJson.VC_eventGet + "/" + id;
-        console.log("api: "+api);
+        console.log("api: " + api);
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
         $scope.calendarOwner = "Your";
         httpFactory.get(api).then(function (data) {
             $scope.numberOfNotif_event = 0;
             var checkStatus = httpFactory.dataValidation(data);
-            console.log("data--" + JSON.stringify(data.data));
+            // console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
                 $scope.eventData = data.data.data;
                 // ownerEvents = [];
                 for (var x = 0; x < $scope.eventData.length; x++) {
                     console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
-                    if ($scope.eventData[x].notificationNeed == 'yes') {
+                    var startD = new Date($scope.eventData[x].start);
+                    console.log("$scope.eventData[x].startAt: " + $scope.eventData[x].startAt + " $scope.todayDate: " + $scope.todayDate);
+                    if ($scope.eventData[x].notificationNeed == 'yes' && startD >= $scope.todayDate) {
                         if ($scope.eventData[x].userId != $scope.userData.id) {
                             console.log("not equal");
                             $scope.numberOfNotif_event = $scope.numberOfNotif_event + 1;
@@ -109,8 +139,8 @@ app.controller('dashboardController', function ($scope, $rootScope, $window, htt
                 $scope.eventData = data.data.data;
                 for (var x = 0; x < $scope.eventData.length; x++) {
                     console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
-
-                    if ($scope.eventData[x].notificationNeed == 'yes') {
+                    console.log("$scope.eventData[x].userId: " + $scope.eventData[x].userId + " $scope.userData.id: " + $scope.userData.id);
+                    if ($scope.eventData[x].notificationNeed == 'yes' && $scope.eventData[x].userId != $scope.userData.id) {
                         $scope.numberOfNotif_quickMsg = $scope.numberOfNotif_quickMsg + 1;
                     }
                 }
@@ -214,31 +244,33 @@ app.controller('dashboardController', function ($scope, $rootScope, $window, htt
         console.log("logOut-->");
         sessionAuthFactory.clearAccess();
         $scope.userData = sessionAuthFactory.getAccess("userData");
-        window.location.href = "https://vc4all.in";
+        window.location.href = "https://norecruits.com";
         console.log("<--logOut");
     }
 
     $scope.homeClick = function () {
         console.log("homeClick-->");
-        window.location.href = "https://vc4all.in";
+        window.location.href = "https://norecruits.com";
         console.log("<--homeClick");
     }
 
     /* ##### Strat function call request from another controller  ##### */
     $rootScope.$on("CallParent_quickMsgGet", function () {
         console.log("CallParent_quickMsgGet-->");
-        if ($scope.loginType == 'studParent')  {
-            console.log("CallParent_quickMsgGet with login Type: "+$scope.loginType);
+        if ($scope.loginType == 'studParent') {
+            console.log("CallParent_quickMsgGet with login Type: " + $scope.loginType);
             $scope.getSelectedStudentPersonalData();
         }
         else if ($scope.loginType == 'teacher') {
-            console.log("CallParent_quickMsgGet with login Type: "+$scope.loginType);
+            console.log("CallParent_quickMsgGet with login Type: " + $scope.loginType);
             $scope.quickMsgGet();
         }
     })
     $rootScope.$on("CallParent_eventGet", function () {
         $scope.eventGet();
     })
+
+
     /* ##### End function call request from another controller  ##### */
 
 })
