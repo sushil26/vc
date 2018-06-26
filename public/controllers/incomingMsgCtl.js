@@ -59,6 +59,7 @@ app.controller('incomingMsgCtl', function ($scope, $rootScope, $state, $window, 
 
     $scope.quickMsgGet = function () {
         console.log("quickMsgGet-->");
+        $scope.events = [];
         var id = $scope.userData.id;
         console.log("$scope.studCS: " + JSON.stringify($scope.studCS));
         if ($scope.loginType == 'studParent') {
@@ -134,27 +135,34 @@ app.controller('incomingMsgCtl', function ($scope, $rootScope, $state, $window, 
         $scope.quickMsgGet();
     }
 
-    $scope.viewDetail = function (id, eventId) {
+    $scope.viewDetail = function (id, eventId, userId) {
         console.log("viewDetail-->");
         console.log("id: " + id);
-        var obj = {
-            "id": eventId
+        console.log("userId: " + userId);
+        if ($scope.events[id].notificationNeed == 'yes') {
+            socket.emit('quickMsg_viewDetail_toserver', { "userId": userId }); /* ### Note: Informing to server that this event is viewed (so that server can inform to respective person) ### */
+            if ($scope.events[id].userId != $scope.userData.id) {
+                var obj = {
+                    "id": eventId
+                }
+                var api = $scope.propertyJson.VC_quickMsgNotificationOff;
+                console.log("api: " + api);
+                httpFactory.post(api, obj).then(function (data) {
+                    var checkStatus = httpFactory.dataValidation(data);
+                    console.log("data--" + JSON.stringify(data.data));
+                    $rootScope.$emit("CallParent_quickMsgGet", {}); /* ### Note: calling method of parentController(dashboardCtr) ### */
+                    // $scope.$parent.quickMsgGet();
+                    if (checkStatus) {
+                        console.log("data" + JSON.stringify(data.data));
+                        var eventPostedData = data.data.data;
+                    }
+                    else {
+                        // alert("UnSuccessfully Event Updated");
+                    }
+                })
+                $scope.events[id].notificationNeed = 'No';
+            }
         }
-        var api = $scope.propertyJson.VC_quickMsgNotificationOff;
-        console.log("api: " + api);
-        httpFactory.post(api, obj).then(function (data) {
-            var checkStatus = httpFactory.dataValidation(data);
-            console.log("data--" + JSON.stringify(data.data));
-            $rootScope.$emit("CallParent_quickMsgGet", {}); /* ### Note: calling method of parentController(dashboardCtr) ### */
-           // $scope.$parent.quickMsgGet();
-            if (checkStatus) {
-                console.log("data" + JSON.stringify(data.data));
-                var eventPostedData = data.data.data;
-            }
-            else {
-                // alert("UnSuccessfully Event Updated");
-            }
-        })
 
         var eClicked = $uibModal.open({
             scope: $scope,
@@ -163,12 +171,31 @@ app.controller('incomingMsgCtl', function ($scope, $rootScope, $state, $window, 
             backdropClass: 'show',
             controller: function ($scope, $uibModalInstance) {
                 $scope.eventDetails = $scope.events[id];
-                $scope.viewType="incoming";
+                $scope.viewType = "incoming";
                 console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
             }
         })
-        $scope.events[id].notificationNeed='No';
+
         console.log("<--viewDetail");
     }
+
+    /* ### Start: Get quickMsg update from quickMsg.js(quickMsgSend method)  ### */  //update the value with new data;
+    socket.on('quickMsg_updated', function (data) {
+        console.log("quickMsg_updated-->: " + JSON.stringify(data));
+        console.log("$scope.userData.id: " + $scope.userData.id);
+        if (data.id == $scope.userData.id || data.remoteId == $scope.userData.id) {
+            $rootScope.$emit("CallParent_quickMsgGet", {}); /* ### Note: calling method of parentController(dashboardCtr) ### */
+            if ($scope.loginType == 'studParent') {
+                $scope.getSelectedStudentPersonalData();
+            }
+            else {
+                $scope.quickMsgGet();
+            }
+        }
+    });
+    /* ### End: Get quickMsg update from quickMsg.js(quickMsgSend method) ### */
+
+
+
 
 })

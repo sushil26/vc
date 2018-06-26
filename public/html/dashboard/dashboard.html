@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="././dashboard_Lib/css/style.css" />
 <link rel="stylesheet" href="././dashboard_Lib/css/style-responsive.css" />
 <link rel="stylesheet" href="././dashboard_Lib/css/elegant-icons-style.css" />
-<div ng-controller="dashboardController">
+<div  ng-controller="dashboardController">
+        <!-- <div id="loadings"></div> -->
     <!-- container section start -->
     <section id="container" class="">
         <!--header start-->
@@ -14,9 +15,7 @@
             <!--logo start-->
             <span>
                 <img ng-click="homeClick()" style="float:left;width: 63px;margin-top: 5px" src="././home/img/fav.png" />
-                <a ng-click="homeClick()" class="logo" style="text-shadow: 2px 2px 4px #000000;font-weight: 500; 
-            font-family: 'Allerta Stencil';">VC<span style="color: #2577be;font-family: 'Allerta Stencil';">4ALL</span>
-                </a>
+                <a ng-click="homeClick()" class="logo" style="font-weight: 500; letter-spacing: -2.3px;font-family: 'Allerta Stencil';">VC4ALL</a>
             </span>
 
             <!--logo end-->
@@ -246,6 +245,13 @@
                         <a href="#!/dashboard/analytics" class="home">
                             <i style="font-size:15px;" class="fa fa-line-chart">
                                 <span>&nbspANALYTICS</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li id="analink">
+                        <a href="#!/dashboard/captureImg" class="home">
+                            <i style="font-size:15px;" class="fa fa-line-chart">
+                                <span>&nbspCAPTURE IMAGE</span>
                             </i>
                         </a>
                     </li>

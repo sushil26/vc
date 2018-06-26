@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
+    "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
 <html>
 
 <head>
-  <meta charset="UTF-8">
   <title>VC4ALL</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
   <link href="/home/img/fav.png" rel="icon" size="32x32">
   <!-- Google Fonts -->
@@ -21,6 +22,7 @@
   <script src="/js/socket.io-1.4.5.js"></script>
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="/angular-animate/angular-animate.min.js"></script>
   <!-- bootstrap -->
   <script src="vcApp.js"></script>
   <script src="vcAppCtrl.js"></script>
@@ -72,8 +74,38 @@
   <script src="/controllers/markViewWithConfId_Ctl.js"></script>
   <script src="/controllers/attendanceViewWithConfId_Ctl.js"></script>
   <script src="/controllers/changePasswordCtl.js"></script>
+  <script src="/controllers/viewEventController.js"></script>
   <script src="/controllers/logoutCtl.js"></script>
+  <script src="/controllers/captureImgCtl.js"></script>
+  <script>
+    var SIGNALING_SERVER = "https://vc4all.in";
+    socket = io(SIGNALING_SERVER);
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+
+
   <style>
+    .no-js #loader {
+      display: none;
+    }
+
+    .js #loader {
+      display: block;
+      position: absolute;
+      left: 100px;
+      top: 0;
+    }
+
+    .se-pre-con {
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background: url(Preloader_2.gif) center no-repeat #fff;
+    }
+
     .red {
       background-color: red;
     }
@@ -91,6 +123,22 @@
     }
 
     #loading {
+      display: block;
+      position: absolute !important;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      width: 100vw;
+      height: 100vh;
+      background-color: green;
+      background-image: url("gears-animation.gif");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #0a425f;
+      background-size: 175px;
+    }
+
+    #loadings {
       display: block;
       position: absolute !important;
       top: 0;
@@ -237,14 +285,14 @@
       }
     }
 
-    function show(id, value) {
-      document.getElementById(id).style.display = value ? 'block' : 'none';
-    }
+    // function show(id, value) {
+    //   document.getElementById(id).style.display = value ? 'block' : 'none';
+    // }
 
-    onReady(function () {
-      show('page', true);
-      show('loading', false);
-    });
+    // onReady(function () {
+    //   show('page', true);
+    //   show('loading', false);
+    // });
   </script>
 
 </head>
@@ -252,28 +300,30 @@
 
 
 <body>
-  <div id="loading"></div>
+  <div class="se-pre-con"></div>
+
   <div ng-app="vcApp" ng-controller="vcAppCtrl">
-    <spinner name="spinner" id="veil"></spinner>
+    <!-- <spinner name="spinner" id="veil"></spinner>
+    <div id="loading"></div> -->
     <div id="page" ui-view>
       <!--==========================
     Header
 ============================-->
       <header id="header">
-        <div class="container ">
+        <div class="container">
           <div id="logo" class="pull-left">
             <span>
               <img style="float:left;" src="/home/img/fav.png" />
-              <a href="/" id="mm" style="font-size: 22px;
+              <a href="/" id="mm" style="font-size: 33px;
+              letter-spacing: -2.3px;
           font-weight: 500;
           font-family: 'Allerta Stencil';
           color: #a8cf44 !important;
           float: left;
-          margin-top: 8px;
-          text-transform: uppercase;
-          text-shadow: 2px 2px 4px #000000;">
+          margin-top: 4px;
+          text-transform: uppercase;">
                 <span>
-                  <span id="vc">VC</span><span  id="4all" style="color: #2577be;">4ALL</span>
+                  <span id="vc">VC4ALL</span>
                 </span>
               </a>
             </span>
@@ -303,6 +353,17 @@
         </div>
       </header>
 
+      <!-- <img   class="kklklk" src="robot.gif" style="margin-top: 81px; background: #a8d043ab; z-index: 1000; width: 100px;">-->
+      <div id="greenline" style="position: fixed;
+      height: 5px;
+      left: 0;
+      top: 81px;
+      right: 0;
+      background: white;
+      z-index: 1000;
+      transition: all 0.5s;">
+      </div>
+
 
 
       <!--==========================
@@ -312,42 +373,33 @@
         <div class="hero-container ">
           <div class="">
             <center>
-              <h1 class="quotes" style="width: fit-content;
-            font-family: 'Allerta Stencil';
+              <div class="quotes" style="width: fit-content;
+              font-family: Aclonica;
             height: auto;
-            color: floralwhite;
             font-weight: 300;
             font-size:6vw;
-            line-height: 1;
-            text-shadow: 2px 2px 4px #000000;
-              ">Welcome to VC4ALL</h1>
-              <h1 class="quotes" style="width: fit-content;
-            font-family: 'Allerta Stencil';
-              height: auto;
-              color: yellow;
-              font-weight: 300;
-              font-size:6vw;
-              line-height: 1;
-              text-shadow: 2px 2px 4px #000000;
-                ">The Ultimate Platform</h1>
-              <h1 class="quotes" style="width: fit-content;
-            font-family: 'Allerta Stencil';
-                height: auto;
-                color: floralwhite;
-                font-weight: 300;
-                font-size:6vw;
-                line-height: 1;
-                text-shadow: 2px 2px 4px #000000;
-                  ">For Video Conferencing</h1>
-              <h1 class="quotes" style="width: fit-content;
-            font-family: 'Allerta Stencil';
-                  height: auto;
-                  color: floralwhite;
-                  font-weight: 300;
-                  font-size:6vw;
-                  line-height: 1;
-                  text-shadow: 2px 2px 4px #000000;
-                    ">And Instant Messaging</h1>
+            line-height: 1;">
+                Welcome to
+                <span style="font-size:6vw; color:#a8cf44;">VC4ALL</span>
+              </div>
+              <div class="quotes" style="width: fit-content;
+              font-family: Aclonica;
+            height: auto;
+            font-weight: 300;
+            font-size:6vw;
+            line-height: 1;">The Ultimate Platform</div>
+              <div class="quotes" style="width: fit-content;
+              font-family: Aclonica;
+          height: auto;
+          font-weight: 300;
+          font-size:6vw;
+          line-height: 1;">For Video Conferencing</div>
+              <div class="quotes" style="width: fit-content;
+              font-family: Aclonica;
+        height: auto;
+        font-weight: 300;
+        font-size:6vw;
+        line-height: 1;">And Instant Messaging</div>
               <!-- <a href="#about" class="btn-get-started">Start Journey</a> -->
             </center>
           </div>
@@ -466,7 +518,7 @@
               <h3 class="section-title">&nbsp</h3>
               <h3 class="section-title" style="color:#3f3f3f;">About us</h3>
               <h3 class="section-title"></h3>
-              <p class="section-description" style="color:#3f3f3f;text-align: justify; font-family: -webkit-body; font-size:15px;">
+              <p class="section-description" style="color:#3f3f3f;text-align: justify; font-family:sans-serif; font-size:15px;">
                 VC4ALL is a holistic new age technology platform for schools integrated with messaging and video conferencing.
                 <br>
                 <br> The genesis of VC4All is to ease the communication between Parent and Teacher, and get connected anywhere.
@@ -530,6 +582,7 @@
                           <span>
                             <img style="width: 60px;margin-top: -20px;" src="/home/img/fav.png" />
                             <a href="/" id="mm" style="
+                            letter-spacing: -2.3px;
                             font-size: 18px;
                             font-family: 'Allerta Stencil';
                             color: wb;
@@ -538,18 +591,15 @@
                             color: #a8cf44;
                             margin-top: 8px;
                             text-transform: uppercase;
-                            ">VC
-                              <span style="color: #2577be;">4ALL</span>
-                            </a>
+                            ">VC4ALL</span>
+                          </a>
                           </span>
 
                         </div>
                       </td>
                     </tr>
                     <tr>
-                      <td style="
-                      text-shadow: 2px 2px 4px #000000;
-                      font-size: 15px;
+                      <td style="font-size: 15px;
                       font-family: sans-serif;
                       color: #a8cf44;"> Careator Technologies Private Limited</td>
                     </tr>
@@ -695,6 +745,18 @@
       <script src="/home/lib/superfish/superfish.min.js"></script>
       <script src="/home/lib/counterup/counterup.min.js"></script>
       <script src="/home/js/main.js"></script>
+      <script>
+        //paste this code under the head tag or in a separate js file.
+        // Wait for window load
+        $(window).load(function () {
+          // Animate loader off screen
+          $(".se-pre-con").fadeOut("slow");;
+        });
+        $(page).load(function () {
+          // Animate loader off screen
+          $(".se-pre-con").fadeOut("slow");;
+        });
+      </script>
     </div>
 
   </div>
