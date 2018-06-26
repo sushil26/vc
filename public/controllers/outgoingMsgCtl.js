@@ -35,7 +35,6 @@ app.controller('outgoingMsgCtl', function ($scope, $rootScope, $state, $window, 
 
     $scope.quickMsgGet = function () {
         console.log("quickMsgGet-->");
-        $scope.events = [];
         var id = $scope.userData.id;
         var api = $scope.propertyJson.VC_quickMsgGet + "/" + id;
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
@@ -61,8 +60,7 @@ app.controller('outgoingMsgCtl', function ($scope, $rootScope, $state, $window, 
                         "senderMN": $scope.eventData[x].senderMN,
                         "receiverEmail": $scope.eventData[x].receiverEmail,
                         'startsAt': new Date($scope.eventData[x].date),
-                        'color': $scope.eventData[x].primColor,
-                        "notificationNeed": $scope.eventData[x].notificationNeed
+                        'color': $scope.eventData[x].primColor
                     }
                     if ($scope.eventData[x].messageType != 'wholeClass') {
                         obj.student_Name = $scope.eventData[x].student_Name;
@@ -100,31 +98,15 @@ app.controller('outgoingMsgCtl', function ($scope, $rootScope, $state, $window, 
             backdropClass: 'show',
             controller: function ($scope, $uibModalInstance) {
                 $scope.eventDetails = $scope.events[id];
-                $scope.viewType = "outgoing";
+                $scope.viewType="outgoing";
                 console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
             }
         })
         console.log("<--viewDetail");
     }
 
-    /* ### Start: Get quickMsg update from quickMsg.js(quickMsgSend method)  ### */  //update the value with new data;
-    socket.on('quickMsg_updated', function (data) {
-        console.log("data: " + JSON.stringify(data));
-        if (data.id == $scope.userData.id || data.remoteId == $scope.userData.id) {
-            $rootScope.$emit("CallParent_quickMsgGet", {}); /* ### Note: calling method of parentController(dashboardCtr) ### */
-            $scope.quickMsgGet();
-        }
-    });
-    /* ### End: Get quickMsg update from quickMsg.js(quickMsgSend method) ### */
-
-    /* ### Start: Get event update from index.js  ### *///update the client with new data;
-    socket.on('quickMsg_viewDetail_toSender', function (data) {
-        console.log("****quickMsg_viewDetail_toSender-->: "+JSON.stringify(data));
-        if ($scope.userData.id == data.userId) {
-            console.log("start calling quickMsgGet");
-            $scope.quickMsgGet();
-        }
-    })
-    /* ### End: Get event update from index.js  ### */
+    // $rootScope.$on("SiblingMethod_quickMsgGet", function () {
+    //     $scope.quickMsgGet();
+    // })
 
 })

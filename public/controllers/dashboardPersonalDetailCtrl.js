@@ -6,12 +6,11 @@ app.controller('dashboardPersonalDetailController', function ($scope, $rootScope
     $scope.userName = $scope.userData.userName;
     var id = $scope.userData.id;
     $scope.propertyJson = $rootScope.propertyJson;
-    console.log("dashboardPersonalDetailController-->");
 
     $scope.getschoollogoPath = function () {
         console.log("getschoollogoPath----------->");
         var schoolName = $scope.userData.schoolName;
-        console.log("schoolName: " + schoolName);
+        console.log("schoolName: "+schoolName);
         var api = $scope.propertyJson.VC_getSchoolData + "/" + schoolName;
         console.log("api: " + api);
         httpFactory.get(api).then(function (data) {
@@ -58,7 +57,4 @@ app.controller('dashboardPersonalDetailController', function ($scope, $rootScope
         console.log("<--getTeacherData");
     }
     $scope.getUserDetails(id);
-
-
-
 })

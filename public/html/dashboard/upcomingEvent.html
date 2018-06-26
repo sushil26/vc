@@ -3,7 +3,7 @@
         <section class="wrapper">
             <div id="profile">
                 <section class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background: #3a4a58">
                         <i class="fa fa-user-circle"></i>
                         <span style="color:white;">&nbspUPCOMING EVENT</span>
                     </div>
@@ -33,7 +33,7 @@
                                             </th>
                                             <!-- <th>
                                                 <i class="icon_clock"></i> End Time
-                                                 <i class="arrow_up_alt pull-right"></i>
+                                                <!-- <i class="arrow_up_alt pull-right"></i>
                                                 <i class="arrow_down_alt pull-right"></i> -->
                                             <!-- </th> -->
 
@@ -45,52 +45,26 @@
                                     <tbody style="background: white">
                                         <tr ng-repeat="event in events" ng-if="event.startsAt>=todayDate">
                                             <td ng-if="event.notificationNeed == 'yes'">
-                                                <div ng-if="event.userId == userData.id">
-                                                    <a class="fa fa-envelope"></a>&nbsp;
-                                                    <b>{{event.title}}</b>
-                                                    <a style="color:green;" class="fa fa-arrow-circle-right"></a>
-                                                   
-                                                </div>
-
-                                                <div ng-if="event.userId != userData.id">
-                                                    <a class="fa fa-envelope"></a>&nbsp;
-                                                    <b>{{event.title}}</b>
-                                                    <a style="color:royalblue;" class="fa fa-arrow-circle-left"></a>
-                                                   
-                                                </div>
+                                                <a class="fa fa-envelope"></a>&nbsp;<b>{{event.title}}</b>
                                             </td>
-
                                             <td ng-if="event.notificationNeed != 'yes'">
-                                                <div ng-if="event.userId == userData.id">
-                                                    <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}
-                                                    <a style="color:green;" class="fa fa-arrow-circle-right"></a>
-                                                  
-                                                </div>
-                                                <div ng-if="event.userId != userData.id">
-                                                        <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}
-                                                        <a style="color:royalblue;" class="fa fa-arrow-circle-left"></a>
-                                                    </div>
-
-                                            </td>
+                                                <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}</td>
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>{{event.startsAt | date:'h:mm a'}}-{{event.endsAt | date:'h:mm a'}}</td>
 
                                             <td>
                                                 <div class="btn-group">
-                                                    <!-- <a ng-if="event.startsAt!=todayDate" class="btn btn-primary" target="_blank" ng-click="waitForTime(event.startsAt| date:'MMM d, y h:mm a')">
+                                                    <a ng-if="event.startsAt!=todayDate" class="btn btn-primary" target="_blank" ng-click="waitForTime(event.startsAt| date:'MMM d, y h:mm a')">
                                                         <i class="icon_headphones"></i>&nbspStart
-                                                    </a> -->
-                                                    <!-- <a ng-if="(event.startsAt==todayDate || event.endsAt==todayDate) || (event.startsAt>=todayDate && event.endsAt<=todayDate)"
+                                                    </a>
+                                                    <a ng-if="(event.startsAt==todayDate || event.endsAt==todayDate) || (event.startsAt>=todayDate && event.endsAt<=todayDate)"
                                                         class="btn btn-primary" ng-click="conferenceStart(event.id, event.url, event.studUserId)">
-                                                        <i class="icon_headphones"></i>&nbspStart
-                                                    </a> -->
-                                                    <a class="btn btn-primary" ng-click="conferenceStart(event.id, event.url, event.studUserId)">
                                                         <i class="icon_headphones"></i>&nbspStart
                                                     </a>
                                                     <a ng-if="loginType=='teacher'" class="btn btn-success" href="" ng-click="rescheduleEvent($index)">
                                                         <i class="fa fa-pencil"></i>&nbsp;Reschedule
                                                     </a>
-                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id, event.userId)">View</button>
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id)">View</button>
                                                 </div>
                                             </td>
                                         </tr>

@@ -1,4 +1,4 @@
-app.controller('historyController', function ($scope, $rootScope, $state, $window, httpFactory, sessionAuthFactory, $uibModal) {
+app.controller('historyController', function ($scope, $rootScope, $window, httpFactory, sessionAuthFactory, $uibModal) {
     console.log("historyController==>");
     $scope.events = [];
     $scope.userData = sessionAuthFactory.getAccess("userData");
@@ -42,6 +42,7 @@ app.controller('historyController', function ($scope, $rootScope, $state, $windo
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
                 $scope.eventData = data.data.data;
+
                 // ownerEvents = [];
                 for (var x = 0; x < $scope.eventData.length; x++) {
                     console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
@@ -66,9 +67,6 @@ app.controller('historyController', function ($scope, $rootScope, $state, $windo
                         "receiverMN": $scope.eventData[x].receiverMN,
                         "remoteCalendarId": $scope.eventData[x].remoteCalendarId
                     }
-                    if ($scope.eventData[x].vcRecordId) {
-                        obj.vcRecordId = $scope.eventData[x].vcRecordId;
-                    }
                     console.log(" obj" + JSON.stringify(obj))
                     $scope.events.push(obj);
                 }
@@ -78,52 +76,20 @@ app.controller('historyController', function ($scope, $rootScope, $state, $windo
             }
         })
     }
-
     // $scope.eventGet();
     $scope.viewDetail = function (id) {
         console.log("viewDetail-->");
-        console.log("id: "+id);
-        $state.go('dashboard.viewEvent', { 'id': id});
-        // console.log("id: " + id);
-        // var indexId = id;
-        // var id = $scope.events[indexId].vcRecordId;
-        // var api = $scope.propertyJson.VC_getRecordVideo + "/" + id;
-        // console.log("api: " + api);
-        // httpFactory.get(api).then(function (data) {
-        //     var checkStatus = httpFactory.dataValidation(data);
-        //     console.log("data--" + JSON.stringify(data.data));
-        //     if (checkStatus) {
-        //         console.log("status true");
-        //         $scope.videoSrc = data.data.data;
-        //         //console.log(" $scope.videoSrc: "+ $scope.videoSrc);
-        //     }
-        //     else {
-        //         console.log("Sorry: status false");
-        //         console.log("data: "+JSON.stringify(data));
-        //     }
-        //     // console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
-        // })
-        // var eClicked = $uibModal.open({
-        //     scope: $scope,
-        //     templateUrl: '/html/templates/eventDetails.html',
-        //     windowClass: 'show',
-        //     backdropClass: 'show',
-        //     controller: function ($scope, $uibModalInstance) {
-        //         $scope.eventDetails = $scope.events[indexId];
-        //         // var video = document.getElementById('videoPlayer');
-        //         $scope.videoSrc = 'data:video/webm;base64,' + $scope.videoSrc;
-        //         console.log("$scope.videoSrc: " + $scope.videoSrc);
-        //         // $scope.videoSrc =  $scope.videoSrc;
-        //         //console.log("$scope.events["+indexId+"]: "+JSON.stringify($scope.events[indexId]));
-
-        //     }
-        // })
+        console.log("id: " + id);
+        var eClicked = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/html/templates/eventDetails.html',
+            windowClass: 'show',
+            backdropClass: 'show',
+            controller: function ($scope, $uibModalInstance) {
+                $scope.eventDetails = $scope.events[id];
+                console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+            }
+        })
         console.log("<--viewDetail");
     }
-
-    //update the client with new data;
-    socket.on('eventUpdatedForHistory', function (data) {
-        console.log("data: " + JSON.stringify(data));
-        $scope.eventGet();
-    });
 })

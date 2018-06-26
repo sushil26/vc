@@ -69,38 +69,4 @@ app.controller('changePasswordCtl', function ($scope, $rootScope, $filter, $wind
         })
         console.log("<--passwordChange");
     }
-    $scope.sendVideo = function () {
-        console.log("getVideo-->");
-        var api = 'record/getRecordVideo';
-        console.log("api: " + api);
-        httpFactory.get(api).then(function (data) {
-            console.log("data--" + JSON.stringify(data.data));
-            var checkStatus = httpFactory.dataValidation(data);
-            console.log("data--" + JSON.stringify(data.data));
-            $scope.videoSrc = JSON.stringify(data.data.data);
-            var video = document.getElementById('videoPlayer');
-            video.src = 'data:video/webm;base64,'+data.data.data;
-            console.log("$scope.videoSrc: "+JSON.stringify($scope.videoSrc));
-            if (checkStatus) {
-                // $scope.adminList = data.data.data;
-                // console.log("adminList: " + JSON.stringify($scope.adminList));
-                // console.log(data.data.message);
-            }
-            else {
-                console.log("Sorry");
-            }
-
-        })
-        console.log("<--getVideo");
-    }
-    $scope.sendVideo();
-
-    // const VP = document.getElementById('videoPlayer')
-    // const VPToggle = document.getElementById('toggleButton')
-
-    // VPToggle.addEventListener('click', function () {
-    //     if (VP.paused) VP.play()
-    //     else VP.pause()
-    // })
-
 })

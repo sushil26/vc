@@ -3,7 +3,7 @@
         <section class="wrapper">
             <div id="profile">
                 <section class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background: #3a4a58">
                         <i class="fa fa-envelope"></i>
                         <span style="color:white;">&nbspOUTBOX</span>
                     </div>
@@ -39,14 +39,7 @@
                                     </thead>
                                     <tbody style="background: white">
                                         <tr ng-repeat="event in events" ng-if="event.userId==userData.id">
-                                           <td ng-if="event.notificationNeed == 'yes'">
-                                                <a class="fa fa-envelope"></a>&nbsp;
-                                                <b>{{event.title}}</b>
-                                            </td>
-                                            <td ng-if="event.notificationNeed != 'yes'">
-                                                <a class="fa fa-envelope-open-o"></a>&nbsp;
-                                                {{event.title}}
-                                            </td>
+                                            <td>{{event.title}}</td>
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>
                                                 <div class="btn-group">

@@ -9,7 +9,6 @@ var ObjectId = require('mongodb').ObjectID;
 
 var bodyParser = require('body-parser');
 
-
 var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
@@ -22,8 +21,6 @@ var transporter = nodemailer.createTransport({
         rejectUnauthorized: false
     }
 });
-
-// var io = require('socket.io');
 
 module.exports.getToDate = function (req, res) {
     console.log("getToDate-->");
@@ -87,8 +84,6 @@ module.exports.eventSend = function (req, res) {
                 res.status(400).send(responseData);
             }
             else {
-                var io = req.app.get('socketio');
-                io.emit('eventUpdated', { "id": req.body.remoteCalendarId, "remoteId": req.body.remoteCalendarId }); /* ### Note: Emit message to upcomingEventCtrl.js ### */
                 var mailOptions = {
                     from: "info@vc4all.in",
                     to: req.body.receiverEmail,
@@ -107,7 +102,6 @@ module.exports.eventSend = function (req, res) {
                             "data": userData
                         }
                         res.status(200).send(responseData);
-
                     } else {
                         console.log('Email sent: ' + info.response);
                         responseData = {
@@ -148,7 +142,7 @@ module.exports.eventNotificationOff = function (req, res) {
         }
         console.log("queryId: " + JSON.stringify(queryId));
         console.log("obj: " + JSON.stringify(obj));
-        event.update(queryId, { $set: obj }, function (err, data) {
+        event.update(queryId, { $set: obj },function (err, data) {
             console.log("data: " + JSON.stringify(data));
             if (err) {
                 responseData = {
@@ -177,14 +171,15 @@ module.exports.eventNotificationOff = function (req, res) {
         res.status(400).send(responseData);
     }
 }
+
 module.exports.eventGet = function (req, res) {
-    console.log("*getEvent-->");
+    console.log("getEvent-->");
     var responseData;
     console.log("req.params.id: " + req.params.id);
 
     if (general.emptyCheck(req.params.id)) {
         event.find({ $or: [{ "userId": req.params.id }, { "remoteCalendarId": req.params.id }] }).sort({ "$natural": -1 }).toArray(function (err, listOfevents) {
-            // console.log("listOfevents: " + JSON.stringify(listOfevents))
+            console.log("listOfevents: " + JSON.stringify(listOfevents))
             if (err) {
                 responseData = {
                     "status": false,
@@ -578,7 +573,6 @@ module.exports.eventReSchedule = function (req, res) {
                 };
                 res.status(400).send(responseData);
             } else {
-                // io.emit('eventUpdated', { "id": req.body.remoteCalendarId, "remoteId": req.body.remoteCalendarId });
                 responseData = {
                     status: true,
                     message: "Rescheduled successfully",

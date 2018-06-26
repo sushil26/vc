@@ -768,11 +768,11 @@ module.exports.uploadFeeFile = function (req, res) {
     feeType = req.params.reportType;
     clas = req.params.clas;
     section = req.params.section;
-
-    if (feeType == 'Other') {
+  
+    if(feeType=='Other'){
         fee_otherName = req.params.fee_otherName;
     }
-    else {
+    else{
 
     }
     console.log("req.body.files: " + req.files.img);
@@ -869,8 +869,9 @@ module.exports.uploadFeeSheet = function (data, callback) {
         "dueAmout": data.DueAmount,
         "lastDateToPaid": data.LastDateToPaid
     }];
-    if (feeType == 'Other') {
-        fee[0].fee_otherName = fee_otherName;
+    if(feeType=='Other')
+    {
+        fee[0].fee_otherName = fee_otherName; 
     }
 
     var studIdForFindQry = {
@@ -1025,7 +1026,7 @@ module.exports.feeUpdate = function (req, res) {
     console.log("req.body.files: " + req.files.img);
     var fileName = req.files.img.name;
     var fileNameSeparate = fileName.split('_');
-    console.log("fileNameSeparate[0]: " + fileNameSeparate[0]);
+    console.log("fileNameSeparate[0]: "+fileNameSeparate[0]);
     if (fileNameSeparate[0] == 'FeeUpdate') {
         if (!req.files)
             return res.status(400).send('No files were uploaded.');
@@ -2004,16 +2005,13 @@ module.exports.uploadStudentMaster = function (req, res) {
             console.log("data: " + JSON.stringify(data));
             csData = [{ "class": req.params.clas, "section": req.params.section }];
             parser.pause();
-            console.log("data.StudentID: " + data.StudentID);
-            if (data.StudentID != '#end#') {
-                if (studentFileValidationMessage == null) {
-                    module.exports.studentMasterValidation(data, function (err) {
-                        console.log("savedatInitiate");
-                        // TODO: handle error
-                        console.log("studentFileValidationFunction start-->: " + studentFileValidationMessage);
-                        parser.resume();
-                    });
-                }
+            if (studentFileValidationMessage == null) {
+                module.exports.studentMasterValidation(data, function (err) {
+                    console.log("savedatInitiate");
+                    // TODO: handle error
+                    console.log("studentFileValidationFunction start-->: " + studentFileValidationMessage);
+                    parser.resume();
+                });
             }
             else {
                 // parser.end();
@@ -2411,19 +2409,16 @@ module.exports.uploadTeacherMaster = function (req, res) {
             console.log("data: " + JSON.stringify(data));
             // var csData = [{ "class": req.params.class, "section": req.params.section }];
             parser.pause();
-            console.log("data.TeacherID: "+data.TeacherID);
-            if (data.TeacherID != '#end#') {
-                if (teacherFileValidationMessage == null) {
-                    module.exports.teacherMasterValidation(data, function (err) {
-                        console.log("savedatInitiate");
-                        // TODO: handle error
-                        console.log("teacherFileValidation function start-->: " + teacherFileValidationMessage);
-                        console.log("objJson: " + JSON.stringify(objJson));
-                        parser.resume();
-                    });
-                }
-            }
 
+            if (teacherFileValidationMessage == null) {
+                module.exports.teacherMasterValidation(data, function (err) {
+                    console.log("savedatInitiate");
+                    // TODO: handle error
+                    console.log("teacherFileValidation function start-->: " + teacherFileValidationMessage);
+                    console.log("objJson: " + JSON.stringify(objJson));
+                    parser.resume();
+                });
+            }
             else {
                 // parser.end();
                 parser.resume();

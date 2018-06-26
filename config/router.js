@@ -6,30 +6,14 @@ var adminAction = require('./controllers/adminAction');
 var school = require('./controllers/school');
 var careator = require('./controllers/careator');
 
-var record = require('./controllers/record');
-var capture = require('./controllers/capture');
-
 module.exports = function (app) {
 
-    app.post('/vc/captureImgSend/:parentEmail/:studName', capture.captureImgSend);
-    
     app.post('/careator/pswdGenerate', careator.pswdGenerate);
     app.post('/careator/pswdCheck', careator.pswdCheck);
     app.post('/careator/emailInvite', careator.emailInvite);
-    app.post('/careator/setCollection', careator.setCollection);
-    app.get('/chatHistory/getHistory', careator.getHistory);
-    app.get('/chatHistory/getHistoryByEmailId/:email', careator.getHistoryByEmailId);
-
-    app.post('/record/pswdGenerate', record.pswdGenerate);
-    app.post('/record/pswdCheck', record.pswdCheck);
-    app.post('/record/emailInvite', record.emailInvite);
-    app.post('/record/recordVideo', record.recordVideo);
-    app.get('/getRecord/getRecordVideo/:id', record.getRecordVideo);
-    app.get('/record/getVideo/:id', record.getRecordVideo);
 
     app.post('/vc/schoolLogo', image.upload);
     app.post('/vc/profilePicupload', image.profilePicupload);
-    
 
     app.post('/vc/register4VC', user.register4VC);
     app.post('/vc/login4VC', user.login4VC);

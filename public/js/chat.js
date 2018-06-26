@@ -112,7 +112,7 @@ function sendMessage() {
             if (msg) {
                 console.log("Start to emit message  ");
                 console.log("peerNew_id: " + peerNew_id);
-                signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, "email": localStorage.getItem('careatorEmail'), "urlDate":urlDate });
+                signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName });
                 document.getElementById('message').value = "";
             }
         }

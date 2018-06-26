@@ -6,6 +6,8 @@ var ObjectId = require("mongodb").ObjectID;
 var nodemailer = require("nodemailer");
 var createdDate = new Date();
 var randomstring = require("randomstring");
+
+
 var transporter = nodemailer.createTransport({
     service: "godaddy",
     auth: {
@@ -16,10 +18,6 @@ var transporter = nodemailer.createTransport({
         rejectUnauthorized: false
     }
 });
-
-var chatHistory = db.collection("chatHistory");
-
-
 
 module.exports.pswdCheck = function (req, res) {
     console.log("pswdCheck-->");
@@ -77,6 +75,7 @@ module.exports.pswdCheck = function (req, res) {
     console.log("<--pswdCheck");
 }
 
+
 module.exports.pswdGenerate = function (req, res) {
     console.log("pswdGenerate-->");
     console.log("req.body.careatorEmail: " + req.body.careatorEmail);
@@ -107,10 +106,10 @@ module.exports.pswdGenerate = function (req, res) {
                                 from: "info@vc4all.in",
                                 to: email,
                                 subject: 'VC4ALL Credential',
-                                html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, Your email Id is verified successfully, you can access the below link by using given password.<p style=background:gainsboro;>Password: " + password + "</p></td></tr></tbody></table>"
+                                html:"<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, Your email Id is verified successfully, you can access the below link by using given password.<p style=background:gainsboro;>Password: "+password+"</p></td></tr></tbody></table>"
 
                                 // "<html><body><p><b>Dear Careator Employee, </b></p><p>Please note, Your email Id is verified successfully,  you can access the below link by using given password.<p>Password: "+password+"</p></p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></body></html>"
-
+                               
                             };
                             transporter.sendMail(mailOptions, function (error, info) {
                                 if (error) {
@@ -152,7 +151,7 @@ module.exports.pswdGenerate = function (req, res) {
                                 from: "info@vc4all.in",
                                 to: email,
                                 subject: 'VC4ALL Credential',
-                                html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, Your email Id is verified successfully, you can access the below link by using given password.<p style=background:gainsboro;>Password: " + password + "</p></td></tr></tbody></table>"
+                                html:"<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, Your email Id is verified successfully, you can access the below link by using given password.<p style=background:gainsboro;>Password: "+password+"</p></td></tr></tbody></table>"
                             };
                             transporter.sendMail(mailOptions, function (error, info) {
                                 if (error) {
@@ -206,7 +205,7 @@ module.exports.emailInvite = function (req, res) {
         from: "info@vc4all.in",
         to: req.body.email,
         subject: "Regarding Instance Meeting",
-        html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Team,</b></td></tr><tr><td> Please note, you have to attend meeting right now, please open the below link.<p style=background:gainsboro;><p>Here your link <a href=" + req.body.url + ">" + req.body.url + "</a></p></td></tr></tbody></table>"
+        html:"<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Team,</b></td></tr><tr><td> Please note, you have to attend meeting right now, please open the below link.<p style=background:gainsboro;><p>Here your link <a href=" + req.body.url + ">" + req.body.url + "</a></p></td></tr></tbody></table>"
 
         //html:"<html><head><p><b>Dear Team, </b></p><p>Please note, you have to attend meeting right now, please open the below link.<p>Here your link <a href=" + req.body.url + ">" + req.body.url + "</a> </p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
     };
@@ -231,101 +230,4 @@ module.exports.emailInvite = function (req, res) {
     });
 
 }
-
-module.exports.setCollection = function (req, res) {
-    console.log("setCollection-->");
-    console.log("req.body.url: " + req.body.url);
-    console.log("req.body.email: " + req.body.email);
-
-    var obj = {
-        "email": req.body.email,
-        "url": req.body.url,
-        "chat": [],
-        "session_dateTime": new Date()
-    }
-    console.log("obj: " + JSON.stringify(obj));
-    chatHistory.insertOne(obj, function (err, data) {
-        if (err) {
-            console.log("err: " + JSON.stringify(err));
-            responseData = {
-                status: false,
-                message: "UnSuccessfully"
-            };
-            res.status(400).send(responseData);
-        }
-        else {
-            console.log("data: " + JSON.stringify(data));
-            responseData = {
-                status: true,
-                message: "Successfully"
-            };
-            res.status(200).send(responseData);
-        }
-    })
-
-
-}
-
-module.exports.getHistoryByEmailId = function (req, res) {
-    console.log("setCollection-->");
-    var email = req.params.email;
-    var obj = {
-        "email": email,
-    }
-    console.log("obj: " + JSON.stringify(obj));
-    chatHistory.find(obj).toArray(function (err, data) {
-        console.log("data: "+JSON.stringify(data));
-        console.log("data.length: "+data.length);
-        if (err) {
-            console.log("err: " + JSON.stringify(err));
-            responseData = {
-                status: false,
-                message: "UnSuccessfully"
-            };
-            res.status(400).send(responseData);
-        }
-        else {
-            console.log("data: " + JSON.stringify(data));
-            responseData = {
-                status: true,
-                message: "Successfully",
-                data: data
-            };
-            res.status(200).send(responseData);
-        }
-    })
-
-
-}
-
-module.exports.getHistory = function (req, res) {
-    console.log("getHistory-->");
-    
-    chatHistory.find().toArray(function (err, data) {
-        console.log("data: "+JSON.stringify(data));
-        console.log("data.length: "+data.length);
-        if (err) {
-            console.log("err: " + JSON.stringify(err));
-            responseData = {
-                status: false,
-                message: "UnSuccessfully"
-            };
-            res.status(400).send(responseData);
-        }
-        else {
-            console.log("data: " + JSON.stringify(data));
-            responseData = {
-                status: true,
-                message: "Successfully",
-                data: data
-            };
-            res.status(200).send(responseData);
-        }
-    })
-
-
-}
-
-
-
 
