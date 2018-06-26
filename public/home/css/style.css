@@ -12,9 +12,34 @@
 /* Trouble Shoot Section
 --------------------------------*/
 
+@import url(https://fonts.googleapis.com/css?family=Aclonica);
 @import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
+.kklklk {
+  -webkit-animation: air 4s infinite;
+  /* Safari 4.0 - 8.0 */
+  animation: air 5s infinite;
+}
+
+@-webkit-keyframes air {
+  from {
+    margin-left: 0%;
+  }
+  to {
+    margin-left: 100%;
+  }
+}
+
+@keyframes air {
+  from {
+    margin-left: 0%;
+  }
+  to {
+    margin-left: 100%;
+  }
+}
+
 .quotes {
-  color: floralwhite;
+  color: white;
   -webkit-animation: mymo 4s infinite;
   /* Safari 4.0 - 8.0 */
   animation: mymo 4s infinite;
@@ -22,24 +47,22 @@
 
 @-webkit-keyframes mymo {
   from {
-    color: floralwhite;
+    color: white;
   }
   to {
-   
-    color: orange;
+    color: gainsboro;
   }
 }
 
 @keyframes mymo {
   from {
-    
-    color: floralwhite;
+    color: white;
   }
   to {
-    
-    color: orange;
+    color: gainsboro;
   }
 }
+
 /* .elementToFadeInAndOut {
 
   background: red;
@@ -231,15 +254,29 @@ h6 {
 --------------------------------------------------------------*/
 
 #header {
-  background: #1a2732b5;
+  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* IE 10 */
+  background: -ms-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* background: #1a2732b5; */
   padding: 30px 0;
-  height: 60px;
+  height: 81px;
   position: fixed;
   left: 0;
   top: 0;
   right: 0;
   transition: all 0.5s;
   z-index: 997;
+}
+
+.greenline-fixed {
+  top: 60px !important;
+  transition: all 0.5s;
 }
 
 #header #logo {
@@ -263,9 +300,9 @@ h6 {
 }
 
 #header #logo img {
-  width: 63px;
+  width: 81px;
   padding: 0;
-  margin: 0;
+  margin-top: -4px
 }
 
 .cicon {
@@ -273,6 +310,7 @@ h6 {
 }
 
 @media (max-width: 768px) {
+
   .btn {
     font-size: 8px ! important;
   }
@@ -281,14 +319,25 @@ h6 {
   }
   #header #logo img {
     width: 62px;
+    margin-top: 0px;
   }
   #header #mm {
     margin-top: 9px !important;
+    font-size: 22px !important;
   }
 }
 
 #header.header-fixed {
-  background: #1a2732;
+  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* IE 10 */
+  background: -ms-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* background: #1a2732; */
   padding: 20px 0;
   height: 60px;
   transition: all 0.5s;
@@ -429,8 +478,11 @@ h6 {
 /* Nav Meu Container */
 
 #nav-menu-container {
+  letter-spacing: -0.3px;
   float: right;
-  margin: 0;
+  margin-top: 8px;
+  font-family: 'Allerta Stencil';
+  -webkit-font-smoothing: antialiased;
 }
 
 @media (max-width: 768px) {
@@ -446,6 +498,7 @@ h6 {
   text-decoration: none;
   display: inline-block;
   color: #fff;
+  letter-spacing: -1px;
   font-weight: 100;
   text-transform: uppercase;
   /* font-size: 13px; */
@@ -514,8 +567,8 @@ h6 {
 
 #mobile-nav-toggle {
   position: fixed;
-  left: 20px;
-  top:0;
+  right: 10px;
+  top: 0;
   z-index: 999;
   margin: 20px 20px 0 0;
   border: 0;
@@ -542,7 +595,7 @@ h6 {
 #mobile-nav {
   position: fixed;
   top: 0;
-  padding-top:60px;
+  padding-top: 60px;
   bottom: 0;
   z-index: 998;
   /* background: rgba(52, 59, 64, 0.9); */
@@ -553,14 +606,27 @@ h6 {
 }
 
 #mobile-nav ul {
+  letter-spacing: -1px;
+  font-family: 'Allerta Stencil';
   padding: 0;
   margin: 0;
   list-style: none;
+  margin-top: 21px;
 }
 
 #mobile-nav ul li {
   position: relative;
-  background: linear-gradient(#212529c9, #343a40bd);
+  /* background: linear-gradient(#212529c9, #343a40bd); */
+  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* IE 10 */
+  background: -ms-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* background: #1a2732b5; */
 }
 
 #mobile-nav ul li a {
@@ -634,12 +700,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 
 .section-header .section-title {
-  font-size: 32px;
-  color: #111;
+  font-family: 'Aclonica';
+  font-size: 35px;
+  padding: 15px;
+  color: white;
   text-transform: uppercase;
   text-align: center;
-  font-weight: 700;
-  margin-bottom: 5px;
 }
 
 .section-header .section-description {
@@ -740,13 +806,22 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 
 #services {
-  background: #1a3b56;
+  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* IE 10 */
+  background: -ms-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* background: #1a2732b5; */
   background-size: cover;
   padding: 80px 0 60px 0;
 }
 
 #services .box {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   width: 100%;
   padding: 50px 20px;
   margin-bottom: 50px;
@@ -781,7 +856,19 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #services .box:hover .icon i {
-  color: #2dc997;
+  color: black;
+}
+
+#services .box:hover {
+  color: #4CAF50;
+  border: 1px solid #4CAF50;
+  box-shadow: 10px 10px 91px 0px rgba(0, 0, 0, 0.2);
+  -ms-transform: scale(1.1, 1.1);
+  /* IE 9 */
+  -webkit-transform: scale(1.1, 1.1);
+  /* Safari */
+  transform: scale(1.1, 1.1);
+  transition: all 0.2s;
 }
 
 #services .box:hover .icon a {
@@ -1003,7 +1090,16 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 
 #contact {
-  background: #1a3b56;
+  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* IE 10 */
+  background: -ms-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* background: #1a2732b5; */
   /* padding: 80px 0 40px 0; */
 }
 
@@ -1117,7 +1213,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------------------------------------*/
 
 #footer {
-  background: #343b40;
+  background: black;
   padding: 15px 0;
   color: #fff;
   font-size: 14px;

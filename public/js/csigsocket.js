@@ -26,6 +26,7 @@ var peer_media_sselements = {}; /* keep track of our <video>/<audio> tags, index
 var peerNew_id = null;
 var queryLink = null;
 var timeLink = null;
+var urlDate = null;
 var txtQueryLink = null;
 
 // signaling_socket = io(SIGNALING_SERVER);
@@ -69,6 +70,7 @@ if (stuff.length > 5) {
     console.log("No user data from session");
     $("#setName").trigger("click");
   }
+ 
   console.log("userName: " + userName);
 }
 else {
@@ -81,6 +83,7 @@ else {
     console.log("2 cond: emailIdSplit: " + JSON.stringify(emailIdSplit));
     userName = emailIdSplit[0];
     document.getElementById("videoConferenceUrl").style.display = "block";
+   
 
   }
   else {
@@ -189,15 +192,12 @@ function checkPassword() {
 }
 function saveName() {
   console.log("setName-->");
-
   var careatorFriendName = document.getElementById("userName").value;
   localStorage.setItem("careatorFriendName", careatorFriendName);
   userName = localStorage.getItem("careatorFriendName");
   careatorFriendName = true;
   document.getElementById("videoConferenceUrl").style.display = "none";
   document.getElementById("emailInvitation").style.display = "none";
-
-
 }
 
 function emailInvite() {
@@ -225,10 +225,10 @@ function emailInvite() {
       };
       console.log("data: " + JSON.stringify(data));
       document.getElementById("info").innerHTML = data.message;
-      setTimeout(function() {
+      setTimeout(function () {
         $('#info').fadeOut('fast');
-    }, 3000);
-     // document.getElementById("info").innerHTML = data.message;
+      }, 3000);
+      // document.getElementById("info").innerHTML = data.message;
     },
     error: function (err) {
       console.log("err: " + JSON.stringify(err));
@@ -303,30 +303,36 @@ function disconnecSession() {
 
 function startSession(id, date) {
   console.log("startSession-->");
-  window.location.href = "https://vc4all.in/careator/" + id + "/" + date;
+  urlDate = date;
   var url = "https://vc4all.in/careator/" + id + "/" + date;
+
   var obj = {
+    "email": localStorage.getItem('careatorEmail'),
     "url": url
-  };
+  }
+  console.log("obj: " + JSON.stringify(obj));
   $.ajax({
-    url: "https://vc4all.in/vc/sessionCreate",
-    //  url: "http://localhost:5000/vc/login4VC",
+    url: "https://vc4all.in/careator/setCollection",
     type: "POST",
     data: JSON.stringify(obj),
     contentType: "application/json",
     dataType: "json",
     success: function (data) {
       console.log("data: " + JSON.stringify(data));
-      console.log("data.status: " + data.status);
-      if (data.status) {
-        //window.location.href = data.data.url;
-      } else {
-        alert("refresh your page and try again");
-      }
+      window.location.href = "https://vc4all.in/careator/" + id + "/" + date;
+    },
+    error: function (err) {
+      console.log("err: " + JSON.stringify(err));
+      console.log("err.responseText: " + JSON.stringify(err.responseText));
+      console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
+
     }
+
   });
-  console.log(",--startSession");
+
 }
+
+
 
 signaling_socket.on("connect", function () {
   console.log("signaling_socket connect-->");
@@ -341,7 +347,9 @@ signaling_socket.on("connect", function () {
     //console.log("Unique Peer Id: " + config.peer_id)
     queryLink = config.queryId;
     peerNew_id = config.peer_id;
+
     timeLink = config.time;
+    console.log("urlDate: " + urlDate + " timeLink: " + timeLink);
     var dt = new Date();
     var dy = dt.getDay().toString();
     var fy = dt.getFullYear().toString();
@@ -349,7 +357,7 @@ signaling_socket.on("connect", function () {
     var hr = dt.getHours().toString();
 
     var date = dy.concat(fy, m, hr);
-
+    urlDate = date;
     console.log("queryLink: " + queryLink);
     console.log("peerNew_id: " + peerNew_id);
     console.log("date: " + date);
@@ -357,7 +365,7 @@ signaling_socket.on("connect", function () {
     if (config.queryId == null) {
       console.log("query id is null");
       document
-        .getElementById("videoConferenceUrl")
+        .getElementById("videoConfStart")
         .setAttribute(
           "onclick",
           "startSession('" + peerNew_id + "' , '" + date + "')"

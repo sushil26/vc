@@ -3,7 +3,7 @@
         <section class="wrapper">
             <div id="profile">
                 <section class="panel">
-                    <div class="panel-heading" style="background: #3a4a58">
+                    <div class="panel-heading">
                         <i class="fa fa-user-circle"></i>
                         <span style="color:white;">&nbspMEETING HISTORY</span>
                     </div>
@@ -38,14 +38,14 @@
                                                 <i class="icon_cogs"></i> Action</th>
 
                                         </tr>
-                                        <tr ng-repeat="event in events  | orderBy:'-startsAt'" ng-if="event.startsAt<todayDate">
-
+                                       <!-- <tr ng-repeat="event in events  | orderBy:'-startsAt'" ng-if="event.startsAt<todayDate"> -->
+                                        <tr ng-repeat="event in events  | orderBy:'-startsAt'">
                                             <td>{{event.title}}</td>
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>{{event.startsAt | date:'h:mm a'}}-{{event.endsAt | date:'h:mm a'}}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <button class="btn btn-primary" ng-click="viewDetail($index)">View</button>
+                                                    <button class="btn btn-primary" ng-click="viewDetail(event.id)">View</button>
                                                     <a class="btn btn-primary" href="#">
                                                         <i class="icon_plus_alt2"></i>&nbsp;Chat
                                                     </a>

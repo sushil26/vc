@@ -3,7 +3,7 @@
         <section class="wrapper">
             <div id="profile">
                 <section class="panel">
-                    <div class="panel-heading" style="background: #3a4a58">
+                    <div class="panel-heading">
                         <i class="fa fa-inbox"></i>
                         <span style="color:white;">&nbspINBOX</span>
                     </div>
@@ -42,13 +42,13 @@
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id)">View</button>
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id, event.userId)">View</button>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                     <tbody style="background: white" ng-if="loginType=='studParent'">
-                                        <tr ng-repeat="event in events">
+                                        <tr ng-repeat="event in events" ng-if="(loginType=='studParent' && event.remoteCalendarId && event.remoteCalendarId==userData.id)">
 
                                             <td ng-if="event.notificationNeed == 'yes'">
                                                 <a class="fa fa-envelope"></a>&nbsp;
@@ -59,7 +59,7 @@
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id)">View</button>
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id, event.userId)">View</button>
                                                 </div>
                                             </td>
                                         </tr>

@@ -423,7 +423,16 @@ table tr th {
   width: 180px;
   height: 100%;
   position: fixed;
-  background: #1b2833;
+  /* background: #1b2833; */
+  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(top, #030b3c, #00bcd4f2);
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(top, #030b3c, #00bcd4f2);
+  /* IE 10 */
+  background: -ms-linear-gradient(top, #030b3c, #00bcd4f2);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(top, #030b3c, #00bcd4f2);
 }
 
 .nav-collapse.collapse {
@@ -737,7 +746,15 @@ ul.sidebar-menu li.active a i {
 }
 
 .dark-bg {
-  background: rgba(54, 66, 74, 1);
+  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* IE 10 */
+  background: -ms-linear-gradient(left, #030b3c, #00bcd4f2);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(left, #030b3c, #00bcd4f2);
   border-bottom: 1px solid #f1f2f7;
 }
 
@@ -1325,8 +1342,7 @@ div[data-role="editor-toolbar"] {
 
 .dark-bg {
   color: #fff;
-  background: #1a2732;
-  background-color: #1a2732;
+  
 }
 
 .facebook-bg {
@@ -4243,7 +4259,9 @@ ul.amounts li {
 
 .panel-heading,
 .modal-header {
-  background: #1a3b56;
+
+  background: #072a56;
+  /* background: #1a3b56; */
   color: white;
 }
 

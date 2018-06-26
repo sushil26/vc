@@ -19,7 +19,7 @@
     <link href="/home/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/chatZone.css" />
     <script src="/js/clientmain.js"></script>
-    <!-- <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"></script> -->
+    <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
     <script src="/js/studentMarkAtt_automation.js"></script>
@@ -53,7 +53,8 @@
                     float: left;
                     margin-top: 8px;
                     letter-spacing: 1px;
-                    text-transform: uppercase;">VC<span style="color:#2577be;">4ALL</span>
+                    text-transform: uppercase;">VC
+                        <span style="color:#2577be;">4ALL</span>
                         <!-- <h1 style="color:azure;float:left;text-shadow: 2px 2px 4px #000000; margin-top: 13px;">&nbspVC4ALL</h1> -->
                 </span>
             </div>
@@ -75,23 +76,9 @@
                         <a href="#" onclick="result()">Result
                         </a>
                     </li>
-
-                    <!-- <li>
-                        <a href="#contact" style="text-shadow: 2px 2px 4px #000000;">Contact Us</a>
-                    </li> -->
                     <li id="userAuth" style="display:none; text-shadow: 2px 2px 4px #000000;">
                         <a href="https://vc4all.in/mainPage#!/userAuth">Teacher List</a>
                     </li>
-                    <!-- <li id="appLogin" style="display:block;">
-                        <a href="#" data-target="#crdntl" data-toggle="modal" style="text-shadow: 2px 2px 4px #000000;">Login</a>
-                    </li> -->
-                    <!-- <li id="appReg" style="display:block;">
-                        <a href="#" data-target="#regVC" data-toggle="modal" style="text-shadow: 2px 2px 4px #000000;">Register</a>
-                    </li> -->
-                    <!-- <li id="appLogout" style="display:none;">
-                        <a href="#" onclick="vcLogout()" style="text-shadow: 2px 2px 4px #000000;">Logout</a>
-                    </li> -->
-
 
                 </ul>
             </nav>
@@ -111,8 +98,6 @@
                     <div class="col-lg-12">
 
                         <center>
-
-
                             <a id="videoConferenceUrl" style="display:none;">
                                 <button id="videoConfStart" class="bouncy fa fa-play-circle">
                                     &nbsp
@@ -129,15 +114,6 @@
                                     <b style="color:black">Stop Sharing</b>
                                 </button>
                             </a>
-
-                            <!-- <a id="screenRecordBtn" class="">
-                                <button class=" fa fa-window-restore">&nbspRecordStart</button>
-                            </a>
-                            <a id="screenRecordStop">
-                                <button class=" fa fa-stop" style="color:red">&nbsp
-                                    <b style="color:black">Stop Recording</b>
-                                </button>
-                            </a> -->
                             <a id="addChatWindow" class="">
                                 <button style="display:none;;color:black;" id="openChat" class="bouncy fa fa-comments">&nbsp
                                     <b>Chat
@@ -145,9 +121,6 @@
                                     </b>
                                 </button>
                             </a>
-
-
-
                             <a id="audio_btn" style="display:none">
 
                                 <button id="audioMute_btn" class="bouncy fa fa-microphone-slash" style="color:black">&nbsp
@@ -167,31 +140,9 @@
                                     <b>Call Close</b>
                                 </button>
                             </a>
-                            <!-- <section class="experiment" style="padding: 5px;"> -->
-                            <!-- <label for="time-interval">Time Interval (milliseconds):</label>
-                                <input type="text" id="time-interval" value="5000">ms -->
-
-                            <!-- <button id="start-recording">Start</button> -->
-                            <!-- <button id="stop-recording" >Stop</button> -->
-
-                            <!-- <button id="pause-recording" disabled>Pause</button>
-                                <button id="resume-recording" disabled>Resume</button>
-                                
-                                <button id="add-stream" disabled>Add another video</button> -->
-                            <!-- </section> -->
-                            <!--                     
-                            <section class="experiment">
-                                <div id="container"></div>
-                            </section>
-                            <hr style="border-top:0;"> -->
-
-
                             <div id="portfolio-wrapper" style="margin-right:auto;">
                             </div>
                             <button id="btnrestore" class="fa fa-window-restore btn" style="z-index: 2; position: absolute; display:none;"></button>
-
-
-
                         </center>
                     </div>
 
@@ -224,8 +175,23 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
+                    <section class="experiment" style="padding: 5px;">
+                        <label for="time-interval">Time Interval (milliseconds):</label>
+                        <input type="text" id="time-interval" value="50000">ms
+
+                        <button id="start-recording">Start</button>
+                        <button id="stop-recording" disabled>Stop</button>
+
+                        <button id="pause-recording" disabled>Pause</button>
+                        <button id="resume-recording" disabled>Resume</button>
+
+                        <button id="add-stream" disabled>Add another video</button>
+                    </section>
+
+                    <section class="experiment">
+                        <div id="container"></div>
+                    </section>
                     <center>
                         <div id="videoConferenceLinkExtention" style="display:none;">
 
