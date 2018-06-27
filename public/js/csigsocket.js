@@ -1095,10 +1095,7 @@ function setup_local_media(callback, errorback) {
             $("<video>") :
             $("<audio>");
           //local_mediaScreenShare.attr("autoplay", "autoplay");
-          local_mediaScreenShare.attr(
-            "muted",
-            true
-          ); /* always mute ourselves by default */
+          local_mediaScreenShare.prop("muted", true );/* always mute ourselves by default */
           // local_mediaScreenShare.attr("controls", "");
           local_mediaScreenShare.attr("id", "screenShareElem");
           local_mediaScreenShare.attr("autoplay", "true");
@@ -1149,6 +1146,7 @@ function setup_local_media(callback, errorback) {
                 /* always mute ourselves by default */
                 // local_media.attr("controls", "");
                 local_media.attr("id", "videoElem");
+                local_media.attr("autoplay", "true");
                 local_media.attr("style", "border:1px solid skyblue");
                 $("#videosAttach").append(local_media);
 
