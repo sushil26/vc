@@ -241,7 +241,7 @@ function checkPassword() {
           localStorage.setItem("chatRights", 'yes');
           document.getElementById("chatConfStart").style.display = "inline";
         }
-        if(data.data.chatStatus){
+        if (data.data.chatStatus) {
           localStorage.setItem("chatStatus", data.data.chatStatus);
         }
         if (data.data.restrictedTo) {
@@ -490,6 +490,34 @@ function startSession(id, date) {
     }
   });
 }
+
+document.getElementById("addChatWindow").addEventListener("click", function () {
+  console.log("addChatWindow-->");
+
+  var obj = {
+    "url": url
+  }
+  console.log("obj: " + JSON.stringify(obj));
+  $.ajax({
+    url: "https://vc4all.in/chatHistory/getChatByUrl",
+    type: "POST",
+    data: JSON.stringify(obj),
+    contentType: "application/json",
+    dataType: "json",
+    success: function (data) {
+      console.log("data: " + JSON.stringify(data));
+     
+    },
+    error: function (err) {
+      console.log("err: " + JSON.stringify(err));
+      console.log("err.responseText: " + JSON.stringify(err.responseText));
+      console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
+    }
+  });
+
+
+})
+
 signaling_socket.on("connect", function () {
   console.log("signaling_socket connect-->");
 
@@ -1310,30 +1338,30 @@ function setup_local_media(callback, errorback) {
           local_mediaScreenShare.attr("style", "border:1px solid skyblue");
           $("#videosAttach").append(local_mediaScreenShare);
 
-          
 
-      /* ### Start: This for audio mute and unmute before SCREEN SHARE ### */
-      document.getElementById("audio_btn").addEventListener("click", function () {
-        console.log("audio_btn-->");
-        console.log(
-          "stream.getAudioTracks()[0].enabled: " +
-          stream.getAudioTracks()[0].enabled
-        );
-        stream.getAudioTracks()[0].enabled = !stream.getAudioTracks()[0]
-          .enabled;
-        var michrophoneVal = stream.getAudioTracks()[0].enabled;
 
-        if (michrophoneVal) {
-          document.getElementById("audioMute_btn").style.display = "inline";
-          document.getElementById("audioUnmute_btn").style.display = "none";
-        } else {
-          document.getElementById("audioMute_btn").style.display = "none";
-          document.getElementById("audioUnmute_btn").style.display = "inline";
-        }
-        console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
-        console.log("<--audio_btn");
-      });
-      /* ### End: This for audio mute and unmute before SCREEN SHARE ### */
+          /* ### Start: This for audio mute and unmute before SCREEN SHARE ### */
+          document.getElementById("audio_btn").addEventListener("click", function () {
+            console.log("audio_btn-->");
+            console.log(
+              "stream.getAudioTracks()[0].enabled: " +
+              stream.getAudioTracks()[0].enabled
+            );
+            stream.getAudioTracks()[0].enabled = !stream.getAudioTracks()[0]
+              .enabled;
+            var michrophoneVal = stream.getAudioTracks()[0].enabled;
+
+            if (michrophoneVal) {
+              document.getElementById("audioMute_btn").style.display = "inline";
+              document.getElementById("audioUnmute_btn").style.display = "none";
+            } else {
+              document.getElementById("audioMute_btn").style.display = "none";
+              document.getElementById("audioUnmute_btn").style.display = "inline";
+            }
+            console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
+            console.log("<--audio_btn");
+          });
+          /* ### End: This for audio mute and unmute before SCREEN SHARE ### */
 
           /* ### Start: Loader Start and Stop ### */
           $("#screenShareElem").on('loadstart', function (event) {
