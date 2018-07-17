@@ -1,0 +1,132 @@
+<div ng-controller="careator_dashboardCtrl">
+    <!-- container section start -->
+    <section id="container" class="">
+        <header class="header dark-bg">
+            <div class="toggle-nav">
+                
+                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom">
+               
+                    <i style="display: none; color:#428bca; border: 1px solid #a8cf44;   padding: 5px; border-radius: 5px;" class="fa fa-bars"
+                        id="tog" ng-click="iconMenuClick()"></i>
+                    <i class="fa fa-times" style="color:#a8cf44; border: 1px solid #428bca;  padding: 5px;  border-radius: 5px;" id="fog" ng-click="iconMenuClick()"></i>
+                 
+                </div>
+            </div>
+            <div class="top-nav notification-row">
+                <ul class="nav pull-right top-menu">
+
+                    <li class="dropdown">
+                        <span ng-if="hour <'12' && min<='59' && sec<='59' && hour >='0'" class="username" style="color: white;"> &nbspGood Morning&nbsp{{name}}</span>
+                        <span ng-if="hour >='12' && hour < '17'" class="username" style="color: white;"> Good Afternoon&nbsp{{name}}</span>
+                        <span ng-if="hour >='17' && min<='59' && sec<='59' && hour <='23'" class="username" style="color: white;">Good Evening&nbsp{{name}}</span>
+                        <br>
+                        <span class="username" style="color: white;">{{clock | date:' d MMM yyyy h:mm a'}}</span>
+                    </li>
+                </ul>
+            </div>
+            <span>
+                <img ng-click="homeClick()" style="float:left;width: 63px;margin-top: 5px" src="../home/img/fav.png" />
+                <a ng-click="homeClick()" class="logo" style="font-weight: 500; letter-spacing: -2.3px;font-family: 'Allerta Stencil';">VC4ALL</a>
+            </span>
+        </header>
+
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" ng-hide="sideBarMenu">
+
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
+                        <a href="#!/dashboard/userCreate">
+                            <i class="fa fa-user-circle">
+                                <span>&nbspCreate User</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
+                        <a href="#!/dashboard/userRestrict">
+                            <i class="fa fa-universal-access">
+                                <span>&nbspUser Restrict</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
+                        <a href="#!/dashboard/createGroup">
+                            <i class="fa fa-users">
+                                <span>&nbspCreate Group</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
+                        <a href="#!/dashboard/usersList">
+                            <i class="fa fa-list-alt">
+                                <span>&nbspUser List</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
+                        <a href="#!/dashboard/groupList">
+                            <i class="fa fa-list">
+                                <span>&nbspGroup List</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!/dashboard/profile">
+                            <i class="fa fa-user-circle-o">
+                                <span>&nbspProfile</span>
+                            </i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#!/dashboard/chat">
+                            <i class="fa fa-comment">
+                                <span>&nbspChat</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li ng-if="videoRights=='yes'">
+                        <a href="https://vc4all.in/careator" target="_blank">
+                            <i class="fa fa-video-camera">
+                                <span>&nbspVideo</span>
+                            </i>
+                        </a>
+                    </li>
+                    <!-- <li ng-if="userData.email !='vc4allAdmin@gmail.com'">
+                        <a href="#!/dashboard/contactAdmin">
+                            <i class="fa fa-user-secret">
+                                <span>&nbspContact Admin</span>
+                            </i>
+                        </a>
+                    </li> -->
+                    <li>
+                        <a ng-click="logout()">
+                            <i class="fa fa-sign-out">
+                                <span>&nbspLogout</span>
+                            </i>
+                        </a>
+                    </li>
+                    <!-- <li>
+                            <a href="#!/dashboard/videoChat">
+                                <i class="fa fa-sign-out">
+                                    <span>&nbsp;Video</span>
+                                </i>
+                            </a>
+                        </li> -->
+
+                </ul>
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <div ui-view class="user-body">
+        </div>
+
+    </section>
+    <!-- <script src="../dashboard_Lib/js/jquery.js"></script> -->
+    <script src="../dashboard_Lib/js/bootstrap.min.js"></script>
+    <script src="../dashboard_Lib/js/jquery.nicescroll.js"></script>
+    <script src="../dashboard_Lib/js/jquery.scrollTo.min.js"></script>
+    <script src="../dashboard_Lib/js/scripts.js"></script>
+
+</div>

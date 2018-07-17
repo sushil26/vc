@@ -1,4 +1,4 @@
-app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window, $timeout, $state, $http, $uibModal, sessionAuthFactory, $uibModal) {
+app.controller("vcAppCtrl", function ($scope, $rootScope, httpFactory, $window,sessionAuthFactory, $uibModal) {
   console.log("controller==>");
   //document.getElementById('mobile-nav').style.display='none';
   var loginModal; /* ### Note: get login modal instance on this variable ###*/

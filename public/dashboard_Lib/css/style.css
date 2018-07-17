@@ -8,32 +8,6 @@
 /* Import fonts */
 
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
-/* #sidebar > ul > li:hover > a::before,
-#sidebar > ul > li > a:hover::before {
-  background: #3db2e1;
-}
-
-#sidebar > ul > li.active > a {
-  color: #dff2fa;
-}
-#sidebar > ul > li:hover > a,
-#sidebar > ul > li > a:hover {
-  color: #dff2fa;
-  -webkit-transform: rotateX(90deg) translateY(-23px);
-  -moz-transform: rotateX(90deg) translateY(-23px);
-  transform: rotateX(90deg) translateY(-23px);
-  -ms-transform: none;
-} */
-
-/* 
-
-table td {
-  word-break: break-all;
-} */
-
-
-
-
 
 .llkk {
   color: #00a8b3;
@@ -87,7 +61,7 @@ p {
 }
 
 span {
-  font-family: Oswald;
+  font-family: Lato;
 }
 
 i {
@@ -420,19 +394,15 @@ table tr th {
 /*sidebar navigation*/
 
 #sidebar {
+  margin-top:48px;
   width: 180px;
   height: 100%;
   position: fixed;
-  /* background: #1b2833; */
-  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
-  /* Safari 5.1, Chrome 10+ */
-  background: -webkit-linear-gradient(top, #030b3c, #00bcd4f2);
-  /* Firefox 3.6+ */
-  background: -moz-linear-gradient(top, #030b3c, #00bcd4f2);
-  /* IE 10 */
-  background: -ms-linear-gradient(top, #030b3c, #00bcd4f2);
-  /* Opera 11.10+ */
-  background: -o-linear-gradient(top, #030b3c, #00bcd4f2);
+ background-color: #1a3652;
+ transition-duration: 0.3s;
+ transition-timing-function: ease-in;
+ border-left: 2px solid #2e3134;
+ border-right: 2px solid #2e3134;
 }
 
 .nav-collapse.collapse {
@@ -523,6 +493,8 @@ ul.sidebar-menu li a span {
 }
 
 ul.sidebar-menu li a {
+  border-top: 1px solid #2e3134;
+  border-bottom: 1px solid #2e3134;
   color: #d0d8df;
   text-decoration: none;
   display: block;
@@ -582,7 +554,7 @@ ul.sidebar-menu .sub-menu li.active a {
 }
 
 ul.sidebar-menu li a i {
-  font-size: 18px;
+  /* font-size: 18px; */
   padding-right: 6px;
   /*color: #688a7e;*/
 }
@@ -717,11 +689,12 @@ ul.sidebar-menu li.active a i {
 
 #main-content {
   margin-left: 180px;
+  transition-duration: 0.3s;    transition-timing-function: ease-in;
 }
 
 .header,
 .footer {
-  min-height: 60px;
+  min-height: 48px;
   padding: 0 15px;
 }
 
@@ -746,16 +719,9 @@ ul.sidebar-menu li.active a i {
 }
 
 .dark-bg {
-  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
-  /* Safari 5.1, Chrome 10+ */
-  background: -webkit-linear-gradient(left, #030b3c, #00bcd4f2);
-  /* Firefox 3.6+ */
-  background: -moz-linear-gradient(left, #030b3c, #00bcd4f2);
-  /* IE 10 */
-  background: -ms-linear-gradient(left, #030b3c, #00bcd4f2);
-  /* Opera 11.10+ */
-  background: -o-linear-gradient(left, #030b3c, #00bcd4f2);
-  border-bottom: 1px solid #f1f2f7;
+  background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
+  background-repeat: repeat-x;
+ 
 }
 
 .panel-content {
@@ -764,7 +730,7 @@ ul.sidebar-menu li.active a i {
 
 .wrapper {
   display: inline-block;
-  margin-top: 60px;
+  margin-top: 50px;
   padding: 10px;
   width: 100%;
 }
@@ -1092,8 +1058,10 @@ div[data-role="editor-toolbar"] {
 }
 
 .top-nav .username {
-  font-size: 13px;
-  color: #bdbdbd;
+  font-weight: bolder;
+    font-size: 13px;
+    color: #00000091;
+
 }
 
 .top-nav ul.top-menu>li>a {
@@ -1342,6 +1310,7 @@ div[data-role="editor-toolbar"] {
 
 .dark-bg {
   color: #fff;
+  box-shadow: 1px 2px 5px #000;
   
 }
 
@@ -1375,7 +1344,7 @@ div[data-role="editor-toolbar"] {
   -moz-box-shadow: none;
 
   box-shadow: none; */
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0.16);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0.16); */
   margin-bottom: 30px;
 }
 
@@ -2172,9 +2141,9 @@ div[data-role="editor-toolbar"] {
 /*--sidebar toggle---*/
 
 .toggle-nav {
-  float: left;
+  float: right;
   padding-right: 15px;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .toggle-nav .icon-reorder {
@@ -4260,7 +4229,7 @@ ul.amounts li {
 .panel-heading,
 .modal-header {
 
-  background: #072a56;
+  background: #428bca;
   /* background: #1a3b56; */
   color: white;
 }

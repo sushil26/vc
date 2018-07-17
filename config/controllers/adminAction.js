@@ -1146,7 +1146,7 @@ module.exports.updateFeeSheet = function (data, callback) {
                     else {
                         stud.update(studIdForUpdateQry, { $push: { "fee.$.details": { $each: fee } } }, function (err, pulledData) {
                             if (err) {
-                                marker = fasle;
+                                marker = false;
                                 if (callback) callback();
                             }
                             else {
@@ -1229,7 +1229,7 @@ module.exports.updateMarkSheet = function (data, callback) {
                     else {
                         stud.update(studIdForUpdateQry, { $push: { "mark.$.subjectWithMark": { $each: consolidateMS } } }, function (err, pulledData) {
                             if (err) {
-                                marker = fasle;
+                                marker = false;
                                 if (callback) callback();
                             }
                             else {
@@ -2167,7 +2167,7 @@ module.exports.uploadStudentMaster = function (req, res) {
                                     from: "info@vc4all.in",
                                     to: to.email,
                                     subject: "Regarding School Meeting",
-                                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Parents,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: " + to.pswd + " </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
+                                    html: "<table style='border:10px solid gainsboro;'><thead style='background-image: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#00bcd4;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Parents,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: " + to.pswd + " </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
                                     // html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                                 };
                                 console.log("mailOptions: " + JSON.stringify(mailOptions));
@@ -2218,7 +2218,7 @@ module.exports.studentMasterValidation = function (data, callback) {
             console.log("idLength.length: " + idLength.length);
             if (err) {
                 responseData = {
-                    status: fasle,
+                    status: false,
                     message: err
                 };
                 res.status(400).send(responseData);
@@ -2574,7 +2574,7 @@ module.exports.uploadTeacherMaster = function (req, res) {
                                     from: "info@vc4all.in",
                                     to: to.email,
                                     subject: "Regarding School Meeting",
-                                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Teachers,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: " + to.pswd + " </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
+                                    html: "<table style='border:10px solid gainsboro;'><thead style='background-image: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#00bcd4;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Teachers,</b></td></tr><tr><td><p>Please note, this is regarding credential email: <b>" + to.email + "password: " + to.pswd + " </b> </p><p style=background:gainsboro;></p></td></tr></tbody></table>"
                                     // html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
                                 };
                                 console.log("mailOptions: " + JSON.stringify(mailOptions));
@@ -2627,7 +2627,7 @@ module.exports.teacherMasterValidation = function (data, callback) {
             if (err) {
                 console.log("err: " + JSON.stringify(err));
                 responseData = {
-                    status: fasle,
+                    status: false,
                     message: err
                 };
                 res.status(400).send(responseData);

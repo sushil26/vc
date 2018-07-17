@@ -1,0 +1,405 @@
+<div ng-controller="chatCtrl">
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel">
+                    <!-- <div class="panel-heading">
+                        <i class="fa fa-comment"></i>
+                        <span style="color:white;">&nbspChat</span>
+                    </div> -->
+                    <link rel="stylesheet" href="./css/newChat.css" />
+                    <style>
+                        .tooltip {
+                            font-size: 10px;
+                            margin-top: -12px;
+                            margin-left: 55px;
+                            cursor: pointer;
+                            display: inline-block;
+                            opacity: 1 !important;
+                        }
+
+                        .tooltip .tooltiptext {
+                            visibility: hidden;
+                            width: 60px;
+                            background: #1d3952;
+                            color: #fff;
+                            text-align: center;
+                            border-radius: 6px;
+                            padding: 5px 0;
+                            position: absolute;
+                            z-index: 1;
+                            top: 100%;
+                            left: 50%;
+                            margin-left: -30px;
+                            opacity: 1;
+                            transition: opacity 0.3s;
+                        }
+
+                        .tooltip:hover .tooltiptext {
+                            visibility: visible;
+                            opacity: 1;
+                            cursor: pointer;
+                        }
+                    </style>
+                    <div class="container app">
+                        <div class="row app-one">
+                            <div class="col-sm-4 side">
+                                <div class="side-one">
+                                    <div class="row heading">
+                                        <div class="form-group has-feedback">
+
+                                            <img alt="User Pic" ng-if="chatStatus=='Available'" style="max-width: 50px;margin-top: -10px;border: 2px solid yellowgreen;"
+                                                src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                                                id="profile-image1" class="img-circle img-responsive">
+                                            <img alt="User Pic" ng-if="chatStatus=='Buzy'" style="max-width: 50px;margin-top: -10px;border: 2px solid goldenrod;" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                                                id="profile-image1" class="img-circle img-responsive">
+                                            <img alt="User Pic" ng-if="chatStatus=='Hide'" style="max-width: 50px;margin-top: -10px;border: 2px solid dimgray;" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                                                id="profile-image1" class="img-circle img-responsive">
+                                            <img alt="User Pic" ng-if="chatStatus=='Sleeping'" style="max-width: 50px;margin-top: -10px;border: 2px solid black;" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                                                id="profile-image1" class="img-circle img-responsive">
+                                            <img alt="User Pic" ng-if="chatStatus=='Custom'" style="max-width: 50px;margin-top: -10px;border: 2px solid #FFC107;" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                                                id="profile-image1" class="img-circle img-responsive">
+
+                                            <h5 style="margin-top: -30px;
+                                                margin-left: 55px;">{{loginUserName}}</h5>
+                                            <div class="tooltip">
+                                                <span ng-if="chatStatus=='Available'" style="color: yellowgreen;">{{chatStatus}}</span>
+                                                <span ng-if="chatStatus=='Buzy'" style="color: goldenrod;">{{chatStatus}}</span>
+                                                <span ng-if="chatStatus=='Hide'" style="color: dimgray;">{{chatStatus}}</span>
+                                                <span ng-if="chatStatus=='Sleeping'" style="color: black;">{{chatStatus}}</span>
+                                                <span ng-if="chatStatus=='Custom'" style="color: #FFC107;">{{chatStatus}}</span>
+                                                <div class="tooltiptext">
+                                                    <span style="background:white;
+                                                    padding: 5px;
+                                                    border-radius: 5px;line-height: 2.5; color: yellowgreen;" ng-click="statusUpdate('Available')">Available</span>
+
+                                                    <span style="background:white;
+                                                    padding: 5px;
+                                                    border-radius: 5px;line-height: 2.5;color:goldenrod;" ng-click="statusUpdate('Buzy')">Busy</span>
+
+                                                    <span style="background:white;
+                                                    padding: 5px;
+                                                    border-radius: 5px;line-height: 2.5;color: dimgray;" ng-click="statusUpdate('Hide')">Hide</span>
+                                                    <span style="background:white;
+                                                    padding: 5px;
+                                                    border-radius: 5px;line-height: 2.5;color: black;" ng-click="statusUpdate('Sleeping')">Sleeping</span>
+
+
+                                                    <span style="background:white;
+                                                    padding: 5px;
+                                                    border-radius: 5px;line-height: 2.5; color: #FFC107;" ng-click="statusUpdate('Custom')">Custom</span>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <span class="heading-compose" style=" border-radius: 10px;
+                                                float: right;
+                                                background: white;
+                                                margin-top: -30px;
+                                                font-size: 10px;
+                                                color: black;
+                                                padding: 5px;
+                                                cursor: pointer;" ng-click="getAllChatRightEmp()">New Chat</span>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="row sideBar">
+                                        <div class="row sideBar-body" ng-repeat="record in chatedGroup_records">
+                                            <div class="col-sm-3 col-xs-3 sideBar-avatar" style="font-size: 35px;">
+                                                <div class="avatar-icon" ng-if="record.groupName==undefined && (record.receiverId!=adminId && record.senderId != adminId)">
+                                                    <img src="./css/user.png">
+                                                </div>
+                                                <div class="avatar-icon" ng-if="record.groupName==undefined && (record.receiverId==adminId || record.senderId == adminId)">
+                                                    <img src="./css/Admin.png">
+                                                </div>
+                                                <div class="avatar-icon" ng-if="record.groupName!==undefined">
+                                                    <img src="./css/group.png">
+                                                </div>
+                                               
+                                            </div>
+                                            <div class="col-sm-9 col-xs-9 sideBar-main" ng-if="record.groupName==undefined">
+                                                <div class="row">
+                                                    <div class="col-sm-8 col-xs-8 sideBar-name" ng-click="chatDetails('individual_chats', record._id, $index)">
+                                                        <span ng-if="record.senderId!=userId" class="name-meta">{{record.senderName}}
+                                                        </span>
+                                                        <span ng-if="record.receiverId!=userId" class="name-meta">{{record.receiverName}}
+                                                        </span>
+                                                        <span class="notify">39</span>
+                                                    </div>
+                                                    <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                                        <span class="time-meta pull-right">{{record.timeStamp | date:' d MMM h:mm a'}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9 col-xs-9 sideBar-main" ng-if="record.groupName!==undefined">
+                                                <div class="row">
+                                                    <div class="col-sm-8 col-xs-8 sideBar-name" ng-click="chatDetails('group', record._id, $index)">
+                                                        <span class="name-meta">{{record.groupName}}
+                                                        </span>
+                                                        <span class="notify">39</span>
+                                                    </div>
+                                                    <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                                        <span class="time-meta pull-right">{{record.timeStamp | date:' d MMM h:mm a'}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="side-two">
+                                    <div class="row newMessage-heading">
+                                        <div class="row newMessage-main">
+                                            <div class="col-sm-2 col-xs-2 newMessage-back" id="backkjkj">
+                                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="col-sm-10 col-xs-10 newMessage-title">
+                                                New Chat
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row composeBox">
+                                        <div class="col-sm-12 composeBox-inner">
+                                            <div class="form-group has-feedback">
+                                                <input id="composeText" type="text" class="form-control" name="searchText" placeholder="Search People">
+                                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ### Start: New Window ### -->
+                                    <div class="row compose-sideBar">
+                                        <div class="row sideBar-body" ng-repeat="record in allGroupAndIndividual">
+                                            <div class="col-sm-3 col-xs-3 sideBar-avatar">
+                                                <div class="avatar-icon" ng-if="record.groupName!==undefined && record.email!='vc4allAdmin@gmail.com'">
+                                                    <img src="./css/group.png">
+                                                </div>
+                                                <div class="avatar-icon" ng-if="record.groupName==undefined && record.email!='vc4allAdmin@gmail.com'">
+                                                    <img src="./css/user.png">
+                                                </div>
+                                                <div class="avatar-icon" ng-if="record.groupName==undefined && record.email=='vc4allAdmin@gmail.com'">
+                                                    <img src="./css/Admin.png">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9 col-xs-9 sideBar-main" ng-if="record.groupName!==undefined">
+                                                <div class="row">
+                                                    <div class="col-sm-8 col-xs-8 sideBar-name" ng-click="chatDetailsFromNew('group', $index)">
+                                                        <span class="name-meta">{{record.groupName}}
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                                        <span class="time-meta pull-right">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9 col-xs-9 sideBar-main" ng-if="record.groupName==undefined">
+                                                <div class="row">
+                                                    <div class="col-sm-8 col-xs-8 sideBar-name" ng-click="chatDetailsFromNew('individual_chats', $index)">
+                                                        <span class="name-meta">{{record.name}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                                        <span class="time-meta pull-right">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!-- ### End: New Window ### -->
+                                </div>
+                            </div>
+                            <!-- ### Start: Remote Profile Head ### -->
+                            <div class="col-sm-8 conversation">
+                                <div class="row heading">
+                                    <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+                                        <div class="avatar-icon" ng-if="selectedType =='group'">
+                                            <img src="./css/group.png">
+                                        </div>
+                                        <div class="avatar-icon" ng-if="selectedType =='individual_chats'">
+                                            <img src="./css/user.png">
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7 heading-name">
+                                        <div ng-if="selectedType=='group'">
+                                            <a class="heading-name-meta">{{individualData.groupName}}
+                                            </a>&nbsp;&nbsp;&nbsp;
+                                            <span>
+                                                <i data-toggle="modal" data-target="#myModal" class="fa fa-info-circle" ng-click=getGroupDetails(individualData.group_id)></i>
+                                            </span>
+                                        </div>
+                                        <a ng-if="selectedType=='individual_chats' && (individualData.senderId==undefined && individualData.receiverId==undefined)"
+                                            class="heading-name-meta">{{individualData.name}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' && individualData.senderId!=userId" class="heading-name-meta">{{individualData.senderName}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' && individualData.receiverId!=userId" class="heading-name-meta">{{individualData.receiverName}}
+                                        </a>
+
+
+
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Available'" class="heading-status">
+                                            <br>
+                                            <i style="color: greenyellow;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Buzy'" class="heading-status">
+                                            <br>
+                                            <i style="color: goldenrod;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Hide'" class="heading-status">
+                                            <br>
+                                            <i style="color: dimgray;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Sleeping'" class="heading-status">
+                                            <br>
+                                            <i style="color: black;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Custom'" class="heading-status">
+                                            <br>
+                                            <i style="color: #FFC107;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
+                                        </a>
+
+                                        <!-- <a ng-if="selectedType=='individual_chats' && (individualData.title==undefined)" class="heading-status">
+                                            <br>
+                                            <i style="color: greenyellow;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
+                                        </a>
+
+                                        <a ng-if="selectedType=='individual_chats' && individualData.senderId!=userId && (individualData.title!=undefined)" class="heading-status">
+                                            <br>
+                                            <i style="color: greenyellow;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' && individualData.receiverId!=userId && (individualData.title!=undefined)" class="heading-status">
+                                            <br>
+                                            <i style="color: greenyellow;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
+                                        </a> -->
+                                        <!--For Status End -->
+
+                                    </div>
+
+                                    <div class="col-sm-1 col-xs-1 pull-right" id="homeicon" ng-click="chatMenu()" style="margin-right: 20px; margin-top:5px;">
+                                        <i style="font-size:25px; cursor: pointer;" class="fa fa-home"></i>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background: #1a3b56;">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Group Partcipents({{groupData.groupMembers.length}})</h4>
+                                            </div>
+                                            <div class="modal-body" style="text-transform: capitalize;">
+                                                <table class="table table-striped">
+                                                    <tr ng-repeat='groupMember in groupData.groupMembers'>
+                                                        <td>
+                                                            {{$index+1}}.&nbsp;
+                                                        </td>
+                                                        <td>
+                                                            {{groupMember.name}}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" style="width: 60px !important;" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row message" id="pulldown">
+                                    <!-- <div class="row message-previous">
+                                        <div class="col-sm-12 previous">
+                                            <a onclick="previous(this)" id="ankitjain28" name="20">
+                                                Show Previous Message!
+                                            </a>
+                                        </div>
+                                    </div> -->
+                                    <div class="row message-body" ng-repeat="chat in allChat.chats">
+                                        <div class="col-sm-12 message-main-receiver" ng-if="chat.senderId!=userId">
+                                            <div ng-if="selectedType=='group'" style="background: #ddf8c6;
+                                            width: max-content;
+                                            padding: 5px;
+                                            border-radius: 10px;
+                                            text-transform: capitalize;
+                                            font-size: 10px;
+                                            font-style: italic;
+                                            font-weight: 700;">
+                                                {{chat.senderName}}
+                                            </div>
+                                            <div class="receiver">
+                                                <div class="message-text">
+                                                    {{chat.message}}
+                                                </div>
+                                                <span class="message-time pull-right">
+                                                    {{chat.sendTime | date:' d MMM yyyy h:mm a'}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 message-main-sender" ng-if="chat.senderId==userId">
+                                            <div class="sender">
+                                                <div class="message-text">
+                                                    {{chat.message}}
+                                                </div>
+                                                <span class="message-time pull-right">
+                                                    {{chat.sendTime | date:' d MMM yyyy h:mm a'}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- <div class="row message-body">
+                                        <div class="col-sm-12 message-main-sender">
+                                            <div class="sender">
+                                                <div class="message-text">
+                                                    I am doing nothing man!
+                                                </div>
+                                                <span class="message-time pull-right">
+                                                    Sun
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+
+
+                                <div class="row reply">
+                                    <div class="col-sm-1 col-xs-1 reply-emojis">
+                                        <i class="fa fa-smile-o fa-2x"></i>
+
+                                    </div>
+                                    <div class="col-sm-9 col-xs-9 reply-main">
+                                        <textarea class="form-control" rows="1" id="comment" ng-model="typedMessage"></textarea>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1 reply-recording">
+                                        <!-- <i class="fa fa-microphone fa-2x" aria-hidden="true"></i> -->
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1 reply-send">
+                                        <i class="fa fa-send fa-2x" aria-hidden="true" id="sndmgs" ng-click="sendText()"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ### End: Remote Profile Head ### -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+</div>

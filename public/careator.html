@@ -7,11 +7,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="/home/img/fav.png" rel="icon" size="32x32">
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <!-- <script src="/js/socket.io-1.4.5.js"></script> -->
-    <!-- <script src="/socket.io/lib/socket.js"></script>  -->
+    <link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
     <script src="/home/lib/jquery/jquery.min.js"></script>
     <link href="/home/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link href="/dashboard_Lib/css/bootstrap-theme.css" rel="stylesheet"> -->
     <!-- Libraries CSS Files -->
     <link href="/home/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
@@ -19,10 +17,62 @@
     <link href="/home/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/chatZone.css" />
     <script src="/js/clientmain.js"></script>
-    <!-- <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"></script> -->
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
     <script src="/js/studentMarkAtt_automation.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        button.example {
+            -webkit-transition: all 0s ease-out;
+            -moz-transition: all 0s ease-out;
+            -o-transition: all 0s ease-out;
+            -ms-transition: all 0s ease-out;
+            transition: all 0s ease-out;
+            height: 100px;
+            display: block;
+
+            font-size: 20px;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
+            padding: 0px 30px 0;
+
+
+            position: relative;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+
+        }
+
+        button.facebook {
+            background-image: linear-gradient(to bottom, #3b5999f0 0%, #131d33 100%);
+            box-shadow: 1px 2px 5px #000;
+        }
+
+
+        button.example:active {
+            top: 3px;
+        }
+
+        button.facebook:active {
+            -webkit-box-shadow: 0px 2px 0px 0px #2E4476;
+            box-shadow: 0px 2px 0px 0px #2E4476;
+        }
+
+
+
+        button.example:active:before {
+            top: -3px;
+        }
+
+        button.facebook:active:before {
+            -webkit-box-shadow: 0px 5px 0px 0px #2E4476, 6px 4px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 5px 0px 0px #2E4476, 6px 4px 2px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+
     <style>
         a {
             color: inherit;
@@ -56,338 +106,410 @@
 </head>
 
 <body>
-
-    <!-- ### Start header #### -->
-    <header id="header" style="background:#1a2732;">
-        <!-- <header id="header" style="background: rgba(52, 59, 64, 0.9);padding: 20px; height: 72px;transition: all 0.5s;"> -->
-        <div class="container">
-            <div id="logo" class="pull-left">
+    <!-- <header class="header dark-bg">
+                <div class="toggle-nav">
+                    <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" style="border: 1px solid #428bca;
+                    padding-right: 5px;
+                    padding-left: 5px;
+                    padding-bottom: 2px;
+                    border-radius: 5px;" data-placement="bottom">
+                        <i style="display: none;" class="fa fa-bars" id="tog" ng-click="iconMenuClick()"></i>
+                        <i class="fa fa-times" id="fog" ng-click="iconMenuClick()"></i>
+                    </div>
+                </div>
+                <div class="top-nav notification-row">
+                    <ul class="nav pull-right top-menu">
+    
+                        <li class="dropdown">
+                            <span ng-if="hour <'12' && min<='59' && sec<='59' && hour >='0'" class="username" style="color: white;"> &nbspGood Morning&nbsp{{name}}</span>
+                            <span ng-if="hour >='12' && hour < '17'" class="username" style="color: white;"> Good Afternoon&nbsp{{name}}</span>
+                            <span ng-if="hour >='17' && min<='59' && sec<='59' && hour <='23'" class="username" style="color: white;">Good Evening&nbsp{{name}}</span>
+                            <br>
+                            <span class="username" style="color: white;">{{clock | date:' d MMM yyyy h:mm a'}}</span>
+                        </li>
+                    </ul>
+                </div>
                 <span>
-                    <img style="float:left;" src="/home/img/fav.png" />
-                    <a href="/" id="mm" style="font-size: 22px;
-                    font-weight: 500;
-                    color: #a8cf44;
-                    float: left;
-                    margin-top: 8px;
-                    letter-spacing: 1px;
-                    text-transform: uppercase;">VC
-                        <span style="color:#2577be;">4ALL</span>
-                        <!-- <h1 style="color:azure;float:left;text-shadow: 2px 2px 4px #000000; margin-top: 13px;">&nbspVC4ALL</h1> -->
+                    <img ng-click="homeClick()" style="float:left;width: 63px;margin-top: 5px" src="../home/img/fav.png" />
+                    <a ng-click="homeClick()" class="logo" style="font-weight: 500; letter-spacing: -2.3px;font-family: 'Allerta Stencil';">VC4ALL</a>
                 </span>
-            </div>
+            </header> -->
+    <header id="chelam" style="position: relative;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
+    background-repeat: repeat-x;
+    min-height: 48px;
+    padding: 0 15px;
+    box-shadow: 1px 2px 5px #000;
+   ">
 
-            <nav id="nav-menu-container">
-                <ul class="nav-menu">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-
-
-
-
-                </ul>
-            </nav>
-            <!-- #nav-menu-container -->
+        <div id="logo" class="pull-left">
+            <span>
+                <img style="float:left;width: 62px;margin-top: 5px;" src="/home/img/fav.png" />
+                <a href="/" id="mm" style=" margin-top: 15px; font-size: 22px;letter-spacing: -2.3px;
+                  font-weight: 500;
+                  font-family: 'Allerta Stencil';
+                  color: #a8cf44 !important;
+                  float: left;">
+                    <span>
+                        <span id="vc">VC4ALL</span>
+                    </span>
+                </a>
+            </span>
         </div>
+        <div id="logout" class="pull-right" onclick=logout(); style="
+        display:none;   
+        font-family: 'Allerta Stencil';
+        color: #fff;
+        letter-spacing: -1px;
+        font-weight: 100;
+        text-transform: uppercase;
+        display: block;
+        margin: 15px;
+        font-weight: 500;
+        cursor: pointer; ">
+            <span>LOGOUT</span>
+        </div>
+
     </header>
     <!-- ### End header #### -->
+
+
 
     <!--==========================
       Portfolio Section
     ============================-->
     <main>
-        <section id="portfolio" style="min-height:100vh; color: #797979;background: #eeeeee;">
-            <div class="container wow">
-                <div id="downloadVideo"> </div>
+        <section id="portfolio" style="min-height:100vh; color: #797979;background: #00d4cf80;">
+            <div class="wow">
+                <div id="downloadVideo"></div>
                 <div class="row">
-                    <div class="col-lg-12">
-
+                    <div class="col-lg-12" style="margin-top: -80px;min-height: 100vh;">
                         <center>
-
                             <a id="videoConferenceUrl" style="display:none;">
-                                <button id="videoConfStart" class="bouncy fa fa-play-circle">
-                                    &nbsp
-                                    <b>Start Video Conference</b>
+                                <button id="videoConfStart" style="margin-top: 50px;display:none;" class="example facebook ">
+                                    <i class="fa fa-video-camera"></i>&nbsp;Video
                                 </button>
-                             
-                            </a>
-                            <br>
+                                <button id="chatConfStart" style="margin-top: 50px;display:none;" class="example facebook " onclick="chatNavigation()">
+                                    <i class="fa fa-comments"></i>&nbsp;Chat
+                                </button>
+                                <br>
+                                <div id="videoCtrolBar" class="giggy" style="margin: 6px;
+                            position: absolute;
+                            top: 0;
+                            background: white;
+                            padding: 15px;
+                            border-radius:5px;display:none;">
+                                    <a id="homeLink" href="/" style="display:none;" class="bcg">
+                                        <button id="" class="bouncy fa fa-home">
+                                        </button>
 
-                            <a id="screenShareBtn" class="">
-                                <button id="screenBtns" style="display:none;color:black;" class="bouncy fa fa-window-restore">&nbspScreenShare</button>
-                            </a>
-                            <a id="screenShareStop" style="display:none;">
-                                <button id="screenBtns" class="bouncy fa fa-stop" style="color:red">&nbsp
-                                    <b style="color:black">Stop Sharing</b>
-                                </button>
-                            </a>
+                                        <div class="mtitle w3-animate-right">Home</div>
+                                    </a>
+                                    <a id="emailInvitation" style="display:none;" class="bcg" data-toggle="modal" data-target="#invitePeople">
+                                        <button id="inv" class="bouncy fa fa-plus">
+                                        </button>
+                                        <div class="mtitle w3-animate-right">Invite</div>
+                                    </a>
+                                    <a id="screenShareBtn" class="bcg">
+                                        <button id="screenBtns" style="display:none;" class="bouncy fa fa-window-restore"></button>
+                                        <div class="mtitle w3-animate-right">Screen</div>
+                                    </a>
+                                    <a id="screenShareStop" style="display:none;">
+                                        <button id="screenBtns" class="bouncy fa fa-stop" style="color:red">
+                                        </button>
+                                        <div class="mtitle w3-animate-right">Stop</div>
+                                    </a>
+                                    <a id="addChatWindow" class="bcg">
+                                        <button style="display:none;" id="openChat" class="bouncy fa fa-comments">
+                                        </button>
+                                        <b>
+                                            <span id="chatNotification" style="display:none;color:rgb(226, 101, 73);"></span>
+                                        </b>
+                                        <div class="mtitle w3-animate-right">Chat</div>
+                                    </a>
+                                    <a id="audio_btn" style="display:none" class="bcg">
+                                        <div id="audioMute_btn">
+                                            <button class="bouncy fa fa-microphone-slash">
+                                            </button>
+                                            <div class="mtitle w3-animate-right">Mute</div>
+                                        </div>
 
-                            <a id="addChatWindow" class="">
-                                <button style="display:none;;color:black;" id="openChat" class="bouncy fa fa-comments">&nbsp
-                                    <b>Chat
-                                        <span id="chatNotification" style="display:none;color:rgb(226, 101, 73);"></span>
-                                    </b>
-                                </button>
-                            </a>
+                                        <div id="audioUnmute_btn" style="display:none;">
+                                            <button class="bouncy fa fa-microphone">
+                                            </button>
+                                            <div class="mtitle w3-animate-right">Unmute</div>
+                                        </div>
+                                    </a>
+                                    <a id="video_btn" style="display:none" class="bcg">
+                                        <div id="videoMute_btn">
+                                            <button class="bouncy fa fa-eye-slash">
+                                            </button>
+                                            <div class="mtitle w3-animate-right">Hide</div>
+                                        </div>
+                                        <div id="videoUnmute_btn" style="display:none;">
+                                            <button class="bouncy fa fa-video-camera">
+                                            </button>
+                                            <div class="mtitle w3-animate-right">Show</div>
+                                        </div>
+                                    </a>
+                                    <a href="#" style="display:none;" id="diconnect_btn" onclick="disconnecSession()" class="bcg">
+                                        <button class="bouncy fa fa-power-off" style="color:red;">
+                                        </button>
+                                        <div class="mtitle w3-animate-right">Close</div>
+                                    </a>
+                                    <hr style="margin: 0px 0 !important;">
+                                    <div class="counter">
 
-                            <a id="audio_btn" style="display:none">
+                                        <h1 style="font-size: 15px;">
+                                            <time>00:00:00</time>
+                                        </h1>
+                                        <button style="display:none;" id="start">start</button>
+                                        <button style="display:none;" id="stop">stop</button>
+                                        <button style="display:none;" id="clear">clear</button>
 
-                                <button id="audioMute_btn" class="bouncy fa fa-microphone-slash" style="color:black">&nbsp
-                                    <b>Mute</b>
-                                </button>
-                                <button id="audioUnmute_btn" style="display:none;color:black" class="bouncy fa fa-microphone">
-                                    &nbsp
-                                    <b>Unmute</b>
-                                </button>
-                            </a>
-                            <a href="https://vc4all.in" style="display:none;" id="diconnect_btn" onclick="disconnecSession()">
-                                <button class="bouncy fa fa-power-off" style="color:red;">
-                                    <b>Disconnect</b>
-                                </button>
-                            </a>
-                            <div id="portfolio-wrapper" style="margin-right:auto;">
-                            </div>
-                            <button id="btnrestore" class="fa fa-window-restore btn" style="z-index: 2; position: absolute; display:none;"></button>
+                                    </div>
+
+                                </div>
+
+                                <div id="portfolio-wrapper" style="margin-left:100px;">
+                                </div>
+                                <button id="btnrestore" class="fa fa-window-restore btn" style="position: fixed;
+                                top: 50vh;display:none;     z-index: 2;"></button>
                         </center>
+
                     </div>
                     <div class="col-lg-12">
-
-                        <button data-toggle="modal" data-target="#myModal" id="setName" data-backdrop="static" data-keyboard="false" style="display:none">Set Name</button>
+                        <button data-toggle="modal" data-target="#remoteJoin" id="setName" data-backdrop="static" data-keyboard="false" style="display:none">Set Name</button>
                         <button data-toggle="modal" data-target="#myEmailModal" id="enterEmail" data-backdrop="static" data-keyboard="false" style="display:none">Set Name</button>
                         <button data-toggle="modal" data-target="#myPasswordModal" id="enterPswd" data-backdrop="static" data-keyboard="false" style="display:none">Enter Password</button>
 
-                        <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal fade" id="remoteJoin" role="dialog">
                             <div class="modal-dialog">
                                 <center>
                                     <div class="modal-content" style="color:#777;max-width:350px;">
-                                        <div class="modal-header" style="background-color: #53dc537d;">
-                                            <h4 class="modal-title">Please Set Your Name</h4>
+                                        <div class="modal-header" style="background-color: #1c3852;">
+                                            <h4 class="modal-title" style="font-size: 15px;">Please enter your email and one time password</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <input type="text" class="form-control" placeholder="Enter your name" id="userName">
+                                            <input type="email" class="form-control" placeholder="Enter your email" id="remote_userName">
                                             <br>
-                                            <!-- <input type="password" class="form-control" placeholder="Enter your Password" id="P_pswd"> -->
+                                            <input type="password" class="form-control" placeholder="Enter your one time password" id="remote_password">
                                         </div>
                                         <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                            <button id="setNameId" type="button" onclick="saveName()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
+                                            <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
                                         </div>
+                                    </div>
                                 </center>
-                                </div>
                             </div>
-
-                            <div class="modal fade" id="myEmailModal" role="dialog">
-                                <div class="modal-dialog">
-                                    <center>
-                                        <form>
-                                            <div class="modal-content" style="color:#777;max-width:350px;">
-                                                <div class="modal-header" style="background-color: #53dc537d;">
-
-                                                    <h4 class="modal-title">Please Enter Email</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <input type="email" class="form-control" placeholder="Enter your Email" id="careatorEmail" required>
-                                                    <br>
-                                                    <!-- <input type="password" class="form-control" placeholder="Enter your Password" id="P_pswd"> -->
-                                                </div>
-                                                <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                                    <button id="setEmail" type="submit" onclick="sendEmail()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
-                                                </div>
-                                        </form>
-                                    </center>
-                                    </div>
-                                </div>
-
-                                <div class="modal fade" id="myPasswordModal" role="dialog">
-                                    <div class="modal-dialog">
-                                        <center>
-                                            <div class="modal-content" style="color:#777;max-width:350px;">
-                                                <div class="modal-header" style="background-color: #53dc537d;">
-                                                    <h4 class="modal-title">Please enter password which you got from email</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <!-- <input type="text" class="form-control" placeholder="Enter your name" id="userName"> -->
-                                                    <br>
-                                                    <input type="password" class="form-control" placeholder="Enter your Password" id="P_pswd">
-                                                </div>
-                                                <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                                    <button type="button" onclick="checkPassword()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
-
-                                                </div>
-                                        </center>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <center>
-                                <div id="videoConferenceLinkExtention">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12" style="display:none" style="overflow:hidden;text-overflow:ellipsis;">
-                                            <a style="color:black;" style="display:none" id="linkToShare"> </a>
-                                        </div>
-                                    </div>
-                                    <div class="form-inline row" id="invitePeople_container">
-                                        <div class="col-sm-12" style="display:none" id="emailInvitation">
-                                            <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
-                                            <button type="button" class="" style=" color:#f1f1f1; background-color:#0a425f;" onclick="emailInvite()">Invite</button>
-                                            <br>
-                                            <label id="info" style="color:blue"></label>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <hr>
-                                            <h6>
-                                                <b>Opera</b> user need to install first this
-                                                <a href="https://addons.opera.com/en-gb/extensions/details/download-chrome-extension-9/?display=en" target="_blank">
-                                                    <button class="btnn fa fa-download" style="border-radius: 5px;border-color:  white;">
-                                                        Opera Extension</button>
-                                                </a> then Screen Sharing from below
-                                            </h6>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <h6>
-                                                <b>Chrome</b> user need to install Only this extension for Screen Sharing
-                                                <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog"
-                                                    target="_blank">
-                                                    <button class="btnn fa fa-download" style="border-radius: 5px;border-color:  white;">
-                                                        Screen Sharing</button>
-                                                </a>
-                                            </h6>
-                                        </div>
-                                        <!-- <div class="col-sm-12"> -->
-                                        <!-- <h6>
-                                                <b>Chrome</b> user need to install Only this extension for Screen Recording
-                                                <a href="https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn" target="_blank">
-                                                    <button class="btnn fa fa-download" style="border-radius: 5px;border-color:  white;">
-                                                        Screen Recording</button>
-                                                </a>
-                                            </h6> -->
-                                        <!-- <button type="button" id="screenShareBtn" class="" style="background-color: #29b6bd;color:#f1f1f1;display:none;">Start Screen Sharing</button> -->
-                                        <!-- </div> -->
-                                    </div>
-                                </div>
-                            </center>
-                            <hr>
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="adhead">
-                                        <h4 style="padding: 10px;font-weight: 100;">Product and Services</h4>
-                                    </div>
-                                    <div class="adbody">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                                    <a href="http://www.careator.com/mobile-aplication-development-india.php" target="_blank">
-                                                        Mobility Services </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                                    <a href="http://www.careator.com/business-intelligence-services-india.php" target="_blank">
-                                                        BI Services</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                                    <a href="http://www.careator.com/professional-services-india.php" target="_blank">Professional Services</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                                    <a href="http://www.careator.com/software-aplication-development-india.php" target="_blank"> Application Development</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                                    <a href="http://www.careator.com/custom-product-development-india.php" target="_blank">Custom Product Development </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                                    <a href="http://www.careator.com/software-testing-india.php" target="_blank">Testing Services </a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="adhead">
-                                        <h4 style="padding: 10px;     font-weight: 100;">Current Openings</h4>
-                                    </div>
-                                    <div class="adbody">
-                                        <a href="http://www.careator.com/job-oppenings.php" target="_blank">
-                                            See Our All Job Openings</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="adhead">
-                                        <h4 style="padding: 10px;     font-weight: 100;">News & Blogs</h4>
-                                    </div>
-                                    <div class="adbody">
-                                        <a href="http://www.careator.com/latest-news.php" target="_blank">
-                                            See Our News
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="popup-box chat-popup" id="qnimate">
-                                    <div class="popup-head">
-                                        <div class="popup-head-left pull-left">
-                                            <img src="/home/img/fav.png"> Chatting zone
-
-                                        </div>
-                                        <div class="popup-head-right pull-right">
-                                            <div class="btn-group">
-                                                <button class="chat-header-button" data-toggle="dropdown"   onclick="chatExpand()" type="button" aria-expanded="false">
-                                                    <i class="fa fa-expand" style="color:white"></i>
-                                                </button>
-                                            </div>
-
-                                            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
-                                                <i class="fa fa-window-close" style="color:white"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="popup-messages" id="popupMsg">
-                                        <div class="direct-chat-messages">
-                                            <!-- Message. Default to the left -->
-                                            <div id="message-container"></div>
-                                            <!-- /.direct-chat-msg -->
-                                        </div>
-                                    </div>
-                                    <audio id="myAudio">
-                                        <source src="/home/img/alrt.mp3">
-                                    </audio>
-                                    <div class="popup-messages-footer">
-                                        <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
-                                        <div class="btn-footer ">
-
-                                            <button class="bg_none ">
-
-                                                <div class="image-upload">
-                                                    <label for="fileselect">
-                                                        <i class="fa fa-upload"> </i>
-                                                    </label>
-                                                    <input id="fileselect" type="file" name="fileselect" />
-                                                </div>
-                                            </button>
-                                            <button class="btn" id="sndmgs" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
-                                                <span class="fa fa-paper-plane"></span>
-
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
+
+                        <div class="modal fade" id="myEmailModal" role="dialog">
+                            <div class="modal-dialog">
+                                <center>
+                                    <form>
+                                        <div class="modal-content" style="color:#777;max-width:350px;">
+                                            <div class="modal-header" style="background-color: #1c3852;">
+
+                                                <h4 class="modal-title">Enter Your Careator Email</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="email" class="form-control" placeholder="Enter your Email" id="careatorEmail" required>
+                                            </div>
+                                            <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
+                                                <button id="setEmail" type="submit" onclick="sendEmail()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myPasswordModal" role="dialog">
+                            <div class="modal-dialog">
+                                <center>
+                                    <div class="modal-content" style="color:#777;max-width:350px;">
+                                        <div class="modal-header" style="background-color: #1c3852;">
+                                            <h4 class="modal-title" style="font-size: 15px;">Please enter password which you got from email</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="password" class="form-control" placeholder="Enter your Password" id="ppswd">
+                                            <div>Time left =
+                                                <span id="timer"></span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
+                                            <button type="button" id="sub" onclick="checkPassword()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
+                                        </div>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="invitePeople" role="dialog">
+                            <div class="modal-dialog">
+                                <center>
+                                    <form>
+                                        <div class="modal-content" style="color:#777;max-width:350px;">
+                                            <div class="modal-header" style="background-color: #1c3852;">
+                                                <h4 class="modal-title">Please Enter Email</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
+                                                <br>
+                                                <label id="info" style="color:blue"></label>
+                                            </div>
+                                            <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
+                                                <button type="button" onclick="emailInviteSend()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Invite</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </center>
+                            </div>
+                        </div>
+                        <center>
+                            <div id="videoConferenceLinkExtention">
+                                <div class="form-group row">
+                                    <div class="col-sm-12" style="display:none" style="overflow:hidden;text-overflow:ellipsis;">
+                                        <a style="color:black;" style="display:none" id="linkToShare"> </a>
+                                    </div>
+                                </div>
+                                <div class="form-inline row" id="invitePeople_container">
+
+                                    <div class="col-sm-12">
+                                        <hr>
+                                        <h6>
+                                            <b>Opera</b> user need to install first this
+                                            <a href="https://addons.opera.com/en-gb/extensions/details/download-chrome-extension-9/?display=en" target="_blank">
+                                                <button class="btnn fa fa-download" style="border-radius: 5px;border-color:  white;">
+                                                    Opera Extension</button>
+                                            </a> then Screen Sharing from below
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <h6>
+                                            <b>Chrome</b> user need to install Only this extension for Screen Sharing
+                                            <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog"
+                                                target="_blank">
+                                                <button class="btnn fa fa-download" style="border-radius: 5px;border-color:  white;">
+                                                    Screen Sharing</button>
+                                            </a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+                <hr>
+                <div class="row" style="margin:10px;">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="adhead">
+                            <h4 style="padding: 10px;font-weight: 100;">Product and Services</h4>
+                        </div>
+                        <div class="adbody">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <a href="http://www.careator.com/mobile-aplication-development-india.php" target="_blank">
+                                            Mobility Services </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <a href="http://www.careator.com/business-intelligence-services-india.php" target="_blank">
+                                            BI Services</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <a href="http://www.careator.com/professional-services-india.php" target="_blank">Professional Services</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <a href="http://www.careator.com/software-aplication-development-india.php" target="_blank"> Application Development</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <a href="http://www.careator.com/custom-product-development-india.php" target="_blank">Custom Product Development </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <a href="http://www.careator.com/software-testing-india.php" target="_blank">Testing Services </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="adhead">
+                            <h4 style="padding: 10px;font-weight: 100;">Current Openings</h4>
+                        </div>
+                        <div class="adbody">
+                            <a href="http://www.careator.com/job-oppenings.php" target="_blank">
+                                See Our All Job Openings</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="adhead">
+                            <h4 style="padding: 10px;font-weight: 100;">News & Blogs</h4>
+                        </div>
+                        <div class="adbody">
+                            <a href="http://www.careator.com/latest-news.php" target="_blank">
+                                See Our News
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="popup-box chat-popup" id="qnimate">
+                        <div class="popup-head">
+                            <div class="popup-head-left pull-left">
+                                <img src="/home/img/fav.png"> Chatting zone
+
+                            </div>
+                            <div class="popup-head-right pull-right">
+                                <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
+                                    <i class="fa fa-window-close" style="color:white"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="popup-messages" id="popupMsg">
+                            <div class="direct-chat-messages">
+
+                                <div id="message-container"></div>
+
+                            </div>
+                        </div>
+                        <audio id="myAudio">
+                            <source src="/home/img/alrt.mp3">
+                        </audio>
+                        <div class="popup-messages-footer">
+                            <textarea id="message" style="color:#000" placeholder="Type a message... " rows="10 " cols="40 " name="message "></textarea>
+                            <div class="btn-footer ">
+                                <button class="bg_none ">
+                                    <div class="image-upload">
+                                        <label for="fileselect">
+                                            <i class="fa fa-upload"> </i>
+                                        </label>
+                                        <input id="fileselect" type="file" name="fileselect" />
+                                    </div>
+                                </button>
+                                <button class="btn" id="sndmgs" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
+                                    <span class="fa fa-paper-plane"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <!-- #portfolio -->
     </main>
     <div class="modal fade" id="mom" role="dialog">
         <div class="modal-dialog">
@@ -411,23 +533,20 @@
                         <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
                             onclick="momVC()" data-dismiss="modal">Submit</button>
                     </div>
-
-
                 </div>
             </center>
         </div>
     </div>
-   
-    <!--==========================
+
+    <!--=============================
           Footer
-        ============================-->
+    ===============================-->
     <footer id="footer">
         <div class="footer-top">
             <div class="container">
 
             </div>
         </div>
-
         <div class="container">
             <div class="copyright">
                 &copy; Copyright
@@ -435,72 +554,112 @@
             </div>
         </div>
     </footer>
-    <!-- #footer -->
-
-    <!-- #footer -->
+    <!--=============================
+    Footer End
+  =============================-->
     <a href="#" class="back-to-top">
         <i class="fa fa-chevron-up"></i>
     </a>
 
     <style>
         #portfolio .portfolio-items {
-
             display: inline-block;
             height: 200px;
-
         }
 
         #portfolio .intro {
             width: 75%;
-
         }
-
-        /* .intro .portfolio-items:last-child {
-            display: block;
-            width: 30%;
-        } */
     </style>
 
     </div>
-    <!-- JavaScript Libraries -->
 
+    <!-- JavaScript Libraries -->
     <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/home/lib/easing/easing.min.js"></script>
     <script src="/home/lib/wow/wow.min.js"></script>
     <script src="/home/lib/superfish/superfish.min.js"></script>
     <script src="/home/lib/counterup/counterup.min.js"></script>
-    <!-- Template Main Javascript File -->
-
-    <!-- <script src="/js/socketTest.js"></script>  -->
-    <!--      <script src="/js/chatTest.js"></script> -->
     <script src="/js/csigsocket.js"></script>
-
     <script src="/js/chat.js"></script>
     <script>
-function chatExpand(){
-    window.location.href="https://vc4all.in/chatCrtr";
-
-}
-
-
+        function chatExpand() {
+            window.location.href = "https://vc4all.in/chatCrtr";
+        }
         $("#message").keyup(function (event) {
             if (event.keyCode === 13) {
                 $("#sndmgs").click();
+            }
+        });
+
+        $("#ppswd").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#sub").click();
             }
         });
     </script>
     <script>
         $(document).ready(function () {
             $("#openChat").click(function () {
-                //alert("hui");
+
                 $("#portfolio-wrapper").addClass("intro");
                 $("portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3").removeClass("col-lg-3");
-                //  $("portfolio-items col-xs-12 col-sm-6 col-md-4").toggleClass("portfolio-items col-xs-12 col-sm-6 col-md-4");
+
             });
             $("#removeClass").click(function () {
                 $("#portfolio-wrapper").removeClass("intro");
             });
         });
+    </script>
+    <script>
+        var h1 = document.getElementsByTagName('h1')[0],
+            start = document.getElementById('start'),
+            stop = document.getElementById('stop'),
+            clear = document.getElementById('clear'),
+            seconds = 0,
+            minutes = 0,
+            hours = 0,
+            t;
+
+        function add() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+
+            h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ?
+                minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+            timer();
+        }
+
+        function timer() {
+            t = setTimeout(add, 1000);
+        }
+        timer();
+
+
+        /* Start button */
+        start.onclick = timer;
+
+        /* Stop button */
+        stop.onclick = function () {
+            clearTimeout(t);
+        }
+
+        /* Clear button */
+        clear.onclick = function () {
+            h1.textContent = "00:00:00";
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+        }
+        /* ##### End: /////////// //Timer code///////////////////  #####*/
     </script>
     <style>
         /* mirror Affect */
@@ -509,11 +668,18 @@ function chatExpand(){
             transform: rotateY(180deg);
             -webkit-transform: rotateY(180deg);
             -moz-transform: rotateY(180deg);
-            /* z-index: 2;
-            position: fixed; */
         }
 
+
         .fullscr {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            min-width: 100%;
+            z-index: 1;
+        }
+
+        /* .fullscr {
             position: fixed;
             left: 0;
             bottom: 0;
@@ -523,10 +689,9 @@ function chatExpand(){
             height: auto;
             object-fit: fill;
             z-index: 1;
-        }
+        } */
 
         #portfolio .portfolio-items {
-
             display: inline-block;
             height: auto;
         }
@@ -535,9 +700,35 @@ function chatExpand(){
             width: 75%;
         }
     </style>
+    <script>
+        let timerOn = true;
 
+        function timer(remaining) {
+            var m = Math.floor(remaining / 60);
+            var s = remaining % 60;
 
+            m = m < 10 ? '0' + m : m;
+            s = s < 10 ? '0' + s : s;
+            document.getElementById('timer').innerHTML = m + ':' + s;
+            remaining -= 1;
 
+            if (remaining >= 0 && timerOn) {
+                setTimeout(function () {
+                    timer(remaining);
+                }, 1000);
+                return;
+            }
+
+            if (!timerOn) {
+                // Do validate stuff here
+                return;
+            }
+
+            // Do timeout stuff here
+            // alert('Timeout for otp');
+            timer(120);
+        }
+    </script>
 </body>
 
 </html>

@@ -1,27 +1,23 @@
-<link rel="stylesheet" href="././dashboard_Lib/css/style.css" />
-<link rel="stylesheet" href="././dashboard_Lib/css/style-responsive.css" />
-<link rel="stylesheet" href="././dashboard_Lib/css/elegant-icons-style.css" />
-<div  ng-controller="dashboardController">
-        <!-- <div id="loadings"></div> -->
+<div ng-controller="dashboardController">
+        <!-- <link rel="stylesheet" href="././dashboard_Lib/css/style.css" />
+        <link rel="stylesheet" href="././dashboard_Lib/css/style-responsive.css" />
+        <link rel="stylesheet" href="././dashboard_Lib/css/elegant-icons-style.css" /> -->
+    <!-- <div id="loadings"></div> -->
     <!-- container section start -->
     <section id="container" class="">
-        <!--header start-->
         <header class="header dark-bg">
             <div class="toggle-nav">
                 <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom">
                     <i class="icon_menu" ng-click="iconMenuClick()"></i>
                 </div>
             </div>
-            <!--logo start-->
             <span>
                 <img ng-click="homeClick()" style="float:left;width: 63px;margin-top: 5px" src="././home/img/fav.png" />
                 <a ng-click="homeClick()" class="logo" style="font-weight: 500; letter-spacing: -2.3px;font-family: 'Allerta Stencil';">VC4ALL</a>
             </span>
-
-            <!--logo end-->
             <div class="top-nav notification-row">
                 <ul class="nav pull-right top-menu">
-                    <!-- user login dropdown start-->
+
                     <li class="dropdown">
                         <span ng-if="hour <'12' && min<='59' && sec<='59' && hour >='0'" class="username"> &nbspGood Morning&nbsp{{userName}}</span>
                         <span ng-if="hour >='12' && hour < '17'" class="username"> Good Afternoon&nbsp{{userName}}</span>
@@ -30,35 +26,85 @@
                         <span class="username" style="color: white;">
                             {{clock | date:' d MMM yyyy h:mm a'}}</span>
                     </li>
-                    <!-- user login dropdown end -->
                 </ul>
             </div>
-
         </header>
-        <!--header end-->
 
+        <!-- <header id="header">
+            <div class="container">
+              <div id="logo" class="pull-left">
+                <span>
+                  <img style="float:left;" src="././home/img/fav.png" />
+                  <a href="/" id="mm" style="font-size: 33px;
+                  letter-spacing: -2.3px;
+              font-weight: 500;
+              font-family: 'Allerta Stencil';
+              color: #a8cf44 !important;
+              float: left;
+              margin-top: 4px;
+              text-transform: uppercase;">
+                    <span>
+                      <span id="vc">VC4ALL</span>
+                    </span>
+                  </a>
+                </span>
+              </div>
+              <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                  <li ng-if="userData.loginType" id="dashboard" style="display:block;">
+                    <a href="#!dashboard/personalDetail">DASHBOARD
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#services">FEATURES</a>
+                  </li>
+                  <li>
+                    <a href="#contact">ABOUT US</a>
+                  </li>
+                  <li ng-if="!userData.loginType">
+                    <a href="#" data-target="#crdntl" data-toggle="modal">LOGIN</a>
+                  </li>
+                  <li ng-if="userData.loginType">
+                    <a href="#!dashboard/logout">LOGOUT</a>
+                  </li>
+    
+                </ul>
+              </nav>
+    
+            </div>
+          </header> -->
+
+        <!-- <img   class="kklklk" src="robot.gif" style="margin-top: 81px; background: #a8d043ab; z-index: 1000; width: 100px;">-->
+        <!-- <div id="grline"  class="moving" style="position: fixed;
+          height: 5px;
+          left: 0;
+          top: 59px;
+          right: 0;
+          z-index: 1000;
+         ">
+        </div> -->
         <!--sidebar start-->
         <aside>
-            <div id="sidebar" class="nav-collapse" style="margin-top: 60px;">
+            <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" ng-hide="sideBarMenu">
                     <li id="alink">
                         <a ng-click="homeClick()" class="home">
-                            <i style="font-size:15px;" class="fa fa-home">
+                            <i class="fa fa-home">
                                 <span>&nbspHOME</span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href="#!/dashboard/personalDetail">
-                            <i style="font-size:15px;" class="fa fa-user-circle">
+                            <i class="fa fa-user-circle">
                                 <span>&nbspPROFILE</span>
                             </i>
                         </a>
                     </li>
                     <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
                         <a ng-click="eventClick('comm_subMenu')">
-                            <i style="font-size:15px;" class="fa fa-globe">
+                            <i class="fa fa-globe">
                                 <span>&nbspCOMMUNICATION</span>
                             </i>
                             <span ng-if="comm_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
@@ -76,7 +122,7 @@
                     <!-- ##### Start teacher/student Event  ##### -->
                     <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
                         <a ng-click="eventClick('events_subMenu')">
-                            <i style="font-size:15px;" class="fa fa-calendar">
+                            <i class="fa fa-calendar">
                                 <span>&nbspEVENTS</span>
                             </i>
                             <i ng-if="numberOfNotif_event>0" class="fa fa-circle llkk" style="font-size:10px"></i>
@@ -102,7 +148,7 @@
                     <!-- ##### Start teacher/student Quick Message  ##### -->
                     <li class="sub-menu" ng-if="loginType == 'teacher' || loginType == 'studParent'">
                         <a ng-click="eventClick('quickMsg_subMenu')">
-                            <i style="font-size:15px;" class="fa fa-envelope">
+                            <i class="fa fa-envelope">
                                 <span>&nbspMESSAGE</span>
                             </i>
                             <i class="fa fa-circle llkk" style="font-size:10px" ng-if="numberOfNotif_quickMsg>0"></i>
@@ -127,7 +173,7 @@
                     <!-- ##### Start teacher/student Acdemic  ##### -->
                     <li class="sub-menu" ng-if="loginType=='teacher' || loginType=='studParent'">
                         <a ng-click="eventClick('academic_subMenu')">
-                            <i style="font-size:15px;" class="fa fa-clipboard">
+                            <i class="fa fa-clipboard">
                                 <span>&nbspACADEMIC</span>
                             </i>
                             <span ng-if="academic_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
@@ -149,7 +195,7 @@
                     <!-- ##### Start teacher/student  Setting  ##### -->
                     <li class="sub-menu" ng-if="loginType=='teacher' || loginType=='studParent'">
                         <a ng-click="eventClick('setting_subMenu')">
-                            <i style="font-size:15px;" class="fa fa-cog">
+                            <i class="fa fa-cog">
                                 <span>&nbspSETTINGS</span>
 
                             </i>
@@ -170,7 +216,7 @@
                     <!-- ##### Start school admin Acdemic  ##### -->
                     <li class="sub-menu" ng-if="loginType=='admin'">
                         <a ng-click="eventClick('academic_subMenu')">
-                            <i style="font-size:15px;" class="fa fa-clipboard">
+                            <i class="fa fa-clipboard">
                                 <span>&nbspACADEMIC</span>
                             </i>
                             <span ng-if="academic_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
@@ -189,7 +235,7 @@
                     <!-- ##### Start school admin Setting  ##### -->
                     <li class="sub-menu" ng-if="loginType=='admin'">
                         <a ng-click="eventClick('setting_subMenu')">
-                            <i style="font-size:15px;" class="fa fa-cog">
+                            <i class="fa fa-cog">
                                 <span>&nbspSETTINGS</span>
                             </i>
 
@@ -212,7 +258,7 @@
                     <!-- ##### Start VC4ALL admin Setting  ##### -->
                     <li class="sub-menu" ng-if="loginType=='vc4allAdmin'">
                         <a ng-click="eventClick('setting_subMenu')">
-                            <i style="font-size:15px;" class="fa fa-cog">
+                            <i class="fa fa-cog">
                                 <span>&nbspSETTINGS</span>
                             </i>
                             <span ng-if="setting_subMenu==true" class="menu-arrow arrow_carrot-right"></span>
@@ -243,14 +289,14 @@
                     </li>
                     <li id="analink" ng-if="loginType=='vc4allAdmin'">
                         <a href="#!/dashboard/analytics" class="home">
-                            <i style="font-size:15px;" class="fa fa-line-chart">
+                            <i class="fa fa-line-chart">
                                 <span>&nbspANALYTICS</span>
                             </i>
                         </a>
                     </li>
                     <li id="analink">
                         <a href="#!/dashboard/captureImg" class="home">
-                            <i style="font-size:15px;" class="fa fa-line-chart">
+                            <i class="fa fa-line-chart">
                                 <span>&nbspCAPTURE IMAGE</span>
                             </i>
                         </a>
@@ -258,7 +304,7 @@
                     <!-- ##### End VC4ALL admin Setting  ##### -->
                     <li>
                         <a href="#" ng-click="logOut()">
-                            <i style="font-size:15px;" class="fa fa-sign-out">
+                            <i class="fa fa-sign-out">
                                 <span>&nbspLOGOUT</span>
                             </i>
                         </a>
@@ -272,11 +318,10 @@
         </div>
         <!--main content end-->
     </section>
+    <script src="././dashboard_Lib/js/jquery.js"></script>
+    <script src="././dashboard_Lib/js/bootstrap.min.js"></script>
+    <script src="././dashboard_Lib/js/jquery.nicescroll.js"></script>
+    <script src="././dashboard_Lib/js/jquery.scrollTo.min.js"></script>
+    <script src="././dashboard_Lib/js/scripts.js"></script>
 
 </div>
-
-<script src="././dashboard_Lib/js/jquery.js"></script>
-<script src="././dashboard_Lib/js/bootstrap.min.js"></script>
-<script src="././dashboard_Lib/js/jquery.nicescroll.js"></script>
-<script src="././dashboard_Lib/js/jquery.scrollTo.min.js"></script>
-<script src="././dashboard_Lib/js/scripts.js"></script>

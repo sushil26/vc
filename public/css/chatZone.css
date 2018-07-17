@@ -201,8 +201,8 @@ font-family: Oswald;
     display: block !important;
 }
 .popup-box .popup-head {
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
     background-color: rgba(52, 59, 64, 0.9);
     clear: both;
     color: #d9edf7;
@@ -454,7 +454,7 @@ font-family: Oswald;
 }
 .popup-messages .direct-chat-text {
     background: #dfece7 none repeat scroll 0 0;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
     border: 1px solid #dfece7;
     border-radius: 2px;
     color: #1f2121;
