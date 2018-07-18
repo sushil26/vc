@@ -1,3 +1,26 @@
+/* .img-circle {
+    -webkit-animation-name: example;
+    -webkit-animation-duration: 4s;
+    animation-name: example;
+    animation-duration: 4s;
+}
+@-webkit-keyframes example {
+    from {
+        border: 0px solid yellowgreen;
+    }
+    to {
+        border: 2px solid yellowgreen;
+    }
+}
+@keyframes example {
+    from {
+        border: 2px solid yellowgreen;
+    }
+    to {
+        border: 2px solid yellowgreen;
+    }
+} */
+
 .modal {
     font-family: Lato;
 }
@@ -40,7 +63,8 @@
     width: auto;
     position: relative;
     overflow: hidden;
-    height: calc(100% - 38px);
+    height: 90vh;
+    /* height: calc(100% - 38px); */
     margin: auto;
     padding: 0;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .06), 0 2px 5px 0 rgba(0, 0, 0, .2);
@@ -48,7 +72,8 @@
 
 .app-one {
     background-color: #f7f7f7;
-    height: 87vh;
+    height: 90vh;
+    /* height: 87vh; */
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -87,7 +112,7 @@
 
 .heading {
     height: 60px;
-    padding: 17px;
+    padding: 5px;
     /* padding: 19px 15px 10px 15px; */
     margin: 0;
     width: 100%;
@@ -107,6 +132,8 @@
 }
 
 .heading-name {
+    /* margin-left: -33px; */
+    margin-top: 10px;
     padding: 0 !important;
     cursor: pointer;
 }
@@ -129,8 +156,9 @@
     font-size: 12px;
     color: #93918f;
 }
+
 .heading-status {
-    padding: 0 5px;
+    /* padding: 0 5px; */
     font-size: 12px;
     color: #93918f;
 }
@@ -349,7 +377,7 @@ box-shadow: none;
     /* background: url("w.jpg") no-repeat fixed center; */
     background-size: cover;
     border: 1px solid #f7f7f7;
-    height: calc(100% - 120px);
+    height: calc(100% - 140px);
     overflow-x: hidden;
 }
 
@@ -436,7 +464,7 @@ box-shadow: none;
 .reply {
     top: 79vh;
     background-color: #1c3852;
-    height: 60px;
+    height: 80px;
     width: 100%;
     padding: 10px 5px 10px 5px !important;
     margin: 0 !important;
@@ -489,7 +517,7 @@ box-shadow: none;
     border: none;
     text-indent: 5px;
     box-shadow: none;
-    height: 100%;
+    height: 58px;
     font-size: 16px;
 }
 
@@ -510,9 +538,9 @@ box-shadow: none;
         top: 0;
         height: 100%;
     }
-    .heading {
+    /* .heading {
         height: 70px;
-    }
+    } */
     .fa-2x {
         font-size: 2.3em !important;
     }
@@ -548,10 +576,10 @@ box-shadow: none;
         text-align: left;
         padding: 0 8px !important;
     }
-    .avatar-icon img {
-        height: 55px;
-        width: 55px;
-    }
+    /* .avatar-icon img {
+        height: 49px;
+        width: 49px;
+    } */
     .sideBar-main {
         padding: 0 !important;
     }
@@ -594,7 +622,7 @@ box-shadow: none;
         height: calc(100% - 140px);
     }
     .reply {
-        height: 70px;
+        height: 80px;
     }
     .reply-emojis {
         padding: 5px 0 !important;

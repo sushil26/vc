@@ -123,11 +123,17 @@ i {
 
 body {
   color: #797979;
-  background: #eeeeee;
   font-family: "Lato", sans-serif;
   padding: 0px !important;
   margin: 0px !important;
   font-size: 14px !important;
+  background: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: -moz-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: -ms-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: -o-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background-size: 10px 10px, 10px 10px, 100% 100%;
+  background-position: 1px 1px, 0px 0px, center center;
 }
 
 h1,
@@ -1359,7 +1365,7 @@ div[data-role="editor-toolbar"] {
 /*----------------------	panel-----------------*/
 
 .panel {
-  border: none;
+  border: 1px solid #1b3752;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
@@ -3715,10 +3721,10 @@ ul.inbox-pagination li {
 
 .page-404 {
   position: relative;
-    /* width: 350px; */
-    /* height: 200px; */
-    /* margin: 100px auto; */
-    text-align: center;
+  /* width: 350px; */
+  /* height: 200px; */
+  /* margin: 100px auto; */
+  text-align: center;
 }
 
 .text-404 {
@@ -4252,8 +4258,8 @@ ul.amounts li {
 
 .panel-heading,
 .modal-header {
-  background: #428bca;
-  /* background: #1a3b56; */
+  /* background: #428bca; */
+  background: #1a3b56;
   color: white;
 }
 

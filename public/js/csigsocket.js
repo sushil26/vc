@@ -83,6 +83,7 @@ if (stuff.length > 5) {
         document.getElementById("logout").style.display = "block";
         document.getElementById("emailInvitation").style.display = "block";
         document.getElementById("videoCtrolBar").style.display = "grid";
+        getChatBack();
       },
       error: function (err) {
         console.log("err: " + JSON.stringify(err));
@@ -118,6 +119,7 @@ if (stuff.length > 5) {
         document.getElementById("logout").style.display = "none";
         document.getElementById("emailInvitation").style.display = "none";
         document.getElementById("videoCtrolBar").style.display = "grid";
+        getChatBack();
       },
       error: function (err) {
         console.log("err: " + JSON.stringify(err));
@@ -135,7 +137,9 @@ if (stuff.length > 5) {
     });
   } else {
     console.log("No user data from session");
+    getChatBack();
     $("#setName").trigger("click");
+
   }
   console.log("userName: " + userName);
 } else {
@@ -254,6 +258,9 @@ function checkPassword() {
 
           console.log("restrictedArray: " + restrictedArray);
           localStorage.setItem("restrictedTo", restrictedArray);
+        }
+        if (data.data.profilePicPath) {
+          localStorage.setItem("profilePicPath", data.data.profilePicPath);
         }
         var userNameEmail = localStorage.getItem("careatorEmail");
         var emailIdSplit = userNameEmail.split('@');
@@ -491,7 +498,8 @@ function startSession(id, date) {
   });
 }
 
-document.getElementById("addChatWindow").addEventListener("click", function () {
+/* ### Note:Start Whenever page refresh get the chathistory respective to url  ### */
+function getChatBack() {
   console.log("addChatWindow-->");
 
   var obj = {
@@ -506,7 +514,15 @@ document.getElementById("addChatWindow").addEventListener("click", function () {
     dataType: "json",
     success: function (data) {
       console.log("data: " + JSON.stringify(data));
-     
+      var chatData = data.data[0];
+      console.log("chatData: " + JSON.stringify(chatData));
+      for (var x = 0; x < chatData.chat.length; x++) {
+
+        document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
+          + chatData.chat[x].userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + chatData.chat[x].message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + chatData.chat[x].textTime + '</span></div>'
+
+      }
+
     },
     error: function (err) {
       console.log("err: " + JSON.stringify(err));
@@ -514,9 +530,9 @@ document.getElementById("addChatWindow").addEventListener("click", function () {
       console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
     }
   });
+}
 
-
-})
+/* ### Note:End Whenever page refresh get the chathistory respective to url  ### */
 
 signaling_socket.on("connect", function () {
   console.log("signaling_socket connect-->");
@@ -781,12 +797,12 @@ signaling_socket.on("addPeer", function (config) {
       peer_id + 'fullscreenbtn2" class="btn fa fa-expand" style="float:left;  margin-top: 10px; margin-left: 10px;"></button><h4>' +
       config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' +
       peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' +
-      peer_id + '" owner=' + peer_id + " name=" + config.userName + "></i><span>All is well</span></div></div>");
+      peer_id + '" owner=' + peer_id + " name=" + config.userName + "></i> </div></div>");
     $("#" + peer_id + "remoteVideoElement").append(remote_media);
     peer_userName_elements[peer_id] = document.getElementById("" + peer_id + "remoteContainer");
     $("#" + peer_id + "Remote").on('loadstart', function (event) {
       $(this).addClass('background');
-      $(this).attr("poster", "/img/Preloader_2.gif");
+      $(this).attr("poster", "/img/loading.gif");
     });
 
     $("#" + peer_id + "Remote").on('canplay', function (event) {
@@ -1151,6 +1167,7 @@ signaling_socket.on("authorizedForClose", function (config) {
   console.log("<--authorizedForClose");
 });
 
+
 //     console.log("<--init");
 
 //     // <!--------video Controller-------->
@@ -1205,13 +1222,13 @@ function setup_local_media(callback, errorback) {
       $("#portfolio-wrapper").append(
         '<div id="videoElem111" class="portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' +
         userName +
-        "</h4><span>All is well</span></div></div>"
+        "</h4> </div></div>"
       );
       $("#videosAttach").append(local_media);
       /* ### Start: Loader Start and Stop ### */
       $('#videoElem').on('loadstart', function (event) {
         $(this).addClass('background');
-        $(this).attr("poster", "/img/Preloader_2.gif");
+        $(this).attr("poster", "/img/loading.gif");
       });
       $('#videoElem').on('canplay', function (event) {
         $(this).removeClass('background');
@@ -1366,7 +1383,7 @@ function setup_local_media(callback, errorback) {
           /* ### Start: Loader Start and Stop ### */
           $("#screenShareElem").on('loadstart', function (event) {
             $(this).addClass('background');
-            $(this).attr("poster", "/img/Preloader_2.gif");
+            $(this).attr("poster", "/img/loading.gif");
           });
           $("#screenShareElem").on('canplay', function (event) {
             $(this).removeClass('background');
@@ -1417,7 +1434,7 @@ function setup_local_media(callback, errorback) {
               /* ### Start: Loader Start and Stop ### */
               $("#videoElem").on('loadstart', function (event) {
                 $(this).addClass('background');
-                $(this).attr("poster", "/img/Preloader_2.gif");
+                $(this).attr("poster", "/img/loading.gif");
               });
               $("#videoElem").on('canplay', function (event) {
                 $(this).removeClass('background');

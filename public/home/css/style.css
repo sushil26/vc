@@ -24,7 +24,6 @@
   border: none;
 }
 
-
 .modal-body {
   min-height: 100px;
 }
@@ -35,13 +34,11 @@
   font-size: 10px;
   font-weight: 500;
 }
-.mtitle :hover{
+
+.mtitle :hover {
   color: brown;
   font-size: 11px;
   font-weight: 600;
-  
- 
-
 }
 
 .bouncy:hover {
@@ -50,7 +47,7 @@
   background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7);
   background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7);
   background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7);
-  color:brown;
+  color: brown;
   box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
 }
 
@@ -242,7 +239,13 @@ video {
 
 body {
   background-image: url("bc.jpg");
-  background: #fff;
+  background: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: -moz-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: -ms-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: -o-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background-size: 10px 10px, 10px 10px, 100% 100%;
+  background-position: 1px 1px, 0px 0px, center center;
   color: #666666;
   font-family: Oswald !important;
   padding: 0 !important;
@@ -334,8 +337,6 @@ h6 {
   z-index: 997;
   box-shadow: 1px 2px 5px #242424;
 }
-
-
 
 #header #logo {
   /* float: left; */
@@ -1010,8 +1011,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 
 #portfolio {
-  background-image: url(././bc.jpg);
-  background: #f7f7f7;
+  background-image: url(././lc.jpg);
+  /* background: #f7f7f7; */
   padding: 80px 0;
 }
 
@@ -1080,11 +1081,14 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #portfolio .portfolio-items .details h4 {
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
-  padding: 8px 0 2px 8px;
+  font-family: lato;
+  color: #d9f7e9b5;
+  font-size: 15px;
+  font-weight: 100;
+  padding: 15px;
   margin: 0;
+  text-transform: capitalize;
+  max-width: 150px;;
 }
 
 #portfolio .portfolio-items .details span {

@@ -5,6 +5,8 @@ var image = require('./controllers/image');
 var adminAction = require('./controllers/adminAction');
 var school = require('./controllers/school');
 var careator = require('./controllers/careator');
+var careatorImgUpload = require('./controllers/careatorImgUploads.js');
+
 
 var record = require('./controllers/record');
 var capture = require('./controllers/capture');
@@ -20,7 +22,7 @@ module.exports = function (app) {
     app.get('/chatHistory/getHistory', careator.getHistory);
     app.get('/chatHistory/getHistoryByEmailId/:email', careator.getHistoryByEmailId);
     app.post('/careator_profile/chatStatusUpdateById/:id', careator.chatStatusUpdateById);
-    app.get('/careator_adminBasicData/getAdminObjectId',careator.getAdminObjectId);
+    app.get('/careator_adminBasicData/getAdminObjectId', careator.getAdminObjectId);
     app.post('/careator/careatorMasterInsert', careator.careatorMasterInsert);
     app.post('/careator/careatorSingleUserInsert', careator.careatorSingleUserInsert);
     app.get('/careator/careator_getAllEmp', careator.careator_getAllEmp);
@@ -44,7 +46,7 @@ module.exports = function (app) {
     app.get('/careator_getChatsById/getChatsById/:id', careator.getChatsById);
     //app.post('/careator/careator_video_creteGroup', careator.careator_video_creteGroup);
     //app.post('/careator/careator_chatVideo_creteGroup', careator.careator_chatVideo_creteGroup);
-   
+
     app.get('/careator_chatGroupList/careator_getChatGroupListById/:id', careator.careator_getChatGroupListById);
     app.get('/careator_chatGroupList/careator_getChatGroupList', careator.careator_getChatGroupList);
     app.post('/careator_getEmp/careator_getChatRightsAllemp/:id', careator.careator_getChatRightsAllemp);
@@ -54,7 +56,9 @@ module.exports = function (app) {
     app.get('/careator_groupTextRead/groupTextReadByGroupId/:group_id', careator.groupTextReadByGroupId);
     app.post('/careator_groupText/groupText', careator.groupText);
     //app.get('/careator_groupTextRead/groupTextReadById/:sId/:rId', careator.groupTextReadById); /* Note: this api methos is not defining on the careator.js */
-   
+
+    app.post('/careator_comm_profileImgUpload/comm_profileImgUpload', careatorImgUpload.comm_profileImgUpload);
+    app.post('/careator_comm_profileImgUpdateById/comm_profileImgUpdateById/:id', careator.comm_profileImgUpdateById);
 
     app.post('/vc/login4VC', user.login4VC);
     app.post('/record/pswdGenerate', record.pswdGenerate);
@@ -64,12 +68,12 @@ module.exports = function (app) {
     app.get('/getRecord/getRecordVideo/:id', record.getRecordVideo);
     app.get('/record/getVideo/:id', record.getRecordVideo);
 
-   
+
     app.post('/vc/captureImgSend/:parentEmail/:studName', capture.captureImgSend);
     app.post('/vc/schoolLogo', image.upload);
     app.post('/vc/profilePicupload', image.profilePicupload);
     app.post('/vc/register4VC', user.register4VC);
-    
+
     app.post('/vc/checkPassword/:id/:loginType', user.checkPassword);
     app.post('/vc/passwordUpdate/:id/:loginType', user.passwordUpdate);
     app.post('/vc/updateProfilePic/:id', user.profilePicUpdate);

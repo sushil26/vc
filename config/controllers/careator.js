@@ -520,7 +520,8 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
         "chatRights": data.ChatRights,
         "status": "active",
         "chatStatus": "Available",
-        "restrictedTo": []
+        "restrictedTo": [],
+        "profilePicPath": "./css/user.png"
     }
     careatorMaster.find(findEmpId).toArray(function (err, findData) {
         if (err) {
@@ -567,7 +568,8 @@ module.exports.careatorSingleUserInsert = function (req, res) {
         "videoRights": req.body.videoRights,
         "chatRights": req.body.chatRights,
         "status": "active",
-        "restrictedTo": []
+        "restrictedTo": [],
+        "profilePicPath": "./css/user.png"
     }
     console.log("obj :" + JSON.stringify(obj));
     var findEmpId = {
@@ -2086,4 +2088,43 @@ module.exports.chatStatusUpdateById = function (req, res) {
     }
 }
 
+module.exports.comm_profileImgUpdateById = function (req, res) {
+    console.log("comm_profileImgUpdateById-->");
+    var id = req.params.id;
+    console.log("id: " + id);
+    console.log("profilePicPath: " + req.body.profilePicPath);
+    var response;
+    if (general.emptyCheck(id)) {
+        var findObj = {
+            "_id": ObjectId(id)
+        }
+        careatorMaster.update(findObj, { $set: { "profilePicPath": req.body.profilePicPath } }, function (err, profilePicPathUpdated) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: "Unsucessfully Pic Updated",
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("profilePicPathUpdated: " + JSON.stringify(profilePicPathUpdated));
+                response = {
+                    status: true,
+                    message: "Sucessfully Pic Updated",
+                    data: profilePicPathUpdated
+                };
+                res.status(200).send(response);
+            }
+        })
+    }
+    else {
+        console.log("empty value found");
+        response = {
+            status: false,
+            message: "Empty value found",
+        }
+        res.status(400).send(response);
+    }
+}
 
