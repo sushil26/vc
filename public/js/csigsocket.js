@@ -11,7 +11,7 @@ console.log("sesionEnc: " + sesionEnc);
 
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "https://norecruits.com";
 //var SIGNALING_SERVER = "http://localhost:5000";
 var streamArray = [];
 var signaling_socket = null; /* our socket.io connection to our webserver */
@@ -49,6 +49,7 @@ console.log("id1**: " + id1);
 console.log("id2**: " + id2);
 if (stuff.length > 5) {
   console.log("1 cond");
+
   console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));
   console.log("localStorage.getItem(sessionPassword): " + localStorage.getItem("sessionPassword"));
   console.log("localStorage.getItem(careator_remoteEmail): " + localStorage.getItem("careator_remoteEmail"));
@@ -57,7 +58,8 @@ if (stuff.length > 5) {
   if (localStorage.getItem("redirctRequired") == 'true') {
     console.log("localStorage.getItem(redirctRequired): " + localStorage.getItem("redirctRequired"));
     localStorage.removeItem("redirctRequired");
-    window.location.href = "/careator"
+    close();
+    //window.location.href = "/careator";
   }
   if (localStorage.getItem("careatorEmail") && localStorage.getItem("sessionPassword") && (localStorage.getItem("videoRights") == 'yes')) {
     console.log("Hoster session check");
@@ -69,7 +71,7 @@ if (stuff.length > 5) {
     };
     console.log("obj: " + JSON.stringify(obj));
     $.ajax({
-      url: "https://vc4all.in/careator/pswdCheck",
+      url: "https://norecruits.com/careator/pswdCheck",
       type: "POST",
       data: JSON.stringify(obj),
       contentType: "application/json",
@@ -80,7 +82,7 @@ if (stuff.length > 5) {
         var emailIdSplit = userNameEmail.split('@');
         userName = emailIdSplit[0];
         document.getElementById("videoConferenceUrl").style.display = "block";
-        document.getElementById("logout").style.display = "block";
+        
         document.getElementById("emailInvitation").style.display = "block";
         document.getElementById("videoCtrolBar").style.display = "grid";
         getChatBack();
@@ -106,7 +108,7 @@ if (stuff.length > 5) {
       "careator_remotePswd": careator_remotePswd
     }
     $.ajax({
-      url: "https://vc4all.in/careator/RemoteJoinCheck",
+      url: "https://norecruits.com/careator/RemoteJoinCheck",
       type: "POST",
       data: JSON.stringify(checkObj),
       contentType: "application/json",
@@ -116,7 +118,6 @@ if (stuff.length > 5) {
         userName = localStorage.getItem("careator_remoteEmail");
         careator_remoteEmail = true;
         document.getElementById("videoConferenceUrl").style.display = "none";
-        document.getElementById("logout").style.display = "none";
         document.getElementById("emailInvitation").style.display = "none";
         document.getElementById("videoCtrolBar").style.display = "grid";
         getChatBack();
@@ -126,7 +127,6 @@ if (stuff.length > 5) {
         console.log("err.responseText: " + JSON.stringify(err.responseText));
         console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
         document.getElementById("videoConferenceUrl").style.display = "none";
-        document.getElementById("logout").style.display = "none";
         document.getElementById("emailInvitation").style.display = "none";
         userName = "";
         localStorage.removeItem("careatorEmail");
@@ -152,12 +152,12 @@ if (stuff.length > 5) {
     console.log("2 cond: emailIdSplit: " + JSON.stringify(emailIdSplit));
     userName = emailIdSplit[0];
     document.getElementById("videoConferenceUrl").style.display = "block";
-    document.getElementById("logout").style.display = "block";
     document.getElementById("videoCtrolBar").style.display = "none";
     console.log("localStorage.getItem(videoRights): " + localStorage.getItem("videoRights"));
     console.log("localStorage.getItem(chatRights): " + localStorage.getItem("chatRights"));
     if (localStorage.getItem("videoRights") == 'yes') {
       document.getElementById("videoConfStart").style.display = "block";
+      $("#buttonpage").css({"min-height":"auto"});
     }
     if (localStorage.getItem("chatRights") == 'yes') {
       document.getElementById("chatConfStart").style.display = "block";
@@ -186,7 +186,7 @@ function sendEmail() {
   console.log("obj: " + JSON.stringify(obj));
 
   $.ajax({
-    url: "https://vc4all.in/careator/pswdGenerate",
+    url: "https://norecruits.com/careator/pswdGenerate",
     type: "POST",
     data: JSON.stringify(obj),
     contentType: "application/json",
@@ -224,7 +224,7 @@ function checkPassword() {
   if (password != "" && careatorEmail != "") {
 
     $.ajax({
-      url: "https://vc4all.in/careator/pswdCheck",
+      url: "https://norecruits.com/careator/pswdCheck",
       type: "POST",
       data: JSON.stringify(obj),
       contentType: "application/json",
@@ -240,6 +240,7 @@ function checkPassword() {
         if (data.data.videoRights == 'yes') {
           localStorage.setItem("videoRights", 'yes');
           document.getElementById("videoConfStart").style.display = "inline";
+          $("#buttonpage").css({"min-height":"auto"});
         }
         if (data.data.chatRights == 'yes') {
           localStorage.setItem("chatRights", 'yes');
@@ -267,15 +268,14 @@ function checkPassword() {
         //userName = emailIdSplit[0];
         console.log("userName: " + userName);
         document.getElementById("videoConferenceUrl").style.display = "block";
-        document.getElementById("logout").style.display = "block";
-        $('#myPasswordModal').modal('hide');
+        // $('#myPasswordModal').modal('hide');
+        window.location.href = "https://norecruits.com/careatorApp/#!/dashboard/profile";
       },
       error: function (err) {
         console.log("err: " + JSON.stringify(err));
         console.log("err.responseText: " + JSON.stringify(err.responseText));
         console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
         document.getElementById("videoConferenceUrl").style.display = "none";
-        document.getElementById("logout").style.display = "none";
         localStorage.removeItem("careatorEmail");
         userName = "";
       }
@@ -291,7 +291,7 @@ function checkPassword() {
 
 function chatNavigation() {
   console.log("chatNavigation-->");
-  window.location.href = "https://vc4all.in/careatorApp/#!/dashboard";
+  window.location.href = "https://norecruits.com/careatorApp/#!/dashboard/profile";
 }
 
 /* ##### Start: Email Invite  ##### */
@@ -309,7 +309,7 @@ function emailInviteSend() {
   console.log("obj: " + JSON.stringify("obj"));
 
   $.ajax({
-    url: "https://vc4all.in/careator/emailInvite",
+    url: "https://norecruits.com/careator/emailInvite",
     //  url: "http://localhost:5000/vc/login4VC",
     type: "POST",
     data: JSON.stringify(obj),
@@ -380,29 +380,6 @@ var ICE_SERVERS = [{
 }
 ];
 
-function logout() {
-  console.log("logout--> ");
-  if (localStorage.getItem("chatRights")) {
-    localStorage.removeItem("chatRights");
-  }
-  if (localStorage.getItem("videoRights")) {
-    localStorage.removeItem("videoRights");
-  }
-  if (localStorage.getItem("sessionUrlId") == queryLink && localStorage.getItem("careatorEmail")) {
-    console.log("start to disconnect the session");
-    localStorage.removeItem("careatorEmail");
-    localStorage.removeItem("sessionUrlId");
-    localStorage.removeItem("careator_remoteEmail");
-    localStorage.removeItem("sessionPassword")
-  } else {
-    localStorage.removeItem("careatorEmail");
-    localStorage.removeItem("sessionUrlId");
-    localStorage.removeItem("careator_remoteEmail");
-    localStorage.removeItem("oneTimePassword");
-    console.log("You are not session creater so you cant delete session");
-    window.location.href = "https://vc4all.in";
-  }
-}
 
 /* ##### Start: disconnectSessionReply from server(index.js)   ##### */
 signaling_socket.on("disconnectSessionReply", function (data) {
@@ -411,14 +388,13 @@ signaling_socket.on("disconnectSessionReply", function (data) {
     console.log("Ready for redirect-->");
     localStorage.setItem("redirctRequired", true);
 
-    //window.location.href = "https://vc4all.in";
-  }
-  else if (queryLink == data.deleteSessionId && peerNew_id != data.owner) {
+    //window.location.href = "https://norecruits.com";
+  } else if (queryLink == data.deleteSessionId && peerNew_id != data.owner) {
     console.log("remote notification that host disconnect the session-->");
     alert("Your host disconnect the session, you no longer can use this session");
     localStorage.setItem("redirctRequired", true);
     // $("#homeLink").trigger("click");
-    // window.location.href = "https://vc4all.in";
+    // window.location.href = "https://norecruits.com";
   }
 })
 /* ##### End: disconnectSessionReply from server(index.js)   ##### */
@@ -435,10 +411,9 @@ function disconnecSession() {
       owner: peerNew_id
     });
 
-    // window.location.href = "https://vc4all.in";
-  }
-  else {
-    window.location.href = "https://vc4all.in";
+    // window.location.href = "https://norecruits.com";
+  } else {
+    window.location.href = "https://norecruits.com";
   }
   // userName = null;
   // console.log("queryLink: " + queryLink);
@@ -464,7 +439,7 @@ function disconnecSession() {
   //   localStorage.removeItem("sessionUrlId");
   //   localStorage.removeItem("careator_remoteEmail");
   //   console.log("You are not session creater so you cant delete session");
-  //   window.location.href = "https://vc4all.in";
+  //   window.location.href = "https://norecruits.com";
   // }
   console.log("-->disconnecSession");
 }
@@ -472,7 +447,7 @@ function disconnecSession() {
 function startSession(id, date) {
   console.log("startSession-->");
   urlDate = date;
-  var url = "https://vc4all.in/careator/" + id + "/" + date;
+  var url = "https://norecruits.com/careator/" + id + "/" + date;
 
   var obj = {
     "email": localStorage.getItem('careatorEmail'),
@@ -480,7 +455,7 @@ function startSession(id, date) {
   }
   console.log("obj: " + JSON.stringify(obj));
   $.ajax({
-    url: "https://vc4all.in/careator/setCollection",
+    url: "https://norecruits.com/careator/setCollection",
     type: "POST",
     data: JSON.stringify(obj),
     contentType: "application/json",
@@ -488,7 +463,7 @@ function startSession(id, date) {
     success: function (data) {
       console.log("data: " + JSON.stringify(data));
       localStorage.setItem("sessionUrlId", id);
-      window.location.href = "https://vc4all.in/careator/" + id + "/" + date;
+      window.location.href = "https://norecruits.com/careator/" + id + "/" + date;
     },
     error: function (err) {
       console.log("err: " + JSON.stringify(err));
@@ -507,7 +482,7 @@ function getChatBack() {
   }
   console.log("obj: " + JSON.stringify(obj));
   $.ajax({
-    url: "https://vc4all.in/chatHistory/getChatByUrl",
+    url: "https://norecruits.com/chatHistory/getChatByUrl",
     type: "POST",
     data: JSON.stringify(obj),
     contentType: "application/json",
@@ -518,8 +493,8 @@ function getChatBack() {
       console.log("chatData: " + JSON.stringify(chatData));
       for (var x = 0; x < chatData.chat.length; x++) {
 
-        document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-          + chatData.chat[x].userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + chatData.chat[x].message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + chatData.chat[x].textTime + '</span></div>'
+        document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">' +
+          chatData.chat[x].userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + chatData.chat[x].message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + chatData.chat[x].textTime + '</span></div>'
 
       }
 
@@ -565,14 +540,15 @@ signaling_socket.on("connect", function () {
     if (config.queryId == null) {
       console.log("query id is null");
       document.getElementById("videoConfStart").setAttribute("onclick", "startSession('" + peerNew_id + "' , '" + date + "')");
+      // $("#buttonpage").css({"min-height":"100vh"})
       document
         .getElementById("linkToShare")
         .setAttribute(
           "href",
-          "https://vc4all.in/careator/" + peerNew_id + "/" + date
+          "https://norecruits.com/careator/" + peerNew_id + "/" + date
         );
       document.getElementById("linkToShare").innerHTML =
-        "https://vc4all.in/careator/" + peerNew_id + "/" + date;
+        "https://norecruits.com/careator/" + peerNew_id + "/" + date;
     } else {
       console.log("query id nt null");
 
@@ -580,13 +556,14 @@ signaling_socket.on("connect", function () {
         .getElementById("linkToShare")
         .setAttribute(
           "href",
-          "https://vc4all.in/careator/" + queryLink + "/" + date
+          "https://norecruits.com/careator/" + queryLink + "/" + date
         );
       document.getElementById("linkToShare").innerHTML =
-        "https://vc4all.in/careator/" + queryLink + "/" + date;
+        "https://norecruits.com/careator/" + queryLink + "/" + date;
       document.getElementById("screenBtns").style.display = "inline";
       document.getElementById("homeLink").style.display = "inline";
       document.getElementById("videoConfStart").style.display = "none";
+      $("#buttonpage").css({"min-height":"100vh"});
       // document.getElementById("chelam").style.display = "none";
       // document.getElementById("mobile-nav-toggle").style.display = "none";
       document.getElementById("openChat").style.display = "inline";
@@ -604,6 +581,7 @@ signaling_socket.on("connect", function () {
           join__channel(DEFAULT_CHANNEL, {
             "whatever-you--here": "stuff"
           });
+
         });
       }
 
@@ -618,7 +596,7 @@ signaling_socket.on("connect", function () {
           "careator_remotePswd": careator_remotePswd
         }
         $.ajax({
-          url: "https://vc4all.in/careator/RemoteJoinCheck",
+          url: "https://norecruits.com/careator/RemoteJoinCheck",
           type: "POST",
           data: JSON.stringify(checkObj),
           contentType: "application/json",
@@ -632,7 +610,6 @@ signaling_socket.on("connect", function () {
             userName = emailIdSplit[0];
             careator_remoteEmail = true;
             document.getElementById("videoConferenceUrl").style.display = "none";
-            document.getElementById("logout").style.display = "none";
             document.getElementById("emailInvitation").style.display = "none";
             document.getElementById("videoCtrolBar").style.display = "grid";
             localStorage.setItem("oneTimePassword", careator_remotePswd);
@@ -648,7 +625,6 @@ signaling_socket.on("connect", function () {
             console.log("err.responseText: " + JSON.stringify(err.responseText));
             console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
             document.getElementById("videoConferenceUrl").style.display = "none";
-            document.getElementById("logout").style.display = "none";
             document.getElementById("emailInvitation").style.display = "none";
             userName = "";
           }
@@ -666,7 +642,7 @@ signaling_socket.on("disconnect", function () {
   disconnPeerId = peerNew_id;
   // document.getElementById(peerNew_id).remove();
   /* Tear down all of our peer connections and remove all the
- * media divs when we disconnect */
+   * media divs when we disconnect */
   for (peer_id in peer_media_elements) {
     peer_media_elements[peer_id].remove();
     peer_userName_elements[peer_id].remove();
@@ -1160,7 +1136,7 @@ signaling_socket.on("authorizedForClose", function (config) {
   if (config.removableId == peerNew_id) {
     console.log("Removable alert should start");
     alert("Session creater removed you from conference");
-    window.location.href = "https://vc4all.in";
+    window.location.href = "https://norecruits.com";
   }
 
   // delete peer_media_sselements[config.peer_id];
@@ -1199,6 +1175,9 @@ function setup_local_media(callback, errorback) {
     video.srcObject = stream;
     console.log("<--attachMediaStream");
   };
+  $("#buttonpage").css({
+    "min-height": "100vh"
+  });
   navigator.getUserMedia({
     audio: USE_AUDIO,
     video: USE_VIDEO
@@ -1735,3 +1714,82 @@ $(".back-to-top").click(function () {
   }, 1500, "easeInOutExpo");
   return false;
 });
+
+signaling_socket.on('comm_logoutNotifyToUserById', function (data) {
+  console.log("***comm_logoutNotifyToUserById-->: " + JSON.stringify(data));
+  console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));
+  console.log(" localStorage.getItem(sessionUrlId): " + localStorage.getItem("sessionUrlId"));
+  console.log(" url: " + url);
+  if (data.email == localStorage.getItem("careatorEmail") || data.email == localStorage.getItem("careator_remoteEmail")) {
+    console.log("Start to remove the session");
+    // localStorage.removeItem("email");
+    // localStorage.removeItem("userName");
+    // localStorage.removeItem("empId");
+    // localStorage.removeItem("userId");
+    // localStorage.removeItem("restrictedTo");
+    // localStorage.removeItem("chatStatus");
+    // localStorage.removeItem("profilePicPath");
+    // if (localStorage.getItem("chatRights")) {
+    //   localStorage.removeItem("chatRights");
+    // }
+    // if (localStorage.getItem("videoRights")) {
+    //   localStorage.removeItem("videoRights");
+    // }
+    // if (localStorage.getItem("sessionUrlId") == queryLink && localStorage.getItem("careatorEmail")) {
+    //   console.log("start to disconnect the session");
+    //   localStorage.removeItem("careatorEmail");
+    //   localStorage.removeItem("sessionUrlId");
+    //   localStorage.removeItem("careator_remoteEmail");
+    //   localStorage.removeItem("sessionPassword")
+    // } else {
+    //   localStorage.removeItem("careatorEmail");
+    //   localStorage.removeItem("sessionUrlId");
+    //   localStorage.removeItem("careator_remoteEmail");
+    //   localStorage.removeItem("oneTimePassword");
+    //   console.log("You are not session creater so you cant delete session");
+    // }
+
+    disconnecSession();
+    //window.location.href = "https://norecruits.com";
+  }
+  if (data.sessionURL == url) {
+    console.log("Start to remove the session based on sessionURL");
+    localStorage.removeItem("sessionUrlId");
+    // signaling_socket.emit("disconnectSession", {
+    //   deleteSessionId: queryLink,
+    //   owner: peerNew_id
+    // });
+    close();
+
+  }
+  // if(localStorage.getItem("careatorEmail")==null || localStorage.getItem("careator_remoteEmail")==null){
+  //   disconnecSession();
+  // }
+
+})
+
+
+
+// function logout() {
+//   console.log("logout--> ");
+//   if (localStorage.getItem("chatRights")) {
+//     localStorage.removeItem("chatRights");
+//   }
+//   if (localStorage.getItem("videoRights")) {
+//     localStorage.removeItem("videoRights");
+//   }
+//   if (localStorage.getItem("sessionUrlId") == queryLink && localStorage.getItem("careatorEmail")) {
+//     console.log("start to disconnect the session");
+//     localStorage.removeItem("careatorEmail");
+//     localStorage.removeItem("sessionUrlId");
+//     localStorage.removeItem("careator_remoteEmail");
+//     localStorage.removeItem("sessionPassword")
+//   } else {
+//     localStorage.removeItem("careatorEmail");
+//     localStorage.removeItem("sessionUrlId");
+//     localStorage.removeItem("careator_remoteEmail");
+//     localStorage.removeItem("oneTimePassword");
+//     console.log("You are not session creater so you cant delete session");
+//     window.location.href = "https://norecruits.com";
+//   }
+// }

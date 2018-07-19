@@ -43,12 +43,13 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             console.log("restrictedArray: " + JSON.stringify(restrictedArray));
             userData.restrictedTo = restrictedArray;
         }
-        if(localStorage.getItem("profilePicPath")){
+        if (localStorage.getItem("profilePicPath")) {
             userData.profilePicPath = localStorage.getItem("profilePicPath");
         }
 
         careatorSessionAuth.setAccess(userData);
         var userData = careatorSessionAuth.getAccess("userData");
+        $scope.userData = userData;
         console.log("userData: " + JSON.stringify(userData));
     }
 
@@ -60,17 +61,17 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         $scope.videoRights = "no";
     }
 
-    $scope.getAdmin_email_id = function(){
+    $scope.getAdmin_email_id = function () {
         console.log("getAdmin_email_id-->");
-        var api = "https://vc4all.in/careator_adminBasicData/getAdminObjectId";
+        var api = "https://norecruits.com/careator_adminBasicData/getAdminObjectId";
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
             var checkStatus = careatorHttpFactory.dataValidation(data);
-            console.log("checkStatus: "+checkStatus);
+            console.log("checkStatus: " + checkStatus);
             if (checkStatus) {
                 $rootScope.adminId = data.data.data;
-               console.log("$rootScope.adminId: "+$rootScope.adminId);
+                console.log("$rootScope.adminId: " + $rootScope.adminId);
                 console.log(data.data.message);
 
             } else {
@@ -84,29 +85,37 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
     $scope.logout = function () {
         console.log("logout-->");
-        localStorage.removeItem("careatorEmail");
-        localStorage.removeItem("sessionUrlId");
-        localStorage.removeItem("careator_remoteEmail");
-        localStorage.removeItem("sessionUrlId");
-        localStorage.removeItem("careator_remoteEmail");
-        localStorage.removeItem("email");
-        localStorage.removeItem("userName");
-        localStorage.removeItem("empId");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("videoRights");
-        localStorage.removeItem("chatRights");
-        localStorage.removeItem("restrictedTo");
-        localStorage.removeItem("chatStatus");
-        localStorage.removeItem("profilePicPath");
-        careatorSessionAuth.clearAccess("userData");
-        window.location.href = "https://vc4all.in";
+        var r = confirm("Are you sure to close all session????");
+        if (r == true) {
+            var id = userData.userId;
+            var api = "https://norecruits.com/careator_loggedin/getLoggedinSessionURLById/" + id;
+            console.log("api: " + api);
+            careatorHttpFactory.get(api).then(function (data) {
+                console.log("data--" + JSON.stringify(data.data));
+                var checkStatus = careatorHttpFactory.dataValidation(data);
+                console.log("checkStatus: " + checkStatus);
+                if (checkStatus) {
+                    var sessionURL = data.data.data.sessionURL;
+                    console.log(data.data.message);
+                    console.log("sessionURL: " + sessionURL);
+                    socket.emit("comm_logout", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": sessionURL }); /* ### Note: Logout notification to server ### */
+                } else {
+                    console.log("Sorry");
+                    console.log(data.data.message);
+                }
+            })
+
+        }
+        else {
+            console.log("Logout cancelled");
+        }
     }
 
     socket.on('comm_aboutUserEdit', function (data) {
         console.log("***comm_aboutUserEdit-->");
         if (data.id == userData.userId) {
             var id = userData.userId;
-            var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
+            var api = "https://norecruits.com/careator_getUser/careator_getUserById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -171,8 +180,32 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             })
         }
     })
+    /* #### Start: Logout request from server(index.js) #### */
+    socket.on('comm_logoutNotifyToUserById', function (data) {
+        console.log("***comm_logoutNotifyToUserById-->: " + JSON.stringify(data));
+        if (data.userId == $scope.userData.userId && data.email == $scope.userData.email) {
+            console.log("started to remove localstorage");
+            localStorage.removeItem("careatorEmail");
+            localStorage.removeItem("careator_remoteEmail");
+            localStorage.removeItem("email");
+            localStorage.removeItem("userName");
+            localStorage.removeItem("empId");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("videoRights");
+            localStorage.removeItem("chatRights");
+            localStorage.removeItem("restrictedTo");
+            localStorage.removeItem("chatStatus");
+            localStorage.removeItem("profilePicPath");
+            careatorSessionAuth.clearAccess("userData");
+            $scope.doRedirect();
+        }
 
-
+    })
+    $scope.doRedirect = function () {
+        console.log("$scope.doRedirect--->");
+        window.location.href = "https://norecruits.com";
+    }
+    /* #### End: Logout request from server(index.js) #### */
 
 
     ///////////////Hamburger/////////////////////////
@@ -203,7 +236,18 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     });
 
 
+    /* ##### Start: on window only one open tab should be there for this page  ##### */
+    if (+localStorage.tabCount > 0)
+    var r = confirm("You have already open this url");
+    if (r == true) {
+        close()
+    }
+    else
+        localStorage.tabCount = 0;
 
-
-
+    localStorage.tabCount = +localStorage.tabCount + 1;
+    window.onunload = function () {
+        localStorage.tabCount = +localStorage.tabCount - 1;
+    };
+    /* ##### End: on window only one open tab should be there for this page  ##### */
 })

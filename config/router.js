@@ -44,6 +44,7 @@ module.exports = function (app) {
     app.post('/careator_restrictedToSave/restrictedToSave/:id', careator.restrictedToSave);
     app.post('/careator_removeRestrictedUserById/removeRestrictedUserById/:id', careator.removeRestrictedUserById);
     app.get('/careator_getChatsById/getChatsById/:id', careator.getChatsById);
+    app.get('/careator_loggedin/getLoggedinSessionURLById/:id', careator.getLoggedinSessionURLById);
     //app.post('/careator/careator_video_creteGroup', careator.careator_video_creteGroup);
     //app.post('/careator/careator_chatVideo_creteGroup', careator.careator_chatVideo_creteGroup);
 

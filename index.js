@@ -347,7 +347,7 @@ io.sockets.on('connection', function (socket) {
             console.log("peerWithQueryId: " + peerWithQueryId[data.userId]);
             console.log("peerWithQueryId: " + peerWithQueryId[data.userId]);
             var queryObj = {
-                "url": "https://vc4all.in/careator/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
+                "url": "https://norecruits.com/careator/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
             }
             console.log("queryObj: " + JSON.stringify(queryObj));
             var obj = {
@@ -454,6 +454,13 @@ io.sockets.on('connection', function (socket) {
         io.sockets.emit('quickMsg_viewDetail_toSender', { "userId": data.userId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
     })
     /* ### End: Get the quick message view notification from the reciever ### */
+
+    /* ### Start: Get the logoutNotification from the user(careator_dashboardCtrl.js) ### */
+    socket.on('comm_logout', function (data) {
+        console.log("comm_logout-->: "+JSON.stringify(data));
+        io.sockets.emit('comm_logoutNotifyToUserById', { "userId": data.userId, "email":data.email, "sessionURL":data.sessionURL  }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
+    })
+    /* ### End: Get the logoutNotification from the user(careator_dashboardCtrl.js) ### */
 
     console.log("<--connection Ended");
 });
