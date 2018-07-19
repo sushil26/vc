@@ -83,6 +83,18 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     }
     $scope.getAdmin_email_id();
 
+    $scope.videoUrlNavigation = function () {
+        console.log("videoUrlNavigation-->");
+        console.log("localStorage.getItem(sessionUrlId): "+localStorage.getItem("sessionUrlId"));
+        
+        if (localStorage.getItem("sessionUrlId")) {
+            alert("You have to disconnect your old session in-order to open new");
+        }
+        else{
+            window.open('https://vc4all.in/careator', '_blank');
+        }
+
+    }
     $scope.logout = function () {
         console.log("logout-->");
         var r = confirm("Are you sure to close all session????");
@@ -235,10 +247,9 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
     });
 
-
     /* ##### Start: on window only one open tab should be there for this page  ##### */
     if (+localStorage.tabCount > 0)
-    var r = confirm("You have already open this url");
+        var r = confirm("You have already open this url");
     if (r == true) {
         close()
     }

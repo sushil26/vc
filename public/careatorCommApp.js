@@ -1,51 +1,126 @@
-var careatorApp = angular.module('careatorCommApp', ['ui.router', 'angularjs-dropdown-multiselect', 'ngCookies','ngImgCrop']);
+var careatorApp = angular.module('careatorCommApp', ['ui.router', 'angularjs-dropdown-multiselect', 'ngCookies', 'ngImgCrop']);
 
 careatorApp.config(function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider
         .state('Cdashboard', {
             url: careator_dashboard(),
-            templateUrl: '/careatorApp/html/careator_dashboard.html'
-
+            templateUrl: '/careatorApp/html/careator_dashboard.html',
         })
         .state('Cdashboard.userCreate', {
             url: careator_userCreate(),
-            templateUrl: '/careatorApp/html/createUsers.html'
+            templateUrl: '/careatorApp/html/createUsers.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.email == 'vc4allAdmin@gmail.com') {
+
+                    }
+                    else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
 
         })
         .state('Cdashboard.createGroup', {
             url: createGroup(),
-            templateUrl: '/careatorApp/html/createGroup.html'
+            templateUrl: '/careatorApp/html/createGroup.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.email == 'vc4allAdmin@gmail.com') {
+
+                    }
+                    else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
 
         })
         .state('Cdashboard.usersListCtrl', {
             url: usersListCtrl(),
-            templateUrl: '/careatorApp/html/userList.html'
+            templateUrl: '/careatorApp/html/userList.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.email == 'vc4allAdmin@gmail.com') {
+
+                    }
+                    else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
 
         })
         .state('Cdashboard.groupListCtrl', {
             url: groupListCtrl(),
-            templateUrl: '/careatorApp/html/groupList.html'
+            templateUrl: '/careatorApp/html/groupList.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.email == 'vc4allAdmin@gmail.com') {
+
+                    }
+                    else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
 
         })
         .state('Cdashboard.editUser', {
             url: editUser(),
-            templateUrl: '/careatorApp/html/userEdit.html'
+            templateUrl: '/careatorApp/html/userEdit.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.email == 'vc4allAdmin@gmail.com') {
+
+                    }
+                    else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
 
         }).state('Cdashboard.editGroup', {
             url: editGroup(),
-            templateUrl: '/careatorApp/html/groupEdit.html'
+            templateUrl: '/careatorApp/html/groupEdit.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.email == 'vc4allAdmin@gmail.com') {
+
+                    }
+                    else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
 
         })
         .state('Cdashboard.chatHistory', {
             url: careator_chatHistory(),
-            templateUrl: '/careatorApp/html/chatHistory.html'
+            templateUrl: '/careatorApp/html/chatHistory.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.email == 'vc4allAdmin@gmail.com') {
+
+                    }
+                    else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
 
         })
         .state('Cdashboard.chat', {
             url: careator_chat(),
             templateUrl: '/careatorApp/html/chat.html'
-
         })
         .state('Cdashboard.contactAdmin', {
             url: contactAdmin(),
@@ -53,11 +128,22 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('Cdashboard.profile', {
             url: profile(),
-            templateUrl: '/careatorApp/html/profile.html'
+            templateUrl: '/careatorApp/html/profile.html',
         })
         .state('Cdashboard.userRestrict', {
             url: careator_userRestrict(),
-            templateUrl: '/careatorApp/html/userRestriction.html'
+            templateUrl: '/careatorApp/html/userRestriction.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.email == 'vc4allAdmin@gmail.com') {
+
+                    }
+                    else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
 
         })
 })

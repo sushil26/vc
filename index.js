@@ -202,7 +202,6 @@ io.sockets.on('connection', function (socket) {
             console.log("connection: channel: " + channel);
             part(channel);
         }
-
         console.log("started to delete session");
         console.log("data.deleteSessionId: " + data.deleteSessionId);
         console.log("sockets[data.deleteSessionId]: " + sockets.valueOf(data.deleteSessionId));
