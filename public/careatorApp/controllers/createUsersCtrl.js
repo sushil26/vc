@@ -7,7 +7,7 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope,$state,ca
         var obj = {
             "file": careatorEmp
           }
-          var api = "https://norecruits.com/careator/careatorMasterInsert";
+          var api = "https://vc4all.in/careator/careatorMasterInsert";
           console.log("api: "+api);
           careatorHttpFactory.csvUpload(obj, api).then(function (data) {
             var checkStatus = careatorHttpFactory.dataValidation(data);

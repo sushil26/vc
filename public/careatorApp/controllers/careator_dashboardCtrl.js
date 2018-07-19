@@ -49,7 +49,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         localStorage.removeItem("sessionUrlId");
         localStorage.removeItem("careator_remoteEmail");
         careatorSessionAuth.clearAccess("userData");
-        window.location.href = "https://norecruits.com";
+        window.location.href = "https://vc4all.in";
     }
 
 
