@@ -342,9 +342,7 @@ function emailInviteSend() {
 /* ##### End: Email Invite  ##### */
 
 
-var ICE_SERVERS = [{
-  url: "stun:stun.l.google.com:19302"
-},
+var ICE_SERVERS = [
 {
   url: "stun:s3.xirsys.com"
 },
