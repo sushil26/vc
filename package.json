@@ -31,7 +31,6 @@
     "mongoose-title-case": "0.0.4",
     "mongoose-validator": "^2.0.2",
     "multer": "^1.3.0",
-    "ng-dropdown-multiselect": "^1.0.1",
     "nodemailer": "^4.6.3",
     "passport": "^0.4.0",
     "path": "^0.12.7",

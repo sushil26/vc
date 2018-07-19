@@ -389,7 +389,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: '/html/dashboard/contact.html',
       controller: 'contactController'
     })
-  
 
 
 });

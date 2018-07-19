@@ -137,7 +137,7 @@ function sendEmail() {
 
 function checkPassword() {
   console.log("checkPassword-->");
-  var password = document.getElementById("ppswd").value;
+  var password = document.getElementById("P_pswd").value;
   var careatorEmail = localStorage.getItem("careatorEmail");
   var obj = {
     "password": password,
@@ -553,7 +553,7 @@ signaling_socket.on("addPeer", function (config) {
     // remote_media.attr("style", "border:5px solid gray");
     remote_media.attr("id", peer_id + "Remote");
     if (MUTE_AUDIO_BY_DEFAULT) {
-      remote_media.prop("muted", true );
+      remote_media.attr("muted", "true");
     }
     remote_media.attr("controls", "");
 
@@ -562,7 +562,7 @@ signaling_socket.on("addPeer", function (config) {
     peer_media_elements[peer_id] = remote_media;
 
     remote_media.attr("id", peer_id + "Remote");
-    // $('#portfolio-wrapper').append('<div id="' + peer_id + 'remoteContainer" class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><button id="fullscreenbtn2" class="btn fa fa-expand" style="float:left;  margin-top: 10px; margin-left: 10px;"></button><h4>' + config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' + peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' + peer_id + '" owner=' + peer_id + ' name=' + config.userName + '></i> </div></div>');
+    // $('#portfolio-wrapper').append('<div id="' + peer_id + 'remoteContainer" class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items" ><div id="' + peer_id + 'remoteVideoElement"></div><div class="details"><button id="fullscreenbtn2" class="btn fa fa-expand" style="float:left;  margin-top: 10px; margin-left: 10px;"></button><h4>' + config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' + peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' + peer_id + '" owner=' + peer_id + ' name=' + config.userName + '></i><span>All is well</span></div></div>');
     // $('#' + peer_id + 'remoteVideoElement').append(remote_media);
     $("#portfolio-wrapper").append(
       '<div id="' +
@@ -581,7 +581,7 @@ signaling_socket.on("addPeer", function (config) {
       peer_id +
       " name=" +
       config.userName +
-      "></i> </div></div>"
+      "></i><span>All is well</span></div></div>"
     );
     $("#" + peer_id + "remoteVideoElement").append(remote_media);
 
@@ -985,19 +985,19 @@ function setup_local_media(callback, errorback) {
       var local_media = USE_VIDEO ? $("<video>") : $();
       // local_media.attr("autoplay", "true");
       //local_media.attr("autoplay", "autoplay");
-      local_media.prop("muted", true ); /* always mute ourselves by default */
+      local_media.attr("muted", "muted"); /* always mute ourselves by default */
       local_media.attr("id", "videoElem");
       local_media.attr(
         "style",
         "border:1px solid skyblue;display:inline !important"
       );
 
-      // $('#portfolio-wrapper').append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' + userName + '</h4> </div></div>');
+      // $('#portfolio-wrapper').append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 portfolio-items"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' + userName + '</h4><span>All is well</span></div></div>');
       // $('#videosAttach').append(local_media);
       $("#portfolio-wrapper").append(
         '<div id="videoElem111" class="portfolio-items col-xs-12 col-sm-6 col-md-4 col-lg-3"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' +
         userName +
-        "</h4> </div></div>"
+        "</h4><span>All is well</span></div></div>"
       );
       $("#videosAttach").append(local_media);
 
@@ -1109,7 +1109,10 @@ function setup_local_media(callback, errorback) {
                   ? $("<video>")
                   : $("<audio>");
                 //local_mediaScreenShare.attr("autoplay", "autoplay");
-                local_mediaScreenShare.prop("muted", true ); /* always mute ourselves by default */
+                local_mediaScreenShare.attr(
+                  "muted",
+                  "muted"
+                ); /* always mute ourselves by default */
                 // local_mediaScreenShare.attr("controls", "");
                 local_mediaScreenShare.attr("id", "screenShareElem");
                 local_mediaScreenShare.attr(
@@ -1117,7 +1120,7 @@ function setup_local_media(callback, errorback) {
                   "border:1px solid skyblue"
                 );
 
-                //$('#portfolio-wrapper').append('<div id="'+id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-items"><div id="'+id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4> </div></div>');
+                //$('#portfolio-wrapper').append('<div id="'+id+'remoteContainer" class="col-lg-3 col-md-6 portfolio-items"><div id="'+id+'remoteVideoElement"></div><div class="details"><h4>'+config.userName+'</h4><span>All is well</span></div></div>');
                 $("#videosAttach").append(local_mediaScreenShare);
 
                 attachMediaStream(local_mediaScreenShare[0], stream);
@@ -1153,10 +1156,12 @@ function setup_local_media(callback, errorback) {
                       // local_media_shareStream = stream;
                       var local_media = USE_VIDEO ? $("<video>") : $();
                       //local_media.attr("autoplay", "autoplay");
-                      local_media.prop("muted", true ); /* always mute ourselves by default */
+                      local_media.attr(
+                        "muted",
+                        "muted"
+                      ); /* always mute ourselves by default */
                       // local_media.attr("controls", "");
                       local_media.attr("id", "videoElem");
-                      local_media.attr("autoplay", true);
                       local_media.attr("style", "border:1px solid skyblue");
                       $("#videosAttach").append(local_media);
 
