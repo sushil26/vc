@@ -1,0 +1,58 @@
+<div ng-controller="groupListCtrl">
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel">
+                    <div class="panel-heading">
+                        <i class="fa fa-users"></i>
+                        <span style="color:white;">&nbspGROUP LIST</span>
+                    </div>
+
+                    <div class="form-group">
+                        <table class="table table-sm table-hover">
+                            <thead style="background: aliceblue;">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Group-name</th>
+                                    <th>Admin</th>
+                                    <th>Members</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="emp in groupList">
+                                    <td>
+                                        {{$index+1}}
+                                    </td>
+                                    <td>
+                                        {{emp.groupName}}
+                                    </td>
+                                    <td>
+                                        {{emp.admin.name}}
+                                    </td>
+
+                                    <td>
+                                        <div ng-repeat="name in emp.groupMembers">{{name.name}}</div>
+                                    </td>
+                                    <td>
+                                        {{emp.status}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary fa fa-user-plus" ng-if="emp.status=='inactive' ||emp.status== null" ng-click="statusChange(emp._id, 'active')">&nbsp;Activate</button>
+                                        <button class="btn btn-warning fa fa-user-times" ng-if="emp.status=='active'" ng-click="statusChange(emp._id, 'inactive')">&nbsp;Deactivate</button>
+                                        <button class="btn btn-danger fa fa-trash" ng-click="deleteGroup(emp._id)">&nbsp;Delete</button>
+                                        <button class="btn btn-info fa fa-pencil-square-o" ng-click="editGroup($index)">&nbsp;Edit</button>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+</div>

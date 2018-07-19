@@ -1,0 +1,178 @@
+<div ng-controller="chatHistoryCtrl">
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel">
+                    <div class="panel-heading">
+                        <i class="fa fa-comments"></i>
+                        <span style="color:white;">&nbspChat History</span>
+                    </div>
+                   
+                    <link rel="stylesheet" href="./css/newChat.css" />
+                    <div class="container app" >
+                        <div class="row app-one" >
+                            <div class="col-sm-4 side">
+                                <div class="side-one">
+                                    <div class="row heading">
+                                        <div class="form-group has-feedback">
+                                            <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search">
+                                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row sideBar">
+                                        <div class="row sideBar-body" ng-repeat="record in chatedGroup_records">
+                                            <div class="col-sm-3 col-xs-3 sideBar-avatar" style="font-size: 35px;">
+                                                <div class="avatar-icon" ng-if="record.groupName==undefined">
+                                                    <img src="./css/user.png">
+                                                </div>
+                                                <div class="avatar-icon" ng-if="record.groupName!==undefined">
+                                                    <img src="./css/group.png">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9 col-xs-9 sideBar-main" ng-if="record.groupName==undefined">
+                                                <div class="row">
+                                                    <div class="col-sm-8 col-xs-8 sideBar-name" ng-click="chatDetails('individual_chats', record._id, $index)">
+                                                        <span ng-if="record.senderId!=userId" class="name-meta">{{record.senderName}}
+                                                        </span>
+                                                        <span ng-if="record.receiverId!=userId" class="name-meta">{{record.receiverName}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                                        <span class="time-meta pull-right">{{$index}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9 col-xs-9 sideBar-main" ng-if="record.groupName!==undefined">
+                                                <div class="row">
+                                                    <div class="col-sm-8 col-xs-8 sideBar-name" ng-click="chatDetails('group', record._id, $index)">
+                                                        <span class="name-meta">{{record.groupName}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                                        <span class="time-meta pull-right">18:18
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ### Start: Remote Profile Head ### -->
+                            <div class="col-sm-8 conversation">
+                                <div class="row heading">
+                                    <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+                                        <div class="avatar-icon" ng-if="selectedType=='group'">
+                                            <img src="./css/group.png">
+                                        </div>
+                                        <div class="avatar-icon" ng-if="selectedType=='individual_chats'">
+                                            <img src="./css/user.png">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7 heading-name">
+                                        <a ng-if="selectedType=='group'" class="heading-name-meta">{{individualData.groupName}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' && (individualData.senderId==undefined && individualData.receiverId==undefined)"
+                                            class="heading-name-meta">{{individualData.name}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' && individualData.senderId!=userId" class="heading-name-meta">{{individualData.senderName}}
+                                        </a>
+                                        <a ng-if="selectedType=='individual_chats' && individualData.receiverId!=userId" class="heading-name-meta">{{individualData.receiverName}}
+                                        </a>
+                                        <span class="heading-online">Online</span>
+                                    </div>
+                                    <!-- <div class="col-sm-1 col-xs-1  heading-dot pull-right">
+                                                                <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+                                                            </div> -->
+                                    <div class="col-sm-1 col-xs-1 pull-right" ng-click="chatMenu()" style="margin-right: 20px; margin-top:5px;">
+                                        <i style="font-size:25px; cursor: pointer;" class="fa fa-home"></i>
+                                    </div>
+                                </div>
+
+                                <div class="row message" id="pulldown">
+                                    <!-- <div class="row message-previous">
+                                                                <div class="col-sm-12 previous">
+                                                                    <a onclick="previous(this)" id="ankitjain28" name="20">
+                                                                        Show Previous Message!
+                                                                    </a>
+                                                                </div>
+                                                            </div> -->
+                                    <div class="row message-body" ng-repeat="chat in allChat.chats">
+                                        <div class="col-sm-12 message-main-receiver" ng-if="chat.senderId!=userId">
+                                            <div ng-if="selectedType=='group'" style="background: #ddf8c6;
+                                                                    width: max-content;
+                                                                    padding: 5px;
+                                                                    border-radius: 10px;
+                                                                    text-transform: capitalize;
+                                                                    font-size: 10px;
+                                                                    font-style: italic;
+                                                                    font-weight: 700;">
+                                                {{chat.senderName}}
+                                            </div>
+                                            <div class="receiver">
+                                                <div class="message-text">
+                                                    {{chat.message}}
+                                                </div>
+                                                <span class="message-time pull-right">
+                                                    {{chat.sendTime | date:' d MMM yyyy h:mm a'}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 message-main-sender" ng-if="chat.senderId==userId">
+                                            <div class="sender">
+                                                <div class="message-text">
+                                                    {{chat.message}}
+                                                </div>
+                                                <span class="message-time pull-right">
+                                                    {{chat.sendTime | date:' d MMM yyyy h:mm a'}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- <div class="row message-body">
+                                                                <div class="col-sm-12 message-main-sender">
+                                                                    <div class="sender">
+                                                                        <div class="message-text">
+                                                                            I am doing nothing man!
+                                                                        </div>
+                                                                        <span class="message-time pull-right">
+                                                                            Sun
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+                                </div>
+
+
+                                <!-- <div class="row reply">
+                                    <div class="col-sm-1 col-xs-1 reply-emojis">
+                                        <i class="fa fa-smile-o fa-2x"></i>
+
+                                    </div>
+                                    <div class="col-sm-9 col-xs-9 reply-main">
+                                        <textarea class="form-control" rows="1" id="comment" ng-model="typedMessage"></textarea>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1 reply-recording">
+                                       
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1 reply-send">
+                                        <i class="fa fa-send fa-2x" aria-hidden="true" id="sndmgs" ng-click="sendText()"></i>
+                                    </div>
+                                </div> -->
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+                </section>
+            </div>
+        </section>
+    </section>
+</div>

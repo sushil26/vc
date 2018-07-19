@@ -1,0 +1,35 @@
+<div ng-controller="createUsersCtrl">
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel">
+                    <div class="panel-heading">
+                        <i class="fa fa-user"></i>
+                        <span style="color:white;">&nbspCREATE USER</span>
+                    </div>
+
+                    <div class="panel-body bio-graph-info" style="padding: 15px;">
+                        <form class="form-horizontal" role="form" enctype="multipart/form-data">
+                            <div class="form-group ">
+
+                                <label class="col-lg-3">Upload User Details*</label>
+                                <div class="col-lg-9">
+                                    <span>
+                                        <input type="file" style="width: 166px;font-size: 10px;" class="bcontrol-label btn btn-warning m-bot15" name="myImage" value="Upload"
+                                            image-with-preview  file-model="careatorEmp" ng-model="image" accept="csv" ng-required="true">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-info" ng-click="uploadCareatorEmp(careatorEmp)">Upload</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+</div>

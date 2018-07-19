@@ -1,15 +1,15 @@
 jQuery(document).ready(function( $ ) {
 
     // Header fixed and Back to top button
-    $(window).scroll(function() {
+    $(window).scroll(function () {
       if ($(this).scrollTop() > 100) {
         $('.back-to-top').fadeIn('slow');
         $('#header').addClass('header-fixed');
-        $('#nav-menu-container').addClass('header-fixed');
         $('#greenline').addClass('greenline-fixed');
       } else {
         $('.back-to-top').fadeOut('slow');
         $('#header').removeClass('header-fixed');
+        $('#greenline').removeClass('greenline-fixed');
       }
     });
     $('.back-to-top').click(function(){

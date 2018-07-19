@@ -37,19 +37,14 @@ var mongoConfig = require('./config/dbConfig.js');
 var server = app.listen('5000', function () {
     console.log("Listening on port 5000");
 });
-
-
 // var server = app.listen("8080");
-
 var io = require('socket.io').listen(server);
 app.set('socketio', io);
 var chatHistory;
 // server.timeout = 9999999999;
 mongoConfig.connectToServer(function (err) {
+    console.log("mongo connected -->");
     require('./config/router')(app);
-    var db = mongoConfig.getDb();
-    console.log("db: " + db);
-    chatHistory = db.collection("chatHistory");
 })
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/node_modules'));
@@ -95,9 +90,9 @@ app.get("/careator/:id/:time", function (req, res) {
     res.sendFile(__dirname + '/public/careator.html');
 });
 
-app.get("/careatorChatHistory", function (req, res) {
+app.get("/careatorApp", function (req, res) {
     console.log("chatCrtr started to render-->");
-    res.sendFile(__dirname + '/public/chatCrtr.html');
+    res.sendFile(__dirname + '/public/careatorComm.html');
 });
 
 // app.get("/record", function (req, res) {
@@ -200,28 +195,28 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('disconnectSession', function (data) {
         console.log("disconnectSession-->");
-        if (sessionHeaderId == data.owner) {
-            for (var channel in socket.channels) {
-                console.log("connection: channel: " + channel);
-                part(channel);
-            }
-            console.log("started to delete session");
-            console.log("data.deleteSessionId: " + data.deleteSessionId);
-            console.log("sockets[data.deleteSessionId]: " + sockets.valueOf(data.deleteSessionId));
-            delete sockets[data.deleteSessionId];
-            delete channels[channel][data.deleteSessionId];
-            console.log("sockets[data.deleteSessionId]: " + sockets[data.deleteSessionId]);
+        //if (sessionHeaderId == data.owner) {
+        var tempSock = sockets[data.deleteSessionId];/* ### Note using this deleteSessionId we are getting real socket(tempSock)   ### */
+        for (var channel in tempSock.channels) {
+            console.log("connection: channel: " + channel);
+            part(channel);
         }
 
         console.log("started to delete session");
         console.log("data.deleteSessionId: " + data.deleteSessionId);
         console.log("sockets[data.deleteSessionId]: " + sockets.valueOf(data.deleteSessionId));
         delete sockets[data.deleteSessionId];
+        delete peerTrackForVideo[data.deleteSessionId];
         delete channels[channel][data.deleteSessionId];
         console.log("sockets[data.deleteSessionId]: " + sockets[data.deleteSessionId]);
+
+
+
+        //}
+
+
         console.log("<--disconnectSession");
     })
-
 
     socket.on('join', function (config) {
 
@@ -244,7 +239,6 @@ io.sockets.on('connection', function (socket) {
             var timeValue = peerWithTimeId[key];
             if (value == config.queryLink && timeValue == config.timeLink) {
                 sessionHeaderId = key;
-
                 break;
             }
             console.log("value " + value);
@@ -345,7 +339,9 @@ io.sockets.on('connection', function (socket) {
     /* ##### Start Gether text message  #### */
     socket.on('textMsg', function (data) {
         console.log("textMsg-->");
-
+        var db = mongoConfig.getDb();
+        console.log("db: " + db);
+        chatHistory = db.collection("chatHistory");
         // //Send message to everyone
         console.log("peerWithQueryId[data.userId]: " + peerWithQueryId[data.userId]);
 
@@ -355,7 +351,7 @@ io.sockets.on('connection', function (socket) {
             console.log("peerWithQueryId: " + peerWithQueryId[data.userId]);
             console.log("peerWithQueryId: " + peerWithQueryId[data.userId]);
             var queryObj = {
-                "url": "https://vc4all.in/careator/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
+                "url": "https://norecruits.com/careator/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
             }
             console.log("queryObj: " + JSON.stringify(queryObj));
             var obj = {
@@ -365,6 +361,7 @@ io.sockets.on('connection', function (socket) {
                 'textTime': date
             }
             console.log("obj: " + JSON.stringify(obj));
+            console.log("chatHistory: " + chatHistory);
             chatHistory.update(queryObj, { $push: { "chat": obj } }, function (err, data) {
                 if (err) {
                     console.log("errr: " + JSON.stringify(err));

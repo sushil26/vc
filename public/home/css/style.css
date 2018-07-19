@@ -11,34 +11,115 @@
 
 /* Trouble Shoot Section
 --------------------------------*/
+
 @import url(https://fonts.googleapis.com/css?family=Aclonica);
 @import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
-.ng-enter {
-  transition:0.75s;
-  opacity:0;
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+.modal {
+  font-family: Lato;
 }
-.ng-enter-stagger{
+
+.modal-content {
+  border-radius: 8px;
+}
+
+.mtitle {
+  color: #2577be;
+  font-family: lato;
+  font-size: 10px;
+  font-weight: 500;
+}
+.mtitle :hover{
+  color: brown;
+  font-size: 11px;
+  font-weight: 600;
+  
+ 
+
+}
+
+.bouncy:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7);
+  color:brown;
+  box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+}
+
+.moving {
+  -webkit-animation: mve 10s infinite;
+  animation: mve 10s infinite;
+}
+
+/* Safari 4.0 - 8.0 */
+
+@-webkit-keyframes mve {
+  0% {
+    background: #a8cf44;
+    opacity: 0.75;
+  }
+  33% {
+    background: green;
+    opacity: 0.50;
+  }
+  66% {
+    background: darkgreen;
+    opacity: 0.50;
+  }
+  100% {
+    background: #a8cf44;
+    opacity: 0.75;
+  }
+}
+
+@keyframes mve {
+  0% {
+    background: #a8cf44;
+    opacity: 0.75;
+  }
+  33% {
+    background: green;
+    opacity: 0.50;
+  }
+  66% {
+    background: darkgreen;
+    opacity: 0.50;
+  }
+  100% {
+    background: #a8cf44;
+    opacity: 0.75;
+  }
+}
+
+.ng-enter {
+  transition: 0.75s;
+  opacity: 0;
+}
+
+.ng-enter-stagger {
   transition-delay: 0.1s;
 }
 
 /* The finishing CSS styles for the enter animation */
+
 .ng-enter.ng-enter-active {
-  opacity:1;
+  opacity: 1;
 }
 
 .ng-leave {
-  transition:0.75s;
-  opacity:1;
+  transition: 0.75s;
+  opacity: 1;
 }
-.ng-leave-stagger{
+
+.ng-leave-stagger {
   transition-delay: 0.1s;
 }
+
 .ng-leave.ng-leave-active {
-  opacity:0;
+  opacity: 0;
 }
-
-
-
 
 .kklklk {
   -webkit-animation: air 4s infinite;
@@ -112,77 +193,24 @@
 } */
 
 .bouncy {
-  display: inline-block;
-  font-size: 15px;
-  font-weight: bold;
-  color: #fff ! important;
-  text-align: center;
-  padding: 10px;
+  line-height: 50px;
+  font-size: 25px;
   margin: 5px;
   position: relative;
   cursor: pointer;
   border: none;
-  background: #109bce;
-  background-image: linear-gradient(bottom, rgb(14, 137, 182) 0%, rgb(22, 179, 236) 100%);
-  border-radius: 5px;
-  box-shadow: inset 0px 1px 0px #2ab7ec, 0px 1px 0px 0px #07526e, 0px 5px 5px #999;
-}
-
-bouncy:active {
-  top: 3px;
-  box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #07526e, 0px 5px 3px #999;
-}
-
-bouncy:before {
-  font-family: 'socialfont';
-  font-size: 50px;
-  line-height: 1em;
-  font-weight: normal;
-  color: #fff;
-  content: "\F020";
-  width: 85px;
-  height: 90px;
-  display: block;
-  position: absolute;
-  padding-top: 10px;
-  top: 10px;
-  text-shadow: 1px 1px 2px #07526e;
-}
-
-bouncy:active:before {
-  top: 7px;
-  font-size: 50px;
-  text-shadow: 0px 3px 0px #07526e, 0px 5px 1px #07526e/*, 3px 0px 1px #07526e, 3px 3px 1px #07526e,
-     -2px 0px 1px #68cff2*/
-  ;
-}
-
-.bouncy {
-  position: relative;
-}
-
-@keyframes bouncy {
-  0% {
-    top: 0em;
-  }
-  40% {
-    top: 0em;
-  }
-  43% {
-    top: -0.9em;
-  }
-  46% {
-    top: 0em;
-  }
-  48% {
-    top: -0.4em;
-  }
-  50% {
-    top: 0em;
-  }
-  100% {
-    top: 0em;
-  }
+  border-radius: 50%;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7);
+  color: #a7a7a7;
+  box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+  /* box-shadow: inset 0px 1px 0px #2ab7ec, 0px 1px 0px 0px #07526e, 0px 5px 5px #999; */
 }
 
 .bt {
@@ -201,7 +229,7 @@ bouncy:active:before {
 }
 
 video {
-  width: 100%;
+  width: 95%;
   height: auto;
   background: #004085;
 }
@@ -336,9 +364,8 @@ h6 {
 }
 
 @media (max-width: 768px) {
-
   .btn {
-    font-size: 8px ! important;
+    font-size: 15px;
   }
   #header #logo h1 {
     font-size: 26px;
@@ -621,7 +648,7 @@ h6 {
 #mobile-nav {
   position: fixed;
   top: 0;
-  padding-top: 60px;
+  padding-top: 40px;
   bottom: 0;
   z-index: 998;
   /* background: rgba(52, 59, 64, 0.9); */
@@ -856,7 +883,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   position: relative;
   background: white;
   /* background-image: url(/home/img/background.jpg); */
-  background-position:right top;
+  background-position: right top;
 }
 
 #services .icon {
@@ -894,14 +921,15 @@ body.mobile-nav-active #mobile-nav-toggle {
   box-shadow: 10px 10px 91px 0px rgba(0, 0, 0, 0.2);
   -ms-transform: scale(1.1, 1.1);
   transition: all 0.3s;
-  -webkit-transform:scale(1.1, 1.1); /* Safari */
-  transform:scale(1.1, 1.1);
+  -webkit-transform: scale(1.1, 1.1);
+  /* Safari */
+  transform: scale(1.1, 1.1);
   background: #111;
 }
 
 #services .box:hover .icon a {
   color: #2dc997;
-  background: #fff;
+  background: #ff5722c4;
 }
 
 #services .title {
@@ -918,7 +946,9 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #services .description {
-  font-family: cursive;
+  font-weight: 100;
+  background: #ff5722c4;
+  /* font-family: sans-serif; */
   font-size: 14px;
   line-height: 24px;
   color: white;
@@ -1035,7 +1065,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #portfolio .portfolio-items .details {
   height: 50px;
-  background: #2dc997;
+  /* background: #2dc997; */
+  background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
   position: absolute;
   width: 100%;
   height: 50px;

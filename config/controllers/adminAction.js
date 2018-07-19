@@ -1146,7 +1146,7 @@ module.exports.updateFeeSheet = function (data, callback) {
                     else {
                         stud.update(studIdForUpdateQry, { $push: { "fee.$.details": { $each: fee } } }, function (err, pulledData) {
                             if (err) {
-                                marker = fasle;
+                                marker = false;
                                 if (callback) callback();
                             }
                             else {
@@ -1229,7 +1229,7 @@ module.exports.updateMarkSheet = function (data, callback) {
                     else {
                         stud.update(studIdForUpdateQry, { $push: { "mark.$.subjectWithMark": { $each: consolidateMS } } }, function (err, pulledData) {
                             if (err) {
-                                marker = fasle;
+                                marker = false;
                                 if (callback) callback();
                             }
                             else {
@@ -2218,7 +2218,7 @@ module.exports.studentMasterValidation = function (data, callback) {
             console.log("idLength.length: " + idLength.length);
             if (err) {
                 responseData = {
-                    status: fasle,
+                    status: false,
                     message: err
                 };
                 res.status(400).send(responseData);
@@ -2627,7 +2627,7 @@ module.exports.teacherMasterValidation = function (data, callback) {
             if (err) {
                 console.log("err: " + JSON.stringify(err));
                 responseData = {
-                    status: fasle,
+                    status: false,
                     message: err
                 };
                 res.status(400).send(responseData);

@@ -17,8 +17,10 @@
   <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
   <!-- Main Stylesheet File -->
   <link href="/home/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="/dashboard_Lib/css/style.css" />
+  <link rel="stylesheet" href="/dashboard_Lib/css/style-responsive.css" />
+  <link rel="stylesheet" href="/dashboard_Lib/css/elegant-icons-style.css" />
   <link rel="stylesheet" href="/css/chatZone.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
   <script src="/js/socket.io-1.4.5.js"></script>
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -41,7 +43,6 @@
   <link href="/bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop.css" rel="stylesheet">
   <script src="/bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop.js"></script>
   <!-- <script src="/bower_components/ui-cropper/source/js/ui-cropper.js"></script> -->
-
   <!-- <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script> -->
   <script src="/controllers/viewUserCtrl.js"></script>
   <script src="/controllers/calendarCtrl.js"></script>
@@ -78,7 +79,7 @@
   <script src="/controllers/logoutCtl.js"></script>
   <script src="/controllers/captureImgCtl.js"></script>
   <script>
-    var SIGNALING_SERVER = "https://vc4all.in";
+    var SIGNALING_SERVER = "https://norecruits.com";
     socket = io(SIGNALING_SERVER);
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
@@ -103,7 +104,7 @@
       width: 100%;
       height: 100%;
       z-index: 9999;
-      background: url(Preloader_2.gif) center no-repeat #fff;
+      background: url(img/Preloader_2.gif) center no-repeat #fff;
     }
 
     .red {
@@ -309,6 +310,15 @@
       <!--==========================
     Header
 ============================-->
+      <div id="" class="" style="position: fixed;
+height: 5px;
+left: 0;
+top: 0;
+right: 0;
+z-index: 1000;
+
+transition: all 0.5s;">
+      </div>
       <header id="header">
         <div class="container">
           <div id="logo" class="pull-left">
@@ -354,13 +364,13 @@
       </header>
 
       <!-- <img   class="kklklk" src="robot.gif" style="margin-top: 81px; background: #a8d043ab; z-index: 1000; width: 100px;">-->
-      <div id="greenline" style="position: fixed;
+      <div id="greenline" class="moving" style="position: fixed;
       height: 5px;
       left: 0;
       top: 81px;
       right: 0;
-      background: white;
       z-index: 1000;
+ 
       transition: all 0.5s;">
       </div>
 
@@ -424,7 +434,7 @@
             </div>
             <div class="row">
               <div class="col-lg-4 col-md-6 wow fadeInUp " data-wow-delay="0.2s">
-                <div class="box">
+                <div class="box" style="background-image: url('schedule1.jpg');     background-size: cover;">
                   <div class="icon">
                     <a href="">
                       <i class="fa fa-calendar"></i>
@@ -437,7 +447,7 @@
                 </div>
               </div>
               <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="box">
+                <div class="box" style="background-image: url('img/multiplechat.jpg');     background-size: cover;">
                   <div class="icon">
                     <a href="">
                       <i class="fa fa-comments"></i>
@@ -451,7 +461,7 @@
                 </div>
               </div>
               <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                <div class="box">
+                <div class="box" style="background-image: url('img/type.jpg');     background-size: cover;">
                   <div class="icon">
                     <a href="">
                       <i class="fa fa-keyboard-o"></i>
@@ -465,7 +475,7 @@
               </div>
 
               <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="box">
+                <div class="box" style="background-image: url('img/screen_share.jpg');     background-size: cover;">
                   <div class="icon">
                     <a href="">
                       <i class="fa fa-photo"></i>
@@ -478,7 +488,7 @@
                 </div>
               </div>
               <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="box">
+                <div class="box" style="background-image: url('img/schedule1.jpg');     background-size: cover;">
                   <div class="icon">
                     <a href="">
                       <i class="fa fa-pencil"></i>
@@ -491,7 +501,7 @@
                 </div>
               </div>
               <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                <div class="box">
+                <div class="box" style="background-image: url('img/notify.png');     background-size: cover;">
                   <div class="icon">
                     <a href="">
                       <i class="fa fa-bullhorn"></i>
@@ -739,7 +749,7 @@
       <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
       <script src="/home/lib/easing/easing.min.js"></script>
       <script src="/home/lib/wow/wow.min.js"></script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2wHGDEY64tSb7obGNcDa9EQ3DtwVd7hc"></script>
+
       <script src="/home/lib/waypoints/waypoints.min.js"></script>
       <script src="/home/lib/superfish/hoverIntent.js"></script>
       <script src="/home/lib/superfish/superfish.min.js"></script>

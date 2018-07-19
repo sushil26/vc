@@ -14,7 +14,7 @@ var sesionEnc = localStorage.getItem("sessionEnc");
 
 /** CONFIG **/
 console.log("Signaling Socket.js");
-var SIGNALING_SERVER = "https://vc4all.in";
+var SIGNALING_SERVER = "https://norecruits.com";
 //var SIGNALING_SERVER = "http://localhost:5000";
 var signaling_socket = null; /* our socket.io connection to our webserver */
 var local_media_stream = null; /* our own microphone / webcam */
@@ -108,7 +108,7 @@ function sendEmail() {
   console.log("obj: " + JSON.stringify(obj));
 
   $.ajax({
-    url: "https://vc4all.in/careator/pswdGenerate",
+    url: "https://norecruits.com/careator/pswdGenerate",
     type: "POST",
     data: JSON.stringify(obj),
     contentType: "application/json",
@@ -137,7 +137,7 @@ function sendEmail() {
 
 function checkPassword() {
   console.log("checkPassword-->");
-  var password = document.getElementById("P_pswd").value;
+  var password = document.getElementById("ppswd").value;
   var careatorEmail = localStorage.getItem("careatorEmail");
   var obj = {
     "password": password,
@@ -146,7 +146,7 @@ function checkPassword() {
   if (password != "" && careatorEmail != "") {
     console.log("obj: " + JSON.stringify(obj));
     $.ajax({
-      url: "https://vc4all.in/careator/pswdCheck",
+      url: "https://norecruits.com/careator/pswdCheck",
       type: "POST",
       data: JSON.stringify(obj),
       contentType: "application/json",
@@ -201,7 +201,7 @@ function emailInvite() {
   };
   console.log("obj: "+JSON.stringify("obj"));
   $.ajax({
-    url: "https://vc4all.in/careator/emailInvite",
+    url: "https://norecruits.com/careator/emailInvite",
     //  url: "http://localhost:5000/vc/login4VC",
     type: "POST",
     data: JSON.stringify(obj),
@@ -310,13 +310,13 @@ function disconnecSession() {
 }
 function startSession(id, date) {
   console.log("startSession-->");
-  window.location.href = "https://vc4all.in/careator/" + id + "/" + date;
-  var url = "https://vc4all.in/careator/" + id + "/" + date;
+  window.location.href = "https://norecruits.com/careator/" + id + "/" + date;
+  var url = "https://norecruits.com/careator/" + id + "/" + date;
   var obj = {
     "url": url
   };
   $.ajax({
-    url: "https://vc4all.in/vc/sessionCreate",
+    url: "https://norecruits.com/vc/sessionCreate",
     //  url: "http://localhost:5000/vc/login4VC",
     type: "POST",
     data: JSON.stringify(obj),
@@ -373,7 +373,7 @@ signaling_socket.on("connect", function () {
       // $('#crdbuttn').trigger('click');
       console.log("message: config.peer_id: " + config.peer_id);
 
-      //document.getElementById('videoConferenceUrl').setAttribute('href', "https://vc4all.in/careator/" + peerNew_id + "/" + date);
+      //document.getElementById('videoConferenceUrl').setAttribute('href', "https://norecruits.com/careator/" + peerNew_id + "/" + date);
       document
         .getElementById("videoConferenceUrl")
         .setAttribute(
@@ -384,10 +384,10 @@ signaling_socket.on("connect", function () {
         .getElementById("linkToShare")
         .setAttribute(
           "href",
-          "https://vc4all.in/careator/" + peerNew_id + "/" + date
+          "https://norecruits.com/careator/" + peerNew_id + "/" + date
         );
       document.getElementById("linkToShare").innerHTML =
-        "https://vc4all.in/careator/" + peerNew_id + "/" + date;
+        "https://norecruits.com/careator/" + peerNew_id + "/" + date;
     } else {
       console.log("query id nt null");
 
@@ -395,10 +395,10 @@ signaling_socket.on("connect", function () {
         .getElementById("linkToShare")
         .setAttribute(
           "href",
-          "https://vc4all.in/careator/" + queryLink + "/" + date
+          "https://norecruits.com/careator/" + queryLink + "/" + date
         );
       document.getElementById("linkToShare").innerHTML =
-        "https://vc4all.in/careator/" + queryLink + "/" + date;
+        "https://norecruits.com/careator/" + queryLink + "/" + date;
       document.getElementById("screenBtns").style.display = "inline";
       document.getElementById("videoConfStart").style.display = "none";
       document.getElementById("openChat").style.display = "inline";
@@ -553,7 +553,7 @@ signaling_socket.on("addPeer", function (config) {
     // remote_media.attr("style", "border:5px solid gray");
     remote_media.attr("id", peer_id + "Remote");
     if (MUTE_AUDIO_BY_DEFAULT) {
-      remote_media.attr("muted", "true");
+      remote_media.prop("muted", true );
     }
     remote_media.attr("controls", "");
 
@@ -933,7 +933,7 @@ signaling_socket.on("authorizedForClose", function (config) {
   if (config.removableId == peerNew_id) {
     console.log("Removable alert should start");
     alert("Session creater removed you from conference");
-    window.location.href = "https://vc4all.in";
+    window.location.href = "https://norecruits.com";
   }
 
   // delete peer_media_sselements[config.peer_id];
@@ -985,7 +985,7 @@ function setup_local_media(callback, errorback) {
       var local_media = USE_VIDEO ? $("<video>") : $();
       // local_media.attr("autoplay", "true");
       //local_media.attr("autoplay", "autoplay");
-      local_media.attr("muted", "muted"); /* always mute ourselves by default */
+      local_media.prop("muted", true ); /* always mute ourselves by default */
       local_media.attr("id", "videoElem");
       local_media.attr(
         "style",
@@ -1109,10 +1109,7 @@ function setup_local_media(callback, errorback) {
                   ? $("<video>")
                   : $("<audio>");
                 //local_mediaScreenShare.attr("autoplay", "autoplay");
-                local_mediaScreenShare.attr(
-                  "muted",
-                  "muted"
-                ); /* always mute ourselves by default */
+                local_mediaScreenShare.prop("muted", true ); /* always mute ourselves by default */
                 // local_mediaScreenShare.attr("controls", "");
                 local_mediaScreenShare.attr("id", "screenShareElem");
                 local_mediaScreenShare.attr(
@@ -1156,12 +1153,10 @@ function setup_local_media(callback, errorback) {
                       // local_media_shareStream = stream;
                       var local_media = USE_VIDEO ? $("<video>") : $();
                       //local_media.attr("autoplay", "autoplay");
-                      local_media.attr(
-                        "muted",
-                        "muted"
-                      ); /* always mute ourselves by default */
+                      local_media.prop("muted", true ); /* always mute ourselves by default */
                       // local_media.attr("controls", "");
                       local_media.attr("id", "videoElem");
+                      local_media.attr("autoplay", true);
                       local_media.attr("style", "border:1px solid skyblue");
                       $("#videosAttach").append(local_media);
 
