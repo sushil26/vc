@@ -102,7 +102,28 @@ careatorApp.factory('careatorHttpFactory', function ($http, $q, $rootScope) {
                 dfd.resolve(error);
             });
             return dfd.promise;
-        },
+        },/* #### Note:Start: Image upload into directory  #### */
+        imageUpload: function (uploadUrl, file) { 
+            var dfd = $q.defer();
+            var postUrl = uploadUrl;
+            var fd = new FormData();
+            console.log("file: " + file);
+            // console.log("file: " + file.upload);
+
+            fd.append('logo', file);
+            console.log("fd: " + fd);
+            $http.post(postUrl, fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).then(function (response) {
+                console.log("lego--" + response)
+                dfd.resolve(response);
+            }, function (error) {
+                console.log(error);
+                dfd.resolve(error);
+            });
+            return dfd.promise;
+        },/* #### Note:End: Image upload into directory  #### */
 
         getFile: function (fileAddress) {
             console.log("getFile");

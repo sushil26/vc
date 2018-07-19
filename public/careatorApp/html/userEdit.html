@@ -43,19 +43,23 @@
                                         Chat&nbsp;
                                         <input type="checkbox" ng-model="userDataRights.chatRights" value="Chat" ng-true-value="'yes'" ng-false-value="'no'" ng-checked="true"> &nbsp;&nbsp; Video&nbsp;
                                         <input type="checkbox" ng-model="userDataRights.videoRights" value="Video" ng-true-value="'yes'" ng-false-value="'no'" ng-checked="true">
-                                    </span>
+                                    </span> 
 
                                     <span ng-if="userData[0].chatRights=='no' && userData[0].videoRights=='yes'">
                                         Chat&nbsp;
                                         <input type="checkbox" ng-model="userDataRights.chatRights" value="Chat" ng-true-value="'yes'" ng-false-value="'no'"> &nbsp;&nbsp; Video&nbsp;
                                         <input type="checkbox" ng-model="userDataRights.videoRights" value="Video" ng-true-value="'yes'" ng-false-value="'no'" ng-checked="true">
                                     </span>
-
                                     <span ng-if="userData[0].chatRights=='yes' && userData[0].videoRights=='no'">
                                         Chat&nbsp;
                                         <input type="checkbox" ng-model="userDataRights.chatRights" value="Chat" ng-true-value="'yes'" ng-false-value="'no'" ng-checked="true"> &nbsp;&nbsp; Video&nbsp;
                                         <input type="checkbox" ng-model="userDataRights.videoRights" value="Video" ng-true-value="'yes'" ng-false-value="'no'">
                                     </span>
+                                    <span ng-if="userData[0].chatRights=='no' && userData[0].videoRights=='no'">
+                                            Chat&nbsp;
+                                            <input type="checkbox" ng-model="userDataRights.chatRights" value="Chat" ng-true-value="'yes'" ng-false-value="'no'" > &nbsp;&nbsp; Video&nbsp;
+                                            <input type="checkbox" ng-model="userDataRights.videoRights" value="Video" ng-true-value="'yes'" ng-false-value="'no'">
+                                        </span>
                                 </div>
                             </div>
 

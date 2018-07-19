@@ -13,9 +13,11 @@ careatorApp.controller('editUserCtrl', function ($scope, $state, $rootScope, $fi
             if (checkStatus) {
                 $scope.userData = data.data.data;
                 $scope.userDataRights = {
-                    "videoRights": $scope.userData.videoRights,
-                    "chatRights": $scope.userData.chatRights
+                    "videoRights": $scope.userData[0].videoRights,
+                    "chatRights": $scope.userData[0].chatRights
                 }
+                console.log("$scope.userDataRights.videoRights: " + $scope.userDataRights.videoRights);
+                console.log("$scope.userDataRights: " + JSON.stringify($scope.userDataRights));
                 console.log("userData: " + JSON.stringify($scope.userData));
                 console.log(data.data.message);
             }
@@ -32,7 +34,8 @@ careatorApp.controller('editUserCtrl', function ($scope, $state, $rootScope, $fi
 
     $scope.updateUser = function () {
         console.log("updateUser-->");
-
+        console.log("$scope.userDataRights.videoRights: " + $scope.userDataRights.videoRights);
+        console.log("$scope.userDataRights.chatRights: " + $scope.userDataRights.chatRights);
         var api = "https://vc4all.in/careator/userEditById/" + id;
         console.log("api: " + api);
         var obj = {

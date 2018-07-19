@@ -27,16 +27,13 @@ var queryLink = null;
 var timeLink = null;
 var urlDate = null;
 var txtQueryLink = null;
-
 // signaling_socket = io(SIGNALING_SERVER);
 var file;
 var disconnPeerId = null;
 var shareScreen = null;
 var sessionHeader = null;
 var peerStream = null;
-
 signaling_socket = io(SIGNALING_SERVER);
-
 var userName;
 var USE_AUDIO = true;
 var USE_VIDEO = true;
@@ -51,30 +48,103 @@ console.log("stuff.length: " + stuff.length);
 console.log("id1**: " + id1);
 console.log("id2**: " + id2);
 if (stuff.length > 5) {
-  if (localStorage.getItem("careatorEmail")) {
-    var userNameEmail = localStorage.getItem("careatorEmail");
-    var emailIdSplit = userNameEmail.split('@');
-    userName = emailIdSplit[0];
-    document.getElementById("videoConferenceUrl").style.display = "block";
-    document.getElementById("emailInvitation").style.display = "block";
-    document.getElementById("videoCtrolBar").style.display = "grid";
+  console.log("1 cond");
+
+  console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));
+  console.log("localStorage.getItem(sessionPassword): " + localStorage.getItem("sessionPassword"));
+  console.log("localStorage.getItem(careator_remoteEmail): " + localStorage.getItem("careator_remoteEmail"));
+  console.log("localStorage.getItem(oneTimePassword): " + localStorage.getItem("oneTimePassword"));
+  console.log("localStorage.getItem(redirctRequired): " + localStorage.getItem("redirctRequired"));
+  if (localStorage.getItem("redirctRequired") == 'true') {
+    console.log("localStorage.getItem(redirctRequired): " + localStorage.getItem("redirctRequired"));
+    localStorage.removeItem("redirctRequired");
+    close();
+    //window.location.href = "/careator";
   }
-  else if (localStorage.getItem("careator_remoteEmail")) {
-    userName = localStorage.getItem("careator_remoteEmail");
-    careator_remoteEmail = true;
-    document.getElementById("videoConferenceUrl").style.display = "none";
-    document.getElementById("emailInvitation").style.display = "none";
-    document.getElementById("videoCtrolBar").style.display = "grid";
-  }
-  else {
+  if (localStorage.getItem("careatorEmail") && localStorage.getItem("sessionPassword") && (localStorage.getItem("videoRights") == 'yes')) {
+    console.log("Hoster session check");
+    var password = localStorage.getItem("sessionPassword");
+    var careatorEmail = localStorage.getItem("careatorEmail");
+    var obj = {
+      "password": password,
+      "careatorEmail": careatorEmail
+    };
+    console.log("obj: " + JSON.stringify(obj));
+    $.ajax({
+      url: "https://vc4all.in/careator/pswdCheck",
+      type: "POST",
+      data: JSON.stringify(obj),
+      contentType: "application/json",
+      dataType: "json",
+      success: function (data) {
+        console.log("data: " + JSON.stringify(data));
+        var userNameEmail = localStorage.getItem("careatorEmail");
+        var emailIdSplit = userNameEmail.split('@');
+        userName = emailIdSplit[0];
+        document.getElementById("videoConferenceUrl").style.display = "block";
+        
+        document.getElementById("emailInvitation").style.display = "block";
+        document.getElementById("videoCtrolBar").style.display = "grid";
+        getChatBack();
+      },
+      error: function (err) {
+        console.log("err: " + JSON.stringify(err));
+        console.log("err.responseText: " + JSON.stringify(err.responseText));
+        console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
+        userName = "";
+        localStorage.removeItem("careatorEmail");
+        localStorage.removeItem("sessionPassword");
+        $("#setName").trigger("click");
+      }
+    });
+
+  } else if (localStorage.getItem("careator_remoteEmail") && localStorage.getItem("oneTimePassword")) {
+    console.log("remote session check");
+    var careator_remoteEmail = localStorage.getItem("careator_remoteEmail");
+    var careator_remotePswd = localStorage.getItem("oneTimePassword");
+    var checkObj = {
+      "url": window.location.href,
+      "careator_remoteEmail": careator_remoteEmail,
+      "careator_remotePswd": careator_remotePswd
+    }
+    $.ajax({
+      url: "https://vc4all.in/careator/RemoteJoinCheck",
+      type: "POST",
+      data: JSON.stringify(checkObj),
+      contentType: "application/json",
+      dataType: "json",
+      success: function (data) {
+        console.log("data: " + JSON.stringify(data));
+        userName = localStorage.getItem("careator_remoteEmail");
+        careator_remoteEmail = true;
+        document.getElementById("videoConferenceUrl").style.display = "none";
+        document.getElementById("emailInvitation").style.display = "none";
+        document.getElementById("videoCtrolBar").style.display = "grid";
+        getChatBack();
+      },
+      error: function (err) {
+        console.log("err: " + JSON.stringify(err));
+        console.log("err.responseText: " + JSON.stringify(err.responseText));
+        console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
+        document.getElementById("videoConferenceUrl").style.display = "none";
+        document.getElementById("emailInvitation").style.display = "none";
+        userName = "";
+        localStorage.removeItem("careatorEmail");
+        localStorage.removeItem("careator_remoteEmail");
+        localStorage.removeItem("oneTimePassword");
+        $("#setName").trigger("click");
+      }
+    });
+  } else {
     console.log("No user data from session");
+    getChatBack();
     $("#setName").trigger("click");
+
   }
   console.log("userName: " + userName);
-}
-else {
+} else {
 
-  if (localStorage.getItem("careatorEmail")) {
+  if (localStorage.getItem("careatorEmail") && localStorage.getItem("sessionPassword")) {
     console.log("2 cond");
     var userNameEmail = localStorage.getItem("careatorEmail");
     console.log("2 cond: userNameEmail: " + userNameEmail);
@@ -87,14 +157,15 @@ else {
     console.log("localStorage.getItem(chatRights): " + localStorage.getItem("chatRights"));
     if (localStorage.getItem("videoRights") == 'yes') {
       document.getElementById("videoConfStart").style.display = "block";
+      $("#buttonpage").css({"min-height":"auto"});
     }
     if (localStorage.getItem("chatRights") == 'yes') {
       document.getElementById("chatConfStart").style.display = "block";
     }
 
-  }
-  else {
+  } else {
     console.log("enterEmail: -->");
+    localStorage.removeItem("careatorEmail")
     $("#enterEmail").trigger("click");
   }
   console.log("userName: " + userName);
@@ -104,6 +175,7 @@ function triggerInvite() {
   console.log("triggerInvite-->");
   $("#enterPswd").trigger("click");
 }
+
 function sendEmail() {
   console.log("sendEmail-->");
   var careatorEmail = document.getElementById("careatorEmail").value;
@@ -122,9 +194,10 @@ function sendEmail() {
     success: function (data) {
       console.log("data: " + JSON.stringify(data));
       //alert(data.message);
-      if (data.message == 'Successfully mail sent') {
+      if (data.message == 'Successfully mail sent' || data.message == "Successfully get admin login") {
         console.log("Successfully mail sent");
         localStorage.setItem("careatorEmail", careatorEmail);
+        localStorage.removeItem("sessionPassword")
         triggerInvite();
       }
     },
@@ -162,52 +235,63 @@ function checkPassword() {
         localStorage.setItem("empId", data.data.empId);
         localStorage.setItem("email", data.data.email);
         localStorage.setItem("userId", data.data._id);
-        userName =  localStorage.getItem("userName");
-    if (data.data.videoRights == 'yes') {
-      localStorage.setItem("videoRights", 'yes');
-      document.getElementById("videoConfStart").style.display = "inline";
-    }
-    if (data.data.chatRights == 'yes') {
-      localStorage.setItem("chatRights", 'yes');
-      document.getElementById("chatConfStart").style.display = "inline";
-    }
-    if(data.data.restrictedTo)
-    {
-      console.log("data.data.restrictedTo: "+JSON.stringify(data.data.restrictedTo));
-      var restrictedTo = data.data.restrictedTo;
-      var restrictedArray = [];
-      for (var x = 0; x < restrictedTo.length; x++) {
-          restrictedArray.push(restrictedTo[x].userId);
+        localStorage.setItem("sessionPassword", password);
+        userName = localStorage.getItem("userName");
+        if (data.data.videoRights == 'yes') {
+          localStorage.setItem("videoRights", 'yes');
+          document.getElementById("videoConfStart").style.display = "inline";
+          $("#buttonpage").css({"min-height":"auto"});
+        }
+        if (data.data.chatRights == 'yes') {
+          localStorage.setItem("chatRights", 'yes');
+          document.getElementById("chatConfStart").style.display = "inline";
+        }
+        if (data.data.chatStatus) {
+          localStorage.setItem("chatStatus", data.data.chatStatus);
+        }
+        if (data.data.restrictedTo) {
+          console.log("data.data.restrictedTo: " + JSON.stringify(data.data.restrictedTo));
+          var restrictedTo = data.data.restrictedTo;
+          var restrictedArray = [];
+          for (var x = 0; x < restrictedTo.length; x++) {
+            restrictedArray.push(restrictedTo[x].userId);
+          }
+
+          console.log("restrictedArray: " + restrictedArray);
+          localStorage.setItem("restrictedTo", restrictedArray);
+        }
+        if (data.data.profilePicPath) {
+          localStorage.setItem("profilePicPath", data.data.profilePicPath);
+        }
+        var userNameEmail = localStorage.getItem("careatorEmail");
+        var emailIdSplit = userNameEmail.split('@');
+        //userName = emailIdSplit[0];
+        console.log("userName: " + userName);
+        document.getElementById("videoConferenceUrl").style.display = "block";
+        // $('#myPasswordModal').modal('hide');
+        window.location.href = "https://vc4all.in/careatorApp/#!/dashboard/profile";
+      },
+      error: function (err) {
+        console.log("err: " + JSON.stringify(err));
+        console.log("err.responseText: " + JSON.stringify(err.responseText));
+        console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
+        document.getElementById("videoConferenceUrl").style.display = "none";
+        localStorage.removeItem("careatorEmail");
+        userName = "";
       }
-      console.log("restrictedArray: "+restrictedArray);
-      localStorage.setItem("restrictedTo", restrictedArray);
-    }
-    var userNameEmail = localStorage.getItem("careatorEmail");
-    var emailIdSplit = userNameEmail.split('@');
-    //userName = emailIdSplit[0];
-    console.log("userName: " + userName);
-    document.getElementById("videoConferenceUrl").style.display = "block";
-    $('#myPasswordModal').modal('hide');
-  },
-  error: function (err) {
-    console.log("err: " + JSON.stringify(err));
-    console.log("err.responseText: " + JSON.stringify(err.responseText));
-    console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
-    document.getElementById("videoConferenceUrl").style.display = "none";
-    localStorage.removeItem("careatorEmail");
-    userName = "";
+    });
+  } else {
+    console.log("password trigger again-->");
+    console.log("Password empty");
+
+    // $("#enterPswd").trigger("click");
   }
-});
-  }
-  else {
-  $("#enterPswd").trigger("click");
-}
-console.log("<--checkPassword");
+  console.log("<--checkPassword");
 }
 
 function chatNavigation() {
   console.log("chatNavigation-->");
-  window.location.href = "https://vc4all.in/careatorApp/#!/dashboard";
+  window.location.href = "https://vc4all.in/careatorApp/#!/dashboard/profile";
 }
 
 /* ##### Start: Email Invite  ##### */
@@ -258,9 +342,7 @@ function emailInviteSend() {
 /* ##### End: Email Invite  ##### */
 
 
-var ICE_SERVERS = [{
-  url: "stun:stun.l.google.com:19302"
-},
+var ICE_SERVERS = [
 {
   url: "stun:s3.xirsys.com"
 },
@@ -296,38 +378,67 @@ var ICE_SERVERS = [{
 }
 ];
 
+
+/* ##### Start: disconnectSessionReply from server(index.js)   ##### */
+signaling_socket.on("disconnectSessionReply", function (data) {
+  console.log("disconnectSessionReply from server-->");
+  if (queryLink == data.deleteSessionId && peerNew_id == data.owner) {
+    console.log("Ready for redirect-->");
+    localStorage.setItem("redirctRequired", true);
+
+    //window.location.href = "https://vc4all.in";
+  } else if (queryLink == data.deleteSessionId && peerNew_id != data.owner) {
+    console.log("remote notification that host disconnect the session-->");
+    alert("Your host disconnect the session, you no longer can use this session");
+    localStorage.setItem("redirctRequired", true);
+    // $("#homeLink").trigger("click");
+    // window.location.href = "https://vc4all.in";
+  }
+})
+/* ##### End: disconnectSessionReply from server(index.js)   ##### */
 function disconnecSession() {
   console.log("disconnecSession-->");
   console.log("sessionHeader: " + sessionHeader);
   console.log("peerNew_id: " + peerNew_id);
-  userName = null;
-  console.log("queryLink: " + queryLink);
-  console.log("localStorage.getItem: " + localStorage.getItem("careatorEmail"));
-  console.log("localStorage.getItem(sessionUrlId): " + localStorage.getItem("sessionUrlId"));
-  if (localStorage.getItem("chatRights")) {
-    localStorage.removeItem("chatRights");
-  }
-  if (localStorage.getItem("videoRights")) {
-    localStorage.removeItem("videoRights");
-  }
+
   if (localStorage.getItem("sessionUrlId") == queryLink && localStorage.getItem("careatorEmail")) {
     console.log("start to disconnect the session");
-    localStorage.removeItem("careatorEmail");
-    localStorage.removeItem("sessionUrlId");
-    localStorage.removeItem("careator_remoteEmail");
-
-    signaling_socket.emit("disconnectSession", { deleteSessionId: queryLink, owner: peerNew_id });
-
+    // localStorage.removeItem("sessionUrlId");
+    signaling_socket.emit("disconnectSession", {
+      deleteSessionId: queryLink,
+      owner: peerNew_id
+    });
 
     // window.location.href = "https://vc4all.in";
   } else {
-    localStorage.removeItem("careatorEmail");
-    localStorage.removeItem("sessionUrlId");
-    localStorage.removeItem("careator_remoteEmail");
-
-    console.log("You are not session creater so you cant delete session");
     window.location.href = "https://vc4all.in";
   }
+  // userName = null;
+  // console.log("queryLink: " + queryLink);
+  // console.log("localStorage.getItem: " + localStorage.getItem("careatorEmail"));
+  // console.log("localStorage.getItem(sessionUrlId): " + localStorage.getItem("sessionUrlId"));
+  // if (localStorage.getItem("chatRights")) {
+  //   localStorage.removeItem("chatRights");
+  // }
+  // if (localStorage.getItem("videoRights")) {
+  //   localStorage.removeItem("videoRights");
+  // }
+  // if (localStorage.getItem("sessionUrlId") == queryLink && localStorage.getItem("careatorEmail")) {
+  //   console.log("start to disconnect the session");
+  //   localStorage.removeItem("careatorEmail");
+  //   localStorage.removeItem("sessionUrlId");
+  //   localStorage.removeItem("careator_remoteEmail");
+  //   signaling_socket.emit("disconnectSession", {
+  //     deleteSessionId: queryLink,
+  //     owner: peerNew_id
+  //   });
+  // } else {
+  //   localStorage.removeItem("careatorEmail");
+  //   localStorage.removeItem("sessionUrlId");
+  //   localStorage.removeItem("careator_remoteEmail");
+  //   console.log("You are not session creater so you cant delete session");
+  //   window.location.href = "https://vc4all.in";
+  // }
   console.log("-->disconnecSession");
 }
 
@@ -359,6 +470,43 @@ function startSession(id, date) {
     }
   });
 }
+
+/* ### Note:Start Whenever page refresh get the chathistory respective to url  ### */
+function getChatBack() {
+  console.log("addChatWindow-->");
+
+  var obj = {
+    "url": url
+  }
+  console.log("obj: " + JSON.stringify(obj));
+  $.ajax({
+    url: "https://vc4all.in/chatHistory/getChatByUrl",
+    type: "POST",
+    data: JSON.stringify(obj),
+    contentType: "application/json",
+    dataType: "json",
+    success: function (data) {
+      console.log("data: " + JSON.stringify(data));
+      var chatData = data.data[0];
+      console.log("chatData: " + JSON.stringify(chatData));
+      for (var x = 0; x < chatData.chat.length; x++) {
+
+        document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">' +
+          chatData.chat[x].userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + chatData.chat[x].message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + chatData.chat[x].textTime + '</span></div>'
+
+      }
+
+    },
+    error: function (err) {
+      console.log("err: " + JSON.stringify(err));
+      console.log("err.responseText: " + JSON.stringify(err.responseText));
+      console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
+    }
+  });
+}
+
+/* ### Note:End Whenever page refresh get the chathistory respective to url  ### */
+
 signaling_socket.on("connect", function () {
   console.log("signaling_socket connect-->");
 
@@ -390,6 +538,7 @@ signaling_socket.on("connect", function () {
     if (config.queryId == null) {
       console.log("query id is null");
       document.getElementById("videoConfStart").setAttribute("onclick", "startSession('" + peerNew_id + "' , '" + date + "')");
+      // $("#buttonpage").css({"min-height":"100vh"})
       document
         .getElementById("linkToShare")
         .setAttribute(
@@ -398,8 +547,7 @@ signaling_socket.on("connect", function () {
         );
       document.getElementById("linkToShare").innerHTML =
         "https://vc4all.in/careator/" + peerNew_id + "/" + date;
-    }
-    else {
+    } else {
       console.log("query id nt null");
 
       document
@@ -411,8 +559,9 @@ signaling_socket.on("connect", function () {
       document.getElementById("linkToShare").innerHTML =
         "https://vc4all.in/careator/" + queryLink + "/" + date;
       document.getElementById("screenBtns").style.display = "inline";
-      document.getElementById("ffrrt").style.display = "inline";
+      document.getElementById("homeLink").style.display = "inline";
       document.getElementById("videoConfStart").style.display = "none";
+      $("#buttonpage").css({"min-height":"100vh"});
       // document.getElementById("chelam").style.display = "none";
       // document.getElementById("mobile-nav-toggle").style.display = "none";
       document.getElementById("openChat").style.display = "inline";
@@ -424,10 +573,13 @@ signaling_socket.on("connect", function () {
       document.getElementById("linkToShare").style.display = "block";
       document.getElementById("emailInvitation").style.display = "inline";
       console.log("userName: " + userName);
-      if (userName != undefined) {
+      if (userName != undefined && userName != "") {
         console.log("userName with localmedia setup call: " + userName);
         setup_local_media(function () {
-          join__channel(DEFAULT_CHANNEL, { "whatever-you--here": "stuff" });
+          join__channel(DEFAULT_CHANNEL, {
+            "whatever-you--here": "stuff"
+          });
+
         });
       }
 
@@ -458,9 +610,12 @@ signaling_socket.on("connect", function () {
             document.getElementById("videoConferenceUrl").style.display = "none";
             document.getElementById("emailInvitation").style.display = "none";
             document.getElementById("videoCtrolBar").style.display = "grid";
+            localStorage.setItem("oneTimePassword", careator_remotePswd);
             $('#remoteJoin').modal('hide');
             setup_local_media(function () {
-              join__channel(DEFAULT_CHANNEL, { "whatever-here": "stuff" });
+              join__channel(DEFAULT_CHANNEL, {
+                "whatever-here": "stuff"
+              });
             });
           },
           error: function (err) {
@@ -484,12 +639,12 @@ signaling_socket.on("disconnect", function () {
   console.log("signaling_socket.on disconnect-->");
   disconnPeerId = peerNew_id;
   // document.getElementById(peerNew_id).remove();
-
   /* Tear down all of our peer connections and remove all the
    * media divs when we disconnect */
   for (peer_id in peer_media_elements) {
     peer_media_elements[peer_id].remove();
     peer_userName_elements[peer_id].remove();
+
     // peer_media_sselements[peer_id].remove();
   }
   for (peer_id in peers) {
@@ -616,12 +771,12 @@ signaling_socket.on("addPeer", function (config) {
       peer_id + 'fullscreenbtn2" class="btn fa fa-expand" style="float:left;  margin-top: 10px; margin-left: 10px;"></button><h4>' +
       config.userName + '</h4><i style="display:none; float:right;color: #555555e3; margin-top: -15px; margin-right: 10px;" id="closeThisConn' +
       peer_id + '" class="fa fa-window-close cancelColrChange" aria-hidden="true" id="closeThisConn' +
-      peer_id + '" owner=' + peer_id + " name=" + config.userName + "></i><span>All is well</span></div></div>");
+      peer_id + '" owner=' + peer_id + " name=" + config.userName + "></i> </div></div>");
     $("#" + peer_id + "remoteVideoElement").append(remote_media);
     peer_userName_elements[peer_id] = document.getElementById("" + peer_id + "remoteContainer");
     $("#" + peer_id + "Remote").on('loadstart', function (event) {
       $(this).addClass('background');
-      $(this).attr("poster", "/img/Preloader_2.gif");
+      $(this).attr("poster", "/img/loading.gif");
     });
 
     $("#" + peer_id + "Remote").on('canplay', function (event) {
@@ -673,7 +828,7 @@ signaling_socket.on("addPeer", function (config) {
         "portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3"
       );
       $("#" + peer_id + "Remote").css({
-        height: "100vh"
+        height: "105vh"
       });
       $
       $("#videoElem").css({
@@ -685,7 +840,9 @@ signaling_socket.on("addPeer", function (config) {
       );
       $("#videosAttach").css({
         "z-index": "2",
-        "position": "fixed"
+        "position": "fixed",
+        "right": "-225px",
+        "bottom": "25px",
       }
 
       );
@@ -984,6 +1141,7 @@ signaling_socket.on("authorizedForClose", function (config) {
   console.log("<--authorizedForClose");
 });
 
+
 //     console.log("<--init");
 
 //     // <!--------video Controller-------->
@@ -1015,6 +1173,9 @@ function setup_local_media(callback, errorback) {
     video.srcObject = stream;
     console.log("<--attachMediaStream");
   };
+  $("#buttonpage").css({
+    "min-height": "100vh"
+  });
   navigator.getUserMedia({
     audio: USE_AUDIO,
     video: USE_VIDEO
@@ -1038,13 +1199,13 @@ function setup_local_media(callback, errorback) {
       $("#portfolio-wrapper").append(
         '<div id="videoElem111" class="portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3"><div id="videosAttach"></div><div class="details"><button id="fullscreenbtn" class="btn fa fa-expand" style="float:left; margin-top: 10px; margin-left: 10px;"></button><h4>' +
         userName +
-        "</h4><span>All is well</span></div></div>"
+        "</h4> </div></div>"
       );
       $("#videosAttach").append(local_media);
       /* ### Start: Loader Start and Stop ### */
       $('#videoElem').on('loadstart', function (event) {
         $(this).addClass('background');
-        $(this).attr("poster", "/img/Preloader_2.gif");
+        $(this).attr("poster", "/img/loading.gif");
       });
       $('#videoElem').on('canplay', function (event) {
         $(this).removeClass('background');
@@ -1141,7 +1302,9 @@ function setup_local_media(callback, errorback) {
     console.log("screenShare-->");
     getScreenId(function (error, sourceId, screen_constraints) {
       navigator.getUserMedia(screen_constraints, function (stream) {
-        navigator.getUserMedia({ audio: true }, function (audioStream) {
+        navigator.getUserMedia({
+          audio: true
+        }, function (audioStream) {
           stream.addTrack(audioStream.getAudioTracks()[0]);
           // shareScreen = peerNew_id;
           var local_media = document.getElementById("videoElem");
@@ -1150,7 +1313,9 @@ function setup_local_media(callback, errorback) {
           function stopVideo(local_media) {
             let stream = videoElem.srcObject;
             let tracks = stream.getTracks();
-            tracks.forEach(function (track) { track.stop(); });
+            tracks.forEach(function (track) {
+              track.stop();
+            });
             videoElem.srcObject = null;
             delete this;
             $(this).remove();
@@ -1167,10 +1332,35 @@ function setup_local_media(callback, errorback) {
           local_mediaScreenShare.attr("style", "border:1px solid skyblue");
           $("#videosAttach").append(local_mediaScreenShare);
 
+
+
+          /* ### Start: This for audio mute and unmute before SCREEN SHARE ### */
+          document.getElementById("audio_btn").addEventListener("click", function () {
+            console.log("audio_btn-->");
+            console.log(
+              "stream.getAudioTracks()[0].enabled: " +
+              stream.getAudioTracks()[0].enabled
+            );
+            stream.getAudioTracks()[0].enabled = !stream.getAudioTracks()[0]
+              .enabled;
+            var michrophoneVal = stream.getAudioTracks()[0].enabled;
+
+            if (michrophoneVal) {
+              document.getElementById("audioMute_btn").style.display = "inline";
+              document.getElementById("audioUnmute_btn").style.display = "none";
+            } else {
+              document.getElementById("audioMute_btn").style.display = "none";
+              document.getElementById("audioUnmute_btn").style.display = "inline";
+            }
+            console.log("stream.getAudioTracks()[0].enabled: " + stream.getAudioTracks()[0].enabled);
+            console.log("<--audio_btn");
+          });
+          /* ### End: This for audio mute and unmute before SCREEN SHARE ### */
+
           /* ### Start: Loader Start and Stop ### */
           $("#screenShareElem").on('loadstart', function (event) {
             $(this).addClass('background');
-            $(this).attr("poster", "/img/Preloader_2.gif");
+            $(this).attr("poster", "/img/loading.gif");
           });
           $("#screenShareElem").on('canplay', function (event) {
             $(this).removeClass('background');
@@ -1199,7 +1389,10 @@ function setup_local_media(callback, errorback) {
             $("#videosAttach").empty();
 
             /* ###### Start: Local media after stop screen share  ###### */
-            navigator.getUserMedia({ audio: USE_AUDIO, video: USE_VIDEO }, function (stream) {
+            navigator.getUserMedia({
+              audio: USE_AUDIO,
+              video: USE_VIDEO
+            }, function (stream) {
               /* user accepted access to a/v */
               console.log("Access granted to audio/video");
               console.log("stream: " + stream);
@@ -1218,7 +1411,7 @@ function setup_local_media(callback, errorback) {
               /* ### Start: Loader Start and Stop ### */
               $("#videoElem").on('loadstart', function (event) {
                 $(this).addClass('background');
-                $(this).attr("poster", "/img/Preloader_2.gif");
+                $(this).attr("poster", "/img/loading.gif");
               });
               $("#videoElem").on('canplay', function (event) {
                 $(this).removeClass('background');
@@ -1519,3 +1712,82 @@ $(".back-to-top").click(function () {
   }, 1500, "easeInOutExpo");
   return false;
 });
+
+signaling_socket.on('comm_logoutNotifyToUserById', function (data) {
+  console.log("***comm_logoutNotifyToUserById-->: " + JSON.stringify(data));
+  console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));
+  console.log(" localStorage.getItem(sessionUrlId): " + localStorage.getItem("sessionUrlId"));
+  console.log(" url: " + url);
+  if (data.email == localStorage.getItem("careatorEmail") || data.email == localStorage.getItem("careator_remoteEmail")) {
+    console.log("Start to remove the session");
+    // localStorage.removeItem("email");
+    // localStorage.removeItem("userName");
+    // localStorage.removeItem("empId");
+    // localStorage.removeItem("userId");
+    // localStorage.removeItem("restrictedTo");
+    // localStorage.removeItem("chatStatus");
+    // localStorage.removeItem("profilePicPath");
+    // if (localStorage.getItem("chatRights")) {
+    //   localStorage.removeItem("chatRights");
+    // }
+    // if (localStorage.getItem("videoRights")) {
+    //   localStorage.removeItem("videoRights");
+    // }
+    // if (localStorage.getItem("sessionUrlId") == queryLink && localStorage.getItem("careatorEmail")) {
+    //   console.log("start to disconnect the session");
+    //   localStorage.removeItem("careatorEmail");
+    //   localStorage.removeItem("sessionUrlId");
+    //   localStorage.removeItem("careator_remoteEmail");
+    //   localStorage.removeItem("sessionPassword")
+    // } else {
+    //   localStorage.removeItem("careatorEmail");
+    //   localStorage.removeItem("sessionUrlId");
+    //   localStorage.removeItem("careator_remoteEmail");
+    //   localStorage.removeItem("oneTimePassword");
+    //   console.log("You are not session creater so you cant delete session");
+    // }
+
+    disconnecSession();
+    //window.location.href = "https://vc4all.in";
+  }
+  if (data.sessionURL == url) {
+    console.log("Start to remove the session based on sessionURL");
+    localStorage.removeItem("sessionUrlId");
+    // signaling_socket.emit("disconnectSession", {
+    //   deleteSessionId: queryLink,
+    //   owner: peerNew_id
+    // });
+    close();
+
+  }
+  // if(localStorage.getItem("careatorEmail")==null || localStorage.getItem("careator_remoteEmail")==null){
+  //   disconnecSession();
+  // }
+
+})
+
+
+
+// function logout() {
+//   console.log("logout--> ");
+//   if (localStorage.getItem("chatRights")) {
+//     localStorage.removeItem("chatRights");
+//   }
+//   if (localStorage.getItem("videoRights")) {
+//     localStorage.removeItem("videoRights");
+//   }
+//   if (localStorage.getItem("sessionUrlId") == queryLink && localStorage.getItem("careatorEmail")) {
+//     console.log("start to disconnect the session");
+//     localStorage.removeItem("careatorEmail");
+//     localStorage.removeItem("sessionUrlId");
+//     localStorage.removeItem("careator_remoteEmail");
+//     localStorage.removeItem("sessionPassword")
+//   } else {
+//     localStorage.removeItem("careatorEmail");
+//     localStorage.removeItem("sessionUrlId");
+//     localStorage.removeItem("careator_remoteEmail");
+//     localStorage.removeItem("oneTimePassword");
+//     console.log("You are not session creater so you cant delete session");
+//     window.location.href = "https://vc4all.in";
+//   }
+// }

@@ -27,6 +27,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
                     allUsersData = data.data.data[0];
                     console.log("allUsersData: " + JSON.stringify(allUsersData));
                     $scope.restrictedTo = [];
+                    
                     if (allUsersData.restrictedTo == undefined) {
                         $scope.authorizedFor();
                     }
@@ -96,7 +97,8 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
         scrollableHeight: '200px',
         scrollable: true,
         enableSearch: true,
-        externalIdProp: ''
+        externalIdProp: '',
+        showUncheckAll: false
     };
     $scope.restrictedUserSelectEvent = {
         onItemSelect: function (item) {
@@ -118,7 +120,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
                 console.log("data--" + JSON.stringify(data.data));
                 if (checkStatus) {
                     console.log(data.data.message);
-                 $scope.addRestrictionToSelectedUser($scope.allUserModel[0].id, item.id);
+                    $scope.addRestrictionToSelectedUser($scope.allUserModel[0].id, item.id);
                 }
                 else {
                     console.log("Sorry: " + data.data.message);
@@ -131,7 +133,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
             var id = $scope.allUserModel[0].id;
             console.log("id: " + id);
             var restrictedTo = {
-                "userId":  item.id
+                "userId": item.id
             }
             console.log("restrictedTo: " + JSON.stringify(restrictedTo));
             var api = "https://vc4all.in/careator_removeRestrictedUserById/removeRestrictedUserById/" + id;
@@ -145,12 +147,21 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
                 console.log("data--" + JSON.stringify(data.data));
                 if (checkStatus) {
                     console.log(data.data.message);
-                    $scope.removeRestriction(item.id, $scope.allUserModel[0].id );
+                    $scope.removeRestriction(item.id, $scope.allUserModel[0].id);
                 }
                 else {
                     console.log("Sorry: " + data.data.message);
                 }
             })
+        },
+        onSelectAll: function () {
+            console.log('onSelectAll-->');
+            alert("Coming Soon: As per now, please select one item at a time");
+            console.log('All authorizedUserData: ' + JSON.stringify($scope.authorizedUserData));
+        },
+        onDeselectAll: function () {
+            console.log('onDeselectAll-->');
+            console.log('All authorizedUserData: ' + JSON.stringify($scope.authorizedUserData));
         }
     }
     $scope.authorizedFor = function () {
@@ -162,15 +173,15 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
         for (var x = 0; x < allUsers.length; x++) {
             console.log("start to gather data");
             if ($scope.allUserModel[0].id != allUsers[x]._id) {
-                counter = counter+1;
+                counter = counter + 1;
                 $scope.authorizedUserData.push({
                     "email": allUsers[x].email,
                     "label": allUsers[x].name + " - " + allUsers[x].empId,
                     "id": allUsers[x]._id,
                 });
-                console.log("$scope.restrictedTo.indexOf("+allUsers[x]._id+"): " + $scope.restrictedTo.indexOf(allUsers[x]._id));
+                console.log("$scope.restrictedTo.indexOf(" + allUsers[x]._id + "): " + $scope.restrictedTo.indexOf(allUsers[x]._id));
                 if ($scope.restrictedTo.indexOf(allUsers[x]._id) >= 0) {
-                    $scope.authorizedUserModel.push($scope.authorizedUserData[counter-1]);
+                    $scope.authorizedUserModel.push($scope.authorizedUserData[counter - 1]);
                 }
 
             }
@@ -203,7 +214,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
                 console.log(data.data.message);
-              
+
             }
             else {
                 console.log("Sorry: " + data.data.message);
@@ -211,58 +222,58 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
         })
     }
 
-    $scope.removeRestriction = function(id, restrictedId){
+    $scope.removeRestriction = function (id, restrictedId) {
         console.log("removeRestriction-->");
         var id = id;
-            console.log("id: " + id);
-            var restrictedTo = {
-                "userId":  restrictedId
+        console.log("id: " + id);
+        var restrictedTo = {
+            "userId": restrictedId
+        }
+        console.log("restrictedTo: " + JSON.stringify(restrictedTo));
+        var api = "https://vc4all.in/careator_removeRestrictedUserById/removeRestrictedUserById/" + id;
+        console.log("api: " + api);
+        var obj = {
+            "restrictedTo": restrictedTo
+        }
+        careatorHttpFactory.post(api, obj).then(function (data) {
+            console.log("data--" + JSON.stringify(data.data));
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                console.log(data.data.message);
+
             }
-            console.log("restrictedTo: " + JSON.stringify(restrictedTo));
-            var api = "https://vc4all.in/careator_removeRestrictedUserById/removeRestrictedUserById/" + id;
-            console.log("api: " + api);
-            var obj = {
-                "restrictedTo": restrictedTo
+            else {
+                console.log("Sorry: " + data.data.message);
             }
-            careatorHttpFactory.post(api, obj).then(function (data) {
-                console.log("data--" + JSON.stringify(data.data));
-                var checkStatus = careatorHttpFactory.dataValidation(data);
-                console.log("data--" + JSON.stringify(data.data));
-                if (checkStatus) {
-                    console.log(data.data.message);
-                   
-                }
-                else {
-                    console.log("Sorry: " + data.data.message);
-                }
-            })
+        })
     }
 
-    $scope.addRestrictionToSelectedUser = function(id, restrictedId){
+    $scope.addRestrictionToSelectedUser = function (id, restrictedId) {
         console.log("removeRestriction-->");
         var id = id;
-            console.log("id: " + id);
-            var restrictedTo = {
-                "userId":  restrictedId
+        console.log("id: " + id);
+        var restrictedTo = {
+            "userId": restrictedId
+        }
+        console.log("restrictedTo: " + JSON.stringify(restrictedTo));
+        var api = "https://vc4all.in/careator_restrictedTo/restrictedTo/" + id;
+        console.log("api: " + api);
+        var obj = {
+            "restrictedTo": restrictedTo
+        }
+        careatorHttpFactory.post(api, obj).then(function (data) {
+            console.log("data--" + JSON.stringify(data.data));
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                console.log(data.data.message);
+
             }
-            console.log("restrictedTo: " + JSON.stringify(restrictedTo));
-            var api = "https://vc4all.in/careator_restrictedTo/restrictedTo/" + id;
-            console.log("api: " + api);
-            var obj = {
-                "restrictedTo": restrictedTo
+            else {
+                console.log("Sorry: " + data.data.message);
             }
-            careatorHttpFactory.post(api, obj).then(function (data) {
-                console.log("data--" + JSON.stringify(data.data));
-                var checkStatus = careatorHttpFactory.dataValidation(data);
-                console.log("data--" + JSON.stringify(data.data));
-                if (checkStatus) {
-                    console.log(data.data.message);
-                   
-                }
-                else {
-                    console.log("Sorry: " + data.data.message);
-                }
-            })
+        })
     }
 
 

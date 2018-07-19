@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/careatorApp/css/style.css" />
     <link rel="stylesheet" href="/careatorApp/css/style-responsive.css" />
     <link rel="stylesheet" href="/careatorApp/css/elegant-icons-style.css" />
+    <script src="/careatorApp/js/mmm.js"></script>
+    <link href='https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.css' rel='stylesheet'>
     <!-- Include the above in your HEAD tag -->
     <link href="/home/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- <script src="/js/chatHistory.js"></script> -->
@@ -22,6 +24,10 @@
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/bower_components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
     <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+
+    <link href="/bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop.css" rel="stylesheet">
+    <script src="/bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop.js"></script>
+
     <script src="/careatorCommApp.js"></script>
     <script src="/careatorCommAppCtrl.js"></script>
     <script src="/common/careatorHttpFactory.js"></script>
@@ -31,7 +37,8 @@
     <script src="/careatorApp/controllers/careator_dashboardCtrl.js"></script>
     <script src="/careatorApp/controllers/chatHistoryCtrl.js"></script>
     <script src="/careatorApp/controllers/chatCtrl.js"></script>
-    <script src="/careatorApp/controllers/videoCtrl.js"></script>
+    <script src="/careatorApp/controllers/contactAdminCtrl.js"></script>
+    <script src="/careatorApp/controllers/profileCtrl.js"></script>
 
     <script src="/careatorApp/controllers/createUsersCtrl.js"></script>
     <script src="/careatorApp/controllers/usersListCtrl.js"></script>
@@ -41,10 +48,12 @@
     <script src="/careatorApp/controllers/createGroupCtrl.js"></script>
     <script src="/careatorApp/controllers/userRestrictionCtrl.js"></script>
     <!-- <link href="/home/css/style.css" rel="stylesheet"> -->
+
+
     <script>
         var SIGNALING_SERVER = "https://vc4all.in";
         socket = io(SIGNALING_SERVER);
-      </script>
+    </script>
 
 
 </head>

@@ -3,10 +3,13 @@
     <section id="container" class="">
         <header class="header dark-bg">
             <div class="toggle-nav">
+                
                 <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom">
+               
                     <i style="display: none; color:#428bca; border: 1px solid #a8cf44;   padding: 5px; border-radius: 5px;" class="fa fa-bars"
                         id="tog" ng-click="iconMenuClick()"></i>
                     <i class="fa fa-times" style="color:#a8cf44; border: 1px solid #428bca;  padding: 5px;  border-radius: 5px;" id="fog" ng-click="iconMenuClick()"></i>
+                 
                 </div>
             </div>
             <div class="top-nav notification-row">
@@ -33,48 +36,70 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" ng-hide="sideBarMenu">
 
-                    <li>
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
                         <a href="#!/dashboard/userCreate">
                             <i class="fa fa-user-circle">
                                 <span>&nbspCreate User</span>
                             </i>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
                         <a href="#!/dashboard/userRestrict">
                             <i class="fa fa-universal-access">
                                 <span>&nbspUser Restrict</span>
                             </i>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
                         <a href="#!/dashboard/createGroup">
                             <i class="fa fa-users">
                                 <span>&nbspCreate Group</span>
                             </i>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
                         <a href="#!/dashboard/usersList">
                             <i class="fa fa-list-alt">
                                 <span>&nbspUser List</span>
                             </i>
                         </a>
                     </li>
-                    <li>
+                    <li ng-if="userData.email=='vc4allAdmin@gmail.com'">
                         <a href="#!/dashboard/groupList">
                             <i class="fa fa-list">
                                 <span>&nbspGroup List</span>
                             </i>
                         </a>
                     </li>
-                    <li ng-click="iconMenuClick()">
+                    <li>
+                        <a href="#!/dashboard/profile">
+                            <i class="fa fa-user-circle-o">
+                                <span>&nbspProfile</span>
+                            </i>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="#!/dashboard/chat">
                             <i class="fa fa-comment">
                                 <span>&nbspChat</span>
                             </i>
                         </a>
                     </li>
+                    <li ng-if="videoRights=='yes'">
+                        <a href="https://vc4all.in/careator" target="_blank">
+                            <i class="fa fa-video-camera">
+                                <span>&nbspVideo</span>
+                            </i>
+                        </a>
+                    </li>
+                    <!-- <li ng-if="userData.email !='vc4allAdmin@gmail.com'">
+                        <a href="#!/dashboard/contactAdmin">
+                            <i class="fa fa-user-secret">
+                                <span>&nbspContact Admin</span>
+                            </i>
+                        </a>
+                    </li> -->
                     <li>
                         <a ng-click="logout()">
                             <i class="fa fa-sign-out">

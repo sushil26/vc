@@ -1,4 +1,4 @@
-var careatorApp = angular.module('careatorCommApp', ['ui.router', 'angularjs-dropdown-multiselect', 'ngCookies']);
+var careatorApp = angular.module('careatorCommApp', ['ui.router', 'angularjs-dropdown-multiselect', 'ngCookies','ngImgCrop']);
 
 careatorApp.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -47,9 +47,13 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: '/careatorApp/html/chat.html'
 
         })
-        .state('Cdashboard.video', {
-            url: careator_video(),
-            templateUrl: '/careatorApp/html/video.html'
+        .state('Cdashboard.contactAdmin', {
+            url: contactAdmin(),
+            templateUrl: '/careatorApp/html/contactAdmin.html'
+        })
+        .state('Cdashboard.profile', {
+            url: profile(),
+            templateUrl: '/careatorApp/html/profile.html'
         })
         .state('Cdashboard.userRestrict', {
             url: careator_userRestrict(),
@@ -57,9 +61,13 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
 
         })
 })
+function profile() {
+    return '/profile';
+}
 
-function careator_video() {
-    return '/videoChat';
+
+function contactAdmin() {
+    return '/contactAdmin';
 }
 
 function careator_dashboard() {

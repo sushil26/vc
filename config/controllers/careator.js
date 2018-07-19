@@ -132,7 +132,96 @@ module.exports.pswdCheck = function (req, res) {
     }
     console.log("<--pswdCheck");
 }
+module.exports.pswdGenerate = function (req, res) {
+    console.log("pswdGenerate-->");
+    console.log("req.body.careatorEmail: " + req.body.careatorEmail);
+    var email = req.body.careatorEmail;
+    var emailSplit = email.split('@');
+    var password = randomstring.generate(7);
+    var responseData;
 
+    if (general.emptyCheck(req.body.careatorEmail)) {
+        if (emailSplit[1] == 'careator.com') {
+            var obj = {
+                "email": email,
+                "password": password,
+                "invite": []
+            }
+            console.log("obj: " + JSON.stringify(obj));
+            careatorMaster.find({ "email": email }).toArray(function (err, findData) {
+                console.log("findData: " + JSON.stringify(findData));
+                if (findData.length > 0) {
+                    careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [] } }, function (err, data) {
+                        console.log("data: " + JSON.stringify(data));
+                        if (err) {
+                            responseData = {
+                                status: true,
+                                message: "Process not successful"
+                            };
+                            res.status(200).send(responseData);
+                        } else {
+                            var mailOptions = {
+                                from: "info@vc4all.in",
+                                to: email,
+                                subject: 'VC4ALL Credential',
+                                html: "<table style='border:10px solid gainsboro;'><thead style='background-image: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#00bcd4;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, Your email Id is verified successfully, you can access the below link by using given password.<p style=background:gainsboro;>Password: " + password + "</p></td></tr></tbody></table>"
+                            };
+                            transporter.sendMail(mailOptions, function (error, info) {
+                                if (error) {
+                                    console.log(error);
+                                    responseData = {
+                                        status: true,
+                                        message: "insert Successfull and Failed to send mail",
+                                        data: data
+                                    };
+                                    res.status(200).send(responseData);
+                                } else {
+                                    console.log("Email sent: " + info.response);
+                                    responseData = {
+                                        status: true,
+                                        message: "Successfully mail sent",
+                                        data: data
+                                    };
+                                    res.status(200).send(responseData);
+                                }
+                            });
+                        }
+                    })
+                } else {
+                    console.log("Email Not Matched, tell your admin to verify");
+                    responseData = {
+                        status: false,
+                        errorCode: 400,
+                        message: "Email Not matched or inactive"
+                    };
+                    res.status(200).send(responseData);
+                }
+
+            })
+
+        }
+        else if (email == 'vc4allAdmin@gmail.com') {
+            responseData = {
+                status: true,
+                message: "Successfully get admin login"
+            };
+            res.status(200).send(responseData);
+        } else {
+            responseData = {
+                status: false,
+                message: "Email id is not valid"
+            };
+            res.status(400).send(responseData);
+        }
+    } else {
+        responseData = {
+            status: false,
+            message: "Empty value found"
+        };
+        res.status(400).send(responseData);
+    }
+    console.log("<--pswdGenerate");
+}
 module.exports.emailInvite = function (req, res) {
     console.log("careator email Invite-->");
     console.log("req.body.sessionHost: " + req.body.sessionHost + " req.body.email: " + req.body.email + " req.body.url: " + req.body.url);
@@ -160,7 +249,7 @@ module.exports.emailInvite = function (req, res) {
                     from: "info@vc4all.in",
                     to: req.body.email,
                     subject: 'VC4ALL Credential',
-                    html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, You get the invitation from VC4ALL and sended by " + req.body.sessionHost + " you can access the below link by using given password.<p style=background:gainsboro;>Password: " + password + "</p><a href=" + req.body.url + " style=background:gainsboro;>URL: Click Me</p></td></tr></tbody></table>"
+                    html: "<table style='border:10px solid gainsboro;'><thead style='background-image: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#00bcd4;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, You get the invitation from VC4ALL and sended by " + req.body.sessionHost + " you can access the below link by using given password.<p style=background:gainsboro;>Password: " + password + "</p><a href=" + req.body.url + " style=background:gainsboro;>URL: Click Me</p></td></tr></tbody></table>"
                     // "<html><body><p><b>Dear Careator Employee, </b></p><p>Please note, Your email Id is verified successfully,  you can access the below link by using given password.<p>Password: "+password+"</p></p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></body></html>"
                 };
                 transporter.sendMail(mailOptions, function (error, info) {
@@ -186,6 +275,28 @@ module.exports.emailInvite = function (req, res) {
                 });
             }
         })
+}
+
+module.exports.getAdminObjectId = function (req, res) {
+    console.log("getAdminObjectId-->");
+    careatorMaster.find({ "email": "vc4allAdmin@gmail.com" }).toArray(function (err, admin) {
+        if (err) {
+            console.log("err: " + JSON.stringify(err));
+            responseData = {
+                status: false,
+                message: "Unsuccessfull, go back and refresh then start session"
+            };
+            res.status(400).send(responseData);
+        } else {
+            console.log("admin: " + JSON.stringify(admin));
+            responseData = {
+                status: true,
+                message: "Successfull",
+                data: admin[0]._id
+            };
+            res.status(200).send(responseData);
+        }
+    })
 }
 
 module.exports.setCollection = function (req, res) {
@@ -243,6 +354,33 @@ module.exports.setCollection = function (req, res) {
 
 }
 
+module.exports.getChatByUrl = function (req, res) {
+    console.log("getChatByUrl-->");
+    var obj = {
+        "url": req.body.url,
+    }
+    console.log("obj: " + JSON.stringify(obj));
+    chatHistory.find(obj).toArray(function (err, data) {
+        console.log("data: " + JSON.stringify(data));
+        console.log("data.length: " + data.length);
+        if (err) {
+            console.log("err: " + JSON.stringify(err));
+            responseData = {
+                status: false,
+                message: "UnSuccessfully"
+            };
+            res.status(400).send(responseData);
+        } else {
+            console.log("data: " + JSON.stringify(data));
+            responseData = {
+                status: true,
+                message: "Successfully",
+                data: data
+            };
+            res.status(200).send(responseData);
+        }
+    })
+}
 module.exports.getHistoryByEmailId = function (req, res) {
     console.log("setCollection-->");
     var email = req.params.email;
@@ -381,7 +519,9 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
         "videoRights": data.VideoRights,
         "chatRights": data.ChatRights,
         "status": "active",
-        "restrictedTo" : []
+        "chatStatus": "Available",
+        "restrictedTo": [],
+        "profilePicPath": "./css/user.png"
     }
     careatorMaster.find(findEmpId).toArray(function (err, findData) {
         if (err) {
@@ -407,6 +547,94 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
                         } else {
                             careatorMasterArray.push(obj);
                             if (callback) callback();
+                        }
+
+                    }
+                })
+            }
+        }
+    })
+
+}
+
+
+module.exports.careatorSingleUserInsert = function (req, res) {
+    console.log("careatorSingleUserInsert-->");
+
+    var obj = {
+        "name": req.body.userName,
+        "empId": req.body.empId,
+        "email": req.body.empEmail,
+        "videoRights": req.body.videoRights,
+        "chatRights": req.body.chatRights,
+        "status": "active",
+        "restrictedTo": [],
+        "profilePicPath": "./css/user.png"
+    }
+    console.log("obj :" + JSON.stringify(obj));
+    var findEmpId = {
+        "empId": req.body.empId
+    }
+    var findEmail = {
+        "email": req.body.empEmail
+    }
+    console.log("findEmpId :" + JSON.stringify(findEmpId));
+    console.log("findEmail :" + JSON.stringify(findEmail));
+
+    careatorMaster.find(findEmpId).toArray(function (err, idFindData) {
+        if (err) {
+            console.log("err: " + JSON.stringify(err));
+            responseData = {
+                status: false,
+                message: "Find employeeid for insert failed"
+            };
+            res.status(400).send(responseData);
+        } else {
+            console.log("idFindData: " + JSON.stringify(idFindData));
+            if (idFindData.length > 0) {
+
+                responseData = {
+                    status: false,
+                    message: "This employee id already exist"
+                };
+                res.status(400).send(responseData);
+            } else {
+                careatorMaster.find(findEmail).toArray(function (err, emailFindData) {
+                    if (err) {
+                        console.log("err: " + JSON.stringify(err));
+                        responseData = {
+                            status: false,
+                            message: "Find emailid for insert failed"
+                        };
+                        res.status(400).send(responseData);
+                    } else {
+                        console.log("emailFindData: " + JSON.stringify(emailFindData));
+                        if (emailFindData.length > 0) {
+
+                            responseData = {
+                                status: false,
+                                message: "This emaail id already exist"
+                            };
+                            res.status(400).send(responseData);
+                        } else {
+                            careatorMaster.insert(obj, function (err, insertedData) {
+                                if (err) {
+                                    console.log("err: " + JSON.stringify(err));
+                                    responseData = {
+                                        status: false,
+                                        message: "Insert Unsuccessful"
+                                    };
+                                    res.status(400).send(responseData);
+                                } else {
+                                    console.log("insertedData: " + JSON.stringify(insertedData));
+                                    responseData = {
+                                        status: true,
+                                        message: "Insert Successfull",
+                                    };
+                                    res.status(200).send(responseData);
+                                }
+                            })
+
                         }
 
                     }
@@ -704,92 +932,7 @@ module.exports.careator_chat_creteGroup = function (req, res) {
     }
 
 }
-module.exports.pswdGenerate = function (req, res) {
-    console.log("pswdGenerate-->");
-    console.log("req.body.careatorEmail: " + req.body.careatorEmail);
-    var email = req.body.careatorEmail;
-    var emailSplit = email.split('@');
-    var password = randomstring.generate(7);
-    var responseData;
 
-    if (general.emptyCheck(req.body.careatorEmail)) {
-        if (emailSplit[1] == 'careator.com') {
-            var obj = {
-                "email": email,
-                "password": password,
-                "invite": []
-            }
-            console.log("obj: " + JSON.stringify(obj));
-            careatorMaster.find({ "email": email }).toArray(function (err, findData) {
-                console.log("findData: " + JSON.stringify(findData));
-                if (findData.length > 0) {
-                    careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [] } }, function (err, data) {
-                        console.log("data: " + JSON.stringify(data));
-                        if (err) {
-                            responseData = {
-                                status: true,
-                                errorCode: 200,
-                                message: "Process not successful"
-                            };
-                            res.status(200).send(responseData);
-                        } else {
-                            var mailOptions = {
-                                from: "info@vc4all.in",
-                                to: email,
-                                subject: 'VC4ALL Credential',
-                                html: "<table style='border:10px solid gainsboro;'><thead style=background:cornflowerblue;><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#396fc9;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, Your email Id is verified successfully, you can access the below link by using given password.<p style=background:gainsboro;>Password: " + password + "</p></td></tr></tbody></table>"
-                            };
-                            transporter.sendMail(mailOptions, function (error, info) {
-                                if (error) {
-                                    console.log(error);
-                                    responseData = {
-                                        status: true,
-                                        errorCode: 200,
-                                        message: "insert Successfull and Failed to send mail",
-                                        data: data
-                                    };
-                                    res.status(200).send(responseData);
-                                } else {
-                                    console.log("Email sent: " + info.response);
-                                    responseData = {
-                                        status: true,
-                                        errorCode: 200,
-                                        message: "Successfully mail sent",
-                                        data: data
-                                    };
-                                    res.status(200).send(responseData);
-                                }
-                            });
-                        }
-                    })
-                } else {
-                    console.log("Email Not Matched, tell your admin to verify");
-                    responseData = {
-                        status: false,
-                        errorCode: 400,
-                        message: "Email Not matched or inactive"
-                    };
-                    res.status(200).send(responseData);
-                }
-
-            })
-
-        } else {
-            responseData = {
-                status: false,
-                message: "Email id is not valid"
-            };
-            res.status(400).send(responseData);
-        }
-    } else {
-        responseData = {
-            status: false,
-            message: "Empty value found"
-        };
-        res.status(400).send(responseData);
-    }
-    console.log("<--pswdGenerate");
-}
 
 module.exports.careator_getChatGroupListById = function (req, res) {
     console.log("getChatGroupListById-->");
@@ -861,7 +1004,9 @@ module.exports.careator_getChatRightsAllemp = function (req, res) {
     console.log("careator_getChatRightsAllemp-->: " + req.params.id);
     var id = req.params.id;
     var restrictedUsers = req.body.restrictedTo;
+    console.log("restrictedUsers: " + JSON.stringify(restrictedUsers));
     for (var x = 0; x < restrictedUsers.length; x++) {
+        console.log("restrictedUsers[x]: " + JSON.stringify(restrictedUsers[x]));
         restrictedUsers[x] = ObjectId(restrictedUsers[x]);
     }
     console.log("restrictedUsers: " + restrictedUsers);
@@ -874,6 +1019,41 @@ module.exports.careator_getChatRightsAllemp = function (req, res) {
             "chatRights": "yes",
             "status": "active"
         }).toArray(function (err, allEmp_chat) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: "Unsucessfully retrived data",
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("allEmp_chat: " + JSON.stringify(allEmp_chat));
+                response = {
+                    status: true,
+                    message: "Sucessfully retrived data",
+                    data: allEmp_chat
+                };
+                res.status(200).send(response);
+            }
+        })
+
+    } else {
+        console.log("Epty value found");
+        response = {
+            status: false,
+            message: "empty value found"
+        };
+        res.status(400).send(response);
+    }
+}
+
+module.exports.careator_getChatRightsAllemp_byLoginId = function (req, res) {
+    console.log("careator_getChatRightsAllemp_byLoginId-->: " + req.params.id);
+    var id = req.params.id;
+
+    if (general.emptyCheck(id)) {
+        careatorMaster.find({ "_id": { $ne: ObjectId(id) }, "chatRights": "yes" }).toArray(function (err, allEmp_chat) {
             if (err) {
                 console.log("err: " + JSON.stringify(err));
                 response = {
@@ -1229,10 +1409,47 @@ module.exports.groupText = function (req, res) {
         res.status(400).send(response);
     }
 }
+module.exports.getGroupById = function (req, res) {
+    console.log("getGroupById-->");
+    var id = req.params.id;
+    var response;
+    if (general.emptyCheck(id)) {
+        var findObj = {
+            "_id": ObjectId(id)
+        }
+        careatorChatGroup.find(findObj).toArray(function (err, groupData) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: "Unsucessfully retrived data",
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("groupData: " + JSON.stringify(groupData));
+                response = {
+                    status: true,
+                    message: "Sucessfully retrived data",
+                    data: groupData
+                };
+                res.status(200).send(response);
+            }
+        })
+    } else {
+        console.log("empty value found");
+        response = {
+            status: false,
+            message: "Empty value found",
+        }
+        res.status(400).send(response);
+    }
 
+}
 module.exports.careator_getUserById = function (req, res) {
     console.log("careator_getUserById-->");
     var id = req.params.id;
+    console.log("id: "+id);
     var response;
     if (general.emptyCheck(id)) {
         var findObj = {
@@ -1384,6 +1601,10 @@ module.exports.userEditById = function (req, res) {
                 };
                 res.status(400).send(response);
             } else {
+                var io = req.app.get('socketio');
+                io.emit('comm_aboutUserEdit', {
+                    "id": id
+                }); /* ### Note: Emit message to user about their new restricted user ### */
                 console.log("updatedData: " + JSON.stringify(updatedData));
                 response = {
                     status: true,
@@ -1590,12 +1811,38 @@ module.exports.groupUpdateById = function (req, res) {
                 res.status(400).send(response);
             } else {
                 console.log("groupCreate: " + JSON.stringify(groupUpdate));
-                response = {
-                    status: true,
-                    message: "Successfully group update",
-                    data: groupUpdate
-                };
-                res.status(200).send(response);
+                if (req.body.groupName) {
+                    var objFindByGroupId = {
+                        "group_id": id
+                    }
+                    careatorChat.update(objFindByGroupId, { $set: { "groupName": req.body.groupName } }, function (err, groupNameUpdated) {
+                        if (err) {
+                            console.log("err: " + JSON.stringify(err));
+                            response = {
+                                status: false,
+                                message: "Unsuccessfull group update into chat details",
+                                data: err
+                            };
+                            res.status(400).send(response);
+                        } else {
+                            console.log("groupNameUpdated: " + JSON.stringify(groupNameUpdated));
+                            response = {
+                                status: true,
+                                message: "Successfully group update into chat details as well group details"
+                            };
+                            res.status(200).send(response);
+                        }
+                    })
+
+                }
+                else {
+                    response = {
+                        status: true,
+                        message: "Successfully group update",
+                        data: groupUpdate
+                    };
+                    res.status(200).send(response);
+                }
             }
         })
     } else {
@@ -1685,7 +1932,7 @@ module.exports.removeRestrictedUserById = function (req, res) {
             } else {
                 console.log("restrict: " + JSON.stringify(restrict));
                 var io = req.app.get('socketio');
-                io.emit('comm_aboutRestrictedRemoveUpdate', {
+                io.emit('comm_aboutRestrictedUpdate', {
                     "id": id,
                     "restrictedTo": req.body.restrictedTo
                 }); /* ### Note: Emit message to user about their new restricted user ### */
@@ -1797,3 +2044,126 @@ module.exports.getChatsById = function (req, res) {
 
 }
 
+module.exports.chatStatusUpdateById = function (req, res) {
+    console.log("chatStatusUpdateById-->");
+    var id = req.params.id;
+    console.log("id: " + id);
+    console.log("chatStatus: " + req.body.chatStatus);
+    var response;
+    if (general.emptyCheck(id)) {
+        var findObj = {
+            "_id": ObjectId(id)
+        }
+        careatorMaster.update(findObj, { $set: { chatStatus: req.body.chatStatus } }, function (err, chatStatusUpdated) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: "Unsucessfully retrived data",
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("chatStatusUpdated: " + JSON.stringify(chatStatusUpdated));
+                var io = req.app.get('socketio');
+                io.emit('comm_receiverStatusUpdate', {
+                    "id": id,
+                    "status": req.body.chatStatus
+                }); /* ### Note: Emit message to client ### */
+                response = {
+                    status: true,
+                    message: "Sucessfully retrived data",
+                    data: chatStatusUpdated
+                };
+                res.status(200).send(response);
+            }
+        })
+    }
+    else {
+        console.log("empty value found");
+        response = {
+            status: false,
+            message: "Empty value found",
+        }
+        res.status(400).send(response);
+    }
+}
+
+module.exports.comm_profileImgUpdateById = function (req, res) {
+    console.log("comm_profileImgUpdateById-->");
+    var id = req.params.id;
+    console.log("id: " + id);
+    console.log("profilePicPath: " + req.body.profilePicPath);
+    var response;
+    if (general.emptyCheck(id)) {
+        var findObj = {
+            "_id": ObjectId(id)
+        }
+        careatorMaster.update(findObj, { $set: { "profilePicPath": req.body.profilePicPath } }, function (err, profilePicPathUpdated) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: "Unsucessfully Pic Updated",
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("profilePicPathUpdated: " + JSON.stringify(profilePicPathUpdated));
+                response = {
+                    status: true,
+                    message: "Sucessfully Pic Updated",
+                    data: profilePicPathUpdated
+                };
+                res.status(200).send(response);
+            }
+        })
+    }
+    else {
+        console.log("empty value found");
+        response = {
+            status: false,
+            message: "Empty value found",
+        }
+        res.status(400).send(response);
+    }
+}
+
+module.exports.getLoggedinSessionURLById = function (req, res){
+    console.log("getLoggedinSessionURLById-->");
+    var response;
+    var id = req.params.id;
+    console.log("id: "+id);
+    if (general.emptyCheck(id)) {
+        var findObj = {
+            "_id": ObjectId(id)
+        }
+        careatorMaster.find(findObj).toArray(function (err, getSessionURL) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: "Unsucessfully Pic Updated",
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("getSessionURL: " + JSON.stringify(getSessionURL));
+                response = {
+                    status: true,
+                    message: "Sucessfully Pic Updated",
+                    data: getSessionURL[0]
+                };
+                res.status(200).send(response);
+            }
+        })
+    }
+    else{
+        console.log("empty value found");
+        response = {
+            status: false,
+            message: "Empty value found",
+        }
+        res.status(400).send(response);   
+    }
+}

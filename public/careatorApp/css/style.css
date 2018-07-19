@@ -8,12 +8,31 @@
 /* Import fonts */
 
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
-.modal{
+.modal {
   font-family: Lato;
 }
-.modal-content{
+
+.modal-content {
   border-radius: 8px;
-  }
+  border: none;
+}
+
+.modal-body {
+  min-height: 100px;
+}
+
+.mtitle {
+  color: #2577be;
+  font-family: lato;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.mtitle :hover {
+  color: brown;
+  font-size: 11px;
+  font-weight: 600;
+}
 
 .llkk {
   color: #00a8b3;
@@ -38,7 +57,7 @@
 
 @keyframes mymove {
   from {
-  font-size: 10px;
+    font-size: 10px;
     color: indianred;
   }
   to {
@@ -104,11 +123,17 @@ i {
 
 body {
   color: #797979;
-  background: #eeeeee;
   font-family: "Lato", sans-serif;
   padding: 0px !important;
   margin: 0px !important;
   font-size: 14px !important;
+  background: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: -moz-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: -ms-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: -o-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background: radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
+  background-size: 10px 10px, 10px 10px, 100% 100%;
+  background-position: 1px 1px, 0px 0px, center center;
 }
 
 h1,
@@ -400,15 +425,15 @@ table tr th {
 /*sidebar navigation*/
 
 #sidebar {
-  margin-top:48px;
+  margin-top: 48px;
   width: 180px;
   height: 100%;
   position: fixed;
- background-color: #1a3652;
- transition-duration: 0.3s;
- transition-timing-function: ease-in;
- border-left: 2px solid #2e3134;
- border-right: 2px solid #2e3134;
+  background-color: #1a3652;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in;
+  border-left: 2px solid #2e3134;
+  border-right: 2px solid #2e3134;
 }
 
 .nav-collapse.collapse {
@@ -695,7 +720,8 @@ ul.sidebar-menu li.active a i {
 
 #main-content {
   margin-left: 180px;
-  transition-duration: 0.3s;    transition-timing-function: ease-in;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in;
 }
 
 .header,
@@ -727,7 +753,6 @@ ul.sidebar-menu li.active a i {
 .dark-bg {
   background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
   background-repeat: repeat-x;
- 
 }
 
 .panel-content {
@@ -1066,9 +1091,8 @@ div[data-role="editor-toolbar"] {
 
 .top-nav .username {
   font-weight: 100;
-    font-size: 13px;
-    color: #00000091;
-
+  font-size: 13px;
+  color: #00000091;
 }
 
 .top-nav ul.top-menu>li>a {
@@ -1318,7 +1342,6 @@ div[data-role="editor-toolbar"] {
 .dark-bg {
   color: #fff;
   box-shadow: 1px 2px 5px #000;
-  
 }
 
 .facebook-bg {
@@ -1342,7 +1365,7 @@ div[data-role="editor-toolbar"] {
 /*----------------------	panel-----------------*/
 
 .panel {
-  border: none;
+  border: 1px solid #1b3752;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
@@ -1953,7 +1976,7 @@ div[data-role="editor-toolbar"] {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
   text-shadow: 0px 1px #fff;
-  border-bottom: 1px solid #fff;
+  /* border-bottom: 1px solid #fff; */
   border-top: 1px solid #ccc;
   padding: 8px 15px;
   font-size: 12px;
@@ -3698,14 +3721,14 @@ ul.inbox-pagination li {
 
 .page-404 {
   position: relative;
-  width: 350px;
-  height: 200px;
-  margin: 100px auto;
+  /* width: 350px; */
+  /* height: 200px; */
+  /* margin: 100px auto; */
   text-align: center;
 }
 
 .text-404 {
-  font-size: 138px;
+  font-size: 60px;
   background: #e9e3dd;
   background-image: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQTdWeWNteABnbzguiXSBxmfc8Z8nh_HHoWoK35QL81x4HnpVmgvQ");
   background-repeat: no-repeat;
@@ -4235,9 +4258,8 @@ ul.amounts li {
 
 .panel-heading,
 .modal-header {
-
-  background: #428bca;
-  /* background: #1a3b56; */
+  /* background: #428bca; */
+  background: #1a3b56;
   color: white;
 }
 

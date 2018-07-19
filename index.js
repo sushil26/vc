@@ -195,6 +195,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('disconnectSession', function (data) {
         console.log("disconnectSession-->");
+        socket.emit('disconnectSessionReply', { "deleteSessionId": data.deleteSessionId, "owner": data.owner });
         //if (sessionHeaderId == data.owner) {
         var tempSock = sockets[data.deleteSessionId];/* ### Note using this deleteSessionId we are getting real socket(tempSock)   ### */
         for (var channel in tempSock.channels) {
@@ -209,12 +210,7 @@ io.sockets.on('connection', function (socket) {
         delete peerTrackForVideo[data.deleteSessionId];
         delete channels[channel][data.deleteSessionId];
         console.log("sockets[data.deleteSessionId]: " + sockets[data.deleteSessionId]);
-
-
-
         //}
-
-
         console.log("<--disconnectSession");
     })
 
@@ -458,6 +454,13 @@ io.sockets.on('connection', function (socket) {
         io.sockets.emit('quickMsg_viewDetail_toSender', { "userId": data.userId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
     })
     /* ### End: Get the quick message view notification from the reciever ### */
+
+    /* ### Start: Get the logoutNotification from the user(careator_dashboardCtrl.js) ### */
+    socket.on('comm_logout', function (data) {
+        console.log("comm_logout-->: "+JSON.stringify(data));
+        io.sockets.emit('comm_logoutNotifyToUserById', { "userId": data.userId, "email":data.email, "sessionURL":data.sessionURL  }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
+    })
+    /* ### End: Get the logoutNotification from the user(careator_dashboardCtrl.js) ### */
 
     console.log("<--connection Ended");
 });
