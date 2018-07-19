@@ -63,7 +63,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
     $scope.getAdmin_email_id = function () {
         console.log("getAdmin_email_id-->");
-        var api = "https://norecruits.com/careator_adminBasicData/getAdminObjectId";
+        var api = "https://vc4all.in/careator_adminBasicData/getAdminObjectId";
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -88,7 +88,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         var r = confirm("Are you sure to close all session????");
         if (r == true) {
             var id = userData.userId;
-            var api = "https://norecruits.com/careator_loggedin/getLoggedinSessionURLById/" + id;
+            var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -115,7 +115,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         console.log("***comm_aboutUserEdit-->");
         if (data.id == userData.userId) {
             var id = userData.userId;
-            var api = "https://norecruits.com/careator_getUser/careator_getUserById/" + id;
+            var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -203,7 +203,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     })
     $scope.doRedirect = function () {
         console.log("$scope.doRedirect--->");
-        window.location.href = "https://norecruits.com";
+        window.location.href = "https://vc4all.in";
     }
     /* #### End: Logout request from server(index.js) #### */
 

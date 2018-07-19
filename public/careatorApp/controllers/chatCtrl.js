@@ -20,7 +20,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
     var id = userData.userId;
     $scope.getUserDataById = function () {
         console.log("getUserDataById--> ");
-        var api = "https://norecruits.com//careator_getUser/careator_getUserById/" + id;
+        var api = "https://vc4all.in//careator_getUser/careator_getUserById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -40,7 +40,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
     $scope.getUserDataById();
     $scope.getChatGroupListById = function (id) {
         console.log("getAllEmployee-->: " + id);
-        var api = "https://norecruits.com/careator_chatGroupList/careator_getChatGroupListById/" + id;
+        var api = "https://vc4all.in/careator_chatGroupList/careator_getChatGroupListById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -65,7 +65,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
         console.log("statusUpdate-->: " + status);
 
         var id = userData.userId;
-        api = "https://norecruits.com/careator_profile/chatStatusUpdateById/" + id;
+        api = "https://vc4all.in/careator_profile/chatStatusUpdateById/" + id;
         console.log("api: " + api);
         var obj = {
             "chatStatus": status
@@ -150,7 +150,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
         console.log("id: " + id);
         if ($scope.selectedType == 'group') {
             var group_id = id;
-            var api = "https://norecruits.com/careator_groupTextRead/groupTextReadByGroupId/" + group_id;
+            var api = "https://vc4all.in/careator_groupTextRead/groupTextReadByGroupId/" + group_id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -186,7 +186,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
                 }
             })
         } else if ($scope.selectedType == "individual_chats") {
-            var api = "https://norecruits.com/careator_getChatsById/getChatsById/" + id;
+            var api = "https://vc4all.in/careator_getChatsById/getChatsById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -245,7 +245,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
         console.log(" $scope.restrictedArray: " + JSON.stringify($scope.restrictedArray));
         if ($scope.selectedType == 'group') {
             var group_id = $scope.individualData._id;
-            var api = "https://norecruits.com/careator_groupTextRead/groupTextReadByGroupId/" + group_id;
+            var api = "https://vc4all.in/careator_groupTextRead/groupTextReadByGroupId/" + group_id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -282,7 +282,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
             console.log(" $scope.receiverData : " + JSON.stringify($scope.receiverData));
             var sId = userData.userId;
             var rId = $scope.individualData._id;
-            var api = "https://norecruits.com/careator_individualTextRead/individualTextReadById/" + sId + "/" + rId;
+            var api = "https://vc4all.in/careator_individualTextRead/individualTextReadById/" + sId + "/" + rId;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -308,7 +308,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
 
     $scope.getReceiverDataById = function (id) {
         console.log("getReceiverData-->");
-        var api = "https://norecruits.com//careator_getUser/careator_getUserById/" + id;
+        var api = "https://vc4all.in//careator_getUser/careator_getUserById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -350,8 +350,8 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
         //     "restrictedTo": restrictedUsers
         // }
         // console.log("obj: " + JSON.stringify(obj));
-        //api = "https://norecruits.com/careator_getEmp/careator_getChatRightsAllemp/" + id; /* #### without restricted emp  #### */
-        api = "https://norecruits.com/careator_getEmp/careator_getChatRightsAllemp_byLoginId/" + id; /* #### without restricted emp  #### */
+        //api = "https://vc4all.in/careator_getEmp/careator_getChatRightsAllemp/" + id; /* #### without restricted emp  #### */
+        api = "https://vc4all.in/careator_getEmp/careator_getChatRightsAllemp_byLoginId/" + id; /* #### without restricted emp  #### */
         console.log("api: " + JSON.stringify(api));
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -392,7 +392,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
         var obj;
         console.log("$scope.selectedType: " + $scope.selectedType);
         if ($scope.selectedType == 'individual_chats') {
-            api = "https://norecruits.com/careator_individualText/individualText";
+            api = "https://vc4all.in/careator_individualText/individualText";
             console.log("api: " + api);
             console.log("$scope.receiverData.receiverId: " + $scope.receiverData.receiverId);
             console.log(" $scope.receiverData.receiverId: " + $scope.receiverData.receiverId);
@@ -451,7 +451,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
                 "message": $scope.typedMessage
             }
             console.log("obj: " + JSON.stringify(obj));
-            api = "https://norecruits.com//careator_groupText/groupText";
+            api = "https://vc4all.in//careator_groupText/groupText";
             console.log("api: " + api);
             careatorHttpFactory.post(api, obj).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -474,7 +474,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
         console.log("readText-->");
         if ($scope.selectedType == 'group') {
             var group_id = $scope.individualData._id;
-            var api = "https://norecruits.com/careator_groupTextRead/groupTextReadByGroupId/" + group_id;
+            var api = "https://vc4all.in/careator_groupTextRead/groupTextReadByGroupId/" + group_id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -492,7 +492,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
         } else {
             var sId = userData.userId;
             var rId = $scope.individualData._id;
-            var api = "https://norecruits.com/careator_individualTextRead/individualTextReadById/" + sId + "/" + rId;
+            var api = "https://vc4all.in/careator_individualTextRead/individualTextReadById/" + sId + "/" + rId;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -512,7 +512,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
     $scope.getChatRecords = function () {
         console.log("getChatRecords-->");
         var id = $scope.userId;
-        var api = "https://norecruits.com/careator_getChatListRecordById/getChatListRecordById/" + id;
+        var api = "https://vc4all.in/careator_getChatListRecordById/getChatListRecordById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             // console.log("data--" + JSON.stringify(data.data));
@@ -562,7 +562,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
     $scope.getGroupDetails = function (id) {
         console.log("getGroupDetails-->");
         console.log("id: " + id);
-        var api = "https://norecruits.com/careator_getGroup/careator_getGroupById/" + id;
+        var api = "https://vc4all.in/careator_getGroup/careator_getGroupById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             // console.log("data--" + JSON.stringify(data.data));
@@ -588,7 +588,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
         // console.log(" data.id: " + JSON.stringify(data));
         if (data.freshInsert == true && (userData.userId == data.senderId || userData.userId == data.receiverId)) {
             var id = data.id;
-            var api = "https://norecruits.com/careator_getChatsById/getChatsById/" + id;
+            var api = "https://vc4all.in/careator_getChatsById/getChatsById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -641,7 +641,7 @@ careatorApp.controller('chatCtrl', function ($scope, $rootScope, $filter, $windo
 
         if (data.id == userData.userId) {
             var id = userData.userId;
-            var api = "https://norecruits.com/careator_getUser/careator_getUserById/" + id;
+            var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));

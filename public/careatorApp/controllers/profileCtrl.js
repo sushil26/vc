@@ -6,7 +6,7 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
 
     $scope.getUserDataById = function () {
         console.log("getUserDataById--> ");
-        var api = "https://norecruits.com//careator_getUser/careator_getUserById/" + id;
+        var api = "https://vc4all.in//careator_getUser/careator_getUserById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -29,7 +29,7 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
 
     $scope.getChatGroupListById = function () {
         console.log("getAllEmployee-->: " + id);
-        var api = "https://norecruits.com/careator_chatGroupList/careator_getChatGroupListById/" + id;
+        var api = "https://vc4all.in/careator_chatGroupList/careator_getChatGroupListById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -62,7 +62,7 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
         // console.log("$scope.file: " + $scope.file.upload);
         if ($scope.myImage.resBlob) {
             console.log("condition satisfied-->");
-            var uploadURL = "https://norecruits.com/careator_comm_profileImgUpload/comm_profileImgUpload";
+            var uploadURL = "https://vc4all.in/careator_comm_profileImgUpload/comm_profileImgUpload";
             console.log("uploadURL: " + uploadURL);
             console.log("$scope.file.upload from : alumRegCtr.js: " + $scope.file.upload);
             careatorHttpFactory.imageUpload(uploadURL, $scope.myImage.resBlob).then(function (data) {
@@ -105,7 +105,7 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
         var obj = {
             "profilePicPath": $scope.filePath
         }
-        var api = "https://norecruits.com/careator_comm_profileImgUpdateById/comm_profileImgUpdateById/" + id;
+        var api = "https://vc4all.in/careator_comm_profileImgUpdateById/comm_profileImgUpdateById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.post(api, obj).then(function (data) {
             var checkStatus = careatorHttpFactory.dataValidation(data);
