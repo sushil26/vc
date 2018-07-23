@@ -103,7 +103,6 @@ else {
     console.log("NOOOOOOOOOOOOO Session data");
 }
 function sendMessage() {
-  
     console.log("sendMsg-->");
     var msg = document.getElementById('message').value;
     // var file = e.target.files[0];

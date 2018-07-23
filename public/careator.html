@@ -8,6 +8,7 @@
     <link href="/home/img/fav.png" rel="icon" size="32x32">
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <script src="/home/lib/jquery/jquery.min.js"></script>
     <link href="/home/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Libraries CSS Files -->
@@ -80,10 +81,16 @@
         .adhead {
             background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
             height: 50px;
+            font-family: 'Tangerine', serif !important;
+            font-size: 35px;
+            text-shadow: 4px 4px 4px #191515;
+            font-weight: 400;
         }
 
         .adbody {
+
             font-family: lato;
+            color: #000;
             background: white;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             transition: 0.3s;
@@ -91,11 +98,14 @@
             min-height: 200px;
             font-size: 15px;
             font-weight: 300;
+            border: 1px solid #303336;
         }
 
         .adbody:hover {
             box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
             color: #0a425f !important;
+            font-size: 17px;
+            font-weight: 400;
         }
 
         a:hover {
@@ -107,35 +117,7 @@
 </head>
 
 <body>
-    <!-- <header class="header dark-bg">
-                <div class="toggle-nav">
-                    <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" style="border: 1px solid #428bca;
-                    padding-right: 5px;
-                    padding-left: 5px;
-                    padding-bottom: 2px;
-                    border-radius: 5px;" data-placement="bottom">
-                        <i style="display: none;" class="fa fa-bars" id="tog" ng-click="iconMenuClick()"></i>
-                        <i class="fa fa-times" id="fog" ng-click="iconMenuClick()"></i>
-                    </div>
-                </div>
-                <div class="top-nav notification-row">
-                    <ul class="nav pull-right top-menu">
-    
-                        <li class="dropdown">
-                            <span ng-if="hour <'12' && min<='59' && sec<='59' && hour >='0'" class="username" style="color: white;"> &nbspGood Morning&nbsp{{name}}</span>
-                            <span ng-if="hour >='12' && hour < '17'" class="username" style="color: white;"> Good Afternoon&nbsp{{name}}</span>
-                            <span ng-if="hour >='17' && min<='59' && sec<='59' && hour <='23'" class="username" style="color: white;">Good Evening&nbsp{{name}}</span>
-                            <br>
-                            <span class="username" style="color: white;">{{clock | date:' d MMM yyyy h:mm a'}}</span>
-                        </li>
-                    </ul>
-                </div>
-                <span>
-                    <img ng-click="homeClick()" style="float:left;width: 63px;margin-top: 5px" src="../home/img/fav.png" />
-                    <a ng-click="homeClick()" class="logo" style="font-weight: 500; letter-spacing: -2.3px;font-family: 'Allerta Stencil';">VC4ALL</a>
-                </span>
-            </header> -->
-    <header id="chelam" style="position: relative;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
+    <header id="someid" style="position: relative;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
     background-repeat: repeat-x;
     min-height: 48px;
     padding: 0 15px;
@@ -273,6 +255,9 @@
                             </div>
 
                             <div id="portfolio-wrapper" style="margin-left:100px; margin-top: 10px;">
+                                <center>
+                                    <h1 id="sessionDisconn_alert" style="display:none;color:red"></h1>
+                                </center>
                             </div>
                             <button id="btnrestore" class="fa fa-window-restore btn" style="position: fixed;
                                 top: 50vh;display:none;     z-index: 2;"></button>
@@ -345,15 +330,19 @@
                                 <center>
                                     <form>
                                         <div class="modal-content" style="color:#777;max-width:350px;">
-                                            <div class="modal-header" style="background-color: #1c3852;">
-
-                                                <h4 class="modal-title">Enter Your Careator Email</h4>
+                                            <div class="modal-header" style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px;margin-top: -15px; margin-left: -150px;" src="/home/img/fav.png" />
+                                                <span class="modal-title">Employee Login</span>
                                             </div>
                                             <div class="modal-body">
                                                 <input type="email" class="form-control" placeholder="Enter your Email" id="careatorEmail" required>
+                                                <br>
+                                                <input type="password" class="form-control" placeholder="Enter your Password" id="careatorPswd" required>
                                             </div>
                                             <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                                <button id="setEmail" type="submit" onclick="sendEmail()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button>
+                                                <label id="credentialErroe" style="display: none;color:red"></label>
+                                                <!-- <button id="setEmail" type="submit" onclick="sendEmail()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button> -->
+                                                <button id="setEmail" type="submit" onclick="checkCredential()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" >Submit</button>
                                             </div>
                                         </div>
                                     </form>
@@ -409,9 +398,10 @@
                 <div class="row" style="margin:10px;">
                     <div class="col-lg-4 col-md-6">
                         <div class="adhead">
-                            <h4 style="padding: 10px;font-weight: 100;">Product and Services</h4>
+                            <span style="padding: 5px;">Product and Services</span>
                         </div>
-                        <div class="adbody">
+                        <div class="adbody" style="background-image:url(/home/img/fav.png);
+                        background-size: cover;background-position: center;">
                             <table>
                                 <tr>
                                     <td>
@@ -456,18 +446,22 @@
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="adhead">
-                            <h4 style="padding: 10px;font-weight: 100;">Current Openings</h4>
+                            <span style="   padding: 5px;">Current Openings</span>
                         </div>
-                        <div class="adbody">
+                        <div class="adbody" style="background-image:url(/home/img/fav.png);
+                        background-size: cover; background-position: center;">
+                            <i class="fa fa-check" aria-hidden="true"></i>
                             <a href="http://www.careator.com/job-oppenings.php" target="_blank">
                                 See Our All Job Openings</a>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="adhead">
-                            <h4 style="padding: 10px;font-weight: 100;">News & Blogs</h4>
+                            <span style="   padding: 5px;">News & Blogs</span>
                         </div>
-                        <div class="adbody">
+                        <div class="adbody" style="background-image:url(/home/img/fav.png);
+                        background-size: cover; background-position: center;">
+                            <i class="fa fa-check" aria-hidden="true"></i>
                             <a href="http://www.careator.com/latest-news.php" target="_blank">
                                 See Our News
                             </a>
@@ -478,6 +472,7 @@
                     <div class="popup-box chat-popup" id="qnimate">
                         <div class="popup-head">
                             <div class="popup-head-left pull-left">
+
                                 <img src="/home/img/fav.png"> Chatting zone
 
                             </div>

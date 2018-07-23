@@ -77,12 +77,14 @@ module.exports.RemoteJoinCheck = function (req, res) {
     }
 }
 
-module.exports.pswdCheck = function (req, res) {
+module.exports.pswdCheckForSesstion = function (req, res) {
     console.log("pswdCheck-->");
     console.log("req.body.password: " + req.body.password + " req.body.careatorEmail: " + req.body.careatorEmail);
     var password = req.body.password;
     var careatorEmail = req.body.careatorEmail;
+    var emailSplit = careatorEmail.split('@');
     if (general.emptyCheck(password) && general.emptyCheck(careatorEmail)) {
+
         var obj = {
             "email": careatorEmail
         }
@@ -114,6 +116,7 @@ module.exports.pswdCheck = function (req, res) {
                         console.log("responseData: " + JSON.stringify(responseData));
                         res.status(400).send(responseData);
                     }
+
                 } else {
                     responseData = {
                         status: false,
@@ -124,6 +127,96 @@ module.exports.pswdCheck = function (req, res) {
                 }
             }
         })
+
+    } else {
+        responseData = {
+            status: false,
+            message: "Empty value found"
+        };
+        console.log("responseData: " + JSON.stringify(responseData));
+        res.status(400).send(responseData);
+    }
+    console.log("<--pswdCheck");
+}
+
+module.exports.pswdCheck = function (req, res) {
+    console.log("pswdCheck-->");
+    console.log("req.body.password: " + req.body.password + " req.body.careatorEmail: " + req.body.careatorEmail);
+    var password = req.body.password;
+    var careatorEmail = req.body.careatorEmail;
+    var emailSplit = careatorEmail.split('@');
+    if (general.emptyCheck(password) && general.emptyCheck(careatorEmail)) {
+        if (emailSplit[1] == 'careator.com' || careatorEmail == 'vc4allAdmin@gmail.com') {
+            var obj = {
+                "email": careatorEmail
+            }
+            console.log("obj: " + JSON.stringify(obj));
+            careatorMaster.find(obj).toArray(function (err, findData) {
+                console.log("findData: " + JSON.stringify(findData));
+                if (err) {
+                    responseData = {
+                        status: false,
+                        message: "Process failed"
+                    };
+                    res.status(400).send(responseData);
+                } else {
+                    if (findData.length > 0) {
+                        if ((findData[0].logout == 'done' && findData[0].login == 'notDone') || (findData[0].logout == 'notDone' && findData[0].login == 'notDone')) {
+                            careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [], "logout": "notDone", "login": "done" } }, function (err, data) {
+                                console.log("data: " + JSON.stringify(data));
+                                if (err) {
+                                    responseData = {
+                                        status: true,
+                                        message: "Process not successful"
+                                    };
+                                    res.status(400).send(responseData);
+                                } else {
+                                    if (findData[0].password == password) {
+                                        responseData = {
+                                            status: true,
+                                            message: "Login Successfully",
+                                            sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
+                                            data: findData[0]
+                                        };
+                                        console.log("responseData: " + JSON.stringify(responseData));
+                                        res.status(200).send(responseData);
+                                    } else {
+                                        responseData = {
+                                            status: false,
+                                            message: "Password is wrong"
+                                        };
+                                        console.log("responseData: " + JSON.stringify(responseData));
+                                        res.status(400).send(responseData);
+                                    }
+                                }
+                            })
+                        }
+                        else {
+                            responseData = {
+                                status: false,
+                                message: "You already logged in, please logout your old session in-order to login"
+                            };
+                            res.status(400).send(responseData);
+                        }
+
+                    } else {
+                        responseData = {
+                            status: false,
+                            message: "Email ID is not valid"
+                        };
+                        console.log("responseData: " + JSON.stringify(responseData));
+                        res.status(400).send(responseData);
+                    }
+                }
+            })
+        }
+        else {
+            responseData = {
+                status: false,
+                message: "Email id is not valid"
+            };
+            res.status(400).send(responseData);
+        }
     } else {
         responseData = {
             status: false,
@@ -153,42 +246,52 @@ module.exports.pswdGenerate = function (req, res) {
             careatorMaster.find({ "email": email }).toArray(function (err, findData) {
                 console.log("findData: " + JSON.stringify(findData));
                 if (findData.length > 0) {
-                    careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [] } }, function (err, data) {
-                        console.log("data: " + JSON.stringify(data));
-                        if (err) {
-                            responseData = {
-                                status: true,
-                                message: "Process not successful"
-                            };
-                            res.status(200).send(responseData);
-                        } else {
-                            var mailOptions = {
-                                from: "info@vc4all.in",
-                                to: email,
-                                subject: 'VC4ALL Credential',
-                                html: "<table style='border:10px solid gainsboro;'><thead style='background-image: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#00bcd4;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, Your email Id is verified successfully, you can access the below link by using given password.<p style=background:gainsboro;>Password: " + password + "</p></td></tr></tbody></table>"
-                            };
-                            transporter.sendMail(mailOptions, function (error, info) {
-                                if (error) {
-                                    console.log(error);
-                                    responseData = {
-                                        status: true,
-                                        message: "insert Successfull and Failed to send mail",
-                                        data: data
-                                    };
-                                    res.status(200).send(responseData);
-                                } else {
-                                    console.log("Email sent: " + info.response);
-                                    responseData = {
-                                        status: true,
-                                        message: "Successfully mail sent",
-                                        data: data
-                                    };
-                                    res.status(200).send(responseData);
-                                }
-                            });
-                        }
-                    })
+                    if (findData[0].logout == 'done' && findData[0].login == 'notDone') {
+                        careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [], "logout": "notDone", "login": "done" } }, function (err, data) {
+                            console.log("data: " + JSON.stringify(data));
+                            if (err) {
+                                responseData = {
+                                    status: true,
+                                    message: "Process not successful"
+                                };
+                                res.status(400).send(responseData);
+                            } else {
+                                var mailOptions = {
+                                    from: "info@vc4all.in",
+                                    to: email,
+                                    subject: 'VC4ALL Credential',
+                                    html: "<table style='border:10px solid gainsboro;'><thead style='background-image: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'><tr><th><h2>Greetings from VC4ALL</h2></th></tr></thead><tfoot style=background:#00bcd4;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Employee,</b></td></tr><tr><td>Please note, Your email Id is verified successfully, you can access the below link by using given password.<p style=background:gainsboro;>Password: " + password + "</p></td></tr></tbody></table>"
+                                };
+                                transporter.sendMail(mailOptions, function (error, info) {
+                                    if (error) {
+                                        console.log(error);
+                                        responseData = {
+                                            status: true,
+                                            message: "insert Successfull and Failed to send mail",
+                                            data: data
+                                        };
+                                        res.status(200).send(responseData);
+                                    } else {
+                                        console.log("Email sent: " + info.response);
+                                        responseData = {
+                                            status: true,
+                                            message: "Successfully mail sent",
+                                            data: data
+                                        };
+                                        res.status(200).send(responseData);
+                                    }
+                                });
+                            }
+                        })
+                    }
+                    else {
+                        responseData = {
+                            status: false,
+                            message: "You already logged in, please logout your old session in-order to login"
+                        };
+                        res.status(400).send(responseData);
+                    }
+
                 } else {
                     console.log("Email Not Matched, tell your admin to verify");
                     responseData = {
@@ -203,11 +306,47 @@ module.exports.pswdGenerate = function (req, res) {
 
         }
         else if (email == 'vc4allAdmin@gmail.com') {
-            responseData = {
-                status: true,
-                message: "Successfully get admin login"
-            };
-            res.status(200).send(responseData);
+            careatorMaster.find({ "email": email }).toArray(function (err, findData) {
+                console.log("findData: " + JSON.stringify(findData));
+                if (findData.length > 0) {
+                    if (findData[0].logout == 'done' && findData[0].login == 'notDone') {
+                        careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "invite": [], "logout": "notDone", "login": "done" } }, function (err, data) {
+                            console.log("data: " + JSON.stringify(data));
+                            if (err) {
+                                responseData = {
+                                    status: false,
+                                    message: "Process not successful"
+                                };
+                                res.status(400).send(responseData);
+                            } else {
+                                responseData = {
+                                    status: true,
+                                    message: "Successfully get admin login"
+                                };
+                                res.status(200).send(responseData);
+                            }
+                        })
+                    }
+                    else {
+                        responseData = {
+                            status: false,
+                            message: "You already logged in, please logout your old session in-order to login"
+                        };
+                        res.status(400).send(responseData);
+                    }
+
+                } else {
+                    console.log("Email Not Matched, tell your admin to verify");
+                    responseData = {
+                        status: false,
+                        errorCode: 400,
+                        message: "Email Not matched or inactive"
+                    };
+                    res.status(200).send(responseData);
+                }
+
+            })
+
         } else {
             responseData = {
                 status: false,
@@ -316,7 +455,7 @@ module.exports.setCollection = function (req, res) {
 
     careatorMaster.update({ "email": req.body.email }, {
         $set: {
-            "sessionURL": req.body.url, "invite": [], "session_dateTime": new Date()
+            "sessionURL": req.body.url, "invite": [], "session_dateTime": new Date(), "isDisconnected": "no"
         }
     }, function (err, urlUpdate) {
         if (err) {
@@ -327,6 +466,11 @@ module.exports.setCollection = function (req, res) {
             };
             res.status(400).send(responseData);
         } else {
+            var io = req.app.get('socketio');
+            io.emit('comm_sessionCreateUpdate', {
+                "email": req.body.email,
+                "isDisconnected": "no"
+            }); /* ### Note: Emit message to client(careator_dashboardCtrl.js) ### */
             chatHistory.insertOne(obj, function (err, data) {
                 if (err) {
                     console.log("err: " + JSON.stringify(err));
@@ -520,10 +664,13 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
         "email": data.Email,
         "videoRights": data.VideoRights,
         "chatRights": data.ChatRights,
+        "password": data.Password,
         "status": "active",
         "chatStatus": "Available",
         "restrictedTo": [],
-        "profilePicPath": "./css/user.png"
+        "profilePicPath": "./css/user.png",
+        "login": "notDone",
+        "logout": "notDone",
     }
     careatorMaster.find(findEmpId).toArray(function (err, findData) {
         if (err) {
@@ -571,7 +718,10 @@ module.exports.careatorSingleUserInsert = function (req, res) {
         "chatRights": req.body.chatRights,
         "status": "active",
         "restrictedTo": [],
-        "profilePicPath": "./css/user.png"
+        "profilePicPath": "./css/user.png",
+        "login": "notDone",
+        "logout": "notDone",
+
     }
     console.log("obj :" + JSON.stringify(obj));
     var findEmpId = {
@@ -1451,7 +1601,7 @@ module.exports.getGroupById = function (req, res) {
 module.exports.careator_getUserById = function (req, res) {
     console.log("careator_getUserById-->");
     var id = req.params.id;
-    console.log("id: "+id);
+    console.log("id: " + id);
     var response;
     if (general.emptyCheck(id)) {
         var findObj = {
@@ -1575,6 +1725,7 @@ module.exports.userEditById = function (req, res) {
             "_id": ObjectId(id)
         }
         console.log("queryId: " + JSON.stringify(queryId));
+        console.log("req.body.videoRights: " + req.body.videoRights);
         var updateVlaue = {};
 
         if (req.body.userName) {
@@ -1585,6 +1736,9 @@ module.exports.userEditById = function (req, res) {
         }
         if (req.body.userEmail) {
             updateVlaue.email = req.body.userEmail;
+        }
+        if (req.body.userPass) {
+            updateVlaue.password = req.body.userPass
         }
         if (req.body.videoRights) {
             updateVlaue.videoRights = req.body.videoRights;
@@ -2131,11 +2285,11 @@ module.exports.comm_profileImgUpdateById = function (req, res) {
     }
 }
 
-module.exports.getLoggedinSessionURLById = function (req, res){
+module.exports.getLoggedinSessionURLById = function (req, res) {
     console.log("getLoggedinSessionURLById-->");
     var response;
     var id = req.params.id;
-    console.log("id: "+id);
+    console.log("id: " + id);
     if (general.emptyCheck(id)) {
         var findObj = {
             "_id": ObjectId(id)
@@ -2160,12 +2314,12 @@ module.exports.getLoggedinSessionURLById = function (req, res){
             }
         })
     }
-    else{
+    else {
         console.log("empty value found");
         response = {
             status: false,
             message: "Empty value found",
         }
-        res.status(400).send(response);   
+        res.status(400).send(response);
     }
 }

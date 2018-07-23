@@ -87,12 +87,17 @@
                         </a>
                     </li>
                     <li ng-if="videoRights=='yes'">
-                         <a href="https://vc4all.in/careator" target="_blank" > 
-                        <!-- <a ng-click="videoUrlNavigation()"> -->
+                        <!-- <a ng-if="sessionHostBlock=='no'" href="https://vc4all.in/careator" target="_blank"> -->
+                            <a href="https://vc4all.in/careator" target="_blank">
                             <i class="fa fa-video-camera">
                                 <span>&nbspVideo</span>
                             </i>
                         </a>
+                        <!-- <a ng-if="sessionHostBlock=='yes'" href="#" ng-click="closeYourOldSession()">
+                            <i class="fa fa-video-camera">
+                                <span>&nbspVideo</span>
+                            </i>
+                        </a> -->
                     </li>
                     <!-- <li ng-if="userData.email !='vc4allAdmin@gmail.com'">
                         <a href="#!/dashboard/contactAdmin">
