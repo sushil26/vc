@@ -13,7 +13,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4allAdmin@gmail.com') {
+                    if (userData.email == 'vc4all@careator.com') {
 
                     }
                     else {
@@ -29,7 +29,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4allAdmin@gmail.com') {
+                    if (userData.email == 'vc4all@careator.com') {
 
                     }
                     else {
@@ -45,7 +45,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4allAdmin@gmail.com') {
+                    if (userData.email == 'vc4all@careator.com') {
 
                     }
                     else {
@@ -61,7 +61,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4allAdmin@gmail.com') {
+                    if (userData.email == 'vc4all@careator.com') {
 
                     }
                     else {
@@ -77,7 +77,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4allAdmin@gmail.com') {
+                    if (userData.email == 'vc4all@careator.com') {
 
                     }
                     else {
@@ -92,7 +92,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4allAdmin@gmail.com') {
+                    if (userData.email == 'vc4all@careator.com') {
 
                     }
                     else {
@@ -108,7 +108,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4allAdmin@gmail.com') {
+                    if (userData.email == 'vc4all@careator.com') {
 
                     }
                     else {
@@ -136,7 +136,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4allAdmin@gmail.com') {
+                    if (userData.email == 'vc4all@careator.com') {
 
                     }
                     else {

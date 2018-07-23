@@ -146,7 +146,7 @@ module.exports.pswdCheck = function (req, res) {
     var careatorEmail = req.body.careatorEmail;
     var emailSplit = careatorEmail.split('@');
     if (general.emptyCheck(password) && general.emptyCheck(careatorEmail)) {
-        if (emailSplit[1] == 'careator.com' || careatorEmail == 'vc4allAdmin@gmail.com') {
+        if (emailSplit[1] == 'careator.com' || careatorEmail == 'vc4all@careator.com') {
             var obj = {
                 "email": careatorEmail
             }
@@ -161,7 +161,7 @@ module.exports.pswdCheck = function (req, res) {
                     res.status(400).send(responseData);
                 } else {
                     if (findData.length > 0) {
-                        if ((findData[0].logout == 'done' && findData[0].login == 'notDone') || (findData[0].logout == 'notDone' && findData[0].login == 'notDone')) {
+                        if (findData[0].logout == 'done' && findData[0].login == 'notDone') {
                             careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [], "logout": "notDone", "login": "done" } }, function (err, data) {
                                 console.log("data: " + JSON.stringify(data));
                                 if (err) {
@@ -305,7 +305,7 @@ module.exports.pswdGenerate = function (req, res) {
             })
 
         }
-        else if (email == 'vc4allAdmin@gmail.com') {
+        else if (email == 'vc4all@careator.com') {
             careatorMaster.find({ "email": email }).toArray(function (err, findData) {
                 console.log("findData: " + JSON.stringify(findData));
                 if (findData.length > 0) {
@@ -420,7 +420,7 @@ module.exports.emailInvite = function (req, res) {
 
 module.exports.getAdminObjectId = function (req, res) {
     console.log("getAdminObjectId-->");
-    careatorMaster.find({ "email": "vc4allAdmin@gmail.com" }).toArray(function (err, admin) {
+    careatorMaster.find({ "email": "vc4all@careator.com" }).toArray(function (err, admin) {
         if (err) {
             console.log("err: " + JSON.stringify(err));
             responseData = {
@@ -670,7 +670,7 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
         "restrictedTo": [],
         "profilePicPath": "./css/user.png",
         "login": "notDone",
-        "logout": "notDone",
+        "logout": "done",
     }
     careatorMaster.find(findEmpId).toArray(function (err, findData) {
         if (err) {
@@ -714,13 +714,14 @@ module.exports.careatorSingleUserInsert = function (req, res) {
         "name": req.body.userName,
         "empId": req.body.empId,
         "email": req.body.empEmail,
+        "password": req.body.empPass,
         "videoRights": req.body.videoRights,
         "chatRights": req.body.chatRights,
         "status": "active",
         "restrictedTo": [],
         "profilePicPath": "./css/user.png",
         "login": "notDone",
-        "logout": "notDone",
+        "logout": "done",
 
     }
     console.log("obj :" + JSON.stringify(obj));
