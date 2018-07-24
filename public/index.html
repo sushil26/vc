@@ -86,6 +86,20 @@
 
 
   <style>
+    .modal {
+    font-family: Lato;
+}
+    .modal-header {
+      padding: 15px;
+    }
+
+
+    .modal-content {
+      border-radius: 8px;
+      border: none;
+    }
+
+
     .no-js #loader {
       display: none;
     }
@@ -188,8 +202,6 @@
       overflow: hidden;
     }
 
-
-
     /* Zoom in Keyframes */
 
     @-webkit-keyframes zoomin {
@@ -285,15 +297,6 @@
         }
       }
     }
-
-    // function show(id, value) {
-    //   document.getElementById(id).style.display = value ? 'block' : 'none';
-    // }
-
-    // onReady(function () {
-    //   show('page', true);
-    //   show('loading', false);
-    // });
   </script>
 
 </head>
@@ -356,9 +359,9 @@ transition: all 0.5s;">
               <li ng-if="userData.loginType">
                 <a href="#!dashboard/logout">LOGOUT</a>
               </li>
-              <li >
-                  <a href="https://vc4all.in/careator">Employee Login</a>
-                </li>
+              <li>
+                <a href="https://vc4all.in/careator">Employee Login</a>
+              </li>
 
             </ul>
           </nav>
@@ -367,7 +370,7 @@ transition: all 0.5s;">
       </header>
 
       <!-- <img   class="kklklk" src="robot.gif" style="margin-top: 81px; background: #a8d043ab; z-index: 1000; width: 100px;">-->
-    
+
 
 
       <!--==========================
@@ -656,8 +659,61 @@ transition: all 0.5s;">
         </section>
       </main>
 
-      <!-- ##### Start login popup  ##### -->
+      <!-- <div class="modal fade" id="myEmailModal" role="dialog">
+        <div class="modal-dialog">
+            <center>
+                <form>
+                    <div class="modal-content" style="color:#777;max-width:350px;">
+                        <div class="modal-header" style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                            <img style="width: 45px;margin-top: -15px; margin-left: -150px;" src="/home/img/fav.png" />
+                            <span class="modal-title">Employee Login</span>
+                        </div>
+                        <div class="modal-body">
+                            <input type="email" class="form-control" placeholder="Enter your Email" id="careatorEmail" required>
+                            <br>
+                            <input type="password" class="form-control" placeholder="Enter your Password" id="careatorPswd" required>
+                        </div>
+                        <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
+                            <label id="credentialErroe" style="display: none;color:red"></label>
+                            <button id="setEmail" type="submit" onclick="checkCredential()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </center>
+        </div>
+    </div> -->
+
       <div class="modal fade" id="crdntl" role="dialog">
+        <div class="modal-dialog">
+          <center>
+            <form>
+              <div class="modal-content" style="color:#777;max-width:350px;">
+                <div class="modal-header" style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                  <img style="width: 45px;margin-top: -15px; margin-left: -150px;" src="/home/img/fav.png" />
+                  <span class="modal-title" style="color: #ccc;font-size: 17px;">Login</span>
+                </div>
+                <div class="modal-body">
+                  <input type="radio" ng-model="loginType" value="teacher" checked="checked"> School &nbsp&nbsp
+                  <input type="radio" ng-model="loginType" value="studParent"> Parent
+                  <hr>
+                  <input ng-keyup="$event.keyCode == 13 && logVC(loginType, email, Password)" type="email" class="form-control" placeholder="Email"
+                    ng-model="email" id="crdEmail">
+                  <br>
+                  <input ng-keyup="$event.keyCode == 13 && logVC(loginType, email, Password)" type="password" id="crdPswd" class="form-control"
+                    placeholder="Password" ng-model="Password">
+
+                  <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
+                    <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="logVC(loginType, email, Password)"
+                      data-dismiss="modal">Submit</button>
+                  </div>
+                </div>
+            </form>
+          </center>
+          </div>
+        </div>
+
+        <!-- ##### Start login popup  ##### -->
+        <!-- <div class="modal fade" id="crdntl" role="dialog">
         <div class="modal-dialog">
           <center>
             <div class="modal-content" style="
@@ -697,73 +753,73 @@ transition: all 0.5s;">
             </div>
           </center>
         </div>
-      </div>
-      <!-- ##### End login popup  ##### -->
+      </div> -->
+        <!-- ##### End login popup  ##### -->
 
-      <!--==========================
+        <!--==========================
     Footer
   ============================-->
-      <footer id="footer">
+        <footer id="footer">
 
-        <div class="container">
-          <div class="copyright">
-            &copy; Copyright
-            <strong>Careator</strong>. All Rights Reserved,
-            <a href="#" style="color: #2676bf;">Terms & Conditions</a>
+          <div class="container">
+            <div class="copyright">
+              &copy; Copyright
+              <strong>Careator</strong>. All Rights Reserved,
+              <a href="#" style="color: #2676bf;">Terms & Conditions</a>
+            </div>
           </div>
-        </div>
-        <div class="container">
-          <div class="copyright">
-            <span class="icn">
-              <a href="#" class="twitter imm">
-                <i class="fa fa-twitter"></i>
-              </a>
-              <a href="#" class="facebook imm">
-                <i class="fa fa-facebook"></i>
-              </a>
-              <a href="#" class="instagram imm">
-                <i class="fa fa-instagram"></i>
-              </a>
-              <a href="#" class="google-plus imm">
-                <i class="fa fa-google-plus"></i>
-              </a>
-              <a href="#" class="linkedin imm">
-                <i class="fa fa-linkedin"></i>
-              </a>
-            </span>
+          <div class="container">
+            <div class="copyright">
+              <span class="icn">
+                <a href="#" class="twitter imm">
+                  <i class="fa fa-twitter"></i>
+                </a>
+                <a href="#" class="facebook imm">
+                  <i class="fa fa-facebook"></i>
+                </a>
+                <a href="#" class="instagram imm">
+                  <i class="fa fa-instagram"></i>
+                </a>
+                <a href="#" class="google-plus imm">
+                  <i class="fa fa-google-plus"></i>
+                </a>
+                <a href="#" class="linkedin imm">
+                  <i class="fa fa-linkedin"></i>
+                </a>
+              </span>
+            </div>
           </div>
-        </div>
-      </footer>
-      <!-- #footer -->
-      <a href="#" class="back-to-top">
-        <i class="fa fa-chevron-up"></i>
-      </a>
-      <script src="/home/lib/jquery/jquery.min.js"></script>
-      <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
-      <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <script src="/home/lib/easing/easing.min.js"></script>
-      <script src="/home/lib/wow/wow.min.js"></script>
+        </footer>
+        <!-- #footer -->
+        <a href="#" class="back-to-top">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+        <script src="/home/lib/jquery/jquery.min.js"></script>
+        <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
+        <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/home/lib/easing/easing.min.js"></script>
+        <script src="/home/lib/wow/wow.min.js"></script>
 
-      <script src="/home/lib/waypoints/waypoints.min.js"></script>
-      <script src="/home/lib/superfish/hoverIntent.js"></script>
-      <script src="/home/lib/superfish/superfish.min.js"></script>
-      <script src="/home/lib/counterup/counterup.min.js"></script>
-      <script src="/home/js/main.js"></script>
-      <script>
-        //paste this code under the head tag or in a separate js file.
-        // Wait for window load
-        $(window).load(function () {
-          // Animate loader off screen
-          $(".se-pre-con").fadeOut("slow");;
-        });
-        $(page).load(function () {
-          // Animate loader off screen
-          $(".se-pre-con").fadeOut("slow");;
-        });
-      </script>
+        <script src="/home/lib/waypoints/waypoints.min.js"></script>
+        <script src="/home/lib/superfish/hoverIntent.js"></script>
+        <script src="/home/lib/superfish/superfish.min.js"></script>
+        <script src="/home/lib/counterup/counterup.min.js"></script>
+        <script src="/home/js/main.js"></script>
+        <script>
+          //paste this code under the head tag or in a separate js file.
+          // Wait for window load
+          $(window).load(function () {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");;
+          });
+          $(page).load(function () {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");;
+          });
+        </script>
+      </div>
+
     </div>
-
-  </div>
 </body>
 
 </html>

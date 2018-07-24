@@ -4,7 +4,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     $scope.tickInterval = 1000 //ms
     $scope.propertyJson = $rootScope.propertyJson;
     $scope.getLogin_hostDetailsById = function (id) {
-        console.log("getLogin_hostDetailsById-->: "+id);
+        console.log("getLogin_hostDetailsById-->: " + id);
         var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
@@ -12,16 +12,47 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             var checkStatus = careatorHttpFactory.dataValidation(data);
             console.log("checkStatus: " + checkStatus);
             if (checkStatus) {
-                console.log("data.data.data[0].isDisconnected: " + data.data.data[0].isDisconnected);
-                // var sessionHostBlock;
-                if (data.data.data[0].isDisconnected == 'yes' || data.data.data[0].isDisconnected==undefined ) {
-                    $scope.sessionHostBlock = 'no';
+                if (data.data.data[0].sessionRandomId == localStorage.getItem("sessionRandomId")) {
+                    // var sessionHostBlock;
+                    console.log("data.data.data[0].isDisconnected: " + data.data.data[0].isDisconnected);
+                    if (data.data.data[0].isDisconnected == 'yes' || data.data.data[0].isDisconnected == undefined) {
+                        $scope.sessionHostBlock = 'no';
+                    }
+                    else {
+                        $scope.sessionHostBlock = 'yes';
+                    }
+                    console.log("$scope.sessionHostBlock: " + $scope.sessionHostBlock);
                 }
                 else {
-                    $scope.sessionHostBlock = 'yes';
+                    console.log("localstorage session randomId(" + localStorage.getItem('sessionRandomId') + ") is not matched with db data (" + data.data.data[0].sessionRandomId + ")");
+                    /* ##### Start: Logout Logic  ##### */
+                    var id = userData.userId;
+                    var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
+                    console.log("api: " + api);
+                    careatorHttpFactory.get(api).then(function (data) {
+                        console.log("data--" + JSON.stringify(data.data));
+                        var checkStatus = careatorHttpFactory.dataValidation(data);
+                        console.log("checkStatus: " + checkStatus);
+                        if (checkStatus) {
+                            if (data.data.data.sessionURL != undefined) {
+                                var sessionURL = data.data.data.sessionURL;
+                                console.log(data.data.message);
+                                console.log("sessionURL: " + sessionURL);
+                                socket.emit("comm_logoutSession", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": sessionURL, "sessionRandomId": data.data.data.sessionRandomId }); /* ### Note: Logout notification to server ### */
+                            }
+                            else {
+                                socket.emit("comm_logoutSession", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": "", "sessionRandomId": data.data.data.sessionRandomId }); /* ### Note: Logout notification to server ### */
+                            }
+                        } else {
+                            console.log("Sorry");
+                            console.log(data.data.message);
+                        }
+                    })
+                    /* ##### End: Logout Logic  ##### */
                 }
 
-                console.log("$scope.sessionHostBlock: " + $scope.sessionHostBlock);
+
+
                 console.log(data.data.message);
 
             } else {
@@ -44,11 +75,9 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     var userData = careatorSessionAuth.getAccess("userData");
     $scope.userData = userData;
     console.log("userData==>: " + JSON.stringify(userData));
-    if(userData!=undefined){
+    if (userData != undefined) {
         $scope.getLogin_hostDetailsById(userData.userId);
     }
-   
-  
     if (userData == undefined || userData.email == null) {
         $scope.getLogin_hostDetailsById(localStorage.getItem("userId"));
         var userData = {
@@ -56,6 +85,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             "userName": localStorage.getItem("userName"),
             "empId": localStorage.getItem("empId"),
             "userId": localStorage.getItem("userId"),
+            "sessionRandomId": localStorage.getItem("sessionRandomId")
         }
         if (localStorage.getItem("videoRights") == 'yes') {
             $scope.videoRights = "yes";
@@ -139,10 +169,22 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                 var checkStatus = careatorHttpFactory.dataValidation(data);
                 console.log("checkStatus: " + checkStatus);
                 if (checkStatus) {
-                    var sessionURL = data.data.data.sessionURL;
-                    console.log(data.data.message);
-                    console.log("sessionURL: " + sessionURL);
-                    socket.emit("comm_logout", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": sessionURL }); /* ### Note: Logout notification to server ### */
+
+                    if (data.data.data != undefined) {
+                        if (data.data.data.sessionURL != undefined) {
+                            var sessionURL = data.data.data.sessionURL;
+                            console.log(data.data.message);
+                            console.log("sessionURL: " + sessionURL);
+                            socket.emit("comm_logout", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": sessionURL, "sessionRandomId": $scope.userData.sessionRandomId }); /* ### Note: Logout notification to server ### */
+                        }
+                        else {
+                            socket.emit("comm_logout", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": "", "sessionRandomId": $scope.userData.sessionRandomId }); /* ### Note: Logout notification to server ### */
+                        }
+                    }
+
+                    else {
+                        socket.emit("comm_logout", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": "", "sessionRandomId": $scope.userData.sessionRandomId }); /* ### Note: Logout notification to server ### */
+                    }
                 } else {
                     console.log("Sorry");
                     console.log(data.data.message);
@@ -158,8 +200,12 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     //     console.log("closeYourOldSession-->");
     //     alert("Close your old session in-order to do new session");
     //     window.open('https://vc4all.in/careator','_blank'); 
-          
+
     // }
+    $scope.doRedirect = function () {
+        console.log("$scope.doRedirect--->");
+        window.location.href = "https://vc4all.in";
+    }
 
     socket.on('comm_aboutUserEdit', function (data) {
         console.log("***comm_aboutUserEdit-->");
@@ -233,6 +279,12 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     /* #### Start: Logout request from server(index.js) #### */
     socket.on('comm_logoutNotifyToUserById', function (data) {
         console.log("***comm_logoutNotifyToUserById-->: " + JSON.stringify(data));
+        var obj = {
+            "userId": $scope.userData.userId,
+            "email": $scope.userData.email,
+            "sessionRandomId": $scope.userData.sessionRandomId
+        }
+        console.log("obj: " + JSON.stringify(obj));
         if (data.userId == $scope.userData.userId && data.email == $scope.userData.email) {
             console.log("started to remove localstorage");
             localStorage.removeItem("careatorEmail");
@@ -246,22 +298,50 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             localStorage.removeItem("restrictedTo");
             localStorage.removeItem("chatStatus");
             localStorage.removeItem("profilePicPath");
+            localStorage.removeItem("sessionRandomId");
             careatorSessionAuth.clearAccess("userData");
             $scope.doRedirect();
         }
-
+        // else if (data.userId == $scope.userData.userId && data.email == $scope.userData.email && data.sessionRandomId == $scope.userData.sessionRandomId) {
+        //     console.log("NO need of logout")
+        // }
     })
-    socket.on('comm_sessionCreateUpdate', function(data){
+    socket.on('comm_logoutNotifyToUserById_beczOfDeadSessionRandomId', function (data) {
+        console.log("comm_logoutNotifyToUserById_beczOfDeadSessionRandomId-->: " + JSON.stringify(data));
+        if (data.userId == $scope.userData.userId && data.email == $scope.userData.email) {
+            console.log("started to remove localstorage");
+            localStorage.removeItem("careatorEmail");
+            localStorage.removeItem("careator_remoteEmail");
+            localStorage.removeItem("email");
+            localStorage.removeItem("userName");
+            localStorage.removeItem("empId");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("videoRights");
+            localStorage.removeItem("chatRights");
+            localStorage.removeItem("restrictedTo");
+            localStorage.removeItem("chatStatus");
+            localStorage.removeItem("profilePicPath");
+            localStorage.removeItem("sessionRandomId");
+            careatorSessionAuth.clearAccess("userData");
+            $scope.doRedirect();
+        }
+    })
+    socket.on('comm_resetNotifyToUserById', function (data) {
+        console.log("***comm_resetNotifyToUserById-->: " + JSON.stringify(data));
+        console.log("$scope.userData.userId-->: " + $scope.userData.userId);
+        if (data.id == $scope.userData.userId) {
+            console.log("started the process for logout");
+            $scope.getLogin_hostDetailsById($scope.userData.userId);
+        }
+    })
+    socket.on('comm_sessionCreateUpdate', function (data) {
         console.log("comm_sessionCreateUpdate-->");
         if (data.email == $scope.userData.email) {
             console.log("started to update $scope.sessionHostBlock");
             $scope.sessionHostBlock = "yes";
         }
     })
-    $scope.doRedirect = function () {
-        console.log("$scope.doRedirect--->");
-        window.location.href = "https://vc4all.in";
-    }
+
     /* #### End: Logout request from server(index.js) #### */
 
 

@@ -60,10 +60,9 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, $rootScope, $f
     $scope.deleteGroup = function (id) {
         console.log("deleteGroup-->");
         console.log("Obj ID  " + id);
+        $("#GroupDeleteButton").trigger("click");
 
-
-        var r = confirm("Are You Sure To Delete ????");
-        if (r == true) {
+       $scope.groupDelete=function() {
             var api = "https://vc4all.in/careator_groupDelete/groupDeleteById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
@@ -79,8 +78,6 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, $rootScope, $f
                 }
             })
             console.log("<--statusChange");
-        } else {
-            console.log("<-- you cancelled");
         }
 
 

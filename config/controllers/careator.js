@@ -194,7 +194,8 @@ module.exports.pswdCheck = function (req, res) {
                         else {
                             responseData = {
                                 status: false,
-                                message: "You already logged in, please logout your old session in-order to login"
+                                message: "You already logged in, please logout your old session in-order to login",
+                                data: { "id": findData[0]._id }
                             };
                             res.status(400).send(responseData);
                         }
@@ -417,7 +418,51 @@ module.exports.emailInvite = function (req, res) {
             }
         })
 }
+module.exports.resetLoginFlagsById = function (req, res) {
+    console.log("resetLoginFlags-->");
+    var id = req.params.id;
+    console.log("id: " + id);
+    if (general.emptyCheck(id)) {
+        var sessionRandomId = randomstring.generate(7);
+        var obj = {
+            "_id": ObjectId(id),
+        }
+        console.log("obj: " + JSON.stringify(obj));
+        careatorMaster.update(obj, { "$set": { "login": "notDone", "logout": "done", "sessionRandomId": sessionRandomId } }, function (err, data) {
+            console.log("data: " + JSON.stringify(data));
+            console.log("data.length: " + data.length);
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                responseData = {
+                    status: false,
+                    message: "UnSuccessfully"
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("data: " + JSON.stringify(data));
+                var io = req.app.get('socketio');
+                io.emit('comm_resetNotifyToUserById', {
+                    "id": id
+                }); /* ### Note: Emitreset message to client(careator_dashboardCtrl.js, csigsocket.js) ### */
+                responseData = {
+                    status: true,
+                    message: "Successfully reset done",
+                    data: data
+                };
+                res.status(200).send(responseData);
+            }
+        })
+    }
+    else {
+        response = {
+            status: false,
+            message: "empty value found",
+            data: obj
+        };
+        res.status(400).send(response);
+    }
 
+}
 module.exports.getAdminObjectId = function (req, res) {
     console.log("getAdminObjectId-->");
     careatorMaster.find({ "email": "vc4all@careator.com" }).toArray(function (err, admin) {
@@ -439,7 +484,6 @@ module.exports.getAdminObjectId = function (req, res) {
         }
     })
 }
-
 module.exports.setCollection = function (req, res) {
     console.log("setCollection-->");
     console.log("req.body.url: " + req.body.url);
@@ -499,7 +543,6 @@ module.exports.setCollection = function (req, res) {
 
 
 }
-
 module.exports.getChatByUrl = function (req, res) {
     console.log("getChatByUrl-->");
     var obj = {
@@ -557,7 +600,6 @@ module.exports.getHistoryByEmailId = function (req, res) {
 
 
 }
-
 module.exports.getHistory = function (req, res) {
     console.log("getHistory-->");
 
@@ -652,6 +694,7 @@ module.exports.careatorMasterInsert = function (req, res) {
 
 module.exports.careatorMasterInsertValidate = function (data, callback) {
     console.log("careatorMasterInsertValidate-->");
+    var sessionRandomId = randomstring.generate(7);
     var findEmpId = {
         "empId": data.EmpId
     }
@@ -665,12 +708,13 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
         "videoRights": data.VideoRights,
         "chatRights": data.ChatRights,
         "password": data.Password,
+        "sessionRandomId": sessionRandomId,
         "status": "active",
         "chatStatus": "Available",
         "restrictedTo": [],
         "profilePicPath": "./css/user.png",
         "login": "notDone",
-        "logout": "done",
+        "logout": "done"
     }
     careatorMaster.find(findEmpId).toArray(function (err, findData) {
         if (err) {
@@ -709,20 +753,20 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
 
 module.exports.careatorSingleUserInsert = function (req, res) {
     console.log("careatorSingleUserInsert-->");
-
+    var sessionRandomId = randomstring.generate(7);
     var obj = {
         "name": req.body.userName,
         "empId": req.body.empId,
         "email": req.body.empEmail,
         "password": req.body.empPass,
+        "sessionRandomId": sessionRandomId,
         "videoRights": req.body.videoRights,
         "chatRights": req.body.chatRights,
         "status": "active",
         "restrictedTo": [],
         "profilePicPath": "./css/user.png",
         "login": "notDone",
-        "logout": "done",
-
+        "logout": "done"
     }
     console.log("obj :" + JSON.stringify(obj));
     var findEmpId = {

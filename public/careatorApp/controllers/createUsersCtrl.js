@@ -14,12 +14,15 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
                 console.log("checkStatus: " + checkStatus);
-                alert(data.data.message);
+                // alert(data.data.message);
+                $scope.notifyMsg = data.data.message;
+                $("#alertButton").trigger("click");
                 $state.go("Cdashboard.usersListCtrl");
-            }
-            else {
+            } else {
                 console.log("checkStatus: " + checkStatus);
-                alert(data.data.message);
+                $scope.notifyMsg = data.data.message;
+                $("#alertButton").trigger("click");
+                // alert(data.data.message);
             }
         })
         console.log("<--uploadCareatorEmp");
@@ -32,12 +35,10 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
         if (rights == 'both') {
             videoRights = "yes";
             chatRights = "yes";
-        }
-        else if (rights == 'chat') {
+        } else if (rights == 'chat') {
             videoRights = "no";
             chatRights = "yes";
-        }
-        else if (rights == 'video') {
+        } else if (rights == 'video') {
             videoRights = "yes";
             chatRights = "no";
         }
@@ -58,12 +59,17 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
                 console.log("checkStatus: " + checkStatus);
-                alert(data.data.message);
+                // alert(data.data.message);
+                $scope.notifyMsg = data.data.message;
+                console.log(" $scope.notifyMsg: "+  $scope.notifyMsg);
+                $("#alertButton").trigger("click");
                 $state.go("Cdashboard.usersListCtrl");
-            }
-            else {
+            } else {
                 console.log("checkStatus: " + checkStatus);
-                alert(data.data.message);
+                $scope.notifyMsg = data.data.message;
+                console.log(" $scope.notifyMsg: "+  $scope.notifyMsg);
+                $("#alertButton").trigger("click");
+                // alert(data.data.message);
             }
         })
     }

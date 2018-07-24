@@ -31,19 +31,16 @@
             transition: all 0s ease-out;
             height: 100px;
             display: block;
-
             font-size: 20px;
             color: #fff;
             text-decoration: none;
             text-align: center;
             text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
             padding: 0px 30px 0;
-
             position: relative;
             cursor: pointer;
             border: none;
             border-radius: 5px;
-
         }
 
         button.facebook {
@@ -88,7 +85,8 @@
         }
 
         .adbody {
-
+            transition-duration: 0.2s;
+            transition-timing-function: ease-in;
             font-family: lato;
             color: #000;
             background: white;
@@ -98,7 +96,7 @@
             min-height: 200px;
             font-size: 15px;
             font-weight: 300;
-            border: 1px solid #303336;
+            /* border: 1px solid #303336; */
         }
 
         .adbody:hover {
@@ -170,9 +168,6 @@
                                     </td>
                                 </tr>
                             </table>
-
-
-
                             <div id="videoCtrolBar" class="giggy" style="margin: 6px;
                             position: absolute;
                             top: 0;
@@ -304,6 +299,57 @@
                         <button data-toggle="modal" data-target="#remoteJoin" id="setName" data-backdrop="static" data-keyboard="false" style="display:none">Set Name</button>
                         <button data-toggle="modal" data-target="#myEmailModal" id="enterEmail" data-backdrop="static" data-keyboard="false" style="display:none">Set Name</button>
                         <button data-toggle="modal" data-target="#myPasswordModal" id="enterPswd" data-backdrop="static" data-keyboard="false" style="display:none">Enter Password</button>
+                        <button data-toggle="modal" data-target="#notify_msg" id="notify_msg_button" data-backdrop="static" data-keyboard="false"
+                            style="display:none"></button>
+                        <button data-toggle="modal" data-target="#notify_msg_show" id="notify_msg_show_button" data-backdrop="static" data-keyboard="false"
+                            style="display:none"></button>
+
+                        <div class="modal fade" id="notify_msg_show" role="dialog">
+                            <div class="modal-dialog">
+                                <center>
+                                    <form>
+                                        <div class="modal-content" style="color:#777;max-width:350px;">
+                                            <div class="modal-header" style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px;margin-top: -15px; margin-left: -150px;" src="/home/img/fav.png" />
+                                                <span class="modal-title"></span>Message
+                                            </div>
+                                            <div class="modal-body">
+                                                <label id="notify_msg_show_content" style="color:red"></label>
+                                            </div>
+                                            <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
+                                                <button type="button" onclick="triggerforLogin()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Ok</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </center>
+                            </div>
+                        </div>
+
+
+                        <div class="modal fade" id="notify_msg" role="dialog">
+                            <div class="modal-dialog">
+                                <center>
+                                    <form>
+                                        <div class="modal-content" style="color:#777;max-width:350px;">
+                                            <div class="modal-header" style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px;margin-top: -15px; margin-left: -150px;" src="/home/img/fav.png" />
+                                                <span class="modal-title"></span>Message
+                                            </div>
+                                            <div class="modal-body">
+                                                <label id="notify_msg_content" style="color:red"></label>
+                                            </div>
+                                            <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
+
+                                                <!-- <button id="setEmail" type="submit" onclick="sendEmail()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button> -->
+                                                <button type="button" onclick="resetLoginFlag()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Reset</button>
+                                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Ok</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </center>
+                            </div>
+                        </div>
+
 
                         <div class="modal fade" id="remoteJoin" role="dialog">
                             <div class="modal-dialog">
@@ -325,65 +371,77 @@
                             </div>
                         </div>
 
+
                         <div class="modal fade" id="myEmailModal" role="dialog">
                             <div class="modal-dialog">
                                 <center>
                                     <form>
-                                        <div class="modal-content" style="color:#777;max-width:350px;">
-                                            <div class="modal-header" style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                                                <img style="width: 45px;margin-top: -15px; margin-left: -150px;" src="/home/img/fav.png" />
-                                                <span class="modal-title">Employee Login</span>
+                                        <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
+                                            <div class="modal-header" style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px; margin-top: -15px;margin-left: -170px;" src="/home/img/fav.png" />
+                                                <span class="modal-title" style="font-weight: 200;">Employee Login</span>
                                             </div>
                                             <div class="modal-body">
+
                                                 <input type="email" class="form-control" placeholder="Enter your Email" id="careatorEmail" required>
                                                 <br>
                                                 <input type="password" class="form-control" placeholder="Enter your Password" id="careatorPswd" required>
+
                                             </div>
-                                            <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
+                                            <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
                                                 <label id="credentialErroe" style="display: none;color:red"></label>
                                                 <!-- <button id="setEmail" type="submit" onclick="sendEmail()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button> -->
-                                                <button id="setEmail" type="submit" onclick="checkCredential()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" >Submit</button>
+                                                <button id="setEmail" type="button" onclick="checkCredential()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
                                             </div>
                                         </div>
                                     </form>
                                 </center>
                             </div>
                         </div>
+
                         <div class="modal fade" id="myPasswordModal" role="dialog">
                             <div class="modal-dialog">
                                 <center>
-                                    <div class="modal-content" style="color:#777;max-width:350px;">
-                                        <div class="modal-header" style="background-color: #1c3852;">
-                                            <h4 class="modal-title" style="font-size: 15px;">Please enter password which you got from email</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <input type="password" class="form-control" placeholder="Enter your Password" id="ppswd">
-                                            <div>Time left =
-                                                <span id="timer"></span>
+                                    <form>
+                                        <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
+                                            <div class="modal-header" style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px; margin-top: -15px;margin-left: -170px;" src="/home/img/fav.png" />
+                                                <span class="modal-title" style="font-weight: 200;">Please enter password which you got from email</span>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <input type="password" class="form-control" placeholder="Enter your Password" id="ppswd">
+
+                                            </div>
+                                            <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
+                                                <button type="button" id="sub" onclick="checkPassword()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
                                             </div>
                                         </div>
-                                        <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                            <button type="button" id="sub" onclick="checkPassword()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </center>
                             </div>
+
+
                         </div>
+
+
                         <div class="modal fade" id="invitePeople" role="dialog">
                             <div class="modal-dialog">
                                 <center>
                                     <form>
-                                        <div class="modal-content" style="color:#777;max-width:350px;">
-                                            <div class="modal-header" style="background-color: #1c3852;">
-                                                <h4 class="modal-title">Please Enter Email</h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
+                                            <div class="modal-header" style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px; margin-top: -15px;margin-left: -170px;" src="/home/img/fav.png" />
+                                                <span class="modal-title" style="font-weight: 200;">Please Enter Email</span>
                                             </div>
                                             <div class="modal-body">
+
                                                 <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
                                                 <br>
                                                 <label id="info" style="color:blue"></label>
+
                                             </div>
-                                            <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
+                                            <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
                                                 <button type="button" onclick="emailInviteSend()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Invite</button>
                                             </div>
                                         </div>
@@ -555,6 +613,27 @@
                 <strong>Careator</strong>. All Rights Reserved
             </div>
         </div>
+        <div class="container">
+            <div class="copyright">
+                <span class="icn">
+                    <a href="#" class="twitter imm">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" class="facebook imm">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a href="#" class="instagram imm">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                    <a href="#" class="google-plus imm">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+                    <a href="#" class="linkedin imm">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
     </footer>
     <!--=============================
     Footer End
@@ -681,18 +760,6 @@
             z-index: 1;
         }
 
-        /* .fullscr {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: fill;
-            z-index: 1;
-        } */
-
         #portfolio .portfolio-items {
             display: inline-block;
             height: auto;
@@ -758,6 +825,10 @@
                 border-radius: 999px 999px;
             }
         }
+.imm{
+font-size: 25px;
+}
+
     </style>
 </body>
 

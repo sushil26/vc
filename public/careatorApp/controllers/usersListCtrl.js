@@ -64,10 +64,11 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
 
     ////////////////Delete User/////////////////////////
     $scope.deleteUser = function (id) {
+        $("#deleteConfirmationButton").trigger("click");
+      
         console.log("deleteUser-->");
         console.log("Obj ID  " + id);
-        var r = confirm("Are You Sure To Delete ????");
-        if (r == true) {
+        $scope.userDelete = function () {
             var api = "https://vc4all.in/careator_userDelete/userDeleteById/" + id;
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -82,10 +83,31 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
                 }
             })
             console.log("<--statusChange");
-
         }
-        else{
-            console.log("selected cancel");
+    }
+
+
+
+    $scope.resetLoginFlag = function (id) {
+        $("#ResetConfirmationButton").trigger("click");
+        console.log("deleteUser-->");
+        console.log("Obj ID  " + id);
+        $scope.userReset = function () {
+            console.log("userReset-->");
+            var api = "https://vc4all.in/careator_reset/resetLoginFlagsById/" + id;
+            careatorHttpFactory.post(api).then(function (data) {
+                console.log("data--" + JSON.stringify(data.data));
+                var checkStatus = careatorHttpFactory.dataValidation(data);
+                console.log("data--" + JSON.stringify(data.data));
+                if (checkStatus) {
+                    console.log(data.data.message);
+                    $scope.getAllEmployee();
+                } else {
+                    console.log("Sorry");
+                    console.log(data.data.message);
+                }
+            })
+            console.log("<--statusChange");
         }
     }
 })

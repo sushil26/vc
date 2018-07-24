@@ -507,9 +507,12 @@ careatorApp.controller("chatCtrl", function(
           }
         });
       } else {
-        alert(
-          "You not allowed to chat with " + $scope.receiverData.receiverName
-        );
+        // alert( 
+        //  "You not allowed to chat with " + $scope.receiverData.receiverName
+        // );
+        $scope.notifyMsg ="You not allowed to chat with " + $scope.receiverData.receiverName;
+        console.log(" $scope.notifyMsg: "+  $scope.notifyMsg);
+        $("#alertButton").trigger("click");
       }
     } else if ($scope.selectedType == "group") {
       obj = {

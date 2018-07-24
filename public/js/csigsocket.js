@@ -221,6 +221,7 @@ function triggerInvite() {
 // }
 function checkCredential() {
   console.log("checkCredential-->");
+  $('#myEmailModal').modal('hide');
   var password = document.getElementById("careatorPswd").value;
   var careatorEmail = document.getElementById("careatorEmail").value;
   var obj = {
@@ -237,13 +238,15 @@ function checkCredential() {
       contentType: "application/json",
       dataType: "json",
       success: function (data) {
-        console.log("data: " + JSON.stringify(data));
+        console.log("data: " + JSON.stringify(data))
+        //alert("succes");
         localStorage.setItem("careatorEmail", careatorEmail);
         localStorage.setItem("userName", data.data.name);
         localStorage.setItem("empId", data.data.empId);
         localStorage.setItem("email", data.data.email);
         localStorage.setItem("userId", data.data._id);
         localStorage.setItem("sessionPassword", password);
+        localStorage.setItem("sessionRandomId", data.data.sessionRandomId);
         localStorage.setItem("sessionEnc", data.sessionData);
         userName = localStorage.getItem("userName");
         if (data.data.videoRights == 'yes') {
@@ -286,8 +289,9 @@ function checkCredential() {
         console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
         if (err.responseJSON.message == 'You already logged in, please logout your old session in-order to login') {
           console.log("You already logged in, please logout your old session in-order to login");
-          alert(err.responseJSON.message);
-          window.location.href = "/";
+          document.getElementById('notify_msg_content').innerHTML = err.responseJSON.message;
+          $("#notify_msg_button").trigger("click");
+          resetId = err.responseJSON.data.id;
         }
         else {
           alert(err.responseJSON.message);
@@ -300,10 +304,47 @@ function checkCredential() {
   } else {
     console.log("password trigger again-->");
     console.log("Password empty");
-
-    // $("#enterPswd").trigger("click");
   }
   console.log("<--checkCredential");
+}
+
+function resetLoginFlag() {
+  console.log("resetLoginFlag-->");
+  $("#notify_msg").modal('hide');
+  var id = resetId;
+  console.log("Obj ID  " + id);
+
+  $.ajax({
+    url: "https://vc4all.in/careator_reset/resetLoginFlagsById/" + id,
+    type: "POST",
+    data: JSON.stringify(checkObj),
+    contentType: "application/json",
+    dataType: "json",
+    success: function (data) {
+      console.log("data: " + JSON.stringify(data));
+
+      document.getElementById('notify_msg_show_content').innerHTML = "Reset successfully done,now you can login";
+      $("#notify_msg_show_button").trigger("click");
+
+    },
+    error: function (err) {
+      console.log("err: " + JSON.stringify(err));
+      console.log("err.responseText: " + JSON.stringify(err.responseText));
+      console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
+      document.getElementById('notify_msg_show_content').innerHTML = "Reset unsuccessfull";
+      $("#notify_msg_show_button").trigger("click");
+
+    }
+  });
+
+  console.log("<--statusChange");
+}
+
+function triggerforLogin() {
+  console.log("triggerforLogin-->");
+  $("#notify_msg_show").modal('hide');
+  $("#enterEmail").trigger("click");
+
 }
 
 function checkPassword() {
@@ -331,6 +372,7 @@ function checkPassword() {
         localStorage.setItem("email", data.data.email);
         localStorage.setItem("userId", data.data._id);
         localStorage.setItem("sessionPassword", password);
+        localStorage.setItem("sessionRandomId", data.data.sessionRandomId);
         localStorage.setItem("sessionEnc", data.sessionData);
         userName = localStorage.getItem("userName");
         if (data.data.videoRights == 'yes') {
@@ -376,6 +418,7 @@ function checkPassword() {
         setTimeout(function () {
           $('#credentialErroe').fadeOut('fast');
         }, 3000);
+        
 
         document.getElementById("videoConferenceUrl").style.display = "none";
         localStorage.removeItem("careatorEmail");
@@ -428,8 +471,10 @@ function emailInviteSend() {
       document.getElementById("info").style.display = 'inline';
       setTimeout(function () {
         $('#info').fadeOut('fast');
-      }, 3000);
-
+      }, 1000);
+      setTimeout(function () {
+        $('#invitePeople').modal('hide');
+      }, 2000);
       // document.getElementById("info").innerHTML = data.message;
     },
     error: function (err) {
@@ -1847,6 +1892,8 @@ signaling_socket.on('comm_logoutNotifyToUserById', function (data) {
   // }
 
 })
+
+
 
 
 
