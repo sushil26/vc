@@ -17,13 +17,11 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                     console.log("data.data.data[0].isDisconnected: " + data.data.data[0].isDisconnected);
                     if (data.data.data[0].isDisconnected == 'yes' || data.data.data[0].isDisconnected == undefined) {
                         $scope.sessionHostBlock = 'no';
-                    }
-                    else {
+                    } else {
                         $scope.sessionHostBlock = 'yes';
                     }
                     console.log("$scope.sessionHostBlock: " + $scope.sessionHostBlock);
-                }
-                else {
+                } else {
                     console.log("localstorage session randomId(" + localStorage.getItem('sessionRandomId') + ") is not matched with db data (" + data.data.data[0].sessionRandomId + ")");
                     /* ##### Start: Logout Logic  ##### */
                     var id = userData.userId;
@@ -38,10 +36,19 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                                 var sessionURL = data.data.data.sessionURL;
                                 console.log(data.data.message);
                                 console.log("sessionURL: " + sessionURL);
-                                socket.emit("comm_logoutSession", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": sessionURL, "sessionRandomId": data.data.data.sessionRandomId }); /* ### Note: Logout notification to server ### */
-                            }
-                            else {
-                                socket.emit("comm_logoutSession", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": "", "sessionRandomId": data.data.data.sessionRandomId }); /* ### Note: Logout notification to server ### */
+                                socket.emit("comm_logoutSession", {
+                                    "userId": $scope.userData.userId,
+                                    "email": $scope.userData.email,
+                                    "sessionURL": sessionURL,
+                                    "sessionRandomId": data.data.data.sessionRandomId
+                                }); /* ### Note: Logout notification to server ### */
+                            } else {
+                                socket.emit("comm_logoutSession", {
+                                    "userId": $scope.userData.userId,
+                                    "email": $scope.userData.email,
+                                    "sessionURL": "",
+                                    "sessionRandomId": data.data.data.sessionRandomId
+                                }); /* ### Note: Logout notification to server ### */
                             }
                         } else {
                             console.log("Sorry");
@@ -118,8 +125,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     $scope.name = userData.userName;
     if (userData.videoRights == 'yes') {
         $scope.videoRights = "yes";
-    }
-    else {
+    } else {
         $scope.videoRights = "no";
     }
 
@@ -151,8 +157,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
         if (localStorage.getItem("sessionUrlId")) {
             alert("You have to disconnect your old session in-order to open new");
-        }
-        else {
+        } else {
             window.open('https://vc4all.in/careator', '_blank');
         }
 
@@ -160,7 +165,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     $scope.logout = function () {
         console.log("logout-->");
         $("#logoutConfirmationButton").trigger("click");
-        $scope.userLogout=function() {
+        $scope.userLogout = function () {
             var id = userData.userId;
             var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
             console.log("api: " + api);
@@ -175,15 +180,27 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                             var sessionURL = data.data.data.sessionURL;
                             console.log(data.data.message);
                             console.log("sessionURL: " + sessionURL);
-                            socket.emit("comm_logout", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": sessionURL, "sessionRandomId": $scope.userData.sessionRandomId }); /* ### Note: Logout notification to server ### */
+                            socket.emit("comm_logout", {
+                                "userId": $scope.userData.userId,
+                                "email": $scope.userData.email,
+                                "sessionURL": sessionURL,
+                                "sessionRandomId": $scope.userData.sessionRandomId
+                            }); /* ### Note: Logout notification to server ### */
+                        } else {
+                            socket.emit("comm_logout", {
+                                "userId": $scope.userData.userId,
+                                "email": $scope.userData.email,
+                                "sessionURL": "",
+                                "sessionRandomId": $scope.userData.sessionRandomId
+                            }); /* ### Note: Logout notification to server ### */
                         }
-                        else {
-                            socket.emit("comm_logout", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": "", "sessionRandomId": $scope.userData.sessionRandomId }); /* ### Note: Logout notification to server ### */
-                        }
-                    }
-
-                    else {
-                        socket.emit("comm_logout", { "userId": $scope.userData.userId, "email": $scope.userData.email, "sessionURL": "", "sessionRandomId": $scope.userData.sessionRandomId }); /* ### Note: Logout notification to server ### */
+                    } else {
+                        socket.emit("comm_logout", {
+                            "userId": $scope.userData.userId,
+                            "email": $scope.userData.email,
+                            "sessionURL": "",
+                            "sessionRandomId": $scope.userData.sessionRandomId
+                        }); /* ### Note: Logout notification to server ### */
                     }
                 } else {
                     console.log("Sorry");
@@ -192,7 +209,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             })
 
         }
-       
+
     }
     // $scope.closeYourOldSession = function(){
     //     console.log("closeYourOldSession-->");
@@ -239,22 +256,19 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                         $scope.videoRights = "yes";
                         localStorage.removeItem("videoRights");
                         localStorage.setItem("videoRights", "yes");
-                    }
-                    else if ($scope.getUserById.videoRights == 'no' && $scope.getUserById.chatRights == 'yes') {
+                    } else if ($scope.getUserById.videoRights == 'no' && $scope.getUserById.chatRights == 'yes') {
                         userData.chatRights = "yes";
                         userData.videoRights = "no";
                         $scope.videoRights = "no";
                         localStorage.removeItem("videoRights");
                         localStorage.setItem("videoRights", "no");
-                    }
-                    else if ($scope.getUserById.videoRights == 'yes' && $scope.getUserById.chatRights == 'no') {
+                    } else if ($scope.getUserById.videoRights == 'yes' && $scope.getUserById.chatRights == 'no') {
                         userData.chatRights = "no";
                         userData.videoRights = "yes";
                         $scope.videoRights = "yes";
                         localStorage.removeItem("videoRights");
                         localStorage.setItem("videoRights", "yes");
-                    }
-                    else if ($scope.getUserById.videoRights == 'no' && $scope.getUserById.chatRights == 'no') {
+                    } else if ($scope.getUserById.videoRights == 'no' && $scope.getUserById.chatRights == 'no') {
                         userData.chatRights = "no";
                         userData.videoRights = "no";
                         $scope.videoRights = "no";
@@ -369,19 +383,41 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         });
 
     });
+var w;
+    $scope.navigateintoBoth_CVoption = function () {
+        console.log("navigateintoBoth_CVoption-->");
+        if (!w || w.closed) {
+            w = window.open("https://vc4all.in/careator", "_blank");
+        } else {
+            console.log('window is already opened');
+            alert("window is already opened");
+            w.focus();
+        }
+       
+    }
 
     /* ##### Start: on window only one open tab should be there for this page  ##### */
-    if (+localStorage.tabCount > 0)
-        var r = confirm("You have already open this url");
-    if (r == true) {
-        close()
-    }
-    else
-        localStorage.tabCount = 0;
+    // if (+localStorage.tabCount > 0) 
+    //     var r = confirm("You have already open this url");
+    //     if (r == true) {
+    //         close()
 
-    localStorage.tabCount = +localStorage.tabCount + 1;
-    window.onunload = function () {
-        localStorage.tabCount = +localStorage.tabCount - 1;
-    };
+    //     } else
+    //         localStorage.tabCount = 0;
+
+    //     localStorage.tabCount = +localStorage.tabCount + 1;
+    //     window.onunload = function () {
+    //         localStorage.tabCount = +localStorage.tabCount - 1;
+
+    //     };
+
+
+    // if (+localStorage.tabCount > 0)
+    // $("#closeConfirmationButton").trigger("click");
+
+    //     $scope.userclose=function(){
+    //         console.log("userclose-->");
+    //         window.close();
+    // }
     /* ##### End: on window only one open tab should be there for this page  ##### */
 })

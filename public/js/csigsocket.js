@@ -434,11 +434,19 @@ function checkPassword() {
   console.log("<--checkPassword");
 }
 
-
+var w;
 function chatNavigation() {
   console.log("chatNavigation-->");
   window.location.href = "https://vc4all.in/careatorApp/#!/dashboard/profile";
+  // if (!w || w.closed) {
+  //   w = window.open("https://vc4all.in/careatorApp/#!/dashboard/profile","_blank","menubar = 0, scrollbars = 0");
+  // } else {
+  //   console.log('window is already opened');
+  //   alert("window is already opened");
+  // }
+  // w.focus();
 }
+
 
 /* ##### Start: Email Invite  ##### */
 function emailInviteSend() {
@@ -549,8 +557,6 @@ signaling_socket.on("disconnectSessionReply", function (data) {
     setTimeout(function () {
       close();
     }, 4000);
-
-
     // localStorage.setItem("redirctRequired", true);
     // $("#homeLink").trigger("click");
     // window.location.href = "https://vc4all.in";

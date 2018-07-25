@@ -18,6 +18,7 @@
     <link href="/home/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/chatZone.css" />
     <script src="/js/clientmain.js"></script>
+    <script src="/bower_components/easytimer.js/dist/easytimer.js"></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="/home/lib/jquery/jquery-migrate.min.js"></script>
     <script src="/js/studentMarkAtt_automation.js"></script>
@@ -236,16 +237,9 @@
                                     <div class="mtitle w3-animate-right">Close</div>
                                 </a>
                                 <hr style="margin: 0px 0 !important;">
-                                <div class="counter">
 
-                                    <h1 style="font-size: 15px;">
-                                        <time>00:00:00</time>
-                                    </h1>
-                                    <button style="display:none;" id="start">start</button>
-                                    <button style="display:none;" id="stop">stop</button>
-                                    <button style="display:none;" id="clear">clear</button>
+                                <div id="basicUsage">00:00:00</div>
 
-                                </div>
 
                             </div>
 
@@ -692,56 +686,8 @@
             });
         });
     </script>
-    <script>
-        var h1 = document.getElementsByTagName('h1')[0],
-            start = document.getElementById('start'),
-            stop = document.getElementById('stop'),
-            clear = document.getElementById('clear'),
-            seconds = 0,
-            minutes = 0,
-            hours = 0,
-            t;
-
-        function add() {
-            seconds++;
-            if (seconds >= 60) {
-                seconds = 0;
-                minutes++;
-                if (minutes >= 60) {
-                    minutes = 0;
-                    hours++;
-                }
-            }
-
-            h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ?
-                minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-
-            timer();
-        }
-
-        function timer() {
-            t = setTimeout(add, 1000);
-        }
-        timer();
 
 
-        /* Start button */
-        start.onclick = timer;
-
-        /* Stop button */
-        stop.onclick = function () {
-            clearTimeout(t);
-        }
-
-        /* Clear button */
-        clear.onclick = function () {
-            h1.textContent = "00:00:00";
-            seconds = 0;
-            minutes = 0;
-            hours = 0;
-        }
-        /* ##### End: /////////// //Timer code///////////////////  #####*/
-    </script>
     <style>
         /* mirror Affect */
 
@@ -825,11 +771,19 @@
                 border-radius: 999px 999px;
             }
         }
-.imm{
-font-size: 25px;
-}
 
+        .imm {
+            font-size: 25px;
+        }
     </style>
+    <script>
+        var timer = new Timer();
+        timer.start();
+        timer.addEventListener('secondsUpdated', function (e) {
+            $('#basicUsage').html(timer.getTimeValues().toString());
+        });
+   
+    </script>
 </body>
 
 </html>
