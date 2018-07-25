@@ -10,19 +10,19 @@ careatorApp.controller('createGroupCtrl', function ($scope, $state,careatorHttpF
     };
     $scope.groupMemberData = [];
 
-    $scope.rightEmployeeList = function (value) {
+    $scope.rightEmployeeList = function () {
         console.log("rightEmployeeList-->");
-        console.log("value: " + value);
+        // console.log("value: " + value);
         var api;
-        if (value == "chat") {
+        // if (value == "chat") {
             api = "https://vc4all.in/careator/getChatRights_emp";
-        }
-        else if (value == "video") {
-            api = "https://vc4all.in/careator/getVideoRights_emp";
-        }
-        else {
-            api = "https://vc4all.in/careator/careator_getChatVideo_emp";
-        }
+        // }
+        // else if (value == "video") {
+        //     api = "https://vc4all.in/careator/getVideoRights_emp";
+        // }
+        // else {
+        //     api = "https://vc4all.in/careator/careator_getChatVideo_emp";
+        // }
         console.log("api: " + JSON.stringify(api));
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -55,6 +55,7 @@ careatorApp.controller('createGroupCtrl', function ($scope, $state,careatorHttpF
 
         console.log("<--rightEmployeeList");
     }
+    $scope.rightEmployeeList();
     $scope.$watchCollection('groupMemberModel', function () {
         console.log("value changed")
         $scope.groupAdminModel = [];
@@ -87,15 +88,15 @@ careatorApp.controller('createGroupCtrl', function ($scope, $state,careatorHttpF
         }
         obj.admin = admin;
         console.log("obj: " + JSON.stringify(obj));
-        if ($scope.rightSelect == 'chat') {
+        // if ($scope.rightSelect == 'chat') {
             api = "https://vc4all.in/careator/careator_chat_creteGroup";
-        }
-        else if ($scope.rightSelect == 'video') {
-            api = "https://vc4all.in/careator/careator_video_creteGroup";
-        }
-        else if ($scope.rightSelect == 'both') {
-            api = "https://vc4all.in/careator/careator_chatVideo_creteGroup";
-        }
+        // }
+        // else if ($scope.rightSelect == 'video') {
+        //     api = "https://vc4all.in/careator/careator_video_creteGroup";
+        // }
+        // else if ($scope.rightSelect == 'both') {
+        //     api = "https://vc4all.in/careator/careator_chatVideo_creteGroup";
+        // }
         console.log("api: " + api);
         careatorHttpFactory.post(api, obj).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));

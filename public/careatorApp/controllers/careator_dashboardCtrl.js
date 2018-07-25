@@ -391,9 +391,8 @@ var w;
         } else {
             console.log('window is already opened');
             alert("window is already opened");
-            w.focus();
         }
-       
+        w.focus();
     }
 
     /* ##### Start: on window only one open tab should be there for this page  ##### */
