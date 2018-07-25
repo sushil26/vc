@@ -759,6 +759,7 @@ module.exports.careatorSingleUserInsert = function (req, res) {
         "empId": req.body.empId,
         "email": req.body.empEmail,
         "password": req.body.empPass,
+        "Designation":req.body.Designation,
         "sessionRandomId": sessionRandomId,
         "videoRights": req.body.videoRights,
         "chatRights": req.body.chatRights,
@@ -1778,6 +1779,9 @@ module.exports.userEditById = function (req, res) {
         }
         if (req.body.empId) {
             updateVlaue.empId = req.body.empId;
+        }
+        if (req.body.Designation) {
+            updateVlaue.Designation = req.body.Designation;
         }
         if (req.body.userEmail) {
             updateVlaue.email = req.body.userEmail;

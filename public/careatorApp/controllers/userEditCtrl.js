@@ -1,4 +1,4 @@
-careatorApp.controller('editUserCtrl', function ($scope, $state, $rootScope, $filter, $window, careatorHttpFactory) {
+careatorApp.controller('editUserCtrl', function ($scope, $state,careatorHttpFactory) {
     console.log("editUserCtrl==>");
     console.log("id: " + $state.params.id);
     var id = $state.params.id;
@@ -42,6 +42,7 @@ careatorApp.controller('editUserCtrl', function ($scope, $state, $rootScope, $fi
             "userName": $scope.userName,
             "userEmail": $scope.userEmail,
             "userPass": $scope.userPass,
+            "Designation":$scope.Designation,
             "videoRights": $scope.userDataRights.videoRights,
             "chatRights": $scope.userDataRights.chatRights,
             "empId": $scope.empId,
