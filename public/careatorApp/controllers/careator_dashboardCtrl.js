@@ -159,8 +159,8 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     }
     $scope.logout = function () {
         console.log("logout-->");
-        var r = confirm("Are you sure to close all session????");
-        if (r == true) {
+        $("#logoutConfirmationButton").trigger("click");
+        $scope.userLogout=function() {
             var id = userData.userId;
             var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
             console.log("api: " + api);
@@ -192,9 +192,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             })
 
         }
-        else {
-            console.log("Logout cancelled");
-        }
+       
     }
     // $scope.closeYourOldSession = function(){
     //     console.log("closeYourOldSession-->");
