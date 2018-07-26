@@ -88,7 +88,7 @@
                     </li>
                     <li ng-if="videoRights=='yes'">
                         <!-- <a ng-if="sessionHostBlock=='no'" href="https://vc4all.in/careator" target="_blank"> -->
-                        <a href="#"  target="_blank" ng-click="navigateintoBoth_CVoption()">
+                        <a href="#"  ng-click="navigateintoBoth_CVoption()">
                             <i class="fa fa-video-camera">
                                 <span>&nbspVideo</span>
                             </i>
@@ -195,14 +195,14 @@
                 <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
                     <div class="modal-header" style="padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
                         <img style="width: 45px;margin-top: -15px;margin-left: -190px;" src="/home/img/fav.png" />
-                        <span class="modal-title" style="font-weight: 200;">Confirmation !!</span>
+                        <span class="modal-title" style="font-weight: 200;">Alert !!</span>
                     </div>
                     <div class="modal-body">
                         <label id="notify_msg_confirm_content" style="color:black;font-size: 20px;">you have Already open open this url</label>
                     </div>
                     <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                        <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">No</button>
-                        <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="userclose()" data-dismiss="modal">Yes</button>
+                        <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal" ng-click="focust()">OK</button>
+                        
                     </div>
                 </div>
             </form>

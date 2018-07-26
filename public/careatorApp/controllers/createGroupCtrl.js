@@ -1,6 +1,5 @@
 careatorApp.controller('createGroupCtrl', function ($scope, $state,careatorHttpFactory) {
     console.log("createGroupCtrl==>");
-
     $scope.names = ['Chat', 'Video'];
     $scope.groupMemberSettings = {
         scrollableHeight: '200px',
@@ -113,7 +112,5 @@ careatorApp.controller('createGroupCtrl', function ($scope, $state,careatorHttpF
 
 
     }
-
-
 
 })

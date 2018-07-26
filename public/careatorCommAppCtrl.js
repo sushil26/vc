@@ -1,16 +1,9 @@
-careatorApp.controller("careatorCommAppCtrl", function ($scope, $http, $timeout, $state) {
+careatorApp.controller("careatorCommAppCtrl", function ($scope,$state) {
     console.log("Chat controller==>");
-
-    //    httpFactory.getFile('property.json');
-    //    console.log("$rootScope.propertyJson: "+JSON.stringify($rootScope.propertyJson));
 
 $scope.gotToDashboard = function(){
     console.log("gotToDashboard-->");
     $state.go('Cdashboard', {});
 }
-
-
-    //var email = localStorage.getItem('careatorEmail');
-
 
 })

@@ -1,0 +1,39 @@
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
+<table style='border:5px solid gainsboro;font-family:lato;'>
+    <thead style='background-image: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'>
+        <tr>
+            <th>
+                <h2>Greetings from VC4ALL</h2>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <b>Hey!</b>
+            </td>
+        </tr>
+        <tr>
+            <td>You just got a video call invitation from
+                <span style='color:blue;'>" + req.body.sessionHost + "</span>.
+                <br> Join the call by clicking on the link below:
+                <br>
+                <br>
+                <a href=" + req.body.url + " style=background:gainsboro;>URL: Click Me</a>
+                <br> Enter the Email ID to which this mail is received.
+                <br> Enter this One Time Password:
+                <br>
+                <p>
+                    <b>Password :</b> " + password + "</p>
+                <b>Note:</b> This is a system generated password which will be lapsed once the current session is over. </td>
+        </tr>
+        <tr style='background-image: linear-gradient(to bottom, #00bcd40f 0%, #00BCD4 100%);'>
+            <td style=padding-top:15px;padding-bottom:15px>
+                <p>Have a seamless chat,
+                    <br>
+                    <b>Team-VC4ALL</b>
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
