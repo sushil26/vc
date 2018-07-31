@@ -16,7 +16,8 @@ careatorApp.controller("chatCtrl", function (
   }
   console.log("userData: " + JSON.stringify(userData));
   $scope.allEmpWithIndexById = []; /* ### Note: Will keep all employee indexed by employee id ### */
-  $scope.allChatRecordsReceiverId = []; /* ### Note: Will keep all receiver   ### */
+  $scope.allChatRecordsId = []; /* ### Note: Will keep all receiver   ### */
+  $scope.allGroupIds = []; /* ### Note: Will keep all GroupIds   ### */
   $scope.allGroupAndIndividual = []; /* ### Note:$scope.allGroupAndIndividual contains All employee list(who having chat rights) and group list(which are included by login person)   ### */
   var restrictedUser = userData.restrictedTo;
   $scope.restrictedArray = restrictedUser;
@@ -158,6 +159,7 @@ careatorApp.controller("chatCtrl", function (
     console.log("  $scope.selectedType: " + $scope.selectedType);
     console.log("id: " + id);
     if ($scope.selectedType == "group") {
+      console.log("**Group text seen");
       var group_id = id;
       var api = "https://vc4all.in/careator_groupTextRead/groupTextReadByGroupId/" + group_id;
       console.log("api: " + api);
@@ -172,7 +174,8 @@ careatorApp.controller("chatCtrl", function (
               group_id: $scope.individualData._id,
               groupName: $scope.individualData.groupName,
               senderId: userData.userId,
-              senderName: userData.userName
+              senderName: userData.userName,
+              groupMembers: $scope.individualData.groupMembers
             };
           } else {
             $scope.individualData = data.data.data[0];
@@ -184,21 +187,51 @@ careatorApp.controller("chatCtrl", function (
               group_id: $scope.individualData.group_id,
               groupName: $scope.individualData.groupName,
               senderId: userData.userId,
-              senderName: userData.userName
+              senderName: userData.userName,
+              groupMembers: $scope.individualData.groupMembers
             };
           }
           console.log("$scope.individualData : " + JSON.stringify($scope.individualData));
-
-          console.log("sendGroupText_withData-->: " + JSON.stringify($scope.sendGroupText_withData)
-          );
-
-          // $scope.readText();
+          console.log("sendGroupText_withData-->: " + JSON.stringify($scope.sendGroupText_withData));
+          var group_id = id;
+          var obj = {
+            "seenBy": userData.userId,
+            "unseenCount": 0,
+          }
+          console.log("obj: " + JSON.stringify(obj));
+          var api = "https://vc4all.in/careator_textSeenFlagUpdate_toGroupChat/textSeenFlagUpdate_toGroupChat/" + group_id;
+          console.log("*api: " + api);
+          careatorHttpFactory.post(api, obj).then(function (data) {
+            console.log("data--" + JSON.stringify(data.data));
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            if (checkStatus) {
+              console.log("Remove notification for this chat: " + data.data.message);
+              var index = $scope.allGroupIds.indexOf(data.group_id);
+              console.log("index: " + index);
+              // if (index >= 0) {
+              //   for (var x = 0; x < data.groupMembers.length; x++) {
+              //     if (userData.userId == data.groupMembers[x].userId) {
+              //       $scope.allChatRecords[index].unseenCount = data.groupMembers[x].unseenCount;
+              //       console.log(" $scope.allChatRecords[index]: " + JSON.stringify($scope.allChatRecords[index]));
+              //       break;
+              //     }
+              //     else {
+              //       console.log("Noting to do");
+              //     }
+              //   }
+              // }
+            } else {
+              console.log("Sorry: " + data.data.message);
+            }
+          })
         } else {
           console.log("Sorry");
           console.log(data.data.message);
         }
       });
+
     } else if ($scope.selectedType == "individual_chats") {
+      console.log("**Individual text seen");
       var api = "https://vc4all.in/careator_getChatsById/getChatsById/" + id;
       console.log("api: " + api);
       careatorHttpFactory.get(api).then(function (data) {
@@ -225,7 +258,8 @@ careatorApp.controller("chatCtrl", function (
           $scope.getReceiverDataById($scope.receiverData.receiverId);
 
           var obj = {
-            "receiverSeen": "yes"
+            "receiverSeen": "yes",
+            "seenBy": userData.userId
           }
           console.log("obj: " + JSON.stringify(obj));
           var api = "https://vc4all.in/careator_textSeenFlagUpdate/textSeenFlagUpdate/" + id;
@@ -271,20 +305,12 @@ careatorApp.controller("chatCtrl", function (
       senderId: userData.userId,
       senderName: userData.userName
     };
-    console.log(
-      "sendGroupText_withData-->: " + JSON.stringify($scope.individualData)
-    );
-    console.log(
-      "individualData-->: " + JSON.stringify($scope.sendGroupText_withData)
-    );
-    console.log(
-      " $scope.restrictedArray: " + JSON.stringify($scope.restrictedArray)
-    );
+    console.log("sendGroupText_withData-->: " + JSON.stringify($scope.individualData));
+    console.log("individualData-->: " + JSON.stringify($scope.sendGroupText_withData));
+    console.log(" $scope.restrictedArray: " + JSON.stringify($scope.restrictedArray));
     if ($scope.selectedType == "group") {
       var group_id = $scope.individualData._id;
-      var api =
-        "https://vc4all.in/careator_groupTextRead/groupTextReadByGroupId/" +
-        group_id;
+      var api = "https://vc4all.in/careator_groupTextRead/groupTextReadByGroupId/" + group_id;
       console.log("api: " + api);
       careatorHttpFactory.get(api).then(function (data) {
         console.log("data--" + JSON.stringify(data.data));
@@ -381,19 +407,7 @@ careatorApp.controller("chatCtrl", function (
     console.log("getAllChatRightEmp-->");
     $scope.allGroupAndIndividual = [];
     var id = userData.userId;
-    // console.log(" $scope.restrictedArray: " + JSON.stringify($scope.restrictedArray));
-    // var restrictedUser = userData.restrictedTo;
-    // console.log("restrictedUser: " + JSON.stringify(restrictedUser));
-    // var splitRestrictedUser = restrictedUser.split(',');
-    // console.log("splitRestrictedUser: " + JSON.stringify(splitRestrictedUser));
-    // var restrictedUsers = $scope.restrictedArray;
-    // var obj = {
-    //     "restrictedTo": restrictedUsers
-    // }
-    // console.log("obj: " + JSON.stringify(obj));
-    //api = "https://vc4all.in/careator_getEmp/careator_getChatRightsAllemp/" + id; /* #### without restricted emp  #### */
-    api =
-      "https://vc4all.in/careator_getEmp/careator_getChatRightsAllemp_byLoginId/" +
+    api = "https://vc4all.in/careator_getEmp/careator_getChatRightsAllemp_byLoginId/" +
       id; /* #### without restricted emp  #### */
     console.log("api: " + JSON.stringify(api));
     careatorHttpFactory.get(api).then(function (data) {
@@ -453,7 +467,7 @@ careatorApp.controller("chatCtrl", function (
       );
       console.log(" $rootScope.adminId: " + $rootScope.adminId);
       if ($rootScope.adminId == userData.userId) {
-        /* ### Note: if loginId is userId then no need to check restricted list ### */
+        /* ### Note: if loginId is admin id then no need to check restricted list ### */
         obj = {
           senderId: userData.userId,
           receiverId: $scope.receiverData.receiverId,
@@ -496,10 +510,7 @@ careatorApp.controller("chatCtrl", function (
           }
         });
       } else {
-        // alert( 
-        //  "You not allowed to chat with " + $scope.receiverData.receiverName
-        // );
-        $scope.notifyMsg = "You not allowed to chat with " + $scope.receiverData.receiverName;
+        $scope.notifyMsg = "You do not have permission to chat with " + $scope.receiverData.receiverName;
         console.log(" $scope.notifyMsg: " + $scope.notifyMsg);
         $("#alertButton").trigger("click");
       }
@@ -507,6 +518,7 @@ careatorApp.controller("chatCtrl", function (
       obj = {
         group_id: $scope.sendGroupText_withData.group_id,
         groupName: $scope.sendGroupText_withData.groupName,
+        groupMembers: $scope.sendGroupText_withData.groupMembers,
         senderId: userData.userId,
         senderName: userData.userName,
         message: $scope.typedMessage
@@ -586,8 +598,11 @@ careatorApp.controller("chatCtrl", function (
         console.log("allChatRecords: " + JSON.stringify($scope.allChatRecords));
         console.log(data.data.message);
         for (var x = 0; x < $scope.allChatRecords.length; x++) {
+          if( $scope.allChatRecords[x].unseenCount!=undefined){
+
+          }
           if ($scope.allChatRecords[x].senderId != userData.userId) {
-            $scope.allChatRecordsReceiverId[x] = $scope.allChatRecords[x]._id;
+            $scope.allChatRecordsId[x] = $scope.allChatRecords[x]._id;
             var tempData = $scope.allEmpWithIndexById[$scope.allChatRecords[x].senderId];
             //console.log("tempData: "+JSON.stringify(tempData));
             if (tempData != undefined) {
@@ -596,7 +611,7 @@ careatorApp.controller("chatCtrl", function (
               }
             } else { }
           } else {
-            $scope.allChatRecordsReceiverId[x] = $scope.allChatRecords[x]._id;
+            $scope.allChatRecordsId[x] = $scope.allChatRecords[x]._id;
             var tempData = $scope.allEmpWithIndexById[$scope.allChatRecords[x].receiverId];
             console.log("tempData: " + JSON.stringify(tempData));
             if (tempData != undefined) {
@@ -608,9 +623,11 @@ careatorApp.controller("chatCtrl", function (
             }
           }
         }
-        $scope.chatedGroup_records =
-          $scope.allChatRecords; /* ### Note: $scope.chatedGroup_records is Chat(chated records) and group(group records) records storage  ### */
+        $scope.chatedGroup_records = $scope.allChatRecords; /* ### Note: $scope.chatedGroup_records is Chat(chated records) and group(group records) records storage  ### */
         for (var x = 0; x < $scope.allGroup.length; x++) {
+          console.log(" $scope.allGroup.length: " + $scope.allGroup.length);
+          console.log("  $scope.chatedGroup_records.length: " + $scope.chatedGroup_records.length);
+          $scope.allGroupIds[$scope.chatedGroup_records.length] = $scope.allGroup[x]._id;
           $scope.chatedGroup_records.push($scope.allGroup[x]);
         }
       } else {
@@ -632,6 +649,7 @@ careatorApp.controller("chatCtrl", function (
       var checkStatus = careatorHttpFactory.dataValidation(data);
       if (checkStatus) {
         $scope.groupData = data.data.data[0];
+
         console.log("groupData: " + JSON.stringify($scope.groupData));
         console.log(data.data.message);
       } else {
@@ -645,6 +663,7 @@ careatorApp.controller("chatCtrl", function (
   socket.on("comm_textReceived", function (data) {
     $scope.scrollDown();
     console.log("****comm_textReceived-->: " + JSON.stringify(data));
+    console.log("$scope.individualData: " + JSON.stringify($scope.individualData));
 
     if (userData.userId == data.receiverId) {
       $scope.playAudio = function () {
@@ -654,85 +673,211 @@ careatorApp.controller("chatCtrl", function (
       };
       $scope.playAudio();
     }
-    if (data.freshInsert == true && (userData.userId == data.senderId || userData.userId == data.receiverId)) {
-      var id = data.id;
-      var api = "https://vc4all.in/careator_getChatsById/getChatsById/" + id;
-      console.log("api: " + api);
-      careatorHttpFactory.get(api).then(function (data) {
-        console.log("data--" + JSON.stringify(data.data));
-        var checkStatus = careatorHttpFactory.dataValidation(data);
-        if (checkStatus) {
-          $scope.allChat = data.data.data;
-          $scope.individualData = data.data.data;
-          console.log("$scope.allChat: " + JSON.stringify($scope.allChat));
-          console.log(
-            "$scope.individualData : " + JSON.stringify($scope.individualData)
-          );
-          $scope.receiverData = {
-            senderId: userData.userId,
-            senderName: userData.userName
-          };
-          if ($scope.individualData.receiverId != userData.userId) {
-            $scope.receiverData.receiverId = $scope.individualData.receiverId;
-            $scope.receiverData.receiverName =
-              $scope.individualData.receiverName;
-          } else if ($scope.individualData.senderId != userData.userId) {
-            $scope.receiverData.receiverId = $scope.individualData.senderId;
-            $scope.receiverData.receiverName = $scope.individualData.senderName;
-          }
-          console.log("$scope.receiverData : " + JSON.stringify($scope.receiverData));
-        } else {
-          console.log("Sorry");
-          console.log(data.data.message);
-        }
-      });
-      $scope.getChatRecords();
-    } else if (data.freshInsert == undefined) {
-      console.log("$scope.individualData: " + JSON.stringify($scope.individualData));
-      if ($scope.individualData._id == data.id) {
-        console.log("2)start pushing message");
+    if (data.group_id != undefined) {
+      console.log("**Group text received");
+      if (data.freshInsert == true && $scope.individualData != undefined && $scope.individualData._id == data.group_id) {
+        console.log("Fresh Insert");
         var id = data.id;
-        console.log("id: " + id);
-        var obj = {
-          "receiverSeen": "yes"
-        }
-        console.log("obj: " + JSON.stringify(obj));
-        var api = "https://vc4all.in/careator_textSeenFlagUpdate/textSeenFlagUpdate/" + id;
+        var api = "https://vc4all.in/careator_getChatsById/getChatsById/" + id;
         console.log("api: " + api);
-        careatorHttpFactory.post(api, obj).then(function (data) {
+        careatorHttpFactory.get(api).then(function (data) {
           console.log("data--" + JSON.stringify(data.data));
           var checkStatus = careatorHttpFactory.dataValidation(data);
           if (checkStatus) {
-            console.log("Message: " + data.data.message);
-          } else {
-            console.log("Sorry: " + data.data.message);
-          }
-        })
-        $scope.allChat.chats.push({
-          senderId: data.senderId,
-          senderName: data.senderName,
-          message: data.message,
-          sendTime: data.sendTime
-        });
-        $scope.scrollDown();
-      } else if ($scope.individualData._id != data.id) {
-        console.log("Notify the Unseen message count");
-        if (data.senderId != userData.userId) {
-          var index = $scope.allChatRecordsReceiverId.indexOf(data.id);
-          $scope.allChatRecords[index].unseenCount = data.unseenCount;
-        }
-        else if (data.receiverId != userData.userId) {
-          var index = $scope.allChatRecordsReceiverId.indexOf(data.id);
-          $scope.allChatRecords[index].unseenCount = data.unseenCount;
-        }
+            $scope.allChat = data.data.data;
+            $scope.individualData = data.data.data;
+            console.log("$scope.allChat: " + JSON.stringify($scope.allChat));
+            console.log(
+              "$scope.individualData : " + JSON.stringify($scope.individualData)
+            );
+            $scope.receiverData = {
+              senderId: userData.userId,
+              senderName: userData.userName
+            };
+            if ($scope.individualData.receiverId != userData.userId) {
+              $scope.receiverData.receiverId = $scope.individualData.receiverId;
+              $scope.receiverData.receiverName =
+                $scope.individualData.receiverName;
+            } else if ($scope.individualData.senderId != userData.userId) {
+              $scope.receiverData.receiverId = $scope.individualData.senderId;
+              $scope.receiverData.receiverName = $scope.individualData.senderName;
+            }
+            console.log("$scope.receiverData : " + JSON.stringify($scope.receiverData));
 
+          } else {
+            console.log("Sorry");
+            console.log(data.data.message);
+          }
+        });
+        $scope.getChatRecords();
+
+        // $scope.allChat.chats.push({
+        //   senderId: data.senderId,
+        //   senderName: data.senderName,
+        //   message: data.message,
+        //   sendTime: data.sendTime
+        // });
+        // $scope.scrollDown();
+      }
+      else {
+        if ($scope.individualData != undefined && $scope.individualData._id == data.id) {
+          var group_id = data.group_id;
+          var obj = {
+            "seenBy": userData.userId,
+            "unseenCount": 0,
+          }
+          console.log("obj: " + JSON.stringify(obj));
+          var api = "https://vc4all.in/careator_textSeenFlagUpdate_toGroupChat/textSeenFlagUpdate_toGroupChat/" + group_id;
+          console.log("*api: " + api);
+          careatorHttpFactory.post(api, obj).then(function (data) {
+            console.log("data--" + JSON.stringify(data.data));
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            if (checkStatus) {
+              console.log("Message: " + data.data.message);
+            } else {
+              console.log("Sorry: " + data.data.message);
+            }
+          })
+          $scope.allChat.chats.push({
+            senderId: data.senderId,
+            senderName: data.senderName,
+            message: data.message,
+            sendTime: data.sendTime
+          });
+          $scope.scrollDown();
+        }
+        else {
+          console.log("Need to notify");
+          console.log("")
+          if (($scope.individualData != undefined && $scope.individualData._id != data.id) || ($scope.individualData == undefined && $scope.allGroupIds.indexOf(data.group_id) >= 0)) {
+            console.log("UnseenCount added to group");
+            var index = $scope.allGroupIds.indexOf(data.group_id);
+            console.log("index: " + index);
+            if (index >= 0) {
+              for (var x = 0; x < data.groupMembers.length; x++) {
+                if (userData.userId == data.groupMembers[x].userId) {
+                  $scope.allChatRecords[index].unseenCount = data.groupMembers[x].unseenCount;
+                  console.log(" $scope.allChatRecords[index]: " + JSON.stringify($scope.allChatRecords[index]));
+                  break;
+                }
+                else {
+                  console.log("Noting to do");
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    else if (data.group_id == undefined) {
+      console.log("**Individual text received");
+      if ($scope.individualData != undefined && data.freshInsert == true && (userData.userId == data.senderId || userData.userId == data.receiverId)) {
+        var id = data.id;
+        var api = "https://vc4all.in/careator_getChatsById/getChatsById/" + id;
+        console.log("api: " + api);
+        careatorHttpFactory.get(api).then(function (data) {
+          console.log("data--" + JSON.stringify(data.data));
+          var checkStatus = careatorHttpFactory.dataValidation(data);
+          if (checkStatus) {
+            $scope.allChat = data.data.data;
+            $scope.individualData = data.data.data;
+            console.log("$scope.allChat: " + JSON.stringify($scope.allChat));
+            console.log(
+              "$scope.individualData : " + JSON.stringify($scope.individualData)
+            );
+            $scope.receiverData = {
+              senderId: userData.userId,
+              senderName: userData.userName
+            };
+            if ($scope.individualData.receiverId != userData.userId) {
+              $scope.receiverData.receiverId = $scope.individualData.receiverId;
+              $scope.receiverData.receiverName =
+                $scope.individualData.receiverName;
+            } else if ($scope.individualData.senderId != userData.userId) {
+              $scope.receiverData.receiverId = $scope.individualData.senderId;
+              $scope.receiverData.receiverName = $scope.individualData.senderName;
+            }
+            console.log("$scope.receiverData : " + JSON.stringify($scope.receiverData));
+          } else {
+            console.log("Sorry");
+            console.log(data.data.message);
+          }
+        });
+        $scope.getChatRecords();
+      }
+      else if ($scope.individualData == undefined && data.freshInsert == true && userData.userId == data.receiverId) {
+        $scope.getChatRecords();
+      }
+      else if (data.freshInsert == undefined) {
+        console.log("$scope.individualData: " + JSON.stringify($scope.individualData));
+        console.log("data.id: " + data.id);
+        if ($scope.individualData != undefined && $scope.individualData._id == data.id) {
+          console.log("2)start pushing message");
+          var id = data.id;
+          console.log("id: " + id);
+          if (data.senderId != userData.userId) {
+            var obj = { "receiverSeen": "yes" }
+            console.log("obj: " + JSON.stringify(obj));
+            var api = "https://vc4all.in/careator_textSeenFlagUpdate/textSeenFlagUpdate/" + id;
+            console.log("api: " + api);
+
+            careatorHttpFactory.post(api, obj).then(function (data) {
+              console.log("data--" + JSON.stringify(data.data));
+              var checkStatus = careatorHttpFactory.dataValidation(data);
+              if (checkStatus) {
+                console.log("Message: " + data.data.message);
+              } else {
+                console.log("Sorry: " + data.data.message);
+              }
+            })
+          }
+          $scope.allChat.chats.push({
+            senderId: data.senderId,
+            senderName: data.senderName,
+            message: data.message,
+            sendTime: data.sendTime
+          });
+          $scope.scrollDown();
+        } else if ($scope.individualData == undefined || $scope.allChatRecordsId.indexOf(data.id) >= 0) {
+          console.log("Notify the Unseen message count: " + JSON.stringify(data));
+          if (data.receiverId == userData.userId) {
+            console.log("UnseenCount added to individual text");
+            var index = $scope.allChatRecordsId.indexOf(data.id);
+            $scope.allChatRecords[index].unseenCount = data.unseenCount;
+          }
+
+        }
+        else {
+        }
       }
     }
   });
-  socket.on("comm_textSeenFlagUpdate", function(data){
+  socket.on("comm_textSeenFlagUpdate", function (data) {
     console.log("****comm_textSeenFlagUpdate-->: " + JSON.stringify(data));
-    var index = $scope.allChatRecordsReceiverId.indexOf(data.id);
-    $scope.allChatRecords[index].unseenCount = data.unseenCount;
+    //console.log("$scope.allChatRecordsId: " + JSON.stringify($scope.allChatRecordsId));
+    //console.log("$scope.allChatRecordsIdindexOf(data.id): " + $scope.allChatRecordsId.indexOf(data.id));
+    console.log("$scope.individualData: " + JSON.stringify($scope.individualData));
+    console.log("sendGroupText_withData-->: " + JSON.stringify($scope.sendGroupText_withData));
+    if (data.isFromGroup != undefined) {
+      if (($scope.individualData != undefined && $scope.individualData.group_id == data.id)) {
+        console.log("UnseenCount added to group");
+        console.log("$scope.allGroupIds: " + JSON.stringify($scope.allGroupIds));
+        var index = $scope.allGroupIds.indexOf(data.id);
+        if (data.seenBy == userData.userId && index >= 0) {
+          $scope.allChatRecords[index].unseenCount = data.unseenCount;
+        }
+      }
+    }
+    else {
+      if (($scope.allChatRecordsId.indexOf(data.id) >= 0) && data.seenBy == userData.userId) {
+        console.log("Need to update");
+        var index = $scope.allChatRecordsId.indexOf(data.id);
+        $scope.allChatRecords[index].unseenCount = data.unseenCount;
+      }
+      else if (($scope.allChatRecordsId.indexOf(data.id) >= 0) && data.seenBy != userData.userId) {
+        console.log("No need to update");
+      }
+    }
   })
   socket.on("comm_aboutRestrictedUpdate", function (data) {
     //update to client about their new restricted users
@@ -846,4 +991,11 @@ careatorApp.controller("chatCtrl", function (
       "display": "block"
     })
   }
+
+  ///////chat welcome user////////////
+  $scope.startachat=function(){
+    $("#newchatwin").trigger("click");
+  }
+
+
 });

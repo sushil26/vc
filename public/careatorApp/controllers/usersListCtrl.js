@@ -65,7 +65,7 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
     ////////////////Delete User/////////////////////////
     $scope.deleteUser = function (id) {
         $("#deleteConfirmationButton").trigger("click");
-      
+
         console.log("deleteUser-->");
         console.log("Obj ID  " + id);
         $scope.userDelete = function () {
@@ -109,5 +109,11 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
             })
             console.log("<--statusChange");
         }
+    }
+
+    $scope.list = $scope.$parent.personList
+    $scope.config = {
+        itemsPerPage: 5,
+        fillLastPage: true
     }
 })

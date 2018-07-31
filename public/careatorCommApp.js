@@ -15,8 +15,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.email == 'vc4all@careator.com') {
 
-                    }
-                    else {
+                    } else {
                         $window.location.href = 'https://vc4all.in';
                     }
                 }
@@ -31,8 +30,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.email == 'vc4all@careator.com') {
 
-                    }
-                    else {
+                    } else {
                         $window.location.href = 'https://vc4all.in';
                     }
                 }
@@ -47,8 +45,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.email == 'vc4all@careator.com') {
 
-                    }
-                    else {
+                    } else {
                         $window.location.href = 'https://vc4all.in';
                     }
                 }
@@ -63,8 +60,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.email == 'vc4all@careator.com') {
 
-                    }
-                    else {
+                    } else {
                         $window.location.href = 'https://vc4all.in';
                     }
                 }
@@ -79,8 +75,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.email == 'vc4all@careator.com') {
 
-                    }
-                    else {
+                    } else {
                         $window.location.href = 'https://vc4all.in';
                     }
                 }
@@ -94,8 +89,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.email == 'vc4all@careator.com') {
 
-                    }
-                    else {
+                    } else {
                         $window.location.href = 'https://vc4all.in';
                     }
                 }
@@ -110,8 +104,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.email == 'vc4all@careator.com') {
 
-                    }
-                    else {
+                    } else {
                         $window.location.href = 'https://vc4all.in';
                     }
                 }
@@ -130,6 +123,12 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
             url: profile(),
             templateUrl: '/careatorApp/html/profile.html',
         })
+
+        .state('Cdashboard.ipost', {
+            url: ipost(),
+            templateUrl: '/careatorApp/html/ipost.html',
+        })
+
         .state('Cdashboard.userRestrict', {
             url: careator_userRestrict(),
             templateUrl: '/careatorApp/html/userRestriction.html',
@@ -138,8 +137,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.email == 'vc4all@careator.com') {
 
-                    }
-                    else {
+                    } else {
                         $window.location.href = 'https://vc4all.in';
                     }
                 }
@@ -147,6 +145,11 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
 
         })
 })
+
+function ipost() {
+    return '/ipost';
+}
+
 function profile() {
     return '/profile';
 }

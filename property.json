@@ -1,0 +1,37 @@
+{
+    "S0001": "User list uploaded successfully",
+    "S0002": "User created successfully",
+    "S0003": "User profile edited successfully",
+    "S0004": "User deleted successfully",
+    "S0005": "Login Successfully",
+    "S0006": "Successfully mail sent",
+    "S0007": "Successfully reset done",
+    "S0008": "Successfully get the data",
+    "S0009": "Successfully Inserted",
+    "S0010": "Successfully Updated",
+    "S0011": "Successfully group created",
+    "S0012": "Successfully sent",
+    "S0013": "Successfully deleted",
+    "S0014": "Successfully uploaded",
+    "S0015": "User profile edited successfully",
+    "S0016": "User deleted successfully",
+    
+    
+    "E0001": "User list upload failed",
+    "E0002": "User creation failed",
+    "E0003": "User profile edit failed",
+    "E0004": "User deletion failed",
+    "E0005": "Password is wrong",
+    "E0006": "Email ID is not valid",
+    "E0007": "Process failed, Contact your admin",
+    "E0008": "Credential Mismatch",
+    "E0009": "Failed to send mail",
+    
+    "N0001": "You've already logged in. To log in again, please reset your session",
+    "N0002": "You profile is inactive. Please contact the admin to activate.",
+    "N0003": "Empty value found",
+    "N0004": "Your URL not alive",
+    "N0005": "Sorry using this credential already user participating in confeence",
+    "N0006": "This employee id already exist",
+    "N0007": "This emaail id already exist"
+}

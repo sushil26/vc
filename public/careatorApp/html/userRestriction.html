@@ -2,17 +2,17 @@
     <section id="main-content">
         <section class="wrapper">
             <div id="profile">
-                <section class="panel">
+                <section class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-user-circle"></i>
-                        <span style="color:white;">&nbspUSER RESTRICTION</span>
+                        <span>&nbspUser Connectivity Restriction</span>
                     </div>
 
                     <div class="panel-body bio-graph-info" style="padding: 15px;">
                         <form class="form-horizontal" role="form" enctype="multipart/form-data">
 
                             <div class="form-group">
-                                <label class="col-lg-3">User Name*</label>
+                                <label class="col-lg-3">User Name</label>
                                 <div class="col-lg-9">
                                     <div ng-dropdown-multiselect="" options="allUserData" selected-model="allUserModel" extra-settings="allUserSettings" events="userSelectEvent">
                                     </div>
@@ -20,7 +20,7 @@
                                 </div>
                             </div>
                             <div class="form-group" ng-if="allUserModel.length>0">
-                                <label class="col-lg-3">Restricted To*</label>
+                                <label class="col-lg-3">Restrict Connectivity To</label>
                                 <div class="col-lg-9">
                                     <div ng-dropdown-multiselect="" options="authorizedUserData" selected-model="authorizedUserModel" checkboxes="true" extra-settings="authorizedUserSettings"
                                         events="restrictedUserSelectEvent">
@@ -32,7 +32,7 @@
                             <div class="form-group ">
                                 <div class="col-lg-12">
                                     <a href="#!/dashboard/usersList">
-                                        <button type="submit" class="btn btn-info">Close</button>
+                                        <button type="submit" class="btn btn-info">Done</button>
                                     </a>
                                 </div>
                             </div>

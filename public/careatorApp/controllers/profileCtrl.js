@@ -17,8 +17,7 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
                 $scope.profilePicPath = $scope.userDetails.profilePicPath;
                 console.log("   $scope.userDetails: " + JSON.stringify($scope.userDetails));
                 console.log("data.data.message: " + data.data.message);
-            }
-            else {
+            } else {
                 console.log("Sorry");
                 console.log("data.data.message: " + data.data.message);
             }
@@ -55,7 +54,9 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
     ///////upload from loacal//////////////
 
     $scope.schoolLogoStorage = function () {
-        $("#uploadlocal").css({"display":"none"});
+        $("#uploadlocal").css({
+            "display": "none"
+        });
         console.log("schoolLogoStorage-->");
         /* #####  Start Upload File ###### */
         console.log("$scope.file: " + $scope.file);
@@ -94,7 +95,7 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
         }
         /* #####  End Upload File ###### */
         else {
-            alert("logo is required");
+            alert("Logo is required");
         }
         console.log("<--schoolLogoStorage");
     }
@@ -116,8 +117,7 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
                 //$scope.eventGet();
                 $scope.getUserDataById();
 
-            }
-            else {
+            } else {
                 console.log("Sorry");
                 console.log("data.data.message: " + data.data.message);
             }
@@ -142,12 +142,16 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
         }
     };
 
-    $scope.profilpic=function(){
+    $scope.profilpic = function () {
 
-        $("#uploadlocal").css({"display":"block"});
+        $("#uploadlocal").css({
+            "display": "block"
+        });
     }
-    $scope.Cancel=function(){
-        $("#uploadlocal").css({"display":"none"});
+    $scope.Cancel = function () {
+        $("#uploadlocal").css({
+            "display": "none"
+        });
 
     }
 

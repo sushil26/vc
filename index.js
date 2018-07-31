@@ -110,6 +110,8 @@ var peerWithUserName = []; /* PeerId with UserName: peer-id is a index, Value is
 var peerTrackForVideo = { 'link': [] }; /* This variable for getting socket.id's with perticular Link*/
 var tempId = null;
 var sessionHeaderId = null;
+var sessionURLTrack = []; /* sessionURL with peer Id: peer-id is a index, value is a sessionURL  */
+var emailTrack = []; /* email with peer Id: peer-id is a index, value is a email id  */
 /**
  * Users will connect to the signaling server, after which they'll issue a "join"
  * to join a particular channel. The signaling server keeps track of all sockets
@@ -159,6 +161,25 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         console.log("[" + socket.id + "] connection disconnected Start");
+        console.log("***emailTrack[socket.id]: " + emailTrack[socket.id]);
+        console.log("***sessionURLTrack[socket.id]: " + sessionURLTrack[socket.id]);
+        var db = mongoConfig.getDb();
+        console.log("db: " + db);
+        careatorMaster = db.collection("careatorMaster");
+        var queryObj = {
+            "sessionURL": sessionURLTrack[socket.id]
+        }
+        console.log("queryObj: " + JSON.stringify(queryObj));
+        careatorMaster.update(queryObj, {
+            $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] }
+        }, function (err, data) {
+            if (err) {
+                console.log("errr: " + JSON.stringify(err));
+            }
+            else {
+                console.log("data: " + JSON.stringify(data));
+            }
+        })
         for (var channel in socket.channels) {
             console.log("connection: channel: " + channel);
             part(channel);
@@ -189,16 +210,11 @@ io.sockets.on('connection', function (socket) {
         deletedSocket_ids.push(data.deleteSessionId);
         console.log("deletedSocket_ids: " + JSON.stringify(deletedSocket_ids));
         var tempSock = sockets[data.deleteSessionId]; /* ### Note using this deleteSessionId we are getting real socket(tempSock)   ### */
-        // for (var channel in tempSock.channels) {
-        //     console.log("connection: channel: " + channel);
-        //     part(channel);
-        // }
         console.log("started to delete session");
         console.log("data.deleteSessionId: " + data.deleteSessionId);
         console.log("sockets[data.deleteSessionId]: " + sockets.valueOf(data.deleteSessionId));
         delete sockets[data.deleteSessionId];
         delete peerTrackForVideo[data.deleteSessionId];
-        //delete channels[channel][data.deleteSessionId];
         console.log("sockets[data.deleteSessionId]: " + sockets[data.deleteSessionId]);
         console.log("deletedSocket_ids: " + JSON.stringify(deletedSocket_ids));
         console.log("<--disconnectSession");
@@ -209,6 +225,8 @@ io.sockets.on('connection', function (socket) {
         console.log("Join-->");
         peerWithQueryId[config.owner] = config.queryLink;
         peerWithTimeId[config.owner] = config.timeLink;
+        sessionURLTrack[config.owner] = config.sessionURL;
+        emailTrack[config.owner] = config.email;
 
         peerWithUserName[config.owner] = config.userName;
 
@@ -259,7 +277,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     function part(channel) {
-        console.log("[" + socket.id + "] part ");
+        console.log("Part[" + socket.id + "] part ");
         if (!(channel in socket.channels)) {
             console.log("[" + socket.id + "] ERROR: not in ", channel);
             return;
@@ -272,6 +290,31 @@ io.sockets.on('connection', function (socket) {
         }
     }
     socket.on('part', part);
+    socket.on('disconnectNotification', function (config) {
+        console.log("disconnectNotification-->: " + JSON.stringify(config));
+        var db = mongoConfig.getDb();
+        console.log("db: " + db);
+        careatorMaster = db.collection("careatorMaster");
+        var queryObj = {
+            "sessionURL": config.sessionURL
+        }
+        console.log("queryObj: " + JSON.stringify(queryObj));
+        var leftEmails = {
+            "email": config.email
+        }
+        console.log("leftEmails: " + JSON.stringify(leftEmails));
+        careatorMaster.update({ "sessionURL": config.sessionURL }, {
+            $addToSet: { "leftEmails": config.email }, $pull: { "joinEmails": config.email }
+        }, function (err, data) {
+            if (err) {
+                console.log("errr: " + JSON.stringify(err));
+            }
+            else {
+                console.log("data: " + JSON.stringify(data));
+                socket.emit('doRedirect', { "email": config.email });
+            }
+        })
+    })
 
     socket.on('relayICECandidate', function (config) {
         console.log("relayICECandidate-->")
@@ -446,9 +489,44 @@ io.sockets.on('connection', function (socket) {
     /* ### Start: Get the logoutNotification from the user(careator_dashboardCtrl.js) ### */
     socket.on('comm_logout', function (data) {
         console.log("comm_logout-->: " + JSON.stringify(data));
+
         var db = mongoConfig.getDb();
         console.log("db: " + db);
         careatorMaster = db.collection("careatorMaster");
+        if (data.sessionURL != "") {
+            var url = data.sessionURL;
+            var stuff = url.split("/");
+            console.log("stuff: " + JSON.stringify(stuff));
+            console.log("emailTrack: " + JSON.stringify(emailTrack));
+            console.log("emailTrack.indexOf(data.email): " + emailTrack.indexOf(data.email));
+            if (emailTrack.indexOf(data.email) >= 0) {
+                io.sockets.emit('disconnectSessionReply', { "deleteSessionId": stuff[4], "owner": emailTrack.indexOf(datadata.email) });
+            }
+            var queryObj = {
+                "_id": ObjectId(data.userId)
+            }
+            careatorMaster.update(queryObj, { $set: { "isDisconnected": "yes" } }, function (err, data) {
+                if (err) {
+                    console.log("errr: " + JSON.stringify(err));
+                }
+                else {
+                    console.log("data: " + JSON.stringify(data));
+                }
+            })
+            console.log("Deleting id: " + stuff[4]);
+            deletedSocket_ids.push(stuff[4]);
+            console.log("deletedSocket_ids: " + JSON.stringify(stuff[4]));
+            var tempSock = sockets[stuff[4]]; /* ### Note using this deleteSessionId we are getting real socket(tempSock)   ### */
+            console.log("started to delete session");
+            console.log(" stuff[4]: " + stuff[4]);
+            console.log("sockets[ stuff[4]]: " + sockets.valueOf(stuff[4]));
+            delete sockets[stuff[4]];
+            delete peerTrackForVideo[stuff[4]];
+            console.log("sockets[ stuff[4]]: " + sockets[stuff[4]]);
+            console.log("deletedSocket_ids: " + JSON.stringify(deletedSocket_ids));
+            console.log("<--disconnectSession");
+        }
+
         var queryObj = {
             "_id": ObjectId(data.userId)
         }
@@ -467,6 +545,58 @@ io.sockets.on('connection', function (socket) {
     socket.on('comm_logoutSession', function (data) {
         console.log("comm_logoutSession-->: " + JSON.stringify(data));
         io.sockets.emit('comm_logoutNotifyToUserById_beczOfDeadSessionRandomId', { "userId": data.userId, "email": data.email, "sessionURL": data.sessionURL, "sessionRandomId": data.sessionRandomId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
+
+        var db = mongoConfig.getDb();
+        console.log("db: " + db);
+        careatorMaster = db.collection("careatorMaster");
+        if (data.sessionURL != "") {
+            var url = data.sessionURL;
+            var stuff = url.split("/");
+            console.log("stuff: " + JSON.stringify(stuff));
+            console.log("emailTrack: " + JSON.stringify(emailTrack));
+            console.log("emailTrack.indexOf(data.email): " + emailTrack.indexOf(data.email));
+            if (emailTrack.indexOf(data.email) >= 0) {
+                io.sockets.emit('disconnectSessionReply', { "deleteSessionId": stuff[4], "owner": emailTrack.indexOf(datadata.email) });
+            }
+            var queryObj = {
+                "_id": ObjectId(data.userId)
+            }
+            careatorMaster.update(queryObj, { $set: { "isDisconnected": "yes" } }, function (err, data) {
+                if (err) {
+                    console.log("errr: " + JSON.stringify(err));
+                }
+                else {
+                    console.log("data: " + JSON.stringify(data));
+                }
+            })
+            console.log("Deleting id: " + stuff[4]);
+            deletedSocket_ids.push(stuff[4]);
+            console.log("deletedSocket_ids: " + JSON.stringify(stuff[4]));
+            var tempSock = sockets[stuff[4]]; /* ### Note using this deleteSessionId we are getting real socket(tempSock)   ### */
+            console.log("started to delete session");
+            console.log(" stuff[4]: " + stuff[4]);
+            console.log("sockets[ stuff[4]]: " + sockets.valueOf(stuff[4]));
+            delete sockets[stuff[4]];
+            delete peerTrackForVideo[stuff[4]];
+            console.log("sockets[ stuff[4]]: " + sockets[stuff[4]]);
+            console.log("deletedSocket_ids: " + JSON.stringify(deletedSocket_ids));
+            console.log("<--disconnectSession");
+        }
+
+        var queryObj = {
+            "_id": ObjectId(data.userId)
+        }
+        console.log("queryObj: " + JSON.stringify(queryObj));
+        console.log("chatHistory: " + chatHistory);
+        careatorMaster.update(queryObj, { $set: { "logout": "done", "login": "notDone" } }, function (err, updateData) {
+            if (err) {
+                console.log("errr: " + JSON.stringify(err));
+            }
+            else {
+                console.log("updateData: " + JSON.stringify(updateData));
+                io.sockets.emit('comm_logoutNotifyToUserById', { "userId": data.userId, "email": data.email, "sessionURL": data.sessionURL, "sessionRandomId": data.sessionRandomId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
+            }
+        })
 
     })
     /* ### End: Get the logoutNotification from the user(careator_dashboardCtrl.js) ### */

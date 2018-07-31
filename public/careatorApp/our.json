@@ -1,0 +1,11 @@
+{
+    "alert1": "You do not have permission to chat with",
+    "alert2": "Are you sure you want to edit the user ?",
+    "alert3": "Are you sure you want to delete the user?",
+    "alert4": "Are you sure you want to activate/deactivate the user?",
+    "alert5": "Have you closed all the sessions?",
+    "alert6": "Do you wish to disconnect the session?",
+    "alert7": "Reseting your session will log you out from all other devices. Are you sure you want to proceed?",
+    "alert8": "You've already logged in. To log in again, please reset your session.",
+    "alert9": "You profile is inactive. Please contact the admin to activate."
+}

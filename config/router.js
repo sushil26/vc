@@ -48,6 +48,7 @@ module.exports = function (app) {
     app.get('/careator_loggedin/getLoggedinSessionURLById/:id', careator.getLoggedinSessionURLById);
     app.post('/careator_reset/resetLoginFlagsById/:id', careator.resetLoginFlagsById);
     app.post('/careator_textSeenFlagUpdate/textSeenFlagUpdate/:id', careator.textSeenFlagUpdate);
+    app.post('/careator_textSeenFlagUpdate_toGroupChat/textSeenFlagUpdate_toGroupChat/:group_id', careator.textSeenFlagUpdate_toGroupChat);
     //app.post('/careator/careator_video_creteGroup', careator.careator_video_creteGroup);
     //app.post('/careator/careator_chatVideo_creteGroup', careator.careator_chatVideo_creteGroup);
 

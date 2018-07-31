@@ -16,6 +16,7 @@
     <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
     <!-- Main Stylesheet File -->
     <link href="/home/css/style.css" rel="stylesheet">
+    <!-- <link href="/careatorApp/css/animate.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="/css/chatZone.css" />
     <script src="/js/clientmain.js"></script>
     <script src="/bower_components/easytimer.js/dist/easytimer.js"></script>
@@ -24,6 +25,29 @@
     <script src="/js/studentMarkAtt_automation.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
+        .extn {
+            margin-right: 25px;
+            list-style-type: none;
+            font-weight: 300;
+            font-size: 12px;
+            height: 75px;
+            background-image: linear-gradient(to bottom, #f8f9fa 0%, #868e96 100%);
+            width: 362px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .btnn {
+            border-radius: 5px;
+            background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
+            color: white;
+            padding: 3.5px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 1px 2px 2px #000000b8;
+        }
+
         button.example {
             -webkit-transition: all 0s ease-out;
             -moz-transition: all 0s ease-out;
@@ -45,8 +69,9 @@
         }
 
         button.facebook {
-            background-image: linear-gradient(to bottom, #3b5999f0 0%, #131d33 100%);
-            box-shadow: 1px 2px 5px #000;
+            background-image: linear-gradient(to bottom, #383939 0%, #0a0b0b 100%);
+
+            box-shadow: 1px 2px 5px #0009;
         }
 
 
@@ -83,6 +108,8 @@
             font-size: 35px;
             text-shadow: 4px 4px 4px #191515;
             font-weight: 400;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
         }
 
         .adbody {
@@ -90,26 +117,24 @@
             transition-timing-function: ease-in;
             font-family: lato;
             color: #000;
-            background: white;
+            background-image: linear-gradient(to bottom, #f8f9fa 0%, #868e96 100%);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            /* background: #f7f7f7; */
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             transition: 0.3s;
             padding: 10px;
             min-height: 200px;
             font-size: 15px;
             font-weight: 300;
-            /* border: 1px solid #303336; */
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
         }
 
-        .adbody:hover {
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-            color: #0a425f !important;
-            font-size: 17px;
-            font-weight: 400;
-        }
+
 
         a:hover {
 
-            color: sienna !important;
+            color: green !important;
 
         }
     </style>
@@ -137,12 +162,59 @@
                 </a>
             </span>
         </div>
+        <div style="    position: absolute;right: 10px;
+        color: white; 
+        font-weight: 100;
+        font-size: 14px;">Current Speed:
+            <span id="speed"></span>&nbsp;Mbps
+            <table>
+                <tr>
+                    <td>
+                        <div id="connectionStatus" style="margin-top: 4px;"></div>
+                    </td>
+                    <td>
+
+                        <div id="bars4" class="signal-bars mt1 sizing-box good four-bars" style="display: none;">
+                            <div class="first-bar bar"></div>
+                            <div class="second-bar bar"></div>
+                            <div class="third-bar bar"></div>
+                            <div class="fourth-bar bar"></div>
+                            <!-- <div class="fifth-bar bar"></div> -->
+                        </div>
+                        <div id="bars3" class="signal-bars mt1 sizing-box good three-bars" style="display: none;">
+                            <div class="first-bar bar"></div>
+                            <div class="second-bar bar"></div>
+                            <div class="third-bar bar"></div>
+                            <div class="fourth-bar bar"></div>
+                            <!-- <div class="fifth-bar bar"></div> -->
+                        </div>
+                        <div id="bars2" class="signal-bars mt1 sizing-box ok two-bars" style="display: none;">
+                            <div class="first-bar bar"></div>
+                            <div class="second-bar bar"></div>
+                            <div class="third-bar bar"></div>
+                            <div class="fourth-bar bar"></div>
+                            <!-- <div class="fifth-bar bar"></div> -->
+                        </div>
+                        <div id="bars1" class="signal-bars mt1 sizing-box bad one-bar" style="display: none;">
+                            <div class="first-bar bar"></div>
+                            <div class="second-bar bar"></div>
+                            <div class="third-bar bar"></div>
+                            <div class="fourth-bar bar"></div>
+                            <!-- <div class="fifth-bar bar"></div> -->
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+
+
+
+        </div>
+
+
 
     </header>
     <!-- ### End header #### -->
-
-
-
     <!--==========================
       Portfolio Section
     ============================-->
@@ -158,12 +230,12 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <button id="videoConfStart" style="margin-top: 50px;display:none;" class="example facebook ">
+                                        <button id="videoConfStart" style="margin-top: 50px;display:none;" class="example facebook slideLeft ">
                                             <i class="fa fa-video-camera"></i>&nbsp;Video
                                         </button>
                                     </td>
                                     <td>
-                                        <button id="chatConfStart" style="margin-top: 50px;display:none;" class="example facebook " onclick="chatNavigation()">
+                                        <button id="chatConfStart" style="margin-top: 50px;display:none;" class="example facebook slideRight " onclick="chatNavigation()">
                                             <i class="fa fa-comments"></i>&nbsp;Chat
                                         </button>
                                     </td>
@@ -253,46 +325,66 @@
                         </center>
 
                     </div>
-                    <div class="col-lg-12" id "extension" style="margin-top: 15vh; color: black;">
 
+                    <div id="extnn">
+                        <div class="col-lg-12" style="margin-top:4vh; color: black;">
+                            <div class="form-group pull-right">
+                                <ul class="extn  slideLeft pull-right">
+                                    <li>
+                                        <b># To have a seamless video conferencing in
+                                            <span style="color:#1da360">Chrome</span> Browser:</b>
+                                    </li>
+                                    <li> Install Screen Sharing Extension.
+                                        <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog"
+                                            target="_blank">
+                                            <button class="btnn fa fa-download">
+                                                Click Here</button>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12" style="color: black; margin-top: -25px;">
+                            <div class="form-group pull-right">
+                                <ul class="extn slideRight ">
+                                    <li>
+                                        <b># To have an uninterrupted video conferencing in
+                                            <span style="color:#ff1a2f;">Opera</span> Browser:</b>
+                                    </li>
+                                    <li> Install Opera Extension.
+                                        <a href="https://addons.opera.com/en-gb/extensions/details/download-chrome-extension-9/?display=en" target="_blank">
+                                            <button class="btnn fa fa-download">
+                                                Click Here</button>
+                                    </li>
+                                    <li>
+                                        </a> Then install Screen Sharing Extension.
+                                        <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog"
+                                            target="_blank">
+                                            <button class="btnn fa fa-download">
+                                                Click Here</button>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-lg-12" id="extension">
                         <div id="videoConferenceLinkExtention">
                             <div class="form-group">
                                 <div class="col-sm-12" style="display:none" style="overflow:hidden;text-overflow:ellipsis;">
                                     <a style="color:black;" style="display:none" id="linkToShare"> </a>
                                 </div>
                             </div>
-                            <div class="form-group" id="invitePeople_container">
-                                <center>
-                                    <h6>
-                                        <b>Opera</b> user need to install first this
-                                        <a href="https://addons.opera.com/en-gb/extensions/details/download-chrome-extension-9/?display=en" target="_blank">
-                                            <button class="btnn fa fa-download" style="border-radius: 5px;border-color:  white;">
-                                                Opera Extension</button>
-                                        </a> then Screen Sharing from below
-                                    </h6>
-                                </center>
-
-                            </div>
-                            <div class="form-group">
-                                <center>
-                                    <h6>
-                                        <b>Chrome</b> user need to install Only this extension for Screen Sharing
-                                        <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk?utm_source=chrome-app-launcher-info-dialog"
-                                            target="_blank">
-                                            <button class="btnn fa fa-download" style="border-radius: 5px;border-color:  white;">
-                                                Screen Sharing</button>
-                                        </a>
-                                    </h6>
-                                </center>
-                            </div>
-
                         </div>
-
                     </div>
                     <div class="col-lg-12">
                         <button data-toggle="modal" data-target="#alertcreator" id="alertButton" data-backdrop="static" data-keyboard="false" style="display:none"></button>
-
-
                         <div class="modal fade" id="alertcreator" role="dialog">
                             <div class="modal-dialog">
                                 <center>
@@ -326,9 +418,7 @@
                                                 <span class="modal-title" style="font-weight: 200;">Message</span>
                                             </div>
                                             <div class="modal-body">
-
                                                 <label id="notify_msg_confirm_content" style="color:indianred;font-size: 20px;">The link you are trying its not alive</label>
-
                                             </div>
                                             <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
                                                 <button type="button" style="background-color: #29b6bd;color:#f1f1f1" data-dismiss="modal" class="btn">ok</button>
@@ -384,7 +474,7 @@
                                             <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
 
                                                 <!-- <button id="setEmail" type="submit" onclick="sendEmail()" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Submit</button> -->
-                                                <button type="button" onclick="resetLoginFlag()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Reset</button>
+                                                <button id="resetBtn" type="button" onclick="resetLoginFlag()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Reset</button>
                                                 <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Ok</button>
                                             </div>
                                         </div>
@@ -392,8 +482,6 @@
                                 </center>
                             </div>
                         </div>
-
-
                         <div class="modal fade" id="remoteJoin" role="dialog">
                             <div class="modal-dialog">
                                 <center>
@@ -464,8 +552,6 @@
 
 
                         </div>
-
-
                         <div class="modal fade" id="invitePeople" role="dialog">
                             <div class="modal-dialog">
                                 <center>
@@ -483,7 +569,7 @@
 
                                             </div>
                                             <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                                                <button type="button"   id="invitebutton" onclick="emailInviteSend()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Invite</button>
+                                                <button type="button" id="invitebutton" onclick="emailInviteSend()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Invite</button>
                                             </div>
                                         </div>
                                     </form>
@@ -494,13 +580,12 @@
                     </div>
                 </div>
 
-                <div class="row" style="margin:10px;">
-                    <div class="col-lg-4 col-md-6">
+                <div class="row" style="padding:25px; margin-top: -60px;">
+                    <div class="col-lg-4 col-md-6" style="margin-bottom: 10px;">
                         <div class="adhead">
                             <span style="padding: 5px;">Product and Services</span>
                         </div>
-                        <div class="adbody" style="background-image:url(/home/img/fav.png);
-                        background-size: cover;background-position: center;">
+                        <div class="adbody">
                             <table>
                                 <tr>
                                     <td>
@@ -543,23 +628,21 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-4 col-md-6" style="margin-bottom: 10px;">
                         <div class="adhead">
                             <span style="   padding: 5px;">Current Openings</span>
                         </div>
-                        <div class="adbody" style="background-image:url(/home/img/fav.png);
-                        background-size: cover; background-position: center;">
+                        <div class="adbody">
                             <i class="fa fa-check" aria-hidden="true"></i>
                             <a href="http://www.careator.com/job-oppenings.php" target="_blank">
                                 See Our All Job Openings</a>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-4 col-md-6" style="margin-bottom: 10px;">
                         <div class="adhead">
                             <span style="   padding: 5px;">News & Blogs</span>
                         </div>
-                        <div class="adbody" style="background-image:url(/home/img/fav.png);
-                        background-size: cover; background-position: center;">
+                        <div class="adbody">
                             <i class="fa fa-check" aria-hidden="true"></i>
                             <a href="http://www.careator.com/latest-news.php" target="_blank">
                                 See Our News
@@ -647,38 +730,54 @@
           Footer
     ===============================-->
     <footer id="footer">
-        <div class="footer-top">
+        <!-- <div class="footer-top">
             <div class="container">
 
             </div>
-        </div>
-        <div class="container">
-            <div class="copyright">
-                &copy; Copyright
-                <strong>Careator</strong>. All Rights Reserved
+        </div> -->
+        <div class="row">
+
+            <div class="col-md-5 col-lg-5">
+
+                <div class="copyright">
+                    <img style="width: 110px;" src="/img/logo.svg"> &nbsp;|&nbsp; &copy; Copyright
+                    <strong>Careator</strong>. All Rights Reserved
+                </div>
+
             </div>
-        </div>
-        <div class="container">
-            <div class="copyright">
-                <span class="icn">
-                    <a href="#" class="twitter imm">
-                        <i class="fa fa-twitter"></i>
-                    </a>
-                    <a href="#" class="facebook imm">
-                        <i class="fa fa-facebook"></i>
-                    </a>
-                    <a href="#" class="instagram imm">
-                        <i class="fa fa-instagram"></i>
-                    </a>
-                    <a href="#" class="google-plus imm">
-                        <i class="fa fa-google-plus"></i>
-                    </a>
-                    <a href="#" class="linkedin imm">
-                        <i class="fa fa-linkedin"></i>
-                    </a>
-                </span>
+            <div class="col-md-2 col-lg-2">
+
             </div>
+
+            <div class="col-md-5 col-lg-5">
+
+                <div class="copyright">
+                    <span class="icn">
+                        <a href="#" style="color: #1ea1f2;" class="twitter imm">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" style="color: #3d5998;" class="facebook imm">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="instagram imm">
+                            <i class="fa fa-instagram" style="background: -webkit-linear-gradient(#dd004f, #fec85c);
+                                        -webkit-background-clip: text !important;
+                                        -webkit-text-fill-color: transparent;"></i>
+                        </a>
+                        <a href="#" style="color: #dd4b39;" class="google-plus imm">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                        <a href="#" style="color: #0072b1;" class="linkedin imm">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </span>
+                </div>
+
+            </div>
+
         </div>
+
+
     </footer>
     <!--=============================
     Footer End
@@ -741,6 +840,21 @@
     </script>
     <script>
         $(document).ready(function () {
+
+            if (window.matchMedia('(min-width:500px)').matches) {
+                console.log("<<<<<<<home icon hide>>>>>>>");
+                $("#extnn").css({
+                    "display": "contents"
+                })
+            }
+            if (window.matchMedia('(max-width: 500px)').matches) {
+                console.log("<<<<<<<home icon hide>>>>>>>");
+                $("#extnn").css({
+                    "display": "none"
+                })
+            }
+
+
             $("#openChat").click(function () {
 
                 $("#portfolio-wrapper").addClass("intro");
@@ -853,7 +967,179 @@
         function closeExpireSessionCustom() {
             close();
         }
+        // window.onbeforeunload = function () {
+        //     return "Do you really want to leave our brilliant application?";
+        //     //if we return nothing here (just calling return;) then there will be no pop-up question at all
+        //     //return;
+        // };
     </script>
+    <script>
+        function speed() {
+            console.log("speeeeeeeeeeeeed");
+            var imageAddr = "/css/test.jpg" + "?n=" + Math.random();
+            var startTime, endTime;
+            var downloadSize = 191 * 1024;
+            var download = new Image();
+            download.onload = function () {
+                endTime = (new Date()).getTime();
+                showResults();
+            }
+            startTime = (new Date()).getTime();
+            download.src = imageAddr;
+
+
+            function showResults() {
+                var duration = (endTime - startTime) / 1000;
+                var bitsLoaded = downloadSize * 8;
+                var speedBps = (bitsLoaded / duration).toFixed(2);
+                var speedKbps = (speedBps / 1024).toFixed(2);
+                var speedMbps = (speedKbps / 1024).toFixed(2);
+                // alert("Your connection speed is: \n" +
+                //     speedBps + " bps\n" +
+                //     speedKbps + " kbps\n" +
+                //     speedMbps + " Mbps\n");
+
+                if (speedMbps <= 2) {
+                    document.getElementById('connectionStatus').innerHTML = "Poor Network &nbsp;";
+                    $("#bars1").css({
+                        "display": "block"
+                    });
+                    $("#bars2").css({
+                        "display": "none"
+                    });
+                    $("#bars3").css({
+                        "display": "none"
+                    });
+                    $("#bars4").css({
+                        "display": "none"
+                    });
+
+                }
+                if (speedMbps > 2 && speedMbps < 4) {
+                    document.getElementById('connectionStatus').innerHTML = "Fair Network &nbsp;";
+                    $("#bars1").css({
+                        "display": "none"
+                    });
+                    $("#bars2").css({
+                        "display": "block"
+                    });
+                    $("#bars3").css({
+                        "display": "none"
+                    });
+                    $("#bars4").css({
+                        "display": "none"
+                    });
+
+                }
+                if (speedMbps > 4 && speedMbps < 10) {
+                    document.getElementById('connectionStatus').innerHTML = "Good Network &nbsp;";
+                    $("#bars1").css({
+                        "display": "none"
+                    });
+                    $("#bars2").css({
+                        "display": "none"
+                    });
+                    $("#bars3").css({
+                        "display": "block"
+                    });
+                    $("#bars4").css({
+                        "display": "none"
+                    });
+
+                }
+
+                if (speedMbps > 10) {
+                    document.getElementById('connectionStatus').innerHTML = "Excellent Network &nbsp;";
+                    $("#bars1").css({
+                        "display": "none"
+                    });
+                    $("#bars2").css({
+                        "display": "none"
+                    });
+                    $("#bars3").css({
+                        "display": "none"
+                    });
+                    $("#bars4").css({
+                        "display": "block"
+                    });
+
+                }
+
+
+                document.getElementById('speed').innerHTML = speedMbps;
+            }
+
+        }
+        setInterval(function () {
+            speed();
+        }, 5000)
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+
+        .sizing-box {
+            height: 25px;
+            width: 40px;
+        }
+
+        .signal-bars {
+            display: inline-block;
+        }
+
+        .signal-bars .bar {
+            width: 14%;
+            margin-left: 1%;
+            min-height: 20%;
+            display: inline-block;
+        }
+
+        .signal-bars .bar.first-bar {
+            height: 20%;
+        }
+
+        .signal-bars .bar.second-bar {
+            height: 40%;
+        }
+
+        .signal-bars .bar.third-bar {
+            height: 60%;
+        }
+
+        .signal-bars .bar.fourth-bar {
+            height: 80%;
+        }
+
+        .signal-bars .bar.fifth-bar {
+            height: 99%;
+        }
+
+        .good .bar {
+            background-color: #16a085;
+            border: thin solid darken(#16a085, 7%);
+        }
+
+        .bad .bar {
+            background-color: #e74c3c;
+            border: thin solid darken(#e74c3c, 20%);
+        }
+
+        .ok .bar {
+            background-color: #f1c40f;
+            border: thin solid darken(#f1c40f, 7%);
+        }
+
+        .four-bars .bar.fifth-bar,
+        .three-bars .bar.fifth-bar,
+        .three-bars .bar.fourth-bar,
+        .one-bar .bar:not(.first-bar),
+        .two-bars .bar:not(.first-bar):not(.second-bar) {
+            background-color: #fafafa;
+            border: thin solid #f3f3f3;
+        }
+    </style>
 </body>
 
 </html>

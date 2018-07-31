@@ -90,7 +90,7 @@ span {
 }
 
 i {
-  color: white;
+  color: #555;
 }
 
 #sidebar>ul>li>a>i.fa-home:hover {
@@ -122,7 +122,7 @@ i {
 }
 
 body {
-  color: #797979;
+  color: #333;
   font-family: "Lato", sans-serif;
   padding: 0px !important;
   margin: 0px !important;
@@ -425,15 +425,15 @@ table tr th {
 /*sidebar navigation*/
 
 #sidebar {
-  margin-top: 48px;
+  margin-top: 46px;
   width: 180px;
   height: 100%;
   position: fixed;
-  background-color: #1a3652;
+  background-color: #212325;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
-  border-left: 2px solid #2e3134;
-  border-right: 2px solid #2e3134;
+  /* border-left: 2px solid #2e3134;
+  border-right: 2px solid #2e3134; */
 }
 
 .nav-collapse.collapse {
@@ -443,7 +443,9 @@ table tr th {
 ul.sidebar-menu,
 ul.sidebar-menu li ul.sub {
   margin: -2px 0 0;
-  padding: 0;
+  padding-top: 5px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 /* ul.sidebar-menu {
@@ -499,8 +501,14 @@ ul.sidebar-menu li ul.sub li.active a {
 }
 
 ul.sidebar-menu li {
+  color: #555;
+  border-radius: 3px;
+  font-size: 15px;
+  cursor: pointer;
+  background-image: linear-gradient(to bottom, #f7f8f9 0%, #6f6f6f 100%);
+  box-shadow: 1px 2px 5px #000;
   line-height: 20px !important;
-  background: linear-gradient(#868e9673, #868e9630);
+  /* background: linear-gradient(#ffffff, #848c94fa); */
   /*margin-bottom: 5px;
 
     margin-left:10px;
@@ -525,7 +533,7 @@ ul.sidebar-menu li a span {
 
 ul.sidebar-menu li a {
   border-top: 1px solid #2e3134;
-  border-bottom: 1px solid #2e3134;
+  /* border-bottom: 1px solid #2e3134; */
   color: #d0d8df;
   text-decoration: none;
   display: block;
@@ -736,6 +744,20 @@ ul.sidebar-menu li.active a i {
   width: 25%;
   padding: 0.25em 0.5em;
   margin: 20px 10px 0 0;
+}
+
+.deepbutton {
+  color: #555;
+  border-radius: 5px;
+  font-size: 15px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  background-image: linear-gradient(to bottom, #f7f8f9 0%, #6f6f6f 100%);
+  box-shadow: 1px 2px 5px #000;
+  text-shadow: 2px 2px 3px rgba(188, 187, 187, 0.5);
 }
 
 .header {
@@ -1365,7 +1387,7 @@ div[data-role="editor-toolbar"] {
 /*----------------------	panel-----------------*/
 
 .panel {
-  border: 1px solid #1b3752;
+  /* border: 1px solid #1b3752; */
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;

@@ -186,11 +186,12 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                                 "sessionURL": sessionURL,
                                 "sessionRandomId": $scope.userData.sessionRandomId
                             }); /* ### Note: Logout notification to server ### */
+
                         } else {
                             socket.emit("comm_logout", {
                                 "userId": $scope.userData.userId,
                                 "email": $scope.userData.email,
-                                "sessionURL": "",
+                                "sessionURL": sessionURL,
                                 "sessionRandomId": $scope.userData.sessionRandomId
                             }); /* ### Note: Logout notification to server ### */
                         }
@@ -392,10 +393,12 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             console.log('window is already opened');
             $("#closeConfirmationButton").trigger("click");
         }
+
         $scope.focust = function () {
             w.focus();
         }
     }
+
 
     /* ##### Start: on window only one open tab should be there for this page  ##### */
     // if (+localStorage.tabCount > 0) 
