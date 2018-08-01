@@ -354,7 +354,7 @@ app.controller('quickMsgCtl', function ($scope, $rootScope, $state, $rootScope, 
     }
     else {
         console.log("loginType" + loginType);
-        // window.location.href = "https://vc4all.in";
+        // window.location.href = "https://norecruits.com";
     }
 
     $scope.getStudListForCS = function (css) {

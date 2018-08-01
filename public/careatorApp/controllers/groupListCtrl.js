@@ -2,7 +2,7 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, $rootScope, $f
     console.log("groupListCtrl==>");
     $scope.getGroupList = function () {
         console.log("getGroupList-->");
-        var api = "https://vc4all.in/careator_chatGroupList/careator_getChatGroupList";
+        var api = "https://norecruits.com/careator_chatGroupList/careator_getChatGroupList";
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -29,7 +29,7 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, $rootScope, $f
             "id": id,
             "status": status
         }
-        var api = "https://vc4all.in/careator/groupStatusChangeById";
+        var api = "https://norecruits.com/careator/groupStatusChangeById";
         console.log("api: " + api);
         careatorHttpFactory.post(api, obj).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -63,7 +63,7 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, $rootScope, $f
         $("#GroupDeleteButton").trigger("click");
 
         $scope.groupDelete = function () {
-            var api = "https://vc4all.in/careator_groupDelete/groupDeleteById/" + id;
+            var api = "https://norecruits.com/careator_groupDelete/groupDeleteById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
