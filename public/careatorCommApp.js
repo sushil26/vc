@@ -22,7 +22,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     if (userData.email == 'vc4all@careator.com') {
 
                     } else {
-                        $window.location.href = 'https://norecruits.com';
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }
@@ -37,7 +37,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     if (userData.email == 'vc4all@careator.com') {
 
                     } else {
-                        $window.location.href = 'https://norecruits.com';
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }
@@ -52,7 +52,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     if (userData.email == 'vc4all@careator.com') {
 
                     } else {
-                        $window.location.href = 'https://norecruits.com';
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }
@@ -67,7 +67,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     if (userData.email == 'vc4all@careator.com') {
 
                     } else {
-                        $window.location.href = 'https://norecruits.com';
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }
@@ -82,7 +82,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     if (userData.email == 'vc4all@careator.com') {
 
                     } else {
-                        $window.location.href = 'https://norecruits.com';
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }
@@ -96,7 +96,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     if (userData.email == 'vc4all@careator.com') {
 
                     } else {
-                        $window.location.href = 'https://norecruits.com';
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }
@@ -111,7 +111,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     if (userData.email == 'vc4all@careator.com') {
 
                     } else {
-                        $window.location.href = 'https://norecruits.com';
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }
@@ -144,7 +144,7 @@ careatorApp.config(function ($stateProvider, $urlRouterProvider) {
                     if (userData.email == 'vc4all@careator.com') {
 
                     } else {
-                        $window.location.href = 'https://norecruits.com';
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }

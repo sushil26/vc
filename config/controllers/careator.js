@@ -869,7 +869,6 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
         "password": data.Password,
         "Designation": data.Designation,
         "sessionRandomId": sessionRandomId,
-        "Designation": data.Designation,
         "status": "active",
         "chatStatus": "Available",
         "restrictedTo": [],

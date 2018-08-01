@@ -5,7 +5,7 @@ careatorApp.controller('editUserCtrl', function ($scope, $state,careatorHttpFact
 
     $scope.getUser = function () {
         console.log("getUser---->>>");
-        var api = "https://norecruits.com/careator_getUser/careator_getUserById/" + id;
+        var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -36,7 +36,7 @@ careatorApp.controller('editUserCtrl', function ($scope, $state,careatorHttpFact
         console.log("updateUser-->");
         console.log("$scope.userDataRights.videoRights: " + $scope.userDataRights.videoRights);
         console.log("$scope.userDataRights.chatRights: " + $scope.userDataRights.chatRights);
-        var api = "https://norecruits.com/careator/userEditById/" + id;
+        var api = "https://vc4all.in/careator/userEditById/" + id;
         console.log("api: " + api);
         var obj = {
             "userName": $scope.userName,

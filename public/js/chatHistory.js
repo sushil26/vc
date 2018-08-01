@@ -1,7 +1,7 @@
 var email = localStorage.getItem('careatorEmail');
 
 $.ajax({
-    url: "https://norecruits.com/chatHistory/getHistoryByEmailId/" + email,
+    url: "https://vc4all.in/chatHistory/getHistoryByEmailId/" + email,
     type: "GET",
     contentType: "application/json",
     dataType: "json",
@@ -24,7 +24,7 @@ $.ajax({
         //     parentUL.appendChild(li);
        
         // }
-        //window.location.href = "https://norecruits.com/careator/" + id + "/" + date;
+        //window.location.href = "https://vc4all.in/careator/" + id + "/" + date;
     },
     error: function (err) {
         console.log("err: " + JSON.stringify(err));

@@ -14,13 +14,13 @@ careatorApp.controller('createGroupCtrl', function ($scope, $state,careatorHttpF
         // console.log("value: " + value);
         var api;
         // if (value == "chat") {
-            api = "https://norecruits.com/careator/getChatRights_emp";
+            api = "https://vc4all.in/careator/getChatRights_emp";
         // }
         // else if (value == "video") {
-        //     api = "https://norecruits.com/careator/getVideoRights_emp";
+        //     api = "https://vc4all.in/careator/getVideoRights_emp";
         // }
         // else {
-        //     api = "https://norecruits.com/careator/careator_getChatVideo_emp";
+        //     api = "https://vc4all.in/careator/careator_getChatVideo_emp";
         // }
         console.log("api: " + JSON.stringify(api));
         careatorHttpFactory.get(api).then(function (data) {
@@ -88,13 +88,13 @@ careatorApp.controller('createGroupCtrl', function ($scope, $state,careatorHttpF
         obj.admin = admin;
         console.log("obj: " + JSON.stringify(obj));
         // if ($scope.rightSelect == 'chat') {
-            api = "https://norecruits.com/careator/careator_chat_creteGroup";
+            api = "https://vc4all.in/careator/careator_chat_creteGroup";
         // }
         // else if ($scope.rightSelect == 'video') {
-        //     api = "https://norecruits.com/careator/careator_video_creteGroup";
+        //     api = "https://vc4all.in/careator/careator_video_creteGroup";
         // }
         // else if ($scope.rightSelect == 'both') {
-        //     api = "https://norecruits.com/careator/careator_chatVideo_creteGroup";
+        //     api = "https://vc4all.in/careator/careator_chatVideo_creteGroup";
         // }
         console.log("api: " + api);
         careatorHttpFactory.post(api, obj).then(function (data) {
