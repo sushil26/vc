@@ -16,17 +16,18 @@
     <link rel="stylesheet" href="/careatorApp/css/style.css" />
     <link rel="stylesheet" href="/careatorApp/css/style-responsive.css" />
     <link rel="stylesheet" href="/careatorApp/css/elegant-icons-style.css" />
+    <link rel="stylesheet" href="/careatorApp/css/newChat.css" />
 
-   
 
 
-  <!-- Custom fonts for this template-->
-  <!-- <link href="/js/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
 
-  <!-- Page level plugin CSS-->
-  <!-- <link href="/js/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"> -->
+    <!-- Custom fonts for this template-->
+    <!-- <link href="/js/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
 
-<!-- 
+    <!-- Page level plugin CSS-->
+    <!-- <link href="/js/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"> -->
+
+    <!-- 
     <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
     <!-- Core plugin JavaScript-->
@@ -45,6 +46,11 @@
     <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
     <link href="/bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop.css" rel="stylesheet">
     <script src="/bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop.js"></script>
+    <script src="/bower_components/angularUtils-pagination/dirPagination.js"></script>
+    <link rel='stylesheet' href='/bower_components/angular-loading-bar/build/loading-bar.css' type='text/css' media='all' />
+    <script type='text/javascript' src='/bower_components/angular-loading-bar/build/loading-bar.min.js'></script>
+    <script src="/bower_components/moment/min/moment.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
 
     <script src="/careatorCommApp.js"></script>
     <script src="/careatorCommAppCtrl.js"></script>
@@ -72,15 +78,20 @@
     <script>
         var SIGNALING_SERVER = "https://vc4all.in";
         socket = io(SIGNALING_SERVER);
-
-      
     </script>
+    <!-- <style>
+        #loading-bar .bar {
+            position: relative;
+        }
+    </style> -->
 
 
 </head>
 
 <body>
+
     <div class="main_section" ng-app="careatorCommApp" ng-controller="careatorCommAppCtrl">
+        <div id="loading-bar-container"></div>
         <div id="page" ui-view>
             <!-- <h1>Welcome to careator chat product</h1>
             <button ng-click="gotToDashboard()">Go to dashboard</button> -->

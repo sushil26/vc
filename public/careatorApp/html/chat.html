@@ -3,40 +3,9 @@
         <section class="wrapper">
             <div id="profile">
                 <section class="panel">
-                    <link rel="stylesheet" href="./css/newChat.css" />
 
-                    <style>
-                        .tooltip {
-                            font-size: 10px;
-                            margin-top: -12px;
-                            cursor: pointer;
-                            display: inline-block;
-                            opacity: 1 !important;
-                        }
 
-                        .tooltip .tooltiptext {
-                            visibility: hidden;
-                            width: 60px;
-                            background: #f7f7f7;
-                            color: #fff;
-                            text-align: center;
-                            border-radius: 6px;
-                            padding: 5px 0;
-                            position: absolute;
-                            z-index: 1;
-                            top: 100%;
-                            left: 50%;
-                            margin-left: -30px;
-                            opacity: 1;
-                            transition: opacity 0.3s;
-                        }
 
-                        .tooltip:hover .tooltiptext {
-                            visibility: visible;
-                            opacity: 1;
-                            cursor: pointer;
-                        }
-                    </style>
                     <div class="container app">
                         <div class="row app-one">
                             <div class="col-sm-4 side">
@@ -152,7 +121,8 @@
                                                                     <span ng-if="record.receiverId!=userId" class="name-meta">{{record.receiverName}}
                                                                     </span>
                                                                     <br>
-                                                                    <span class="time-meta">{{record.timeStamp | date:' d MMM h:mm a'}}
+                                                                    <!-- <span class="time-meta">{{record.timeStamp | date:' d MMM h:mm a'}} -->
+                                                                    <span class="time-meta">{{record.timeStamp | amCalendar}}
                                                                     </span>
 
                                                                     <span ng-if="record.unseenCount > 0" class="notify"> {{record.unseenCount}}</span>
@@ -167,7 +137,7 @@
                                                                     <span ng-if="record.unseenCount > 0" class="notify"> {{record.unseenCount}}</span>
                                                                 </div>
                                                                 <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                                                    <span class="time-meta pull-right">{{record.timeStamp | date:' d MMM h:mm a'}}
+                                                                        <span class="time-meta">{{record.timeStamp |amCalendar}}
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -194,14 +164,14 @@
                                     <div class="row composeBox">
                                         <div class="col-sm-12 composeBox-inner">
                                             <div class="form-group has-feedback">
-                                                <input id="composeText" type="text" class="form-control" name="searchText" placeholder="Search People">
+                                                <input id="composeText" type="text" class="form-control" ng-model="search"  name="searchText" placeholder="Search People">
                                                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- ### Start: New Window ### -->
                                     <div class="row compose-sideBar">
-                                        <div class="row sideBar-body" ng-repeat="record in allGroupAndIndividual">
+                                        <div class="row sideBar-body" ng-repeat="record in allGroupAndIndividual |filter:search">
                                             <div class="col-sm-3 col-xs-3 sideBar-avatar">
                                                 <div class="avatar-icon" ng-if="record.groupName!==undefined && record.email!='vc4all@careator.com'">
                                                     <img src="./css/group.png">
@@ -404,7 +374,7 @@
                                                                 {{chat.message}}
                                                             </div>
                                                             <span class="message-time pull-right">
-                                                                {{chat.sendTime | date:' d MMM yyyy h:mm a'}}
+                                                                {{chat.sendTime | amCalendar}}
                                                             </span>
                                                         </td>
                                                     </tr>
@@ -419,7 +389,7 @@
                                                     {{chat.message}}
                                                 </div>
                                                 <span class="message-time pull-right">
-                                                    {{chat.sendTime | date:' d MMM yyyy h:mm a'}}
+                                                        {{chat.sendTime | amCalendar}}
                                                 </span>
                                             </div>
                                         </div>

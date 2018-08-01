@@ -13,7 +13,7 @@
 
                     <div class="panel-body bio-graph-info" style="padding: 15px; margin: 0px !important;">
 
-                        <div class="row" style="    border: 5px solid white; background-image:url('./css/bc.jpg');background-position: center;       margin-top: -15px;    background-size: cover;">
+                        <div class="row" style="border: 5px solid white; background-image:url('./css/bc.jpg');background-position: center;       margin-top: -15px;    background-size: cover;">
 
                             <div class="col-md-6" style="padding: 10px;">
                                 <div align="center">
@@ -76,84 +76,93 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <table class=" table table-hover">
-                                <tr>
-                                    <td>
-                                        <div style="float: right;"> Name :</div>
+                        <div class="card mb-3">
 
-                                    </td>
-                                    <td style="color:#00b1b1;">
-                                        {{userDetails.name}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div style="float: right;">
-                                            Email ID : </div>
 
-                                    </td>
-                                    <td style="color:#00b1b1;">
-                                        {{userDetails.email}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div style="float: right;">
-                                            Employee ID : </div>
+                            <div class="card-body">
 
-                                    </td>
-                                    <td style="color:#00b1b1;">
-                                        {{userDetails.empId}}
-                                    </td>
-                                </tr>
+                                <div class="table-responsive">
 
-                                <tr ng-if="userDetails.videoRights=='yes' && userDetails.chatRights=='yes'">
-                                    <td>
-                                        <div style="float: right;">
-                                            Access : </div>
-                                    </td>
-                                    <td style="color:#00b1b1;">
-                                        Chat , Video
-                                    </td>
-                                </tr>
-                                <tr ng-if="userDetails.videoRights=='yes' && userDetails.chatRights=='no'">
-                                    <td>
-                                        <div style="float: right;">
-                                            Access : </div>
-                                    </td>
-                                    <td style="color:#00b1b1;">
-                                        Video
-                                    </td>
-                                </tr>
-                                <tr ng-if="userDetails.videoRights=='no' && userDetails.chatRights=='yes'">
-                                    <td>
-                                        <div style="float: right;">
-                                            Access : </div>
-                                    </td>
-                                    <td style="color:#00b1b1;">
-                                        Chat
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div style="float: right;">
-                                            Group(s) : </div>
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <td>
+                                                <div style="float: right;"> Name :</div>
 
-                                    </td>
-                                    <td style="color:#00b1b1;">
-                                        <span ng-repeat="group in allGroup" style="background: wheat;
+                                            </td>
+                                            <td style="color:#00b1b1;">
+                                                {{userDetails.name}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="float: right;">
+                                                    Email ID : </div>
+
+                                            </td>
+                                            <td style="color:#00b1b1;">
+                                                {{userDetails.email}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="float: right;">
+                                                    Employee ID : </div>
+
+                                            </td>
+                                            <td style="color:#00b1b1;">
+                                                {{userDetails.empId}}
+                                            </td>
+                                        </tr>
+
+                                        <tr ng-if="userDetails.videoRights=='yes' && userDetails.chatRights=='yes'">
+                                            <td>
+                                                <div style="float: right;">
+                                                    Access : </div>
+                                            </td>
+                                            <td style="color:#00b1b1;">
+                                                Chat , Video
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="userDetails.videoRights=='yes' && userDetails.chatRights=='no'">
+                                            <td>
+                                                <div style="float: right;">
+                                                    Access : </div>
+                                            </td>
+                                            <td style="color:#00b1b1;">
+                                                Video
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="userDetails.videoRights=='no' && userDetails.chatRights=='yes'">
+                                            <td>
+                                                <div style="float: right;">
+                                                    Access : </div>
+                                            </td>
+                                            <td style="color:#00b1b1;">
+                                                Chat
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="float: right;">
+                                                    Group(s) : </div>
+
+                                            </td>
+                                            <td style="color:#00b1b1;">
+                                                <span ng-repeat="group in allGroup" style="background: wheat;
                                         width: max-content;
                                         padding: 3px;
                                         border-radius: 5px;
                                         margin-right: 5px;">
-                                            {{group.groupName}}
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                                                    {{group.groupName}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
 
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>

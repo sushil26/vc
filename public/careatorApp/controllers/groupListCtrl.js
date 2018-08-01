@@ -62,7 +62,7 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, $rootScope, $f
         console.log("Obj ID  " + id);
         $("#GroupDeleteButton").trigger("click");
 
-       $scope.groupDelete=function() {
+        $scope.groupDelete = function () {
             var api = "https://vc4all.in/careator_groupDelete/groupDeleteById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
@@ -85,5 +85,9 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, $rootScope, $f
 
     }
 
-
+    /////////serch///////////////////
+    $scope.sort = function (keyname) {
+        $scope.sortKey = keyname; //set the sortKey to the param passed
+        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+    }
 })

@@ -36,6 +36,7 @@
   <script src="/common/fileModel.js"></script>
   <script src="/common/notification.js"></script>
   <script src="/bower_components/moment/min/moment.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
   <link rel="stylesheet" href="/bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
   <script src="/bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
   <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -78,6 +79,8 @@
   <script src="/controllers/viewEventController.js"></script>
   <script src="/controllers/logoutCtl.js"></script>
   <script src="/controllers/captureImgCtl.js"></script>
+  <link rel='stylesheet' href='/bower_components/angular-loading-bar/build/loading-bar.css' type='text/css' media='all' />
+  <script type='text/javascript' src='/bower_components/angular-loading-bar/build/loading-bar.min.js'></script>
   <script>
     var SIGNALING_SERVER = "https://vc4all.in";
     socket = io(SIGNALING_SERVER);
@@ -86,6 +89,10 @@
 
 
   <style>
+    /* #loading-bar .bar {
+  position: relative;
+} */
+
     .modal {
       font-family: Lato;
     }
@@ -305,9 +312,11 @@
 
 
 <body>
-  <div class="se-pre-con"></div>
+
+
 
   <div ng-app="vcApp" ng-controller="vcAppCtrl">
+    <div id="loading-bar-container"></div>
     <!-- <spinner name="spinner" id="veil"></spinner>
     <div id="loading"></div> -->
     <div id="page" ui-view>
@@ -776,15 +785,6 @@ transition: all 0.5s;">
         <script src="/home/js/main.js"></script>
         <script>
           //paste this code under the head tag or in a separate js file.
-          // Wait for window load
-          $(window).load(function () {
-            // Animate loader off screen
-            $(".se-pre-con").fadeOut("slow");;
-          });
-          $(page).load(function () {
-            // Animate loader off screen
-            $(".se-pre-con").fadeOut("slow");;
-          });
         </script>
       </div>
 

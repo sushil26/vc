@@ -1,7 +1,12 @@
 
-var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngCookies', 'ngAnimate','ngImgCrop']);
+var app = angular.module('vcApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngCookies', 'ngAnimate','ngImgCrop','angular-loading-bar','angularMoment']);
 
-
+app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+  // cfpLoadingBarProvider.includeBar = true;
+  cfpLoadingBarProvider.includeSpinner = true;
+  // cfpLoadingBarProvider.parentSelector = '#loading-bar-container';
+  // cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner">Loading...</div>';
+}])
 app.config(function ($stateProvider, $urlRouterProvider) {
 
   // // For any unmatched url, send to /route1

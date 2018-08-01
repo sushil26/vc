@@ -211,6 +211,39 @@
 box-shadow: none;
 }*/
 
+
+.tooltip {
+    font-size: 10px;
+    margin-top: -12px;
+    cursor: pointer;
+    display: inline-block;
+    opacity: 1 !important;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 60px;
+    background: #f7f7f7;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -30px;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+
+
 .searchBox-inner input:focus {
     outline: none;
     border: none;

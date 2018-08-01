@@ -86,8 +86,6 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
         }
     }
 
-
-
     $scope.resetLoginFlag = function (id) {
         $("#ResetConfirmationButton").trigger("click");
         console.log("deleteUser-->");
@@ -111,9 +109,9 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
         }
     }
 
-    $scope.list = $scope.$parent.personList
-    $scope.config = {
-        itemsPerPage: 5,
-        fillLastPage: true
+    /////////serch///////////////////
+    $scope.sort = function (keyname) {
+        $scope.sortKey = keyname; //set the sortKey to the param passed
+        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     }
 })
