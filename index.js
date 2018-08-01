@@ -493,7 +493,7 @@ io.sockets.on('connection', function (socket) {
         var db = mongoConfig.getDb();
         console.log("db: " + db);
         careatorMaster = db.collection("careatorMaster");
-        if (data.sessionURL != "") {
+        if (data.sessionURL != "" && data.sessionURL != undefined) {
             var url = data.sessionURL;
             var stuff = url.split("/");
             console.log("stuff: " + JSON.stringify(stuff));
@@ -549,7 +549,7 @@ io.sockets.on('connection', function (socket) {
         var db = mongoConfig.getDb();
         console.log("db: " + db);
         careatorMaster = db.collection("careatorMaster");
-        if (data.sessionURL != "") {
+        if (data.sessionURL != "" && data.sessionURL != undefined ) {
             var url = data.sessionURL;
             var stuff = url.split("/");
             console.log("stuff: " + JSON.stringify(stuff));
