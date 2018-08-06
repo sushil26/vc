@@ -1,4 +1,4 @@
-careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, careatorHttpFactory) {
+careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, careatorHttpFactory,SweetAlert) {
     console.log("createUsersCtrl==>");
     $scope.propertyJson = $rootScope.propertyJson;
     $scope.uploadCareatorEmp = function (careatorEmp) {
@@ -16,12 +16,14 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
                 console.log("checkStatus: " + checkStatus);
                 // alert(data.data.message);
                 $scope.notifyMsg = data.data.message;
-                $("#alertButton").trigger("click");
+                // $("#alertButton").trigger("click");
+                SweetAlert.swal($scope.notifyMsg);
                 $state.go("Cdashboard.usersListCtrl");
             } else {
                 console.log("checkStatus: " + checkStatus);
                 $scope.notifyMsg = data.data.message;
-                $("#alertButton").trigger("click");
+                // $("#alertButton").trigger("click");
+                SweetAlert.swal($scope.notifyMsg);
                 // alert(data.data.message);
             }
         })
@@ -63,13 +65,15 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
                 // alert(data.data.message);
                 $scope.notifyMsg = data.data.message;
                 console.log(" $scope.notifyMsg: "+  $scope.notifyMsg);
-                $("#alertButton").trigger("click");
+                // $("#alertButton").trigger("click");
+                SweetAlert.swal($scope.notifyMsg);
                 $state.go("Cdashboard.usersListCtrl");
             } else {
                 console.log("checkStatus: " + checkStatus);
                 $scope.notifyMsg = data.data.message;
                 console.log(" $scope.notifyMsg: "+  $scope.notifyMsg);
-                $("#alertButton").trigger("click");
+                // $("#alertButton").trigger("click");
+                SweetAlert.swal($scope.notifyMsg);
                 // alert(data.data.message);
             }
         })

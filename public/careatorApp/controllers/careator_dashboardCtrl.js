@@ -1,8 +1,9 @@
-careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $filter, $timeout, careatorSessionAuth, careatorHttpFactory) {
+careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $filter, $timeout, careatorSessionAuth, careatorHttpFactory, SweetAlert) {
     console.log("careator_dashboardCtrl==>");
     $scope.clock = "loading clock..."; // initialise the time variable
     $scope.tickInterval = 1000 //ms
     $scope.propertyJson = $rootScope.propertyJson;
+    console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));
     $scope.getLogin_hostDetailsById = function (id) {
         console.log("getLogin_hostDetailsById-->: " + id);
         var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
@@ -92,6 +93,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             "userName": localStorage.getItem("userName"),
             "empId": localStorage.getItem("empId"),
             "userId": localStorage.getItem("userId"),
+            "sessionPassword": localStorage.getItem("sessionPassword"),
             "sessionRandomId": localStorage.getItem("sessionRandomId")
         }
         if (localStorage.getItem("videoRights") == 'yes') {
@@ -156,7 +158,8 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         console.log("localStorage.getItem(sessionUrlId): " + localStorage.getItem("sessionUrlId"));
 
         if (localStorage.getItem("sessionUrlId")) {
-            alert("You have to disconnect your old session in-order to open new");
+            SweetAlert.swal("You have to disconnect your old session in-order to open new");
+            // alert("You have to disconnect your old session in-order to open new");
         } else {
             window.open('https://vc4all.in/careator', '_blank');
         }
@@ -164,53 +167,68 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     }
     $scope.logout = function () {
         console.log("logout-->");
-        $("#logoutConfirmationButton").trigger("click");
-        $scope.userLogout = function () {
-            var id = userData.userId;
-            var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
-            console.log("api: " + api);
-            careatorHttpFactory.get(api).then(function (data) {
-                console.log("data--" + JSON.stringify(data.data));
-                var checkStatus = careatorHttpFactory.dataValidation(data);
-                console.log("checkStatus: " + checkStatus);
-                if (checkStatus) {
+        SweetAlert.swal({
+            title: "Have you closed all the sessions?", //Bold text
+            text: "It will close all your open sessions", //light text
+            type: "warning", //type -- adds appropiriate icon
+            showCancelButton: true, // displays cancel btton
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sure",
+            closeOnConfirm: false, //do not close popup after click on confirm, usefull when you want to display a subsequent popup
+            closeOnCancel: false
+        },
+            function (isConfirm) { //Function that triggers on user action.
+                if (isConfirm) {
+                    SweetAlert.swal("Logged Out");
+                    var id = userData.userId;
+                    var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
+                    console.log("api: " + api);
+                    careatorHttpFactory.get(api).then(function (data) {
+                        console.log("data--" + JSON.stringify(data.data));
+                        var checkStatus = careatorHttpFactory.dataValidation(data);
+                        console.log("checkStatus: " + checkStatus);
+                        if (checkStatus) {
 
-                    if (data.data.data != undefined) {
-                        if (data.data.data.sessionURL != undefined) {
-                            var sessionURL = data.data.data.sessionURL;
-                            console.log(data.data.message);
-                            console.log("sessionURL: " + sessionURL);
-                            socket.emit("comm_logout", {
-                                "userId": $scope.userData.userId,
-                                "email": $scope.userData.email,
-                                "sessionURL": sessionURL,
-                                "sessionRandomId": $scope.userData.sessionRandomId
-                            }); /* ### Note: Logout notification to server ### */
+                            if (data.data.data != undefined) {
+                                if (data.data.data.sessionURL != undefined) {
+                                    var sessionURL = data.data.data.sessionURL;
+                                    console.log(data.data.message);
+                                    console.log("sessionURL: " + sessionURL);
+                                    socket.emit("comm_logout", {
+                                        "userId": $scope.userData.userId,
+                                        "email": $scope.userData.email,
+                                        "sessionURL": sessionURL,
+                                        "sessionRandomId": $scope.userData.sessionRandomId
+                                    }); /* ### Note: Logout notification to server ### */
 
+                                } else {
+                                    socket.emit("comm_logout", {
+                                        "userId": $scope.userData.userId,
+                                        "email": $scope.userData.email,
+                                        "sessionURL": sessionURL,
+                                        "sessionRandomId": $scope.userData.sessionRandomId
+                                    }); /* ### Note: Logout notification to server ### */
+                                }
+                            } else {
+                                socket.emit("comm_logout", {
+                                    "userId": $scope.userData.userId,
+                                    "email": $scope.userData.email,
+                                    "sessionURL": "",
+                                    "sessionRandomId": $scope.userData.sessionRandomId
+                                }); /* ### Note: Logout notification to server ### */
+                            }
                         } else {
-                            socket.emit("comm_logout", {
-                                "userId": $scope.userData.userId,
-                                "email": $scope.userData.email,
-                                "sessionURL": sessionURL,
-                                "sessionRandomId": $scope.userData.sessionRandomId
-                            }); /* ### Note: Logout notification to server ### */
+                            console.log("Sorry");
+                            console.log(data.data.message);
                         }
-                    } else {
-                        socket.emit("comm_logout", {
-                            "userId": $scope.userData.userId,
-                            "email": $scope.userData.email,
-                            "sessionURL": "",
-                            "sessionRandomId": $scope.userData.sessionRandomId
-                        }); /* ### Note: Logout notification to server ### */
-                    }
+                    })
                 } else {
-                    console.log("Sorry");
-                    console.log(data.data.message);
+                    SweetAlert.swal("Your still logged in ");
                 }
-            })
+            }
 
-        }
-
+        )
+        // $("#logoutConfirmationButton").trigger("click");
     }
     // $scope.closeYourOldSession = function(){
     //     console.log("closeYourOldSession-->");
@@ -303,6 +321,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             localStorage.removeItem("careatorEmail");
             localStorage.removeItem("careator_remoteEmail");
             localStorage.removeItem("email");
+            localStorage.removeItem("sessionPassword");
             localStorage.removeItem("userName");
             localStorage.removeItem("empId");
             localStorage.removeItem("userId");
@@ -326,6 +345,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             localStorage.removeItem("careatorEmail");
             localStorage.removeItem("careator_remoteEmail");
             localStorage.removeItem("email");
+            localStorage.removeItem("sessionPassword");
             localStorage.removeItem("userName");
             localStorage.removeItem("empId");
             localStorage.removeItem("userId");
@@ -388,15 +408,34 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     $scope.navigateintoBoth_CVoption = function () {
         console.log("navigateintoBoth_CVoption-->");
         if (!w || w.closed) {
+            localStorage.setItem("careatorEmail", userData.email);
+            localStorage.setItem("sessionPassword", userData.sessionPassword);
             w = window.open("https://vc4all.in/careator", "_blank");
         } else {
-            console.log('window is already opened');
-            $("#closeConfirmationButton").trigger("click");
+            SweetAlert.swal({
+                title: "window is already opened", //Bold text
+                text: "we will take you the desired page!", //light text
+                type: "warning", //type -- adds appropiriate icon
+                showCancelButton: true, // displays cancel btton
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Go to the page",
+                closeOnConfirm: false, //do not close popup after click on confirm, usefull when you want to display a subsequent popup
+                closeOnCancel: false
+            },
+                function (isConfirm) { //Function that triggers on user action.
+                    if (isConfirm) {
+                        SweetAlert.swal("ok!");
+                        w.focus();
+                    } else {
+                        SweetAlert.swal("didnt open");
+                    }
+                }
+
+            )
+
         }
 
-        $scope.focust = function () {
-            w.focus();
-        }
+
     }
 
 

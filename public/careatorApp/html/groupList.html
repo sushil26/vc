@@ -16,7 +16,7 @@
                             <form class="form-inline">
                                 <div class="form-group">
                                     <!-- <label>Search</label> -->
-                                    <input id="composeText" type="text" class="form-control" ng-model="search"  name="searchText" placeholder="Search">
+                                    <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search">
                                 </div>
                             </form>
                             <div class="table-responsive">
@@ -79,28 +79,4 @@
             </div>
         </section>
     </section>
-
-    <button data-toggle="modal" data-target="#GroupDeleteConfirmation" id="GroupDeleteButton" data-backdrop="static" data-keyboard="false"
-        style="display:none"></button>
-    <div class="modal fade" id="GroupDeleteConfirmation" role="dialog">
-        <div class="modal-dialog">
-            <center>
-                <form>
-                    <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
-                        <div class="modal-header" style="padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                            <img style="width: 45px;margin-top: -15px;margin-left: -190px;" src="/home/img/fav.png" />
-                            <span class="modal-title" style="font-weight: 200;">Confirmation !!</span>
-                        </div>
-                        <div class="modal-body">
-                            <label id="notify_msg_confirm_content" style="color:black;font-size: 20px;">Are You Sure To Delete Group ?</label>
-                        </div>
-                        <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                            <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">No</button>
-                            <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="groupDelete()" data-dismiss="modal">Yes</button>
-                        </div>
-                    </div>
-                </form>
-            </center>
-        </div>
-    </div>
 </div>

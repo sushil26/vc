@@ -89,62 +89,9 @@
                             <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
                             </dir-pagination-controls>
                         </div>
-
-
                     </div>
                 </section>
             </div>
         </section>
-
     </section>
-    <button data-toggle="modal" data-target="#deleteConfirmation" id="deleteConfirmationButton" data-backdrop="static" data-keyboard="false"
-        style="display:none"></button>
-
-    <div class="modal fade" id="deleteConfirmation" role="dialog">
-        <div class="modal-dialog">
-            <center>
-                <form>
-                    <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
-                        <div class="modal-header" style="padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                            <img style="width: 45px;margin-top: -15px;margin-left: -190px;" src="/home/img/fav.png" />
-                            <span class="modal-title" style="font-weight: 200;">Confirmation !!</span>
-                        </div>
-                        <div class="modal-body">
-                            <label id="notify_msg_confirm_content" style="color:black;font-size: 20px;">Are you sure you want to delete the user?</label>
-                        </div>
-                        <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                            <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">No</button>
-                            <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="userDelete()" data-dismiss="modal">Yes</button>
-                        </div>
-                    </div>
-                </form>
-            </center>
-        </div>
-    </div>
-    <button data-toggle="modal" data-target="#ResetConfirmation" id="ResetConfirmationButton" data-backdrop="static" data-keyboard="false"
-        style="display:none"></button>
-
-    <div class="modal fade" id="ResetConfirmation" role="dialog">
-        <div class="modal-dialog">
-            <center>
-                <form>
-                    <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
-                        <div class="modal-header" style="padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                            <img style="width: 45px;margin-top: -15px;margin-left: -190px;" src="/home/img/fav.png" />
-                            <span class="modal-title" style="font-weight: 200;">Confirmation !!</span>
-                        </div>
-                        <div class="modal-body">
-                            <label id="notify_msg_confirm_content" style="color:black;font-size: 20px;">Are you sure to Reset User ?</label>
-                        </div>
-                        <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                            <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">No</button>
-                            <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="userReset()" data-dismiss="modal">Yes</button>
-                        </div>
-                    </div>
-                </form>
-            </center>
-        </div>
-    </div>
-
-
 </div>

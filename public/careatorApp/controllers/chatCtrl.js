@@ -2,7 +2,7 @@ careatorApp.controller("chatCtrl", function (
   $scope,
   $rootScope,
   careatorHttpFactory,
-  careatorSessionAuth
+  careatorSessionAuth, SweetAlert
 ) {
   console.log("chatCtrl==>");
   $scope.count = 0;
@@ -512,7 +512,8 @@ careatorApp.controller("chatCtrl", function (
       } else {
         $scope.notifyMsg = "You do not have permission to chat with " + $scope.receiverData.receiverName;
         console.log(" $scope.notifyMsg: " + $scope.notifyMsg);
-        $("#alertButton").trigger("click");
+        // $("#alertButton").trigger("click");
+        SweetAlert.swal($scope.notifyMsg);
       }
     } else if ($scope.selectedType == "group") {
       obj = {
@@ -598,7 +599,7 @@ careatorApp.controller("chatCtrl", function (
         console.log("allChatRecords: " + JSON.stringify($scope.allChatRecords));
         console.log(data.data.message);
         for (var x = 0; x < $scope.allChatRecords.length; x++) {
-          if( $scope.allChatRecords[x].unseenCount!=undefined){
+          if ($scope.allChatRecords[x].unseenCount != undefined) {
 
           }
           if ($scope.allChatRecords[x].senderId != userData.userId) {
@@ -609,7 +610,7 @@ careatorApp.controller("chatCtrl", function (
               if (tempData.profilePicPath != undefined) {
                 $scope.allChatRecords[x].profilePicPath = tempData.profilePicPath;
               }
-            } else { }
+            } else {}
           } else {
             $scope.allChatRecordsId[x] = $scope.allChatRecords[x]._id;
             var tempData = $scope.allEmpWithIndexById[$scope.allChatRecords[x].receiverId];
@@ -718,8 +719,7 @@ careatorApp.controller("chatCtrl", function (
         //   sendTime: data.sendTime
         // });
         // $scope.scrollDown();
-      }
-      else {
+      } else {
         if ($scope.individualData != undefined && $scope.individualData._id == data.id) {
           var group_id = data.group_id;
           var obj = {
@@ -745,8 +745,7 @@ careatorApp.controller("chatCtrl", function (
             sendTime: data.sendTime
           });
           $scope.scrollDown();
-        }
-        else {
+        } else {
           console.log("Need to notify");
           console.log("")
           if (($scope.individualData != undefined && $scope.individualData._id != data.id) || ($scope.individualData == undefined && $scope.allGroupIds.indexOf(data.group_id) >= 0)) {
@@ -759,8 +758,7 @@ careatorApp.controller("chatCtrl", function (
                   $scope.allChatRecords[index].unseenCount = data.groupMembers[x].unseenCount;
                   console.log(" $scope.allChatRecords[index]: " + JSON.stringify($scope.allChatRecords[index]));
                   break;
-                }
-                else {
+                } else {
                   console.log("Noting to do");
                 }
               }
@@ -768,8 +766,7 @@ careatorApp.controller("chatCtrl", function (
           }
         }
       }
-    }
-    else if (data.group_id == undefined) {
+    } else if (data.group_id == undefined) {
       console.log("**Individual text received");
       if ($scope.individualData != undefined && data.freshInsert == true && (userData.userId == data.senderId || userData.userId == data.receiverId)) {
         var id = data.id;
@@ -804,11 +801,9 @@ careatorApp.controller("chatCtrl", function (
           }
         });
         $scope.getChatRecords();
-      }
-      else if ($scope.individualData == undefined && data.freshInsert == true && userData.userId == data.receiverId) {
+      } else if ($scope.individualData == undefined && data.freshInsert == true && userData.userId == data.receiverId) {
         $scope.getChatRecords();
-      }
-      else if (data.freshInsert == undefined) {
+      } else if (data.freshInsert == undefined) {
         console.log("$scope.individualData: " + JSON.stringify($scope.individualData));
         console.log("data.id: " + data.id);
         if ($scope.individualData != undefined && $scope.individualData._id == data.id) {
@@ -816,7 +811,9 @@ careatorApp.controller("chatCtrl", function (
           var id = data.id;
           console.log("id: " + id);
           if (data.senderId != userData.userId) {
-            var obj = { "receiverSeen": "yes" }
+            var obj = {
+              "receiverSeen": "yes"
+            }
             console.log("obj: " + JSON.stringify(obj));
             var api = "https://vc4all.in/careator_textSeenFlagUpdate/textSeenFlagUpdate/" + id;
             console.log("api: " + api);
@@ -846,9 +843,7 @@ careatorApp.controller("chatCtrl", function (
             $scope.allChatRecords[index].unseenCount = data.unseenCount;
           }
 
-        }
-        else {
-        }
+        } else {}
       }
     }
   });
@@ -867,14 +862,12 @@ careatorApp.controller("chatCtrl", function (
           $scope.allChatRecords[index].unseenCount = data.unseenCount;
         }
       }
-    }
-    else {
+    } else {
       if (($scope.allChatRecordsId.indexOf(data.id) >= 0) && data.seenBy == userData.userId) {
         console.log("Need to update");
         var index = $scope.allChatRecordsId.indexOf(data.id);
         $scope.allChatRecords[index].unseenCount = data.unseenCount;
-      }
-      else if (($scope.allChatRecordsId.indexOf(data.id) >= 0) && data.seenBy != userData.userId) {
+      } else if (($scope.allChatRecordsId.indexOf(data.id) >= 0) && data.seenBy != userData.userId) {
         console.log("No need to update");
       }
     }
@@ -993,7 +986,7 @@ careatorApp.controller("chatCtrl", function (
   }
 
   ///////chat welcome user////////////
-  $scope.startachat=function(){
+  $scope.startachat = function () {
     $("#newchatwin").trigger("click");
   }
 

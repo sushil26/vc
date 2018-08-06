@@ -84,13 +84,14 @@ app.get("/careator", function (req, res) {
     res.sendFile(__dirname + '/public/careator.html');
 });
 
-app.get("/careator/:id/:time", function (req, res) {
+app.get("/careator_conf/:id/:time", function (req, res) {
     queryId = req.params.id;
     time = req.params.id;
     console.log("queryId: " + req.params.id + "Time: " + req.params.time);
     console.log("start to render page");
-    res.sendFile(__dirname + '/public/careator.html');
+    res.sendFile(__dirname + '/public/careatorConference.html');
 });
+
 
 app.get("/careatorApp", function (req, res) {
     console.log("chatCrtr started to render-->");
@@ -321,7 +322,7 @@ io.sockets.on('connection', function (socket) {
         var peer_id = config.peer_id;
         var ice_candidate = config.ice_candidate;
         if (peer_id in sockets) {
-            sockets[peer_id].emit('iceCandidate', { 'peer_id': socket.id, 'ice_candidate': ice_candidate });
+            sockets[peer_id].emit('iceCandidate', { 'peer_id': socket.id, 'ice_candidate': ice_candidate, "queryId": config.queryLink });
         }
         console.log("<--relayICECandidate")
     });
@@ -549,7 +550,7 @@ io.sockets.on('connection', function (socket) {
         var db = mongoConfig.getDb();
         console.log("db: " + db);
         careatorMaster = db.collection("careatorMaster");
-        if (data.sessionURL != "" && data.sessionURL != undefined ) {
+        if (data.sessionURL != "" && data.sessionURL != undefined) {
             var url = data.sessionURL;
             var stuff = url.split("/");
             console.log("stuff: " + JSON.stringify(stuff));
