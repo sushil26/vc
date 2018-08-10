@@ -1,0 +1,62 @@
+{
+  "_from": "ng-email-list",
+  "_id": "ng-email-list@1.3.0",
+  "_inBundle": false,
+  "_integrity": "sha1-4ruhY2unHcUmQMkctWOGNpAAzAQ=",
+  "_location": "/ng-email-list",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "ng-email-list",
+    "name": "ng-email-list",
+    "escapedName": "ng-email-list",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ng-email-list/-/ng-email-list-1.3.0.tgz",
+  "_shasum": "e2bba1636ba71dc52640c91cb56386369000cc04",
+  "_spec": "ng-email-list",
+  "_where": "/home/logu/heroku/DOVC4ALL/dvc",
+  "author": {
+    "name": "EdITS/ERAS"
+  },
+  "bugs": {
+    "url": "https://github.com/editseras/ng-email-list/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Angular.js directive that validates email address in a text area",
+  "devDependencies": {
+    "angular": "^1.4.3",
+    "angular-mocks": "^1.4.3",
+    "karma": "^0.13.3",
+    "karma-browserify": "^4.2.1",
+    "karma-cli": "^0.1.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0"
+  },
+  "homepage": "https://github.com/editseras/ng-email-list#readme",
+  "keywords": [
+    "angularjs",
+    "email",
+    "email-list"
+  ],
+  "license": "MIT",
+  "main": "src/common.js",
+  "name": "ng-email-list",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/editseras/ng-email-list.git"
+  },
+  "scripts": {
+    "prepublish": "make build",
+    "test": "make test"
+  },
+  "version": "1.3.0"
+}

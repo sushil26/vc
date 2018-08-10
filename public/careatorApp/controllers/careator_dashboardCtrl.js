@@ -1,9 +1,34 @@
-careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $filter, $timeout, careatorSessionAuth, careatorHttpFactory, SweetAlert) {
+careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $filter, $timeout, $window, careatorSessionAuth, careatorHttpFactory, SweetAlert) {
     console.log("careator_dashboardCtrl==>");
     $scope.clock = "loading clock..."; // initialise the time variable
     $scope.tickInterval = 1000 //ms
     $scope.propertyJson = $rootScope.propertyJson;
     console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));
+
+    $scope.getToDate = function () {
+        console.log("Get To Date-->");
+        var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
+        careatorHttpFactory.get(api).then(function (data) {
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                console.log("data.data.data.date: " + data.data.data.date);
+                var todayDate = new Date(data.data.data.date);
+                console.log("todayDate: " + todayDate);
+                var reqDate = todayDate.getDate();
+                console.log("reqDate: " + reqDate);
+                var reqMonth = todayDate.getMonth();
+                var reqYear = todayDate.getFullYear();
+                var reqHr = todayDate.getHours();
+                var reqMin = todayDate.getMinutes();
+                var reqSec = todayDate.getSeconds();
+                $scope.todayDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
+                console.log("consolidateDate: " + $scope.consolidateDate);
+            } else {}
+        })
+        console.log("<--Get To Date");
+    }
+    $scope.getToDate();
     $scope.getLogin_hostDetailsById = function (id) {
         console.log("getLogin_hostDetailsById-->: " + id);
         var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
@@ -131,6 +156,12 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         $scope.videoRights = "no";
     }
 
+
+    // $scope.instantConference = function () {
+    //     console.log("instantConference-->");
+
+    // }
+
     $scope.getAdmin_email_id = function () {
         console.log("getAdmin_email_id-->");
         var api = "https://vc4all.in/careator_adminBasicData/getAdminObjectId";
@@ -168,18 +199,21 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     $scope.logout = function () {
         console.log("logout-->");
         SweetAlert.swal({
-            title: "Have you closed all the sessions?", //Bold text
-            text: "It will close all your open sessions", //light text
-            type: "warning", //type -- adds appropiriate icon
-            showCancelButton: true, // displays cancel btton
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Sure",
-            closeOnConfirm: false, //do not close popup after click on confirm, usefull when you want to display a subsequent popup
-            closeOnCancel: false
-        },
+                title: "Have you closed all the sessions?", //Bold text
+                text: "It will close all your open sessions", //light text
+                type: "warning", //type -- adds appropiriate icon
+                showCancelButton: true, // displays cancel btton
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Sure",
+                closeOnConfirm: false, //do not close popup after click on confirm, usefull when you want to display a subsequent popup
+                closeOnCancel: false
+            },
             function (isConfirm) { //Function that triggers on user action.
                 if (isConfirm) {
-                    SweetAlert.swal("Logged Out");
+                    SweetAlert.swal({
+                        title: "Logged Out",
+                        type: "success"
+                    });
                     var id = userData.userId;
                     var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
                     console.log("api: " + api);
@@ -223,7 +257,10 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                         }
                     })
                 } else {
-                    SweetAlert.swal("Your still logged in ");
+                    SweetAlert.swal({
+                        title: "Your still logged in",
+                        type:"info"
+                    });
                 }
             }
 
@@ -380,6 +417,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
     ///////////////Hamburger/////////////////////////
     $('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').click(function () {
+        console.log("toggle click");
         $(this).toggleClass('open');
     });
 
@@ -410,18 +448,61 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         if (!w || w.closed) {
             localStorage.setItem("careatorEmail", userData.email);
             localStorage.setItem("sessionPassword", userData.sessionPassword);
-            w = window.open("https://vc4all.in/careator", "_blank");
+            var dt = $scope.todayDate;
+            var dy = dt.getDay().toString();
+            var fy = dt.getFullYear().toString();
+            var m = dt.getMonth().toString();
+            var hr = dt.getHours().toString();
+            var date = dy.concat(fy, m, hr);
+            urlDate = date;
+            // w = window.open("https://vc4all.in/careator", "_blank");
+            var SIGNALING_SERVER = "https://vc4all.in";
+            signaling_socket = io(SIGNALING_SERVER);
+            signaling_socket.on('connect', function () {
+                console.log("signaling_socket connect-->");
+                signaling_socket.on('message', function (config) {
+                    console.log("signaling_socket message-->");
+                    queryLink = config.queryId;
+                    peerNew_id = config.peer_id;
+                    var url = "https://vc4all.in/careator_conf/" + peerNew_id + "/" + urlDate;
+                    // window.location.href = url;
+                    var api = "https://vc4all.in/careator/setCollection";
+                    console.log("api: " + api);
+                    var obj = {
+                        "email": localStorage.getItem('careatorEmail'),
+                        "url": url
+                    }
+                    console.log("obj: " + JSON.stringify(obj));
+                    careatorHttpFactory.post(api, obj).then(function (data) {
+                        var checkStatus = careatorHttpFactory.dataValidation(data);
+                        console.log("data--" + JSON.stringify(data.data));
+                        console.log("checkStatus--" + checkStatus);
+                        if (checkStatus) {
+                            localStorage.setItem("sessionUrlId", peerNew_id);
+                            console.log("url: " + url);
+
+
+                            w = window.open(url, '_blank');
+                            console.log("***");
+                            // $window.open(url, "_blank");
+
+                        } else {
+                            console.log("Sorry");
+                        }
+                    })
+                })
+            })
         } else {
             SweetAlert.swal({
-                title: "window is already opened", //Bold text
-                text: "we will take you the desired page!", //light text
-                type: "warning", //type -- adds appropiriate icon
-                showCancelButton: true, // displays cancel btton
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Go to the page",
-                closeOnConfirm: false, //do not close popup after click on confirm, usefull when you want to display a subsequent popup
-                closeOnCancel: false
-            },
+                    title: "window is already opened", //Bold text
+                    text: "we will take you the desired page!", //light text
+                    type: "warning", //type -- adds appropiriate icon
+                    showCancelButton: true, // displays cancel btton
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Go to the page",
+                    closeOnConfirm: false, //do not close popup after click on confirm, usefull when you want to display a subsequent popup
+                    closeOnCancel: false
+                },
                 function (isConfirm) { //Function that triggers on user action.
                     if (isConfirm) {
                         SweetAlert.swal("ok!");

@@ -1,5 +1,7 @@
 <div ng-controller="careator_dashboardCtrl">
     <!-- container section start -->
+    
+
     <section id="container" class="">
         <header class="header dark-bg">
             <div class="toggle-nav">
@@ -25,7 +27,7 @@
                 </ul>
             </div>
             <span ng-click="homeClick()">
-                <img style="float:left;width: 63px;margin-top: 5px" src="./css/fav.png" />
+                <img style="float:left;width: 63px;margin-top: 5px" src="/careatorApp/css/fav.png" />
                 <a class="logo" style="font-weight: 500; letter-spacing: -2.3px;font-family: 'Allerta Stencil';">VC4ALL</a>
             </span>
         </header>
@@ -85,8 +87,6 @@
                             </i>
                         </a>
                     </li>
-
-
                     <li>
                         <a href="#!/dashboard/chat">
                             <i class="fa fa-comment">
@@ -97,12 +97,31 @@
                     <li ng-if="videoRights=='yes'">
                         <a href="#" ng-click="navigateintoBoth_CVoption()">
                             <i class="fa fa-video-camera">
-                                <span>&nbspVideo</span>
+                                <span>&nbsp Instant</span>
                             </i>
                         </a>
-
                     </li>
-
+                    <li ng-if="videoRights=='yes'">
+                        <a href="#!/dashboard/vc4allSchedule">
+                            <i class="fa fa-video-camera">
+                                <span>&nbspSchedule</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="#!/dashboard/upcomingEvent">
+                            <i class="fa fa-video-camera">
+                                <span>&nbsp;Upcoming Event</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="#!/dashboard/historyEvent">
+                            <i class="fa fa-video-camera">
+                                <span>&nbsp;History Event</span>
+                            </i>
+                        </a>
+                    </li>
                     <li>
                         <a ng-click="logout()">
                             <i class="fa fa-sign-out">

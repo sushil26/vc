@@ -1,16 +1,7 @@
 var express = require('express');
-var http = require('http');
 var bodyParser = require('body-parser')
-var nodemailer = require('nodemailer');
 var fileUpload = require('express-fileupload');
-var cJSON = require('circular-json');
 var ObjectId = require("mongodb").ObjectID;
-
-var multer = require('multer');
-
-var fs = require('fs'),
-    url = require('url'),
-    path = require('path');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({
@@ -109,7 +100,6 @@ var peerWithQueryId = []; /* PeerId with Query Id: peer-id is a index, value is 
 var peerWithTimeId = [];  /* PeerId with time Id: peer-id is a index, value is a time id  */
 var peerWithUserName = []; /* PeerId with UserName: peer-id is a index, Value is a UserName  */
 var peerTrackForVideo = { 'link': [] }; /* This variable for getting socket.id's with perticular Link*/
-var tempId = null;
 var sessionHeaderId = null;
 var sessionURLTrack = []; /* sessionURL with peer Id: peer-id is a index, value is a sessionURL  */
 var emailTrack = []; /* email with peer Id: peer-id is a index, value is a email id  */

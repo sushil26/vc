@@ -3,9 +3,6 @@
         <section class="wrapper">
             <div id="profile">
                 <section class="panel">
-
-
-
                     <div class="container app">
                         <div class="row app-one">
                             <div class="col-sm-4 side">
@@ -87,10 +84,6 @@
                                                     </td>
                                                 </tr>
                                             </table>
-
-
-
-
                                         </div>
                                     </div>
                                     <div class="row sideBar">
@@ -100,15 +93,15 @@
                                                     <td style="width: 50px;">
                                                         <div class="col-sm-3 col-xs-3 sideBar-avatar">
                                                             <div class="avatar-icon" ng-if="record.groupName==undefined && (record.receiverId!=adminId && record.senderId != adminId)">
-                                                                <img ng-if="record.profilePicPath==undefined" src="./css/user.png">
+                                                                <img ng-if="record.profilePicPath==undefined" src="/careatorApp/css/user.png">
                                                                 <img ng-if="record.profilePicPath!=undefined" ng-src="{{record.profilePicPath}}">
                                                             </div>
                                                             <div class="avatar-icon" ng-if="record.groupName==undefined && (record.receiverId==adminId || record.senderId == adminId) ">
-                                                                <img ng-if="record.profilePicPath==undefined" src="./css/Admin.png">
+                                                                <img ng-if="record.profilePicPath==undefined" src="/careatorApp/css/Admin.png">
                                                                 <img ng-if="record.profilePicPath!=undefined" ng-src="{{record.profilePicPath}}">
                                                             </div>
                                                             <div class="avatar-icon" ng-if="record.groupName!==undefined">
-                                                                <img src="./css/group.png">
+                                                                <img src="/careatorApp/css/group.png">
                                                             </div>
                                                         </div>
                                                     </td>
@@ -174,14 +167,14 @@
                                         <div class="row sideBar-body" ng-repeat="record in allGroupAndIndividual |filter:search">
                                             <div class="col-sm-3 col-xs-3 sideBar-avatar">
                                                 <div class="avatar-icon" ng-if="record.groupName!==undefined && record.email!='vc4all@careator.com'">
-                                                    <img src="./css/group.png">
+                                                    <img src="/careatorApp/css/group.png">
                                                 </div>
                                                 <div class="avatar-icon" ng-if="record.groupName==undefined && record.email!='vc4all@careator.com'">
-                                                    <img ng-if="record.profilePicPath==undefined" src="./css/user.png">
+                                                    <img ng-if="record.profilePicPath==undefined" src="/careatorApp/css/user.png">
                                                     <img ng-if="record.profilePicPath!=undefined" ng-src="{{record.profilePicPath}}">
                                                 </div>
                                                 <div class="avatar-icon" ng-if="record.groupName==undefined && record.email=='vc4all@careator.com'">
-                                                    <img ng-if="record.profilePicPath==undefined" src="./css/Admin.png">
+                                                    <img ng-if="record.profilePicPath==undefined" src="/careatorApp/css/Admin.png">
                                                     <img ng-if="record.profilePicPath!=undefined" ng-src="{{record.profilePicPath}}">
                                                 </div>
                                             </div>
@@ -227,7 +220,7 @@
                                         </div>
                                         <div class="avatar-icon" ng-if="selectedType =='individual_chats' && chatListSection == 'newChatWindow'">
                                             <img ng-if="receiverProfilePicPath!=undefined" ng-src="{{receiverProfilePicPath}}">
-                                            <img ng-if="receiverProfilePicPath==undefined" src="./css/user.png">
+                                            <img ng-if="receiverProfilePicPath==undefined" src="">
                                         </div>
 
                                     </div> -->
@@ -349,7 +342,7 @@
                                     </div>
 
                                     <div class="row message-body" ng-repeat="chat in allChat.chats">
-                                        <div class="col-sm-12 message-main-receiver" ng-if="chat.senderId!=userId">
+                                        <div class="col-sm-12 message-main-receiver slideRight" ng-if="chat.senderId!=userId">
                                             <div ng-if="selectedType=='group'" style="background:#ddf8c6;
                                                 width: max-content;
                                                 padding: 5px;
@@ -366,7 +359,7 @@
                                                         <td>
                                                             <div class="avatar-icon" ng-if="selectedType =='individual_chats' && chatListSection == 'chatWindow'">
                                                                 <img ng-if="receiverProfilePicPath!=undefined" ng-src="{{receiverProfilePicPath}}">
-                                                                <img ng-if="receiverProfilePicPath==undefined" src="./css/user.png">
+                                                                <img ng-if="receiverProfilePicPath==undefined" src="/careatorApp/css/user.png">
                                                             </div>
                                                         </td>
                                                         <td>
@@ -435,7 +428,7 @@
         </section>
         <!-- ##### Start audio play  ##### -->
         <audio id="myAudio">
-            <source src="./audio/alert.mp3" type="audio/mpeg">
+            <source src="/careatorApp/audio/alert.mp3" type="audio/mpeg">
         </audio>
         <!-- ##### End audio play  ##### -->
 

@@ -2,6 +2,9 @@ var db = require("../dbConfig.js").getDb();
 var general = require("../general.js");
 var property = require("../../property.json");
 var ObjectId = require("mongodb").ObjectID;
+var logger = require('../log4.js');
+var log = logger.LOG;
+// var iplocation = require('iplocation')
 var nodemailer = require("nodemailer");
 var randomstring = require("randomstring");
 var careatorMaster = db.collection("careatorMaster"); /* ### careator employee collection  ### */
@@ -288,11 +291,15 @@ module.exports.pswdCheck = function (req, res) {
                                             console.log("data: " + JSON.stringify(data));
                                             if (err) {
                                                 responseData = {
-                                                    status: true,
+                                                    status: false,
                                                     message: property.E0007
                                                 };
                                                 res.status(400).send(responseData);
                                             } else {
+                                                var date = new Date();
+                                              
+                                                log.info("req.originalUrl: " + req.originalUrl + " Email: " + findData[0].email, " Date: (" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + ")" + " Time: (" + date.getHours() + ":" + date.getMinutes() + ")" );
+                                                console.log("log: " + log);
                                                 responseData = {
                                                     status: true,
                                                     message: property.S0005,
@@ -533,7 +540,7 @@ module.exports.emailInvite = function (req, res) {
         } else {
 
             if (findData.length > 0) {
-                careatorMaster.update({ email: req.body.sessionHost, 'invite.remoteEmailId': req.body.email }, { "$set": { "invite.$.password": password } }, function(err, updatedOnIndex) {
+                careatorMaster.update({ email: req.body.sessionHost, 'invite.remoteEmailId': req.body.email }, { "$set": { "invite.$.password": password } }, function (err, updatedOnIndex) {
                     if (err) {
                         responseData = {
                             status: false,
@@ -547,7 +554,7 @@ module.exports.emailInvite = function (req, res) {
                             to: req.body.email,
                             subject: 'VC4ALL Credential',
                             html: "<link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Lato'/> <table style='width: 100%;border:2px solid gainsboro;font-family:lato !important;'> <thead style='background: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'> <tr> <th> <h2 style='font-weight: 200;'>Greetings from VC4ALL</h2> </th> </tr> </thead> <tbody> <tr> <td> <b>Hey!</b> </td> </tr> <tr> <td>You just got a video call invitation from <span style='color:dodgerblue;'>" + req.body.sessionHost + "</span>. <br> Join the call by clicking on the URL below: <br> <br><b>URL:</b><a href=" + req.body.url + " style=color:dodgerblue;>Conference Link</a> <br> Enter the Email ID to which this mail is received. <br> Enter this One Time Password: <br> <p> <b>Password :</b> " + password + "</p> <b>Note:</b> This is a system generated password which will be lapsed once the current session is over. </td> </tr> <tr style='background: linear-gradient(to bottom, #00bcd40f 0%, #00BCD4 100%);'> <td style=padding-top:4px;padding-bottom:4px> <p>Have a seamless chat, <br> <b>Team-VC4ALL</b> </p> </td> </tr> </tbody> </table>"
-            
+
                         };
                         transporter.sendMail(mailOptions, function (error, info) {
                             if (error) {
@@ -572,52 +579,52 @@ module.exports.emailInvite = function (req, res) {
                         });
                     }
                 })
-                }
-                else{
-                    careatorMaster.update({ email: req.body.sessionHost }, { $push: { "invite": { "remoteEmailId": req.body.email, "password": password } } }, function (err, data) {
-                        if (err) {
-                            responseData = {
-                                status: true,
-                                errorCode: 200,
-                                message: property.E0007
-                            };
-                            res.status(200).send(responseData);
-                        } else {
-                            var mailOptions = {
-                                from: "info@vc4all.in",
-                                to: req.body.email,
-                                subject: 'VC4ALL Credential',
-                                html: "<link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Lato'/> <table style='width: 100%;border:2px solid gainsboro;font-family:lato !important;'> <thead style='background: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'> <tr> <th> <h2 style='font-weight: 200;'>Greetings from VC4ALL</h2> </th> </tr> </thead> <tbody> <tr> <td> <b>Hey!</b> </td> </tr> <tr> <td>You just got a video call invitation from <span style='color:dodgerblue;'>" + req.body.sessionHost + "</span>. <br> Join the call by clicking on the URL below: <br> <br><b>URL:</b><a href=" + req.body.url + " style=color:dodgerblue;>Conference Link</a> <br> Enter the Email ID to which this mail is received. <br> Enter this One Time Password: <br> <p> <b>Password :</b> " + password + "</p> <b>Note:</b> This is a system generated password which will be lapsed once the current session is over. </td> </tr> <tr style='background: linear-gradient(to bottom, #00bcd40f 0%, #00BCD4 100%);'> <td style=padding-top:4px;padding-bottom:4px> <p>Have a seamless chat, <br> <b>Team-VC4ALL</b> </p> </td> </tr> </tbody> </table>"
-                
-                            };
-                            transporter.sendMail(mailOptions, function (error, info) {
-                                if (error) {
-                                    console.log(error);
-                                    responseData = {
-                                        status: true,
-                                        errorCode: 200,
-                                        message: property.E0009,
-                                        data: data
-                                    };
-                                    res.status(200).send(responseData);
-                                } else {
-                                    console.log("Email sent: " + info.response);
-                                    responseData = {
-                                        status: true,
-                                        errorCode: 200,
-                                        message: property.S0006,
-                                        data: data
-                                    };
-                                    res.status(200).send(responseData);
-                                }
-                            });
-                        }
-                    })
-                }
+            }
+            else {
+                careatorMaster.update({ email: req.body.sessionHost }, { $push: { "invite": { "remoteEmailId": req.body.email, "password": password } } }, function (err, data) {
+                    if (err) {
+                        responseData = {
+                            status: true,
+                            errorCode: 200,
+                            message: property.E0007
+                        };
+                        res.status(200).send(responseData);
+                    } else {
+                        var mailOptions = {
+                            from: "info@vc4all.in",
+                            to: req.body.email,
+                            subject: 'VC4ALL Credential',
+                            html: "<link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Lato'/> <table style='width: 100%;border:2px solid gainsboro;font-family:lato !important;'> <thead style='background: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'> <tr> <th> <h2 style='font-weight: 200;'>Greetings from VC4ALL</h2> </th> </tr> </thead> <tbody> <tr> <td> <b>Hey!</b> </td> </tr> <tr> <td>You just got a video call invitation from <span style='color:dodgerblue;'>" + req.body.sessionHost + "</span>. <br> Join the call by clicking on the URL below: <br> <br><b>URL:</b><a href=" + req.body.url + " style=color:dodgerblue;>Conference Link</a> <br> Enter the Email ID to which this mail is received. <br> Enter this One Time Password: <br> <p> <b>Password :</b> " + password + "</p> <b>Note:</b> This is a system generated password which will be lapsed once the current session is over. </td> </tr> <tr style='background: linear-gradient(to bottom, #00bcd40f 0%, #00BCD4 100%);'> <td style=padding-top:4px;padding-bottom:4px> <p>Have a seamless chat, <br> <b>Team-VC4ALL</b> </p> </td> </tr> </tbody> </table>"
+
+                        };
+                        transporter.sendMail(mailOptions, function (error, info) {
+                            if (error) {
+                                console.log(error);
+                                responseData = {
+                                    status: true,
+                                    errorCode: 200,
+                                    message: property.E0009,
+                                    data: data
+                                };
+                                res.status(200).send(responseData);
+                            } else {
+                                console.log("Email sent: " + info.response);
+                                responseData = {
+                                    status: true,
+                                    errorCode: 200,
+                                    message: property.S0006,
+                                    data: data
+                                };
+                                res.status(200).send(responseData);
+                            }
+                        });
+                    }
+                })
+            }
         }
 
     })
-    
+
 }
 module.exports.resetLoginFlagsById = function (req, res) {
     console.log("resetLoginFlags-->");
@@ -920,7 +927,7 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
         "status": "active",
         "chatStatus": "Available",
         "restrictedTo": [],
-        "profilePicPath": "./css/user.png",
+        "profilePicPath": "/careatorApp/css/user.png",
         "login": "notDone",
         "logout": "done"
     }
@@ -971,7 +978,7 @@ module.exports.careatorSingleUserInsert = function (req, res) {
         "status": "active",
         "chatStatus": "Available",
         "restrictedTo": [],
-        "profilePicPath": "./css/user.png",
+        "profilePicPath": "/careatorApp/css/user.png",
         "login": "notDone",
         "logout": "done"
     }

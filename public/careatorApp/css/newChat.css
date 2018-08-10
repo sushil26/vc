@@ -577,7 +577,7 @@ box-shadow: none;
 @media screen and (max-width: 700px) {
     .btn {
         padding: 0px;
-        height: 45px;
+        height: auto;
     }
     .app {
         width: auto;

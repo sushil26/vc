@@ -5,6 +5,7 @@ var image = require('./controllers/image');
 var adminAction = require('./controllers/adminAction');
 var school = require('./controllers/school');
 var careator = require('./controllers/careator');
+var careator_event = require('./controllers/careator_event');
 var careatorImgUpload = require('./controllers/careatorImgUploads.js');
 
 
@@ -49,6 +50,9 @@ module.exports = function (app) {
     app.post('/careator_reset/resetLoginFlagsById/:id', careator.resetLoginFlagsById);
     app.post('/careator_textSeenFlagUpdate/textSeenFlagUpdate/:id', careator.textSeenFlagUpdate);
     app.post('/careator_textSeenFlagUpdate_toGroupChat/textSeenFlagUpdate_toGroupChat/:group_id', careator.textSeenFlagUpdate_toGroupChat);
+    app.post('/careator_eventSchedule/careator_sendEventSchedule', careator_event.careator_sendEventSchedule);
+    app.get('/careator_eventSchedule/careator_eventGetById/:id', careator_event.careator_eventGetById);
+    app.get("/careator_getToDate/careator_getToDate", careator_event.careator_getToDate);
     //app.post('/careator/careator_video_creteGroup', careator.careator_video_creteGroup);
     //app.post('/careator/careator_chatVideo_creteGroup', careator.careator_chatVideo_creteGroup);
 

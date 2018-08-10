@@ -1,9 +1,4 @@
-careatorApp.controller("chatCtrl", function (
-  $scope,
-  $rootScope,
-  careatorHttpFactory,
-  careatorSessionAuth, SweetAlert
-) {
+careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFactory, careatorSessionAuth, SweetAlert) {
   console.log("chatCtrl==>");
   $scope.count = 0;
   var userData = careatorSessionAuth.getAccess("userData");
@@ -23,9 +18,7 @@ careatorApp.controller("chatCtrl", function (
   $scope.restrictedArray = restrictedUser;
   // console.log("restrictedUser: " + JSON.stringify(restrictedUser));
   // $scope.restrictedArray = restrictedUser.split(',');
-  console.log(
-    " $scope.restrictedArray: " + JSON.stringify($scope.restrictedArray)
-  );
+  console.log(" $scope.restrictedArray: " + JSON.stringify($scope.restrictedArray));
   var id = userData.userId;
   $scope.getUserDataById = function () {
     console.log("getUserDataById--> ");

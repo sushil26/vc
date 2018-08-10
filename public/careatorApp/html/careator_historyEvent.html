@@ -1,0 +1,72 @@
+<div ng-controller="careator_historyCtr">
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel">
+                    <div class="panel-heading">
+                        <i class="fa fa-user-circle"></i>
+                        <span style="color:white;">&nbspMEETING HISTORY</span>
+                    </div>
+                    <div class="panel-body bio-graph-info" style="padding: 1px;">
+                        <div style="margin:20px !important;">
+                            <div class="col-lg-12">
+
+                                <form class="navbar-form">
+                                    <input class="form-control" placeholder="Search" type="text">
+                                </form>
+                                <table class="table   table-sm table-striped table-advance table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                <i class="icon_profile"></i>Title
+                                                <i class="arrow_up_alt pull-right"></i>
+                                                <i class="arrow_down_alt pull-right"></i>
+                                            </th>
+                                            <th>
+                                                <i class="icon_calendar"></i>Date
+                                                <i class="arrow_up_alt pull-right"></i>
+                                                <i class="arrow_down_alt pull-right"></i>
+                                            </th>
+                                            <th>
+                                                <i class="icon_mail_alt"></i>Timing
+                                                <i class="arrow_up_alt pull-right"></i>
+                                                <i class="arrow_down_alt pull-right"></i>
+                                            </th>
+                                            <th>
+
+
+                                                <i class="icon_cogs"></i> Action</th>
+
+                                        </tr>
+                                       <!-- <tr ng-repeat="event in events  | orderBy:'-startsAt'" ng-if="event.startsAt<todayDate"> -->
+                                        <tr ng-repeat="event in events  | orderBy:'-startsAt'" ng-if="event.startsAt<todayDate">
+                                            <td>{{event.title}}</td>
+                                            <td>{{event.startsAt | date:'MMM d, y'}}</td>
+                                            <td>{{event.startsAt | date:'h:mm a'}}-{{event.endsAt | date:'h:mm a'}}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index)">View</button>
+                                                    <!-- <a class="btn btn-primary" href="#">
+                                                        <i class="icon_plus_alt2"></i>&nbsp;Chat
+                                                    </a>
+                                                    <a class="btn btn-success" href="#">
+                                                        <i class="icon_check_alt2"></i>&nbsp;Video
+                                                    </a>
+                                                    <a class="btn btn-success" href="#">
+                                                        <i class="icon_check_alt2"></i>&nbsp;Summary
+                                                    </a> -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+</div>

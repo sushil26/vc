@@ -1,0 +1,91 @@
+<div ng-controller="careator_upcomingEventCtr">
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel">
+                    <div class="panel-heading">
+                        <i class="fa fa-user-circle"></i>
+                        <span style="color:white;">&nbspUPCOMING EVENT</span>
+                    </div>
+                    <div class="panel-body bio-graph-info" style="padding: 1px;">
+                        <div style="margin:20px !important;">
+                            <div class="col-lg-12">
+                                <form class="navbar-form">
+                                    <input class="form-control" placeholder="Search" type="text">
+                                </form>
+                                <table class="table   table-sm table-bordered">
+                                    <thead style="background: white">
+                                        <tr>
+                                            <th>
+                                                <span>
+                                                    <i class="icon_profile"></i>Title</span>
+                                            </th>
+                                            <th>
+                                                <span>
+                                                    <i class="icon_calendar"></i> Date</span>
+                                                <!-- <i class="arrow_up_alt pull-right"></i>
+                                                <i class="arrow_down_alt pull-right"></i> -->
+                                            </th>
+                                            <th>
+                                                <i class="icon_mail_alt"></i>Timing
+                                                <!-- <i class="arrow_up_alt pull-right"></i>
+                                                <i class="arrow_down_alt pull-right"></i> -->
+                                            </th>
+                                            <!-- <th>
+                                                <i class="icon_clock"></i> End Time
+                                                 <i class="arrow_up_alt pull-right"></i>
+                                                <i class="arrow_down_alt pull-right"></i> -->
+                                            <!-- </th> -->
+
+                                            <th>
+                                                <i class="icon_cogs"></i> Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="background: white">
+                                        <tr ng-repeat="event in events" ng-if="event.startsAt>=todayDate">
+                                            <td >
+                                                <div ng-if="event.userId == userData.id">
+                                                    <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}
+                                                    <a style="color:green;" class="fa fa-arrow-circle-right"></a>
+
+                                                </div>
+                                                <div ng-if="event.userId != userData.id">
+                                                    <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}
+                                                    <a style="color:royalblue;" class="fa fa-arrow-circle-left"></a>
+                                                </div>
+
+                                            </td>
+                                            <td>{{event.startsAt | date:'MMM d, y'}}</td>
+                                            <td>{{event.startsAt | date:'h:mm a'}}-{{event.endsAt | date:'h:mm a'}}</td>
+
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a ng-if="event.startsAt!=todayDate" class="btn btn-primary" target="_blank" ng-click="waitForTime(event.startsAt| date:'MMM d, y h:mm a')">
+                                                        <i class="icon_headphones"></i>&nbspStart
+                                                    </a> 
+                                                     <a ng-if="(event.startsAt==todayDate || event.endsAt==todayDate) || (event.startsAt>=todayDate && event.endsAt<=todayDate)"
+                                                        class="btn btn-primary" ng-click="conferenceStart(event.id, event.url, event.studUserId)">
+                                                        <i class="icon_headphones"></i>&nbspStart
+                                                    </a>
+                                                    <!-- <a class="btn btn-primary" ng-click="conferenceStart(event.id, event.url, event.studUserId)">
+                                                        <i class="icon_headphones"></i>&nbspStart
+                                                    </a>
+                                                    <a ng-if="loginType=='teacher'" class="btn btn-success" href="" ng-click="rescheduleEvent($index)">
+                                                        <i class="fa fa-pencil"></i>&nbsp;Reschedule
+                                                    </a> -->
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id, event.userId)">View</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+</div>

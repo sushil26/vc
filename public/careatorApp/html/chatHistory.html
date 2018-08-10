@@ -8,7 +8,7 @@
                         <span>&nbspChat History</span>
                     </div>
                    
-                    <link rel="stylesheet" href="./css/newChat.css" />
+                    <link rel="stylesheet" href="/careatorApp/css/newChat.css" />
                     <div class="container app" >
                         <div class="row app-one" >
                             <div class="col-sm-4 side">
@@ -23,10 +23,10 @@
                                         <div class="row sideBar-body" ng-repeat="record in chatedGroup_records">
                                             <div class="col-sm-3 col-xs-3 sideBar-avatar" style="font-size: 35px;">
                                                 <div class="avatar-icon" ng-if="record.groupName==undefined">
-                                                    <img src="./css/user.png">
+                                                    <img src="/careatorApp/css/user.png">
                                                 </div>
                                                 <div class="avatar-icon" ng-if="record.groupName!==undefined">
-                                                    <img src="./css/group.png">
+                                                    <img src="/careatorApp/css/group.png">
                                                 </div>
                                             </div>
                                             <div class="col-sm-9 col-xs-9 sideBar-main" ng-if="record.groupName==undefined">
@@ -64,10 +64,10 @@
                                 <div class="row heading">
                                     <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
                                         <div class="avatar-icon" ng-if="selectedType=='group'">
-                                            <img src="./css/group.png">
+                                            <img src="/careatorApp/css/group.png">
                                         </div>
                                         <div class="avatar-icon" ng-if="selectedType=='individual_chats'">
-                                            <img src="./css/user.png">
+                                            <img src="/careatorApp/css/user.png">
                                         </div>
                                     </div>
                                     <div class="col-sm-8 col-xs-7 heading-name">

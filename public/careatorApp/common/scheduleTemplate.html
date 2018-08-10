@@ -1,0 +1,46 @@
+<div class="modal-header loginpopUp_header" style="height: 50px;     background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+    <span class="modal-title" style="font-weight: 200;">
+        <b>&nbsp;Scheduling on :&nbsp;</b>{{ eventDetails.startsAt | date }}</span>
+    <button type="button" class="close" ng-click="$close()">&times;</button>
+</div>
+<style>
+    .btn {
+        background: none;
+        box-shadow: none;
+    }
+
+    .modal-content {
+        border-radius: 5px;
+        background: white;
+    }
+</style>
+<div class="modal-body">
+    <input type="text" class="form-control" placeholder="Topic" ng-model="eventDetails.title">
+    <input style="margin-top:10px;" class="form-control" type="text" placeholder="Participents Email" ng-model="eventDetails.emailList">
+
+
+    <table>
+        <tr>
+            <td>
+                <label>Timing:&nbsp</label>
+            </td>
+            <td>
+                <div uib-timepicker ng-model="eventDetails.startsAt" hour-step="1" minute-step="20" show-meridian="true">
+                </div>
+            </td>
+            <td>
+                <div uib-timepicker ng-model="eventDetails.endsAt" hour-step="1" minute-step="20" show-meridian="true">
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <label for="comment">Message:</label>
+    <textarea class="form-control" rows="5" id="comment" ng-model="eventDetails.reason"></textarea>
+
+
+</div>
+<div class="modal-footer loginpopUp_footer" style="    background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+    <button class="btn btn-warning loginpopUp_footerBtn" type="button" ng-click="$close()">Close</button>
+    <button class="btn btn-primary" data-dismiss="modal" ng-click="save( eventDetails.title,eventDetails.emailList,eventDetails.startsAt,eventDetails.endsAt, eventDetails.reason)">Save</button>
+</div>

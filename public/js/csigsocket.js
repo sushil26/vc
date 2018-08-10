@@ -6,8 +6,11 @@
 // console.log("decryptedPswd: "+decryptedPswd.toString(CryptoJS.enc.Utf8));
 
 // ];
+
 var sesionEnc = localStorage.getItem("sessionEnc");
 console.log("sesionEnc: " + sesionEnc);
+
+$('html, body').css('overflow-x', 'hidden');
 
 /** CONFIG **/
 console.log("Signaling Socket.js");
@@ -111,7 +114,7 @@ var sessionPassword = localStorage.getItem("sessionPassword");
 //   console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));
 //   console.log("localStorage.getItem(sessionPassword): " + localStorage.getItem("sessionPassword"));
 
-if ((localStorage.getItem("careatorEmail")!=null && localStorage.getItem("careatorEmail")!=undefined) && (localStorage.getItem("sessionPassword")!=null && localStorage.getItem("sessionPassword")!=undefined)) {
+if ((localStorage.getItem("careatorEmail") != null && localStorage.getItem("careatorEmail") != undefined) && (localStorage.getItem("sessionPassword") != null && localStorage.getItem("sessionPassword") != undefined)) {
   var userNameEmail = localStorage.getItem("careatorEmail");
   console.log("2 cond: userNameEmail: " + userNameEmail);
   var emailIdSplit = userNameEmail.split('@');
@@ -123,9 +126,11 @@ if ((localStorage.getItem("careatorEmail")!=null && localStorage.getItem("careat
   console.log("localStorage.getItem(chatRights): " + localStorage.getItem("chatRights"));
   if (localStorage.getItem("videoRights") == 'yes') {
     document.getElementById("videoConfStart").style.display = "block";
+    document.getElementById("scheduleVC").style.display = "block";
     $("#buttonpage").css({
       "min-height": "auto"
     });
+    window.location.href = "https://vc4all.in/careatorApp/#!/dashboard/profile";
   }
   if (localStorage.getItem("chatRights") == 'yes') {
     document.getElementById("chatConfStart").style.display = "block";
@@ -219,6 +224,7 @@ function checkCredential() {
         if (data.data.videoRights == 'yes') {
           localStorage.setItem("videoRights", 'yes');
           document.getElementById("videoConfStart").style.display = "inline";
+          document.getElementById("scheduleVC").style.display = "inline";
           $("#buttonpage").css({
             "min-height": "auto"
           });
@@ -244,7 +250,7 @@ function checkCredential() {
         if (data.data.profilePicPath) {
           localStorage.setItem("profilePicPath", data.data.profilePicPath);
         }
-        var userNameEmail = localStorage.getItem("careatorEmail");
+
         console.log("userName: " + userName);
         document.getElementById("videoConferenceUrl").style.display = "block";
         // $('#myPasswordModal').modal('hide');
@@ -255,6 +261,7 @@ function checkCredential() {
         console.log("err.responseText: " + JSON.stringify(err.responseText));
         console.log("err.responseJSON: " + JSON.stringify(err.responseJSON.message));
         if (err.responseJSON.message == "You've already logged in. To log in again, please reset your session") {
+
           checkObj = {
             "password": password,
             "careatorEmail": careatorEmail
@@ -263,11 +270,13 @@ function checkCredential() {
           document.getElementById('notify_msg_content').innerHTML = err.responseJSON.message;
           document.getElementById('resetBtn').style.display = 'inline';
           $("#notify_msg_button").trigger("click");
+           
           resetId = err.responseJSON.data.id;
 
         } else {
           // alert(err.responseJSON.message);
           $("#alertButton").trigger("click");
+           
           var x =
             document.getElementById('alertcontent').innerHTML = err.responseJSON.message + "<br>Please try with correct password or contact Admin";
         }
@@ -633,6 +642,12 @@ function startSession(id, date) {
 // }
 
 /* ### Note:End Whenever page refresh get the chathistory respective to url  ### */
+
+document.getElementById("scheduleVC").addEventListener("click", function () {
+  console.log("scheduleVC4ALL Emp--->");
+  window.location.href = "https://vc4all.in/careatorApp/#!/dashboard/vc4allSchedule"
+
+})
 
 signaling_socket.on("connect", function () {
   console.log("signaling_socket connect-->");
@@ -1736,8 +1751,8 @@ signaling_socket.on("connect", function () {
 function scrollDown() {
   console.log("scrollDown-->");
   $("#popupMsg").animate({
-    scrollTop: $("#popupMsg").prop("scrollHeight")
-  },
+      scrollTop: $("#popupMsg").prop("scrollHeight")
+    },
     500
   );
   console.log("<--scrollDown");
@@ -1828,8 +1843,8 @@ function scrollDown() {
     }
 
     iframe.contentWindow.postMessage({
-      captureSourceId: true
-    },
+        captureSourceId: true
+      },
       "*"
     );
   }
@@ -1903,8 +1918,8 @@ function scrollDown() {
     }
 
     iframe.contentWindow.postMessage({
-      getChromeExtensionStatus: true
-    },
+        getChromeExtensionStatus: true
+      },
       "*"
     );
   }

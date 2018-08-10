@@ -375,6 +375,9 @@
 video {
   width: 100%;
   height: 25vh;
+  border: 5px solid white;
+  background: #495057;
+  box-shadow: 1px 2px 5px #000;
   /* background: black; */
 }
 
@@ -550,7 +553,7 @@ h6 {
   display: table;
   width: 100%;
   height: 100vh;
-  background: url(/home/img/cp.jpg) top center fixed;
+  background: url(/home/img/woman-laptop.jpg) top center fixed;
   background-size: cover;
 }
 
@@ -1192,14 +1195,15 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #portfolio .portfolio-items {
-  width: 50%;
+  width: 48%;
+  margin-left: 1%;
   position: relative;
   overflow: hidden !important;
   transition: all 350ms ease;
   padding: 0;
   transform: scale(1);
-  background: aliceblue;
-  border: 2px solid #272a2c;
+  /* background: aliceblue;
+  border: 2px solid #272a2c; */
 }
 
 #portfolio .portfolio-items a {
