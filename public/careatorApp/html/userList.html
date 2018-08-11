@@ -69,13 +69,12 @@
                                             </td>
                                             <td ng-if="emp.status=='active'">
                                                 Active
-
                                             </td>
                                             <td>
                                                 <button class="btn btn-primary fa fa-user-plus" ng-if="emp.status=='inactive'" ng-click="statusChange(emp._id, 'active', $index)">&nbsp;Activate</button>
                                                 <button class="btn btn-warning fa fa-user-times" ng-if="emp.status=='active'" ng-click="statusChange(emp._id, 'inactive', $index)">&nbsp;Deactivate</button>
                                                 <button class="btn btn-danger fa fa-trash" ng-click="deleteUser(emp._id)">&nbsp;Delete</button>
-                                                <button class="btn btn-info fa fa-pencil-square-o" ng-click="editUser($index)">&nbsp;Edit</button>
+                                                <button class="btn btn-info fa fa-pencil-square-o" ng-click="editUser(emp._id)">&nbsp;Edit</button>
                                                 <button class="btn btn-info fa fa-envelope" ng-click="seeChat(emp._id)">&nbsp;Chat</button>
                                                 <button class="btn btn-info fa fa-user" ng-click="resetLoginFlag(emp._id)">&nbsp;Reset</button>
 

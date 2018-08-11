@@ -1,106 +1,105 @@
-<div div class="modal-header loginpopUp_header">
-    <h4 class="modal-title">Event Details</h4>
-    <button type="button" class="close" data-dismiss="modal" ng-click="$close()" aria-hidden="true">&times;</button>
+<div class="modal-header loginpopUp_header" style="height: 50px;     background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+    <span class="modal-title" style="font-weight: 200;">
+        <b>&nbsp;Event Details</b>
+    </span>
+    <button type="button" class="close" data-dismiss="modal" ng-click="$close()">&times;</button>
 </div>
+<style>
+    .btn {
+        background: none;
+        box-shadow: none;
+    }
+
+    .modal-content {
+        border-radius: 5px;
+        background: white;
+    }
+</style>
 <div class="modal-body">
-
-    <table class="table table-sm">
-        <thead>
-            <tr>
-                <th>
-                    <div class="panel-heading">
-                        Sender Details
-                    </div>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
+    <center>
+        <table>
             <tr>
                 <td>
-                    Name
+                    <label style="float:right;">Host&nbsp;&nbsp;:&nbsp;&nbsp;</label>
                 </td>
                 <td>
-                    <div style="color:green">{{eventDetails.senderName}} </div>
-                </td>
-                <td>
-                    Id
-                </td>
-                <td>
-                    <div style="color:green">{{eventDetails.senderId}} </div>
-                </td>
-
-            </tr>
-            <tr>
-                <td>
-                    Title
-                </td>
-                <td>
-                    <div style="color:green">{{eventDetails.title}} </div>
-                </td>
-                <td>
-                    Timing
-                </td>
-                <td>
-                    <div style="color:green">{{eventDetails.startsAt | date:'h:mm a'}}-{{eventDetails.endsAt | date:'h:mm a'}} </div>
+                    <lable style="float:left;">
+                        <b>{{eventDetails.senderName}}</b>
+                    </lable>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Message
+                    <label style="float:right;">Topic&nbsp;&nbsp;:&nbsp;&nbsp;</label>
                 </td>
                 <td>
-                    <div style="color:green">{{eventDetails.reason}} </div>
+                    <lable style="float:left;">
+                        <b>{{eventDetails.title}}</b>
+                    </lable>
                 </td>
             </tr>
-        </tbody>
-
-        <thead>
-            <tr>
-
-                <th>
-                    <div class="panel-heading">
-                        Receiver Emails
-                    </div>
-
-                </th>
-
-            </tr>
-        </thead>
-        <tbody>
             <tr>
                 <td>
-                    Emails
+                    <label style="float:right;">Timing&nbsp;&nbsp;:&nbsp;&nbsp;</label>
                 </td>
-                <td ng-repeat="email in eventDetails.invitingTo">
-                    <div style="color:green">{{email}} </div>
+                <td>
+                    <lable style="float:left;">
+                        <b>{{eventDetails.startsAt | date:'h:mm a'}}-{{eventDetails.endsAt | date:'h:mm a'}}</b>
+                    </lable>
                 </td>
-
             </tr>
-
-        </tbody>
-
-        <!-- ng-if only for history -->
-        <thead ng-if="eventDetails.teacher_mom && eventDetails.parent_mom">
             <tr>
                 <td>
-                    <div class="panel-heading">
-                        Minutes of Meeting
-                    </div>
+                    <label style="float:right;">Details&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                </td>
+                <td>
+                    <lable style="float:left;">
+                        <b>{{eventDetails.reason}}</b>
+                    </lable>
                 </td>
             </tr>
-        </thead>
-        <tbody>
             <tr>
-                <td ng-if="loginType='teacher'">
-                    <div style="color:green">{{eventDetails.teacher_mom}} </div>
+                <td>
+                    <label style="float:right;">Participants&nbsp;&nbsp;:&nbsp;&nbsp;</label>
                 </td>
-                <td ng-if="loginType='studParent'">
-                    <div style="color:green">{{eventDetails.parent_mom}} </div>
+                <td>
+                    <span style="float:left;" ng-repeat="email in eventDetails.invitingTo">
+                        <lable>
+                            <b>{{email}}</b>,&nbsp;
+                        </lable>
+                    </span>
                 </td>
-
             </tr>
-        </tbody>
-        <!-- <thead ng-if="viewType=='history'">
+        </table>
+    </center>
+
+
+
+
+
+
+    <!-- ng-if only for history -->
+    <!-- <thead ng-if="eventDetails.teacher_mom && eventDetails.parent_mom">
+        <tr>
+            <td>
+                <div class="panel-heading">
+                    Minutes of Meeting
+                </div>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td ng-if="loginType='teacher'">
+                <div style="color:green"><lable><b>{{eventDetails.teacher_mom}}</b></lable> </div>
+            </td>
+            <td ng-if="loginType='studParent'">
+                <div style="color:green"><lable><b>{{eventDetails.parent_mom}}</b></lable> </div>
+            </td>
+
+        </tr>
+    </tbody> -->
+    <!-- <thead ng-if="viewType=='history'">
             <tr>
                 <th>
                     <div class="panel-heading">
@@ -116,13 +115,13 @@
                 </td>
                 <td>
                     <video id="videoPlayer" autoplay='true' controls>
-                        <source src="{{videoSrc}}" type="video/mp4"> Your browser does not support the video tag.
+                        <source src="<lable><b>{{videoSrc}}</b></lable>" type="video/mp4"> Your browser does not support the video tag.
                     </video>
                 </td>
             </tr>
         </tbody> -->
-    </table>
+
 </div>
-<div class="modal-footer">
-    <button class="btn btn-default loginpopUp_footerBtn" type="button" ng-click="$close()">Close</button>
+<div class="modal-footer loginpopUp_footer" style="    background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+    <button class="btn btn-warning loginpopUp_footerBtn" type="button" ng-click="$close()">Close</button>
 </div>

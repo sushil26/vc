@@ -1,4 +1,4 @@
-careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope, $state, $window, careatorHttpFactory, $uibModal, $filter, careatorSessionAuth) {
+careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope, $state, $window, careatorHttpFactory, $uibModal, $filter, careatorSessionAuth, SweetAlert) {
     console.log("upcomingEventController==>");
     $scope.userData = careatorSessionAuth.getAccess("userData");
     $scope.loginType = $scope.userData.loginType;
@@ -26,9 +26,7 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
                 $scope.todayDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
                 console.log("consolidateDate: " + $scope.consolidateDate);
                 $scope.eventGet();
-            }
-            else {
-            }
+            } else {}
         })
         console.log("<--Get To Date");
     }
@@ -81,8 +79,7 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
                     $scope.events.push(obj);
                 }
                 console.log(" $scope.events: " + JSON.stringify($scope.events));
-            }
-            else {
+            } else {
                 //alert("Event get Failed");
             }
         })
@@ -213,9 +210,10 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
             //   var name = $scope.events[id].student_Name;
 
             console.log("id: " + id);
-            $state.go('dashboard.eventReschedule', { 'id': id });
-        }
-        else {
+            $state.go('dashboard.eventReschedule', {
+                'id': id
+            });
+        } else {
             var loginAlert = $uibModal.open({
                 scope: $scope,
                 templateUrl: '/html/templates/dashboardwarning.html',
@@ -252,7 +250,13 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
 
     $scope.waitForTime = function (time) {
         console.log("waitForTime-->");
-        alert("Wait till " + time);
+
+        SweetAlert.swal({
+            title: "Its too early",
+            text: "Wait till" + time,
+            type: "warning"
+        });
+        // alert("Wait till " + time);
         console.log("<--waitForTime");
     }
 
@@ -265,8 +269,7 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
         localStorage.setItem("eventId", event_id);
         if ($scope.loginType == 'teacher') {
             localStorage.setItem("teacherLoginId", $scope.userData.id);
-        }
-        else if ($scope.loginType == 'studParent') {
+        } else if ($scope.loginType == 'studParent') {
             localStorage.setItem("studLoginId", $scope.userData.id);
         }
         $window.open(url, '_blank');
@@ -290,7 +293,7 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
     });
     /* ### End: Get event update from event.js(eventSend method)  ### */
 
-    /* ### Start: Get event update from index.js  ### *///update the client with new data;
+    /* ### Start: Get event update from index.js  ### */ //update the client with new data;
     socket.on('event_viewDetail_toSender', function (data) {
         console.log("****event_viewDetail_toSender-->: " + JSON.stringify(data));;
 

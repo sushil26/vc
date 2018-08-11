@@ -421,27 +421,6 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         $(this).toggleClass('open');
     });
 
-    //////////////toggle//////////////////////////////
-    $('#tog').click(function () {
-
-        $('#tog').css({
-            "display": "none"
-        });
-        $('#fog').css({
-            "display": "inline"
-        });
-
-    });
-    $('#fog').click(function () {
-
-        $('#tog').css({
-            "display": "inline"
-        });
-        $('#fog').css({
-            "display": "none"
-        });
-
-    });
     var w;
     $scope.navigateintoBoth_CVoption = function () {
         console.log("navigateintoBoth_CVoption-->");
@@ -494,7 +473,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             })
         } else {
             SweetAlert.swal({
-                    title: "window is already opened", //Bold text
+                    title:"window is already opened", //Bold text
                     text: "we will take you the desired page!", //light text
                     type: "warning", //type -- adds appropiriate icon
                     showCancelButton: true, // displays cancel btton

@@ -1,6 +1,6 @@
 <div class="modal-header loginpopUp_header" style="height: 50px;     background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
     <span class="modal-title" style="font-weight: 200;">
-        <b>&nbsp;Scheduling on :&nbsp;</b>{{ eventDetails.startsAt | date }}</span>
+        <b>&nbsp;Meeting Schedule on :&nbsp;</b>{{ eventDetails.startsAt | date }}</span>
     <button type="button" class="close" ng-click="$close()">&times;</button>
 </div>
 <style>
@@ -14,10 +14,12 @@
         background: white;
     }
 </style>
+<form name="scheduleInviteForm">
 <div class="modal-body">
     <input type="text" class="form-control" placeholder="Topic" ng-model="eventDetails.title">
-    <input style="margin-top:10px;" class="form-control" type="text" placeholder="Participents Email" ng-model="eventDetails.emailList">
-
+    <input style="margin-top:10px;" name="emailToInvite" class="form-control" type="text" placeholder="Participents Email" ng-model="eventDetails.emailList">
+    <span ng-show="scheduleInviteForm.emailToInvite.$dirty" style="color:blue">*Note: Multiple email should separated by comma (Ex:abc@gmail.com, xyz@gmail.com)</span>
+</p>
 
     <table>
         <tr>
@@ -41,6 +43,7 @@
 
 </div>
 <div class="modal-footer loginpopUp_footer" style="    background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-    <button class="btn btn-warning loginpopUp_footerBtn" type="button" ng-click="$close()">Close</button>
-    <button class="btn btn-primary" data-dismiss="modal" ng-click="save( eventDetails.title,eventDetails.emailList,eventDetails.startsAt,eventDetails.endsAt, eventDetails.reason)">Save</button>
+    <button class="btn btn-warning loginpopUp_footerBtn" type="button" ng-click="$close()">Cancel</button>
+    <button class="btn btn-primary" data-dismiss="modal" ng-click="save( eventDetails.title,eventDetails.emailList,eventDetails.startsAt,eventDetails.endsAt, eventDetails.reason)">Invite</button>
 </div>
+</form>

@@ -33,6 +33,7 @@ jQuery(document).ready(function ($) {
 
   // Mobile Navigation
   if ($('#nav-menu-container').length) {
+    console.log("Mobile Navigation-->");
     var $mobile_nav = $('#nav-menu-container').clone().prop({
       id: 'mobile-nav'
     });
@@ -64,6 +65,7 @@ jQuery(document).ready(function ($) {
     });
 
     $(document).on('click', '#mobile-nav-toggle', function (e) {
+      console.log("mobile-nav-toggle clicked-->");
       
       $('body').toggleClass('mobile-nav-active');
       $('#mobile-nav-toggle i').toggleClass('fa-times fa-bars');

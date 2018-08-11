@@ -1,5 +1,6 @@
-careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, $rootScope, $state, $rootScope, $compile, $window, $filter, careatorHttpFactory, careatorSessionAuth, moment, calendarConfig, $uibModal) {
+careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, $rootScope, $state, $rootScope, $compile, $window, $filter, careatorHttpFactory, careatorSessionAuth, moment, calendarConfig, $uibModal, SweetAlert) {
   console.log("vc4allEmpScheduleCtrl==>");
+  console.log("date: " + new Date());
   var dayEventmodal; /* ### Note: open model for event send ###  */
   var studEvents = []; /* ### Note: selected student events ### */
   var teacherEvents = []; /* ### Note: selected teacher events ### */
@@ -29,9 +30,8 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
         $scope.todayDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
         console.log("consolidateDate: " + $scope.consolidateDate);
         $scope.eventGet();
-      }
-      else {
-      }
+
+      } else { }
     })
     console.log("<--Get To Date");
   }
@@ -75,8 +75,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
           ownerEvents.push(obj);
           vm.events.push(obj);
         }
-      }
-      else {
+      } else {
         //alert("Event get Failed");
       }
     })
@@ -98,23 +97,50 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
     var reqMin = rsd.getMinutes();
     var reqSec = rsd.getSeconds();
     var consolidateDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
-    console.log("consolidateDate: " + consolidateDate + " $scope.todayDate: " + $scope.todayDate);
-    if (consolidateDate > $scope.todayDate) {
-      console.log("PersonalRemoteCombineCal.length: " + PersonalRemoteCombineCal.length);
-      if (PersonalRemoteCombineCal.length > 0) {
-        var conflicts = PersonalRemoteCombineCal.some(function (event) {
-          //   return (event.startsAt <= s && s <= event.endsAt) ||event.startsAt <= e && e <= event.endsAt || s <= event.startsAt && event.startsAt <= e ||s <= event.endsAt && event.endsAt <= e});
-          return (event.startsAt <= rsd && rsd < event.endsAt) ||
-            event.startsAt < red && red < event.endsAt ||
-            rsd <= event.startsAt && event.startsAt < red ||
-            rsd < event.endsAt && event.endsAt < red
-        });
-        console.log("conflicts: " + conflicts);
-        if (conflicts) {
-          console.log("conflicts is there");
-          alert("ON this time you have an appointment");
-        }
-        else {
+    console.log("rsd.getTime(): " + rsd.getTime() + " red: " + red.getTime());
+    var reqDate = $scope.todayDate.getDate();
+    var reqMonth = $scope.todayDate.getMonth();
+    var reqYear = $scope.todayDate.getFullYear();
+    var todayDate = new Date(reqYear, reqMonth, reqDate);
+    console.log("todayDate: " + todayDate);
+    var selected_reqDate = rsd.getDate();
+    var selected_reqMonth = rsd.getMonth();
+    var selected_reqYear = rsd.getFullYear();
+    
+    var selected_date = new Date(selected_reqYear, selected_reqMonth, selected_reqDate);
+if(rsd.getTime() > $scope.todayDate.getTime() )
+{
+    if (rsd.getTime() < red.getTime() ) {
+      var diff = red.getHours() - rsd.getHours();
+      console.log("diff: "+diff);
+      if(diff<=8){
+        console.log("PersonalRemoteCombineCal.length: " + PersonalRemoteCombineCal.length);
+        if (PersonalRemoteCombineCal.length > 0) {
+          var conflicts = PersonalRemoteCombineCal.some(function (event) {
+            //   return (event.startsAt <= s && s <= event.endsAt) ||event.startsAt <= e && e <= event.endsAt || s <= event.startsAt && event.startsAt <= e ||s <= event.endsAt && event.endsAt <= e});
+            return (event.startsAt <= rsd && rsd < event.endsAt) ||
+              event.startsAt < red && red < event.endsAt ||
+              rsd <= event.startsAt && event.startsAt < red ||
+              rsd < event.endsAt && event.endsAt < red
+          });
+          console.log("conflicts: " + conflicts);
+          if (conflicts) {
+            console.log("conflicts is there");
+            SweetAlert.swal({
+              title: "Not Available",
+              type: "info",
+              text: "you have a apponitment on same time",
+            })
+            // alert("ON this time you have an appointment");
+          } else {
+            console.log("no conflicts is there");
+            var formatedStartTime = $filter('date')(sd, "HH:mm a");
+            var formatedEndTime = $filter('date')(ed, "HH:mm a");
+            var dateForEvent = $filter('date')(sd, "EEE MMM dd y");
+            dayEventmodal.close('resetModel');
+            $scope.eventSend(title, emailList, dateForEvent, formatedStartTime, formatedEndTime, sd, ed, reason);
+          }
+        } else {
           console.log("no conflicts is there");
           var formatedStartTime = $filter('date')(sd, "HH:mm a");
           var formatedEndTime = $filter('date')(ed, "HH:mm a");
@@ -123,18 +149,30 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
           $scope.eventSend(title, emailList, dateForEvent, formatedStartTime, formatedEndTime, sd, ed, reason);
         }
       }
-      else {
-        console.log("no conflicts is there");
-        var formatedStartTime = $filter('date')(sd, "HH:mm a");
-        var formatedEndTime = $filter('date')(ed, "HH:mm a");
-        var dateForEvent = $filter('date')(sd, "EEE MMM dd y");
-        dayEventmodal.close('resetModel');
-        $scope.eventSend(title, emailList, dateForEvent, formatedStartTime, formatedEndTime, sd, ed, reason);
+      else{
+        SweetAlert.swal({
+          title: "Invalid Time Duration",
+          type: "warning",
+          text: "Sorry! maximum 8hours duration only allowed for schedule",
+        })
       }
+      
+    } else {
+      SweetAlert.swal({
+        title: "Invalid Date",
+        type: "warning",
+        text: "End time should not be lesser than/equal to start time",
+      })
+      // alert("Selected should not be lesser than current date");
     }
-    else{
-      alert("Selected should not be lesser than current date");
-    }
+  }
+  else{
+    SweetAlert.swal({
+      title: "Invalid Date Start date/time: "+rsd+" End date/time: "+$scope.todayDate,
+      type: "warning",
+      text: "Start time should not be lesser than/equal to current time",
+    })
+  }
   }
 
 
@@ -199,10 +237,20 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
           console.log("data--" + JSON.stringify(data.data));
           if (checkStatus) {
             if (data.data.failedToSend.length == 0) {
-              alert("Successfully sent the event");
-            }
-            else {
-              alert("Failed to send " + JSON.stringify(data.data.failedToSend.length));
+              // alert("Successfully sent the event");
+              SweetAlert.swal({
+                title: "Invited Successfully",
+                type: "success",
+                text: "Successfully sent the event",
+              })
+
+            } else {
+              SweetAlert.swal({
+                title: "Failed",
+                type: "warning",
+                text: "Failed to send" + JSON.stringify(data.data.failedToSend.length)
+              })
+              // alert("Failed to send " + JSON.stringify(data.data.failedToSend.length));
             }
 
             // vm.events.splice(0, 1);
@@ -224,9 +272,13 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
             }
             ownerEvents.push(objData);
             vm.events.push(objData);
-          }
-          else {
-            alert("Event Send Failed");
+          } else {
+            // alert("Event Send Failed");
+            SweetAlert.swal({
+              title: "Failed",
+              type: "warning",
+              text: "Failed to send"
+            })
 
           }
         })
@@ -246,10 +298,8 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
   calendarConfig.dateFormats.hour = 'HH:mm';
   if ($scope.userData.loginType == 'teacher') {
     var actions = [{
-      // label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
       label: 'Re-Schedule',
       onClick: function (args) {
-        // alert("Edit Event Comming Soon");
         console.log("args.calendarEvent: " + args.calendarEvent);
         console.log("JSON args.calendarEvent: " + JSON.stringify(args.calendarEvent));
         var date = args.calendarEvent.startsAt;
@@ -265,15 +315,11 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
         if (consolidateDate > $scope.todayDate) {
           // alert("Edit Started-->");
           var id = args.calendarEvent.id;
-          //   var cs= $scope.events[id].student_cs;
-
-          //   var stud_id = $scope.events[id].student_id; 
-          //   var name = $scope.events[id].student_Name;
-
           console.log("id: " + id);
-          $state.go('dashboard.eventReschedule', { 'id': id });
-        }
-        else {
+          $state.go('dashboard.eventReschedule', {
+            'id': id
+          });
+        } else {
           var loginAlert = $uibModal.open({
             scope: $scope,
             templateUrl: '/html/templates/dashboardwarning.html',
@@ -286,28 +332,8 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
           })
           // alert("Sorry you not allow to edit");
         }
-        // var eClicked = $uibModal.open({
-        //   scope: $scope,
-        //   templateUrl: '/html/templates/eventDetails_edit.html',
-        //   windowClass: 'show',
-        //   backdropClass: 'show',
-        //   controller: function ($scope, $uibModalInstance) {
-        //     $scope.eventDetails = args.calendarEvent;
-        //     console.log("$scope.eventDetails: " + $scope.eventDetails);
-        //   }
-        // })
-
       }
     }
-      // {
-
-      //   label: 'Delete',
-      //   onClick: function (args) {
-      //     alert("Delete Event Comming Soon");
-      //     console.log("args: " + args);
-
-      //   }
-      // }
     ];
   }
 
@@ -345,7 +371,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
     $scope.evtData = event;
     console.log("$scope.evtData: " + JSON.stringify($scope.evtData));
     // $('#eDetail').trigger('click');
-    var eClicked = $uibModal.open({
+    $uibModal.open({
       scope: $scope,
       templateUrl: '/careatorApp/common/eventDetailTemplate.html',
       windowClass: 'show',
@@ -419,8 +445,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
         }
       })
       // alert("ON this time any one of you not free,try on other time");
-    }
-    else {
+    } else {
       console.log("No conflicts");
       dayEventmodal = $uibModal.open({
         scope: $scope,
@@ -443,24 +468,84 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
 
   vm.timespanClicked = function (date, css) {
     console.log("timespanClicked-->");
-    console.log("date: " + date);
-    $scope.selectedDateForEvent = $filter('date')(date, "EEE");
-    $scope.selectedDate = date;
+    /* ##### Start getdate api  ##### */
+    var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
+    careatorHttpFactory.get(api).then(function (data) {
+      var checkStatus = careatorHttpFactory.dataValidation(data);
+      console.log("data--" + JSON.stringify(data.data));
+      if (checkStatus) {
+        console.log("data.data.data.date: " + data.data.data.date);
+        var todayDate = new Date(data.data.data.date);
+        console.log("todayDate: " + todayDate);
+        var reqDate = todayDate.getDate();
+        console.log("reqDate: " + reqDate);
+        var reqMonth = todayDate.getMonth();
+        var reqYear = todayDate.getFullYear();
+        var reqHr = todayDate.getHours();
+        var reqMin = todayDate.getMinutes();
+        var reqSec = todayDate.getSeconds();
+        $scope.todayDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
+        console.log("consolidateDate: " + $scope.consolidateDate);
+        console.log("date: " + date);
+        console.log("$scope.todayDate: " + $scope.todayDate);
+        var reqDate = $scope.todayDate.getDate();
+        var reqMonth = $scope.todayDate.getMonth();
+        var reqYear = $scope.todayDate.getFullYear();
+        var todayDate = new Date(reqYear, reqMonth, reqDate);
+        console.log("todayDate: " + todayDate);
+        var selected_reqDate = date.getDate();
+        var selected_reqMonth = date.getMonth();
+        var selected_reqYear = date.getFullYear();
+        
+        var selected_date = new Date(selected_reqYear, selected_reqMonth, selected_reqDate);
 
-    dayEventmodal = $uibModal.open({
-      scope: $scope,
-      templateUrl: '/careatorApp/common/scheduleTemplate.html',
-      windowClass: 'show',
-      backdropClass: 'show',
-      controller: function ($scope, $uibModalInstance) {
-        var dt = new Date();
-        $scope.eventDetails = {
-          "startsAt": $scope.selectedDate,
-          "endsAt": $scope.selectedDate
+        console.log("date: " + date);
+        console.log("selected_date: " + selected_date);
+
+        if (todayDate > selected_date) {
+          SweetAlert.swal({
+            title: "Date Error",
+            type: "warning",
+            text: "Schedule date should not be lesser than current date",
+          })
+
         }
-        console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
-      }
+        else {
+          console.log("Ready to process the date");
+          $scope.selectedDateForEvent = $filter('date')(date, "EEE");
+          $scope.selectedDate = date;
+          console.log("todayDate: " + todayDate.getTime() + "selected_date: " + selected_date.getTime());
+          if (todayDate.getTime() == selected_date.getTime()) {
+            console.log("selected and today both are same");
+            selectedStartDate = $scope.todayDate.setMinutes($scope.todayDate.getMinutes() + 5);
+            selectedEndDate = $scope.todayDate.setMinutes($scope.todayDate.getMinutes() + 15);
+            console.log("selectedStartDate: " + selectedStartDate + "selectedEndDate: " + selectedEndDate);
+          }
+          else {
+            console.log("selected and today both are different");
+            selectedStartDate = date;
+            selectedEndDate = date;
+          }
+          dayEventmodal = $uibModal.open({
+            scope: $scope,
+            templateUrl: '/careatorApp/common/scheduleTemplate.html',
+            windowClass: 'show',
+            backdropClass: 'show',
+            controller: function ($scope, $uibModalInstance) {
+              var dt = new Date();
+              $scope.eventDetails = {
+                "startsAt": selectedStartDate,
+                "endsAt": selectedEndDate
+              }
+              console.log("$scope.eventDetails: " + JSON.stringify($scope.eventDetails));
+            }
+          })
+        }
+
+      } else { }
     })
+    /* ##### End getdate api  ##### */
+
   }
 
 

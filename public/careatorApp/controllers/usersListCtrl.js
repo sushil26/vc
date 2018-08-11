@@ -121,12 +121,12 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
         }
     }
 
-    $scope.editUser = function (index) {
+    $scope.editUser = function (id) {
         console.log("editUser-->");
-        console.log("$scope.allemployee[index]: " + JSON.stringify($scope.allemployee[index]));
-        var data = $scope.allemployee[index];
+        console.log("id: " + id);
+        //var data = $scope.allemployee[index];
         $state.go("Cdashboard.editUser", {
-            "id": data._id
+            "id": id
         });
     }
     $scope.seeChat = function (id) {

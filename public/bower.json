@@ -23,6 +23,7 @@
     "angular-spinners": "^5.1.2",
     "ng-img-crop-full-extended": "ngImgCropFullExtended#^0.6.2",
     "angularjs-dropdown-multiselect": "^1.11.8",
-    "easytimer.js": "^2.2.3"
+    "easytimer.js": "^2.2.3",
+    "date-and-time": "^0.6.2"
   }
 }
