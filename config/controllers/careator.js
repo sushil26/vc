@@ -259,7 +259,7 @@ module.exports.pswdCheck = function (req, res) {
     var careatorEmail = req.body.careatorEmail;
     var emailSplit = careatorEmail.split('@');
     if (general.emptyCheck(password) && general.emptyCheck(careatorEmail)) {
-        if (emailSplit[1] == 'careator.com' || careatorEmail == 'vc4all@careator.com') {
+        if (emailSplit[1] == 'careator.com' || emailSplit[1] == 'talenkart.com' || careatorEmail == 'vc4all@careator.com') {
             var obj = {
                 "email": careatorEmail
             }
