@@ -66,20 +66,18 @@ console.log("id2**: " + id2);
     console.log("localStorage.getItem(sessionPassword): " + localStorage.getItem("sessionPassword"));
     console.log("localStorage.getItem(careator_remoteEmail): " + localStorage.getItem("careator_remoteEmail"));
     console.log("localStorage.getItem(oneTimePassword): " + localStorage.getItem("oneTimePassword"));
-    if (localStorage.getItem("careatorEmail") && localStorage.getItem("sessionPassword") && (localStorage.getItem("videoRights") == 'yes')) {
+    if (localStorage.getItem("careatorEmail") && localStorage.getItem("sessionPassword") ) {
       console.log("Hoster session check");
       var password = localStorage.getItem("sessionPassword");
       var careatorEmail = localStorage.getItem("careatorEmail");
       var obj = {
         "password": password,
         "careatorEmail": careatorEmail,
-        "sessionURL": window.location.href
+         "sessionURL": window.location.href
       };
       console.log("obj: " + JSON.stringify(obj));
-      var urlForSessionCheck;
-      
       $.ajax({
-        url: "https://vc4all.in/careator/pswdCheckForSesstion",
+        url: "https://vc4all.in/careator/pswdCheckForSession_schedule",
         type: "POST",
         data: JSON.stringify(obj),
         contentType: "application/json",
@@ -139,7 +137,6 @@ console.log("id2**: " + id2);
         "careator_remoteEmail": careator_remoteEmail,
         "careator_remotePswd": careator_remotePswd
       }
-           
       $.ajax({
         url: "https://vc4all.in/careator/RemoteJoinCheck",
         type: "POST",

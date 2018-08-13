@@ -168,9 +168,9 @@ if(rsd.getTime() > $scope.todayDate.getTime() )
   }
   else{
     SweetAlert.swal({
-      title: "Invalid Date Start date/time: "+rsd+" End date/time: "+$scope.todayDate,
+      title: "Invalid Date",
       type: "warning",
-      text: "Start time should not be lesser than/equal to current time",
+      text: "Sorry! Start time should not be lesser than/equal to current time("+$scope.todayDate+")",
     })
   }
   }
@@ -197,7 +197,7 @@ if(rsd.getTime() > $scope.todayDate.getTime() )
         var date = dy.concat(fy, m, hr);
         urlDate = date;
 
-        var url = "https://vc4all.in/careator_conf/" + peerNew_id + "/" + urlDate;
+        var url = "https://vc4all.in/talenkart_conf/" + peerNew_id + "/" + urlDate;
         dfd.resolve(url);
       })
     })

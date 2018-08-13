@@ -110,8 +110,6 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
                             }
                         })
                         console.log("<--statusChange");
-
-
                     } else {
                         SweetAlert.swal("User cant login Now!");
                     }

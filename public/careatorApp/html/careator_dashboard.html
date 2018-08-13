@@ -1,6 +1,10 @@
 <div ng-controller="careator_dashboardCtrl">
     <!-- container section start -->
-    
+    <!-- <script src="../dashboard_Lib/js/jquery.js"></script>
+    <script src="../dashboard_Lib/js/bootstrap.min.js"></script> -->
+    <!-- <script src="../dashboard_Lib/js/jquery.nicescroll.js"></script>
+    <script src="../dashboard_Lib/js/jquery.scrollTo.min.js"></script> -->
+    <!-- <script src="../dashboard_Lib/js/scripts.js"></script> -->
 
     <section id="container" class="">
         <header class="header dark-bg">
@@ -8,7 +12,7 @@
 
                 <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom">
 
-                    <!-- <i style="color:#428bca; border: 1px solid #a8cf44;   padding: 5px; border-radius: 5px;" class="fa fa-bars" ng-click="iconMenuClick()"></i> -->
+                    <i style="color:#428bca; border: 1px solid #a8cf44;   padding: 5px; border-radius: 5px;" class="fa fa-bars" ng-click="iconMenuClick()"></i>
                     <!-- <i class="fa fa-times" style="color:#a8cf44; border: 1px solid #428bca;  padding: 5px;  border-radius: 5px;" id="fog" ng-click="iconMenuClick()"></i> -->
 
                 </div>
@@ -37,35 +41,42 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" ng-hide="sideBarMenu">
 
-                    <li ng-if="userData.email=='vc4all@careator.com'">
+                    <li ng-if="userData.email=='vc4all@talenkart.com'">
                         <a href="#!/dashboard/userCreate">
                             <i class="fa fa-user-circle">
                                 <span>&nbspCreate User</span>
                             </i>
                         </a>
                     </li>
-                    <li ng-if="userData.email=='vc4all@careator.com'">
+                    <li ng-if="userData.email=='vc4all@talenkart.com'">
                         <a href="#!/dashboard/userRestrict">
                             <i class="fa fa-universal-access">
                                 <span>&nbspRestrict Connectivity</span>
                             </i>
                         </a>
                     </li>
-                    <li ng-if="userData.email=='vc4all@careator.com'">
+                    <li ng-if="userData.email=='vc4all@talenkart.com'">
                         <a href="#!/dashboard/createGroup">
                             <i class="fa fa-users">
                                 <span>&nbspCreate Group</span>
                             </i>
                         </a>
                     </li>
-                    <li ng-if="userData.email=='vc4all@careator.com'">
+                    <li ng-if="userData.email=='vc4all@talenkart.com'">
                         <a href="#!/dashboard/usersList">
                             <i class="fa fa-list-alt">
                                 <span>&nbspAll Users</span>
                             </i>
                         </a>
                     </li>
-                    <li ng-if="userData.email=='vc4all@careator.com'">
+                    <li ng-if="userData.email=='vc4all@talenkart.com'">
+                        <a href="#!/dashboard/loginDetails">
+                            <i class="fa fa-address-book">
+                                <span>&nbspLog Details</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li ng-if="userData.email=='vc4all@talenkart.com'">
                         <a href="#!/dashboard/groupList">
                             <i class="fa fa-list">
                                 <span>&nbspAll Groups</span>
@@ -94,7 +105,7 @@
                         </a>
                     </li>
                     <li ng-if="videoRights=='yes'">
-                        <a href="#" ng-click="navigateintoBoth_CVoption()">
+                        <a ng-click="navigateintoBoth_CVoption()">
                             <i class="fa fa-video-camera">
                                 <span>&nbsp Instant</span>
                             </i>
@@ -102,25 +113,26 @@
                     </li>
                     <li ng-if="videoRights=='yes'">
                         <a href="#!/dashboard/vc4allSchedule">
-                            <i class="fa fa-video-camera">
+                            <i class="fa fa-pencil-square-o">
                                 <span>&nbspSchedule</span>
                             </i>
                         </a>
                     </li>
-                    <li >
+                    <li>
                         <a href="#!/dashboard/upcomingEvent">
-                            <i class="fa fa-video-camera">
+                            <i class="fa fa-calendar">
                                 <span>&nbsp;Upcoming Event</span>
                             </i>
                         </a>
                     </li>
-                    <li >
+                    <li>
                         <a href="#!/dashboard/historyEvent">
-                            <i class="fa fa-video-camera">
-                                <span>&nbsp;History Event</span>
+                            <i class="fa fa-history">
+                                <span>&nbsp;Event History</span>
                             </i>
                         </a>
                     </li>
+
                     <li>
                         <a ng-click="logout()">
                             <i class="fa fa-sign-out">
@@ -166,9 +178,5 @@
         </div>
 
     </section>
-    <!-- <script src="../dashboard_Lib/js/jquery.js"></script> -->
-    <script src="../dashboard_Lib/js/bootstrap.min.js"></script>
-    <script src="../dashboard_Lib/js/jquery.nicescroll.js"></script>
-    <script src="../dashboard_Lib/js/jquery.scrollTo.min.js"></script>
-    <script src="../dashboard_Lib/js/scripts.js"></script>
+
 </div>

@@ -248,12 +248,12 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
         console.log("<--reschedule");
     }
 
-    $scope.waitForTime = function (time) {
+    $scope.waitForTime = function (time, currentTime, wt, ct) {
         console.log("waitForTime-->");
 
         SweetAlert.swal({
             title: "Its too early",
-            text: "Wait till" + time,
+            text: "Now time is just "+ currentTime+" Wait till" + time,
             type: "warning"
         });
         // alert("Wait till " + time);

@@ -166,14 +166,14 @@
                                     <div class="row compose-sideBar">
                                         <div class="row sideBar-body" ng-repeat="record in allGroupAndIndividual |filter:search">
                                             <div class="col-sm-3 col-xs-3 sideBar-avatar">
-                                                <div class="avatar-icon" ng-if="record.groupName!==undefined && record.email!='vc4all@careator.com'">
+                                                <div class="avatar-icon" ng-if="record.groupName!==undefined && record.email!='vc4all@talenkart.com'">
                                                     <img src="/careatorApp/css/group.png">
                                                 </div>
-                                                <div class="avatar-icon" ng-if="record.groupName==undefined && record.email!='vc4all@careator.com'">
+                                                <div class="avatar-icon" ng-if="record.groupName==undefined && record.email!='vc4all@talenkart.com'">
                                                     <img ng-if="record.profilePicPath==undefined" src="/careatorApp/css/user.png">
                                                     <img ng-if="record.profilePicPath!=undefined" ng-src="{{record.profilePicPath}}">
                                                 </div>
-                                                <div class="avatar-icon" ng-if="record.groupName==undefined && record.email=='vc4all@careator.com'">
+                                                <div class="avatar-icon" ng-if="record.groupName==undefined && record.email=='vc4all@talenkart.com'">
                                                     <img ng-if="record.profilePicPath==undefined" src="/careatorApp/css/Admin.png">
                                                     <img ng-if="record.profilePicPath!=undefined" ng-src="{{record.profilePicPath}}">
                                                 </div>

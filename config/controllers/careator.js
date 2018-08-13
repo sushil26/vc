@@ -8,6 +8,8 @@ var log = logger.LOG;
 var nodemailer = require("nodemailer");
 var randomstring = require("randomstring");
 var careatorMaster = db.collection("careatorMaster"); /* ### careator employee collection  ### */
+var careatorEvents = db.collection("careatorEvents"); /* ### careatorEvents collection  ### */
+var loginDetails = db.collection("loginDetails"); /* ### careator login detail collection  ### */
 var careatorChatGroup = db.collection("careatorChatGroup"); /* ### careatorChatGroup collection  ### */
 var careatorChat = db.collection("careatorChat"); /* ### careatorChat collection  ### */
 var csv = require('fast-csv');
@@ -251,7 +253,127 @@ module.exports.pswdCheckForSesstion = function (req, res) {
     }
     console.log("<--pswdCheckForSesstion");
 }
+module.exports.pswdCheckForSession_schedule = function (req, res) {
+    console.log("pswdCheckForSession_schedule-->");
+    console.log("req.body.password: " + req.body.password + " req.body.careatorEmail: " + req.body.careatorEmail);
+    var password = req.body.password;
+    var careatorEmail = req.body.careatorEmail;
+    var url = req.body.sessionURL;
+    if (general.emptyCheck(password) && general.emptyCheck(careatorEmail)) {
+        var obj = { "email": careatorEmail }
+        console.log("obj: " + JSON.stringify(obj));
+        careatorMaster.find(obj).toArray(function (err, findData) {
+            console.log("findData: " + JSON.stringify(findData));
+            if (err) {
+                responseData = {
+                    status: false,
+                    message: property.E0007
+                };
+                res.status(400).send(responseData);
+            } else {
+                if (findData.length > 0) {
+                    if (findData[0].password == password) {
+                        var eventFindObj = {
+                            "url": url,
+                            "senderEmail": careatorEmail
+                        }
+                        console.log("eventFindObj: "+eventFindObj);
+                        careatorEvents.find(eventFindObj).toArray(function (err, sessionURLFind) {
+                            console.log("sessionURLFind: " + JSON.stringify(sessionURLFind));
+                            if (err) {
+                                responseData = {
+                                    status: false,
+                                    message: property.E0007
+                                };
+                                res.status(400).send(responseData);
+                            } else {
+                                if (sessionURLFind.length > 0) {
+                                    if (sessionURLFind[0].isDisconnected == 'yes') {
+                                        responseData = {
+                                            status: false,
+                                            errorCode: "E0_URLE",
+                                            message: property.N0004
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+                                    else {
+                                        var joinEmails = sessionURLFind[0].joinEmails;
+                                        console.log("joinEmails: " + JSON.stringify(joinEmails));
+                                        console.log("req.body.careatorEmail: " + req.body.careatorEmail);
+                                        console.log("joinEmails.indexOf(req.body.careatorEmail): " + joinEmails.indexOf(req.body.careatorEmail));
+                                        if (joinEmails.indexOf(req.body.careatorEmail) < 0) {
+                                            careatorEvents.update({ "url": req.body.sessionURL }, { $pull: { "leftEmails": careatorEmail }, $addToSet: { "joinEmails": careatorEmail } }, function (err, data) {
+                                                console.log("sessionURLFind: " + JSON.stringify(sessionURLFind));
+                                                if (err) {
+                                                    responseData = {
+                                                        status: false,
+                                                        message: property.E0007
+                                                    };
+                                                    res.status(400).send(responseData);
+                                                } else {
+                                                    responseData = {
+                                                        status: true,
+                                                        sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
+                                                        message: property.S0005
+                                                    };
+                                                    res.status(200).send(responseData);
+                                                }
+                                            })
+                                        }
+                                        else {
+                                            responseData = {
+                                                status: false,
+                                                errorCode: "E0_alreadyInUse",
+                                                message: property.N0005
+                                            };
+                                            console.log("responseData: " + JSON.stringify(responseData));
+                                            res.status(400).send(responseData);
+                                        }
+                                    }
 
+                                }
+                                else {
+                                    responseData = {
+                                        status: false,
+                                        errorCode: "E0_URLE",
+                                        message: property.N0004
+                                    };
+                                    res.status(400).send(responseData);
+                                }
+                            }
+                        })
+
+
+                    } else {
+                        responseData = {
+                            status: false,
+                            errorCode: "E1_credentialMismatch",
+                            message: property.E0008
+                        };
+                        res.status(400).send(responseData);
+                    }
+
+                } else {
+                    responseData = {
+                        status: false,
+                        message: property.E0006
+                    };
+                    console.log("responseData: " + JSON.stringify(responseData));
+                    res.status(400).send(responseData);
+                }
+            }
+        })
+
+    } else {
+        responseData = {
+            status: false,
+            message: property.N0003
+        };
+        console.log("responseData: " + JSON.stringify(responseData));
+        res.status(400).send(responseData);
+    }
+    console.log("<--pswdCheckForSession_schedule");
+}
 module.exports.pswdCheck = function (req, res) {
     console.log("pswdCheck-->");
     console.log("req.body.password: " + req.body.password + " req.body.careatorEmail: " + req.body.careatorEmail);
@@ -259,7 +381,7 @@ module.exports.pswdCheck = function (req, res) {
     var careatorEmail = req.body.careatorEmail;
     var emailSplit = careatorEmail.split('@');
     if (general.emptyCheck(password) && general.emptyCheck(careatorEmail)) {
-        if (emailSplit[1] == 'careator.com' || careatorEmail == 'vc4all@careator.com') {
+        if (emailSplit[1] == 'talenkart.com' || careatorEmail == 'vc4all@talenkart.com') {
             var obj = {
                 "email": careatorEmail
             }
@@ -277,39 +399,39 @@ module.exports.pswdCheck = function (req, res) {
                         if (findData[0].status == 'active') {
                             if (findData[0].password == password) {
                                 if (findData[0].logout == 'done' && findData[0].login == 'notDone') {
-                                    careatorMaster.update({
-                                        "_id": ObjectId(findData[0]._id),
-                                        "status": "active"
-                                    }, {
-                                            $set: {
-                                                "password": password,
-                                                "invite": [],
-                                                "logout": "notDone",
-                                                "login": "done"
-                                            }
-                                        }, function (err, data) {
-                                            console.log("data: " + JSON.stringify(data));
-                                            if (err) {
-                                                responseData = {
-                                                    status: false,
-                                                    message: property.E0007
-                                                };
-                                                res.status(400).send(responseData);
-                                            } else {
-                                                var date = new Date();
-                                              
-                                                log.info("req.originalUrl: " + req.originalUrl + " Email: " + findData[0].email, " Date: (" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + ")" + " Time: (" + date.getHours() + ":" + date.getMinutes() + ")" );
-                                                console.log("log: " + log);
-                                                responseData = {
-                                                    status: true,
-                                                    message: property.S0005,
-                                                    sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
-                                                    data: findData[0]
-                                                };
-                                                console.log("responseData: " + JSON.stringify(responseData));
-                                                res.status(200).send(responseData);
-                                            }
-                                        })
+                                    careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [], "logout": "notDone", "login": "done" } }, function (err, data) {
+                                        console.log("data: " + JSON.stringify(data));
+                                        if (err) {
+                                            responseData = {
+                                                status: false,
+                                                message: property.E0007
+                                            };
+                                            res.status(400).send(responseData);
+                                        } else {
+                                            var date = new Date();
+                                            loginDetails.update({ "_id": ObjectId(findData[0]._id) }, { $set: { "userId": findData[0]._id, "userName":findData[0].name, "email":findData[0].email, "login": true, "loginDate": date, "logout": false } },{ upsert : true }, function (err, loginData) {
+                                                if (err) {
+                                                    responseData = {
+                                                        status: false,
+                                                        message: property.E0007
+                                                    };
+                                                    res.status(400).send(responseData);
+                                                } else {
+                                                    // log.info("req.originalUrl: " + req.originalUrl + " Email: " + findData[0].email, " Date: (" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + ")" + " Time: (" + date.getHours() + ":" + date.getMinutes() + ")");
+                                                    console.log("log: " + log);
+                                                    responseData = {
+                                                        status: true,
+                                                        message: property.S0005,
+                                                        sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
+                                                        data: findData[0]
+                                                    };
+                                                    console.log("responseData: " + JSON.stringify(responseData));
+                                                    res.status(200).send(responseData);
+                                                }
+                                            })
+
+                                        }
+                                    })
                                 } else {
                                     responseData = {
                                         status: false,
@@ -453,7 +575,7 @@ module.exports.pswdGenerate = function (req, res) {
 
             })
 
-        } else if (email == 'vc4all@careator.com') {
+        } else if (email == 'vc4all@talenkart.com') {
             careatorMaster.find({
                 "email": email
             }).toArray(function (err, findData) {
@@ -679,7 +801,7 @@ module.exports.resetLoginFlagsById = function (req, res) {
 module.exports.getAdminObjectId = function (req, res) {
     console.log("getAdminObjectId-->");
     careatorMaster.find({
-        "email": "vc4all@careator.com"
+        "email": "vc4all@talenkart.com"
     }).toArray(function (err, admin) {
         if (err) {
             console.log("err: " + JSON.stringify(err));
@@ -1079,6 +1201,30 @@ module.exports.careator_getAllEmp = function (req, res) {
         }
     })
 
+}
+
+module.exports.careator_getAllEmpLoginDetails= function (req, res) {
+console.log("careator_getAllEmpLoginDetails-->");
+var response;
+loginDetails.find().toArray(function (err, allEmpLoginDetails) {
+        if (err) {
+            console.log("err: " + JSON.stringify(err));
+            response = {
+                status: false,
+                message: property.E0007,
+                data: err
+            };
+            res.status(400).send(responseData);
+        } else {
+            console.log("allEmpLoginDetails: " + JSON.stringify(allEmpLoginDetails));
+            response = {
+                status: true,
+                message: property.S0008,
+                data: allEmpLoginDetails
+            };
+            res.status(200).send(response);
+        }
+    })
 }
 /* ##### Start: Get careator all employee include status inactive  #### */
 module.exports.careator_getChatRightsEmp = function (req, res) {

@@ -61,9 +61,9 @@
 
                                             <td>
                                                 <div class="btn-group">
-                                                    <a ng-if="event.startsAt!=todayDate" class="btn btn-primary" target="_blank" ng-click="waitForTime(event.startsAt| date:'MMM d, y h:mm a')">
+                                                    <a ng-if="event.startsAt!=todayDate" class="btn btn-primary" target="_blank" ng-click="waitForTime(event.startsAt| date:'MMM d, y h:mm a', todayDate| date:'MMM d, y h:mm a', event.startsAt, todayDate)">
                                                         <i class="icon_headphones"></i>&nbspStart
-                                                    </a> 
+                                                    </a>
                                                      <a ng-if="(event.startsAt==todayDate || event.endsAt==todayDate) || (event.startsAt>=todayDate && event.endsAt<=todayDate)"
                                                         class="btn btn-primary" ng-click="conferenceStart(event.id, event.url, event.studUserId)">
                                                         <i class="icon_headphones"></i>&nbspStart

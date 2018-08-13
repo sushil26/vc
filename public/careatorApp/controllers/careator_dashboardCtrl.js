@@ -259,7 +259,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                 } else {
                     SweetAlert.swal({
                         title: "Your still logged in",
-                        type:"info"
+                        type: "info"
                     });
                 }
             }
@@ -443,7 +443,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                     console.log("signaling_socket message-->");
                     queryLink = config.queryId;
                     peerNew_id = config.peer_id;
-                    var url = "https://vc4all.in/careator_conf/" + peerNew_id + "/" + urlDate;
+                    var url = "https://vc4all.in/talenkart_conf/" + peerNew_id + "/" + urlDate;
                     // window.location.href = url;
                     var api = "https://vc4all.in/careator/setCollection";
                     console.log("api: " + api);
@@ -459,9 +459,8 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                         if (checkStatus) {
                             localStorage.setItem("sessionUrlId", peerNew_id);
                             console.log("url: " + url);
-
-
                             w = window.open(url, '_blank');
+                            $window.close();
                             console.log("***");
                             // $window.open(url, "_blank");
 
@@ -473,7 +472,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             })
         } else {
             SweetAlert.swal({
-                    title:"window is already opened", //Bold text
+                    title: "window is already opened", //Bold text
                     text: "we will take you the desired page!", //light text
                     type: "warning", //type -- adds appropiriate icon
                     showCancelButton: true, // displays cancel btton
@@ -484,10 +483,15 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                 },
                 function (isConfirm) { //Function that triggers on user action.
                     if (isConfirm) {
-                        SweetAlert.swal("ok!");
                         w.focus();
                     } else {
-                        SweetAlert.swal("didnt open");
+                        SweetAlert.swal({
+
+                            title: "Cancelled",
+                            text: "You have entered cancel you are still in same Page",
+                            type: "info"
+                        });
+
                     }
                 }
 
@@ -497,6 +501,137 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
 
     }
+
+
+
+
+    // ###################################################################################
+
+
+    $scope.initializeJS = function () {
+
+        //tool tips
+        $('.tooltips').tooltip();
+
+        //popovers
+        $('.popovers').popover();
+
+        //custom scrollbar
+        //for html
+  
+
+        //sidebar dropdown menu
+        $('#sidebar .sub-menu > a').click(function () {
+            var last = $('.sub-menu.open', $('#sidebar'));
+            $('.menu-arrow').removeClass('arrow_carrot-right');
+            $('.sub', last).slideUp(200);
+            var sub = $(this).next();
+            if (sub.is(":visible")) {
+                $('.menu-arrow').addClass('arrow_carrot-right');
+                sub.slideUp(200);
+            } else {
+                $('.menu-arrow').addClass('arrow_carrot-down');
+                sub.slideDown(200);
+            }
+            var o = ($(this).offset());
+            diff = 200 - o.top;
+            if (diff > 0)
+                $("#sidebar").scrollTo("-=" + Math.abs(diff), 500);
+            else
+                $("#sidebar").scrollTo("+=" + Math.abs(diff), 500);
+        });
+
+        // sidebar menu toggle
+        $(function () {
+            function responsiveView() {
+                var wSize = $(window).width();
+                if (wSize <= 768) {
+                    $('#container').addClass('sidebar-close');
+                    $('#sidebar > ul').hide();
+                    console.log("mobile view");
+                    $('#profile').css({
+                        'margin-top ': '195px'
+
+                    });
+
+                }
+
+                if (wSize > 768) {
+                    $('#container').removeClass('sidebar-close');
+                    $('#sidebar > ul').show();
+                    console.log("Desktop view");
+                    $('#profile').css({
+                        'margin-top ': '195px'
+                    });
+
+
+                }
+
+            }
+            $(window).on('load', responsiveView);
+            $(window).on('resize', responsiveView);
+        });
+
+        $('.toggle-nav').click(function () {
+            // if (wSize <= 768) {
+            //     $('#profile').css({
+            //         'margin-top ': '195px'
+            //     });
+
+            // }
+            // if (wSize > 768) {
+            //     $('#profile').css({
+            //         'margin-top ': ''
+            //     });
+
+            // }
+
+            // if ($(window).width() <= 768){	
+            //     $('#profile').css({
+            //         'margin-top ': '195px'
+            //     });
+
+
+            // }
+            if ($('#sidebar > ul').is(":visible") === true) {
+                $('#main-content').css({
+                    'margin-left': '0px'
+                });
+                $('#sidebar').css({
+                    'margin-left': '-180px'
+                });
+                $('#sidebar > ul').hide();
+                $("#container").addClass("sidebar-closed");
+            } else {
+                $('#main-content').css({
+                    'margin-left': '180px'
+                });
+                $('#sidebar > ul').show();
+                $('#sidebar').css({
+                    'margin-left': '0'
+                });
+                $("#container").removeClass("sidebar-closed");
+            }
+        });
+
+        //bar chart
+        if ($(".custom-custom-bar-chart")) {
+            $(".bar").each(function () {
+                var i = $(this).find(".value").html();
+                $(this).find(".value").html("");
+                $(this).find(".value").animate({
+                    height: i
+                }, 2000)
+            })
+        }
+
+    }
+
+
+
+
+    $scope.initializeJS();
+
 
 
     /* ##### Start: on window only one open tab should be there for this page  ##### */
