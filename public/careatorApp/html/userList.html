@@ -8,17 +8,13 @@
                         <span>&nbspUSER LIST</span>
                     </div>
                     <div class="card mb-3">
-
-                        <!-- <div class="3">
-                            <i class="fas fa-table"></i>
-                            USER LIST</div> -->
                         <div class="card-body">
-                            <form class="form-inline">
-                                <div class="form-group">
-                                    <!-- <label>Search</label> -->
-                                    <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
-                                </div>
-                            </form>
+
+                            <div class="form-group has-feedback" style="margin: 5px;width: 300px;">
+                                <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+
                             <div class="table-responsive">
                                 <table class="table table-bordered" width="100%" cellspacing="0">
 
@@ -50,7 +46,7 @@
                                                 {{$index+1}}.
                                             </td>
                                             <td>
-                                                {{ emp.name }}
+                                                {{ emp.firstName }}&nbsp; {{ emp.lastName }}
                                             </td>
                                             <td>
                                                 {{emp.email}}

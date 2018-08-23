@@ -1,13 +1,17 @@
-careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, careatorHttpFactory,SweetAlert) {
+careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, careatorSessionAuth, careatorHttpFactory, SweetAlert) {
     console.log("createUsersCtrl==>");
     $scope.propertyJson = $rootScope.propertyJson;
+    $scope.userData = careatorSessionAuth.getAccess("userData");
+    console.log(" $scope.userData : " + JSON.stringify($scope.userData));
+    var orgId = $scope.userData.orgId;
+
     $scope.uploadCareatorEmp = function (careatorEmp) {
         console.log("uploadCareatorEmp-->");
 
         var obj = {
             "file": careatorEmp
         }
-        var api = "https://vc4all.in/careator/careatorMasterInsert";
+        var api = "https://vc4all.in/careator/careatorMasterInsert/"+orgId;
         console.log("api: " + api);
         careatorHttpFactory.csvUpload(obj, api).then(function (data) {
             var checkStatus = careatorHttpFactory.dataValidation(data);
@@ -17,19 +21,27 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
                 // alert(data.data.message);
                 $scope.notifyMsg = data.data.message;
                 // $("#alertButton").trigger("click");
-                SweetAlert.swal($scope.notifyMsg);
+                SweetAlert.swal({
+                    title: "Uploaded",
+                    text: $scope.notifyMsg,
+                    type: "success"
+                });
                 $state.go("Cdashboard.usersListCtrl");
             } else {
                 console.log("checkStatus: " + checkStatus);
                 $scope.notifyMsg = data.data.message;
                 // $("#alertButton").trigger("click");
-                SweetAlert.swal($scope.notifyMsg);
+                SweetAlert.swal({
+                    title: "Error",
+                    text: $scope.notifyMsg,
+                    type: "warning"
+                });
                 // alert(data.data.message);
             }
         })
         console.log("<--uploadCareatorEmp");
     }
-    $scope.careatorEmp = function (name, empId, emailId, pswd,Designation,rights) {
+    $scope.careatorEmp = function (fn, ln, empId, emailId, pswd, Designation, rights) {
         console.log("careatorEmp-->");
         console.log("name: " + name);
         var videoRights;
@@ -45,13 +57,15 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
             chatRights = "no";
         }
         var obj = {
-            "userName": name,
+            "firstName": fn,
+            "lastName": ln,
             "empId": empId,
             "empEmail": emailId,
             "empPass": pswd,
-            "Designation":Designation,
+            "Designation": Designation,
             "videoRights": videoRights,
-            "chatRights": chatRights
+            "chatRights": chatRights,
+            "orgId": orgId
         }
         console.log("obj: " + JSON.stringify(obj));
 
@@ -64,16 +78,24 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
                 console.log("checkStatus: " + checkStatus);
                 // alert(data.data.message);
                 $scope.notifyMsg = data.data.message;
-                console.log(" $scope.notifyMsg: "+  $scope.notifyMsg);
+                console.log(" $scope.notifyMsg: " + $scope.notifyMsg);
                 // $("#alertButton").trigger("click");
-                SweetAlert.swal($scope.notifyMsg);
+                SweetAlert.swal({
+                    title: "Craeted",
+                    text: $scope.notifyMsg,
+                    type: "success"
+                });
                 $state.go("Cdashboard.usersListCtrl");
             } else {
                 console.log("checkStatus: " + checkStatus);
                 $scope.notifyMsg = data.data.message;
-                console.log(" $scope.notifyMsg: "+  $scope.notifyMsg);
+                console.log(" $scope.notifyMsg: " + $scope.notifyMsg);
                 // $("#alertButton").trigger("click");
-                SweetAlert.swal($scope.notifyMsg);
+                SweetAlert.swal({
+                    title: "Error",
+                    text: $scope.notifyMsg,
+                    type: "warning"
+                });
                 // alert(data.data.message);
             }
         })

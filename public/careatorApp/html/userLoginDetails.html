@@ -5,7 +5,7 @@
                 <section class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-user"></i>
-                        <span>&nbspUSER LIST</span>
+                        <span>&nbspLog Details</span>
                     </div>
                     <div class="card mb-3">
 
@@ -13,12 +13,10 @@
                                 <i class="fas fa-table"></i>
                                 USER LIST</div> -->
                         <div class="card-body">
-                            <form class="form-inline">
-                                <div class="form-group">
-                                    <!-- <label>Search</label> -->
-                                    <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
-                                </div>
-                            </form>
+                            <div class="form-group has-feedback" style="margin: 5px;width: 300px;">
+                                <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered" width="100%" cellspacing="0">
 
@@ -50,7 +48,7 @@
                                             </td>
                                             <td>
                                                 <i ng-if="emp.login" class="fa fa-check" style="color: green"></i>
-                                                <i ng-if="emp.login == 'false'" class="fa fa-times" style="color: red"></i>
+                                                <i ng-if="emp.login == false" class="fa fa-times" style="color: red"></i>
                                             </td>
                                             <td>
                                                 <p ng-if="emp.loginDate!=undefined">{{emp.loginDate | date: 'MMM d, y h:mm:ss a'}}</p>

@@ -1,13 +1,12 @@
-careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFactory, SweetAlert) {
+careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFactory, SweetAlert, careatorSessionAuth) {
     console.log("usersListCtrl==>");
-
-
-
-
+    $scope.userData = careatorSessionAuth.getAccess("userData");
+    console.log(" $scope.userData : " + JSON.stringify($scope.userData));
+    var orgId =  $scope.userData.orgId;
 
     $scope.getAllEmployee = function () {
         console.log("getAllEmployee-->");
-        var api = "https://vc4all.in/careator/careator_getAllEmp";
+        var api = "https://vc4all.in/careator/careator_getAllEmp/"+orgId;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -43,7 +42,10 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
                 },
                 function (isConfirm) { //Function that triggers on user action.
                     if (isConfirm) {
-                        SweetAlert.swal("Activated!");
+                        SweetAlert.swal({
+                            title: "Activated!",
+                            type: "success"
+                        });
                         console.log("statusChange-->");
                         console.log("id: " + id + " status: " + status + " index: " + index);
                         var obj = {
@@ -68,7 +70,11 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
 
 
                     } else {
-                        SweetAlert.swal("You did not Activate the user!");
+                        SweetAlert.swal({
+                            title: "Not Activated!",
+                            type: "info",
+                            text: "You did not Activate the user!"
+                        });
                     }
                 }
             )
@@ -88,7 +94,11 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
                 },
                 function (isConfirm) { //Function that triggers on user action.
                     if (isConfirm) {
-                        SweetAlert.swal("Deactivated!");
+                        SweetAlert.swal({
+                            title: "Deactivated!",
+                            type: "success",
+                            text: "User can not login Now!"
+                        });
                         console.log("statusChange-->");
                         console.log("id: " + id + " status: " + status + " index: " + index);
                         var obj = {
@@ -111,7 +121,12 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
                         })
                         console.log("<--statusChange");
                     } else {
-                        SweetAlert.swal("User cant login Now!");
+                        SweetAlert.swal({
+                            title: "Not Deactivated!",
+                            type: "warning",
+                            text: "User can still login Now!"
+                        });
+
                     }
                 }
             )
@@ -150,7 +165,10 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
             },
             function (isConfirm) { //Function that triggers on user action.
                 if (isConfirm) {
-                    SweetAlert.swal("Deleted!");
+                    SweetAlert.swal({
+                        title: "Deleted!",
+                        type: "success"
+                    });
                     var api = "https://vc4all.in/careator_userDelete/userDeleteById/" + id;
                     careatorHttpFactory.get(api).then(function (data) {
                         console.log("data--" + JSON.stringify(data.data));
@@ -167,7 +185,12 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
                     console.log("<--statusChange");
 
                 } else {
-                    SweetAlert.swal("Your user is safe!");
+                    SweetAlert.swal({
+                        title: "Not Deleted!",
+                        text: "Your user is safe!",
+                        type: "info"
+                    });
+
                 }
             }
 
@@ -196,6 +219,11 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
             },
             function (isConfirm) { //Function that triggers on user action.
                 if (isConfirm) {
+                    SweetAlert.swal({
+                        title: "Resetted!",
+                        text: "All session of this user got killed",
+                        type: "success"
+                    });
                     SweetAlert.swal("Reseted!");
                     console.log("Obj ID  " + id);
                     console.log("userReset-->");
@@ -214,7 +242,11 @@ careatorApp.controller('usersListCtrl', function ($scope, $state, careatorHttpFa
                     })
                     console.log("<--statusChange");
                 } else {
-                    SweetAlert.swal("Your  didn't Reset the user!");
+                    SweetAlert.swal({
+                        title: "Not Resetted!",
+
+                        type: "info"
+                    });
                 }
             }
 

@@ -1,9 +1,11 @@
-careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFactory, careatorSessionAuth, SweetAlert) {
+careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFactory, careatorSessionAuth, SweetAlert, $q) {
   console.log("chatCtrl==>");
   $scope.count = 0;
   var userData = careatorSessionAuth.getAccess("userData");
-  $scope.loginUserName = userData.userName;
+  $scope.userData = userData;
+  $scope.loginUserName = userData.firstName + " " + userData.lastName;
   $scope.userId = userData.userId;
+  var orgId = $scope.userData.orgId;
   if (userData.chatStatus) {
     $scope.chatStatus = userData.chatStatus;
   } else {
@@ -32,9 +34,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
         var userDetails = data.data.data[0];
         $scope.userDetails = userDetails;
         $scope.profilePicPath = $scope.userDetails.profilePicPath;
-        console.log(
-          "   $scope.userDetails: " + JSON.stringify($scope.userDetails)
-        );
+        console.log("$scope.userDetails: " + JSON.stringify($scope.userDetails));
         console.log("data.data.message: " + data.data.message);
       } else {
         console.log("Sorry");
@@ -46,8 +46,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
   $scope.getChatGroupListById = function (id) {
     console.log("getAllEmployee-->: " + id);
     var api =
-      "https://vc4all.in/careator_chatGroupList/careator_getChatGroupListById/" +
-      id;
+      "https://vc4all.in/careator_chatGroupList/careator_getChatGroupListById/" + id;
     console.log("api: " + api);
     careatorHttpFactory.get(api).then(function (data) {
       console.log("data--" + JSON.stringify(data.data));
@@ -64,7 +63,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
     console.log("<--getAllEmployee");
   };
   if (userData.chatRights == "yes") {
-    $scope.getChatGroupListById(localStorage.getItem("userId"));
+    $scope.getChatGroupListById($scope.userId);
   }
 
   $scope.statusUpdate = function (status) {
@@ -168,20 +167,20 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
               groupName: $scope.individualData.groupName,
               senderId: userData.userId,
               senderName: userData.userName,
-              groupMembers: $scope.individualData.groupMembers
+              groupMembers: $scope.individualData.groupMembers,
+              status: $scope.individualData.status
             };
           } else {
             $scope.individualData = data.data.data[0];
             console.log("$scope.allChat: " + JSON.stringify($scope.allChat));
-            console.log(
-              "$scope.allChat.chats: " + JSON.stringify($scope.allChat.chats)
-            );
+            console.log("$scope.allChat.chats: " + JSON.stringify($scope.allChat.chats));
             $scope.sendGroupText_withData = {
               group_id: $scope.individualData.group_id,
               groupName: $scope.individualData.groupName,
               senderId: userData.userId,
               senderName: userData.userName,
-              groupMembers: $scope.individualData.groupMembers
+              groupMembers: $scope.individualData.groupMembers,
+              status: $scope.individualData.status
             };
           }
           console.log("$scope.individualData : " + JSON.stringify($scope.individualData));
@@ -228,13 +227,23 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
       var api = "https://vc4all.in/careator_getChatsById/getChatsById/" + id;
       console.log("api: " + api);
       careatorHttpFactory.get(api).then(function (data) {
-        console.log("data--" + JSON.stringify(data.data));
+        // console.log("data--" + JSON.stringify(data.data));
         var checkStatus = careatorHttpFactory.dataValidation(data);
         if (checkStatus) {
           $scope.allChat = data.data.data;
           $scope.individualData = data.data.data;
           console.log("$scope.allChat: " + JSON.stringify($scope.allChat));
-          console.log("$scope.individualData : " + JSON.stringify($scope.individualData));
+          for (var x = 0; x < $scope.allChat.chats.length; x++) {
+
+            console.log("$scope.allChat.chats[" + x + "]: " + JSON.stringify($scope.allChat.chats[x]));
+            if ($scope.allChat.chats[x].messageType != undefined && $scope.allChat.chats[x].messageType == 'file') {
+              $scope.getFileFRomGridfs(x, $scope.allChat.chats[x].message);
+            }
+            else {
+              console.log("no file")
+            }
+          }
+          //console.log("$scope.individualData : " + JSON.stringify($scope.individualData));
           $scope.receiverData = {
             senderId: userData.userId,
             senderName: userData.userName
@@ -298,6 +307,9 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
       senderId: userData.userId,
       senderName: userData.userName
     };
+    if ($scope.individualData.status) {
+      $scope.sendGroupText_withData.status = $scope.individualData.status
+    }
     console.log("sendGroupText_withData-->: " + JSON.stringify($scope.individualData));
     console.log("individualData-->: " + JSON.stringify($scope.sendGroupText_withData));
     console.log(" $scope.restrictedArray: " + JSON.stringify($scope.restrictedArray));
@@ -334,9 +346,9 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
         "yes"; /* ### Note: identify chat is coming new window means, may be we dont have chat record in the chated list, so we have to show the reciever as well sender to refresh the all chated list ### */
       $scope.receiverData = {
         senderId: userData.userId,
-        senderName: userData.userName,
+        senderName: userData.firstName + " " + userData.lastName,
         receiverId: $scope.individualData._id,
-        receiverName: $scope.individualData.name
+        receiverName: $scope.individualData.firstName + " " + $scope.individualData.lastName
       };
       console.log(" $scope.receiverData : " + JSON.stringify($scope.receiverData));
       var sId = userData.userId;
@@ -382,9 +394,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
         } else {
           $scope.receiverProfilePicPath = undefined;
         }
-        console.log(
-          "$scope.receiverProfilePicPath: " + $scope.receiverProfilePicPath
-        );
+        console.log("$scope.receiverProfilePicPath: " + $scope.receiverProfilePicPath);
         console.log("data.data.message: " + data.data.message);
       } else {
         console.log("Sorry");
@@ -398,37 +408,102 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
 
   $scope.getAllChatRightEmp = function () {
     console.log("getAllChatRightEmp-->");
-    $scope.allGroupAndIndividual = [];
-    var id = userData.userId;
-    api = "https://vc4all.in/careator_getEmp/careator_getChatRightsAllemp_byLoginId/" +
-      id; /* #### without restricted emp  #### */
-    console.log("api: " + JSON.stringify(api));
-    careatorHttpFactory.get(api).then(function (data) {
-      console.log("data--" + JSON.stringify(data.data));
-      var checkStatus = careatorHttpFactory.dataValidation(data);
-      if (checkStatus) {
-        $scope.allEmp = data.data.data;
-        console.log(" $scope.allEmp : " + JSON.stringify($scope.allEmp));
-        console.log("data.data.message: " + data.data.message);
-        for (var x = 0; x < $scope.allEmp.length; x++) {
-          $scope.allGroupAndIndividual.push($scope.allEmp[x]);
-          $scope.allEmpWithIndexById[$scope.allEmp[x]._id] = $scope.allEmp[x];
+    if ($scope.userData.loginType == 'employee') {
+      $scope.allGroupAndIndividual = [];
+      var id = userData.userId;
+      api = "https://vc4all.in/careator_getEmp/careator_getChatRightsAllemp_byLoginId/" + id + "/" + orgId; /* #### without restricted emp  #### */
+      console.log("api: " + JSON.stringify(api));
+      careatorHttpFactory.get(api).then(function (data) {
+        console.log("data--" + JSON.stringify(data.data));
+        var checkStatus = careatorHttpFactory.dataValidation(data);
+        if (checkStatus) {
+          $scope.allEmp = data.data.data;
+          console.log(" $scope.allEmp : " + JSON.stringify($scope.allEmp));
+          console.log("data.data.message: " + data.data.message);
+          for (var x = 0; x < $scope.allEmp.length; x++) {
+            $scope.allGroupAndIndividual.push($scope.allEmp[x]);
+            $scope.allEmpWithIndexById[$scope.allEmp[x]._id] = $scope.allEmp[x];
+          }
+          for (var x = 0; x < $scope.allGroup.length; x++) {
+            $scope.allGroupAndIndividual.push($scope.allGroup[x]);
+          }
+          console.log(
+            " $scope.allEmpWithIndexById: " +
+            JSON.stringify($scope.allEmpWithIndexById)
+          );
+          console.log(
+            " $scope.allGroupAndIndividual: " +
+            JSON.stringify($scope.allGroupAndIndividual)
+          );
+        } else {
+          console.log("Sorry: " + data.data.message);
         }
-        for (var x = 0; x < $scope.allGroup.length; x++) {
-          $scope.allGroupAndIndividual.push($scope.allGroup[x]);
+      });
+    }
+    else if ($scope.userData.loginType == 'admin') {
+      $scope.allGroupAndIndividual = [];
+      var id = userData.userId;
+      api = "https://vc4all.in/careator_getEmp/careator_getChatRightsAllempWithSuperAdmin_byLoginId/" + id + "/" + orgId; /* #### without restricted emp  #### */
+      console.log("api: " + JSON.stringify(api));
+      careatorHttpFactory.get(api).then(function (data) {
+        console.log("data--" + JSON.stringify(data.data));
+        var checkStatus = careatorHttpFactory.dataValidation(data);
+        if (checkStatus) {
+          $scope.allEmp = data.data.data;
+          console.log(" $scope.allEmp : " + JSON.stringify($scope.allEmp));
+          console.log("data.data.message: " + data.data.message);
+          for (var x = 0; x < $scope.allEmp.length; x++) {
+            $scope.allGroupAndIndividual.push($scope.allEmp[x]);
+            $scope.allEmpWithIndexById[$scope.allEmp[x]._id] = $scope.allEmp[x];
+          }
+          for (var x = 0; x < $scope.allGroup.length; x++) {
+            $scope.allGroupAndIndividual.push($scope.allGroup[x]);
+          }
+          console.log(
+            " $scope.allEmpWithIndexById: " +
+            JSON.stringify($scope.allEmpWithIndexById)
+          );
+          console.log(
+            " $scope.allGroupAndIndividual: " +
+            JSON.stringify($scope.allGroupAndIndividual)
+          );
+        } else {
+          console.log("Sorry: " + data.data.message);
         }
-        console.log(
-          " $scope.allEmpWithIndexById: " +
-          JSON.stringify($scope.allEmpWithIndexById)
-        );
-        console.log(
-          " $scope.allGroupAndIndividual: " +
-          JSON.stringify($scope.allGroupAndIndividual)
-        );
-      } else {
-        console.log("Sorry: " + data.data.message);
-      }
-    });
+      });
+    }
+    else if ($scope.userData.loginType == 'superAdmin') {
+      $scope.allGroupAndIndividual = [];
+      var id = userData.userId;
+      api = "https://vc4all.in/careator_getEmp/careator_getAllAdmins_byLoginId/" + id; /* #### without restricted emp  #### */
+      console.log("api: " + JSON.stringify(api));
+      careatorHttpFactory.get(api).then(function (data) {
+        console.log("data--" + JSON.stringify(data.data));
+        var checkStatus = careatorHttpFactory.dataValidation(data);
+        if (checkStatus) {
+          $scope.allEmp = data.data.data;
+          console.log(" $scope.allEmp : " + JSON.stringify($scope.allEmp));
+          console.log("data.data.message: " + data.data.message);
+          for (var x = 0; x < $scope.allEmp.length; x++) {
+            $scope.allGroupAndIndividual.push($scope.allEmp[x]);
+            $scope.allEmpWithIndexById[$scope.allEmp[x]._id] = $scope.allEmp[x];
+          }
+          for (var x = 0; x < $scope.allGroup.length; x++) {
+            $scope.allGroupAndIndividual.push($scope.allGroup[x]);
+          }
+          console.log(
+            " $scope.allEmpWithIndexById: " +
+            JSON.stringify($scope.allEmpWithIndexById)
+          );
+          console.log(
+            " $scope.allGroupAndIndividual: " +
+            JSON.stringify($scope.allGroupAndIndividual)
+          );
+        } else {
+          console.log("Sorry: " + data.data.message);
+        }
+      });
+    }
   };
   $scope.getAllChatRightEmp();
   $scope.getEmpDetail = function (index) {
@@ -445,6 +520,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
   $scope.sendText = function () {
     $("#comment").val("");
     console.log("sendText-->");
+    //  console.log("chatFile: "+$scope.chatFile);
     console.log("$scope.typedMessage: " + $scope.typedMessage);
     var api;
     var obj;
@@ -452,19 +528,15 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
     if ($scope.selectedType == "individual_chats") {
       api = "https://vc4all.in/careator_individualText/individualText";
       console.log("api: " + api);
-      console.log(
-        "$scope.receiverData.receiverId: " + $scope.receiverData.receiverId
-      );
-      console.log(
-        " $scope.receiverData.receiverId: " + $scope.receiverData.receiverId
-      );
+      console.log("$scope.receiverData.receiverId: " + $scope.receiverData.receiverId);
+      console.log(" $scope.receiverData.receiverId: " + $scope.receiverData.receiverId);
       console.log(" $rootScope.adminId: " + $rootScope.adminId);
       if ($rootScope.adminId == userData.userId) {
         /* ### Note: if loginId is admin id then no need to check restricted list ### */
         obj = {
           senderId: userData.userId,
           receiverId: $scope.receiverData.receiverId,
-          senderName: userData.userName,
+          senderName: userData.firstName + " " + userData.lastName,
           receiverName: $scope.receiverData.receiverName,
           message: $scope.typedMessage
         };
@@ -486,7 +558,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
         obj = {
           senderId: userData.userId,
           receiverId: $scope.receiverData.receiverId,
-          senderName: userData.userName,
+          senderName: userData.firstName + " " + userData.lastName,
           receiverName: $scope.receiverData.receiverName,
           message: $scope.typedMessage
         };
@@ -506,33 +578,208 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
         $scope.notifyMsg = "You do not have permission to chat with " + $scope.receiverData.receiverName;
         console.log(" $scope.notifyMsg: " + $scope.notifyMsg);
         // $("#alertButton").trigger("click");
-        SweetAlert.swal($scope.notifyMsg);
+        SweetAlert.swal({
+          title: "Not Allowed",
+          text: $scope.notifyMsg,
+          type: "info"
+        });
       }
     } else if ($scope.selectedType == "group") {
-      obj = {
-        group_id: $scope.sendGroupText_withData.group_id,
-        groupName: $scope.sendGroupText_withData.groupName,
-        groupMembers: $scope.sendGroupText_withData.groupMembers,
-        senderId: userData.userId,
-        senderName: userData.userName,
-        message: $scope.typedMessage
-      };
+      console.log("$scope.sendGroupText_withData.status: " + $scope.sendGroupText_withData.status);
+      if ($scope.sendGroupText_withData.status != 'inactive') {
+
+        obj = {
+          group_id: $scope.sendGroupText_withData.group_id,
+          groupName: $scope.sendGroupText_withData.groupName,
+          groupMembers: $scope.sendGroupText_withData.groupMembers,
+          senderId: userData.userId,
+          senderName: userData.firstName + " " + userData.lastName,
+          message: $scope.typedMessage
+        };
+        console.log("obj: " + JSON.stringify(obj));
+        api = "https://vc4all.in//careator_groupText/groupText";
+        console.log("api: " + api);
+        careatorHttpFactory.post(api, obj).then(function (data) {
+          console.log("data--" + JSON.stringify(data.data));
+          var checkStatus = careatorHttpFactory.dataValidation(data);
+          if (checkStatus) {
+            console.log("data.data.data: " + JSON.stringify(data.data.data));
+            console.log(data.data.message);
+          } else {
+            console.log("Sorry");
+            console.log(data.data.message);
+          }
+        });
+      }
+      else {
+        $scope.notifyMsg = "This Group is not active right now"
+        console.log(" $scope.notifyMsg: " + $scope.notifyMsg);
+        SweetAlert.swal({
+          title: "Not Allowed",
+          text: $scope.notifyMsg,
+          type: "info"
+        });
+      }
+    }
+  };
+
+
+  $scope.sendTextWithFile = function (chatFile) {
+    $("#comment").val("");
+    console.log("sendTextWithFile-->");
+
+    // if (upload_form.file.$valid && chatFile) { //check if from is valid
+
+    console.log("chatFile: " + chatFile.size);
+    if (chatFile.size <= 237069) {
+      console.log("chatFilewithJson: " + JSON.stringify(chatFile));
+      console.log("$scope.chatFile: " + $scope.chatFile);
+      console.log("$scope.chatFilewith json: " + JSON.stringify(chatFile));
+      var obj = {
+        "file": chatFile
+      }
       console.log("obj: " + JSON.stringify(obj));
-      api = "https://vc4all.in//careator_groupText/groupText";
+      var api = "https://vc4all.in/careator_chatFileUpload/chatFileUpload";
       console.log("api: " + api);
-      careatorHttpFactory.post(api, obj).then(function (data) {
-        console.log("data--" + JSON.stringify(data.data));
+      careatorHttpFactory.chatUpload(api, obj).then(function (data) {
+        console.log("hello " + JSON.stringify(data));
         var checkStatus = careatorHttpFactory.dataValidation(data);
+        //   $scope.progress = 'progress: ' + progress + '% '; // capture upload progress
         if (checkStatus) {
-          console.log("data.data.data: " + JSON.stringify(data.data.data));
-          console.log(data.data.message);
+          var uploadResponse = data.data;
+          console.log("$scope.photo" + JSON.stringify(uploadResponse));
+          $scope.chatFile = undefined;
+          /* ##### Start send file info  ##### */
+
+          var api;
+          var obj;
+          console.log("$scope.selectedType: " + $scope.selectedType);
+          if ($scope.selectedType == "individual_chats") {
+            api = "https://vc4all.in/careator_individualText/individualText";
+            console.log("api: " + api);
+            console.log("$scope.receiverData.receiverId: " + $scope.receiverData.receiverId);
+            console.log(" $scope.receiverData.receiverId: " + $scope.receiverData.receiverId);
+            console.log(" $rootScope.adminId: " + $rootScope.adminId);
+            if ($rootScope.adminId == userData.userId) {
+              /* ### Note: if loginId is admin id then no need to check restricted list ### */
+              obj = {
+                senderId: userData.userId,
+                receiverId: $scope.receiverData.receiverId,
+                senderName: userData.firstName + " " + userData.lastName,
+                receiverName: $scope.receiverData.receiverName,
+                messageType: "file",
+                message: uploadResponse.data
+              };
+              console.log("obj: " + JSON.stringify(obj));
+              careatorHttpFactory.post(api, obj).then(function (data) {
+                console.log("data--" + JSON.stringify(data.data));
+                var checkStatus = careatorHttpFactory.dataValidation(data);
+                if (checkStatus) {
+                  console.log("data.data.data: " + JSON.stringify(data.data.data));
+                  console.log(data.data.message);
+                } else {
+                  console.log("Sorry");
+                  console.log(data.data.message);
+                }
+              });
+            } else if (
+              ($scope.restrictedArray != undefined && $scope.restrictedArray.indexOf($scope.receiverData.receiverId) >= 0) ||
+              ($scope.restrictedArray != undefined || $scope.receiverData.receiverId == $rootScope.adminId)) {
+              obj = {
+                senderId: userData.userId,
+                receiverId: $scope.receiverData.receiverId,
+                senderName: userData.firstName + " " + userData.lastName,
+                receiverName: $scope.receiverData.receiverName,
+                messageType: "file",
+                message: uploadResponse.data
+              };
+              console.log("obj: " + JSON.stringify(obj));
+              careatorHttpFactory.post(api, obj).then(function (data) {
+                console.log("data--" + JSON.stringify(data.data));
+                var checkStatus = careatorHttpFactory.dataValidation(data);
+                if (checkStatus) {
+                  console.log("data.data.data: " + JSON.stringify(data.data.data));
+                  console.log(data.data.message);
+                } else {
+                  console.log("Sorry");
+                  console.log(data.data.message);
+                }
+              });
+            } else {
+              $scope.notifyMsg = "You do not have permission to chat with " + $scope.receiverData.receiverName;
+              console.log(" $scope.notifyMsg: " + $scope.notifyMsg);
+              // $("#alertButton").trigger("click");
+              SweetAlert.swal({
+                title: "Not Allowed",
+                text: $scope.notifyMsg,
+                type: "info"
+              });
+            }
+          } else if ($scope.selectedType == "group") {
+            obj = {
+              group_id: $scope.sendGroupText_withData.group_id,
+              groupName: $scope.sendGroupText_withData.groupName,
+              groupMembers: $scope.sendGroupText_withData.groupMembers,
+              senderId: userData.userId,
+              senderName: userData.firstName + " " + userData.lastName,
+              messageType: "file",
+              message: uploadResponse.data
+            };
+            console.log("obj: " + JSON.stringify(obj));
+            api = "https://vc4all.in//careator_groupText/groupText";
+            console.log("api: " + api);
+            careatorHttpFactory.post(api, obj).then(function (data) {
+              console.log("data--" + JSON.stringify(data.data));
+              var checkStatus = careatorHttpFactory.dataValidation(data);
+              if (checkStatus) {
+                console.log("data.data.data: " + JSON.stringify(data.data.data));
+                console.log(data.data.message);
+              } else {
+                console.log("Sorry");
+                console.log(data.data.message);
+              }
+            });
+          }
+          /* ##### End send file info  ##### */
+
         } else {
-          console.log("Sorry");
-          console.log(data.data.message);
+          console.log("image is not uploaded");
+          alertDialog.alert("Upload Appropriate File Formate", "error");
         }
       });
     }
+    else {
+      console.log("File size allowed only upto 227Kb")
+      SweetAlert.swal({
+        title: "Not Allowed",
+        text: "File size allowed only upto 227Kb",
+        type: "info"
+      });
+    }
+
   };
+
+  $scope.getFileFRomGridfs = function (x, id) {
+    console.log("getFileFRomGridfs-->");
+    console.log("$scope.allChat.chats[x]: " + JSON.stringify($scope.allChat.chats[x]));
+    var api = "https://vc4all.in/careator_chatFileUpload/getChatFileUpload/" + id;
+    console.log("*api: " + api);
+
+    careatorHttpFactory.getFromGrid(api).then(function (getData) {
+      console.log("data--" + JSON.stringify(getData));
+      var checkStatus = careatorHttpFactory.dataValidation(getData);
+      if (checkStatus) {
+        console.log("getData.data.data;: " + getData.data.data);
+        console.log("$scope.allChat.chats[" + x + "]: " + JSON.stringify($scope.allChat.chats[x]));
+
+        $scope.allChat.chats[x].chatFile_src = getData.data.data;
+
+      } else {
+        console.log("Sorry: " + data.data.message);
+      }
+      console.log("$scope.allChat.chats[x]: " + JSON.stringify($scope.allChat.chats[x]));
+    })
+  }
 
   $scope.readText = function () {
     console.log("readText-->");
@@ -603,7 +850,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
               if (tempData.profilePicPath != undefined) {
                 $scope.allChatRecords[x].profilePicPath = tempData.profilePicPath;
               }
-            } else {}
+            } else { }
           } else {
             $scope.allChatRecordsId[x] = $scope.allChatRecords[x]._id;
             var tempData = $scope.allEmpWithIndexById[$scope.allChatRecords[x].receiverId];
@@ -657,7 +904,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
   socket.on("comm_textReceived", function (data) {
     $scope.scrollDown();
     console.log("****comm_textReceived-->: " + JSON.stringify(data));
-    console.log("$scope.individualData: " + JSON.stringify($scope.individualData));
+    //console.log("$scope.individualData: " + JSON.stringify($scope.individualData));
 
     if (userData.userId == data.receiverId) {
       $scope.playAudio = function () {
@@ -686,7 +933,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
             );
             $scope.receiverData = {
               senderId: userData.userId,
-              senderName: userData.userName
+              senderName: userData.firstName + " " + userData.lastName
             };
             if ($scope.individualData.receiverId != userData.userId) {
               $scope.receiverData.receiverId = $scope.individualData.receiverId;
@@ -731,12 +978,40 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
               console.log("Sorry: " + data.data.message);
             }
           })
-          $scope.allChat.chats.push({
-            senderId: data.senderId,
-            senderName: data.senderName,
-            message: data.message,
-            sendTime: data.sendTime
-          });
+          if (data.messageType == 'file') {
+            console.log("********MSG TYPE IS FILE");
+            var id = data.message;
+            var api = "https://vc4all.in/careator_chatFileUpload/getChatFileUpload/" + id;
+            console.log("*api: " + api);
+            careatorHttpFactory.getFromGrid(api).then(function (getData) {
+              console.log("data--" + JSON.stringify(getData));
+              var checkStatus = careatorHttpFactory.dataValidation(getData);
+              if (checkStatus) {
+                console.log("getData.data.data;: " + getData.data.data);
+
+                $scope.allChat.chats.push({
+                  senderId: data.senderId,
+                  senderName: data.senderName,
+                  messageType: "file",
+                  message: id,
+                  chatFile_src: getData.data.data,
+                  sendTime: data.sendTime
+                });
+                console.log("$scope.allChat.chats: " + JSON.stringify($scope.allChat.chats[length - 1]));
+                // $scope.chatFile_src = getData.data.data;
+              } else {
+                console.log("Sorry: " + data.data.message);
+              }
+            })
+          }
+          else {
+            $scope.allChat.chats.push({
+              senderId: data.senderId,
+              senderName: data.senderName,
+              message: data.message,
+              sendTime: data.sendTime
+            });
+          }
           $scope.scrollDown();
         } else {
           console.log("Need to notify");
@@ -772,12 +1047,10 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
             $scope.allChat = data.data.data;
             $scope.individualData = data.data.data;
             console.log("$scope.allChat: " + JSON.stringify($scope.allChat));
-            console.log(
-              "$scope.individualData : " + JSON.stringify($scope.individualData)
-            );
+            console.log("$scope.individualData : " + JSON.stringify($scope.individualData));
             $scope.receiverData = {
               senderId: userData.userId,
-              senderName: userData.userName
+              senderName: userData.firstName + " " + userData.lastName
             };
             if ($scope.individualData.receiverId != userData.userId) {
               $scope.receiverData.receiverId = $scope.individualData.receiverId;
@@ -821,12 +1094,40 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
               }
             })
           }
-          $scope.allChat.chats.push({
-            senderId: data.senderId,
-            senderName: data.senderName,
-            message: data.message,
-            sendTime: data.sendTime
-          });
+          if (data.messageType == 'file') {
+            console.log("********MSG TYPE IS FILE");
+            var id = data.message;
+            var api = "https://vc4all.in/careator_chatFileUpload/getChatFileUpload/" + id;
+            console.log("*api: " + api);
+            careatorHttpFactory.getFromGrid(api).then(function (getData) {
+              console.log("data--" + JSON.stringify(getData));
+              var checkStatus = careatorHttpFactory.dataValidation(getData);
+              if (checkStatus) {
+                console.log("getData.data.data;: " + getData.data.data);
+
+                $scope.allChat.chats.push({
+                  senderId: data.senderId,
+                  senderName: data.senderName,
+                  messageType: "file",
+                  message: id,
+                  chatFile_src: getData.data.data,
+                  sendTime: data.sendTime
+                });
+                console.log("$scope.allChat.chats: " + JSON.stringify($scope.allChat.chats[length - 1]));
+                // $scope.chatFile_src = getData.data.data;
+              } else {
+                console.log("Sorry: " + data.data.message);
+              }
+            })
+          }
+          else {
+            $scope.allChat.chats.push({
+              senderId: data.senderId,
+              senderName: data.senderName,
+              message: data.message,
+              sendTime: data.sendTime
+            });
+          }
           $scope.scrollDown();
         } else if ($scope.individualData == undefined || $scope.allChatRecordsId.indexOf(data.id) >= 0) {
           console.log("Notify the Unseen message count: " + JSON.stringify(data));
@@ -836,7 +1137,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
             $scope.allChatRecords[index].unseenCount = data.unseenCount;
           }
 
-        } else {}
+        } else { }
       }
     }
   });
@@ -908,9 +1209,7 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
             userData.chatStatus = localStorage.getItem("chatStatus");
           }
 
-          console.log(
-            "userData.restrictedTo: " + JSON.stringify(userData.restrictedTo)
-          );
+          console.log("userData.restrictedTo: " + JSON.stringify(userData.restrictedTo));
 
           careatorSessionAuth.clearAccess("userData");
           careatorSessionAuth.setAccess(userData);
@@ -929,6 +1228,48 @@ careatorApp.controller("chatCtrl", function ($scope,$rootScope, careatorHttpFact
     console.log("****comm_receiverStatusUpdate-->: " + JSON.stringify(data));
     if ($scope.receiverData.receiverId == data.id) {
       $scope.receiverChatStatus = data.status;
+    }
+  });
+  socket.on("comm_groupCreateNotify", function (data) {
+    console.log("****comm_groupCreateNotify-->: " + JSON.stringify(data));
+    if ($scope.userData.orgId == data.orgId) {
+      console.log("data.groupMembers: " + JSON.stringify(data.groupMembers));
+      for (var x = 0; x < data.groupMembers.length; x++) {
+        if ($scope.userId == data.groupMembers[x].userId) {
+
+          /* ##### Start get group list ##### */
+          var id = $scope.userId;
+          var api = "https://vc4all.in/careator_chatGroupList/careator_getChatGroupListById/" + id;
+          console.log("api: " + api);
+          careatorHttpFactory.get(api).then(function (data) {
+            // console.log("data--" + JSON.stringify(data.data));
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            if (checkStatus) {
+              $scope.allGroup = data.data.data;
+              $scope.getChatRecords();
+              // console.log("allGroup: " + JSON.stringify($scope.allGroup));
+              //console.log(data.data.message);
+            } else {
+              console.log("Sorry");
+              console.log(data.data.message);
+            }
+          });
+
+          /* ##### End get group list ##### */
+        }
+      }
+    }
+  });
+  socket.on("comm_groupStatusNotify", function (data) {
+    console.log("****comm_groupStatusNotify-->: " + JSON.stringify(data));
+    if ($scope.sendGroupText_withData.group_id == data.id) {
+      $scope.sendGroupText_withData.status = data.status;
+    }
+    else if ($scope.individualData.group_id == data.id) {
+      $scope.individualData.status = data.status;
+    }
+    else {
+
     }
   });
   /* ### End: receive message from careator.js  ### */

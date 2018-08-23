@@ -31,6 +31,7 @@ careatorApp.factory('careatorHttpFactory', function ($http, $q, $rootScope) {
             $http({
                 method: 'GET',
                 url: api
+               
             }).
                 then(function (data, status, headers, config) {
                     dfd.resolve(data);
@@ -49,6 +50,32 @@ careatorApp.factory('careatorHttpFactory', function ($http, $q, $rootScope) {
 
             return dfd.promise;
         },
+        getFromGrid: function (api) {
+            //console.log("get api-->");
+            var dfd = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: api
+            }).
+                then(function (data, status, headers, config) {
+                    dfd.resolve(data);
+
+                }, function (error) {
+                    console.log(error);
+                    dfd.resolve(error);
+
+                });
+            /* error(function(data, status, headers, config) {
+                 dfd.reject(data);
+             });*/
+            var j = dfd.promise.then(function (data) {
+                return data;
+            })
+
+            return dfd.promise;
+        },
+
         put: function (api, data) {
 
             // console.log("headers"+headers);
@@ -83,6 +110,32 @@ careatorApp.factory('careatorHttpFactory', function ($http, $q, $rootScope) {
                 return false;
             }
         },
+        chatUpload: function (uploadUrl, obj) {
+            var dfd = $q.defer();
+
+            var fd = new FormData();
+            console.log("obj.file: " + obj.file);
+
+            fd.append('img', obj.file);
+
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).then(function (response) {
+                console.log("lego--" + response)
+                dfd.resolve(response);
+            }, function (error) {
+                console.log(error);
+                dfd.resolve(error);
+            }, function (evt) { 
+                console.log(evt);
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+                dfd.resolve(progress);
+            });
+            return dfd.promise;
+        },
         csvUpload: function (obj, uploadUrl) {
             var dfd = $q.defer();
 
@@ -107,8 +160,8 @@ careatorApp.factory('careatorHttpFactory', function ($http, $q, $rootScope) {
             var dfd = $q.defer();
             var postUrl = uploadUrl;
             var fd = new FormData();
+            // console.log("file.upload: " + file.upload);
             console.log("file: " + file);
-            // console.log("file: " + file.upload);
 
             fd.append('logo', file);
             console.log("fd: " + fd);

@@ -24,11 +24,18 @@
     <script src="/js/studentMarkAtt_automation.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
+        .modal-content {
+            border-radius: 5px;
+            background: white;
+        }
+
         @media only screen and (max-width: 600px) {
             .screenShareBtn_Class {
                 display: "none"
             }
         }
+
+
 
         .extn {
             margin-right: 25px;
@@ -576,7 +583,7 @@
 
                                             </div>
                                             <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                                                <button type="button" id="sub" onclick="checkPassword()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
+                                                <button type="button" id="sub" onclick="checkPassword()" style="background-color: #29b6bd;color:#f1f1f1" class="btn-info">Submit</button>
                                             </div>
                                         </div>
                                     </form>
@@ -589,20 +596,24 @@
                             <div class="modal-dialog">
                                 <center>
                                     <form onSubmit="return false;">
-                                        <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
-                                            <div class="modal-header" style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                                                <img style="width: 45px; margin-top: -15px;margin-left: -170px;" src="/home/img/fav.png" />
-                                                <span class="modal-title" style="font-weight: 200;">Please Enter Email</span>
+                                        <div class="modal-content" style="border-radius: 8px;">
+                                            <div class="modal-header  loginpopUp_header" style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <!-- <img style="width: 45px; margin-top: -15px;margin-left: -170px;" src="/home/img/fav.png" /> -->
+                                                <span class="modal-title" style="font-weight: 200; color: white;float: left;">
+                                                    <b>&nbsp;Enter Participants Email</b>
+                                                </span>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
                                             <div class="modal-body">
 
-                                                <input type="email" class="form-control" size="45" placeholder="Email Address to Invite" required id="emailInvite">
+                                                <input type="textarea" class="form-control" size="45" placeholder="Email  to Invite" required id="emailInvite">
                                                 <br>
+                                                <span style="color:blue; font-size:12px;">*Note: Multiple email should separated by comma (Ex:abc@gmail.com, xyz@gmail.com)</span>
                                                 <label id="info" style="color:blue"></label>
 
                                             </div>
-                                            <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                                                <button type="button" id="invitebutton" onclick="emailInviteSend()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Invite</button>
+                                            <div class="modal-footer loginpopUp_footer" style=" border-bottom-right-radius:5px;  border-bottom-left-radius:5px; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <button type="button" id="invitebutton" onclick="emailInviteSend()" style="background-color: #29b6bd;color:#f1f1f1" class="btn-primary">Invite</button>
                                             </div>
                                         </div>
                                     </form>
@@ -888,16 +899,6 @@
                 })
             }
 
-
-            $("#openChat").click(function () {
-
-                // $("#portfolio-wrapper").addClass("intro");
-                // $("portfolio-items col-xs-6 col-sm-6 col-md-4 col-lg-3").removeClass("col-lg-3");
-
-            });
-            $("#removeClass").click(function () {
-                // $("#portfolio-wrapper").removeClass("intro");
-            });
         });
     </script>
 
@@ -1179,6 +1180,7 @@
     </div>
     <script>
         var w;
+
         function goToDashboard() {
             console.log("goToDashboard-->");
             if (!w || w.closed) {

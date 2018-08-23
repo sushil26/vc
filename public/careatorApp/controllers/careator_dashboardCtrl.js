@@ -4,6 +4,15 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     $scope.tickInterval = 1000 //ms
     $scope.propertyJson = $rootScope.propertyJson;
     console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));
+    var userData = careatorSessionAuth.getAccess("userData");
+    $scope.userData =userData;
+    $scope.loginUserName = userData.firstName + " " + userData.lastName;
+    $scope.userId = userData.userId;
+    var orgId;
+    if($scope.userData.loginType!= 'superAdmin'){
+        orgId = $scope.userData.orgId;
+    }
+    
 
     $scope.getToDate = function () {
         console.log("Get To Date-->");
@@ -38,7 +47,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             var checkStatus = careatorHttpFactory.dataValidation(data);
             console.log("checkStatus: " + checkStatus);
             if (checkStatus) {
-                if (data.data.data[0].sessionRandomId == localStorage.getItem("sessionRandomId")) {
+                if (data.data.data[0].sessionRandomId ==  $scope.userData.sessionRandomId) {
                     // var sessionHostBlock;
                     console.log("data.data.data[0].isDisconnected: " + data.data.data[0].isDisconnected);
                     if (data.data.data[0].isDisconnected == 'yes' || data.data.data[0].isDisconnected == undefined) {
@@ -48,7 +57,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                     }
                     console.log("$scope.sessionHostBlock: " + $scope.sessionHostBlock);
                 } else {
-                    console.log("localstorage session randomId(" + localStorage.getItem('sessionRandomId') + ") is not matched with db data (" + data.data.data[0].sessionRandomId + ")");
+                    console.log("localstorage session randomId(" + $scope.userData.sessionRandomId + ") is not matched with db data (" + data.data.data[0].sessionRandomId + ")");
                     /* ##### Start: Logout Logic  ##### */
                     var id = userData.userId;
                     var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
@@ -107,47 +116,49 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
     var userData = careatorSessionAuth.getAccess("userData");
     $scope.userData = userData;
+    $scope.loginType = userData.loginType;
     console.log("userData==>: " + JSON.stringify(userData));
     if (userData != undefined) {
         $scope.getLogin_hostDetailsById(userData.userId);
     }
-    if (userData == undefined || userData.email == null) {
-        $scope.getLogin_hostDetailsById(localStorage.getItem("userId"));
-        var userData = {
-            "email": localStorage.getItem("email"),
-            "userName": localStorage.getItem("userName"),
-            "empId": localStorage.getItem("empId"),
-            "userId": localStorage.getItem("userId"),
-            "sessionPassword": localStorage.getItem("sessionPassword"),
-            "sessionRandomId": localStorage.getItem("sessionRandomId")
-        }
-        if (localStorage.getItem("videoRights") == 'yes') {
-            $scope.videoRights = "yes";
-            userData.videoRights = "yes";
-        }
-        if (localStorage.getItem("chatRights") == 'yes') {
-            userData.chatRights = "yes";
-            // $scope.getChatGroupListById(localStorage.getItem("userId"));
-        }
-        if (localStorage.getItem("chatStatus")) {
-            userData.chatStatus = localStorage.getItem("chatStatus");
-        }
-        console.log("localStorage.getItem(restrictedTo): " + JSON.stringify(localStorage.getItem("restrictedTo")));
-        if (localStorage.getItem("restrictedTo")) {
-            var restrictedUser = localStorage.getItem("restrictedTo");
-            var restrictedArray = restrictedUser.split(',');
-            console.log("restrictedArray: " + JSON.stringify(restrictedArray));
-            userData.restrictedTo = restrictedArray;
-        }
-        if (localStorage.getItem("profilePicPath")) {
-            userData.profilePicPath = localStorage.getItem("profilePicPath");
-        }
+    // if (userData == undefined || userData.email == null) {
+    //     $scope.getLogin_hostDetailsById(localStorage.getItem("userId"));
+    //     var userData = {
+    //         "email": localStorage.getItem("email"),
+    //         "userName": localStorage.getItem("userName"),
+    //         "empId": localStorage.getItem("empId"),
+    //         "userId": localStorage.getItem("userId"),
+    //         "sessionPassword": localStorage.getItem("sessionPassword"),
+    //         "sessionRandomId": localStorage.getItem("sessionRandomId"),
+            
+    //     }
+    //     if (localStorage.getItem("videoRights") == 'yes') {
+    //         $scope.videoRights = "yes";
+    //         userData.videoRights = "yes";
+    //     }
+    //     if (localStorage.getItem("chatRights") == 'yes') {
+    //         userData.chatRights = "yes";
+    //         // $scope.getChatGroupListById(localStorage.getItem("userId"));
+    //     }
+    //     if (localStorage.getItem("chatStatus")) {
+    //         userData.chatStatus = localStorage.getItem("chatStatus");
+    //     }
+    //     console.log("localStorage.getItem(restrictedTo): " + JSON.stringify(localStorage.getItem("restrictedTo")));
+    //     if (localStorage.getItem("restrictedTo")) {
+    //         var restrictedUser = localStorage.getItem("restrictedTo");
+    //         var restrictedArray = restrictedUser.split(',');
+    //         console.log("restrictedArray: " + JSON.stringify(restrictedArray));
+    //         userData.restrictedTo = restrictedArray;
+    //     }
+    //     if (localStorage.getItem("profilePicPath")) {
+    //         userData.profilePicPath = localStorage.getItem("profilePicPath");
+    //     }
 
-        careatorSessionAuth.setAccess(userData);
-        var userData = careatorSessionAuth.getAccess("userData");
-        $scope.userData = userData;
-        console.log("userData: " + JSON.stringify(userData));
-    }
+    //     careatorSessionAuth.setAccess(userData);
+    //     var userData = careatorSessionAuth.getAccess("userData");
+    //     $scope.userData = userData;
+    //     console.log("userData: " + JSON.stringify(userData));
+    // }
 
     $scope.name = userData.userName;
     if (userData.videoRights == 'yes') {
@@ -164,7 +175,26 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
     $scope.getAdmin_email_id = function () {
         console.log("getAdmin_email_id-->");
-        var api = "https://vc4all.in/careator_adminBasicData/getAdminObjectId";
+        if($scope.userData.loginType=='admin'){
+            var api = "https://vc4all.in/careator_adminBasicData/getSuperAdminObjectId";
+            console.log("api: " + api);
+            careatorHttpFactory.get(api).then(function (data) {
+                console.log("data--" + JSON.stringify(data.data));
+                var checkStatus = careatorHttpFactory.dataValidation(data);
+                console.log("checkStatus: " + checkStatus);
+                if (checkStatus) {
+                    $rootScope.adminId = data.data.data;
+                    console.log("$rootScope.adminId: " + $rootScope.adminId);
+                    console.log(data.data.message);
+    
+                } else {
+                    console.log("Sorry");
+                    console.log(data.data.message);
+                }
+            })
+        }
+       else if($scope.userData.loginType=='employee'){
+        var api = "https://vc4all.in/careator_adminBasicData/getAdminObjectIdByOrgId/"+orgId;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -180,6 +210,26 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                 console.log(data.data.message);
             }
         })
+       }
+       else if($scope.userData.loginType=='superAdmin'){
+        var api = "https://vc4all.in/careator_adminBasicData/getAllAdminObjectIdByOrgId";
+        console.log("api: " + api);
+        careatorHttpFactory.get(api).then(function (data) {
+            console.log("data--" + JSON.stringify(data.data));
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            console.log("checkStatus: " + checkStatus);
+            if (checkStatus) {
+                $rootScope.adminId = data.data.data;
+                console.log("$rootScope.adminId: " + $rootScope.adminId);
+                console.log(data.data.message);
+
+            } else {
+                console.log("Sorry");
+                console.log(data.data.message);
+            }
+        })
+       }
+       
 
     }
     $scope.getAdmin_email_id();
@@ -189,7 +239,11 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         console.log("localStorage.getItem(sessionUrlId): " + localStorage.getItem("sessionUrlId"));
 
         if (localStorage.getItem("sessionUrlId")) {
-            SweetAlert.swal("You have to disconnect your old session in-order to open new");
+            SweetAlert.swal({
+                title: "Disconnected",
+                type: "warning",
+                text: "You have to disconnect your old session in-order to open new",
+            });
             // alert("You have to disconnect your old session in-order to open new");
         } else {
             window.open('https://vc4all.in/careator', '_blank');
@@ -232,7 +286,8 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                                         "userId": $scope.userData.userId,
                                         "email": $scope.userData.email,
                                         "sessionURL": sessionURL,
-                                        "sessionRandomId": $scope.userData.sessionRandomId
+                                        "sessionRandomId": $scope.userData.sessionRandomId,
+                                        "orgId":$scope.userData.orgId
                                     }); /* ### Note: Logout notification to server ### */
 
                                 } else {
@@ -240,7 +295,8 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                                         "userId": $scope.userData.userId,
                                         "email": $scope.userData.email,
                                         "sessionURL": sessionURL,
-                                        "sessionRandomId": $scope.userData.sessionRandomId
+                                        "sessionRandomId": $scope.userData.sessionRandomId,
+                                        "orgId":$scope.userData.orgId
                                     }); /* ### Note: Logout notification to server ### */
                                 }
                             } else {
@@ -486,7 +542,6 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                         w.focus();
                     } else {
                         SweetAlert.swal({
-
                             title: "Cancelled",
                             text: "You have entered cancel you are still in same Page",
                             type: "info"
@@ -518,7 +573,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
         //custom scrollbar
         //for html
-  
+
 
         //sidebar dropdown menu
         $('#sidebar .sub-menu > a').click(function () {
@@ -571,8 +626,51 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             $(window).on('load', responsiveView);
             $(window).on('resize', responsiveView);
         });
+        $scope.menuclick = function () {
+            if ($('#sidebar').is(":visible") === true) {
+                $('#main-content').css({
+                    'margin-left': '0px'
+                });
+                $('#sidebar').css({
+                    'margin-left': '-180px'
+                });
+                $('#sidebar').hide();
+                $("#container").addClass("sidebar-closed");
+            } else {
+                $('#main-content').css({
+                    'margin-left': '180px'
+                });
+                $('#sidebar').show();
+                $('#sidebar').css({
+                    'margin-left': '0'
+                });
+                $("#container").removeClass("sidebar-closed");
+            }
 
+
+        }
         $('.toggle-nav').click(function () {
+            if ($('#sidebar').is(":visible") === true) {
+                $('#main-content').css({
+                    'margin-left': '0px'
+                });
+                $('#sidebar').css({
+                    'margin-left': '-180px'
+                });
+                $('#sidebar').hide();
+                $("#container").addClass("sidebar-closed");
+            } else {
+                $('#main-content').css({
+                    'margin-left': '180px'
+                });
+                $('#sidebar').show();
+                $('#sidebar').css({
+                    'margin-left': '0'
+                });
+                $("#container").removeClass("sidebar-closed");
+            }
+
+
             // if (wSize <= 768) {
             //     $('#profile').css({
             //         'margin-top ': '195px'
@@ -593,25 +691,25 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
 
             // }
-            if ($('#sidebar > ul').is(":visible") === true) {
-                $('#main-content').css({
-                    'margin-left': '0px'
-                });
-                $('#sidebar').css({
-                    'margin-left': '-180px'
-                });
-                $('#sidebar > ul').hide();
-                $("#container").addClass("sidebar-closed");
-            } else {
-                $('#main-content').css({
-                    'margin-left': '180px'
-                });
-                $('#sidebar > ul').show();
-                $('#sidebar').css({
-                    'margin-left': '0'
-                });
-                $("#container").removeClass("sidebar-closed");
-            }
+            // if ($('#sidebar > ul').is(":visible") === true) {
+            //     $('#main-content').css({
+            //         'margin-left': '0px'
+            //     });
+            //     $('#sidebar').css({
+            //         'margin-left': '-180px'
+            //     });
+            //     $('#sidebar > ul').hide();
+            //     $("#container").addClass("sidebar-closed");
+            // } else {
+            //     $('#main-content').css({
+            //         'margin-left': '180px'
+            //     });
+            //     $('#sidebar > ul').show();
+            //     $('#sidebar').css({
+            //         'margin-left': '0'
+            //     });
+            //     $("#container").removeClass("sidebar-closed");
+            // }
         });
 
         //bar chart
@@ -631,6 +729,27 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
 
     $scope.initializeJS();
+
+
+    if (window.matchMedia('(min-width: 768px)').matches) {
+        console.log("<<<<<<<home icon hide>>>>>>>");
+        $("#sidebarmnu").css({
+            "display": "none"
+        })
+        $("#sidebarmnudesktop").css({
+            "margin-top": "4px"
+        })
+
+    }
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        console.log("<<<<<<<home icon hide>>>>>>>");
+        $("#sidebarmnudesktop").css({
+            "display": "none"
+        })
+        $("#sidebarmnu").css({
+            "margin-top": "50px"
+        })
+    }
 
 
 

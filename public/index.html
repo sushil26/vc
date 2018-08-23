@@ -5,6 +5,7 @@
 
 <head>
   <title>VC4ALL</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
   <link href="/home/img/fav.png" rel="icon" size="32x32">
@@ -19,15 +20,9 @@
   <link href="/home/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
   <script src="/home/js/main.js"></script>
-  <!-- Main Stylesheet File -->
+
+
   <link href="/home/css/style.css" rel="stylesheet">
-  <!-- <script src="/dashboard_Lib/js/scripts.js"></script> -->
-  <!-- <link rel="stylesheet" href="/dashboard_Lib/css/style.css"/> -->
-  <!-- <link rel="stylesheet" href="/dashboard_Lib/css/style-responsive.css" />
-  <link rel="stylesheet" href="/dashboard_Lib/css/elegant-icons-style.css" /> -->
-  <!-- <link rel="stylesheet" href="/css/chatZone.css" /> -->
-
-
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="/bower_components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
   <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
@@ -44,6 +39,8 @@
   <link rel="stylesheet" href="/bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
   <script src="/bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
   <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script type="text/javascript" src="/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+  <script type="text/javascript" src="/bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
   <script src="/angular-animate/angular-animate.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/angular-bootstrap-colorpicker@3/css/colorpicker.min.css" />
@@ -71,6 +68,11 @@
   <script src="/careatorApp/controllers/userEditCtrl.js"></script>
   <script src="/careatorApp/controllers/groupEditCtrl.js"></script>
   <script src="/careatorApp/controllers/createGroupCtrl.js"></script>
+
+  <script src="/careatorApp/controllers/createAdminCtrl.js"></script>
+  <script src="/careatorApp/controllers/adminListCtrl.js"></script>
+  <script src="/careatorApp/controllers/organizationSettingCtrl.js"></script>
+
   <script src="/careatorApp/controllers/userRestrictionCtrl.js"></script>
   <script src="/careatorApp/controllers/vc4allEmpScheduleCtrl.js"></script>
   <script src="/careatorApp/controllers/careator_upcomingEventCtr.js"></script>
@@ -92,6 +94,43 @@
     /* #loading-bar .bar {
   position: relative;
 } */
+
+    .formsetting {
+      /* background: beige; */
+      padding: 10px;
+      margin: 5px;
+    }
+
+    .selplan {
+      color: white;
+      background: coral;
+      border: none;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
+
+    }
+
+    .pricingcard {
+      padding: 10px;
+    }
+
+    .spannumber {
+      font-size: 25px;
+      color: coral;
+    }
+
+    .cbb {
+      /* line-height: 1.2; */
+      font-weight: 400;
+    }
+
+    .cdd {
+      box-shadow: 0px 0px 5px #2424248f;
+      padding: 5px;
+      background: azure;
+    }
 
     .modal-backdrop {
 
@@ -362,7 +401,10 @@ transition: all 0.5s;">
                 <a href="#services">FEATURES</a>
               </li>
               <li>
-                <a href="#contact">ABOUT US</a>
+                <a href="#facts">ABOUT US</a>
+              </li>
+              <li>
+                <a href="#Pricing">Pricing</a>
               </li>
               <li>
                 <a ng-if="userData==undefined || userData.email==null" href="#" id="empLogin" data-target="#crdntl" data-toggle="modal">Employee Login</a>
@@ -547,6 +589,7 @@ transition: all 0.5s;">
       Facts Section
     ============================-->
 
+
           <div class="container wow fadeIn">
             <hr>
             <div class="row counters">
@@ -573,6 +616,488 @@ transition: all 0.5s;">
             </div>
           </div>
         </section>
+        <section id="Pricing" style="background:white;">
+          <div class="section-header">
+            <h3 class="section-title" style="color:#555;margin-bottom: -20px;">Pricing options</h3>
+            <p class="section-description">Select a plan that best fits your needs. Upgrade, downgrade or cancel at any time</p>
+          </div>
+          <div class="row" style="margin:0 !important">
+            <div class="col-lg-3 col-md-4 col-sm-6 pricingcard">
+              <center>
+                <div class="card cdd">
+                  <div class="card-header">
+                    <h2>Basic</h2>
+                  </div>
+                  <hr style="margin:0 !important;">
+                  <div class="card-body cbb">
+
+                    <p class="card-text">
+                      <table>
+                        <tr>
+                          <td>
+
+                            <span class="spannumber">Free</span>
+                            <span>1 Month</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">3</span> User Access
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">10</span> Guest Invite
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span class="spannumber">1</span> Meeting Room
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">2</span> participents
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">10 min</span> video/call
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">1</span> Group Setting
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">0</span> File Sharing Limit
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">0</span>Storage
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Screen Sharing
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            No Admin Control
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            No Recording
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            No Meeting Control
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Mobile and Desktop
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>No User Restriction Feature
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            No File Sharing
+                          </td>
+                        </tr>
+
+
+
+                        <tr>
+                          <td>
+                            No Message Archive
+                          </td>
+                        </tr>
+
+
+                      </table>
+
+                    </p>
+                    <hr>
+
+                    <button class="selplan">Select Plan</button>
+
+                  </div>
+                </div>
+              </center>
+
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 pricingcard">
+              <center>
+                <div class="card cdd">
+                  <div class="card-header">
+
+                    <h2>Start-up</h2>
+
+                  </div>
+                  <hr style="margin:0 !important;">
+                  <div class="card-body cbb">
+
+                    <p class="card-text">
+                      <table>
+                        <tr>
+                          <td>
+
+                            <span class="spannumber">INR 500</span>
+                            /User/Month
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">10</span> User Access
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">100</span> Guest Invite
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span class="spannumber">5</span> Meeting Room
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">3</span> participents
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">Unlimited</span> video/call
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">3</span> Group Setting
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">1 Mb</span> File Sharing Limit
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">50 Gb</span> Storage
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Screen Sharing
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            No Admin Control
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            No Recording
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            No Meeting Control
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Mobile and Desktop
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>No User Restriction Feature
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            File Sharing
+                          </td>
+                        </tr>
+
+
+
+                        <tr>
+                          <td>
+                            No Message Archive
+                          </td>
+                        </tr>
+
+
+                      </table>
+
+                    </p>
+                    <hr>
+
+                    <button class="selplan">Select Plan</button>
+
+                  </div>
+                </div>
+              </center>
+
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 pricingcard">
+              <center>
+                <div class="card cdd">
+                  <div class="card-header">
+
+                    <h2>SME</h2>
+
+                  </div>
+                  <hr style="margin:0 !important;">
+                  <div class="card-body cbb">
+
+                    <p class="card-text">
+                      <table>
+                        <tr>
+                          <td>
+
+                            <span class="spannumber">INR 750</span>
+                            /User/Month
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">25</span> User Access
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">500</span> Guest Invite
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span class="spannumber">10</span> Meeting Room
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">5</span> participents
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">Unlimited</span> video/call
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">5</span> Group Setting
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">3 Mb</span> File Sharing Limit
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">100 Gb</span> Storage
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Screen Sharing
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Admin Control
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            No Recording
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            No Meeting Control
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Mobile and Desktop
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>User Restriction Feature
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            File Sharing
+                          </td>
+                        </tr>
+
+
+
+                        <tr>
+                          <td>
+                            Message Archive
+                          </td>
+                        </tr>
+
+
+                      </table>
+
+                    </p>
+                    <hr>
+
+                    <button class="selplan">Select Plan</button>
+
+                  </div>
+                </div>
+              </center>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 pricingcard">
+              <center>
+                <div class="card cdd">
+                  <div class="card-header">
+
+                    <h2>Enterprise</h2>
+
+                  </div>
+                  <hr style="margin:0 !important;">
+                  <div class="card-body cbb">
+
+                    <p class="card-text">
+                      <table>
+                        <tr>
+                          <td>
+
+                            <span class="spannumber">INR 1000</span>
+                            /User/Month
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">25+</span> User Access
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">Unlimited</span> Guest Invite
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span class="spannumber">15</span> Meeting Room
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">5</span> participents
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">Unlimited</span> video/call
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">Unlimited</span> Group Setting
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">5 Mb</span> File Sharing Limit
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="spannumber">1 Tb</span> Storage
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Screen Sharing
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Admin Control
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Recording
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Meeting Control
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Mobile and Desktop
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>User Restriction Feature
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            File Sharing
+                          </td>
+                        </tr>
+
+
+
+                        <tr>
+                          <td>
+                            Message Archive
+                          </td>
+                        </tr>
+
+
+                      </table>
+
+                    </p>
+                    <hr>
+
+                    <button class="selplan">Select Plan</button>
+
+                  </div>
+                </div>
+              </center>
+            </div>
+
+          </div>
+        </section>
+
+
 
         <section id="contact">
           <div class="container wow">
@@ -668,6 +1193,7 @@ transition: all 0.5s;">
                   <img style="width: 45px; float: left;" src="/home/img/fav.png" />
                   <span class="modal-title" style="margin-top: 10px;
                   font-weight: 400;float: left;">&nbsp;Login</span>
+                  <button type="button" class="close" data-dismiss="modal" ng-click="$close()">&times;</button>
                 </div>
                 <div class="modal-body">
                   <input ng-keyup="$event.keyCode == 13 && logVC(email, Password)" type="email" class="form-control" placeholder="Email" ng-model="email"
@@ -748,13 +1274,11 @@ transition: all 0.5s;">
         <i class="fa fa-chevron-up"></i>
       </a>
       <!-- <script src="/home/lib/jquery/jquery.min.js"></script> -->
-
       <!-- <script src="/home/lib/jquery/jquery-migrate.min.js"></script> -->
       <!-- <script src="/home/lib/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
       <script src="/home/lib/easing/easing.min.js"></script>
       <script src="/home/lib/wow/wow.min.js"></script>
-
       <script src="/home/lib/waypoints/waypoints.min.js"></script>
       <script src="/home/lib/superfish/hoverIntent.js"></script>
       <script src="/home/lib/superfish/superfish.min.js"></script>

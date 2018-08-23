@@ -2,6 +2,7 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
     console.log("profileCtrl++++++>>>>>>");
     $scope.file = {}; /* ### Note Upload file declaration ### */
     var userData = careatorSessionAuth.getAccess("userData");
+    console.log("userData: "+JSON.stringify(userData));
     var id = userData.userId;
 
     $scope.getUserDataById = function () {
@@ -14,8 +15,9 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
             if (checkStatus) {
                 var userDetails = data.data.data[0];
                 $scope.userDetails = userDetails;
+                console.log("$scope.userDetails: " + JSON.stringify($scope.userDetails));
                 $scope.profilePicPath = $scope.userDetails.profilePicPath;
-                console.log("   $scope.userDetails: " + JSON.stringify($scope.userDetails));
+                console.log("$scope.profilePicPath: " + $scope.profilePicPath);
                 console.log("data.data.message: " + data.data.message);
             } else {
                 console.log("Sorry");
@@ -26,27 +28,27 @@ careatorApp.controller('profileCtrl', function ($scope, $state, careatorHttpFact
     $scope.getUserDataById();
 
 
-    $scope.getChatGroupListById = function () {
-        console.log("getAllEmployee-->: " + id);
-        var api = "https://vc4all.in/careator_chatGroupList/careator_getChatGroupListById/" + id;
-        console.log("api: " + api);
-        careatorHttpFactory.get(api).then(function (data) {
-            console.log("data--" + JSON.stringify(data.data));
-            var checkStatus = careatorHttpFactory.dataValidation(data);
-            if (checkStatus) {
-                $scope.allGroup = data.data.data;
-                console.log("allGroup: " + JSON.stringify($scope.allGroup));
-                console.log(data.data.message);
+    // $scope.getChatGroupListById = function () {
+    //     console.log("getAllEmployee-->: " + id);
+    //     var api = "https://vc4all.in/careator_chatGroupList/careator_getChatGroupListById/" + id;
+    //     console.log("api: " + api);
+    //     careatorHttpFactory.get(api).then(function (data) {
+    //         console.log("data--" + JSON.stringify(data.data));
+    //         var checkStatus = careatorHttpFactory.dataValidation(data);
+    //         if (checkStatus) {
+    //             $scope.allGroup = data.data.data;
+    //             console.log("allGroup: " + JSON.stringify($scope.allGroup));
+    //             console.log(data.data.message);
 
-            } else {
-                console.log("Sorry");
-                console.log(data.data.message);
-            }
-        })
-        console.log("<--getAllEmployee");
-    }
+    //         } else {
+    //             console.log("Sorry");
+    //             console.log(data.data.message);
+    //         }
+    //     })
+    //     console.log("<--getAllEmployee");
+    // }
 
-    $scope.getChatGroupListById();
+    // $scope.getChatGroupListById();
 
 
 

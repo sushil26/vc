@@ -6,24 +6,51 @@
     <script src="../dashboard_Lib/js/jquery.scrollTo.min.js"></script> -->
     <!-- <script src="../dashboard_Lib/js/scripts.js"></script> -->
 
+    <style>
+        .ictextparnt {
+            line-height: 15px;
+            height: 70px;
+            padding: 12px;
+            box-shadow: 1px 2px 5px #000;
+            color: white;
+            border-radius: 5px;
+            background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
+        }
+
+        .ictextparnt:hover {
+            background-image: linear-gradient(to bottom, #383c3f 0%, #124169 100%);
+            /* background: #124169; */
+            padding: 14px;
+
+            box-shadow: 1px 2px 5px #000;
+
+        }
+
+        .ictext {
+            color: gainsboro;
+            font-size: 11px;
+        }
+
+        .ictexticon {
+            font-size: 20px;
+            color: lightsalmon;
+        }
+    </style>
     <section id="container" class="">
-        <header class="header dark-bg">
+        <header class="header dark-bg" style="position:fixed;">
             <div class="toggle-nav">
 
                 <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom">
-
-                    <i style="color:#428bca; border: 1px solid #a8cf44;   padding: 5px; border-radius: 5px;" class="fa fa-bars" ng-click="iconMenuClick()"></i>
-                    <!-- <i class="fa fa-times" style="color:#a8cf44; border: 1px solid #428bca;  padding: 5px;  border-radius: 5px;" id="fog" ng-click="iconMenuClick()"></i> -->
-
+                    <i style="color:#428bca; border: 1px solid #a8cf44;   padding: 5px; border-radius: 5px;" class="fa fa-bars"></i>
                 </div>
             </div>
             <div class="top-nav notification-row">
                 <ul class="nav pull-right top-menu">
 
                     <li class="dropdown">
-                        <span ng-if="hour <'12' && min<='59' && sec<='59' && hour >='0'" class="username" style="color: white;"> &nbspGood Morning&nbsp{{name}}</span>
-                        <span ng-if="hour >='12' && hour < '17'" class="username" style="color: white;"> Good Afternoon&nbsp{{name}}</span>
-                        <span ng-if="hour >='17' && min<='59' && sec<='59' && hour <='23'" class="username" style="color: white;">Good Evening&nbsp{{name}}</span>
+                        <span ng-if="hour <'12' && min<='59' && sec<='59' && hour >='0'" class="username" style="color: white;"> &nbspGood Morning&nbsp{{userData.firstName}}&nbsp;{{userData.lastName}}</span>
+                        <span ng-if="hour >='12' && hour < '17'" class="username" style="color: white;"> Good Afternoon&nbsp;{{userData.firstName}}&nbsp;{{userData.lastName}}</span>
+                        <span ng-if="hour >='17' && min<='59' && sec<='59' && hour <='23'" class="username" style="color: white;">Good Evening&nbsp;{{userData.firstName}}&nbsp;{{userData.lastName}}</span>
                         <br>
                         <span class="username" style="color: white;">{{clock | date:' d MMM yyyy h:mm a'}}</span>
                     </li>
@@ -38,8 +65,11 @@
         <!--sidebar start-->
         <aside>
             <div id="sidebar" class="nav-collapse">
-                <!-- sidebar menu start-->
-                <ul class="sidebar-menu" ng-hide="sideBarMenu">
+
+
+
+
+                <!-- <ul class="sidebar-menu" ng-hide="sideBarMenu">
 
                     <li ng-if="userData.email=='vc4all@talenkart.com'">
                         <a href="#!/dashboard/userCreate">
@@ -83,13 +113,7 @@
                             </i>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a href="#!/dashboard/ipost">
-                            <i class="fa fa-user-circle-o">
-                                <span>&nbspPost</span>
-                            </i>
-                        </a>
-                    </li> -->
+
                     <li>
                         <a href="#!/dashboard/profile">
                             <i class="fa fa-user-circle-o">
@@ -140,10 +164,313 @@
                             </i>
                         </a>
                     </li>
+                    ng-click="menuclick()"
+                </ul> -->
 
 
 
-                </ul>
+                <!-- sidebar menu start-->
+                <div class="sidebar-menu" id="sidebarmnudesktop" ng-hide="sideBarMenu">
+                    <a href="#!/dashboard/adminCreate">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
+                             
+                            <i class="fa fa-user-secret ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">Create Admin</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/adminList">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
+                            <i class="fa fa-list-alt ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">All Organization</span>
+
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/userCreate">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-user-circle ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">Create User</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/userRestrict">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-universal-access ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">Restrict Connectivity</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/createGroup">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+
+                            <i class="fa fa-users ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">Create Group</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/usersList">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-list-alt ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">All Users</span>
+
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/loginDetails">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-address-book ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">Log Details</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/groupList ">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-list ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">All Groups</span>
+                        </div>
+                    </a>
+
+                    <a href="#!/dashboard/profile">
+                        <div class="col-sm-6  col-xs-4 ictextparnt">
+                            <i class="fa fa-user-circle-o ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Profile</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/chat">
+                        <div class="col-sm-6  col-xs-4 ictextparnt">
+
+                            <i class="fa fa-comment ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Chat</span>
+
+                        </div>
+                    </a>
+                    <a ng-click="navigateintoBoth_CVoption()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="videoRights=='yes'">
+
+                            <i class="fa fa-video-camera ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Instant</span>
+
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/vc4allSchedule">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="videoRights=='yes'">
+
+                            <i class="fa fa-pencil-square-o ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Schedule</span>
+
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/upcomingEvent">
+                        <div class="col-sm-6  col-xs-4 ictextparnt">
+
+                            <i class="fa fa-calendar ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Upcoming Event</span>
+
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/historyEvent">
+                        <div class="col-sm-6 col-xs-4 ictextparnt">
+
+                            <i class="fa fa-history ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Event History</span>
+
+                        </div>
+                    </a>
+                    <a ng-click="logout()">
+
+                        <div class="col-sm-6  col-xs-4 ictextparnt">
+
+                            <i class="fa fa-sign-out ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Logout</span>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="sidebar-menu" id="sidebarmnu" ng-hide="sideBarMenu">
+                        <a href="#!/dashboard/adminCreate" ng-click="menuclick()"> 
+                            <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
+                                <i class="fa fa-user-secret ictexticon">
+                                </i>
+                                <br>
+                                <span class="ictext">Create Admin</span>
+                            </div>
+                        </a>
+                        <a href="#!/dashboard/adminList" ng-click="menuclick()">
+                            <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
+                                <i class="fa fa-list-alt ictexticon">
+                                </i>
+                                <br>
+                                <span class="ictext">All Organization</span>
+    
+                            </div>
+                        </a>
+                    <a href="#!/dashboard/userCreate" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-user-circle ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">Create User</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/userRestrict" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-universal-access ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">Restrict Connectivity</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/createGroup" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+
+                            <i class="fa fa-users ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">Create Group</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/usersList" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-list-alt ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">All Users</span>
+
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/loginDetails" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-address-book ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">Log Details</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/groupList" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='admin'">
+                            <i class="fa fa-list ictexticon">
+                            </i>
+                            <br>
+                            <span class="ictext">All Groups</span>
+                        </div>
+                    </a>
+
+                    <a href="#!/dashboard/profile" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt">
+                            <i class="fa fa-user-circle-o ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Profile</span>
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/chat" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt">
+
+                            <i class="fa fa-comment ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Chat</span>
+
+                        </div>
+                    </a>
+                    <a ng-click="navigateintoBoth_CVoption()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="videoRights=='yes'">
+
+                            <i class="fa fa-video-camera ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Instant</span>
+
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/vc4allSchedule" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="videoRights=='yes'">
+
+                            <i class="fa fa-pencil-square-o ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Schedule</span>
+
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/upcomingEvent" ng-click="menuclick()">
+                        <div class="col-sm-6  col-xs-4 ictextparnt">
+
+                            <i class="fa fa-calendar ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Upcoming Event</span>
+
+                        </div>
+                    </a>
+                    <a href="#!/dashboard/historyEvent" ng-click="menuclick()">
+                        <div class="col-sm-6 col-xs-4 ictextparnt">
+
+                            <i class="fa fa-history ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Event History</span>
+
+                        </div>
+                    </a>
+                    <a ng-click="logout()">
+
+                        <div class="col-sm-6  col-xs-4 ictextparnt">
+
+                            <i class="fa fa-sign-out ictexticon">
+
+                            </i>
+                            <br>
+                            <span class="ictext">Logout</span>
+
+                        </div>
+                    </a>
+                </div>
+
+                <!-- <li>
+                        <a href="#!/dashboard/ipost">
+                            <i class="fa fa-user-circle-o">
+                                <span>&nbspPost</span>
+                            </i>
+                        </a>
+                    </li> -->
             </div>
         </aside>
         <!-- <textarea id="ta" class="ta"></textarea>

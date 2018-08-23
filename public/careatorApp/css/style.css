@@ -425,6 +425,7 @@ table tr th {
 /*sidebar navigation*/
 
 #sidebar {
+  padding: 2px;
   margin-top: 46px;
   width: 180px;
   height: 100%;
@@ -728,8 +729,8 @@ ul.sidebar-menu li.active a i {
 
 #main-content {
   margin-left: 180px;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-in;
+  /* transition-duration: 0.3s;
+  transition-timing-function: ease-in; */
 }
 
 .header,

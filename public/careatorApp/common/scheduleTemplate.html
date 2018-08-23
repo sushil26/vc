@@ -15,35 +15,41 @@
     }
 </style>
 <form name="scheduleInviteForm">
-<div class="modal-body">
-    <input type="text" class="form-control" placeholder="Topic" ng-model="eventDetails.title">
-    <input style="margin-top:10px;" name="emailToInvite" class="form-control" type="text" placeholder="Participents Email" ng-model="eventDetails.emailList">
-    <span ng-show="scheduleInviteForm.emailToInvite.$dirty" style="color:blue">*Note: Multiple email should separated by comma (Ex:abc@gmail.com, xyz@gmail.com)</span>
-</p>
+    <div class="modal-body">
+        <input type="text" name="title" class="form-control" placeholder="Topic" ng-model="eventDetails.title" required>
+        <span ng-if="scheduleInviteForm.title.$error.required" style="color:red">*Note:Title is required</span>
+        </p>
+        <input style="margin-top:10px;" name="emailToInvite" class="form-control" type="text" placeholder="Participents Email" ng-model="eventDetails.emailList" required>
+        <span ng-if="scheduleInviteForm.emailToInvite.$error.required" style="color:red">*Note:Title is required</span>
+        <span ng-show="scheduleInviteForm.emailToInvite.$dirty" style="color:blue">*Note: Multiple email should separated by comma (Ex:abc@gmail.com, xyz@gmail.com)</span>
+        </p>
 
-    <table>
-        <tr>
-            <td>
-                <label>Timing:&nbsp</label>
-            </td>
-            <td>
-                <div uib-timepicker ng-model="eventDetails.startsAt" hour-step="1" minute-step="20" show-meridian="true">
-                </div>
-            </td>
-            <td>
-                <div uib-timepicker ng-model="eventDetails.endsAt" hour-step="1" minute-step="20" show-meridian="true">
-                </div>
-            </td>
-        </tr>
-    </table>
+        <table>
+            <tr>
+                <td>
+                    <label>Timing:&nbsp</label>
+                </td>
+                <td>
+                    <div uib-timepicker name="startTime" ng-model="eventDetails.startsAt" hour-step="1" minute-step="20" show-meridian="true" required>
+                    </div>
+                </td>
+                <td>&nbsp;-&nbsp;</td>
+                <td>
+                    <div uib-timepicker name="endTime" ng-model="eventDetails.endsAt" hour-step="1" minute-step="20" show-meridian="true" required>
+                    </div>
+                </td>
+                <span ng-if="scheduleInviteForm.startTime.$error.required || scheduleInviteForm.endTime.$error.required" style="color:red">*Note:Start Date and End Date is required</span>
+            </tr>
+        </table>
 
-    <label for="comment">Message:</label>
-    <textarea class="form-control" rows="5" id="comment" ng-model="eventDetails.reason"></textarea>
+        <label for="comment">Message:</label>
+        <textarea class="form-control" name="reason" rows="5" id="comment" ng-model="eventDetails.reason" required></textarea>
+        <span ng-if="scheduleInviteForm.reason.$error.required" style="color:red">*Note:Message is required</span>
 
 
-</div>
-<div class="modal-footer loginpopUp_footer" style="    background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-    <button class="btn btn-warning loginpopUp_footerBtn" type="button" ng-click="$close()">Cancel</button>
-    <button class="btn btn-primary" data-dismiss="modal" ng-click="save( eventDetails.title,eventDetails.emailList,eventDetails.startsAt,eventDetails.endsAt, eventDetails.reason)">Invite</button>
-</div>
+    </div>
+    <div class="modal-footer loginpopUp_footer" style="    background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+        <button class="btn-warning loginpopUp_footerBtn" type="button" ng-click="$close()">Cancel</button>
+        <button class="btn-primary respcal"  data-dismiss="modal" ng-click="save( eventDetails.title,eventDetails.emailList,eventDetails.startsAt,eventDetails.endsAt, eventDetails.reason)">Invite</button>
+    </div>
 </form>

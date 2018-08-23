@@ -13,17 +13,12 @@
                                 <i class="fas fa-table"></i>
                                 USER LIST</div> -->
                         <div class="card-body">
-                            <form class="form-inline">
-                                <div class="form-group">
-                                    <!-- <label>Search</label> -->
-                                    <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search">
-                                </div>
-                            </form>
+                            <div class="form-group has-feedback" style="margin: 5px;width: 300px;">
+                                <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered" width="100%" cellspacing="0">
-
-
-
                                     <thead style="background: aliceblue;">
                                         <tr>
                                             <th>#</th>
@@ -62,7 +57,7 @@
                                                 Active
                                             </td>
                                             <td>
-                                                <button class="btn btn-primary fa fa-user-plus" ng-if="emp.status=='inactive' ||emp.status== null" ng-click="statusChange(emp._id, 'active')">&nbsp;Activate</button>
+                                                <button class="btn btn-primary fa fa-user-plus" ng-if="emp.status=='inactive' || emp.status== null " ng-click="statusChange(emp._id, 'active')">&nbsp;Activate</button>
                                                 <button class="btn btn-warning fa fa-user-times" ng-if="emp.status=='active'" ng-click="statusChange(emp._id, 'inactive')">&nbsp;Deactivate</button>
                                                 <button class="btn btn-danger fa fa-trash" ng-click="deleteGroup(emp._id)">&nbsp;Delete</button>
                                                 <button class="btn btn-info fa fa-pencil-square-o" ng-click="editGroup($index)">&nbsp;Edit</button>

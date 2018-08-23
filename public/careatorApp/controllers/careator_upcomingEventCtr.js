@@ -1,11 +1,62 @@
-careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope, $state, $window, careatorHttpFactory, $uibModal, $filter, careatorSessionAuth, SweetAlert) {
+careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope, $state, $window, careatorHttpFactory, $uibModal, $filter, careatorSessionAuth, SweetAlert, $interval) {
     console.log("upcomingEventController==>");
     $scope.userData = careatorSessionAuth.getAccess("userData");
     $scope.loginType = $scope.userData.loginType;
     $scope.events = [];
     $scope.propertyJson = $rootScope.propertyJson;
     $scope.numberOfNotif = 0;
+    $scope.eventGet = function () {
+        console.log("eventGet-->");
+        var id = $scope.userData.userId
+        var api = "https://vc4all.in/careator_eventSchedule/careator_eventGetById/" + id;
+        //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
+        $scope.calendarOwner = "Your";
+        console.log("api: " + api);
+        careatorHttpFactory.get(api).then(function (data) {
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            console.log("data--" + JSON.stringify(data.data));
+            if (checkStatus) {
+                $scope.eventData = data.data.data;
+                // vm.events = [];
+                ownerEvents = [];
+                for (var x = 0; x < $scope.eventData.length; x++) {
+                    console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
+                    var obj = {
+                        'id': $scope.eventData[x]._id,
+                        "senderId": $scope.eventData[x].senderId,
+                        "senderName": $scope.eventData[x].senderName,
+                        "senderEmail": $scope.eventData[x].senderEmail,
+                        "title": $scope.eventData[x].title,
+                        "reason": $scope.eventData[x].reason,
+                        "invite": $scope.eventData[x].invite,
+                        "formatedStartTime": $scope.eventData[x].formatedStartTime,
+                        "formatedEndTime": $scope.eventData[x].formatedEndTime,
+                        "startsAt": new Date($scope.eventData[x].startsAt),
+                        "endsAt": new Date($scope.eventData[x].endsAt),
+                        "primColor": $scope.eventData[x].primColor,
+                        "sessionURL": $scope.eventData[x].sessionURL,
+                        "date": $scope.eventData[x].date,
 
+                    }
+                    console.log(" obj" + JSON.stringify(obj));
+
+                    if ($scope.eventData[x].notificationNeed == 'yes') {
+                        if ($scope.eventData[x].userId != $scope.userData.id) {
+                            console.log("not equal");
+                            $scope.numberOfNotif = $scope.numberOfNotif + 1;
+                        }
+                    }
+                    console.log("$scope.numberOfNotif: " + $scope.numberOfNotif);
+                    console.log(" obj" + JSON.stringify(obj))
+                    // ownerEvents.push(obj);
+                    $scope.events.push(obj);
+                }
+                console.log(" $scope.events: " + JSON.stringify($scope.events));
+            } else {
+                //alert("Event get Failed");
+            }
+        })
+    }
     $scope.getToDate = function () {
         console.log("Get To Date-->");
         var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
@@ -31,59 +82,33 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
         console.log("<--Get To Date");
     }
     $scope.getToDate();
-
-    $scope.eventGet = function () {
-        console.log("eventGet-->");
-        var id = $scope.userData.userId
-        var api = "https://vc4all.in/careator_eventSchedule/careator_eventGetById/" + id;
-        //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
-        $scope.calendarOwner = "Your";
-        console.log("api: " + api);
+    getToDateByEachSec = function () {
+        //console.log("Get To Date-->");
+        var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
         careatorHttpFactory.get(api).then(function (data) {
             var checkStatus = careatorHttpFactory.dataValidation(data);
-            console.log("data--" + JSON.stringify(data.data));
+            //console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
-                $scope.eventData = data.data.data;
-                // vm.events = [];
-                ownerEvents = [];
-                for (var x = 0; x < $scope.eventData.length; x++) {
-                    console.log("$scope.eventData[" + x + "]: " + JSON.stringify($scope.eventData[x]));
-                    var obj = {
-                        'id': $scope.eventData[x]._id,
-                        "senderId": $scope.eventData[x].senderId,
-                        "senderName": $scope.eventData[x].senderName,
-                        "senderEmail": $scope.eventData[x].senderEmail,
-                        "title": $scope.eventData[x].title,
-                        "reason": $scope.eventData[x].reason,
-                        "invitingTo": $scope.eventData[x].invitingTo,
-                        "formatedStartTime": $scope.eventData[x].formatedStartTime,
-                        "formatedEndTime": $scope.eventData[x].formatedEndTime,
-                        "startsAt": new Date($scope.eventData[x].startsAt),
-                        "endsAt": new Date($scope.eventData[x].endsAt),
-                        "primColor": $scope.eventData[x].primColor,
-                        "url": $scope.eventData[x].url,
-                        "date": $scope.eventData[x].date,
-
-                    }
-                    console.log(" obj" + JSON.stringify(obj));
-
-                    if ($scope.eventData[x].notificationNeed == 'yes') {
-                        if ($scope.eventData[x].userId != $scope.userData.id) {
-                            console.log("not equal");
-                            $scope.numberOfNotif = $scope.numberOfNotif + 1;
-                        }
-                    }
-                    console.log("$scope.numberOfNotif: " + $scope.numberOfNotif);
-                    console.log(" obj" + JSON.stringify(obj))
-                    // ownerEvents.push(obj);
-                    $scope.events.push(obj);
-                }
-                console.log(" $scope.events: " + JSON.stringify($scope.events));
-            } else {
-                //alert("Event get Failed");
-            }
+               // console.log("data.data.data.date: " + data.data.data.date);
+                var todayDate = new Date(data.data.data.date);
+                //console.log("todayDate: " + todayDate);
+                var reqDate = todayDate.getDate();
+                //console.log("reqDate: " + reqDate);
+                var reqMonth = todayDate.getMonth();
+                var reqYear = todayDate.getFullYear();
+                var reqHr = todayDate.getHours();
+                var reqMin = todayDate.getMinutes();
+                var reqSec = todayDate.getSeconds();
+                $scope.todayDate = new Date(reqYear, reqMonth, reqDate, reqHr, reqMin, reqSec);
+                //console.log("consolidateDate: " + $scope.consolidateDate);
+            } else {}
         })
+        console.log("<--Get To Date");
     }
+    getToDateByEachSec();
+
+    $interval(getToDateByEachSec, 1000);
+   
 
 
     // $scope.eventGet = function () {
@@ -253,25 +278,22 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
 
         SweetAlert.swal({
             title: "Its too early",
-            text: "Now time is just "+ currentTime+" Wait till" + time,
+            text: "Now time is just " + currentTime + " Wait till" + time,
             type: "warning"
         });
         // alert("Wait till " + time);
         console.log("<--waitForTime");
     }
 
-    $scope.conferenceStart = function (event_id, url, id) {
+    $scope.conferenceStart = function (url) {
         console.log("conferenceStart-->");
-        console.log(" event_id: " + event_id + " id: " + id + "url: " + url);
-
-        localStorage.setItem("id", id);
-        localStorage.setItem("schoolName", $scope.userData.schoolName);
-        localStorage.setItem("eventId", event_id);
-        if ($scope.loginType == 'teacher') {
-            localStorage.setItem("teacherLoginId", $scope.userData.id);
-        } else if ($scope.loginType == 'studParent') {
-            localStorage.setItem("studLoginId", $scope.userData.id);
-        }
+        console.log("url: " + url);
+        var splitURL = url.split('/');
+        console.log("url: " + JSON.stringify(splitURL));
+        localStorage.setItem("schedule_sessionUrlId", splitURL[4]);
+        localStorage.setItem("userId", $scope.userData.userId);
+        console.log("url: " + localStorage.getItem("schedule_sessionUrlId"));
+        console.log("url: " + localStorage.getItem("userId"));
         $window.open(url, '_blank');
         console.log("<--conferenceStart");
     }
@@ -303,6 +325,10 @@ careatorApp.controller('careator_upcomingEventCtr', function ($scope, $rootScope
         }
     })
     /* ### End: Get event update from index.js  ### */
+    $scope.sort = function (keyname) {
+        $scope.sortKey = keyname; //set the sortKey to the param passed
+        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+    }
 
 
 

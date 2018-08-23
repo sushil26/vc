@@ -60,6 +60,7 @@ console.log("id2**: " + id2);
 //    console.log("Your in any one these browser: 1) Chrome, 2) Firefox, 3) Safari, 4) Opera");
 
   // console.log("localStorage.getItem(careatorEmail )" +localStorage.getItem("careatorEmail")+"localStorage.getItem(sessionPassword): "+localStorage.getItem("sessionPassword"));
+  console.log("csigsocket_conf-->");
   if (stuff.length > 5) {
     console.log("1 cond");
     console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));

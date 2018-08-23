@@ -1,4 +1,4 @@
-var careatorApp = angular.module('careatorCommApp', ['ui.router', 'angularjs-dropdown-multiselect', 'ngCookies', 'ngImgCrop', 'angularUtils.directives.dirPagination', 'angular-loading-bar', 'angularMoment', 'oitozero.ngSweetAlert', 'mwl.calendar', 'ui.bootstrap']);
+var careatorApp = angular.module('careatorCommApp', ['ui.router', 'angularjs-dropdown-multiselect', 'ngCookies', 'ngImgCrop', 'angularUtils.directives.dirPagination', 'angular-loading-bar', 'angularMoment', 'oitozero.ngSweetAlert', 'mwl.calendar', 'ui.bootstrap', 'ngFileUpload']);
 
 careatorApp.config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
     // cfpLoadingBarProvider.includeBar = true;
@@ -7,11 +7,40 @@ careatorApp.config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
     // cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner">Loading...</div>';
 }])
 careatorApp.config(function ($stateProvider) {
-
     $stateProvider
         .state('Cdashboard', {
             url: careator_dashboard(),
             templateUrl: '/careatorApp/html/careator_dashboard.html',
+        })
+        .state('Cdashboard.adminCreate', {
+            url: careator_adminCreate(),
+            templateUrl: '/careatorApp/html/createAdmin.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.loginType == 'superAdmin') {
+
+                    } else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
+
+        })
+        .state('Cdashboard.adminList', {
+            url: adminList(),
+            templateUrl: '/careatorApp/html/adminList.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.loginType == 'superAdmin') {
+
+                    } else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
+
         })
         .state('Cdashboard.userCreate', {
             url: careator_userCreate(),
@@ -19,7 +48,7 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4all@talenkart.com') {
+                    if (userData.loginType == 'admin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -34,7 +63,7 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4all@talenkart.com') {
+                    if (userData.loginType == 'admin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -49,7 +78,7 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4all@talenkart.com') {
+                    if (userData.loginType == 'admin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -64,7 +93,22 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4all@talenkart.com') {
+                    if (userData.loginType == 'admin') {
+
+                    } else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
+
+        })
+        .state('Cdashboard.orgSetting', {
+            url: orgSetting(),
+            templateUrl: '/careatorApp/html/organizationSetting.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.loginType == 'superAdmin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -79,7 +123,7 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4all@talenkart.com') {
+                    if (userData.loginType == 'admin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -87,13 +131,14 @@ careatorApp.config(function ($stateProvider) {
                 }
             }
 
-        }).state('Cdashboard.editGroup', {
+        })
+        .state('Cdashboard.editGroup', {
             url: editGroup(),
             templateUrl: '/careatorApp/html/groupEdit.html',
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4all@talenkart.com') {
+                    if (userData.loginType == 'admin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -108,7 +153,7 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4all@talenkart.com') {
+                    if (userData.loginType == 'admin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -120,28 +165,28 @@ careatorApp.config(function ($stateProvider) {
         .state('Cdashboard.chat', {
             url: careator_chat(),
             templateUrl: '/careatorApp/html/chat.html',
-            // resolve: {
-            //     result: function (careatorSessionAuth, $window) {
-            //         var userData = careatorSessionAuth.getAccess("userData");
-            //         if (userData.email == null || userData.email == "") {
-            //             $window.location.href = 'https://vc4all.in';
-            //         } else {
-
-            //         }
-            //     }
-            // }
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
+                        
+                    } else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
+                }
+            }
         })
         .state('Cdashboard.profile', {
             url: profile(),
             templateUrl: '/careatorApp/html/profile.html',
             resolve: {
                 result: function (careatorSessionAuth, $window) {
-                    // var userData = careatorSessionAuth.getAccess("userData");
-                    // if (userData.email == null || userData.email == "") {
-                    //     $window.location.href = 'https://vc4all.in';
-                    // } else {
-                       
-                    // }
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
+                        
+                    } else {
+                        $window.location.href = 'https://vc4all.in';
+                    }
                 }
             }
         })
@@ -157,7 +202,7 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4all@talenkart.com') {
+                    if (userData.loginType == 'admin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -173,10 +218,10 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == null || userData.email == "") {
-                        $window.location.href = 'https://vc4all.in';
-                    } else {
+                    if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
                        
+                    } else {
+                        $window.location.href = 'https://vc4all.in';  
                     }
                 }
             }
@@ -187,10 +232,10 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == null || userData.email == "") {
-                        $window.location.href = 'https://vc4all.in';
+                    if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
+                        
                     } else {
-                       
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }
@@ -202,10 +247,10 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == null || userData.email == "") {
-                        $window.location.href = 'https://vc4all.in';
+                    if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
+                        
                     } else {
-                       
+                        $window.location.href = 'https://vc4all.in';
                     }
                 }
             }
@@ -216,7 +261,7 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.email == 'vc4all@talenkart.com') {
+                    if (userData.loginType == 'admin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -226,6 +271,9 @@ careatorApp.config(function ($stateProvider) {
         })
 
 })
+function orgSetting(){
+    return '/orgSetting/:id';
+}
 
 function ipost() {
     return '/ipost';
@@ -234,7 +282,12 @@ function ipost() {
 function profile() {
     return '/profile';
 }
-
+function careator_adminCreate() {
+    return '/adminCreate';
+}
+function adminList() {
+    return '/adminList';
+}
 
 function contactAdmin() {
     return '/contactAdmin';

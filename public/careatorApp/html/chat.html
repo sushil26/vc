@@ -1,5 +1,10 @@
 <div ng-controller="chatCtrl">
     <section id="main-content">
+        <style>
+            body {
+                overflow-y: hidden;
+            }
+        </style>
         <section class="wrapper">
             <div id="profile">
                 <section class="panel">
@@ -130,7 +135,7 @@
                                                                     <span ng-if="record.unseenCount > 0" class="notify"> {{record.unseenCount}}</span>
                                                                 </div>
                                                                 <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                                                        <span class="time-meta">{{record.timeStamp |amCalendar}}
+                                                                    <span class="time-meta">{{record.timeStamp |amCalendar}}
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -157,7 +162,7 @@
                                     <div class="row composeBox">
                                         <div class="col-sm-12 composeBox-inner">
                                             <div class="form-group has-feedback">
-                                                <input id="composeText" type="text" class="form-control" ng-model="search"  name="searchText" placeholder="Search People">
+                                                <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
                                                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                             </div>
                                         </div>
@@ -193,7 +198,7 @@
                                             <div class="col-sm-9 col-xs-9 sideBar-main" ng-if="record.groupName==undefined">
                                                 <div class="row">
                                                     <div class="col-sm-8 col-xs-8 sideBar-name" ng-click="chatDetailsFromNew('individual_chats', $index)">
-                                                        <span class="name-meta">{{record.name}}
+                                                        <span class="name-meta">{{record.firstName}}&nbsp;{{record.lastName}}
                                                         </span>
                                                     </div>
                                                     <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
@@ -224,7 +229,7 @@
                                         </div>
 
                                     </div> -->
-                                    <div class="col-sm-8 col-xs-7 heading-name">
+                                    <div class="col-sm-4 col-xs-3 heading-name">
                                         <div ng-if="selectedType=='group'">
                                             <a class="heading-name-meta">{{individualData.groupName}}
                                             </a>&nbsp;&nbsp;&nbsp;
@@ -233,7 +238,7 @@
                                             </span>
                                         </div>
                                         <a ng-if="selectedType=='individual_chats' && (individualData.senderId==undefined && individualData.receiverId==undefined)"
-                                            class="heading-name-meta">{{individualData.name}}
+                                            class="heading-name-meta">{{individualData.firstName}}&nbsp;{{individualData.lastName}}
                                         </a>
                                         <a ng-if="selectedType=='individual_chats' && individualData.senderId!=userId" class="heading-name-meta">{{individualData.senderName}}
                                         </a>
@@ -260,6 +265,13 @@
                                             <i style="color: #FFC107;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
                                         </a>
                                     </div>
+                                    <div class="col-sm-4 col-xs-3" style="float:right; margin-top: 10px;">
+                                        <div class="form-group has-feedback">
+                                            <input id="composeText" type="text" class="form-control" ng-model="searchm" name="searchText" placeholder="Search text">
+                                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                        </div>
+                                    </div>
+
 
                                     <div class="col-sm-1 col-xs-1 pull-right" id="homeicon" ng-click="chatMenu()" style="margin-right: 20px; margin-top:5px;">
                                         <i style="font-size:25px; cursor: pointer;" class="fa fa-home"></i>
@@ -335,13 +347,14 @@
                                             <button class="" style="padding: 5px;
                                             box-shadow:  1px 2px 5px #0000004f;
                                             background:white; border-radius: 5px; padding-right: 10px;padding-left: 10px; border:none;"
-                                                ng-click="startachat()"> Start a chat</button>
+                                                ng-click="startachat()"> Start a chat
+                                            </button>
                                             <p>Search new Contact or chat with your contact list</p>
 
                                         </center>
                                     </div>
 
-                                    <div class="row message-body" ng-repeat="chat in allChat.chats">
+                                    <div class="row message-body" ng-repeat="chat in allChat.chats | filter:searchm ">
                                         <div class="col-sm-12 message-main-receiver slideRight" ng-if="chat.senderId!=userId">
                                             <div ng-if="selectedType=='group'" style="background:#ddf8c6;
                                                 width: max-content;
@@ -363,7 +376,10 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div class="message-text">
+                                                            <div ng-if="chat.messageType=='file'" class="message-text">
+                                                                <img style="max-width:200px;" ng-src="{{chat.chatFile_src}}">
+                                                            </div>
+                                                            <div ng-if="chat.messageType!='file'" class="message-text">
                                                                 {{chat.message}}
                                                             </div>
                                                             <span class="message-time pull-right">
@@ -378,11 +394,16 @@
                                         <div class="col-sm-12 message-main-sender slideLeft" ng-if="chat.senderId==userId">
                                             <div class="sender">
 
-                                                <div class="message-text">
+                                                <div ng-if="chat.messageType=='file'" class="message-text">
+                                                    <img style="max-width:200px;" ng-src="{{chat.chatFile_src}}">
+
+                                                    <!-- <iframe ng-src="{{chat.message}}" width="100%" /> -->
+                                                </div>
+                                                <div class="message-text" ng-if="chat.messageType!='file'">
                                                     {{chat.message}}
                                                 </div>
                                                 <span class="message-time pull-right">
-                                                        {{chat.sendTime | amCalendar}}
+                                                    {{chat.sendTime | amCalendar}}
                                                 </span>
                                             </div>
                                         </div>
@@ -396,25 +417,54 @@
 
                                         <textarea class="form-control" rows="1" id="comment" ng-model="typedMessage"></textarea>
                                     </div>
-                                    <div class="col-sm-1 col-xs-1 reply-recording">
-                                        <!-- <label for="fileselect">
-                                                <i class="fa fa-upload fa-2x"> </i>
-                                            </label>
-                                            <input id="fileselect" type="file" name="fileselect" style="display: none;"/> -->
-                                    </div>
-                                    <div class="col-sm-1 col-xs-1 reply-send">
-                                        <button id="sndmgs" ng-click="sendText()" style="
-                                            font-family: lato;  
-                                            color: gray;                   
-                                             padding: 5px;
-                                             background: black;
-                                             border-radius: 5px;
-                                             border: none;
-                                             padding-left: 10px;
-                                             padding-right: 10px;
-                                             float: right;">
-                                            Send
-                                        </button>
+                                    <div class="col-sm-3 col-xs-3 reply-send">
+
+                                        <label for="fileselect">
+                                            <i style="color: gray;" class="fa fa-paperclip fa-2x"> </i>
+                                        </label>
+                                        <form name="upload_form">
+
+                                            <input id="fileselect" value="Upload" style="display: none;" type="file" ngf-select ng-model="image" name="file" ngf-pattern="'image/*'"
+                                                accept="image/*" ngf-max-size="20MB" file-model="chatFile" />
+                                            <!-- <img style="width:100px;" ng-if="chatFile !=undefined" ngf-thumbnail="up.file || '/thumb.jpg'" />                                            
+                                            <i ng-show="upload_form.file.$error.required">*required</i><br>
+                                            <i ng-show="upload_form.file.$error.maxSize">File too large {{up.file.size/ 1000000|number:1}}MB:
+                                                max 20M</i> -->
+
+                                            <!-- <p>{{progress}} -->
+
+                                            <!-- <input id="fileselect" type="file" name="fileselect" style="display: none;" name="myImage" value="Upload" image-with-preview
+                                            file-model="chatFile" ng-model="image" accept="image/*" ng-required="true" /> -->
+
+
+                                        </form>
+                                        <span style="    position: absolute;
+                                        left: 35px;
+                                        bottom: 10px;">
+                                            <button ng-if="chatFile != undefined" id="sndmgs" ng-click="sendTextWithFile(chatFile)" style="
+                                        font-family: lato;  
+                                        color: white;                   
+                                         padding: 5px;
+                                         background: black;
+                                         border-radius: 5px;
+                                         border: none;
+                                         padding-left: 10px;
+                                         padding-right: 10px;">
+                                                Send
+                                            </button>
+                                            <button ng-if="chatFile == undefined" id="sndmgs" ng-click="sendText()" style="
+                                        font-family: lato;  
+                                        color:white;                   
+                                         padding: 5px;
+                                         background: black;
+                                         border-radius: 5px;
+                                         border: none;
+                                         padding-left: 10px;
+                                         padding-right: 10px;;">
+                                                Send
+                                            </button>
+                                        </span>
+
 
                                         <!-- <button class="btn btn-success" aria-hidden="true" id="sndmgs" ng-click="sendText()">Send</button> -->
                                     </div>

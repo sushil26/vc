@@ -1,5 +1,8 @@
-careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootScope, $filter, $window, careatorHttpFactory) {
+careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootScope, careatorHttpFactory, careatorSessionAuth) {
     console.log("editGroupCtrl==>");
+    $scope.userData = careatorSessionAuth.getAccess("userData");
+    console.log(" $scope.userData : " + JSON.stringify($scope.userData));
+    var orgId =  $scope.userData.orgId;
     console.log("id: " + $state.params.id);
     var id = $state.params.id;
     $scope.selectedMembers = []; /* ### $scope.selectedMembers contains groupmembers  ### */
@@ -55,7 +58,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
 
     $scope.rightEmployeeList = function () {
         console.log("rightEmployeeList-->");
-        var api = "https://vc4all.in/careator/getChatRights_emp";
+        var api = "https://vc4all.in/careator/getChatRights_emp/"+orgId;
         console.log("api: " + JSON.stringify(api));
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -71,7 +74,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
                     console.log("allUsers[x].email: " + allUsers[x].email + " allUsers[x]._id: " + allUsers[x]._id);
                     $scope.allUserData.push({
                         "email": allUsers[x].email,
-                        "label": allUsers[x].name + " - " + allUsers[x].empId,
+                        "label": allUsers[x].firstName +" "+allUsers[x].lastName+" - " + allUsers[x].empId,
                         "id": allUsers[x]._id
                     });
                     for (var y = 0; y < $scope.selectedMembers.length; y++) {
@@ -176,7 +179,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
                 counter = counter + 1;
                 $scope.authorizedUserData.push({
                     "email": allUsers[x].email,
-                    "label": allUsers[x].name + " - " + allUsers[x].empId,
+                    "label": allUsers[x].firstName +" "+allUsers[x].lastName + " - " + allUsers[x].empId,
                     "id": allUsers[x]._id,
                 });
                 console.log("$scope.restrictedTo.indexOf(" + allUsers[x]._id + "): " + $scope.restrictedTo.indexOf(allUsers[x]._id));

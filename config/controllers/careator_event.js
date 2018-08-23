@@ -26,7 +26,7 @@ module.exports.careator_eventGetById = function (req, res) {
 
     if (general.emptyCheck(req.params.id)) {
         careatorEvents.find({ "senderId": req.params.id }).sort({ "$natural": -1 }).toArray(function (err, listOfevents) {
-            // console.log("listOfevents: " + JSON.stringify(listOfevents))
+             console.log("listOfevents: " + JSON.stringify(listOfevents))
             if (err) {
                 responseData = {
                     "status": false,
@@ -70,26 +70,34 @@ module.exports.careator_sendEventSchedule = function (req, res) {
         var emailString = req.body.invitingTo;
         var emailSplit = emailString.split(',');
         console.log("emailSplit: " + JSON.stringify(emailSplit));
-        var maillist = emailSplit;
+        var maillist = [];
+        for (var x = 0; x < emailSplit.length; x++) {
+            var password = randomstring.generate({
+                length: 6,
+                charset: 'numeric'
+            });
+            maillist.push({ "remoteEmailId": emailSplit[x].trim(), "password": password })
+        }
+
         var userData = {
             "senderId": req.body.senderId,
             "senderName": req.body.senderName,
             "senderEmail": req.body.senderEmail,
             "title": req.body.title,
             "reason": req.body.reason,
-            "invitingTo": maillist,
+            "invite": maillist,
             "formatedStartTime": req.body.formatedStartTime,
             "formatedEndTime": req.body.formatedEndTime,
             "startsAt": req.body.startsAt,
             "endsAt": req.body.endsAt,
             "primColor": req.body.primColor,
-            "url": req.body.url,
+            "sessionURL": req.body.url,
             "date": req.body.date,
             "joinEmails": [],
             "leftEmails": [],
             "login": "notDone",
             "logout": "done",
-            "isDisconnected" : "no",
+            "isDisconnected": "no",
             "notificationNeed": 'yes',
             "password": password
         }
@@ -109,17 +117,14 @@ module.exports.careator_sendEventSchedule = function (req, res) {
                 var failedList = [];
                 // var io = req.app.get('socketio');
                 // io.emit('eventUpdated', { "id": req.body.remoteCalendarId, "remoteId": req.body.remoteCalendarId }); /* ### Note: Emit message to upcomingEventCtrl.js ### */
+                for (var x = 0; x < maillist.length; x++) {
 
-                maillist.forEach(function (to, i, array) {
-                    console.log("To: " + to);
-                    console.log("i: " + i);
-                    console.log("array: " + JSON.stringify(array));
+
                     var mailOptions = {
                         from: "info@vc4all.in",
-                        to: to,
+                        to: maillist[x].remoteEmailId,
                         subject: "Regarding Meeting",
-                        html: "<link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Lato' /> <table style='width: 100%;border:2px solid gainsboro;font-family:lato !important;'> <thead style='background: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'> <tr> <th> <h2 style='font-weight: 200;'>Greetings from VC4ALL</h2> </th> </tr> </thead> <tbody> <tr> <td> <b>Hey!</b> </td> </tr> <tr> <td>You just got a video call invitation for <span style='color:dodgerblue;'>" + req.body.title + "</span>. <br> <b>Details:</b>" + req.body.reason + " <br> please open the below link at sharp " + req.body.formatedStartTime + " <br> <b>TIMING:</b>" + req.body.formatedStartTime + " to " + req.body.formatedEndTime + " on " + req.body.date + " <br> <b>URL:</b> <a href=" + req.body.url + " style=color:dodgerblue;>Conference Link</a> <br> Enter the Email ID to which this mail is received. <br> Enter this One Time Password: <br> <p> <b>Password :</b> " + password + "</p> <b>Note:</b> This is a system generated password which will be lapsed once the current session is over. </td> </tr> <tr style='background: linear-gradient(to bottom, #00bcd40f 0%, #00BCD4 100%);'> <td style=padding-top:4px;padding-bottom:4px> <p>Have a seamless chat, <br> <b>Team-VC4ALL</b> </p> </td> </tr> </tbody> </table>"
-                        // html: "<html><head><p><b>Dear Parents, </b></p><p>Please note, you have to attend meeting regarding <b>" + req.body.reason + " </b>please open the below link at sharp " + req.body.startAt + " to " + req.body.endAt + "</p><p style=background:gainsboro;>Here your link and password for meeting <a href=" + req.body.url + ">" + req.body.url + "</a> and Password: " + password + "</p><p>Regards</p><p><b>Careator Technologies Pvt. Ltd</b></p></head><body></body></html>"
+                        html: "<link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Lato' /> <table style='width: 100%;border:2px solid gainsboro;font-family:lato !important;'> <thead style='background: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'> <tr> <th> <h2 style='font-weight: 200;'>Greetings from VC4ALL</h2> </th> </tr> </thead> <tbody> <tr> <td> <b>Hey!</b> </td> </tr> <tr> <td>You just got a video call invitation for <span style='color:dodgerblue;'>" + req.body.title + "</span>. <br> <b>Details:</b>" + req.body.reason + " <br> please open the below link at sharp " + req.body.formatedStartTime + " <br> <b>TIMING:</b>" + req.body.formatedStartTime + " to " + req.body.formatedEndTime + " on " + req.body.date + " <br> <b>URL:</b> <a href=" + req.body.url + " style=color:dodgerblue;>Conference Link</a> <br> Enter the Email ID to which this mail is received. <br> Enter this One Time Password: <br> <p> <b>Password :</b> " + maillist[x].password + "</p> <b>Note:</b> This is a system generated password which will be lapsed once the current session is over. </td> </tr> <tr style='background: linear-gradient(to bottom, #00bcd40f 0%, #00BCD4 100%);'> <td style=padding-top:4px;padding-bottom:4px> <p>Have a seamless chat, <br> <b>Team-VC4ALL</b> </p> </td> </tr> </tbody> </table>"
                     };
 
                     console.log("mailOptions: " + JSON.stringify(mailOptions));
@@ -133,7 +138,7 @@ module.exports.careator_sendEventSchedule = function (req, res) {
                             console.log('Email sent: ' + info.response);
                         }
                     })
-                    if (maillist.length - 1 == i) {
+                    if (maillist.length - 1 == x) {
                         responseData = {
                             "status": true,
                             "message": "Email send successfully",
@@ -141,8 +146,14 @@ module.exports.careator_sendEventSchedule = function (req, res) {
                         }
                         res.status(200).send(responseData);
                     }
+                }
+                // maillist.forEach(function (to, i, array) {
+                //     console.log("To: " + to);
+                //     console.log("i: " + i);
+                //     console.log("array: " + JSON.stringify(array));
 
-                });
+
+                // });
             }
         })
     }
@@ -159,15 +170,15 @@ module.exports.careator_sendEventSchedule = function (req, res) {
 }
 
 module.exports.careator_getToDate = function (req, res) {
-    console.log("careator_getToDate-->");
+    //console.log("careator_getToDate-->");
     var date = new Date();
-    console.log("***date: " + date);
+   
     var responseData = {
         "status": true,
         "message": "date get successfully",
         "data": { "date": date }
     }
-    console.log("responseData: " + JSON.stringify(responseData));
+   // console.log("responseData: " + JSON.stringify(responseData));
     res.status(200).send(responseData);
-    console.log("<--careator_getToDate");
+   // console.log("<--careator_getToDate");
 }

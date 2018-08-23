@@ -39,7 +39,8 @@ careatorApp.controller('editUserCtrl', function ($scope, $state,careatorHttpFact
         var api = "https://vc4all.in/careator/userEditById/" + id;
         console.log("api: " + api);
         var obj = {
-            "userName": $scope.userName,
+            "firstName": $scope.firstName,
+            "lastName": $scope.lastName,
             "userEmail": $scope.userEmail,
             "userPass": $scope.userPass,
             "Designation":$scope.Designation,

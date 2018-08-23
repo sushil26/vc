@@ -63,9 +63,9 @@
                     <label style="float:right;">Participants&nbsp;&nbsp;:&nbsp;&nbsp;</label>
                 </td>
                 <td>
-                    <span style="float:left;" ng-repeat="email in eventDetails.invitingTo">
+                    <span style="float:left;">
                         <lable>
-                            <b>{{email}}</b>,&nbsp;
+                            <b ng-repeat="email in eventDetails.invite">{{email.remoteEmailId}},&nbsp;</b>
                         </lable>
                     </span>
                 </td>

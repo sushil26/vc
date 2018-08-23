@@ -1,12 +1,16 @@
 {
 "BASE_URL": "https://vc4all.in/",
-"VC_teacherDetail": "vc/teacherDetail",
-"VC_studentDetail": "vc/studentDetail",
-"VC_adminCreate": "vc/adminCreate",
-"VC_getAllAdmin": "vc/getAllAdmin",
+
+"C_adminCreate": "https://vc4all.in/c/adminCreate",
+"C_getAllAdmin": "https://vc4all.in/c/getAllAdmin",
+"C_getAllOrg": "https://vc4all.in/c/getAllOrg",
+"C_updateOrgStatus": "https://vc4all.in/c/updateOrgStatus",
+"C_getOrg_admin_byOrgId": "https://vc4all.in/c/getOrg_admin_byOrgId",
+"C_orgEditById": "https://vc4all.in/c/orgEditById",
+
 "VC_updateUserStatus": "vc/updateUserStatus",
 "VC_getAllSchool": "vc/getAllSchool",
-"VC_updateSchoolStatus": "vc/updateSchoolStatus",
+
 "VC_getSchoolList": "vc/getSchoolList",
 "VC_getSchoolUser": "vc/getSchoolUser",
 "VC_getStudentAttendance": "vc/getStudentAttendance",

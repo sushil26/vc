@@ -112,7 +112,13 @@ function sendMessage() {
             if (msg) {
                 console.log("Start to emit message  ");
                 console.log("peerNew_id: " + peerNew_id);
-                signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, "email": localStorage.getItem('careatorEmail'), "urlDate":urlDate });
+                console.log("id2: " + id2);
+                if (id2 == 'talenkart_scheduleConf') {
+                    signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, "email": localStorage.getItem('careatorEmail'), "urlDate": urlDate, "requestFrom":"schedulePage" });
+                }
+                else {
+                    signaling_socket.emit('textMsg', { 'message': msg, 'userId': peerNew_id, 'queryLink': queryLink, 'timeLink': timeLink, 'userName': userName, "email": localStorage.getItem('careatorEmail'), "urlDate": urlDate });
+                }
                 document.getElementById('message').value = "";
             }
         }
@@ -127,7 +133,7 @@ function sendMessage() {
             console.log("MAX_UPLOAD_SIZE * 1000: " + MAX_UPLOAD_SIZE * 1000);
             console.log("MAX_UPLOAD_SIZE: " + MAX_UPLOAD_SIZE + "MAX_UPLOAD_SIZE * 1000 * 1000: " + MAX_UPLOAD_SIZE * 1000 * 1000);
             /* &&&& MAX_UPLOAD_SIZE was in a if condition is-->MAX_UPLOAD_SIZE * 1000 * 1000, i have changed for test purpose as--> MAX_UPLOAD_SIZE * 1000 &&&& */
-            if (file.size > MAX_UPLOAD_SIZE * 1000*1000) {
+            if (file.size > MAX_UPLOAD_SIZE * 1000 * 1000) {
                 alert('Sorry, we can only accept files up to ' + MAX_UPLOAD_SIZE + ' MB');
             }
             else if (file.type.substring(0, 5) === 'image') {
@@ -159,7 +165,7 @@ function sendMessage() {
     }
     else {
         console.log("You haven't set name");
-       // $('#setName').trigger('click');
+        // $('#setName').trigger('click');
     }
     console.log("<--Upload");
     console.log("<--sendMsg");

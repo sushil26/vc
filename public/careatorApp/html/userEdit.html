@@ -11,10 +11,18 @@
                     <div class="panel-body bio-graph-info" style="padding: 15px;">
                         <form class="form-horizontal" role="form" enctype="multipart/form-data">
                             <div class="form-group ">
-                                <label class="col-lg-3">Username</label>
+                                <label class="col-lg-3">First Name</label>
                                 <div class="col-lg-9">
                                     <span>
-                                        <input type="text" ng-model="userName" class="bcontrol-label m-bot15" ng-value="userData[0].name">
+                                        <input type="text" ng-model="firstName" class="bcontrol-label m-bot15" ng-value="userData[0].firstName">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-lg-3">Last Name</label>
+                                <div class="col-lg-9">
+                                    <span>
+                                        <input type="text" ng-model="lastName" class="bcontrol-label m-bot15" ng-value="userData[0].lastName">
                                     </span>
                                 </div>
                             </div>

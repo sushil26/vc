@@ -12,6 +12,7 @@ var careatorEvents = db.collection("careatorEvents"); /* ### careatorEvents coll
 var loginDetails = db.collection("loginDetails"); /* ### careator login detail collection  ### */
 var careatorChatGroup = db.collection("careatorChatGroup"); /* ### careatorChatGroup collection  ### */
 var careatorChat = db.collection("careatorChat"); /* ### careatorChat collection  ### */
+var organizations = db.collection("organizations"); /* ### organizations collection  ### */
 var csv = require('fast-csv');
 var careatorMasterArray = [];
 var alreadyExist = null; /* ### Note: Marker for user create ### */
@@ -135,6 +136,136 @@ module.exports.RemoteJoinCheck = function (req, res) {
         };
         res.status(400).send(responseData);
     }
+}
+
+module.exports.RemoteJoinCheck_schedule = function (req, res) {
+    console.log("RemoteJoinCheck_schedule-->");
+    console.log("req.body.careator_remoteEmail: " + req.body.careator_remoteEmail + " req.body.careator_remotePswd" + req.body.careator_remotePswd);
+    console.log("req.body.url: " + req.body.url);
+    var password = req.body.careator_remotePswd;
+    var remote_careatorEmail = req.body.careator_remoteEmail;
+    var url = req.body.url;
+    if (general.emptyCheck(password) && general.emptyCheck(remote_careatorEmail)) {
+        var obj = {
+            "remoteEmailId": remote_careatorEmail,
+            "password": password
+        }
+        console.log("obj: " + JSON.stringify(obj));
+        console.log("url: " + url);
+        careatorEvents.find({ "sessionURL": url }).toArray(function (err, sessionURLFindData) {
+            console.log("sessionURLFindData: " + JSON.stringify(sessionURLFindData));
+            console.log("sessionURLFindData.length: " + sessionURLFindData.length);
+            if (err) {
+                responseData = {
+                    status: false,
+                    message: property.E0007,
+                };
+                res.status(400).send(responseData);
+            } else {
+                if (sessionURLFindData.length > 0) {
+                    if (sessionURLFindData[0].isDisconnected == 'yes') {
+                        responseData = {
+                            status: false,
+                            errorCode: "E0_URLE",
+                            message: property.N0004
+                        };
+                        res.status(400).send(responseData);
+                    }
+                    else {
+                        careatorEvents.find({ "sessionURL": url, "invite": { $elemMatch: obj } }).toArray(function (err, findData) {
+                            console.log("findData: " + JSON.stringify(findData));
+                            console.log("findData.length: " + findData.length);
+                            if (err) {
+                                responseData = {
+                                    status: false,
+                                    message: property.E0007,
+                                };
+                                res.status(400).send(responseData);
+                            } else {
+                                if (findData.length > 0) {
+                                    var date = new Date();
+                                    var newFormatedDate_currentDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
+                                    var sd = new Date(findData[0].startsAt);
+                                    var ed = new Date(findData[0].endsAt);
+                                    var newFormate_sd = new Date(sd.getFullYear(), sd.getMonth(), sd.getDate(), sd.getHours(), sd.getMinutes());
+                                    var newFormated_ed = new Date(ed.getFullYear(), ed.getMonth(), ed.getDate(), ed.getHours(), ed.getMinutes());
+                                    console.log("newFormatedDate_currentDate: " + newFormatedDate_currentDate);
+                                    console.log("newFormate_sd: " + newFormate_sd);
+                                    if ((newFormatedDate_currentDate <= newFormate_sd && newFormatedDate_currentDate >= newFormated_ed) || (newFormatedDate_currentDate >= newFormate_sd && newFormatedDate_currentDate <= newFormated_ed)) {
+                                        console.log("Allowed for conference");
+                                        var joinEmails = findData[0].joinEmails;
+                                        console.log("joinEmails: " + JSON.stringify(joinEmails));
+                                        console.log("joinEmails.indexOf(req.body.careator_remoteEmail): " + joinEmails.indexOf(req.body.careator_remoteEmail));
+                                        if (joinEmails.indexOf(req.body.careator_remoteEmail) < 0) {
+                                            careatorEvents.update({ "sessionURL": url }, { $pull: { "leftEmails": remote_careatorEmail }, $addToSet: { "joinEmails": remote_careatorEmail } }, function (err, data) {
+                                                if (err) {
+                                                    responseData = {
+                                                        status: false,
+                                                        message: property.E0007
+                                                    };
+                                                    res.status(400).send(responseData);
+                                                } else {
+                                                    responseData = {
+                                                        status: true,
+                                                        sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
+                                                        message: property.S0005
+                                                    };
+                                                    res.status(200).send(responseData);
+                                                }
+                                            })
+                                        }
+                                        else {
+                                            responseData = {
+                                                status: false,
+                                                errorCode: "E0_alreadyInUse",
+                                                message: property.N0005
+                                            };
+                                            console.log("responseData: " + JSON.stringify(responseData));
+                                            res.status(400).send(responseData);
+                                        }
+                                    }
+                                    else {
+                                        console.log("Not allowed for conference");
+                                        responseData = {
+                                            status: false,
+                                            errorCode: "E1_timeInvalid",
+                                            message: "You can join conference only time, between " + newFormate_sd + " to " + newFormated_ed,
+                                        };
+                                        res.status(400).send(responseData);
+                                    }
+
+
+                                } else {
+                                    responseData = {
+                                        status: false,
+                                        errorCode: "E1_credentialMismatch",
+                                        message: property.E0008
+                                    };
+                                    res.status(400).send(responseData);
+                                }
+                            }
+                        })
+                    }
+                }
+                else {
+                    responseData = {
+                        status: false,
+                        errorCode: "E0_URLE",
+                        message: property.N0004
+                    };
+                    res.status(400).send(responseData);
+                }
+            }
+        })
+    }
+    else {
+        responseData = {
+            status: false,
+            message: property.N0003
+        };
+        res.status(400).send(responseData);
+    }
+    console.log("<--RemoteJoinCheck_schedule");
 }
 
 module.exports.pswdCheckForSesstion = function (req, res) {
@@ -274,10 +405,10 @@ module.exports.pswdCheckForSession_schedule = function (req, res) {
                 if (findData.length > 0) {
                     if (findData[0].password == password) {
                         var eventFindObj = {
-                            "url": url,
+                            "sessionURL": url,
                             "senderEmail": careatorEmail
                         }
-                        console.log("eventFindObj: "+eventFindObj);
+                        console.log("eventFindObj: " + eventFindObj);
                         careatorEvents.find(eventFindObj).toArray(function (err, sessionURLFind) {
                             console.log("sessionURLFind: " + JSON.stringify(sessionURLFind));
                             if (err) {
@@ -302,7 +433,7 @@ module.exports.pswdCheckForSession_schedule = function (req, res) {
                                         console.log("req.body.careatorEmail: " + req.body.careatorEmail);
                                         console.log("joinEmails.indexOf(req.body.careatorEmail): " + joinEmails.indexOf(req.body.careatorEmail));
                                         if (joinEmails.indexOf(req.body.careatorEmail) < 0) {
-                                            careatorEvents.update({ "url": req.body.sessionURL }, { $pull: { "leftEmails": careatorEmail }, $addToSet: { "joinEmails": careatorEmail } }, function (err, data) {
+                                            careatorEvents.update({ "sessionURL": req.body.sessionURL }, { $pull: { "leftEmails": careatorEmail }, $addToSet: { "joinEmails": careatorEmail } }, function (err, data) {
                                                 console.log("sessionURLFind: " + JSON.stringify(sessionURLFind));
                                                 if (err) {
                                                     responseData = {
@@ -376,12 +507,17 @@ module.exports.pswdCheckForSession_schedule = function (req, res) {
 }
 module.exports.pswdCheck = function (req, res) {
     console.log("pswdCheck-->");
+    var sessionRandomId = randomstring.generate(7);
     console.log("req.body.password: " + req.body.password + " req.body.careatorEmail: " + req.body.careatorEmail);
     var password = req.body.password;
     var careatorEmail = req.body.careatorEmail;
     var emailSplit = careatorEmail.split('@');
     if (general.emptyCheck(password) && general.emptyCheck(careatorEmail)) {
-        if (emailSplit[1] == 'talenkart.com' || careatorEmail == 'vc4all@talenkart.com') {
+        var obj = {
+            "email": careatorEmail
+        }
+        if (careatorEmail == 'admin@vc4all.in') {
+            console.log("VC4ALL Admin login-->");
             var obj = {
                 "email": careatorEmail
             }
@@ -399,7 +535,7 @@ module.exports.pswdCheck = function (req, res) {
                         if (findData[0].status == 'active') {
                             if (findData[0].password == password) {
                                 if (findData[0].logout == 'done' && findData[0].login == 'notDone') {
-                                    careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [], "logout": "notDone", "login": "done" } }, function (err, data) {
+                                    careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [], "logout": "notDone", "login": "done", "sessionRandomId": sessionRandomId + findData[0]._id } }, function (err, data) {
                                         console.log("data: " + JSON.stringify(data));
                                         if (err) {
                                             responseData = {
@@ -409,7 +545,7 @@ module.exports.pswdCheck = function (req, res) {
                                             res.status(400).send(responseData);
                                         } else {
                                             var date = new Date();
-                                            loginDetails.update({ "_id": ObjectId(findData[0]._id) }, { $set: { "userId": findData[0]._id, "userName":findData[0].name, "email":findData[0].email, "login": true, "loginDate": date, "logout": false } },{ upsert : true }, function (err, loginData) {
+                                            loginDetails.insert({ "userId": findData[0]._id, "sessionRandomId": sessionRandomId + findData[0]._id, "orgId": findData[0].orgId, "userName": findData[0].firstName + " " + findData[0].lastName, "email": findData[0].email, "login": true, "loginDate": date, "logout": false }, function (err, loginData) {
                                                 if (err) {
                                                     responseData = {
                                                         status: false,
@@ -418,7 +554,20 @@ module.exports.pswdCheck = function (req, res) {
                                                     res.status(400).send(responseData);
                                                 } else {
                                                     // log.info("req.originalUrl: " + req.originalUrl + " Email: " + findData[0].email, " Date: (" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + ")" + " Time: (" + date.getHours() + ":" + date.getMinutes() + ")");
-                                                    console.log("log: " + log);
+                                                    console.log("emit started to client-->");
+                                                    var io = req.app.get('socketio');
+                                                    var emitObj = {
+                                                        "orgId": loginData.ops[0].orgId,
+                                                        "insertedId": loginData.ops[0]._id,
+                                                        "sessionRandomId": loginData.ops[0].sessionRandomId,
+                                                        "userName": loginData.ops[0].userName,
+                                                        "email": loginData.ops[0].email,
+                                                        "loginDate": loginData.ops[0].loginDate,
+                                                        "login": loginData.ops[0].login,
+                                                        "logout": loginData.ops[0].logout
+                                                    }
+                                                    io.emit('comm_userLoginNotify', emitObj); /* ### Note: Emit message to client(userLoginDetailsCtrl.js) ### */
+                                                    findData[0].sessionRandomId = sessionRandomId + findData[0]._id;
                                                     responseData = {
                                                         status: true,
                                                         message: property.S0005,
@@ -461,6 +610,133 @@ module.exports.pswdCheck = function (req, res) {
                             res.status(400).send(responseData);
                         }
                     } else {
+                        responseData = {
+                            status: false,
+                            message: property.E0006
+                        };
+                        console.log("responseData: " + JSON.stringify(responseData));
+                        res.status(400).send(responseData);
+                    }
+                }
+            })
+        }
+        else if (emailSplit[1] != undefined) {
+            console.log("other employee login-->");
+            var domainCheck = {
+                "domain": emailSplit[1]
+            }
+            console.log("domainCheck: " + JSON.stringify(domainCheck));
+            organizations.find(domainCheck).toArray(function (err, organizationDomain) {
+                if (err) {
+                    responseData = {
+                        status: false,
+                        message: property.E0007
+                    };
+                    res.status(400).send(responseData);
+                } else {
+                    console.log("organizationDomain.length: " + organizationDomain.length);
+                    if (organizationDomain.length > 0) {
+                        careatorMaster.find(obj).toArray(function (err, findData) {
+                            console.log("findData: " + JSON.stringify(findData));
+                            if (err) {
+                                responseData = {
+                                    status: false,
+                                    message: property.E0007
+                                };
+                                res.status(400).send(responseData);
+                            } else {
+                                if (findData.length > 0) {
+                                    if (findData[0].status == 'active') {
+                                        if (findData[0].password == password) {
+                                            if (findData[0].logout == 'done' && findData[0].login == 'notDone') {
+                                                careatorMaster.update({ "_id": ObjectId(findData[0]._id), "status": "active" }, { $set: { "password": password, "invite": [], "logout": "notDone", "login": "done", "sessionRandomId": sessionRandomId + findData[0]._id } }, function (err, data) {
+                                                    console.log("data: " + JSON.stringify(data));
+                                                    if (err) {
+                                                        responseData = {
+                                                            status: false,
+                                                            message: property.E0007
+                                                        };
+                                                        res.status(400).send(responseData);
+                                                    } else {
+                                                        var date = new Date();
+                                                        loginDetails.insert({ "userId": findData[0]._id, "sessionRandomId": sessionRandomId + findData[0]._id, "orgId": findData[0].orgId, "userName": findData[0].firstName + " " + findData[0].lastName, "email": findData[0].email, "login": true, "loginDate": date, "logout": false }, function (err, loginData) {
+                                                            if (err) {
+                                                                responseData = {
+                                                                    status: false,
+                                                                    message: property.E0007
+                                                                };
+                                                                res.status(400).send(responseData);
+                                                            } else {
+                                                                // log.info("req.originalUrl: " + req.originalUrl + " Email: " + findData[0].email, " Date: (" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + ")" + " Time: (" + date.getHours() + ":" + date.getMinutes() + ")");
+                                                                //console.log("loginData: " + JSON.stringify(loginData));
+                                                                // console.log("loginData.insertedIds: " + loginData.insertedIds[0]);
+                                                                console.log("emit started to client-->");
+                                                                var io = req.app.get('socketio');
+                                                                var emitObj = {
+                                                                    "orgId": loginData.ops[0].orgId,
+                                                                    "insertedId": loginData.ops[0]._id,
+                                                                    "sessionRandomId": loginData.ops[0].sessionRandomId,
+                                                                    "userName": loginData.ops[0].userName,
+                                                                    "email": loginData.ops[0].email,
+                                                                    "loginDate": loginData.ops[0].loginDate,
+                                                                    "login": loginData.ops[0].login,
+                                                                    "logout": loginData.ops[0].logout
+                                                                }
+                                                                io.emit('comm_userLoginNotify', emitObj); /* ### Note: Emit message to client(userLoginDetailsCtrl.js) ### */
+                                                                findData[0].sessionRandomId = sessionRandomId + findData[0]._id;
+                                                                responseData = {
+                                                                    status: true,
+                                                                    message: property.S0005,
+                                                                    sessionData: "79ea520a-3e67-11e8-9679-97fa7aeb8e97",
+                                                                    data: findData[0]
+                                                                };
+                                                                console.log("responseData: " + JSON.stringify(responseData));
+                                                                res.status(200).send(responseData);
+                                                            }
+                                                        })
+
+                                                    }
+                                                })
+                                            } else {
+                                                responseData = {
+                                                    status: false,
+                                                    message: property.N0001,
+                                                    data: {
+                                                        "id": findData[0]._id
+                                                    }
+                                                };
+                                                res.status(400).send(responseData);
+                                            }
+
+                                        } else {
+                                            responseData = {
+                                                status: false,
+                                                message: property.E0005
+                                            };
+                                            console.log("responseData: " + JSON.stringify(responseData));
+                                            res.status(400).send(responseData);
+                                        }
+                                    }
+                                    else {
+                                        responseData = {
+                                            status: false,
+                                            message: property.N0002
+                                        };
+                                        console.log("responseData: " + JSON.stringify(responseData));
+                                        res.status(400).send(responseData);
+                                    }
+                                } else {
+                                    responseData = {
+                                        status: false,
+                                        message: property.E0006
+                                    };
+                                    console.log("responseData: " + JSON.stringify(responseData));
+                                    res.status(400).send(responseData);
+                                }
+                            }
+                        })
+                    }
+                    else {
                         responseData = {
                             status: false,
                             message: property.E0006
@@ -762,7 +1038,7 @@ module.exports.resetLoginFlagsById = function (req, res) {
             "$set": {
                 "login": "notDone",
                 "logout": "done",
-                "sessionRandomId": sessionRandomId
+                "sessionRandomId": sessionRandomId + obj._id
             }
         }, function (err, data) {
             console.log("data: " + JSON.stringify(data));
@@ -798,29 +1074,87 @@ module.exports.resetLoginFlagsById = function (req, res) {
     }
 
 }
-module.exports.getAdminObjectId = function (req, res) {
-    console.log("getAdminObjectId-->");
-    careatorMaster.find({
-        "email": "vc4all@talenkart.com"
-    }).toArray(function (err, admin) {
-        if (err) {
-            console.log("err: " + JSON.stringify(err));
-            responseData = {
-                status: false,
-                message: property.E0009
-            };
-            res.status(400).send(responseData);
-        } else {
-            console.log("admin: " + JSON.stringify(admin));
-            responseData = {
-                status: true,
-                message: property.S0008,
-                data: admin[0]._id
-            };
-            res.status(200).send(responseData);
-        }
-    })
+module.exports.getAdminObjectIdByOrgId = function (req, res) {
+    console.log("getAdminObjectIdByOrgId-->");
+    var orgId = req.params.orgId;
+    if (general.emptyCheck(orgId)) {
+        careatorMaster.find({ "orgId": ObjectId(orgId), loginType: "admin" }).toArray(function (err, admin) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                responseData = {
+                    status: false,
+                    message: property.E0009
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("admin: " + JSON.stringify(admin));
+                responseData = {
+                    status: true,
+                    message: property.S0008,
+                    data: admin[0]._id
+                };
+                res.status(200).send(responseData);
+            }
+        })
+    }
+    else {
+        response = {
+            status: false,
+            message: property.N0003,
+            data: obj
+        };
+        res.status(400).send(response);
+    }
 }
+module.exports.getSuperAdminObjectId = function (req, res) {
+    console.log("getSuperAdminObjectId-->");
+   
+        careatorMaster.find({ loginType: "superAdmin" }).toArray(function (err, admin) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                responseData = {
+                    status: false,
+                    message: property.E0009
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("admin: " + JSON.stringify(admin));
+                responseData = {
+                    status: true,
+                    message: property.S0008,
+                    data: admin[0]._id
+                };
+                res.status(200).send(responseData);
+            }
+        })
+   
+    console.log("<--getSuperAdminObjectId");
+}
+module.exports.getAllAdminObjectIdByOrgId = function (req, res) {
+    console.log("getAllAdminObjectIdByOrgId-->");
+   
+        careatorMaster.find({ loginType: "admin" }).toArray(function (err, admin) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                responseData = {
+                    status: false,
+                    message: property.E0009
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("admin: " + JSON.stringify(admin));
+                responseData = {
+                    status: true,
+                    message: property.S0008,
+                    data: admin[0]._id
+                };
+                res.status(200).send(responseData);
+            }
+        })
+   
+    console.log("<--getAllAdminObjectIdByOrgId");
+}
+
 module.exports.setCollection = function (req, res) {
     console.log("setCollection-->");
     console.log("req.body.url: " + req.body.url);
@@ -967,66 +1301,77 @@ module.exports.getHistory = function (req, res) {
 module.exports.careatorMasterInsert = function (req, res) {
     console.log("careatorMasterInsert-->");
     var responseData;
-    if (!req.files)
-        return res.status(400).send('No files were uploaded.');
+    if (general.emptyCheck(req.params.orgId)) {
+        if (!req.files)
+            return res.status(400).send('No files were uploaded.');
 
-    var userDataFile = req.files.img;
-    console.log("userDataFile: " + userDataFile);
-    var parser = csv.fromString(userDataFile.data.toString(), {
-        headers: true,
-        ignoreEmpty: true
-    }).on("data", function (data) {
-        console.log("data: " + JSON.stringify(data));
-        parser.pause();
-        if (data.Name == "#" || alreadyExist == 'yes') {
-            parser.resume();
-        } else {
-            module.exports.careatorMasterInsertValidate(data, function (err) {
-                console.log("validation -->");
-                console.log("alreadyExist : " + alreadyExist + " existEmail: " + existEmail + " existEmpId: " + existEmpId);
+        var userDataFile = req.files.img;
+        console.log("userDataFile: " + userDataFile);
+        var parser = csv.fromString(userDataFile.data.toString(), {
+            headers: true,
+            ignoreEmpty: true
+        }).on("data", function (data) {
+            console.log("data: " + JSON.stringify(data));
+            parser.pause();
+            if (data.Name == "#" || alreadyExist == 'yes') {
                 parser.resume();
-            });
-        }
-    })
-        .on("end", function () {
-            console.log("end marker: ");
-            if (alreadyExist == 'yes') {
-                careatorMasterArray = [];
-                alreadyExist = null;
-                if (existEmpId != null) {
-                    var temp = existEmpId;
-                } else if (existEmail != null) {
-                    var temp = existEmail;
-                }
-
-                existEmail = null;
-                existEmpId = null;
-                responseData = {
-                    status: false,
-                    message: "Upload failed because this " + temp + " already exist",
-                };
-                res.status(400).send(responseData);
             } else {
-                careatorMaster.insert(careatorMasterArray, function (err, insertedData) {
-                    careatorMasterArray = [];
-                    if (err) {
-                        console.log("err: " + JSON.stringify(err));
-                        responseData = {
-                            status: false,
-                            message: property.E0007
-                        };
-                        res.status(400).send(responseData);
-                    } else {
-                        console.log("insertedData: " + JSON.stringify(insertedData));
-                        responseData = {
-                            status: true,
-                            message: property.S0001,
-                        };
-                        res.status(200).send(responseData);
-                    }
-                })
+                data.orgId = ObjectId(req.params.orgId);
+                module.exports.careatorMasterInsertValidate(data, function (err) {
+                    console.log("validation -->");
+                    console.log("alreadyExist : " + alreadyExist + " existEmail: " + existEmail + " existEmpId: " + existEmpId);
+                    parser.resume();
+                });
             }
         })
+            .on("end", function () {
+                console.log("end marker: ");
+                if (alreadyExist == 'yes') {
+                    careatorMasterArray = [];
+                    alreadyExist = null;
+                    if (existEmpId != null) {
+                        var temp = existEmpId;
+                    } else if (existEmail != null) {
+                        var temp = existEmail;
+                    }
+
+                    existEmail = null;
+                    existEmpId = null;
+                    responseData = {
+                        status: false,
+                        message: "Upload failed because this " + temp + " already exist",
+                    };
+                    res.status(400).send(responseData);
+                } else {
+                    careatorMaster.insert(careatorMasterArray, function (err, insertedData) {
+                        careatorMasterArray = [];
+                        if (err) {
+                            console.log("err: " + JSON.stringify(err));
+                            responseData = {
+                                status: false,
+                                message: property.E0007
+                            };
+                            res.status(400).send(responseData);
+                        } else {
+                            console.log("insertedData: " + JSON.stringify(insertedData));
+                            responseData = {
+                                status: true,
+                                message: property.S0001,
+                            };
+                            res.status(200).send(responseData);
+                        }
+                    })
+                }
+            })
+    }
+    else {
+        response = {
+            status: false,
+            message: property.N0003,
+            data: obj
+        };
+        res.status(400).send(response);
+    }
 }
 module.exports.careatorMasterInsertValidate = function (data, callback) {
     console.log("careatorMasterInsertValidate-->");
@@ -1038,7 +1383,8 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
         "email": data.Email
     }
     var obj = {
-        "name": data.Name,
+        "firstName": data.FirstName,
+        "lastName": data.LastName,
         "empId": data.EmpId,
         "email": data.Email,
         "videoRights": data.VideoRights,
@@ -1046,12 +1392,14 @@ module.exports.careatorMasterInsertValidate = function (data, callback) {
         "password": data.Password,
         "Designation": data.Designation,
         "sessionRandomId": sessionRandomId,
+        "orgId": data.orgId,
         "status": "active",
         "chatStatus": "Available",
         "restrictedTo": [],
         "profilePicPath": "/careatorApp/css/user.png",
         "login": "notDone",
-        "logout": "done"
+        "logout": "done",
+        "loginType": "employee"
     }
     careatorMaster.find(findEmpId).toArray(function (err, findData) {
         if (err) {
@@ -1089,7 +1437,8 @@ module.exports.careatorSingleUserInsert = function (req, res) {
     console.log("careatorSingleUserInsert-->");
     var sessionRandomId = randomstring.generate(7);
     var obj = {
-        "name": req.body.userName,
+        "firstName": req.body.firstName,
+        "lastName": req.body.lastName,
         "empId": req.body.empId,
         "email": req.body.empEmail,
         "password": req.body.empPass,
@@ -1097,12 +1446,14 @@ module.exports.careatorSingleUserInsert = function (req, res) {
         "sessionRandomId": sessionRandomId,
         "videoRights": req.body.videoRights,
         "chatRights": req.body.chatRights,
+        "orgId": ObjectId(req.body.orgId),
         "status": "active",
         "chatStatus": "Available",
         "restrictedTo": [],
         "profilePicPath": "/careatorApp/css/user.png",
         "login": "notDone",
-        "logout": "done"
+        "logout": "done",
+        "loginType": "employee"
     }
     console.log("obj :" + JSON.stringify(obj));
     var findEmpId = {
@@ -1180,51 +1531,74 @@ module.exports.careatorSingleUserInsert = function (req, res) {
 
 module.exports.careator_getAllEmp = function (req, res) {
     console.log("careator_getAllEmp-->");
+    console.log("orgId: " + req.params.orgId);
     var response;
-    careatorMaster.find().toArray(function (err, allEmp) {
-        if (err) {
-            console.log("err: " + JSON.stringify(err));
-            response = {
-                status: false,
-                message: property.E0007,
-                data: err
-            };
-            res.status(400).send(responseData);
-        } else {
-            console.log("allEmp: " + JSON.stringify(allEmp));
-            response = {
-                status: true,
-                message: property.S0008,
-                data: allEmp
-            };
-            res.status(200).send(response);
-        }
-    })
+    if (general.emptyCheck(req.params.orgId)) {
+
+        careatorMaster.find({ "orgId": ObjectId(req.params.orgId), loginType: { $ne: "admin" } }).toArray(function (err, allEmp) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: property.E0007,
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("allEmp: " + JSON.stringify(allEmp));
+                response = {
+                    status: true,
+                    message: property.S0008,
+                    data: allEmp
+                };
+                res.status(200).send(response);
+            }
+        })
+    }
+    else {
+        response = {
+            status: false,
+            message: property.N0003,
+            data: obj
+        };
+        res.status(400).send(response);
+    }
 
 }
 
-module.exports.careator_getAllEmpLoginDetails= function (req, res) {
-console.log("careator_getAllEmpLoginDetails-->");
-var response;
-loginDetails.find().toArray(function (err, allEmpLoginDetails) {
-        if (err) {
-            console.log("err: " + JSON.stringify(err));
-            response = {
-                status: false,
-                message: property.E0007,
-                data: err
-            };
-            res.status(400).send(responseData);
-        } else {
-            console.log("allEmpLoginDetails: " + JSON.stringify(allEmpLoginDetails));
-            response = {
-                status: true,
-                message: property.S0008,
-                data: allEmpLoginDetails
-            };
-            res.status(200).send(response);
-        }
-    })
+module.exports.careator_getAllEmpLoginDetails = function (req, res) {
+    console.log("careator_getAllEmpLoginDetails-->");
+    var response;
+    console.log("orgId: " + req.params.orgId);
+    if (general.emptyCheck(req.params.orgId)) {
+        loginDetails.find({ "orgId": ObjectId(req.params.orgId) }).toArray(function (err, allEmpLoginDetails) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: property.E0007,
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("allEmpLoginDetails: " + JSON.stringify(allEmpLoginDetails));
+                response = {
+                    status: true,
+                    message: property.S0008,
+                    data: allEmpLoginDetails
+                };
+                res.status(200).send(response);
+            }
+        })
+    }
+    else {
+        response = {
+            status: false,
+            message: property.N0003,
+            data: obj
+        };
+        res.status(400).send(response);
+    }
 }
 /* ##### Start: Get careator all employee include status inactive  #### */
 module.exports.careator_getChatRightsEmp = function (req, res) {
@@ -1271,32 +1645,51 @@ module.exports.groupStatusChangeById = function (req, res) {
             "status": status
         }
         console.log("updateVlaue: " + JSON.stringify(updateVlaue));
-        careatorChatGroup.update({
-            "_id": ObjectId(id)
-        }, {
-                $set: {
+        careatorChatGroup.update({ "_id": ObjectId(id) }, { $set: { "status": status } }, function (err, data) {
+            console.log("status query proccessed-->");
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: property.E0007,
+                    data: err
+                };
+                res.status(400).send(response);
+            } else {
+                console.log("updatedData: " + JSON.stringify(data));
+                var careatorChatUpdateVlaue = {
                     "status": status
                 }
-            }, function (err, data) {
-                console.log("status query proccessed-->");
-                if (err) {
-                    console.log("err: " + JSON.stringify(err));
-                    response = {
-                        status: false,
-                        message: property.E0007,
-                        data: err
-                    };
-                    res.status(400).send(response);
-                } else {
-                    console.log("updatedData: " + JSON.stringify(data));
-                    response = {
-                        status: true,
-                        message: property.S0010,
-                        data: data
-                    };
-                    res.status(200).send(response);
-                }
-            })
+                console.log("careatorChatUpdateVlaue: " + JSON.stringify(careatorChatUpdateVlaue));
+                careatorChat.update({ "group_id": id }, { $set: { "status": status } }, function (err, data) {
+                    console.log("status query proccessed-->");
+                    if (err) {
+                        console.log("err: " + JSON.stringify(err));
+                        response = {
+                            status: false,
+                            message: property.E0007,
+                            data: err
+                        };
+                        res.status(400).send(response);
+                    } else {
+                        console.log("emit started to client-->");
+                        var io = req.app.get('socketio');
+                        var emitObj = {
+                            "id": id,
+                            "status": status,
+                        }
+                        io.emit('comm_groupStatusNotify', emitObj); /* ### Note: Emit message to client(groupListCtrl.js) ### */
+                        console.log("updatedData: " + JSON.stringify(data));
+                        response = {
+                            status: true,
+                            message: property.S0010,
+                            data: data
+                        };
+                        res.status(200).send(response);
+                    }
+                })
+            }
+        })
     } else {
         console.log("Epty value found");
         var obj = {
@@ -1370,29 +1763,37 @@ module.exports.statusChangeById = function (req, res) {
 /* ##### Start: Get careator all employee exclude status inactive  #### */
 module.exports.getChatRights_emp = function (req, res) {
     console.log("getChatRights_emp-->");
+    console.log("req.params.orgId: " + req.params.orgId);
     var response;
-    careatorMaster.find({
-        "chatRights": "yes",
-        "status": "active"
-    }).toArray(function (err, allEmp_chat) {
-        if (err) {
-            console.log("err: " + JSON.stringify(err));
-            response = {
-                status: false,
-                message: property.E0007,
-                data: err
-            };
-            res.status(400).send(responseData);
-        } else {
-            console.log("allEmp_chat: " + JSON.stringify(allEmp_chat));
-            response = {
-                status: true,
-                message: property.S0008,
-                data: allEmp_chat
-            };
-            res.status(200).send(response);
-        }
-    })
+    if (general.emptyCheck(req.params.orgId)) {
+        careatorMaster.find({ "chatRights": "yes", "status": "active", "orgId": ObjectId(req.params.orgId) }).toArray(function (err, allEmp_chat) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: property.E0007,
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("allEmp_chat: " + JSON.stringify(allEmp_chat));
+                response = {
+                    status: true,
+                    message: property.S0008,
+                    data: allEmp_chat
+                };
+                res.status(200).send(response);
+            }
+        })
+    }
+    else {
+        response = {
+            status: false,
+            message: property.N0003,
+            data: obj
+        };
+        res.status(400).send(response);
+    }
 
 }
 /* ##### End: Get careator all employee exclude status inactive  #### */
@@ -1466,6 +1867,7 @@ module.exports.careator_chat_creteGroup = function (req, res) {
             "groupName": groupName,
             "groupMembers": groupMembers,
             "admin": admin,
+            "orgId": ObjectId(req.body.orgId),
             "status": "active"
         }
         careatorChatGroup.insert(insertObj, function (err, groupCreate) {
@@ -1479,6 +1881,15 @@ module.exports.careator_chat_creteGroup = function (req, res) {
                 res.status(400).send(response);
             } else {
                 console.log("groupCreate: " + JSON.stringify(groupCreate));
+                console.log("emit started to client-->");
+                var io = req.app.get('socketio');
+                var emitObj = {
+                    "groupMembers": insertObj.groupMembers,
+                    "orgId": req.body.orgId,
+                }
+
+                io.emit('comm_groupCreateNotify', emitObj); /* ### Note: Emit message to client(chatCtrl.js) ### */
+
                 response = {
                     status: true,
                     message: property.S0011,
@@ -1505,13 +1916,7 @@ module.exports.careator_getChatGroupListById = function (req, res) {
     console.log("getChatGroupListById-->");
     var id = req.params.id;
     if (general.emptyCheck(id)) {
-        careatorChatGroup.find({
-            "groupMembers": {
-                $elemMatch: {
-                    "userId": id
-                }
-            }
-        }).toArray(function (err, data) {
+        careatorChatGroup.find({ "groupMembers": { $elemMatch: { "userId": id } } }).toArray(function (err, data) {
             if (err) {
                 console.log("err: " + JSON.stringify(err));
                 responseData = {
@@ -1544,27 +1949,37 @@ module.exports.careator_getChatGroupListById = function (req, res) {
 
 module.exports.careator_getChatGroupList = function (req, res) {
     console.log("careator_getChatGroupList-->");
-
-    careatorChatGroup.find().toArray(function (err, data) {
-        if (err) {
-            console.log("err: " + JSON.stringify(err));
-            responseData = {
-                status: false,
-                data: err,
-                message: property.E0007
-            };
-            res.status(400).send(responseData);
-        } else {
-            console.log("data: " + JSON.stringify(data));
-            responseData = {
-                status: true,
-                errorCode: 200,
-                message: property.S0008,
-                data: data
-            };
-            res.status(200).send(responseData);
-        }
-    })
+    console.log("req.params.orgId: " + req.params.orgId);
+    var id = req.params.orgId;
+    if (general.emptyCheck(id)) {
+        careatorChatGroup.find({ "orgId": ObjectId(id) }).toArray(function (err, data) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                responseData = {
+                    status: false,
+                    data: err,
+                    message: property.E0007
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("data: " + JSON.stringify(data));
+                responseData = {
+                    status: true,
+                    errorCode: 200,
+                    message: property.S0008,
+                    data: data
+                };
+                res.status(200).send(responseData);
+            }
+        })
+    } else {
+        console.log("Epty value found");
+        response = {
+            status: false,
+            message: property.N0003
+        };
+        res.status(400).send(response);
+    }
 }
 
 module.exports.careator_getChatRightsAllemp = function (req, res) {
@@ -1620,11 +2035,79 @@ module.exports.careator_getChatRightsAllemp_byLoginId = function (req, res) {
 
     if (general.emptyCheck(id)) {
         careatorMaster.find({
-            "_id": {
-                $ne: ObjectId(id)
-            },
+            "_id": { $ne: ObjectId(id) }, "orgId": ObjectId(req.params.orgId),
             "chatRights": "yes"
         }).toArray(function (err, allEmp_chat) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: property.E0007,
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("allEmp_chat: " + JSON.stringify(allEmp_chat));
+                response = {
+                    status: true,
+                    message: property.S0008,
+                    data: allEmp_chat
+                };
+                res.status(200).send(response);
+            }
+        })
+
+    } else {
+        console.log("Epty value found");
+        response = {
+            status: false,
+            message: property.N0003
+        };
+        res.status(400).send(response);
+    }
+}
+
+module.exports.careator_getChatRightsAllempWithSuperAdmin_byLoginId = function (req, res) {
+    console.log("careator_getChatRightsAllempWithSuperAdmin_byLoginId-->" + req.params.id);
+    var id = req.params.id;
+
+    if (general.emptyCheck(id)) {
+        careatorMaster.find({ "_id": { $ne: ObjectId(id) }, $or: [{ "orgId": ObjectId(req.params.orgId), "chatRights": "yes" }, { "loginType": 'superAdmin' }] }).toArray(function (err, allEmp_chat) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: property.E0007,
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("allEmp_chat: " + JSON.stringify(allEmp_chat));
+                response = {
+                    status: true,
+                    message: property.S0008,
+                    data: allEmp_chat
+                };
+                res.status(200).send(response);
+            }
+        })
+
+    } else {
+        console.log("Epty value found");
+        response = {
+            status: false,
+            message: property.N0003
+        };
+        res.status(400).send(response);
+    }
+}
+
+module.exports.careator_getAllAdmins_byLoginId = function (req, res) {
+    console.log("careator_getAllAdmins_byLoginId-->: " + req.params.id);
+    var id = req.params.id;
+
+    if (general.emptyCheck(id)) {
+        careatorMaster.find({ "_id": { $ne: ObjectId(id) }, "loginType": "admin" }).toArray(function (err, allEmp_chat) {
             if (err) {
                 console.log("err: " + JSON.stringify(err));
                 response = {
@@ -1703,7 +2186,7 @@ module.exports.individualText = function (req, res) {
                         res.status(400).send(responseData);
                     } else {
                         var io = req.app.get('socketio');
-                        io.emit('comm_textReceived', {
+                        var emitObj = {
                             "id": insertedData.ops[0]._id,
                             "senderId": obj.chats[0].senderId,
                             "senderName": obj.chats[0].senderName,
@@ -1711,7 +2194,12 @@ module.exports.individualText = function (req, res) {
                             "sendTime": obj.chats[0].sendTime,
                             "receiverId": obj.receiverId,
                             "freshInsert": true
-                        }); /* ### Note: Emit message to client ### */
+                        }
+                        if (req.body.messageType == 'file') {
+                            emitObj.messageType = req.body.messageType
+                        }
+                        io.emit('comm_textReceived', emitObj); /* ### Note: Emit message to client ### */
+
                         response = {
                             status: true,
                             message: property.S0012,
@@ -1721,6 +2209,8 @@ module.exports.individualText = function (req, res) {
                     }
                 })
             } else {
+                console.log("NOt Fresh insert");
+                console.log("req.body.meesageType: " + req.body.messageType);
                 var unseenCount, setObj;
                 if (data[0].unseenCount != undefined) {
                     unseenCount = data[0].unseenCount + 1;
@@ -1735,6 +2225,9 @@ module.exports.individualText = function (req, res) {
                     "senderName": req.body.senderName,
                     "message": req.body.message,
                     "sendTime": date
+                }
+                if (req.body.messageType != undefined && req.body.messageType == 'file') {
+                    obj.messageType = 'file';
                 }
                 console.log("obj : " + JSON.stringify(obj));
                 var findObj = { "_id": data[0]._id }
@@ -1751,7 +2244,7 @@ module.exports.individualText = function (req, res) {
                     } else {
                         console.log("updatedData: " + JSON.stringify(updatedData));
                         var io = req.app.get('socketio');
-                        io.emit('comm_textReceived', {
+                        var emitObj = {
                             "id": data[0]._id,
                             "senderId": obj.senderId,
                             "senderName": obj.senderName,
@@ -1761,7 +2254,11 @@ module.exports.individualText = function (req, res) {
                             "senderSeen": setObj.senderSeen,
                             "receiverSeen": setObj.receiverSeen,
                             "unseenCount": setObj.unseenCount
-                        }); /* ### Note: Emit message to client ### */
+                        }
+                        if (req.body.messageType == 'file') {
+                            emitObj.messageType = req.body.messageType
+                        }
+                        io.emit('comm_textReceived', emitObj); /* ### Note: Emit message to client ### */
                         response = {
                             status: true,
                             message: property.S0010,
@@ -1973,7 +2470,7 @@ module.exports.groupText = function (req, res) {
                             console.log("insertedData: " + JSON.stringify(insertedData));
                             console.log("insertedData.ops[0]._id", insertedData.ops[0]._id);
                             var io = req.app.get('socketio');
-                            io.emit('comm_textReceived', {
+                            var emitObj = {
                                 "id": insertedData.ops[0]._id,
                                 "group_id": insertedData.ops[0].group_id,
                                 "senderId": obj.chats[0].senderId,
@@ -1982,7 +2479,11 @@ module.exports.groupText = function (req, res) {
                                 "sendTime": obj.chats[0].sendTime,
                                 "freshInsert": true,
                                 "groupMembers": groupMem
-                            }); /* ### Note: Emit message to client ### */
+                            }
+                            if (req.body.messageType == 'file') {
+                                emitObj.messageType = req.body.messageType
+                            }
+                            io.emit('comm_textReceived', emitObj); /* ### Note: Emit message to client ### */
                             response = {
                                 status: true,
                                 message: property.S0012,
@@ -1997,6 +2498,9 @@ module.exports.groupText = function (req, res) {
                         "senderName": req.body.senderName,
                         "message": req.body.message,
                         "sendTime": date
+                    }
+                    if (req.body.messageType != undefined && req.body.messageType == 'file') {
+                        obj.messageType = 'file';
                     }
                     var groupMembers = [];
                     var groupMem = data[0].groupMembers;
@@ -2029,7 +2533,7 @@ module.exports.groupText = function (req, res) {
                         } else {
                             console.log("updatedData: " + JSON.stringify(updatedData));
                             var io = req.app.get('socketio');
-                            io.emit('comm_textReceived', {
+                            var emitObj = {
                                 "id": data[0]._id,
                                 "group_id": data[0].group_id,
                                 "senderId": obj.senderId,
@@ -2037,8 +2541,11 @@ module.exports.groupText = function (req, res) {
                                 "message": obj.message,
                                 "sendTime": obj.sendTime,
                                 "groupMembers": groupMem
-
-                            }); /* ### Note: Emit message to client ### */
+                            }
+                            if (req.body.messageType == 'file') {
+                                emitObj.messageType = req.body.messageType
+                            }
+                            io.emit('comm_textReceived', emitObj); /* ### Note: Emit message to client ### */
                             response = {
                                 status: true,
                                 message: property.S0010,
@@ -2257,6 +2764,7 @@ module.exports.careator_getGroupById = function (req, res) {
     }
 
 }
+
 module.exports.userEditById = function (req, res) {
     console.log("userEditById-->");
     var response;
@@ -2270,8 +2778,11 @@ module.exports.userEditById = function (req, res) {
         console.log("req.body.videoRights: " + req.body.videoRights);
         var updateVlaue = {};
 
-        if (req.body.userName) {
-            updateVlaue.name = req.body.userName;
+        if (req.body.firstName) {
+            updateVlaue.firstName = req.body.firstName;
+        }
+        if (req.body.lastName) {
+            updateVlaue.lastName = req.body.lastName;
         }
         if (req.body.empId) {
             updateVlaue.empId = req.body.empId;
@@ -2745,6 +3256,7 @@ module.exports.getChatsById = function (req, res) {
                 res.status(400).send(responseData);
             } else {
                 console.log("allChat: " + JSON.stringify(allChat));
+
                 response = {
                     status: true,
                     message: property.S0008,

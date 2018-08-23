@@ -68,61 +68,40 @@
             <div style="margin:20px !important;">
               <div class="row">
                 <div class="col-md-9 col-sm-12 col-lg-9 col-xs-12 portlets">
-                  <div class="panel panel-default" id="calnwidth" style="width:75%; margin-left: 20px;">
+                  <div class="panel panel-default" id="calnwidth">
                     <div class="panel-heading" style="height: 50px;">
-                      <div class="panel-actions">
-                        <!-- <div style="float:left !important; position: absolute;
-                      left: 0;">
-                          <select class="btn btn-warning" placeholder="select" ng-model="cssSelect" ng-change="getStudListForCS(cssSelect)" ng-options="css as css.class+ '-' + css.section for css in teacherData[0].css">
-                            <option value="" disabled selected>Employee</option>
-                          </select>
-                          <select class="btn" ng-if="userLoginType=='teacher'" placeholder="select" ng-model="csSelect" ng-change="getStudentCalendar(csSelect)"
-                            ng-options="cs as cs.name + '-' + cs.studId for cs in studList">
-                            <option value="" disabled selected>Student</option>
-                          </select>
-                          <select class=" btn btn-warning" ng-if="userLoginType=='studParent'" placeholder="select" ng-model="cssSelect" ng-change="getTeacherCalendar(cssSelect)"
-                            ng-options="cs as cs.name + '-' + cs.teacherId+'-'+cs.subject for cs in teacherList">
-                            <option value="" disabled selected>Teacher</option>
-                          </select>
-                        </div> -->
+                      <div style="word-wrap: break-word;">
+                        <center>
+                          <h2 ng-if="calendarOwner!='Your'" style="margin-top: 7px;">
+                            <strong class="respcal">{{ vm.calendarTitle }}({{calendarOwner}})</strong>
+                          </h2>
+                          <h2 ng-if="calendarOwner=='Your'" style="margin-top: 7px;">
+                            <strong class="respcal">{{ vm.calendarTitle }}</strong>
+                          </h2>
+                        </center>
+                      </div>
 
-                        <div style="float:right; position: absolute;
-                      right: 0;">
 
-                        </div>
+                      <div style="float:left !important; position: absolute;
+                          left: 0;     top: 5px;">
+                        <label class="btn uib-btn-radio respcal" mwl-date-modifier date="vm.viewDate" decrement="vm.calendarView" ng-click="vm.cellIsOpen = false">
+                          << </label>
+                            <label class="btn btn-default respcal" mwl-date-modifier date="vm.viewDate" set-to-today ng-click="vm.cellIsOpen = false">
+                              Today
+                            </label>
+                            <label class="btn uib-btn-radio respcal" mwl-date-modifier date="vm.viewDate" increment="vm.calendarView" ng-click="vm.cellIsOpen = false">
+                              >>
+                            </label>
+                      </div>
+
+
+                      <div style="float:right; position: absolute;
+                        right: 0;     top: 5px;">
+                        <label class="btn btn-info respcal" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
+                        <label class="btn btn-info respcal" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
                       </div>
                     </div>
-                    <div class="panel-heading" style="height: 50px;">
-                      <div class="panel-actions">
 
-                        <div style="float:left !important; position: absolute;
-                          left: 0;">
-                          <label class="btn uib-btn-radio" mwl-date-modifier date="vm.viewDate" decrement="vm.calendarView" ng-click="vm.cellIsOpen = false">
-                            << </label>
-                              <label class="btn btn-default" mwl-date-modifier date="vm.viewDate" set-to-today ng-click="vm.cellIsOpen = false">
-                                Today
-                              </label>
-                              <label class="btn uib-btn-radio" mwl-date-modifier date="vm.viewDate" increment="vm.calendarView" ng-click="vm.cellIsOpen = false">
-                                >>
-                              </label>
-                        </div>
-                        <div style="word-wrap: break-word; position: absolute !important;
-                      right: 43%;">
-                          <h2 ng-if="calendarOwner!='Your'">
-                            <strong>{{ vm.calendarTitle }}({{calendarOwner}})</strong>
-                          </h2>
-                          <h2 ng-if="calendarOwner=='Your'">
-                            <strong>{{ vm.calendarTitle }}</strong>
-                          </h2>
-                        </div>
-
-                        <div style="float:right; position: absolute;
-                        right: 0;">
-                          <label class="btn btn-info" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
-                          <label class="btn btn-info" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
-                        </div>
-                      </div>
-                    </div>
                     <div class="panel-body">
                       <!-- Widget content -->
                       <mwl-calendar events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)"

@@ -1,0 +1,97 @@
+<div ng-controller="adminListCtrl">
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-user"></i>
+                        <span>&nbsp Organization List</span>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+
+                            <div class="form-group has-feedback" style="margin: 5px;width: 300px;">
+                                <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+
+
+
+                                    <thead style="background: aliceblue;">
+                                        <tr>
+                                            <th> #</th>
+
+                                            <th ng-click="sort('name')">Organization
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th ng-click="sort('Admin')">Admin
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th ng-click="sort('status')">Status
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th ng-click="sort('Subscription')">Subscription
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th>Action</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="org in allOrgList">
+                                            <td>
+                                                {{$index+1}}
+                                            </td>
+                                            <td>
+                                                {{org.organizationName}}
+                                            </td>
+                                            <td>
+                                                {{org.adminFirstName}}&nbsp;{{org.adminLastName}}
+                                            </td>
+                                            <td ng-if="org.status=='inactive'">
+                                                Inactive
+
+                                            </td>
+                                            <td ng-if="org.status=='active'">
+                                                Active
+                                            </td>
+
+                                            <td>
+                                                {{org.subscription}}
+                                            </td>
+
+                                            <td>
+
+                                                <button class="btn btn-primary fa fa-user-plus" ng-if="org.status=='inactive'" ng-click="updateOrganizationStatus(org._id, 'active', $index)">&nbsp;Activate</button>
+                                                <button class="btn btn-warning fa fa-user-times" ng-if="org.status=='active'" ng-click="updateOrganizationStatus(org._id, 'inactive', $index)">&nbsp;Deactivate</button>
+
+                                                <a href="#!/dashboard/orgSetting/{{org._id}}">
+                                                    <button class="btn btn-warning fa fa-cog">
+                                                        &nbspSetting</button>
+                                                </a>
+                                                <a href="#!/dashboard/orgSetting/{{org._id}}">
+                                                    <button class="btn btn-warning fa fa-cog">
+                                                        &nbspUsers</button>
+                                                </a>
+                                            </td>
+
+                                        </tr>
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+</div>

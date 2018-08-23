@@ -2,63 +2,50 @@
     <section id="main-content">
         <section class="wrapper">
             <div id="profile">
-                <section class="panel">
+                <section class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-user-circle"></i>
-                        <span style="color:white;">&nbspMEETING HISTORY</span>
+                        <i class="fa fa-history"></i>
+                        <span>&nbspEVENT HISTORY</span>
                     </div>
-                    <div class="panel-body bio-graph-info" style="padding: 1px;">
-                        <div style="margin:20px !important;">
-                            <div class="col-lg-12">
 
-                                <form class="navbar-form">
-                                    <input class="form-control" placeholder="Search" type="text">
-                                </form>
-                                <table class="table   table-sm table-striped table-advance table-hover">
-                                    <tbody>
+                    <div class="card mb-3">
+                        <div class="card-body">
+
+                            <div class="form-group has-feedback" style="margin: 5px;width: 300px;">
+                                <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+
+                                    <thead style="background: aliceblue;">
+
                                         <tr>
-                                            <th>
-                                                <i class="icon_profile"></i>Title
-                                                <i class="arrow_up_alt pull-right"></i>
-                                                <i class="arrow_down_alt pull-right"></i>
+                                            <th ng-click="sort('title')">Title
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='title'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
-                                            <th>
-                                                <i class="icon_calendar"></i>Date
-                                                <i class="arrow_up_alt pull-right"></i>
-                                                <i class="arrow_down_alt pull-right"></i>
-                                            </th>
-                                            <th>
-                                                <i class="icon_mail_alt"></i>Timing
-                                                <i class="arrow_up_alt pull-right"></i>
-                                                <i class="arrow_down_alt pull-right"></i>
-                                            </th>
-                                            <th>
 
-
-                                                <i class="icon_cogs"></i> Action</th>
+                                            <th ng-click="sort('startsAt')">Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='startsAt'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th>Timing</th>
+                                            <th>Action</th>
 
                                         </tr>
-                                       <!-- <tr ng-repeat="event in events  | orderBy:'-startsAt'" ng-if="event.startsAt<todayDate"> -->
-                                        <tr ng-repeat="event in events  | orderBy:'-startsAt'" ng-if="event.startsAt<todayDate">
+                                    </thead>
+                                    <tbody>
+                                        <!-- <tr ng-repeat="event in events  | orderBy:'-startsAt'" ng-if="event.startsAt<todayDate"> -->
+                                        <tr ng-repeat="event in events | filter:search  |orderBy:sortKey:reverse" ng-if="event.startsAt<todayDate && event.endsAt<todayDate">
                                             <td>{{event.title}}</td>
                                             <td>{{event.startsAt | date:'MMM d, y'}}</td>
                                             <td>{{event.startsAt | date:'h:mm a'}}-{{event.endsAt | date:'h:mm a'}}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <button class="btn btn-primary" ng-click="viewDetail($index)">View</button>
-                                                    <!-- <a class="btn btn-primary" href="#">
-                                                        <i class="icon_plus_alt2"></i>&nbsp;Chat
-                                                    </a>
-                                                    <a class="btn btn-success" href="#">
-                                                        <i class="icon_check_alt2"></i>&nbsp;Video
-                                                    </a>
-                                                    <a class="btn btn-success" href="#">
-                                                        <i class="icon_check_alt2"></i>&nbsp;Summary
-                                                    </a> -->
                                                 </div>
                                             </td>
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
 

@@ -1,6 +1,7 @@
 careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careatorSessionAuth, careatorHttpFactory, $timeout, SweetAlert) {
     console.log("Chat controller==>");
 
+    careatorHttpFactory.getFile('property.json');
 
     $scope.gotToDashboard = function () {
         console.log("gotToDashboard-->");
@@ -14,7 +15,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
     console.log(" $scope.userData : " + JSON.stringify($scope.userData));
 
     if ($scope.userData) {
-        userName = $scope.userData.userName;
+        userName = $scope.userData.firstName+" "+$scope.userData.lastName;
 
         // $scope.loginType = $scope.userData.loginType;
         console.log("userData: " + JSON.stringify($scope.userData));
@@ -27,6 +28,72 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
         }
     }
 
+    $scope.getLogin_hostDetailsById = function (id) {
+        console.log("getLogin_hostDetailsById-->: " + id);
+        var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
+        console.log("api: " + api);
+        careatorHttpFactory.get(api).then(function (data) {
+            console.log("data--" + JSON.stringify(data.data));
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            console.log("checkStatus: " + checkStatus);
+            if (checkStatus) {
+                if (data.data.data[0].sessionRandomId == $scope.userData.sessionRandomId) {
+                    // var sessionHostBlock;
+                    console.log("data.data.data[0].isDisconnected: " + data.data.data[0].isDisconnected);
+                    if (data.data.data[0].isDisconnected == 'yes' || data.data.data[0].isDisconnected == undefined) {
+                        $scope.sessionHostBlock = 'no';
+                    } else {
+                        $scope.sessionHostBlock = 'yes';
+                    }
+                    console.log("$scope.sessionHostBlock: " + $scope.sessionHostBlock);
+                } else {
+                    console.log("localstorage session randomId(" + $scope.userData.sessionRandomId + ") is not matched with db data (" + data.data.data[0].sessionRandomId + ")");
+                    /* ##### Start: Logout Logic  ##### */
+                    var id = userData.userId;
+                    var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
+                    console.log("api: " + api);
+                    careatorHttpFactory.get(api).then(function (data) {
+                        console.log("data--" + JSON.stringify(data.data));
+                        var checkStatus = careatorHttpFactory.dataValidation(data);
+                        console.log("checkStatus: " + checkStatus);
+                        if (checkStatus) {
+                            if (data.data.data.sessionURL != undefined) {
+                                var sessionURL = data.data.data.sessionURL;
+                                console.log(data.data.message);
+                                console.log("sessionURL: " + sessionURL);
+                                socket.emit("comm_logoutSession", {
+                                    "userId": $scope.userData.userId,
+                                    "email": $scope.userData.email,
+                                    "sessionURL": sessionURL,
+                                    "sessionRandomId": data.data.data.sessionRandomId
+                                }); /* ### Note: Logout notification to server ### */
+                            } else {
+                                socket.emit("comm_logoutSession", {
+                                    "userId": $scope.userData.userId,
+                                    "email": $scope.userData.email,
+                                    "sessionURL": "",
+                                    "sessionRandomId": data.data.data.sessionRandomId
+                                }); /* ### Note: Logout notification to server ### */
+                            }
+                        } else {
+                            console.log("Sorry");
+                            console.log(data.data.message);
+                        }
+                    })
+                    /* ##### End: Logout Logic  ##### */
+                }
+
+
+
+                console.log(data.data.message);
+
+            } else {
+                console.log("Sorry");
+                console.log(data.data.message);
+            }
+        })
+    }
+    
     $scope.logVC = function (email, password) {
         console.log("logVC from ");
         var obj = {
@@ -122,11 +189,14 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
         if (typeof (Storage) !== "undefined") {
             var userData = {
                 "email": data.data.email,
-                "userName": data.data.name,
+                "firstName": data.data.firstName,
+                "lastName": data.data.lastName,
                 "empId": data.data.empId,
                 "userId": data.data._id,
                 "sessionPassword": data.data.password,
-                "sessionRandomId": data.data.sessionRandomId
+                "sessionRandomId": data.data.sessionRandomId,
+                "loginType": data.data.loginType,
+                "orgId": data.data.orgId
             }
             if (data.data.videoRights == 'yes') {
                 $scope.videoRights = "yes";
@@ -162,9 +232,12 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
                 userData.profilePicPath = data.data.profilePicPath;
             }
             var userData = userData;
+            console.log("userData before update into localstorage: "+JSON.stringify(userData));
             careatorSessionAuth.setAccess(userData);
             var userData = careatorSessionAuth.getAccess("userData");
-            $scope.userData = userData;
+            $scope.userData = careatorSessionAuth.getAccess("userData");
+            $scope.loginType = $scope.userData.loginType;
+            console.log("userData After update into localstorage: "+JSON.stringify(            $scope.userData));
             console.log("userData: " + JSON.stringify(userData));
 
 
