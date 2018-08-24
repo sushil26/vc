@@ -29,7 +29,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -45,7 +45,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -61,7 +61,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -106,7 +106,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -123,7 +123,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -143,7 +143,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -168,7 +168,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -183,7 +183,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -198,7 +198,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -213,7 +213,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -229,7 +229,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'admin') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -244,7 +244,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'admin') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -259,7 +259,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -279,7 +279,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -294,7 +294,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'teacher' || userData.loginType == 'studParent') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -304,17 +304,17 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: '/html/dashboard/markViewWithConfId.html',
       controller: 'markViewWithConfId_Ctl'
     })
-    .state('dashboard.adminCreate', {
-      url: adminCreate(),
-      templateUrl: '/html/dashboard/adminCreate.html',
-      controller: 'adminCreateCtl',
+    .state('dashboard.organizationCreate', {
+      url: organizationCreate(),
+      templateUrl: '/html/dashboard/organizationCreate.html',
+      controller: 'organizationCreateCtl',
       resolve: {
         result: function (sessionAuthFactory, $window) {
           var userData = sessionAuthFactory.getAccess("userData");
           if (userData.loginType == 'vc4allAdmin') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -329,7 +329,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'vc4allAdmin') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -345,7 +345,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'vc4allAdmin') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -360,7 +360,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           if (userData.loginType == 'vc4allAdmin') {
           }
           else {
-            $window.location.href = 'https://vc4all.in';
+            $window.location.href = 'https://norecruits.com';
           }
         }
       }
@@ -465,8 +465,8 @@ function dashboardComingSoon() {
 function dashboardConference() {
   return '/dashboardConference';
 }
-function adminCreate() {
-  return '/adminCreate';
+function organizationCreate() {
+  return '/organizationCreate';
 }
 function reportsUpload() {
   return '/reportsUpload';
@@ -474,8 +474,8 @@ function reportsUpload() {
 function reportsUpdate() {
   return '/reportsUpdate';
 }
-function adminCreate() {
-  return '/adminCreate';
+function organizationCreate() {
+  return '/organizationCreate';
 }
 function allUser() {
   return '/allUser';

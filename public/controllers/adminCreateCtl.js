@@ -1,11 +1,11 @@
-app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window, httpFactory, sessionAuthFactory, $uibModal) {
-    console.log("adminCreateCtl==>");
+app.controller('organizationCreateCtl', function ($scope, $rootScope, $filter, $window, httpFactory, sessionAuthFactory, $uibModal) {
+    console.log("organizationCreateCtl==>");
     $scope.propertyJson = $rootScope.propertyJson;
     $scope.file = {}; /* ### Note Upload file declaration ### */
 
 
-    $scope.adminCreate = function () {
-        console.log("adminCreate-->");
+    $scope.organizationCreate = function () {
+        console.log("organizationCreate-->");
         if ($scope.filePath) {
             var objJson = {
                 "schoolName": $scope.schoolName,
@@ -25,7 +25,7 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
                 "logoPath": $scope.filePath
             }
             console.log("objJson: " + JSON.stringify(objJson));
-        var api = $scope.propertyJson.VC_adminCreate;
+        var api = $scope.propertyJson.VC_organizationCreate;
         httpFactory.post(api, objJson).then(function (data) {
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -77,7 +77,7 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
         }
 
         
-        console.log("<--adminCreate");
+        console.log("<--organizationCreate");
     }
 
     $scope.schoolLogoStorage = function () {
@@ -112,7 +112,7 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
                         }
                     })
                     // // console.log("JSON.stringify($scope.postJson): " + JSON.stringify(postJson));
-                    // $scope.adminCreate();
+                    // $scope.organizationCreate();
                 } else {
                     $scope.status = data.data.status;
                     $scope.message = data.data.message;
@@ -127,7 +127,7 @@ app.controller('adminCreateCtl', function ($scope, $rootScope, $filter, $window,
                             $scope.message = $scope.message 
                         }
                     })
-                    // $scope.adminCreate();
+                    // $scope.organizationCreate();
                     // console.log("JSON.stringify($scope.postJson): " + JSON.stringify(postJson));
                     // $scope.savePost();
                 }

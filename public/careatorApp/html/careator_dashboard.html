@@ -65,10 +65,6 @@
         <!--sidebar start-->
         <aside>
             <div id="sidebar" class="nav-collapse">
-
-
-
-
                 <!-- <ul class="sidebar-menu" ng-hide="sideBarMenu">
 
                     <li ng-if="userData.email=='vc4all@talenkart.com'">
@@ -171,16 +167,16 @@
 
                 <!-- sidebar menu start-->
                 <div class="sidebar-menu" id="sidebarmnudesktop" ng-hide="sideBarMenu">
-                    <a href="#!/dashboard/adminCreate">
+                    <a href="#!/dashboard/organizationCreate">
                         <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
                              
-                            <i class="fa fa-user-secret ictexticon">
+                            <i class="fa fa-university ictexticon">
                             </i>
                             <br>
-                            <span class="ictext">Create Admin</span>
+                            <span class="ictext">Create Organization</span>
                         </div>
                     </a>
-                    <a href="#!/dashboard/adminList">
+                    <a href="#!/dashboard/organizationList">
                         <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
                             <i class="fa fa-list-alt ictexticon">
                             </i>
@@ -318,15 +314,15 @@
                     </a>
                 </div>
                 <div class="sidebar-menu" id="sidebarmnu" ng-hide="sideBarMenu">
-                        <a href="#!/dashboard/adminCreate" ng-click="menuclick()"> 
+                        <a href="#!/dashboard/organizationCreate" ng-click="menuclick()"> 
                             <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
-                                <i class="fa fa-user-secret ictexticon">
+                                <i class="fa fa-university ictexticon">
                                 </i>
                                 <br>
-                                <span class="ictext">Create Admin</span>
+                                <span class="ictext">Create Organization</span>
                             </div>
                         </a>
-                        <a href="#!/dashboard/adminList" ng-click="menuclick()">
+                        <a href="#!/dashboard/organizationList" ng-click="menuclick()">
                             <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
                                 <i class="fa fa-list-alt ictexticon">
                                 </i>

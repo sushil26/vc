@@ -13,8 +13,8 @@ app.controller('allAdminCtl', function ($scope, $rootScope, $state, $uibModal, $
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
-                $scope.adminList = data.data.data;
-                console.log("adminList: " + JSON.stringify($scope.adminList));
+                $scope.organizationList = data.data.data;
+                console.log("organizationList: " + JSON.stringify($scope.organizationList));
 
                 console.log(data.data.message);
             }
@@ -39,7 +39,7 @@ app.controller('allAdminCtl', function ($scope, $rootScope, $state, $uibModal, $
             var checkStatus = httpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
-                $scope.adminList[index].status = status;
+                $scope.organizationList[index].status = status;
                 var loginAlert = $uibModal.open({
                     scope: $scope,
                     templateUrl: '/html/templates/dashboardsuccess.html',

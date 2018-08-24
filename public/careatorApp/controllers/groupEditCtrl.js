@@ -5,7 +5,7 @@ careatorApp.controller('editGroupCtrl', function ($scope, $state, $rootScope, $f
     $scope.selectedMembers = []; /* ### $scope.selectedMembers contains groupmembers  ### */
     $scope.getGroup = function () {
         console.log("getGroup-->");
-        var api = "https://vc4all.in/careator_getGroup/careator_getGroupById/" + id;
+        var api = "https://norecruits.com/careator_getGroup/careator_getGroupById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -46,7 +46,7 @@ careatorApp.controller('editGroupCtrl', function ($scope, $state, $rootScope, $f
 
     $scope.rightEmployeeList = function () {
         console.log("rightEmployeeList-->");
-        var api = "https://vc4all.in/careator/getChatRights_emp";
+        var api = "https://norecruits.com/careator/getChatRights_emp";
         console.log("api: " + JSON.stringify(api));
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -100,7 +100,7 @@ careatorApp.controller('editGroupCtrl', function ($scope, $state, $rootScope, $f
 
     $scope.updateGroup = function () {
         console.log("updateGroup-->");
-        var api = "https://vc4all.in/careator_groupUpdate/groupUpdateById/" + id;
+        var api = "https://norecruits.com/careator_groupUpdate/groupUpdateById/" + id;
         console.log("api: " + api);
         var obj = {
             "groupName": $scope.grpname,

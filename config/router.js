@@ -77,7 +77,7 @@ module.exports = function (app) {
     app.post('/careator_chatFileUpload/chatFileUpload', chatUpload.chatFileUpload);
     app.get('/careator_chatFileUpload/getChatFileUpload/:id', chatUpload.getChatFileUpload);
 
-    app.post('/c/adminCreate', cAdminAction.adminCreate);
+    app.post('/c/organizationCreate', cAdminAction.organizationCreate);
     app.get('/c/getAllAdmin', cAdminAction.getAllAdmin);
     app.get('/c/getAllOrg', cAdminAction.getAllOrg);
     app.post('/c/updateOrgStatus', cAdminAction.updateOrgStatus);

@@ -69,9 +69,10 @@
   <script src="/careatorApp/controllers/groupEditCtrl.js"></script>
   <script src="/careatorApp/controllers/createGroupCtrl.js"></script>
 
-  <script src="/careatorApp/controllers/createAdminCtrl.js"></script>
-  <script src="/careatorApp/controllers/adminListCtrl.js"></script>
+  <script src="/careatorApp/controllers/organizationCreateCtrl.js"></script>
+  <script src="/careatorApp/controllers/organizationListCtrl.js"></script>
   <script src="/careatorApp/controllers/organizationSettingCtrl.js"></script>
+  <script src="/careatorApp/controllers/organizationUserListCtrljs"></script>
 
   <script src="/careatorApp/controllers/userRestrictionCtrl.js"></script>
   <script src="/careatorApp/controllers/vc4allEmpScheduleCtrl.js"></script>
@@ -84,7 +85,7 @@
 
 
   <script>
-    var SIGNALING_SERVER = "https://vc4all.in";
+    var SIGNALING_SERVER = "https://norecruits.com";
     socket = io(SIGNALING_SERVER);
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
@@ -126,10 +127,15 @@
       font-weight: 400;
     }
 
+    .chh {
+      background: gainsboro;
+      /* padding: 10px; */
+    }
+
     .cdd {
       box-shadow: 0px 0px 5px #2424248f;
       padding: 5px;
-      background: azure;
+      /* background: azure; */
     }
 
     .modal-backdrop {
@@ -403,9 +409,9 @@ transition: all 0.5s;">
               <li>
                 <a href="#facts">ABOUT US</a>
               </li>
-              <li>
-                <a href="#Pricing">Pricing</a>
-              </li>
+              <!-- <li>
+                <a href="#Pricing">PRICING</a>
+              </li> -->
               <li>
                 <a ng-if="userData==undefined || userData.email==null" href="#" id="empLogin" data-target="#crdntl" data-toggle="modal">Employee Login</a>
                 <a ng-if="userData!=undefined && userData.email!=null" ng-click="logout()" href="#">Employee Logout</a>
@@ -616,19 +622,18 @@ transition: all 0.5s;">
             </div>
           </div>
         </section>
-        <section id="Pricing" style="background:white;">
+        <!-- <section id="Pricing" style="background:white;">
           <div class="section-header">
             <h3 class="section-title" style="color:#555;margin-bottom: -20px;">Pricing options</h3>
             <p class="section-description">Select a plan that best fits your needs. Upgrade, downgrade or cancel at any time</p>
           </div>
-          <div class="row" style="margin:0 !important">
+          <div class="row" style="margin:0 !important; padding: 35px;">
             <div class="col-lg-3 col-md-4 col-sm-6 pricingcard">
               <center>
                 <div class="card cdd">
-                  <div class="card-header">
-                    <h2>Basic</h2>
+                  <div class="card-header chh">
+                    <h2 style="font-weight:900;">Basic</h2>
                   </div>
-                  <hr style="margin:0 !important;">
                   <div class="card-body cbb">
 
                     <p class="card-text">
@@ -729,7 +734,7 @@ transition: all 0.5s;">
                       </table>
 
                     </p>
-                    <hr>
+          
 
                     <button class="selplan">Select Plan</button>
 
@@ -742,12 +747,12 @@ transition: all 0.5s;">
             <div class="col-lg-3 col-md-4 col-sm-6 pricingcard">
               <center>
                 <div class="card cdd">
-                  <div class="card-header">
+                  <div class="card-header chh">
 
-                    <h2>Start-up</h2>
+                    <h2 style="font-weight:900;">Start-up</h2>
 
                   </div>
-                  <hr style="margin:0 !important;">
+               
                   <div class="card-body cbb">
 
                     <p class="card-text">
@@ -848,7 +853,7 @@ transition: all 0.5s;">
                       </table>
 
                     </p>
-                    <hr>
+                   
 
                     <button class="selplan">Select Plan</button>
 
@@ -861,12 +866,12 @@ transition: all 0.5s;">
             <div class="col-lg-3 col-md-4 col-sm-6 pricingcard">
               <center>
                 <div class="card cdd">
-                  <div class="card-header">
+                  <div class="card-header chh">
 
-                    <h2>SME</h2>
+                    <h2 style="font-weight:900;">SME</h2>
 
                   </div>
-                  <hr style="margin:0 !important;">
+                
                   <div class="card-body cbb">
 
                     <p class="card-text">
@@ -967,7 +972,7 @@ transition: all 0.5s;">
                       </table>
 
                     </p>
-                    <hr>
+                  
 
                     <button class="selplan">Select Plan</button>
 
@@ -979,12 +984,12 @@ transition: all 0.5s;">
             <div class="col-lg-3 col-md-4 col-sm-6 pricingcard">
               <center>
                 <div class="card cdd">
-                  <div class="card-header">
+                  <div class="card-header chh">
 
-                    <h2>Enterprise</h2>
+                    <h2 style="font-weight:900;">Enterprise</h2>
 
                   </div>
-                  <hr style="margin:0 !important;">
+                 
                   <div class="card-body cbb">
 
                     <p class="card-text">
@@ -1085,7 +1090,7 @@ transition: all 0.5s;">
                       </table>
 
                     </p>
-                    <hr>
+                   
 
                     <button class="selplan">Select Plan</button>
 
@@ -1095,7 +1100,7 @@ transition: all 0.5s;">
             </div>
 
           </div>
-        </section>
+        </section> -->
 
 
 

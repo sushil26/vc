@@ -20,8 +20,8 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-module.exports.adminCreate = function (req, res) {
-    console.log("adminCreate-->");
+module.exports.organizationCreate = function (req, res) {
+    console.log("organizationCreate-->");
     var createdDate = new Date();
     var sessionRandomId = randomstring.generate(7);
     var organizationObj = {
@@ -298,7 +298,7 @@ module.exports.adminCreate = function (req, res) {
         }
 
 
-        console.log("<--adminCreate");
+        console.log("<--organizationCreate");
     })
 
 }

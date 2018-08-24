@@ -54,7 +54,7 @@ careatorApp.controller('organizationSettingCtrl', function ($scope,  $rootScope,
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
                 console.log(data.data.message);
-                $state.go("Cdashboard.adminListCtrl")
+                $state.go("Cdashboard.organizationListCtrl")
             }
             else {
                 console.log("Sorry: " + data.data.message);

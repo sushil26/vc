@@ -20,7 +20,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
             console.log('selected: ' + item);
             console.log('selected json: ' + JSON.stringify(item));
             var id = item.id;
-            var api = "https://vc4all.in//careator_getUser/careator_getUserById/" + id;
+            var api = "https://norecruits.com//careator_getUser/careator_getUserById/" + id;
             console.log("api: " + JSON.stringify(api));
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -58,7 +58,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
 
     $scope.rightEmployeeList = function () {
         console.log("rightEmployeeList-->");
-        var api = "https://vc4all.in/careator/getChatRights_emp/"+orgId;
+        var api = "https://norecruits.com/careator/getChatRights_emp/"+orgId;
         console.log("api: " + JSON.stringify(api));
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -112,7 +112,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
                 "userId": $scope.allUserModel[0].id
             }
             console.log("restrictedTo: " + JSON.stringify($scope.restrictedTo));
-            var api = "https://vc4all.in/careator_restrictedTo/restrictedTo/" + id;
+            var api = "https://norecruits.com/careator_restrictedTo/restrictedTo/" + id;
             console.log("api: " + api);
             var obj = {
                 "restrictedTo": restrictedTo
@@ -139,7 +139,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
                 "userId": item.id
             }
             console.log("restrictedTo: " + JSON.stringify(restrictedTo));
-            var api = "https://vc4all.in/careator_removeRestrictedUserById/removeRestrictedUserById/" + id;
+            var api = "https://norecruits.com/careator_removeRestrictedUserById/removeRestrictedUserById/" + id;
             console.log("api: " + api);
             var obj = {
                 "restrictedTo": restrictedTo
@@ -206,7 +206,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
             });
         }
         console.log("restrictedTo: " + JSON.stringify($scope.restrictedTo));
-        var api = "https://vc4all.in/careator_restrictedToSave/restrictedToSave/" + id;
+        var api = "https://norecruits.com/careator_restrictedToSave/restrictedToSave/" + id;
         console.log("api: " + api);
         var obj = {
             "restrictedTo": restrictedTo
@@ -233,7 +233,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
             "userId": restrictedId
         }
         console.log("restrictedTo: " + JSON.stringify(restrictedTo));
-        var api = "https://vc4all.in/careator_removeRestrictedUserById/removeRestrictedUserById/" + id;
+        var api = "https://norecruits.com/careator_removeRestrictedUserById/removeRestrictedUserById/" + id;
         console.log("api: " + api);
         var obj = {
             "restrictedTo": restrictedTo
@@ -260,7 +260,7 @@ careatorApp.controller('userRestrictionCtrl', function ($scope, $state, $rootSco
             "userId": restrictedId
         }
         console.log("restrictedTo: " + JSON.stringify(restrictedTo));
-        var api = "https://vc4all.in/careator_restrictedTo/restrictedTo/" + id;
+        var api = "https://norecruits.com/careator_restrictedTo/restrictedTo/" + id;
         console.log("api: " + api);
         var obj = {
             "restrictedTo": restrictedTo

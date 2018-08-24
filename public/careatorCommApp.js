@@ -12,31 +12,31 @@ careatorApp.config(function ($stateProvider) {
             url: careator_dashboard(),
             templateUrl: '/careatorApp/html/careator_dashboard.html',
         })
-        .state('Cdashboard.adminCreate', {
-            url: careator_adminCreate(),
-            templateUrl: '/careatorApp/html/createAdmin.html',
+        .state('Cdashboard.organizationCreate', {
+            url: careator_organizationCreate(),
+            templateUrl: '/careatorApp/html/organizationCreate.html',
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.loginType == 'superAdmin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
 
         })
-        .state('Cdashboard.adminList', {
-            url: adminList(),
-            templateUrl: '/careatorApp/html/adminList.html',
+        .state('Cdashboard.organizationList', {
+            url: organizationList(),
+            templateUrl: '/careatorApp/html/organizationList.html',
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.loginType == 'superAdmin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -51,12 +51,28 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'admin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
 
         })
+        .state('Cdashboard.organizationUserList', {
+            url: organizationUserList(),
+            templateUrl: '/careatorApp/html/organizationUserList.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    var userData = careatorSessionAuth.getAccess("userData");
+                    if (userData.loginType == 'superAdmin') {
+
+                    } else {
+                        $window.location.href = 'https://norecruits.com';
+                    }
+                }
+            }
+
+        })
+
         .state('Cdashboard.createGroup', {
             url: createGroup(),
             templateUrl: '/careatorApp/html/createGroup.html',
@@ -66,7 +82,7 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'admin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -81,7 +97,7 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'admin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -96,7 +112,7 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'admin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -111,7 +127,7 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'superAdmin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -126,7 +142,7 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'admin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -141,7 +157,7 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'admin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -156,7 +172,7 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'admin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -169,9 +185,9 @@ careatorApp.config(function ($stateProvider) {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
-                        
+
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -183,9 +199,9 @@ careatorApp.config(function ($stateProvider) {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
-                        
+
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -205,7 +221,7 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'admin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -219,9 +235,9 @@ careatorApp.config(function ($stateProvider) {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
-                       
+
                     } else {
-                        $window.location.href = 'https://vc4all.in';  
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -233,13 +249,13 @@ careatorApp.config(function ($stateProvider) {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
-                        
+
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
-            
+
         })
         .state('Cdashboard.historyEvent', {
             url: careator_historyEvent(),
@@ -248,9 +264,9 @@ careatorApp.config(function ($stateProvider) {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
                     if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
-                        
+
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
@@ -264,16 +280,30 @@ careatorApp.config(function ($stateProvider) {
                     if (userData.loginType == 'admin') {
 
                     } else {
-                        $window.location.href = 'https://vc4all.in';
+                        $window.location.href = 'https://norecruits.com';
                     }
                 }
             }
         })
 
 })
-function orgSetting(){
+
+function orgSetting() {
     return '/orgSetting/:id';
 }
+
+function organizationUserList() {
+    return '/organizationUserList/:id';
+}
+
+function careator_organizationCreate() {
+    return '/organizationCreate';
+}
+
+function organizationList() {
+    return '/organizationList';
+}
+
 
 function ipost() {
     return '/ipost';
@@ -281,12 +311,6 @@ function ipost() {
 
 function profile() {
     return '/profile';
-}
-function careator_adminCreate() {
-    return '/adminCreate';
-}
-function adminList() {
-    return '/adminList';
 }
 
 function contactAdmin() {
@@ -345,6 +369,6 @@ function careator_historyEvent() {
     return '/historyEvent'
 }
 
-function careator_loginDetails(){
+function careator_loginDetails() {
     return '/loginDetails'
 }

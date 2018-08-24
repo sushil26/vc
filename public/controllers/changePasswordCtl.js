@@ -82,8 +82,8 @@ app.controller('changePasswordCtl', function ($scope, $rootScope, $filter, $wind
             video.src = 'data:video/webm;base64,'+data.data.data;
             console.log("$scope.videoSrc: "+JSON.stringify($scope.videoSrc));
             if (checkStatus) {
-                // $scope.adminList = data.data.data;
-                // console.log("adminList: " + JSON.stringify($scope.adminList));
+                // $scope.organizationList = data.data.data;
+                // console.log("organizationList: " + JSON.stringify($scope.organizationList));
                 // console.log(data.data.message);
             }
             else {

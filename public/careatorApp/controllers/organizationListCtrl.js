@@ -1,5 +1,5 @@
-careatorApp.controller('adminListCtrl', function ($scope, $rootScope, $state, careatorHttpFactory, SweetAlert) {
-    console.log("adminListCtrl==>");
+careatorApp.controller('organizationListCtrl', function ($scope, $rootScope, $state, careatorHttpFactory, SweetAlert) {
+    console.log("organizationListCtrl==>");
     $scope.propertyJson = $rootScope.propertyJson;
     $scope.getAllAdmin = function () {
         console.log("getAllSchool-->");
@@ -12,7 +12,7 @@ careatorApp.controller('adminListCtrl', function ($scope, $rootScope, $state, ca
             if (checkStatus) {
                 console.log("data.data.data: " + JSON.stringify(data.data.data));
                 console.log("data.data.message: " + data.data.message);
-                $scope.allAdminList = data.data.data;
+                $scope.allorganizationList = data.data.data;
             }
             else {
                 console.log("data.data.message: " + data.data.message);

@@ -58,7 +58,7 @@ app.get('/', function (req, res) {
 //     res.sendFile(__dirname + '/public/careator.html');
 // });
 
-app.get("/talenkart_conf/:id/:time", function (req, res) {
+app.get("/vc4all_conf/:id/:time", function (req, res) {
     queryId = req.params.id;
     time = req.params.id;
     console.log("queryId: " + req.params.id + "Time: " + req.params.time);
@@ -68,7 +68,7 @@ app.get("/talenkart_conf/:id/:time", function (req, res) {
 
 
 
-app.get("/talenkart_scheduleConf/:id/:time", function (req, res) {
+app.get("/vc4all_scheduleConf/:id/:time", function (req, res) {
     queryId = req.params.id;
     time = req.params.id;
     console.log("queryId: " + req.params.id + "Time: " + req.params.time);
@@ -419,12 +419,12 @@ io.sockets.on('connection', function (socket) {
             var queryObj;
             if (data.requestFrom == 'schedulePage') {
                 queryObj = {
-                    "url": "https://vc4all.in/talenkart_scheduleConf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
+                    "url": "https://norecruits.com/vc4all_scheduleConf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
                 }
             }
             else {
                 queryObj = {
-                    "url": "https://vc4all.in/talenkart_conf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
+                    "url": "https://norecruits.com/vc4all_conf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
                 }
             }
             console.log("queryObj: " + JSON.stringify(queryObj));
