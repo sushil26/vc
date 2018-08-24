@@ -12,7 +12,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
   $scope.propertyJson = $rootScope.propertyJson;
   $scope.getToDate = function () {
     console.log("Get To Date-->");
-    var api = "https://norecruits.com/careator_getToDate/careator_getToDate";
+    var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
     careatorHttpFactory.get(api).then(function (data) {
       var checkStatus = careatorHttpFactory.dataValidation(data);
       console.log("data--" + JSON.stringify(data.data));
@@ -39,7 +39,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
 
   function getToDateByEachSec () {
     console.log("Get To Date-->");
-    var api = "https://norecruits.com/careator_getToDate/careator_getToDate";
+    var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
     careatorHttpFactory.get(api).then(function (data) {
       var checkStatus = careatorHttpFactory.dataValidation(data);
      // console.log("data--" + JSON.stringify(data.data));
@@ -68,7 +68,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
   $scope.eventGet = function () {
     console.log("eventGet-->");
     var id = $scope.userData.userId
-    var api = "https://norecruits.com/careator_eventSchedule/careator_eventGetById/" + id;
+    var api = "https://vc4all.in/careator_eventSchedule/careator_eventGetById/" + id;
     //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
     $scope.calendarOwner = "Your";
     console.log("api: " + api);
@@ -216,7 +216,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
   function getSocketUrlFromServer() {
     console.log("getSocketUrlFromServer-->");
     var dfd = $q.defer();
-    var SIGNALING_SERVER = "https://norecruits.com";
+    var SIGNALING_SERVER = "https://vc4all.in";
     signaling_socket = io(SIGNALING_SERVER);
     signaling_socket.on('connect', function () {
       console.log("signaling_socket connect-->");
@@ -234,7 +234,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
         var date = dy.concat(fy, m, hr);
         urlDate = date;
 
-        var url = "https://norecruits.com/vc4all_scheduleConf/" + peerNew_id + "/" + urlDate;
+        var url = "https://vc4all.in/vc4all_scheduleConf/" + peerNew_id + "/" + urlDate;
         dfd.resolve(url);
       })
     })
@@ -253,7 +253,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
       getSocketUrlFromServer().then(function (url) {
         console.log("Back to function call-->");
         console.log("url: " + url);
-        var api = "https://norecruits.com/careator_eventSchedule/careator_sendEventSchedule";
+        var api = "https://vc4all.in/careator_eventSchedule/careator_sendEventSchedule";
         console.log("api: " + api);
         var obj = {
           "senderId": $scope.userData.userId,
@@ -507,7 +507,7 @@ careatorApp.controller('vc4allEmpScheduleCtrl', function ($scope, $q, $timeout, 
   vm.timespanClicked = function (date, css) {
     console.log("timespanClicked-->");
     /* ##### Start getdate api  ##### */
-    var api = "https://norecruits.com/careator_getToDate/careator_getToDate";
+    var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
     careatorHttpFactory.get(api).then(function (data) {
       var checkStatus = careatorHttpFactory.dataValidation(data);
       console.log("data--" + JSON.stringify(data.data));

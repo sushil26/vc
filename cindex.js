@@ -419,12 +419,12 @@ io.sockets.on('connection', function (socket) {
             var queryObj;
             if (data.requestFrom == 'schedulePage') {
                 queryObj = {
-                    "url": "https://norecruits.com/vc4all_scheduleConf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
+                    "url": "https://vc4all.in/vc4all_scheduleConf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
                 }
             }
             else {
                 queryObj = {
-                    "url": "https://norecruits.com/vc4all_conf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
+                    "url": "https://vc4all.in/vc4all_conf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
                 }
             }
             console.log("queryObj: " + JSON.stringify(queryObj));

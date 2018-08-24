@@ -1,12 +1,12 @@
 {
-"BASE_URL": "https://norecruits.com/",
+"BASE_URL": "https://vc4all.in/",
 
-"C_organizationCreate": "https://norecruits.com/c/organizationCreate",
-"C_getAllAdmin": "https://norecruits.com/c/getAllAdmin",
-"C_getAllOrg": "https://norecruits.com/c/getAllOrg",
-"C_updateOrgStatus": "https://norecruits.com/c/updateOrgStatus",
-"C_getOrg_admin_byOrgId": "https://norecruits.com/c/getOrg_admin_byOrgId",
-"C_orgEditById": "https://norecruits.com/c/orgEditById",
+"C_organizationCreate": "https://vc4all.in/c/organizationCreate",
+"C_getAllAdmin": "https://vc4all.in/c/getAllAdmin",
+"C_getAllOrg": "https://vc4all.in/c/getAllOrg",
+"C_updateOrgStatus": "https://vc4all.in/c/updateOrgStatus",
+"C_getOrg_admin_byOrgId": "https://vc4all.in/c/getOrg_admin_byOrgId",
+"C_orgEditById": "https://vc4all.in/c/orgEditById",
 
 "VC_updateUserStatus": "vc/updateUserStatus",
 "VC_getAllSchool": "vc/getAllSchool",

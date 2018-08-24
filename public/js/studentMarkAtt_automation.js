@@ -4,15 +4,15 @@ console.log("studSchoolId: " + id + " schoolName: " + schoolName);
 
 function attendance() {
     window.open(
-        "https://norecruits.com/#!dashboard/automationAttendanceView/" + id,
+        "https://vc4all.in/#!dashboard/automationAttendanceView/" + id,
         '_blank' // <- This is what makes it open in a new window.
     );
 
 }
 function result() {
     window.open(
-        "https://norecruits.com/#!dashboard/automationResultView/" + id,
+        "https://vc4all.in/#!dashboard/automationResultView/" + id,
         '_blank' // <- This is what makes it open in a new window.
     );
-    // window.location.href = "https://norecruits.com/#!dashboard/automationResultView/"+id;    
+    // window.location.href = "https://vc4all.in/#!dashboard/automationResultView/"+id;    
 }

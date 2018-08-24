@@ -16,7 +16,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
 
     $scope.getToDate = function () {
         console.log("Get To Date-->");
-        var api = "https://norecruits.com/careator_getToDate/careator_getToDate";
+        var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
         careatorHttpFactory.get(api).then(function (data) {
             var checkStatus = careatorHttpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -40,7 +40,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     $scope.getToDate();
     $scope.getLogin_hostDetailsById = function (id) {
         console.log("getLogin_hostDetailsById-->: " + id);
-        var api = "https://norecruits.com/careator_getUser/careator_getUserById/" + id;
+        var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -60,7 +60,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                     console.log("localstorage session randomId(" + $scope.userData.sessionRandomId + ") is not matched with db data (" + data.data.data[0].sessionRandomId + ")");
                     /* ##### Start: Logout Logic  ##### */
                     var id = userData.userId;
-                    var api = "https://norecruits.com/careator_loggedin/getLoggedinSessionURLById/" + id;
+                    var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
                     console.log("api: " + api);
                     careatorHttpFactory.get(api).then(function (data) {
                         console.log("data--" + JSON.stringify(data.data));
@@ -176,7 +176,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     $scope.getAdmin_email_id = function () {
         console.log("getAdmin_email_id-->");
         if($scope.userData.loginType=='admin'){
-            var api = "https://norecruits.com/careator_adminBasicData/getSuperAdminObjectId";
+            var api = "https://vc4all.in/careator_adminBasicData/getSuperAdminObjectId";
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -194,7 +194,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             })
         }
        else if($scope.userData.loginType=='employee'){
-        var api = "https://norecruits.com/careator_adminBasicData/getAdminObjectIdByOrgId/"+orgId;
+        var api = "https://vc4all.in/careator_adminBasicData/getAdminObjectIdByOrgId/"+orgId;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -212,7 +212,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
         })
        }
        else if($scope.userData.loginType=='superAdmin'){
-        var api = "https://norecruits.com/careator_adminBasicData/getAllAdminObjectIdByOrgId";
+        var api = "https://vc4all.in/careator_adminBasicData/getAllAdminObjectIdByOrgId";
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -246,7 +246,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             });
             // alert("You have to disconnect your old session in-order to open new");
         } else {
-            window.open('https://norecruits.com/careator', '_blank');
+            window.open('https://vc4all.in/careator', '_blank');
         }
 
     }
@@ -269,7 +269,7 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                         type: "success"
                     });
                     var id = userData.userId;
-                    var api = "https://norecruits.com/careator_loggedin/getLoggedinSessionURLById/" + id;
+                    var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
                     console.log("api: " + api);
                     careatorHttpFactory.get(api).then(function (data) {
                         console.log("data--" + JSON.stringify(data.data));
@@ -326,19 +326,19 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
     // $scope.closeYourOldSession = function(){
     //     console.log("closeYourOldSession-->");
     //     alert("Close your old session in-order to do new session");
-    //     window.open('https://norecruits.com/careator','_blank'); 
+    //     window.open('https://vc4all.in/careator','_blank'); 
 
     // }
     $scope.doRedirect = function () {
         console.log("$scope.doRedirect--->");
-        window.location.href = "https://norecruits.com";
+        window.location.href = "https://vc4all.in";
     }
 
     socket.on('comm_aboutUserEdit', function (data) {
         console.log("***comm_aboutUserEdit-->");
         if (data.id == userData.userId) {
             var id = userData.userId;
-            var api = "https://norecruits.com/careator_getUser/careator_getUserById/" + id;
+            var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
             console.log("api: " + api);
             careatorHttpFactory.get(api).then(function (data) {
                 console.log("data--" + JSON.stringify(data.data));
@@ -490,8 +490,8 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             var hr = dt.getHours().toString();
             var date = dy.concat(fy, m, hr);
             urlDate = date;
-            // w = window.open("https://norecruits.com/careator", "_blank");
-            var SIGNALING_SERVER = "https://norecruits.com";
+            // w = window.open("https://vc4all.in/careator", "_blank");
+            var SIGNALING_SERVER = "https://vc4all.in";
             signaling_socket = io(SIGNALING_SERVER);
             signaling_socket.on('connect', function () {
                 console.log("signaling_socket connect-->");
@@ -499,9 +499,9 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                     console.log("signaling_socket message-->");
                     queryLink = config.queryId;
                     peerNew_id = config.peer_id;
-                    var url = "https://norecruits.com/vc4all_conf/" + peerNew_id + "/" + urlDate;
+                    var url = "https://vc4all.in/vc4all_conf/" + peerNew_id + "/" + urlDate;
                     // window.location.href = url;
-                    var api = "https://norecruits.com/careator/setCollection";
+                    var api = "https://vc4all.in/careator/setCollection";
                     console.log("api: " + api);
                     var obj = {
                         "email": localStorage.getItem('careatorEmail'),
