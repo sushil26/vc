@@ -30,6 +30,7 @@ module.exports = function (app) {
     app.post('/careator/careatorMasterInsert/:orgId', careator.careatorMasterInsert);
     app.post('/careator/careatorSingleUserInsert', careator.careatorSingleUserInsert);
     app.get('/careator/careator_getAllEmp/:orgId', careator.careator_getAllEmp);
+    app.get('/careator/careator_getAllUser/:orgId', careator.careator_getAllUser);
     app.post('/careator/statusChangeById', careator.statusChangeById);
     app.post('/careator/groupStatusChangeById', careator.groupStatusChangeById);
     app.get('/careator_getChatListRecordById/getChatListRecordById/:id', careator.getChatListRecordById);

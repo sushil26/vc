@@ -17,9 +17,6 @@
 
                             <div class="table-responsive">
                                 <table class="table table-bordered" width="100%" cellspacing="0">
-
-
-
                                     <thead style="background: aliceblue;">
                                         <tr>
                                             <th> #</th>
@@ -36,12 +33,10 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
                                             <th>Action</th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr dir-paginate="emp in allemployee | filter:search |orderBy:sortKey:reverse |itemsPerPage:5">
+                                        <tr dir-paginate="emp in allUser | filter:search |orderBy:sortKey:reverse |itemsPerPage:5">
                                             <td>
                                                 {{$index+1}}.
                                             </td>

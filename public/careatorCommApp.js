@@ -139,7 +139,7 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.loginType == 'admin') {
+                    if (userData.loginType == 'admin' || userData.loginType == 'superAdmin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';
@@ -169,7 +169,7 @@ careatorApp.config(function ($stateProvider) {
             resolve: {
                 result: function (careatorSessionAuth, $window) {
                     var userData = careatorSessionAuth.getAccess("userData");
-                    if (userData.loginType == 'admin') {
+                    if (userData.loginType == 'admin' || userData.loginType == 'superAdmin') {
 
                     } else {
                         $window.location.href = 'https://vc4all.in';

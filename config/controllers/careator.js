@@ -1108,50 +1108,50 @@ module.exports.getAdminObjectIdByOrgId = function (req, res) {
 }
 module.exports.getSuperAdminObjectId = function (req, res) {
     console.log("getSuperAdminObjectId-->");
-   
-        careatorMaster.find({ loginType: "superAdmin" }).toArray(function (err, admin) {
-            if (err) {
-                console.log("err: " + JSON.stringify(err));
-                responseData = {
-                    status: false,
-                    message: property.E0009
-                };
-                res.status(400).send(responseData);
-            } else {
-                console.log("admin: " + JSON.stringify(admin));
-                responseData = {
-                    status: true,
-                    message: property.S0008,
-                    data: admin[0]._id
-                };
-                res.status(200).send(responseData);
-            }
-        })
-   
+
+    careatorMaster.find({ loginType: "superAdmin" }).toArray(function (err, admin) {
+        if (err) {
+            console.log("err: " + JSON.stringify(err));
+            responseData = {
+                status: false,
+                message: property.E0009
+            };
+            res.status(400).send(responseData);
+        } else {
+            console.log("admin: " + JSON.stringify(admin));
+            responseData = {
+                status: true,
+                message: property.S0008,
+                data: admin[0]._id
+            };
+            res.status(200).send(responseData);
+        }
+    })
+
     console.log("<--getSuperAdminObjectId");
 }
 module.exports.getAllAdminObjectIdByOrgId = function (req, res) {
     console.log("getAllAdminObjectIdByOrgId-->");
-   
-        careatorMaster.find({ loginType: "admin" }).toArray(function (err, admin) {
-            if (err) {
-                console.log("err: " + JSON.stringify(err));
-                responseData = {
-                    status: false,
-                    message: property.E0009
-                };
-                res.status(400).send(responseData);
-            } else {
-                console.log("admin: " + JSON.stringify(admin));
-                responseData = {
-                    status: true,
-                    message: property.S0008,
-                    data: admin[0]._id
-                };
-                res.status(200).send(responseData);
-            }
-        })
-   
+
+    careatorMaster.find({ loginType: "admin" }).toArray(function (err, admin) {
+        if (err) {
+            console.log("err: " + JSON.stringify(err));
+            responseData = {
+                status: false,
+                message: property.E0009
+            };
+            res.status(400).send(responseData);
+        } else {
+            console.log("admin: " + JSON.stringify(admin));
+            responseData = {
+                status: true,
+                message: property.S0008,
+                data: admin[0]._id
+            };
+            res.status(200).send(responseData);
+        }
+    })
+
     console.log("<--getAllAdminObjectIdByOrgId");
 }
 
@@ -1564,6 +1564,43 @@ module.exports.careator_getAllEmp = function (req, res) {
         res.status(400).send(response);
     }
 
+}
+
+module.exports.careator_getAllUser = function (req, res) {
+    console.log("careator_getAllUser-->");
+    console.log("orgId: " + req.params.orgId);
+    var response;
+    if (general.emptyCheck(req.params.orgId)) {
+
+        careatorMaster.find({ "orgId": ObjectId(req.params.orgId)}).toArray(function (err, allEmp) {
+            if (err) {
+                console.log("err: " + JSON.stringify(err));
+                response = {
+                    status: false,
+                    message: property.E0007,
+                    data: err
+                };
+                res.status(400).send(responseData);
+            } else {
+                console.log("allEmp: " + JSON.stringify(allEmp));
+                response = {
+                    status: true,
+                    message: property.S0008,
+                    data: allEmp
+                };
+                res.status(200).send(response);
+            }
+        })
+    }
+    else {
+        response = {
+            status: false,
+            message: property.N0003,
+            data: obj
+        };
+        res.status(400).send(response);
+    }
+    console.log("<--careator_getAllUser");
 }
 
 module.exports.careator_getAllEmpLoginDetails = function (req, res) {

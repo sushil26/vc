@@ -1,30 +1,29 @@
 careatorApp.controller('organizationUserListCtrl', function ($scope, $state, careatorHttpFactory, SweetAlert, careatorSessionAuth) {
     console.log("usersListCtrl==>");
-    $scope.userData = careatorSessionAuth.getAccess("userData");
-    console.log(" $scope.userData : " + JSON.stringify($scope.userData));
-    var orgId =  $scope.userData.orgId;
+   
+    var orgId =  $state.params.id;
 
-    $scope.getAllEmployee = function () {
-        console.log("getAllEmployee-->");
-        var api = "https://vc4all.in/careator/careator_getAllEmp/"+orgId;
+    $scope.getAllUser = function () {
+        console.log("getAllUser-->");
+        var api = "https://vc4all.in/careator/careator_getAllUser/"+orgId;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
             var checkStatus = careatorHttpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
             if (checkStatus) {
-                $scope.allemployee = data.data.data;
-                console.log("allemployee: " + JSON.stringify($scope.allemployee));
+                $scope.allUser = data.data.data;
+                console.log("allUser: " + JSON.stringify($scope.allUser));
                 console.log(data.data.message);
             } else {
                 console.log("Sorry");
                 console.log(data.data.message);
             }
         })
-        console.log("<--getAllEmployee");
+        console.log("<--getAllUser");
     }
 
-    $scope.getAllEmployee();
+    $scope.getAllUser();
 
     $scope.statusChange = function (id, status, index) {
 
@@ -59,7 +58,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
                             var checkStatus = careatorHttpFactory.dataValidation(data);
                             console.log("data--" + JSON.stringify(data.data));
                             if (checkStatus) {
-                                $scope.allemployee[index].status = status
+                                $scope.allUser[index].status = status
                                 console.log(data.data.message);
                             } else {
                                 console.log("Sorry");
@@ -112,7 +111,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
                             var checkStatus = careatorHttpFactory.dataValidation(data);
                             console.log("data--" + JSON.stringify(data.data));
                             if (checkStatus) {
-                                $scope.allemployee[index].status = status
+                                $scope.allUser[index].status = status
                                 console.log(data.data.message);
                             } else {
                                 console.log("Sorry");
@@ -137,7 +136,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
     $scope.editUser = function (id) {
         console.log("editUser-->");
         console.log("id: " + id);
-        //var data = $scope.allemployee[index];
+        //var data = $scope.allUser[index];
         $state.go("Cdashboard.editUser", {
             "id": id
         });
@@ -176,7 +175,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
                         console.log("data--" + JSON.stringify(data.data));
                         if (checkStatus) {
                             console.log(data.data.message);
-                            $scope.getAllEmployee();
+                            $scope.getAllUser();
                         } else {
                             console.log("Sorry");
                             console.log(data.data.message);
@@ -234,7 +233,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
                         console.log("data--" + JSON.stringify(data.data));
                         if (checkStatus) {
                             console.log(data.data.message);
-                            $scope.getAllEmployee();
+                            $scope.getAllUser();
                         } else {
                             console.log("Sorry");
                             console.log(data.data.message);
