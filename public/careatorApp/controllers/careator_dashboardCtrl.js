@@ -266,7 +266,9 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
                 if (isConfirm) {
                     SweetAlert.swal({
                         title: "Logged Out",
-                        type: "success"
+                        type: "success",
+                        showConfirmButton: false,
+                        showCancelButton: false
                     });
                     var id = userData.userId;
                     var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
