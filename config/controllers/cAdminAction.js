@@ -152,7 +152,7 @@ module.exports.organizationCreate = function (req, res) {
                     else if (err.errors.pinCode) {
                         responseData = {
                             status: false,
-                            message: "PinCode of registration is required"
+                            message: "PinCode is required as number"
                         };
                         res.status(400).send(responseData);
                     }
@@ -470,6 +470,42 @@ module.exports.getOrg_admin_byOrgId = function (req, res) {
     }
 }
 
+module.exports.getOrganizationDetailsById = function (req, res) {
+    console.log("getOrganizationDetailsById-->");
+    if (general.emptyCheck(req.params.orgId)) {
+        var obj = {
+            "_id": ObjectId(req.params.orgId)
+        };
+        console.log("obj: " + JSON.stringify(obj));
+        organizations.find(obj).toArray(function (err, data) {
+            if (err) {
+                responseData = {
+                    status: false,
+                    message: "Failed to get Data",
+                    data: data
+                };
+                res.status(400).send(responseData);
+            } else {
+                responseData = {
+                    status: true,
+                    message: "Successfull getData",
+                    data: data[0]
+                };
+
+                res.status(200).send(responseData);
+            }
+        })
+    }
+    else {
+        console.log("Epty value found");
+        responseData = {
+            status: false,
+            message: "empty value found",
+        };
+        res.status(400).send(responseData);
+    }
+}
+
 module.exports.orgEditById = function (req, res) {
     console.log("orgEditById-->");
     var response;
@@ -480,7 +516,7 @@ module.exports.orgEditById = function (req, res) {
         var queryId = {
             "_id": ObjectId(id)
         }
-        console.log("Organization queryId: "+JSON.stringify(queryId));
+        console.log("Organization queryId: " + JSON.stringify(queryId));
         var updateVlaue = {
             "lastUpdatedDate": date
         };
@@ -542,7 +578,7 @@ module.exports.orgEditById = function (req, res) {
                 var careatorUpdateQueryId = {
                     "orgId": ObjectId(id)
                 }
-                console.log("careatorUpdateQueryId: "+JSON.stringify(careatorUpdateQueryId));
+                console.log("careatorUpdateQueryId: " + JSON.stringify(careatorUpdateQueryId));
                 var adminObj = {
                     "lastUpdatedDate": date
                 }

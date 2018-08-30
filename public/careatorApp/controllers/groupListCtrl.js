@@ -6,7 +6,7 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, careatorHttpFa
 
     $scope.getGroupList = function () {
         console.log("getGroupList-->");
-        var api = "https://vc4all.in/careator_chatGroupList/careator_getChatGroupList/"+orgId;
+        var api = "https://norecruits.com/careator_chatGroupList/careator_getChatGroupList/"+orgId;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -52,7 +52,7 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, careatorHttpFa
                             "id": id,
                             "status": status
                         }
-                        var api = "https://vc4all.in/careator/groupStatusChangeById";
+                        var api = "https://norecruits.com/careator/groupStatusChangeById";
                         console.log("api: " + api);
                         careatorHttpFactory.post(api, obj).then(function (data) {
                             console.log("data--" + JSON.stringify(data.data));
@@ -103,7 +103,7 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, careatorHttpFa
                             "id": id,
                             "status": status
                         }
-                        var api = "https://vc4all.in/careator/groupStatusChangeById";
+                        var api = "https://norecruits.com/careator/groupStatusChangeById";
                         console.log("api: " + api);
                         careatorHttpFactory.post(api, obj).then(function (data) {
                             console.log("data--" + JSON.stringify(data.data));
@@ -162,7 +162,7 @@ careatorApp.controller('groupListCtrl', function ($scope, $state, careatorHttpFa
                     console.log("deleteGroup-->");
                     console.log("Obj ID  " + id);
                     // $("#GroupDeleteButton").trigger("click");
-                    var api = "https://vc4all.in/careator_groupDelete/groupDeleteById/" + id;
+                    var api = "https://norecruits.com/careator_groupDelete/groupDeleteById/" + id;
                     console.log("api: " + api);
                     careatorHttpFactory.get(api).then(function (data) {
                         console.log("data--" + JSON.stringify(data.data));

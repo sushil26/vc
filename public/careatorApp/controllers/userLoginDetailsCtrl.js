@@ -6,7 +6,7 @@ careatorApp.controller('userLoginDetailsCtrl', function ($scope, $state, careato
 
     $scope.getAllEmployeeLoginDetails = function () {
         console.log("getAllEmployeeLoginDetails-->");
-        var api = "https://vc4all.in/careator/careator_getAllEmpLoginDetails/" + orgId;
+        var api = "https://norecruits.com/careator/careator_getAllEmpLoginDetails/" + orgId;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));

@@ -19,7 +19,7 @@
         <input type="text" name="title" class="form-control" placeholder="Topic" ng-model="eventDetails.title" required>
         <span ng-if="scheduleInviteForm.title.$error.required" style="color:red">*Note:Title is required</span>
         </p>
-        <input style="margin-top:10px;" name="emailToInvite" class="form-control" type="text" placeholder="Participents Email" ng-model="eventDetails.emailList" required>
+        <input type="text" style="margin-top:10px;" name="emailToInvite" class="form-control"  placeholder="Participents Email" ng-model="eventDetails.emailList" required>
         <span ng-if="scheduleInviteForm.emailToInvite.$error.required" style="color:red">*Note:Title is required</span>
         <span ng-show="scheduleInviteForm.emailToInvite.$dirty" style="color:blue">*Note: Multiple email should separated by comma (Ex:abc@gmail.com, xyz@gmail.com)</span>
         </p>

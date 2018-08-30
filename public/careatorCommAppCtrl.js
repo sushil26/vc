@@ -15,7 +15,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
     console.log(" $scope.userData : " + JSON.stringify($scope.userData));
 
     if ($scope.userData) {
-        userName = $scope.userData.firstName+" "+$scope.userData.lastName;
+        userName = $scope.userData.firstName + " " + $scope.userData.lastName;
 
         // $scope.loginType = $scope.userData.loginType;
         console.log("userData: " + JSON.stringify($scope.userData));
@@ -30,7 +30,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
 
     $scope.getLogin_hostDetailsById = function (id) {
         console.log("getLogin_hostDetailsById-->: " + id);
-        var api = "https://vc4all.in/careator_getUser/careator_getUserById/" + id;
+        var api = "https://norecruits.com/careator_getUser/careator_getUserById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -50,7 +50,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
                     console.log("localstorage session randomId(" + $scope.userData.sessionRandomId + ") is not matched with db data (" + data.data.data[0].sessionRandomId + ")");
                     /* ##### Start: Logout Logic  ##### */
                     var id = userData.userId;
-                    var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
+                    var api = "https://norecruits.com/careator_loggedin/getLoggedinSessionURLById/" + id;
                     console.log("api: " + api);
                     careatorHttpFactory.get(api).then(function (data) {
                         console.log("data--" + JSON.stringify(data.data));
@@ -93,7 +93,31 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
             }
         })
     }
-    
+
+    $scope.statusUpdate = function (status, id) {
+        console.log("statusUpdate-->: " + status);
+
+        
+        api = "https://norecruits.com/careator_profile/chatStatusUpdateById/" + id;
+        console.log("api: " + api);
+        var obj = {
+            chatStatus: status
+        };
+        careatorHttpFactory.post(api, obj).then(function (data) {
+            console.log("data--" + JSON.stringify(data.data));
+            var checkStatus = careatorHttpFactory.dataValidation(data);
+            if (checkStatus) {
+                console.log("data.data.data: " + JSON.stringify(data.data.data));
+                $scope.chatStatus = status;
+
+                console.log(data.data.message);
+            } else {
+                console.log("Sorry");
+                console.log(data.data.message);
+            }
+        });
+    };
+
     $scope.logVC = function (email, password) {
         console.log("logVC from ");
         var obj = {
@@ -102,7 +126,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
         };
         console.log("obj: " + JSON.stringify(obj));
         console.log("logVC");
-        var api = "https://vc4all.in/careator/pswdCheck";
+        var api = "https://norecruits.com/careator/pswdCheck";
         console.log("api: " + api);
         careatorHttpFactory.post(api, obj).then(function (data) {
             var checkStatus = careatorHttpFactory.dataValidation(data);
@@ -167,15 +191,15 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
 
     }
 
-    $scope.$watch($scope.userData, function(newVal, oldVal) {
-        if(newVal !== oldVal) {
-          // call with updated filters
-          console.log("different value found");
+    $scope.$watch($scope.userData, function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+            // call with updated filters
+            console.log("different value found");
         }
-        else{
+        else {
             console.log("Same valeu");
         }
-      });
+    });
 
     $scope.sessionSet = function (data) {
         console.log("sessionSet-->");
@@ -185,6 +209,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
         localStorage.setItem("sessionPassword", data.data.password);
         localStorage.setItem("sessionRandomId", data.data.sessionRandomId);
         localStorage.setItem("sessionEnc", data.sessionData);
+        localStorage.setItem("userId", data.data._id);
         console.log("localStorage.getItem(sessionEnc): " + localStorage.getItem("sessionEnc"));
         if (typeof (Storage) !== "undefined") {
             var userData = {
@@ -232,14 +257,14 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
                 userData.profilePicPath = data.data.profilePicPath;
             }
             var userData = userData;
-            console.log("userData before update into localstorage: "+JSON.stringify(userData));
+            console.log("userData before update into localstorage: " + JSON.stringify(userData));
             careatorSessionAuth.setAccess(userData);
             var userData = careatorSessionAuth.getAccess("userData");
             $scope.userData = careatorSessionAuth.getAccess("userData");
             $scope.loginType = $scope.userData.loginType;
-            console.log("userData After update into localstorage: "+JSON.stringify(            $scope.userData));
+            console.log("userData After update into localstorage: " + JSON.stringify($scope.userData));
             console.log("userData: " + JSON.stringify(userData));
-
+            $scope.statusUpdate('Available', userData.userId);
 
             SweetAlert.swal({
                 title: "Login Successfully", //light text
@@ -283,7 +308,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
         // $("#notify_msg").modal('hide');
         var id = resetId;
         console.log("Obj ID  " + id);
-        var api = "https://vc4all.in/careator_reset/resetLoginFlagsById/" + id;
+        var api = "https://norecruits.com/careator_reset/resetLoginFlagsById/" + id;
         console.log("api: " + api);
         careatorHttpFactory.post(api, $scope.checkObj).then(function (data) {
             var checkStatus = careatorHttpFactory.dataValidation(data);
@@ -355,7 +380,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
 
                     });
                     var id = $scope.userData.userId;
-                    var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
+                    var api = "https://norecruits.com/careator_loggedin/getLoggedinSessionURLById/" + id;
                     console.log("api: " + api);
                     careatorHttpFactory.get(api).then(function (data) {
                         console.log("data--" + JSON.stringify(data.data));
@@ -461,7 +486,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
             localStorage.removeItem("profilePicPath");
             localStorage.removeItem("sessionRandomId");
             careatorSessionAuth.clearAccess("userData");
-           // $scope.doRedirect();
+            // $scope.doRedirect();
         }
     })
     socket.on('comm_resetNotifyToUserById', function (data) {
