@@ -541,7 +541,7 @@ h6 {
 }
 
 #header.header-fixed {
-  background: white;
+  background: #f8f8f8;
   padding: 20px 0;
   height: 60px;
   transition: all 0.5s;
