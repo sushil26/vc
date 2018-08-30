@@ -222,10 +222,10 @@ io.sockets.on('connection', function (socket) {
         else {
             var queryObj = {
                 "_id": data.userId,
-                "instantConf.sessionURL": "https://norecruits.com/vc4all_conf/"+data.deleteSessionId+"/"+data.queryTime
+                "instantConf.sessionURL": "https://vc4all.in/vc4all_conf/"+data.deleteSessionId+"/"+data.queryTime
             }
             console.log("queryObj: "+JSON.stringify(queryObj));
-            careatorMaster.update({"_id": ObjectId(data.userId), "instantConf.sessionURL": "https://norecruits.com/vc4all_conf/"+data.deleteSessionId+"/"+data.queryTime}, { $set: { "instantConf.$.isDisconnected": "yes" } }, function (err, data) {
+            careatorMaster.update({"_id": ObjectId(data.userId), "instantConf.sessionURL": "https://vc4all.in/vc4all_conf/"+data.deleteSessionId+"/"+data.queryTime}, { $set: { "instantConf.$.isDisconnected": "yes" } }, function (err, data) {
 
                 if (err) {
                     console.log("errr: " + JSON.stringify(err));
@@ -425,12 +425,12 @@ io.sockets.on('connection', function (socket) {
             var queryObj;
             if (data.requestFrom == 'schedulePage') {
                 queryObj = {
-                    "url": "https://norecruits.com/vc4all_scheduleConf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
+                    "url": "https://vc4all.in/vc4all_scheduleConf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
                 }
             }
             else {
                 queryObj = {
-                    "url": "https://norecruits.com/vc4all_conf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
+                    "url": "https://vc4all.in/vc4all_conf/" + peerWithQueryId[data.userId] + "/" + data.urlDate,
                 }
             }
             console.log("queryObj: " + JSON.stringify(queryObj));

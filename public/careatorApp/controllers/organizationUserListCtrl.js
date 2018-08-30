@@ -5,7 +5,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
 
     $scope.getAllUser = function () {
         console.log("getAllUser-->");
-        var api = "https://norecruits.com/careator/careator_getAllUser/"+orgId;
+        var api = "https://vc4all.in/careator/careator_getAllUser/"+orgId;
         console.log("api: " + api);
         careatorHttpFactory.get(api).then(function (data) {
             console.log("data--" + JSON.stringify(data.data));
@@ -51,7 +51,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
                             "id": id,
                             "status": status
                         }
-                        var api = "https://norecruits.com/careator/statusChangeById";
+                        var api = "https://vc4all.in/careator/statusChangeById";
                         console.log("api: " + api);
                         careatorHttpFactory.post(api, obj).then(function (data) {
                             console.log("data--" + JSON.stringify(data.data));
@@ -104,7 +104,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
                             "id": id,
                             "status": status
                         }
-                        var api = "https://norecruits.com/careator/statusChangeById";
+                        var api = "https://vc4all.in/careator/statusChangeById";
                         console.log("api: " + api);
                         careatorHttpFactory.post(api, obj).then(function (data) {
                             console.log("data--" + JSON.stringify(data.data));
@@ -168,7 +168,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
                         title: "Deleted!",
                         type: "success"
                     });
-                    var api = "https://norecruits.com/careator_userDelete/userDeleteById/" + id;
+                    var api = "https://vc4all.in/careator_userDelete/userDeleteById/" + id;
                     careatorHttpFactory.get(api).then(function (data) {
                         console.log("data--" + JSON.stringify(data.data));
                         var checkStatus = careatorHttpFactory.dataValidation(data);
@@ -226,7 +226,7 @@ careatorApp.controller('organizationUserListCtrl', function ($scope, $state, car
                     SweetAlert.swal("Reseted!");
                     console.log("Obj ID  " + id);
                     console.log("userReset-->");
-                    var api = "https://norecruits.com/careator_reset/resetLoginFlagsById/" + id;
+                    var api = "https://vc4all.in/careator_reset/resetLoginFlagsById/" + id;
                     careatorHttpFactory.post(api).then(function (data) {
                         console.log("data--" + JSON.stringify(data.data));
                         var checkStatus = careatorHttpFactory.dataValidation(data);

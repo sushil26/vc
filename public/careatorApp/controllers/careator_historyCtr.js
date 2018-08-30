@@ -7,7 +7,7 @@ careatorApp.controller('careator_historyCtr', function ($scope, $rootScope, $int
     $scope.eventGet = function () {
         console.log("eventGet-->");
         var id = $scope.userData.userId;
-        var api = "https://norecruits.com/careator_eventSchedule/careator_eventGetById/" + id;
+        var api = "https://vc4all.in/careator_eventSchedule/careator_eventGetById/" + id;
         console.log("api: " + api);
         //var api = "http://localhost:5000/vc/eventGet"+ "/" + id;;
         $scope.calendarOwner = "Your";
@@ -49,7 +49,7 @@ careatorApp.controller('careator_historyCtr', function ($scope, $rootScope, $int
 
     $scope.getToDate = function () {
         console.log("Get To Date-->");
-        var api = "https://norecruits.com/careator_getToDate/careator_getToDate";
+        var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
         careatorHttpFactory.get(api).then(function (data) {
             var checkStatus = careatorHttpFactory.dataValidation(data);
             console.log("data--" + JSON.stringify(data.data));
@@ -77,7 +77,7 @@ careatorApp.controller('careator_historyCtr', function ($scope, $rootScope, $int
 
     getToDateByEachSec = function () {
         //console.log("Get To Date-->");
-        var api = "https://norecruits.com/careator_getToDate/careator_getToDate";
+        var api = "https://vc4all.in/careator_getToDate/careator_getToDate";
         careatorHttpFactory.get(api).then(function (data) {
             var checkStatus = careatorHttpFactory.dataValidation(data);
             //console.log("data--" + JSON.stringify(data.data));
