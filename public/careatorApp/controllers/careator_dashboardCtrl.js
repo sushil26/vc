@@ -93,6 +93,10 @@ careatorApp.controller('careator_dashboardCtrl', function ($scope, $rootScope, $
             }
         })
     }
+    $scope.home = function(){
+        console.log("home trigger-->");
+        window.location.href="https://vc4all.in";
+    }
 
     var tick = function () {
         $scope.clock = new Date()

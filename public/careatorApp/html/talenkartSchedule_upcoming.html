@@ -1,0 +1,82 @@
+<div ng-controller="talenkartSchedule_upcomingCtr">
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-calendar"></i>
+                        <span>&nbspUPCOMING EVENT</span>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+
+                            <div class="form-group has-feedback" style="margin: 5px;width: 300px;">
+                                <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+
+                                    <thead style="background: aliceblue;">
+                                        <tr>
+                                            <th ng-click="sort('title')">Title
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='title'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th ng-click="sort('startsAt')">Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='startsAt'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th>
+                                                Timing
+
+                                            </th>
+                                            <th>
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="event in events | filter:search  |orderBy:sortKey:reverse" ng-if="event.startsAt>=todayDate || event.endsAt>=todayDate">
+                                            <td>
+                                                <div ng-if="event.userId == userData.id">
+                                                    <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}
+                                             
+
+                                                </div>
+                                                <div ng-if="event.userId != userData.id">
+                                                    <a class="fa fa-envelope-open-o"></a>&nbsp;{{event.title}}
+                                                   
+                                                </div>
+
+                                            </td>
+                                            <td>{{event.startsAt | date:'MMM d, y'}}</td>
+                                            <td>{{event.startsAt | date:'h:mm a'}}-{{event.endsAt | date:'h:mm a'}}</td>
+
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a ng-if="(event.startsAt<todayDate && event.endsAt<todayDate) || (event.startsAt>todayDate && event.endsAt>todayDate)" class="btn btn-primary"
+                                                        target="_blank" ng-click="waitForTime(event.startsAt| date:'MMM d, y h:mm a', todayDate| date:'MMM d, y h:mm a', event.startsAt, todayDate)">
+                                                        <i class="icon_headphones"></i>&nbspStart
+                                                    </a>
+                                                    <a ng-if="(event.startsAt==todayDate || event.endsAt==todayDate) || (event.startsAt>=todayDate && event.endsAt<=todayDate) || (event.startsAt<=todayDate && event.endsAt>=todayDate)"
+                                                        class="btn btn-primary" ng-click="conferenceStart(event.sessionURL)">
+                                                        <i class="icon_headphones"></i>&nbspStart
+                                                    </a>
+                                                    <!-- <a class="btn btn-primary" ng-click="conferenceStart(event.sessionURL)">
+                                                        <i class="icon_headphones"></i>&nbspStart
+                                                    </a> -->
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index, event.id, event.userId)">View</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+</div>

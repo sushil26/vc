@@ -1,0 +1,59 @@
+<div ng-controller="talenkartSchedule_historyEventCtr">
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="profile">
+                <section class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-history"></i>
+                        <span>&nbspEVENT HISTORY</span>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+
+                            <div class="form-group has-feedback" style="margin: 5px;width: 300px;">
+                                <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+
+                                    <thead style="background: aliceblue;">
+
+                                        <tr>
+                                            <th ng-click="sort('title')">Title
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='title'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+
+                                            <th ng-click="sort('startsAt')">Date
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='startsAt'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                            </th>
+                                            <th>Timing</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- <tr ng-repeat="event in events  | orderBy:'-startsAt'" ng-if="event.startsAt<todayDate"> -->
+                                        <tr ng-repeat="event in events | filter:search  |orderBy:sortKey:reverse" ng-if="event.startsAt<todayDate && event.endsAt<todayDate">
+                                            <td>{{event.title}}</td>
+                                            <td>{{event.startsAt | date:'MMM d, y'}}</td>
+                                            <td>{{event.startsAt | date:'h:mm a'}}-{{event.endsAt | date:'h:mm a'}}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-primary" ng-click="viewDetail($index)">View</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+</div>

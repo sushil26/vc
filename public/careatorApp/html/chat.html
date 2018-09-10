@@ -162,7 +162,7 @@
 
                                     <div class="row composeBox">
                                         <div class="col-sm-12 composeBox-inner">
-                                            <div class="form-group has-feedback">
+                                            <div class="form-group has-feedback" >
                                                 <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
                                                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                             </div>
@@ -275,7 +275,7 @@
                                         </span>
                                     </div>
                                     <div class="col-sm-4 col-xs-3" style="float:right; margin-top: 10px;">
-                                        <div class="form-group has-feedback">
+                                        <div class="form-group has-feedback" ng-if="chatListSection != undefined &&chatListSection != null">
                                             <input id="composeText" type="text" class="form-control" ng-model="searchm" name="searchText" placeholder="Search text">
                                             <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                         </div>
@@ -421,7 +421,7 @@
 
                                     </div>
                                 </div>
-                                <div class="row reply">
+                                <div class="row reply" ng-if="chatListSection != undefined &&chatListSection != null">
                                     <div class="col-sm-9 col-xs-9 reply-main">
 
 

@@ -2,6 +2,11 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
     console.log("Chat controller==>");
 
     careatorHttpFactory.getFile('property.json');
+    $scope.help_var =false;
+    $scope.home = function(){
+        console.log("home trigger-->");
+        window.location.href="https://vc4all.in";
+    }
 
     $scope.gotToDashboard = function () {
         console.log("gotToDashboard-->");
@@ -26,6 +31,11 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
             console.log("enterEmail: -->");
 
         }
+    }
+
+    $scope.closeNeedHelp = function(){
+        console.log("closeNeedHelp-->");
+        $scope.help_var = false;
     }
 
     $scope.getLogin_hostDetailsById = function (id) {
@@ -505,6 +515,12 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
         }
     })
 
+
+    $("#helpChat").click(function () {
+        console.log("helpChat clicked-->");
+        $("#helpmodal").css({"display":"inline"})
+    
+    })
     /* #### End: Logout request from server(index.js) #### */
 
 

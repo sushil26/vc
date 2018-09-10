@@ -9,7 +9,6 @@
 --------------------------------------------------------------*/
 /* Trouble Shoot Section
 --------------------------------*/
-
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 
 .modal {
@@ -401,6 +400,7 @@ video {
 }
 
 body {
+  overflow-x: hidden;
   /* background-image: url("bc.jpg");
   background: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
   background: -moz-radial-gradient(center, circle, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 21%), -webkit-radial-gradient(center, circle, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(center, circle farthest-corner, #f0f0f0, #c0c0c0);
@@ -770,10 +770,10 @@ h6 {
   right: 10px;
   top: 0;
   z-index: 999;
-  margin: 20px 20px 0 0;
+  margin: 25px 20px 0 0;
   border: 0;
   background: none;
-  font-size: 15px;
+  font-size: 20px;
   display: none;
   transition: all 0.4s;
   outline: none;
@@ -815,21 +815,11 @@ h6 {
 
 #mobile-nav ul li {
   position: relative;
-  /* background: linear-gradient(#212529c9, #343a40bd); */
-  background: -webkit-gradient(linear, left top, right top, from(#030b3c), to(#00bcd4f2));
-  /* Safari 5.1, Chrome 10+ */
-  background: -webkit-linear-gradient(left, #030b3c, #00bcd4f2);
-  /* Firefox 3.6+ */
-  background: -moz-linear-gradient(left, #030b3c, #00bcd4f2);
-  /* IE 10 */
-  background: -ms-linear-gradient(left, #030b3c, #00bcd4f2);
-  /* Opera 11.10+ */
-  background: -o-linear-gradient(left, #030b3c, #00bcd4f2);
-  /* background: #1a2732b5; */
+  background: #f8f8f8;
 }
 
 #mobile-nav ul li a {
-  color: #fff;
+  color: #3e3c3c;
   font-size: 16px;
   overflow: hidden;
   padding: 10px 22px 10px 15px;
@@ -837,7 +827,7 @@ h6 {
   text-decoration: none;
   width: 100%;
   display: block;
-  outline: none;
+  outline: auto;
 }
 
 #mobile-nav ul li a:hover {
@@ -901,7 +891,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   letter-spacing: 7px;
   text-shadow: 2px 2px 2px rgba(16, 16, 16, 0.45);
   font-weight: 700;
-  font-family: 'Aclonica';
+  /* font-family: 'Aclonica'; */
   text-transform: uppercase;
   text-align: center;
 }
@@ -1000,8 +990,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 /* Services Section
 --------------------------------*/
-#services, #facts, #stats, #Pricing {
-  padding: 80px 0 60px 0;
+#services, #facts, #stats, #Pricing ,#contact{
+  padding: 80px 0 40px 0;
 }
 
 #services .box {

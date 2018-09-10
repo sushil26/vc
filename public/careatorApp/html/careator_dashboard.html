@@ -61,7 +61,7 @@
                     </li>
                 </ul>
             </div>
-            <span ng-click="homeClick()">
+            <span  ng-click="home()" style="cursor:pointer">
                 <img style="float:left;width: 63px;margin-top: 5px" src="/careatorApp/css/fav.png" />
                 <a class="logo" style="font-weight: 500; letter-spacing: -2.3px;font-family: 'Allerta Stencil';">VC4ALL</a>
             </span>
@@ -172,7 +172,7 @@
 
                 <!-- sidebar menu start-->
                 <div class="sidebar-menu" id="sidebarmnudesktop" ng-hide="sideBarMenu">
-                    <!-- <a href="https://vc4all.in">
+                    <a href="#" ng-click="home()">
                         <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
                              
                             <i class="fa fa-home ictexticon">
@@ -180,7 +180,7 @@
                             <br>
                             <span class="ictext">Home</span>
                         </div>
-                    </a> -->
+                    </a>
                     <a href="#!/dashboard/organizationCreate">
                         <div class="col-sm-6  col-xs-4 ictextparnt" ng-if="loginType=='superAdmin'">
 

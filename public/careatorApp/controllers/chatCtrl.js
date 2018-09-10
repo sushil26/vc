@@ -552,7 +552,7 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
             console.log(data.data.message);
           }
         });
-      } else if ($scope.userData.loginType != 'superAdmin' && $rootScope.orgDatas.subscription == 'Basic') {
+      } else if ($scope.userData.loginType != 'superAdmin' && $rootScope.orgDatas.subscription == 'Basic' && $rootScope.orgDatas.subscription == 'Start-up') {
         console.log("Subscription is basic so this person can chat with anyone");
         obj = {
           senderId: userData.userId,
