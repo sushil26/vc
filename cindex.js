@@ -155,35 +155,42 @@ io.sockets.on('connection', function (socket) {
             "sessionURL": sessionURLTrack[socket.id]
         }
         console.log("queryObj: " + JSON.stringify(queryObj));
-        careatorMaster.find(queryObj).toArray(function (err, sessionURLFindData) {
-            if (err) {
-                console.log("errr: " + JSON.stringify(err));
-            }
-            else {
-                if (sessionURLFindData.length > 0) {
-                    console.log("found url on careator master-->");
-                    careatorMaster.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
-                        if (err) {
-                            console.log("errr: " + JSON.stringify(err));
-                        }
-                        else {
-                            console.log("data: " + JSON.stringify(data));
-                        }
-                    })
+        if(sessionURLTrack[socket.id]!=undefined){
+            careatorMaster.find(queryObj).toArray(function (err, sessionURLFindData) {
+                if (err) {
+                    console.log("errr: " + JSON.stringify(err));
                 }
                 else {
-                    console.log("start to update if url is in careatorEvents-->");
-                    careatorEvents.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
-                        if (err) {
-                            console.log("errr: " + JSON.stringify(err));
-                        }
-                        else {
-                            console.log("data: " + JSON.stringify(data));
-                        }
-                    })
+                    if (sessionURLFindData.length > 0) {
+                        console.log("found url on careator master-->");
+                        careatorMaster.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
+                            if (err) {
+                                console.log("errr: " + JSON.stringify(err));
+                            }
+                            else {
+                                console.log("data: " + JSON.stringify(data));
+                            }
+                        })
+                    }
+                    else {
+                        console.log("start to update if url is in careatorEvents-->");
+                        careatorEvents.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
+                            if (err) {
+                                console.log("errr: " + JSON.stringify(err));
+                            }
+                            else {
+                                console.log("data: " + JSON.stringify(data));
+                            }
+                        })
+                    }
                 }
-            }
-        })
+            })
+        }
+        else{
+            console.log("NO need to do anything when sessionURLTrack[socket.id] is undefined");
+        }
+      
+
         for (var channel in socket.channels) {
             console.log("connection: channel: " + channel);
             part(channel);
