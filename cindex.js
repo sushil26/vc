@@ -151,43 +151,49 @@ io.sockets.on('connection', function (socket) {
         console.log("db: " + db);
         careatorMaster = db.collection("careatorMaster");
         careatorEvents = db.collection("careatorEvents");
-        var queryObj = {
-            "instantConf.sessionURL": sessionURLTrack[socket.id]
-        }
-        console.log("queryObj: " + JSON.stringify(queryObj));
-        careatorMaster.find(queryObj).toArray(function (err, sessionURLFindData) {
-            if (err) {
-                console.log("errr: " + JSON.stringify(err));
+        if(sessionURLTrack[socket.id]!=undefined){
+            var queryObj = {
+                "instantConf.sessionURL": sessionURLTrack[socket.id]
             }
-            else {
-                console.log("sessionURLFindData: "+JSON.stringify(sessionURLFindData));
-                if (sessionURLFindData.length > 0) {
-                    console.log("found url on careator master-->");
-                    careatorMaster.update({ "instantConf.sessionURL": sessionURLTrack[socket.id]}, { $addToSet: { "instantConf.$.leftEmails": emailTrack[socket.id] }, $pull: { "instantConf.$.joinEmails": emailTrack[socket.id] } }, function (err, data) {
-                        if (err) {
-                            console.log("errr: " + JSON.stringify(err));
-                        }
-                        else {
-                            console.log("data: " + JSON.stringify(data));
-                        }
-                    })
+            console.log("queryObj: " + JSON.stringify(queryObj));
+            careatorMaster.find(queryObj).toArray(function (err, sessionURLFindData) {
+                if (err) {
+                    console.log("errr: " + JSON.stringify(err));
                 }
                 else {
-                    console.log("start to update if url is in careatorEvents-->");
-                    var queryObj = {
-                        "sessionURL": sessionURLTrack[socket.id]
+                    console.log("sessionURLFindData: "+JSON.stringify(sessionURLFindData));
+                    if (sessionURLFindData.length > 0) {
+                        console.log("found url on careator master-->");
+                        careatorMaster.update({ "instantConf.sessionURL": sessionURLTrack[socket.id]}, { $addToSet: { "instantConf.$.leftEmails": emailTrack[socket.id] }, $pull: { "instantConf.$.joinEmails": emailTrack[socket.id] } }, function (err, data) {
+                            if (err) {
+                                console.log("errr: " + JSON.stringify(err));
+                            }
+                            else {
+                                console.log("data: " + JSON.stringify(data));
+                            }
+                        })
                     }
-                    careatorEvents.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
-                        if (err) {
-                            console.log("errr: " + JSON.stringify(err));
+                    else {
+                        console.log("start to update if url is in careatorEvents-->");
+                        var queryObj = {
+                            "sessionURL": sessionURLTrack[socket.id]
                         }
-                        else {
-                            console.log("data: " + JSON.stringify(data));
-                        }
-                    })
+                        careatorEvents.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
+                            if (err) {
+                                console.log("errr: " + JSON.stringify(err));
+                            }
+                            else {
+                                console.log("data: " + JSON.stringify(data));
+                            }
+                        })
+                    }
                 }
-            }
-        })
+            })
+        }
+        else{
+            console.log("No need to do anything becase sessionURLTrack[socket.id] giving undefined");
+        }
+       
         for (var channel in socket.channels) {
             console.log("connection: channel: " + channel);
             part(channel);
