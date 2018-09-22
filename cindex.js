@@ -40,7 +40,7 @@ var chatHistory;
 mongoConfig.connectToServer(function (err) {
     console.log("mongo connected -->");
 
-    require('./config/router.js')(app);
+    require('./config/router')(app);
 })
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/node_modules'));
@@ -152,7 +152,7 @@ io.sockets.on('connection', function (socket) {
         careatorMaster = db.collection("careatorMaster");
         careatorEvents = db.collection("careatorEvents");
         var queryObj = {
-            "instantConf.sessionURL": sessionURLTrack[socket.id]
+            "sessionURL": sessionURLTrack[socket.id]
         }
         console.log("queryObj: " + JSON.stringify(queryObj));
         careatorMaster.find(queryObj).toArray(function (err, sessionURLFindData) {
@@ -162,7 +162,7 @@ io.sockets.on('connection', function (socket) {
             else {
                 if (sessionURLFindData.length > 0) {
                     console.log("found url on careator master-->");
-                    careatorMaster.update({ "instantConf.sessionURL": sessionURLTrack[socket.id]}, { $addToSet: { "instantConf.$.leftEmails": emailTrack[socket.id] }, $pull: { "instantConf.$.joinEmails": emailTrack[socket.id] } }, function (err, data) {
+                    careatorMaster.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
                         if (err) {
                             console.log("errr: " + JSON.stringify(err));
                         }
@@ -173,9 +173,6 @@ io.sockets.on('connection', function (socket) {
                 }
                 else {
                     console.log("start to update if url is in careatorEvents-->");
-                    var queryObj = {
-                        "sessionURL": sessionURLTrack[socket.id]
-                    }
                     careatorEvents.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
                         if (err) {
                             console.log("errr: " + JSON.stringify(err));
@@ -221,17 +218,14 @@ io.sockets.on('connection', function (socket) {
         }
         else {
             var queryObj = {
-                "_id": data.userId,
-                "instantConf.sessionURL": "https://vc4all.in/vc4all_conf/"+data.deleteSessionId+"/"+data.queryTime
+                "_id": data.userId
             }
-            console.log("queryObj: "+JSON.stringify(queryObj));
-            careatorMaster.update({"_id": ObjectId(data.userId), "instantConf.sessionURL": "https://vc4all.in/vc4all_conf/"+data.deleteSessionId+"/"+data.queryTime}, { $set: { "instantConf.$.isDisconnected": "yes" } }, function (err, data) {
-
+            careatorMaster.update(queryObj, { $set: { "isDisconnected": "yes" } }, function (err, data) {
                 if (err) {
                     console.log("errr: " + JSON.stringify(err));
                 }
                 else {
-                    console.log("data after update: " + JSON.stringify(data));
+                    console.log("data: " + JSON.stringify(data));
                 }
             })
         }
@@ -346,8 +340,8 @@ io.sockets.on('connection', function (socket) {
             })
         }
         else {
-            careatorMaster.update({ "instantConf.sessionURL": config.sessionURL }, {
-                $addToSet: { "instantConf.$.leftEmails": config.email }, $pull: { "instantConf.$.joinEmails": config.email }
+            careatorMaster.update({ "sessionURL": config.sessionURL }, {
+                $addToSet: { "leftEmails": config.email }, $pull: { "joinEmails": config.email }
             }, function (err, data) {
                 if (err) {
                     console.log("errr: " + JSON.stringify(err));
@@ -550,16 +544,51 @@ io.sockets.on('connection', function (socket) {
         console.log("db: " + db);
         var careatorMaster = db.collection("careatorMaster");
         var loginDetails = db.collection("loginDetails");
-        for(var x=0;x<data.undisconnectedSession.length;x++){
+        if (data.sessionURL != "" && data.sessionURL != undefined) {
+            var url = data.sessionURL;
+            var stuff = url.split("/");
+            console.log("stuff: " + JSON.stringify(stuff));
+            console.log("emailTrack: " + JSON.stringify(emailTrack));
+            console.log("emailTrack.indexOf(data.email): " + emailTrack.indexOf(data.email));
             if (emailTrack.indexOf(data.email) >= 0) {
                 io.sockets.emit('disconnectSessionReply', { "deleteSessionId": stuff[4], "owner": emailTrack.indexOf(datadata.email) });
             }
-            io.sockets.emit('comm_logoutNotifyToUserById', { "userId": data.userId, "email": data.email, "sessionURL": data.undisconnectedSession[x], "sessionRandomId": data.sessionRandomId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
-            var url = data.undisconnectedSession[x];
-            var stuff = url.split("/");
-            console.log("stuff: " + JSON.stringify(stuff));
-           // console.log("stuff.length-2: " + stuff.length-2);
-           console.log("Deleting id: " + stuff[4]);
+            var queryObj = {
+                "_id": ObjectId(data.userId)
+            }
+            careatorMaster.update(queryObj, { $set: { "isDisconnected": "yes" } }, function (err, updateData) {
+                if (err) {
+                    console.log("errr: " + JSON.stringify(err));
+                }
+                else {
+                    console.log("updateData: " + JSON.stringify(updateData));
+                    var date = new Date();
+                    var queryObj = {
+                        "sessionRandomId": data.sessionRandomId
+                    }
+                    console.log("queryObj: "+JSON.stringify(queryObj));
+                    loginDetails.update(queryObj, { $set: { "login": false, "logoutDate": date, "logout": true } }, function (err, logoutData) {
+                        if (err) {
+                            console.log("errr: " + JSON.stringify(err));
+                        }
+                        else {
+                            console.log("emit started to client-->");
+                          
+                            var emitObj = {
+                                "orgId":data.orgId,
+                                "sessionRandomId": queryObj.sessionRandomId,
+                                "logoutDate": date,
+                                "login": false,
+                                "logout": true
+                            }
+                            io.sockets.emit('comm_userLogoutNotify', emitObj); /* ### Note: Emit message to client(userLoginDetailsCtrl.js) ### */
+                            console.log("logoutData: " + JSON.stringify(logoutData));
+                        }
+
+                    })
+                }
+            })
+            console.log("Deleting id: " + stuff[4]);
             deletedSocket_ids.push(stuff[4]);
             console.log("deletedSocket_ids: " + JSON.stringify(stuff[4]));
             var tempSock = sockets[stuff[4]]; /* ### Note using this deleteSessionId we are getting real socket(tempSock)   ### */
@@ -571,12 +600,7 @@ io.sockets.on('connection', function (socket) {
             console.log("sockets[ stuff[4]]: " + sockets[stuff[4]]);
             console.log("deletedSocket_ids: " + JSON.stringify(deletedSocket_ids));
             console.log("<--disconnectSession");
-            
         }
-        if(data.undisconnectedSession.length==0){
-            io.sockets.emit('comm_logoutNotifyToUserById', { "userId": data.userId, "email": data.email, "sessionRandomId": data.sessionRandomId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
-        }
-        
 
         var queryObj = {
             "_id": ObjectId(data.userId)
@@ -611,7 +635,7 @@ io.sockets.on('connection', function (socket) {
                     }
                 })
                 console.log("updateData: " + JSON.stringify(updateData));
-             
+                io.sockets.emit('comm_logoutNotifyToUserById', { "userId": data.userId, "email": data.email, "sessionURL": data.sessionURL, "sessionRandomId": data.sessionRandomId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
             }
         })
     })
@@ -622,16 +646,27 @@ io.sockets.on('connection', function (socket) {
         var db = mongoConfig.getDb();
         console.log("db: " + db);
         careatorMaster = db.collection("careatorMaster");
-        for(var x=0;x<data.undisconnectedSession.length;x++){
+        if (data.sessionURL != "" && data.sessionURL != undefined) {
+            var url = data.sessionURL;
+            var stuff = url.split("/");
+            console.log("stuff: " + JSON.stringify(stuff));
+            console.log("emailTrack: " + JSON.stringify(emailTrack));
+            console.log("emailTrack.indexOf(data.email): " + emailTrack.indexOf(data.email));
             if (emailTrack.indexOf(data.email) >= 0) {
                 io.sockets.emit('disconnectSessionReply', { "deleteSessionId": stuff[4], "owner": emailTrack.indexOf(datadata.email) });
             }
-            io.sockets.emit('comm_logoutNotifyToUserById', { "userId": data.userId, "email": data.email, "sessionURL": data.undisconnectedSession[x], "sessionRandomId": data.sessionRandomId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
-            var url = data.undisconnectedSession[x];
-            var stuff = url.split("/");
-            console.log("stuff: " + JSON.stringify(stuff));
-           // console.log("stuff.length-2: " + stuff.length-2);
-           console.log("Deleting id: " + stuff[4]);
+            var queryObj = {
+                "_id": ObjectId(data.userId)
+            }
+            careatorMaster.update(queryObj, { $set: { "isDisconnected": "yes" } }, function (err, data) {
+                if (err) {
+                    console.log("errr: " + JSON.stringify(err));
+                }
+                else {
+                    console.log("data: " + JSON.stringify(data));
+                }
+            })
+            console.log("Deleting id: " + stuff[4]);
             deletedSocket_ids.push(stuff[4]);
             console.log("deletedSocket_ids: " + JSON.stringify(stuff[4]));
             var tempSock = sockets[stuff[4]]; /* ### Note using this deleteSessionId we are getting real socket(tempSock)   ### */
@@ -643,12 +678,7 @@ io.sockets.on('connection', function (socket) {
             console.log("sockets[ stuff[4]]: " + sockets[stuff[4]]);
             console.log("deletedSocket_ids: " + JSON.stringify(deletedSocket_ids));
             console.log("<--disconnectSession");
-            
         }
-        if(data.undisconnectedSession.length==0){
-            io.sockets.emit('comm_logoutNotifyToUserById', { "userId": data.userId, "email": data.email, "sessionRandomId": data.sessionRandomId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
-        }
-        
 
         var queryObj = {
             "_id": ObjectId(data.userId)
@@ -661,7 +691,7 @@ io.sockets.on('connection', function (socket) {
             }
             else {
                 console.log("updateData: " + JSON.stringify(updateData));
-              
+                io.sockets.emit('comm_logoutNotifyToUserById', { "userId": data.userId, "email": data.email, "sessionURL": data.sessionURL, "sessionRandomId": data.sessionRandomId }) /* ### Note: Send quick message view notification to event sender(who's user id is matched with this userId) ### */
             }
         })
 
