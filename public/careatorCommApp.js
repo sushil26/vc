@@ -6,11 +6,21 @@ careatorApp.config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
     // cfpLoadingBarProvider.parentSelector = '#loading-bar-container';
     // cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner">Loading...</div>';
 }])
-careatorApp.config(function ($stateProvider) {
+careatorApp.config(function ($stateProvider, $urlRouterProvider) {
+  //  $urlRouterProvider.otherwise('/home');
+    // .state('Chome', {
+    //     url: careator_home(),
+    //     templateUrl: './index.html',
+    // })
     $stateProvider
-        .state('Cdashboard', {
+   
+     .state('Cdashboard', {
             url: careator_dashboard(),
             templateUrl: '/careatorApp/html/careator_dashboard.html',
+        })
+        .state('Tdashboard', {
+            url: talenkart_dashboard(),
+            templateUrl: '/careatorApp/html/talenkartDashboard.html',
         })
         .state('Cdashboard.organizationCreate', {
             url: careator_organizationCreate(),
@@ -286,7 +296,54 @@ careatorApp.config(function ($stateProvider) {
             }
         })
 
+        .state('Tdashboard.talenkartVCSchedule', {
+            url: careator_talenkartVCSchedule(),
+            templateUrl: '/careatorApp/html/talenkartSchedule.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    //var userData = careatorSessionAuth.getAccess("userData");
+                    // if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
+                    // } else {
+                    //     $window.location.href = 'https://vc4all.in';
+                    // }
+                }
+            }
+        })
+        .state('Cdashboard.talenkartVCUpcomingEvent', {
+            url: careator_talenkartVCScheduleUpcomingEvent(),
+            templateUrl: '/careatorApp/html/talenkartSchedule_upcoming.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    //var userData = careatorSessionAuth.getAccess("userData");
+                    // if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
+
+                    // } else {
+                    //     $window.location.href = 'https://vc4all.in';
+                    // }
+                }
+            }
+
+        })
+        .state('Cdashboard.talenkartVCHistoryEvent', {
+            url: careator_talenkartVCScheduleHistoryEvent(),
+            templateUrl: '/careatorApp/html/talenkartSchedule_historyEvent.html',
+            resolve: {
+                result: function (careatorSessionAuth, $window) {
+                    // var userData = careatorSessionAuth.getAccess("userData");
+                    // if (userData.loginType == 'admin' || userData.loginType == 'superAdmin' || userData.loginType == 'employee') {
+
+                    // } else {
+                    //     $window.location.href = 'https://vc4all.in';
+                    // }
+                }
+            }
+        })
+
 })
+
+function careator_home(){
+    return '/home';
+}
 
 function orgSetting() {
     return '/orgSetting/:id';
@@ -319,6 +376,10 @@ function contactAdmin() {
 
 function careator_dashboard() {
     return '/dashboard';
+}
+
+function talenkart_dashboard(){
+    return '/Tdashboard'
 }
 
 function editUser() {
@@ -371,4 +432,14 @@ function careator_historyEvent() {
 
 function careator_loginDetails() {
     return '/loginDetails'
+}
+function careator_talenkartVCSchedule(){
+    return '/talenkartVCSchedule';
+}
+function careator_talenkartVCScheduleUpcomingEvent() {
+    return '/talenkartVCUpcomingEvent'
+}
+
+function careator_talenkartVCScheduleHistoryEvent() {
+    return '/talenkartVCHistoryEvent'
 }

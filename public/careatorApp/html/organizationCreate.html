@@ -10,127 +10,161 @@
 
                     <div class="panel-body bio-graph-info" style="padding: 15px;">
                         <p> *All the fields are mandatory to fill.</p>
+                        <form name="orgCreate" novalidate>
+                            <div class="form-group ">
+                                <label class="col-lg-3">Organization Name 
+                                    <span ng-show="orgCreate.orgName.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="text" ng-model="organizationName" class="form-control capitalizeCase" name="orgName" required capitalize-directive>
+                                    </span>
+                                    <span ng-show="(orgCreate.orgName.$touched || submitted) && orgCreate.orgName.$error.required" class="validation_fe">Organization
+                                        Name is required</span>
+                                </div>
 
-                        <div class="form-group ">
-                            <label class="col-lg-3">Organization Name*:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="organizationName" class="form-control">
-                                </span>
+                                <label class="col-lg-3">Organization Domain 
+                                    <span ng-show="orgCreate.orgDomain.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="text" ng-model="organizationDomain" class="form-control smallerCase" name="orgDomain" required capitalize-directive>
+                                    </span>
+                                    <span ng-show="(orgCreate.orgDomain.$touched || submitted) && orgCreate.orgDomain.$error.required" class="validation_fe ">Organization Domain is required</span>
+                                    <span ng-show="organizationDomain.split('.').length!=2 && orgCreate.orgDomain.$error.required!=true" class="validation_fe ">Organization Domain (Ex: abc.com, abc.in, abc.co )</span>
+                                </div>
+
+                                <label class="col-lg-3 ">Registration Date 
+                                    <span ng-show="orgCreate.regDate.$error.required"  class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="date" ng-model="dor" name="regDate" class="form-control" required>
+                                    </span>
+                                    <span ng-show="(orgCreate.regDate.$touched || submitted) && orgCreate.regDate.$error.required" class="validation_fe">Registration Date is required.</span>
+                                </div>
+
+                                <label class="col-lg-3 ">Registration Number 
+                                    <span ng-show="orgCreate.orgName.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="text" ng-model="registrationRegNumber" name="regNum" style="text-transform:uppercase;" class="form-control"  required>
+                                    </span>
+                                    <span ng-show="(orgCreate.regNum.$touched || submitted) && orgCreate.regNum.$error.required" class="validation_fe">Registration Number is required.</span>
+                                </div>
                             </div>
 
-                            <label class="col-lg-3">Organization Domain*:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="organizationDomain" class="form-control">
-                                </span>
+                            <div class="form-group ">
+                                <label class="col-lg-12 ">
+                                    <b>Address</b>
+                                </label>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-lg-3 "> Street 
+                                    <span ng-show="orgCreate.street.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="text" ng-model="streetName " name="street" class="form-control capitalizeCase" required capitalize-directive>
+                                    </span>
+                                    <span ng-show="(orgCreate.street.$touched || submitted) && orgCreate.street.$error.required
+                                        " class="validation_fe">Street
+                                        is required.</span>
+                                </div>
+
+                                <label class="col-lg-3 "> City <span ng-show="orgCreate.cities.$error.required" class="required_mark "></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="text" ng-model="city" name="cities" class="form-control capitalizeCase" required capitalize-directive>
+                                    </span>
+                                    <span ng-show="(orgCreate.cities.$touched || submitted)&& orgCreate.cities.$error.required
+                                        " class="validation_fe">City is required.</span>
+                                </div>
+
+                                <label class="col-lg-3 "> State 
+                                    <span ng-show="orgCreate.states.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="text" ng-model="state" name="states" class="form-control capitalizeCase" required capitalize-directive>
+                                    </span>
+                                    <span ng-show="(orgCreate.states.$touched || submitted) && orgCreate.states.$error.required" class="validation_fe">State is required.</span>
+                                </div>
+
+                                <label class="col-lg-3 "> PinCode 
+                                    <span ng-show="orgCreate.pincodes.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3">
+                                    <span>
+                                        <input type="text" ng-model="pinCode" name="pincodes" class="form-control" required >
+                                    </span>
+                                    <span ng-show="(orgCreate.pincodes.$touched || submitted) && orgCreate.pincodes.$error.required" class="validation_fe">Pincode is required.</span>
+                                </div>
+
+                                <label class="col-lg-3 "> Country 
+                                    <span ng-show="orgCreate.countries.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="text" ng-model="country" name="countries" class="form-control capitalizeCase" required capitalize-directive>
+                                    </span>
+                                    <span ng-show="(orgCreate.countries.$touched || submitted) && orgCreate.countries.$error.required" class="validation_fe">Country is required.</span>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group ">
+                                <label class="col-lg-12 ">
+                                    <b>Admin</b>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 ">First Name 
+                                    <span ng-show="orgCreate.fn.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3">
+                                    <span>
+                                        <input type="text" ng-model="adminFirstName" name="fn" class="form-control capitalizeCase" required capitalize-directive>
+                                    </span>
+                                    <span ng-show="(orgCreate.fn.$touched || submitted) && orgCreate.fn.$error.required " class="validation_fe">First Name is required.</span>
+                                </div>
+
+                                <label class="col-lg-3 ">Last Name <span ng-show="orgCreate.ln.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="text" ng-model="adminLastName" name="ln" class="form-control capitalizeCase" required capitalize-directive>
+                                    </span>
+                                    <span ng-show="(orgCreate.ln.$touched || submitted) && orgCreate.ln.$error.required " class="validation_fe">Last Name is required.</span>
+                                </div>
+
+                                <label class="col-lg-3 ">Admin Email ID <span ng-show="orgCreate.emailId.$error.required"
+                                        class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="email" ng-model="adminEmail" name="emailId" class="form-control smallerCase" required>
+                                    </span>
+                                    <span ng-show="(orgCreate.emailId.$touched || submitted) && orgCreate.emailId.$error.required" class="validation_fe">Email is required (EX:abc@{{organizationDomain}}).</span>
+                                    <span ng-show="(orgCreate.emailId.$touched || submitted) && orgCreate.emailId.$invalid && orgCreate.emailId.$error.required!=true" class="validation_fe">You have to give valid input EX:abc@{{organizationDomain}}</span>
+                                    <span ng-show="adminEmail.split('@')[1]!=organizationDomain && orgCreate.emailId.$valid && orgCreate.emailId.$error.required!=true" class="validation_fe">You have to give you domain name for email EX:abc@{{organizationDomain}}</span>
+                                </div>
+
+                                <label class="col-lg-3">Admin Mobile. No <span ng-show="orgCreate.mobNum.$error.required"
+                                        class="required_mark"></span></label>
+                                <div class="col-lg-3 ">
+                                    <span>
+                                        <input type="number" ng-model="mobNumber" name="mobNum" class="form-control" required>
+                                    </span>
+                                    <span ng-show="(orgCreate.mobNum.$touched || submitted) && orgCreate.mobNum.$error.required
+                                        " class="validation_fe">Mobile Number is required.</span>
+                                </div>
+
+                                <label class="col-lg-3 ">Password 
+                                    <span ng-show="orgCreate.pswd.$error.required" class="required_mark"></span></label>
+                                <div class="col-lg-3">
+                                    <span>
+                                        <input type="text" ng-model="adminPassword" name="pswd" class="form-control" required>
+                                    </span>
+                                    <span ng-show="(orgCreate.pswd.$touched || submitted) && orgCreate.pswd.$error.required" class="validation_fe">Password is required.</span>
+                                </div>
                             </div>
 
-                            <label class="col-lg-3">Registration Date:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="date" ng-model="dor" class="form-control">
-                                </span>
+                            <div class="form-group ">
+                                <div class="col-lg-12 ">
+                                    <button type="submit " class="btn btn-info " ng-click="organizationCreate(orgCreate)">Save</button>
+                                </div>
                             </div>
-
-                            <label class="col-lg-3">Registration Number:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="registrationRegNumber" style="text-transform:uppercase;" class="form-control">
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-12">
-                                <b>Address</b>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3"> Street*:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="streetName" class="form-control">
-                                </span>
-                            </div>
-
-                            <label class="col-lg-3"> City*:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="city" class="form-control">
-                                </span>
-                            </div>
-
-                            <label class="col-lg-3"> State*:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="state" class="form-control">
-                                </span>
-                            </div>
-
-                            <label class="col-lg-3"> PinCode*:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="pinCode" class="form-control">
-                                </span>
-                            </div>
-
-                            <label class="col-lg-3"> Country*:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="country" class="form-control">
-                                </span>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <label class="col-lg-12">
-                                <b>Admin</b>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3">First Name:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="adminFirstName" class="form-control">
-                                </span>
-                            </div>
-
-                            <label class="col-lg-3">Last Name:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="adminLastName" class="form-control">
-                                </span>
-                            </div>
-
-                            <label class="col-lg-3">Admin Email ID*:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="email" ng-model="adminEmail" class="form-control">
-                                </span>
-                            </div>
-
-                            <label class="col-lg-3">Admin Mobile. No.*:</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="mobNumber" class="form-control">
-                                </span>
-                            </div>
-
-                            <label class="col-lg-3">Password*</label>
-                            <div class="col-lg-3">
-                                <span>
-                                    <input type="text" ng-model="adminPassword" class="form-control">
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group ">
-                            <div class="col-lg-12">
-                                <button type="submit" class="btn btn-info" ng-click="organizationCreate()">Save</button>
-                            </div>
-                        </div>
-
+                        </form>
                     </div>
                 </section>
             </div>

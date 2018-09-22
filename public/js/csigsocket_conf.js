@@ -12,6 +12,7 @@ console.log("sesionEnc: " + sesionEnc);
 
 /** CONFIG **/
 console.log("Signaling Socket.js");
+console.log("sessionUrlId: "+localStorage.getItem("sessionUrlId"));
 var SIGNALING_SERVER = "https://vc4all.in";
 //var SIGNALING_SERVER = "http://localhost:5000";
 var streamArray = [];
@@ -33,6 +34,7 @@ var file;
 var disconnPeerId = null;
 var shareScreen = null;
 var sessionHeader = null;
+var sessionHeaderEmail = null;
 var peerStream = null;
 signaling_socket = io(SIGNALING_SERVER);
 var userName;
@@ -48,6 +50,7 @@ var id2 = stuff[stuff.length - 3];
 console.log("stuff.length: " + stuff.length);
 console.log("id1**: " + id1);
 queryLink = id1;
+queryTime = stuff[stuff.length - 1];
 console.log("id2**: " + id2);
 
 // $.browser.firefox = /firefox/.test(navigator.userAgent.toLowerCase());
@@ -87,6 +90,7 @@ console.log("id2**: " + id2);
         dataType: "json",
         success: function (data) {
           console.log("data: " + JSON.stringify(data));
+          sessionHeaderEmail = careatorEmail;
           var userNameEmail = localStorage.getItem("careatorEmail");
           var emailIdSplit = userNameEmail.split('@');
           userName = emailIdSplit[0];
@@ -99,7 +103,7 @@ console.log("id2**: " + id2);
           if (screen.width <= 768) {
             document.getElementById("screenShareBtn").style.display = 'none';
           }
-          if (localStorage.getItem("sessionUrlId") == queryLink) {
+          if (sessionHeaderEmail == careatorEmail) {
             document.getElementById("emailInvitation").style.display = "block";
           } else {
             document.getElementById("emailInvitation").style.display = "none";
@@ -421,11 +425,12 @@ console.log("id2**: " + id2);
     console.log("sessionHeader: " + sessionHeader);
     console.log("peerNew_id: " + peerNew_id);
 
-    if (localStorage.getItem("sessionUrlId") == queryLink && localStorage.getItem("careatorEmail")) {
+    if (sessionHeaderEmail == localStorage.getItem("careatorEmail")) {
       console.log("start to disconnect the session");
       localStorage.removeItem("sessionUrlId");
       signaling_socket.emit("disconnectSession", {
         deleteSessionId: queryLink,
+        queryTime: queryTime,
         owner: peerNew_id,
         userId: localStorage.getItem("userId")
       });
@@ -874,7 +879,7 @@ console.log("id2**: " + id2);
           $(this).removeAttr("poster");
         });
         // if (peerNew_id == sessionHeader) {
-        if (localStorage.getItem("sessionUrlId") == queryLink && localStorage.getItem("careatorEmail")) {
+        if (sessionHeaderEmail == localStorage.getItem("careatorEmail")) {
           document.getElementById("closeThisConn" + peer_id).style.display =
             "inline";
 
@@ -1875,6 +1880,8 @@ console.log("id2**: " + id2);
     console.log("localStorage.getItem(careatorEmail): " + localStorage.getItem("careatorEmail"));
     console.log(" localStorage.getItem(sessionUrlId): " + localStorage.getItem("sessionUrlId"));
     console.log(" url: " + url);
+    console.log(" data.sessionURL: " + data.sessionURL);
+    console.log(" stuff[4]: " + stuff[4]);
     if (data.email == localStorage.getItem("careatorEmail") || data.email == localStorage.getItem("careator_remoteEmail")) {
       console.log("Start to remove the session");
       // localStorage.removeItem("email");
@@ -1909,7 +1916,7 @@ console.log("id2**: " + id2);
     }
     if (data.sessionURL == url) {
       console.log("Start to remove the session based on sessionURL");
-      localStorage.removeItem("sessionUrlId");
+      //localStorage.removeItem("sessionUrlId");
       // signaling_socket.emit("disconnectSession", {
       //   deleteSessionId: queryLink,
       //   owner: peerNew_id

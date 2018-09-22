@@ -7,16 +7,16 @@
                         <i class="fa fa-user"></i>
                         <span>&nbspCREATE USER</span>
                     </div>
-
                     <div class="panel-body bio-graph-info" style="padding: 15px;">
-                            <p> *All the fields are mandatory to fill.</p>
-                        <form class="form-horizontal" role="form" enctype="multipart/form-data">
+                        <p> *All the fields are mandatory to fill.</p>
+                        <form class="form-horizontal" role="form" name="userCreate" enctype="multipart/form-data" novalidate>
                             <div class="form-group ">
-                                <label class="col-lg-3">User Insert Type*</label>
+                                <label class="col-lg-3">User Insert Type</label>
                                 <div class="col-lg-9">
                                     <span>
-                                            Create User Manually&nbsp;
-                                        <input type="radio" name="cat" value="enterValue" ng-model="userInsertType" ng-change="rightEmployeeList('chat')"> &nbsp;&nbsp; Upload User&nbsp;
+                                        Create User Manually&nbsp;
+                                        <input type="radio" name="cat" value="enterValue" ng-model="userInsertType" ng-change="rightEmployeeList('chat')">                                        &nbsp;&nbsp;
+                                        Upload User&nbsp;
                                         <input type="radio" name="cat" value="csv" ng-model="userInsertType" ng-change="rightEmployeeList('video')">
                                     </span>
                                 </div>
@@ -24,69 +24,102 @@
                             <div ng-switch="userInsertType">
                                 <div ng-switch-when="enterValue">
                                     <div class="form-group ">
-                                        <label class="col-lg-3">User First Name*:</label>
+                                        <label class="col-lg-3">User First Name
+                                            <span ng-show="userCreate.ufn.$error.required" class="required_mark"></span>
+                                        </label>
                                         <div class="col-lg-9">
                                             <span>
-                                                <input type="text" ng-model="firstName" class="form-control">
+                                                <input type="text" ng-model="firstName" name="ufn" class="form-control capitalizeCase" required capitalize-directive>                                              
                                             </span>
+                                            <span ng-show="(userCreate.ufn.$touched || submitted) && userCreate.ufn.$error.required" class="validation_fe">User
+                                                First Name is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group ">
-                                        <label class="col-lg-3">User Second Name*:</label>
+                                        <label class="col-lg-3">User Last Name
+                                            <span ng-show="userCreate.uln.$error.required" class="required_mark"></span>
+                                        </label>
                                         <div class="col-lg-9">
                                             <span>
-                                                <input type="text" ng-model="lastName" class="form-control">
+                                                <input type="text" ng-model="lastName" name="uln" class="form-control capitalizeCase" required capitalize-directive>
                                             </span>
+                                            <span ng-show="(userCreate.uln.$touched || submitted) && userCreate.uln.$error.required" class="validation_fe">User
+                                                Last Name is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group ">
-                                        <label class="col-lg-3">Employee ID/Number*:</label>
+                                        <label class="col-lg-3">Employee ID/Number
+                                            <span ng-show="userCreate.employeeID.$error.required" class="required_mark"></span>
+                                        </label>
                                         <div class="col-lg-9">
                                             <span>
-                                                <input type="text" ng-model="empId" class="form-control">
+                                                <input type="text" ng-model="empId" name="employeeID" class="form-control" required>
                                             </span>
+                                            <span ng-show="(userCreate.employeeID.$touched || submitted) && userCreate.employeeID.$error.required" class="validation_fe">Employee
+                                                Id is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group ">
-                                        <label class="col-lg-3">Designation*:</label>
+                                        <label class="col-lg-3">Designation
+                                            <span ng-show="userCreate.desig.$error.required" class="required_mark"></span>
+                                        </label>
                                         <div class="col-lg-9">
                                             <span>
-                                                <input type="text" ng-model="Designation" class="form-control">
+                                                <input type="text" ng-model="Designation" name="desig" class="form-control capitalizeCase" required capitalize-directive>
                                             </span>
+                                            <span ng-show="(userCreate.desig.$touched || submitted) && userCreate.desig.$error.required" class="validation_fe">Designation
+                                                is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-3">Email ID*:</label>
+                                        <label class="col-lg-3">Email ID
+                                            <span ng-show="userCreate.employeeEmail.$error.required" class="required_mark"></span>
+                                        </label>
                                         <div class="col-lg-9">
                                             <span>
-                                                <input type="email" ng-model="empEmail" class="form-control">
+                                                <input type="email" ng-model="empEmail" name="employeeEmail" class="form-control smallerCase" required>
                                             </span>
+                                            <span ng-show="(userCreate.employeeEmail.$touched || submitted) && userCreate.employeeEmail.$error.required" class="validation_fe">Email
+                                                Id is required (Ex:abc@{{organizationDomain}})</span>
+                                                
+                                    <span ng-show="(userCreate.employeeEmail.$touched || submitted) && userCreate.employeeEmail.$invalid && userCreate.employeeEmail.$error.required!=true" class="validation_fe">You have to give valid input EX:abc@{{orgDatas.domain}}</span>
+                                    <span ng-show="adminEmail.split('@')[1]!=orgDatas.domain && userCreate.employeeEmail.$valid && userCreate.employeeEmail.$error.required!=true" class="validation_fe">You have to give you domain name for email EX:abc@{{orgDatas.domain}}</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
 
-                                        <label class="col-lg-3">Accessibility Permission*:</label>
+                                        <label class="col-lg-3">Accessibility Permission
+                                            <span ng-show="userCreate.perm.$error.required" class="required_mark"></span>
+                                        </label>
                                         <div class="col-lg-9">
                                             <span>
                                                 Chat&nbsp;
-                                                <input type="radio" name="cat" value="chat" ng-model="rightSelect" ng-change="rightEmployeeList('chat')"> &nbsp;&nbsp; Video&nbsp;
-                                                <input type="radio" name="cat" value="video" ng-model="rightSelect" ng-change="rightEmployeeList('video')"> &nbsp;&nbsp; Both&nbsp;
-                                                <input type="radio" name="cat" value="both" ng-model="rightSelect" ng-change="rightEmployeeList('bothChatVideo')">
-
+                                                <input type="radio" name="perm" value="chat" ng-model="rightSelect" ng-change="rightEmployeeList('chat')" required>                                                &nbsp;&nbsp;
+                                                Video&nbsp;
+                                                <input type="radio" name="perm" value="video" ng-model="rightSelect" ng-change="rightEmployeeList('video')" required>                                                &nbsp;&nbsp;
+                                                Both&nbsp;
+                                                <input type="radio" name="perm" value="both" ng-model="rightSelect" ng-change="rightEmployeeList('bothChatVideo')" required>
                                             </span>
+                                            <br>
+                                            <span ng-show="(userCreate.perm.$touched || submitted) && userCreate.perm.$error.required" class="validation_fe">Permision
+                                                is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-3">Password*</label>
+                                        <label class="col-lg-3">Password
+                                            <span ng-show="userCreate.pswd.$error.required" class="required_mark"></span>
+                                        </label>
                                         <div class="col-lg-9">
                                             <span>
-                                                <input type="text" ng-model="empPass" class="form-control">
+                                                <input type="text" ng-model="empPass" name="pswd" class="form-control" required>
                                             </span>
+                                            <span ng-show="(userCreate.pswd.$touched || submitted) && userCreate.pswd.$error.required" class="validation_fe">Password
+                                                is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group ">
                                         <div class="col-lg-12">
-                                            <button type="submit" class="btn btn-info" ng-click="careatorEmp(firstName, lastName,empId, empEmail, empPass,Designation,rightSelect)">Upload</button>
+                                            <button type="submit" class="btn btn-info" ng-click="careatorEmp(userCreate, firstName, lastName,empId, empEmail, empPass,Designation,rightSelect)">Upload</button>
                                         </div>
                                     </div>
                                 </div>

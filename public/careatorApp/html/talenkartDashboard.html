@@ -1,0 +1,87 @@
+<div ng-controller="talenkart_dashboardCtrl">
+    <!-- container section start -->
+    <!-- <script src="../dashboard_Lib/js/jquery.js"></script>
+    <script src="../dashboard_Lib/js/bootstrap.min.js"></script> -->
+    <!-- <script src="../dashboard_Lib/js/jquery.nicescroll.js"></script>
+    <script src="../dashboard_Lib/js/jquery.scrollTo.min.js"></script> -->
+    <!-- <script src="../dashboard_Lib/js/scripts.js"></script> -->
+
+    <style>
+        .mb-3 {
+            padding: 5px;
+
+        }
+
+        .ictextparnt {
+            line-height: 15px;
+            height: 70px;
+            padding: 12px;
+            box-shadow: 1px 2px 5px #000;
+            color: white;
+            border-radius: 5px;
+            background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);
+        }
+
+        .ictextparnt:hover {
+            background-image: linear-gradient(to bottom, #383c3f 0%, #124169 100%);
+            /* background: #124169; */
+            padding: 14px;
+
+            box-shadow: 1px 2px 5px #000;
+
+        }
+
+        .ictext {
+            color: gainsboro;
+            font-size: 11px;
+        }
+
+        .ictexticon {
+            font-size: 20px;
+            color: lightsalmon;
+        }
+    </style>
+    <section id="container" class="">
+        <header class="header dark-bg" style="position:fixed;">
+            <span ng-click="home()" style="cursor:pointer">
+                <img style="float:left;width: 63px;margin-top: 5px" src="/careatorApp/css/fav.png" />
+                <a class="logo" style="font-weight: 500; letter-spacing: -2.3px;font-family: 'Allerta Stencil';">VC4ALL</a>
+            </span>
+        </header>
+
+        <!--sidebar start-->
+
+        <!-- <textarea id="ta" class="ta"></textarea>
+        <div id="render" style="display:none"></div> -->
+        <!--sidebar end-->
+        <div ui-view class="user-body">
+        </div>
+
+        <button data-toggle="modal" data-target="#notify_msg_confirm" id="notify_msg_confirm_button" data-backdrop="static" data-keyboard="false"
+            style="display:none">Enter Password</button>
+
+        <div class="modal fade" id="notify_msg_confirm" role="dialog">
+            <div class="modal-dialog">
+                <center>
+                    <form>
+                        <div class="modal-content" style="color:#777;max-width:350px;">
+                            <div class="modal-header" style="background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                <img style="width: 45px;margin-top: -15px; margin-left: -150px;" src="/home/img/fav.png" />
+                                <span class="modal-title"></span>Message
+                            </div>
+                            <div class="modal-body">
+                                <label id="notify_msg_confirm_content" style="color:red"></label>
+                            </div>
+                            <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;" ng-if="resetLoginFlag_clicked=='true'">
+                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Cancel</button>
+                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" ng-click="ok_forLogin()">Ok</button>
+                            </div>
+                        </div>
+                    </form>
+                </center>
+            </div>
+        </div>
+
+    </section>
+
+</div>

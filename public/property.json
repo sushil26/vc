@@ -6,6 +6,7 @@
 "C_getAllOrg": "https://vc4all.in/c/getAllOrg",
 "C_updateOrgStatus": "https://vc4all.in/c/updateOrgStatus",
 "C_getOrg_admin_byOrgId": "https://vc4all.in/c/getOrg_admin_byOrgId",
+"C_getOrganizationDetailsById": "https://vc4all.in/c/getOrganizationDetailsById",
 "C_orgEditById": "https://vc4all.in/c/orgEditById",
 
 "VC_updateUserStatus": "vc/updateUserStatus",
