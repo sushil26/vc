@@ -384,11 +384,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
         },
             function (isConfirm) { //Function that triggers on user action.
                 if (isConfirm) {
-                    SweetAlert.swal({
-                        title: "Logged Out",
-                        type: "success",
-
-                    });
+                    
                     var id = $scope.userData.userId;
                     var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
                     console.log("api: " + api);
@@ -426,9 +422,19 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
                                     "sessionRandomId": $scope.userData.sessionRandomId
                                 }); /* ### Note: Logout notification to server ### */
                             }
+                            SweetAlert.swal({
+                                title: "Logged Out",
+                                type: "success"
+        
+                            });
                         } else {
                             console.log("Sorry");
                             console.log(data.data.message);
+                            SweetAlert.swal({
+                                title: "Logged Out",
+                                type: "success"
+        
+                            });
                         }
                     })
                 } else {
