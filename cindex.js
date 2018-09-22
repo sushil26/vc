@@ -160,6 +160,7 @@ io.sockets.on('connection', function (socket) {
                 console.log("errr: " + JSON.stringify(err));
             }
             else {
+                console.log("sessionURLFindData: "+JSON.stringify(sessionURLFindData));
                 if (sessionURLFindData.length > 0) {
                     console.log("found url on careator master-->");
                     careatorMaster.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
