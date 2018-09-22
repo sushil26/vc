@@ -379,7 +379,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
             showCancelButton: true, // displays cancel btton
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Sure",
-            closeOnConfirm: true, //do not close popup after click on confirm, usefull when you want to display a subsequent popup
+            closeOnConfirm: false, //do not close popup after click on confirm, usefull when you want to display a subsequent popup
             closeOnCancel: false
         },
             function (isConfirm) { //Function that triggers on user action.
