@@ -2,10 +2,10 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
     console.log("Chat controller==>");
 
     careatorHttpFactory.getFile('property.json');
-    $scope.help_var =false;
-    $scope.home = function(){
+    $scope.help_var = false;
+    $scope.home = function () {
         console.log("home trigger-->");
-        window.location.href="https://vc4all.in";
+        window.location.href = "https://vc4all.in";
     }
 
     $scope.gotToDashboard = function () {
@@ -33,9 +33,74 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
         }
     }
 
-    $scope.closeNeedHelp = function(){
+    $scope.needHelp_click = function(){
+        console.log("needHelp_click-->");
+        console.log("$scope.help_var : "+$scope.help_var );
+        $scope.help_var = !$scope.help_var;
+        console.log("$scope.help_var : "+$scope.help_var );
+    }
+
+    $scope.closeNeedHelp = function () {
         console.log("closeNeedHelp-->");
+        console.log("$scope.help_var : "+$scope.help_var );
         $scope.help_var = false;
+        console.log("$scope.help_var : "+$scope.help_var );
+    }
+    $scope.needHelp_submit = function (formName, needHelp_name, needHelp_email, needHelp_query) {
+        console.log("needHelp_submit-->");
+        $scope.submitted=true; /* ### Note: Front end validation for check the form submission ### */
+        var obj = {};
+
+        if (formName.$valid) {
+            obj = {
+                "name": needHelp_name,
+                "email": needHelp_email,
+                "query": needHelp_query
+            }
+            console.log("obj: "+JSON.stringify(obj));
+            var api = "https://vc4all.in/c/careator_needHelp";
+            console.log("api: " + api);
+            careatorHttpFactory.post(api, obj).then(function (data) {
+                var checkStatus = careatorHttpFactory.dataValidation(data);
+                console.log("data--" + JSON.stringify(data.data));
+                if (checkStatus) {
+                    console.log("checkStatus: " + checkStatus);
+                   
+                    $scope.notifyMsg = data.data.message;
+                    console.log(" $scope.notifyMsg: " + $scope.notifyMsg);
+                    
+                    SweetAlert.swal({
+                        title: "Successfull",
+                        text: $scope.notifyMsg,
+                        type: "success"
+                    });
+                  
+                } else {
+                    console.log("checkStatus: " + checkStatus);
+                    $scope.notifyMsg = data.data.message;
+                    console.log(" $scope.notifyMsg: " + $scope.notifyMsg);
+                    // $("#alertButton").trigger("click");
+                    SweetAlert.swal({
+                        title: "Error",
+                        text: $scope.notifyMsg,
+                        type: "warning"
+                    });
+                    // alert(data.data.message);
+                }
+            })
+            $scope.help_var = false;
+
+
+        }
+
+        else {
+            SweetAlert.swal({
+                title: "Not valid",
+                text: "All the fields are required", //light text
+                type: "warning",
+            })
+        }
+     
     }
 
     $scope.getLogin_hostDetailsById = function (id) {
@@ -107,7 +172,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
     $scope.statusUpdate = function (status, id) {
         console.log("statusUpdate-->: " + status);
 
-        
+
         api = "https://vc4all.in/careator_profile/chatStatusUpdateById/" + id;
         console.log("api: " + api);
         var obj = {
@@ -384,7 +449,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
         },
             function (isConfirm) { //Function that triggers on user action.
                 if (isConfirm) {
-                    
+
                     var id = $scope.userData.userId;
                     var api = "https://vc4all.in/careator_loggedin/getLoggedinSessionURLById/" + id;
                     console.log("api: " + api);
@@ -425,7 +490,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
                             SweetAlert.swal({
                                 title: "Logged Out",
                                 type: "success"
-        
+
                             });
                         } else {
                             console.log("Sorry");
@@ -433,7 +498,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
                             SweetAlert.swal({
                                 title: "Logged Out",
                                 type: "success"
-        
+
                             });
                         }
                     })
@@ -524,8 +589,8 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
 
     $("#helpChat").click(function () {
         console.log("helpChat clicked-->");
-        $("#helpmodal").css({"display":"inline"})
-    
+        $("#helpmodal").css({ "display": "inline" })
+
     })
     /* #### End: Logout request from server(index.js) #### */
 

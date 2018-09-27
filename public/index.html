@@ -423,62 +423,74 @@ border-radius: 50%;
     <div id="loading-bar-container"></div>
 
 
-    <button class="help" ng-click="help_var=!help_var">
-      &nbsp; Need Help ?? &nbsp;
-    </button>
 
 
-    <div class="helpbox" ng-show="help_var" style="position: fixed;
-    left: 15px;
-    bottom: 15px; min-height: 350px;
-    z-index: 2;">
 
-      <div class="animated jello faster">
-        <div class="modal-dialog">
 
-          <div class="modal-content" style="background:none;color:#777;width:300px; border-radius: 8px;">
-            <div class="modal-header" style="padding-top: 15px;    background: #f8f8f8; height: 60px;">
-              <img style="width: 45px; float: left;" src="/home/img/fav.png" />
-              <span class="modal-title" style="font-size: 20px;
-              margin-top: 3px;
-              font-weight: 300;
-              float: left;
-              color: rgb(67, 67, 67);">&nbsp;Need Help ??</span>
-              <button type="button" class="close" ng-click="closeNeedHelp()">&times;</button>
-            </div>
-            <div class="modal-body" style="background:white;">
-              <input type="text" style="background: #000000b8;
-              border: none;
-              height: 40px;
-              color: #d1cece;"
-                class="form-control" placeholder="Name">
-              <br>
-              <input type="email" style="background: #000000b8;
-              border: none;
-              height: 40px;
-              color: #d1cece;"
-                class="form-control" placeholder="Email">
-
-              <br>
-              <textarea style="background: #000000b8;
-                border: none;
-                height: 80px;
-                color: #d1cece;"
-                class="form-control" placeholder="Query"></textarea>
-
-            </div>
-            <div class="modal-footer" style="padding: 15px; background: #f8f8f8;height: 60px;">
-              <button type="button" style="width:100px;background-color: #9abd3e;color:#f1f1f1;padding: 5px;" class="btn"
-              ng-click="closeNeedHelp()">Send</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
 
     <div id="page" ui-view>
+      <button class="help" ng-click="needHelp_click()">
+        &nbsp; Need Help ?? &nbsp;
+      </button>
+      <div class="helpbox" ng-show="help_var" style="position: fixed;
+      left: 15px;
+      bottom: 15px; min-height: 350px;
+      z-index: 2;">
+
+        <div class="animated jello faster">
+          <div class="modal-dialog">
+            <div class="modal-content" style="background:none;color:#777;width:300px; border-radius: 8px;">
+              <form name="needHelp_form">
+                <div class="modal-header" style="padding-top: 15px;    background: #f8f8f8; height: 60px;">
+                  <img style="width: 45px; float: left;" src="/home/img/fav.png" />
+                  <span class="modal-title" style="font-size: 20px;
+                margin-top: 3px;
+                font-weight: 300;
+                float: left;
+                color: rgb(67, 67, 67);">&nbsp;Need
+                    Help ??</span>
+                  <button type="button" class="close" ng-click="closeNeedHelp()">&times;</button>
+                </div>
+                <div class="modal-body" style="background:white;">
+                  <input type="text" style="background: #000000b8;
+                border: none;
+                height: 40px;
+                color: #d1cece;"
+                    name="nh_name" ng-model="needHelp_name" class="form-control" placeholder="Name" required>
+                  <span ng-show="(needHelp_form.nh_name.$touched || submitted) && needHelp_form.nh_name.$error.required"
+                    class="validation_fe">User
+                    Name is required</span>
+                  <br>
+                  <input type="email" style="background: #000000b8;
+                border: none;
+                height: 40px;
+                color: #d1cece;"
+                    name="nh_email" ng-model="needHelp_email" class="form-control" placeholder="Email" required>
+                  <span ng-show="(needHelp_form.nh_email.$touched || submitted) && needHelp_form.nh_email.$error.required"
+                    class="validation_fe">Email Id
+                    is required</span>
+                  <br>
+                  <textarea style="background: #000000b8;
+                  border: none;
+                  height: 80px;
+                  color: #d1cece;"
+                    name="nh_query" ng-model="needHelp_query" class="form-control" placeholder="Query/Message" required></textarea>
+                  <span ng-show="(needHelp_form.nh_query.$touched || submitted) && needHelp_form.nh_query.$error.required"
+                    class="validation_fe"> Query/Message
+                    is required</span>
+
+                </div>
+                <div class="modal-footer" style="padding: 15px; background: #f8f8f8;height: 60px;">
+                  <button type="button" style="width:100px;background-color: #9abd3e;color:#f1f1f1;padding: 5px;" class="btn"
+                    ng-click="needHelp_submit(needHelp_form, needHelp_name, needHelp_email, needHelp_query)">Send</button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
       <!--==========================
     Header
 ============================-->
@@ -905,11 +917,13 @@ border-radius: 50%;
                   Trial
                 </h2>
                 <div class="card-body cbb">
+                  <span style="display: -webkit-inline-box;  font-style: italic;">
+                    <h1 style="font-weight: 900;">Free</h1>
+                    <h6 style="margin-top: 20px;">&nbsp;&nbsp;For a Month</h6>
+                  </span>
 
                   <ul class="pricing-text" style="margin-left:-4rem; margin-top: 1rem;">
-                    <li>
-                      <strong>Free One Month</strong>
-                    </li>
+
                     <li>
                       <strong>3</strong> User Access</li>
                     <li>
@@ -952,12 +966,15 @@ border-radius: 50%;
                 <h2 class="heading" style="    background: #d5edb8;">
                   Start-up
                 </h2>
+
                 <div class="card-body cbb">
+                  <span style="display: -webkit-inline-box; font-style: italic;">
+                    <h1 style="font-weight: 900; ">INR 500 </h1>
+                    <h6 style="margin-top: 20px;">&nbsp;&nbsp;User/ Month</h6>
+                  </span>
 
                   <ul class="pricing-text" style="margin-left:-4rem; margin-top: 1rem;">
-                    <li>
-                      <strong>INR 500 / User/ Month</strong>
-                    </li>
+
                     <li>
                       <strong>10</strong> User Access</li>
                     <li>
@@ -1001,11 +1018,13 @@ border-radius: 50%;
                   SME
                 </h2>
                 <div class="card-body cbb">
+                  <span style="display: -webkit-inline-box;font-style: italic;">
+                    <h1 style="font-weight: 900;">INR 750 </h1>
+                    <h6 style="margin-top: 20px;">&nbsp;&nbsp;User/ Month</h6>
+                  </span>
 
                   <ul class="pricing-text" style="margin-left:-4rem; margin-top: 1rem;">
-                    <li>
-                      <strong>INR 750 / User/ Month</strong>
-                    </li>
+
                     <li>
                       <strong>25</strong> User Access</li>
                     <li>
@@ -1046,11 +1065,13 @@ border-radius: 50%;
                   Enterprise
                 </h2>
                 <div class="card-body cbb">
+                  <span style="display: -webkit-inline-box;font-style: italic;">
+                    <h1 style="font-weight: 900;">INR 1000 </h1>
+                    <h6 style="margin-top: 20px;">&nbsp;&nbsp;User/ Month</h6>
+                  </span>
 
                   <ul class="pricing-text" style="margin-left:-4rem; margin-top: 1rem;">
-                    <li>
-                      <strong>INR 1000 / User/ Month</strong>
-                    </li>
+
                     <li>
                       <strong>25+</strong> User Access</li>
                     <li>
@@ -1100,7 +1121,7 @@ border-radius: 50%;
             <h3 class="section-title"></h3>
           </div>
           <div class="row">
-            <div class="col-md-4" style="    padding: 25px;">
+            <div class="col-md-4" style="padding: 25px;">
               <ul>
                 <li>
 
@@ -1205,7 +1226,7 @@ border-radius: 50%;
       <div class="modal animated jello faster " id="crdntl" role="dialog">
         <div class="modal-dialog">
           <center>
-            <form>
+            <form ng-keyup="$event.keyCode == 13 && logVC(email, password)">
               <div class="modal-content" style="background:none;color:#777;max-width:450px; border-radius: 8px;">
                 <div class="modal-header" style="padding-top: 15px;    background: #f8f8f8; height: 60px;">
                   <img style="width: 45px; float: left;" src="/home/img/fav.png" />
@@ -1217,13 +1238,13 @@ border-radius: 50%;
                   <button type="button" class="close" data-dismiss="modal" ng-click="$close()">&times;</button>
                 </div>
                 <div class="modal-body">
-                  <input ng-keyup="$event.keyCode == 13 && logVC(email, Password)" type="email" style="background: #000000b8;
+                  <input ng-keyup="$event.keyCode == 13 && logVC(email, password)" type="email" style="background: #000000b8;
                   border: none;
                   height: 40px;
                   color: #d1cece;"
                     class="form-control" placeholder="Email" ng-model="email" id="crdEmail">
                   <br>
-                  <input ng-keyup="$event.keyCode == 13 && logVC(email, Password)" type="password" style="background: #000000b8;
+                  <input ng-keyup="$event.keyCode == 13 && logVC(email, password)" type="password" style="background: #000000b8;
                   border: none;
                   height: 40px;     color: #d1cece;"
                     id="crdPswd" class="form-control" placeholder="Password" ng-model="password">
@@ -1334,7 +1355,7 @@ border-radius: 50%;
         width: 70%;
         font-size: 25px;
         line-height: 1;
-        font-weight: 500;
+        font-weight: 200;
         padding: 12px 20px;
         color: #0e0e0e;
         border-radius: 0px 0px 10px 10px;

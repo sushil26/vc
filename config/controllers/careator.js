@@ -3514,3 +3514,33 @@ module.exports.getLoggedinSessionURLById = function (req, res) {
         res.status(400).send(response);
     }
 }
+
+module.exports.careator_needHelp = function (req, res) {
+    console.log("careator_needHelp-->");
+    console.log("req.body.email: "+req.body.email+" req.body.query: "+req.body.query);
+    if(general.emptyCheck(req.body.email) && general.emptyCheck(req.body.query))
+
+    var mailOptions = {
+        from: req.body.email,
+        to: "logeswari.g@careator.com",
+        subject: 'VC4ALL Credential',
+        html: "<table style='border:10px solid gainsboro;'><thead style='background-image: linear-gradient(to bottom, #00BCD4 0%, #00bcd40f 100%);'></thead><tfoot style=background:#00bcd4;color:white;><tr><td style=padding:15px;><p><p>Regards</p><b>Careator Technologies Pvt. Ltd</b></p></td></tr></tfoot><tbody><tr><td><b>Dear Careator Admin,</b></td></tr><tr><td><b>User Name : "+req.body.name+"</b></td></tr><tr><td>"+req.body.query+"</td></tr></tbody></table>"
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+            responseData = {
+                status: false,
+                message: "Try again"
+            };
+            res.status(200).send(responseData);
+        } else {
+            console.log("Email sent: " + info.response);
+            responseData = {
+                status: true,
+                message: "Successfully mail sent"
+            };
+            res.status(200).send(responseData);
+        }
+    });
+}
