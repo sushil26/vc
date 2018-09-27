@@ -519,6 +519,7 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
 
   $scope.sendText = function (typedMessage) {
     $("#comment").val("");
+   // $scope.typedMessage = typedMessage;
     console.log("sendText-->");
     //  console.log("chatFile: "+$scope.chatFile);
     console.log("typedMessage: " + typedMessage);
@@ -1312,13 +1313,7 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
     console.log("newMessage-back");
   });
   // /* ### End: Front end CSS ### */
-  $("#comment").keyup(function (event) {
-    if (event.keyCode === 13) {
-      // $(this).val('');
-      $("#sndmgs").click();
-      $("#comment").val("");
-    }
-  });
+ 
 
   ///Auto Scroll Down Chat////////////////
   $scope.scrollDown = function () {

@@ -4,6 +4,8 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
     $scope.userData = careatorSessionAuth.getAccess("userData");
     console.log(" $scope.userData : " + JSON.stringify($scope.userData));
     var orgId = $scope.userData.orgId;
+    //console.log("$scope.orgDatas: "+JSON.stringify($scope.orgDatas.domain));
+    console.log("$rootScope.orgDatas: " + JSON.stringify($rootScope.orgDatas));
 //console.log("$rootScope.orgDatas: "+JSON.stringify($rootScope.orgDatas));
     //$scope.domainName = $rootScope.orgDatas.domain;
 
@@ -46,7 +48,8 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
     $scope.careatorEmp = function (formName, fn, ln, empId, emailId, pswd, Designation, rights) {
         console.log("careatorEmp-->");
         $scope.submitted=true; /* ### Note: Front end validation for check the form submission ### */
-        if (formName.$valid) {
+        if (formName.$valid ) {
+            if(emailId.split('@')[1] == $scope.orgDatas.domain){
             console.log("name: " + name);
             var videoRights;
             var chatRights;
@@ -103,6 +106,16 @@ careatorApp.controller('createUsersCtrl', function ($scope, $rootScope, $state, 
                     // alert(data.data.message);
                 }
             })
+
+        }
+        else {
+            //alert("Fill all the required field");
+            SweetAlert.swal({
+                title: "Email id is Not Valied",
+                text: "Domain name mismatch",
+                type: "info"
+            });
+        }
         }
         else {
             //alert("Fill all the required field");

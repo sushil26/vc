@@ -75,7 +75,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <button class="heading-compose" id="newchatwin" ng-click="getAllChatRightEmp()" style="
+                                                    <button class="heading-compose" id="newchatwin" ng-click="getAllChatRightEmp()" style="
                                                         font-family: lato;
 
     padding: 5px;
@@ -276,8 +276,8 @@
                                     </div>
                                     <div class="col-sm-4 col-xs-3" style="float:right; margin-top: 10px;">
                                         <div class="form-group has-feedback" ng-if="chatListSection != undefined &&chatListSection != null">
-                                            <input id="composeText" type="text" class="form-control" ng-model="searchm" name="searchText" placeholder="Search text">
-                                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                            <!-- <input id="composeText" type="text" class="form-control" ng-model="searchtext" name="searchText" placeholder="Search text">
+                                            <span class="glyphicon glyphicon-search form-control-feedback"></span> -->
                                         </div>
                                     </div>
 
@@ -364,7 +364,7 @@
                                         </center>
                                     </div>
 
-                                    <div class="row message-body" ng-repeat="chat in allChat.chats | filter:searchm ">
+<div class="row message-body" ng-repeat="chat in allChat.chats">
                                         <div class="col-sm-12 message-main-receiver slideRight" ng-if="chat.senderId!=userId">
                                             <div ng-if="selectedType=='group'" style="background:#ddf8c6;
                                                 width: max-content;
@@ -390,7 +390,7 @@
                                                                 <img style="max-width:200px;" ng-src="{{chat.chatFile_src}}">
                                                             </div>
                                                             <div ng-if="chat.messageType!='file'" class="message-text">
-                                                                {{chat.message}}
+{{chat.message}}
                                                             </div>
                                                             <span class="message-time pull-right">
                                                                 {{chat.sendTime | amCalendar}}
@@ -425,7 +425,7 @@
                                     <div class="col-sm-9 col-xs-9 reply-main">
 
 
-                                        <textarea class="form-control" rows="1" id="comment" ng-model="typedMessage"></textarea>
+<textarea class="form-control" rows="1" id="comment" ng-keyup="$event.keyCode == 13 && sendText(typedMessage)" ng-model="typedMessage"></textarea>
                                     </div>
                                     <div class="col-sm-3 col-xs-3 reply-send">
 
@@ -436,17 +436,6 @@
 
                                             <input id="fileselect" value="Upload" style="display: none;" type="file" ngf-select ng-model="image" name="file" ngf-pattern="'image/*'"
                                                 accept="image/*" ngf-max-size="20MB" file-model="chatFile" />
-                                            <!-- <img style="width:100px;" ng-if="chatFile !=undefined" ngf-thumbnail="up.file || '/thumb.jpg'" />                                            
-                                            <i ng-show="upload_form.file.$error.required">*required</i><br>
-                                            <i ng-show="upload_form.file.$error.maxSize">File too large {{up.file.size/ 1000000|number:1}}MB:
-                                                max 20M</i> -->
-
-                                            <!-- <p>{{progress}} -->
-
-                                            <!-- <input id="fileselect" type="file" name="fileselect" style="display: none;" name="myImage" value="Upload" image-with-preview
-                                            file-model="chatFile" ng-model="image" accept="image/*" ng-required="true" /> -->
-
-
                                         </form>
                                         <span style="    position: absolute;
                                         left: 35px;
@@ -474,9 +463,6 @@
                                                 Send
                                             </button>
                                         </span>
-
-
-                                        <!-- <button class="btn btn-success" aria-hidden="true" id="sndmgs" ng-click="sendText()">Send</button> -->
                                     </div>
                                 </div>
                             </div>

@@ -80,10 +80,10 @@
                                                 <input type="email" ng-model="empEmail" name="employeeEmail" class="form-control smallerCase" required>
                                             </span>
                                             <span ng-show="(userCreate.employeeEmail.$touched || submitted) && userCreate.employeeEmail.$error.required" class="validation_fe">Email
-                                                Id is required (Ex:abc@{{organizationDomain}})</span>
+                                                Id is required</span>
                                                 
                                     <span ng-show="(userCreate.employeeEmail.$touched || submitted) && userCreate.employeeEmail.$invalid && userCreate.employeeEmail.$error.required!=true" class="validation_fe">You have to give valid input EX:abc@{{orgDatas.domain}}</span>
-                                    <span ng-show="adminEmail.split('@')[1]!=orgDatas.domain && userCreate.employeeEmail.$valid && userCreate.employeeEmail.$error.required!=true" class="validation_fe">You have to give you domain name for email EX:abc@{{orgDatas.domain}}</span>
+                                    <span ng-show="empEmail.split('@')[1]!=orgDatas.domain && userCreate.employeeEmail.$valid && userCreate.employeeEmail.$error.required!=true" class="validation_fe">You have to give you domain name for email EX:abc@{{orgDatas.domain}}</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
