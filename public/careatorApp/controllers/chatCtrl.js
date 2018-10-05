@@ -789,11 +789,13 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
     }
     else {
       console.log("File size allowed only upto 227Kb")
+      $scope.isChatFileSelected =false;
       SweetAlert.swal({
         title: "Not Allowed",
         text: "File size allowed only upto 227Kb",
         type: "info"
       });
+
     }
 
   };
