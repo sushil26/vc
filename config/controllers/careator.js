@@ -279,7 +279,7 @@ module.exports.pswdCheckForSesstion = function (req, res) {
         var obj = { "email": careatorEmail }
         console.log("obj: " + JSON.stringify(obj));
         careatorMaster.find(obj).toArray(function (err, findData) {
-            console.log("findData: " + JSON.stringify(findData));
+            //console.log("findData: " + JSON.stringify(findData));
             if (err) {
                 responseData = {
                     status: false,

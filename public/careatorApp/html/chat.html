@@ -20,16 +20,23 @@
                                                     <td style="width: 50px;">
                                                         <div class="col-sm-3 col-xs-3 sideBar-avatar">
                                                             <div class="avatar-icon">
-                                                                <img alt="User Pic" ng-if="chatStatus=='Available'" style="max-width: 49px; border: 2px solid yellowgreen;" ng-src="{{profilePicPath}}"
-                                                                    id="profile-image1" class="img-circle img-responsive">
-                                                                <img alt="User Pic" ng-if="chatStatus=='Busy'" style="max-width: 49px; border: 2px solid goldenrod;" ng-src="{{profilePicPath}}"
-                                                                    id="profile-image1" class="img-circle img-responsive">
-                                                                <img alt="User Pic" ng-if="chatStatus=='Hide'" style="max-width: 49px; border: 2px solid dimgray;" ng-src="{{profilePicPath}}"
-                                                                    id="profile-image1" class="img-circle img-responsive">
-                                                                <img alt="User Pic" ng-if="chatStatus=='Sleeping'" style="max-width: 49px; border: 2px solid black;" ng-src="{{profilePicPath}}"
-                                                                    id="profile-image1" class="img-circle img-responsive">
-                                                                <img alt="User Pic" ng-if="chatStatus=='Custom'" style="max-width: 49px; border: 2px solid #FFC107;" ng-src="{{profilePicPath}}"
-                                                                    id="profile-image1" class="img-circle img-responsive">
+                                                                <img alt="User Pic" ng-if="chatStatus=='Available'"
+                                                                    style="max-width: 49px; border: 2px solid yellowgreen;"
+                                                                    ng-src="{{profilePicPath}}" id="profile-image1"
+                                                                    class="img-circle img-responsive">
+                                                                <img alt="User Pic" ng-if="chatStatus=='Busy'" style="max-width: 49px; border: 2px solid goldenrod;"
+                                                                    ng-src="{{profilePicPath}}" id="profile-image1"
+                                                                    class="img-circle img-responsive">
+                                                                <img alt="User Pic" ng-if="chatStatus=='Hide'" style="max-width: 49px; border: 2px solid dimgray;"
+                                                                    ng-src="{{profilePicPath}}" id="profile-image1"
+                                                                    class="img-circle img-responsive">
+                                                                <img alt="User Pic" ng-if="chatStatus=='Sleeping'"
+                                                                    style="max-width: 49px; border: 2px solid black;"
+                                                                    ng-src="{{profilePicPath}}" id="profile-image1"
+                                                                    class="img-circle img-responsive">
+                                                                <img alt="User Pic" ng-if="chatStatus=='Custom'" style="max-width: 49px; border: 2px solid #FFC107;"
+                                                                    ng-src="{{profilePicPath}}" id="profile-image1"
+                                                                    class="img-circle img-responsive">
                                                             </div>
                                                         </div>
                                                     </td>
@@ -75,7 +82,8 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                    <button class="heading-compose" id="newchatwin" ng-click="getAllChatRightEmp()" style="
+                                                        <button class="heading-compose" id="newchatwin" ng-click="getAllChatRightEmp()"
+                                                            style="
                                                         font-family: lato;
 
     padding: 5px;
@@ -121,10 +129,12 @@
                                                                     </span>
                                                                     <br>
                                                                     <!-- <span class="time-meta">{{record.timeStamp | date:' d MMM h:mm a'}} -->
-                                                                    <span class="time-meta">{{record.timeStamp | amCalendar}}
+                                                                    <span class="time-meta">{{record.timeStamp |
+                                                                        amCalendar}}
                                                                     </span>
 
-                                                                    <span ng-if="record.unseenCount > 0" class="notify"> {{record.unseenCount}}</span>
+                                                                    <span ng-if="record.unseenCount > 0" class="notify">
+                                                                        {{record.unseenCount}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -133,10 +143,12 @@
                                                                 <div class="col-sm-8 col-xs-8 sideBar-name" ng-click="chatDetails('group', record._id, $index)">
                                                                     <span class="name-meta">{{record.groupName}}
                                                                     </span>
-                                                                    <span ng-if="record.unseenCount > 0" class="notify"> {{record.unseenCount}}</span>
+                                                                    <span ng-if="record.unseenCount > 0" class="notify">
+                                                                        {{record.unseenCount}}</span>
                                                                 </div>
                                                                 <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                                                    <span class="time-meta">{{record.timeStamp |amCalendar}}
+                                                                    <span class="time-meta">{{record.timeStamp
+                                                                        |amCalendar}}
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -162,8 +174,9 @@
 
                                     <div class="row composeBox">
                                         <div class="col-sm-12 composeBox-inner">
-                                            <div class="form-group has-feedback" >
-                                                <input id="composeText" type="text" class="form-control" ng-model="search" name="searchText" placeholder="Search People">
+                                            <div class="form-group has-feedback">
+                                                <input id="composeText" type="text" class="form-control" ng-model="search"
+                                                    name="searchText" placeholder="Search People">
                                                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                             </div>
                                         </div>
@@ -235,37 +248,46 @@
                                             <a class="heading-name-meta">{{individualData.groupName}}
                                             </a>&nbsp;&nbsp;&nbsp;
                                             <span>
-                                                <i data-toggle="modal" data-target="#myModal" class="fa fa-info-circle" ng-click=getGroupDetails(individualData.group_id)></i>
+                                                <i data-toggle="modal" data-target="#myModal" class="fa fa-info-circle"
+                                                    ng-click=getGroupDetails(individualData.group_id)></i>
                                             </span>
                                         </div>
                                         <a ng-if="selectedType=='individual_chats' && (individualData.senderId==undefined && individualData.receiverId==undefined)"
                                             class="heading-name-meta">{{individualData.firstName}}&nbsp;{{individualData.lastName}}
                                         </a>
-                                        <a ng-if="selectedType=='individual_chats' && individualData.senderId!=userId" class="heading-name-meta">{{individualData.senderName}}
+                                        <a ng-if="selectedType=='individual_chats' && individualData.senderId!=userId"
+                                            class="heading-name-meta">{{individualData.senderName}}
                                         </a>
-                                        <a ng-if="selectedType=='individual_chats' && individualData.receiverId!=userId" class="heading-name-meta">{{individualData.receiverName}}
+                                        <a ng-if="selectedType=='individual_chats' && individualData.receiverId!=userId"
+                                            class="heading-name-meta">{{individualData.receiverName}}
                                         </a>
-                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Available'" class="heading-status">
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Available'"
+                                            class="heading-status">
                                             <br>
                                             <i style="color: greenyellow;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
                                         </a>
-                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Busy'" class="heading-status">
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Busy'"
+                                            class="heading-status">
                                             <br>
                                             <i style="color: goldenrod;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
                                         </a>
-                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Hide'" class="heading-status">
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Hide'"
+                                            class="heading-status">
                                             <br>
                                             <i style="color: dimgray;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
                                         </a>
-                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Sleeping'" class="heading-status">
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Sleeping'"
+                                            class="heading-status">
                                             <br>
                                             <i style="color: black;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
                                         </a>
-                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Custom'" class="heading-status">
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Custom'"
+                                            class="heading-status">
                                             <br>
                                             <i style="color: #FFC107;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
                                         </a>
-                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Offline'" class="heading-status">
+                                        <a ng-if="selectedType=='individual_chats' &&  receiverChatStatus=='Offline'"
+                                            class="heading-status">
                                             <br>
                                             <i style="color: #FFC107;    font-size: 7px;" class="fa fa-circle"></i>&nbsp;{{receiverChatStatus}}
                                         </a>
@@ -294,7 +316,8 @@
                                         <div class="modal-content">
                                             <div class="modal-header" style="background: #1a3b56;">
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Group Partcipents({{groupData.groupMembers.length}})</h4>
+                                                <h4 class="modal-title">Group
+                                                    Partcipents({{groupData.groupMembers.length}})</h4>
                                             </div>
                                             <div class="modal-body" style="text-transform: capitalize;">
                                                 <table class="table table-striped">
@@ -309,7 +332,8 @@
                                                 </table>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" style="width: 60px !important;" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" style="width: 60px !important;" class="btn btn-default"
+                                                    data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
 
@@ -342,16 +366,16 @@
                                             background-clip: text;">
                                                 Welcome, {{loginUserName}}
                                             </h1>
-                                            <img alt="User Pic" ng-if="chatStatus=='Available'" style=" border: 2px solid yellowgreen;     max-width: 200px;" ng-src="{{profilePicPath}}"
-                                                id="profile-image1" class="img-circle img-responsive">
-                                            <img alt="User Pic" ng-if="chatStatus=='Busy'" style=" border: 2px solid goldenrod;     max-width: 200px;" ng-src="{{profilePicPath}}"
-                                                id="profile-image1" class="img-circle img-responsive">
-                                            <img alt="User Pic" ng-if="chatStatus=='Hide'" style=" border: 2px solid dimgray;     max-width: 200px;" ng-src="{{profilePicPath}}"
-                                                id="profile-image1" class="img-circle img-responsive">
-                                            <img alt="User Pic" ng-if="chatStatus=='Sleeping'" style=" border: 2px solid black;     max-width: 200px;" ng-src="{{profilePicPath}}"
-                                                id="profile-image1" class="img-circle img-responsive">
-                                            <img alt="User Pic" ng-if="chatStatus=='Custom'" style=" border: 2px solid #FFC107;     max-width: 200px;" ng-src="{{profilePicPath}}"
-                                                id="profile-image1" class="img-circle img-responsive">
+                                            <img alt="User Pic" ng-if="chatStatus=='Available'" style=" border: 2px solid yellowgreen;     max-width: 200px;"
+                                                ng-src="{{profilePicPath}}" id="profile-image1" class="img-circle img-responsive">
+                                            <img alt="User Pic" ng-if="chatStatus=='Busy'" style=" border: 2px solid goldenrod;     max-width: 200px;"
+                                                ng-src="{{profilePicPath}}" id="profile-image1" class="img-circle img-responsive">
+                                            <img alt="User Pic" ng-if="chatStatus=='Hide'" style=" border: 2px solid dimgray;     max-width: 200px;"
+                                                ng-src="{{profilePicPath}}" id="profile-image1" class="img-circle img-responsive">
+                                            <img alt="User Pic" ng-if="chatStatus=='Sleeping'" style=" border: 2px solid black;     max-width: 200px;"
+                                                ng-src="{{profilePicPath}}" id="profile-image1" class="img-circle img-responsive">
+                                            <img alt="User Pic" ng-if="chatStatus=='Custom'" style=" border: 2px solid #FFC107;     max-width: 200px;"
+                                                ng-src="{{profilePicPath}}" id="profile-image1" class="img-circle img-responsive">
                                             <br>
                                             <button class="" style="padding: 5px;
                                             box-shadow:  1px 2px 5px #0000004f;
@@ -364,7 +388,7 @@
                                         </center>
                                     </div>
 
-<div class="row message-body" ng-repeat="chat in allChat.chats">
+                                    <div class="row message-body" ng-repeat="chat in allChat.chats">
                                         <div class="col-sm-12 message-main-receiver slideRight" ng-if="chat.senderId!=userId">
                                             <div ng-if="selectedType=='group'" style="background:#ddf8c6;
                                                 width: max-content;
@@ -390,7 +414,7 @@
                                                                 <img style="max-width:200px;" ng-src="{{chat.chatFile_src}}">
                                                             </div>
                                                             <div ng-if="chat.messageType!='file'" class="message-text">
-{{chat.message}}
+                                                                {{chat.message}}
                                                             </div>
                                                             <span class="message-time pull-right">
                                                                 {{chat.sendTime | amCalendar}}
@@ -415,17 +439,20 @@
                                                 <span class="message-time pull-right">
                                                     {{chat.sendTime | amCalendar}}
                                                 </span>
+                                               
                                             </div>
                                         </div>
 
 
                                     </div>
                                 </div>
+
                                 <div class="row reply" ng-if="chatListSection != undefined &&chatListSection != null">
                                     <div class="col-sm-9 col-xs-9 reply-main">
 
 
-<textarea class="form-control" rows="1" id="comment" ng-keyup="$event.keyCode == 13 && sendText(typedMessage)" ng-model="typedMessage"></textarea>
+                                        <textarea class="form-control" rows="1" id="comment" ng-keyup="$event.keyCode == 13 && sendTextByHit()"
+                                            ng-model="chatMessage.typedMessage"></textarea>
                                     </div>
                                     <div class="col-sm-3 col-xs-3 reply-send">
 
@@ -434,13 +461,15 @@
                                         </label>
                                         <form name="upload_form">
 
-                                            <input id="fileselect" value="Upload" style="display: none;" type="file" ngf-select ng-model="image" name="file" ngf-pattern="'image/*'"
-                                                accept="image/*" ngf-max-size="20MB" file-model="chatFile" />
+                                            <input id="fileselect" value="Upload" style="display: none;" type="file"
+                                                ngf-select ng-model="image" name="file" ngf-pattern="'image/*'" accept="image/*"
+                                                ngf-max-size="20MB" file-model="chatFile" onchange="angular.element(this).scope().fileSelected_chat()"/>
                                         </form>
-                                        <span style="    position: absolute;
+                                        <span style="position: absolute;
                                         left: 35px;
                                         bottom: 10px;">
-                                            <button ng-if="chatFile != undefined" id="sndmgs" ng-click="sendTextWithFile(chatFile)" style="
+                                            <button ng-if="isChatFileSelected" id="sndmgs" ng-click="sendTextWithFile(chatFile)"
+                                                style="
                                         font-family: lato;  
                                         color: white;                   
                                          padding: 5px;
@@ -451,7 +480,8 @@
                                          padding-right: 10px;">
                                                 Send
                                             </button>
-                                            <button ng-if="chatFile == undefined" id="sndmgs" ng-click="sendText(typedMessage)" style="
+                                            <button ng-if="isChatFileSelected==false" id="sndmgs" ng-click="sendText()"
+                                                style="
                                         font-family: lato;  
                                         color:white;                   
                                          padding: 5px;
@@ -467,6 +497,7 @@
                                 </div>
                             </div>
                             <!-- ### End: Remote Profile Head ### -->
+
                         </div>
                     </div>
                 </section>
@@ -479,7 +510,8 @@
         <!-- ##### End audio play  ##### -->
 
     </section>
-    <button data-toggle="modal" data-target="#alertcreatuser" id="alertButton" data-backdrop="static" data-keyboard="false" style="display:none"></button>
+    <button data-toggle="modal" data-target="#alertcreatuser" id="alertButton" data-backdrop="static" data-keyboard="false"
+        style="display:none"></button>
 
 
     <div class="modal fade" id="alertcreatuser" role="dialog">
@@ -500,7 +532,8 @@
                             text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
                             -webkit-background-clip: text;
                             -moz-background-clip: text;
-                            background-clip: text;" class="btn" data-dismiss="modal">Ok</button>
+                            background-clip: text;"
+                                class="btn" data-dismiss="modal">Ok</button>
                         </div>
                     </div>
                 </form>

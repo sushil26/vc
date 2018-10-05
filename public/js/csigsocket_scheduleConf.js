@@ -498,7 +498,7 @@ function getChatBack() {
       console.log("chatData: " + JSON.stringify(chatData));
       for (var x = 0; x < chatData.chat.length; x++) {
         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">' +
-          chatData.chat[x].userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + chatData.chat[x].message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + chatData.chat[x].textTime + '</span></div>'
+          chatData.chat[x].userName + '</span></div><i class="fa fa-user" aria-hidden="true"></i><div class="content direct-chat-text new_windowAutoLink">' + chatData.chat[x].message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + chatData.chat[x].textTime + '</span></div>'
       }
     },
     error: function (err) {

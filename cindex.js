@@ -156,14 +156,16 @@ io.sockets.on('connection', function (socket) {
         }
         console.log("queryObj: " + JSON.stringify(queryObj));
         if(sessionURLTrack[socket.id]!=undefined){
-            careatorMaster.find(queryObj).toArray(function (err, sessionURLFindData) {
+            console.log("started to update left status");
+            careatorMaster.find({"instantConf.sessionURL":sessionURLTrack[socket.id]}).toArray(function (err, sessionURLFindData) {
+                console.log("sessionURLFindData.length: "+sessionURLFindData.length);
                 if (err) {
                     console.log("errr: " + JSON.stringify(err));
                 }
                 else {
                     if (sessionURLFindData.length > 0) {
                         console.log("found url on careator master-->");
-                        careatorMaster.update(queryObj, { $addToSet: { "leftEmails": emailTrack[socket.id] }, $pull: { "joinEmails": emailTrack[socket.id] } }, function (err, data) {
+                        careatorMaster.update({"instantConf.sessionURL":sessionURLTrack[socket.id]}, { $addToSet: { "instantConf.$.leftEmails": emailTrack[socket.id] }, $pull: { "instantConf.$.joinEmails": emailTrack[socket.id] } }, function (err, data) {
                             if (err) {
                                 console.log("errr: " + JSON.stringify(err));
                             }
@@ -224,15 +226,20 @@ io.sockets.on('connection', function (socket) {
             })
         }
         else {
+            console.log("Started to update isDisconnected field as yes")
             var queryObj = {
-                "_id": data.userId
+                "_id": data.userId,
+                
             }
-            careatorMaster.update(queryObj, { $set: { "isDisconnected": "yes" } }, function (err, data) {
+            console.log("queryObj: "+JSON.stringify(queryObj));
+            var sessionurl = "https://vc4all.in/vc4all_conf/"+data.deleteSessionId+"/"+data.queryTime;
+            console.log("sessionurl: "+sessionurl);
+            careatorMaster.update({"_id": ObjectId(data.userId), "instantConf.sessionURL": sessionurl}, { $set: { "instantConf.$.isDisconnected": "yes" } }, function (err, data) {
                 if (err) {
                     console.log("errr: " + JSON.stringify(err));
                 }
                 else {
-                    console.log("data: " + JSON.stringify(data));
+                    console.log("careator disconnect data: " + JSON.stringify(data));
                 }
             })
         }

@@ -12,7 +12,7 @@ font-family: Oswald;
     position: fixed;
     right: 10px;
     width: 300px;
-    height: 490px;
+    height: 350px;
 }
 /* .round.hollow {
     margin: 40px 0 0;
@@ -277,8 +277,8 @@ font-family: Oswald;
 
 
 .popup-box .popup-messages {
-    background: #dbe2dfa6  none repeat scroll 0 0;
-    height: 330px;
+    background: white;
+    height: 190px;
     overflow: auto;
 }
 .direct-chat-messages {

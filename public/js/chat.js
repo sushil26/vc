@@ -187,7 +187,7 @@ signaling_socket.on('newTextMsg', function (data) {
         /* ##### End Calling Get Time  ##### */
 
         document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-            + data.userName + '</span></div><i class="direct-chat-img" aria-hidden="true"></i><!-- /.direct-chat-img --><div class="content direct-chat-text new_windowAutoLink">' + data.message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + time + '</span></div>'
+            + data.userName + '</span></div><i class="fa fa-user" style="color: cornflowerblue;float: left;font-size: 30px;" aria-hidden="true"></i><div class="content direct-chat-text new_windowAutoLink">' + data.message + '</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">' + time + '</span></div>'
         autoLinkNeed();
         scrollDown();
         var chatOpen = $("#qnimate").hasClass("popup-box-on");
@@ -228,7 +228,7 @@ function appendFile(URI, type, name, queryId) {
         if (type === 'image') {
             console.log("image");
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><img src="' + URI + '" height="100px" /></div><div class="direct-chat-info clearfix"><span id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+                + name + '</span></div> <i class="fa fa-user" style="color: cornflowerblue;float: left;font-size: 30px;"></i><div class="direct-chat-text"><img src="' + URI + '" height="100px" /></div><div class="direct-chat-info clearfix"><span id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
 
             /* ##### Start Calling Get Time  ##### */
             DisplayCurrentTime(URI);
@@ -239,7 +239,7 @@ function appendFile(URI, type, name, queryId) {
             console.log("video-->");
 
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><video width="320" height="240" controls><source src="' + URI + '"></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+                + name + '</span></div><i class="fa fa-user" style="color: cornflowerblue;float: left;font-size: 30px;"></i><div class="direct-chat-text"><video width="320" height="240" controls><source src="' + URI + '"></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
 
             /* ##### Start Calling Get Time  ##### */
             DisplayCurrentTime(URI);
@@ -260,7 +260,7 @@ function appendFile(URI, type, name, queryId) {
             // save.dispatchEvent(event);
             // (window.URL || window.webkitURL).revokeObjectURL(save.href);
             document.getElementById('message-container').innerHTML += '<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'
-                + name + '</span></div> <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img --><div class="direct-chat-text"><a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
+                + name + '</span></div><i class="fa fa-user" style="color: cornflowerblue;float: left;font-size: 30px;"></i><div class="direct-chat-text"><a width="320" height="240" href=' + URI + ' target="_blank" download=' + URI + '><source src="' + URI + '">Download Here</a></div><div class="direct-chat-info clearfix"><span  id=' + URI + ' class="direct-chat-timestamp pull-right"></span></div>'
 
             /* ##### Start Calling Get Time  ##### */
             DisplayCurrentTime(URI);

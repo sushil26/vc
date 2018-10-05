@@ -1,6 +1,8 @@
 careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFactory, careatorSessionAuth, SweetAlert, $q) {
   console.log("chatCtrl==>");
   $scope.count = 0;
+  $scope.chatMessage = {typedMessage: ""} /* ### Note: $scope.chatMessage is text area variable of chat window  ### */
+  $scope.isChatFileSelected =false; /* ### Note: $scope.isChatFileSelected is watch whether file is uploading or not based on this send button function changes in chat  ### */
   var userData = careatorSessionAuth.getAccess("userData");
   $scope.userData = userData;
   $scope.loginUserName = userData.firstName + " " + userData.lastName;
@@ -516,11 +518,16 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
     );
     $scope.readText();
   };
+ 
 
-  $scope.sendText = function (typedMessage) {
+  $scope.sendText = function () {
     $("#comment").val("");
-   // $scope.typedMessage = typedMessage;
+    
     console.log("sendText-->");
+    if($scope.chatMessage.typedMessage!=""){
+      var typedMessage = $scope.chatMessage.typedMessage;
+      $scope.chatMessage.typedMessage = "";
+    //console.log("chatFile: " + JSON.stringify($scope.chatFile));
     //  console.log("chatFile: "+$scope.chatFile);
     console.log("typedMessage: " + typedMessage);
     var api;
@@ -545,6 +552,7 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
         careatorHttpFactory.post(api, obj).then(function (data) {
           console.log("data--" + JSON.stringify(data.data));
           var checkStatus = careatorHttpFactory.dataValidation(data);
+          $scope.chatMessage = {typedMessage: ""}
           if (checkStatus) {
             console.log("data.data.data: " + JSON.stringify(data.data.data));
             console.log(data.data.message);
@@ -583,7 +591,7 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
           receiverId: $scope.receiverData.receiverId,
           senderName: userData.firstName + " " + userData.lastName,
           receiverName: $scope.receiverData.receiverName,
-          message:typedMessage
+          message: typedMessage
         };
         console.log("obj: " + JSON.stringify(obj));
         careatorHttpFactory.post(api, obj).then(function (data) {
@@ -617,7 +625,7 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
           groupMembers: $scope.sendGroupText_withData.groupMembers,
           senderId: userData.userId,
           senderName: userData.firstName + " " + userData.lastName,
-          message:typedMessage
+          message: typedMessage
         };
         console.log("obj: " + JSON.stringify(obj));
         api = "https://vc4all.in//careator_groupText/groupText";
@@ -644,15 +652,21 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
         });
       }
     }
-  };
 
+  }
+  else{
+
+  }
+  };
 
   $scope.sendTextWithFile = function (chatFile) {
     $("#fileselect").val("");
     console.log("sendTextWithFile-->");
+    
 
     // if (upload_form.file.$valid && chatFile) { //check if from is valid
-
+    console.log("chatFile: " + chatFile);
+    console.log("$scope.chatFile: " + $scope.chatFile);
     console.log("chatFile: " + chatFile.size);
     if (chatFile.size <= 237069) {
       console.log("chatFilewithJson: " + JSON.stringify(chatFile));
@@ -667,11 +681,13 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
       careatorHttpFactory.chatUpload(api, obj).then(function (data) {
         console.log("hello " + JSON.stringify(data));
         var checkStatus = careatorHttpFactory.dataValidation(data);
+        //$scope.chatFile = undefined;
+        $scope.isChatFileSelected =false;
         //   $scope.progress = 'progress: ' + progress + '% '; // capture upload progress
         if (checkStatus) {
           var uploadResponse = data.data;
           console.log("$scope.photo" + JSON.stringify(uploadResponse));
-          $scope.chatFile = undefined;
+
           /* ##### Start send file info  ##### */
 
           var api;
@@ -781,6 +797,23 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
     }
 
   };
+
+  $scope.sendTextByHit = function(){
+    console.log("sendTextByHit-->");
+    console.log("$scope.chatMessage.typedMessage: "+$scope.chatMessage.typedMessage);
+    if($scope.chatMessage.typedMessage!="" && $scope.chatMessage.typedMessage!=undefined)
+    {
+      $scope.sendText();
+    }
+    else{
+
+    }
+    
+  }
+  $scope.fileSelected_chat = function(){
+    console.log("fileSelected_chat -->");
+    $scope.isChatFileSelected =true;
+  }
 
   $scope.getFileFRomGridfs = function (x, id) {
     console.log("getFileFRomGridfs-->");
@@ -1313,7 +1346,7 @@ careatorApp.controller("chatCtrl", function ($scope, $rootScope, careatorHttpFac
     console.log("newMessage-back");
   });
   // /* ### End: Front end CSS ### */
- 
+
 
   ///Auto Scroll Down Chat////////////////
   $scope.scrollDown = function () {

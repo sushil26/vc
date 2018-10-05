@@ -34,6 +34,7 @@ careatorApp.controller("careatorCommAppCtrl", function ($scope, $state, careator
     }
 
     $scope.needHelp_click = function(){
+        $(".helpbox").css({"display":"inline"})
         console.log("needHelp_click-->");
         console.log("$scope.help_var : "+$scope.help_var );
         $scope.help_var = !$scope.help_var;
