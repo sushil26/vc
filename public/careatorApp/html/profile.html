@@ -13,13 +13,16 @@
 
                     <div class="panel-body bio-graph-info" style="padding: 15px; margin: 0px !important;">
 
-                        <div class="row" style="border: 5px solid white; background-image:url('/careatorApp/css/bc.jpg');background-position: center;margin-top: -15px;    background-size: cover;">
+                        <div class="row"
+                            style="border: 5px solid white; background-image:url('/careatorApp/css/bc.jpg');background-position: center;margin-top: -15px;    background-size: cover;">
 
                             <div class="col-md-6" style="padding: 10px;">
                                 <div align="center">
 
-                                    <img alt="User Pic" style="width: 35%;" ng-src="{{profilePicPath}}" id="profile-image1"  class="img-circle img-responsive">
-                                    <div style="color:#999;cursor: pointer;" ng-click="profilpic()">click here to change profile image</div>
+                                    <img alt="User Pic" style="width: 35%;" ng-src="{{profilePicPath}}"
+                                        id="profile-image1" class="img-circle img-responsive">
+                                    <div style="color:#999;cursor: pointer;" ng-click="profilpic()">click here to change
+                                        profile image</div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -29,7 +32,8 @@
                                 padding: 5px;
                                 color: #333;
                                 border-bottom-right-radius: 10px;
-                                border-top-left-radius: 10px;">{{userDetails.firstName}}&nbsp;{{userDetails.lastName}}</h2>
+                                border-top-left-radius: 10px;">{{userDetails.firstName}}&nbsp;{{userDetails.lastName}}
+                                </h2>
                                 <span>
                                     <p style="BACKGROUND: #33333352;
                                     width: max-content;
@@ -45,11 +49,13 @@
                         <div class="row" id="uploadlocal" style="display: none;">
 
                             <div class="col-md-6">
-                                <input type="file" id="fileInput" class="btn btn-warning" name="logo" value="Upload" onchange="angular.element(this).scope().uploadFile(this.files[0])"
+                                <input type="file" id="fileInput" class="btn btn-warning" name="logo" value="Upload"
+                                    onchange="angular.element(this).scope().uploadFile(this.files[0])"
                                     ng-click="fileUploadClick('profile_picPath')" accept="image/jpeg,image/png">
                                 <div class="cropArea">
-                                    <img-crop image="myImage.originalImage" result-image="myImage.croppedImage" result-blob="myImage.resBlob" area-type="rectangle"
-                                        area-min-size="100" area-init-size="100" result-image-format="png" result-image-size="200"
+                                    <img-crop image="myImage.originalImage" result-image="myImage.croppedImage"
+                                        result-blob="myImage.resBlob" area-type="rectangle" area-min-size="100"
+                                        area-init-size="100" result-image-format="png" result-image-size="200"
                                         aspect-ratio="1" init-max-area="false" allow-crop-resize-on-corners="false">
                                     </img-crop>
                                 </div>
@@ -68,10 +74,12 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <button class="btn btn-info" ng-click="schoolLogoStorage()" style="float: right;">Save</button>
+                                            <button class="btn btn-info" ng-click="schoolLogoStorage()"
+                                                style="float: right;">Save</button>
                                         </td>
                                         <td>
-                                            <button class="btn btn-info" ng-click="Cancel()" style="float: left;">Cancel</button>
+                                            <button class="btn btn-info" ng-click="Cancel()"
+                                                style="float: left;">Cancel</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -87,7 +95,7 @@
                                     <table class="table table-hover">
                                         <tr>
                                             <td>
-                                                <div style="float: right;"> Name :</div>
+                                                <div style="text-align: left;"> Name :</div>
 
                                             </td>
                                             <td style="color:#00b1b1;">
@@ -96,7 +104,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <div style="float: right;">
+                                                <div style="text-align: left;">
                                                     Email ID : </div>
 
                                             </td>
@@ -106,7 +114,7 @@
                                         </tr>
                                         <tr ng-if="loginType=='employee'">
                                             <td>
-                                                <div style="float: right;">
+                                                <div style="text-align: left;">
                                                     Employee ID : </div>
 
                                             </td>
@@ -117,7 +125,7 @@
 
                                         <tr ng-if="userDetails.videoRights=='yes' && userDetails.chatRights=='yes'">
                                             <td>
-                                                <div style="float: right;">
+                                                <div style="text-align: left;">
                                                     Access : </div>
                                             </td>
                                             <td style="color:#00b1b1;">
@@ -126,7 +134,7 @@
                                         </tr>
                                         <tr ng-if="userDetails.videoRights=='yes' && userDetails.chatRights=='no'">
                                             <td>
-                                                <div style="float: right;">
+                                                <div style="text-align: left;">
                                                     Access : </div>
                                             </td>
                                             <td style="color:#00b1b1;">
@@ -135,7 +143,7 @@
                                         </tr>
                                         <tr ng-if="userDetails.videoRights=='no' && userDetails.chatRights=='yes'">
                                             <td>
-                                                <div style="float: right;">
+                                                <div style="text-align: left;">
                                                     Access : </div>
                                             </td>
                                             <td style="color:#00b1b1;">
@@ -144,7 +152,7 @@
                                         </tr>
                                         <tr ng-if="group.groupName">
                                             <td>
-                                                <div style="float: right;">
+                                                <div style="text-align: left;">
                                                     Group(s) : </div>
 
                                             </td>
