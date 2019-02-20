@@ -9,7 +9,20 @@
     <link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <script src="/home/lib/jquery/jquery.min.js"></script>
-    <link href="/home/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- <link href="/home/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <!-- Libraries CSS Files -->
     <link href="/home/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/home/lib/animate/animate.min.css" rel="stylesheet">
@@ -28,7 +41,7 @@
             border-radius: 5px;
             background: white;
         }
-      
+
 
         @media only screen and (max-width: 600px) {
             .screenShareBtn_Class {
@@ -252,7 +265,8 @@
                             </a>
                         </td>
                         <td>
-                            <a id="emailInvitation" style="display:none;" class="bcg" data-toggle="modal" data-target="#invitePeople">
+                            <a id="emailInvitation" style="display:none;" class="bcg" data-toggle="modal"
+                                data-target="#invitePeople">
                                 <button id="inv" class="bouncy fa fa-plus">
                                 </button>
                                 <center>
@@ -262,7 +276,8 @@
                         </td>
                         <td>
                             <a id="screenShareBtn" class="bcg">
-                                <button id="screenBtns" style="display:none;" class="bouncy fa fa-window-restore"></button>
+                                <button id="screenBtns" style="display:none;"
+                                    class="bouncy fa fa-window-restore"></button>
                                 <center>
                                     <div class="mtitle w3-animate-right">Screen</div>
                                 </center>
@@ -397,7 +412,8 @@
                                             <span style="color:#ff1a2f;">Opera</span> Browser:</b>
                                     </li>
                                     <li> Install Opera Extension.
-                                        <a href="https://addons.opera.com/en-gb/extensions/details/download-chrome-extension-9/?display=en" target="_blank">
+                                        <a href="https://addons.opera.com/en-gb/extensions/details/download-chrome-extension-9/?display=en"
+                                            target="_blank">
                                             <button class="btnn fa fa-download">
                                                 Click Here</button>
                                     </li>
@@ -421,28 +437,36 @@
                     <div class="col-lg-12" id="extension">
                         <div id="videoConferenceLinkExtention">
                             <div class="form-group">
-                                <div class="col-sm-12" style="display:none" style="overflow:hidden;text-overflow:ellipsis;">
+                                <div class="col-sm-12" style="display:none"
+                                    style="overflow:hidden;text-overflow:ellipsis;">
                                     <a style="color:black;" style="display:none" id="linkToShare"> </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <button data-toggle="modal" data-target="#alertcreator" id="alertButton" data-backdrop="static" data-keyboard="false" style="display:none"></button>
+                        <button data-toggle="modal" data-target="#alertcreator" id="alertButton" data-backdrop="static"
+                            data-keyboard="false" style="display:none"></button>
                         <div class="modal fade" id="alertcreator" role="dialog">
                             <div class="modal-dialog">
                                 <center>
                                     <form>
-                                        <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
-                                            <div class="modal-header" style=" display: table;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                                                <img style="width: 45px;margin-top: -15px;margin-left: -190px;" src="/home/img/fav.png" />
+                                        <div class="modal-content"
+                                            style="color:#777;max-width:350px; border-radius: 8px;">
+                                            <div class="modal-header"
+                                                style=" display: table;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px;margin-top: -15px;margin-left: -190px;"
+                                                    src="/home/img/fav.png" />
                                                 <span class="modal-title" style="font-weight: 200;">Message</span>
                                             </div>
                                             <div class="modal-body">
-                                                <label id="alertcontent" style="color:indianred;font-size: 20px;"></label>
+                                                <label id="alertcontent"
+                                                    style="color:indianred;font-size: 20px;"></label>
                                             </div>
-                                            <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Ok</button>
+                                            <div class="modal-footer"
+                                                style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
+                                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1"
+                                                    class="btn" data-dismiss="modal">Ok</button>
                                             </div>
                                         </div>
                                     </form>
@@ -450,22 +474,29 @@
                             </div>
                         </div>
 
-                        <button data-toggle="modal" data-target="#alertforsessionclose" id="alertConfirmationButton" data-backdrop="static" data-keyboard="false"
-                            style="display:none"></button>
+                        <button data-toggle="modal" data-target="#alertforsessionclose" id="alertConfirmationButton"
+                            data-backdrop="static" data-keyboard="false" style="display:none"></button>
                         <div class="modal fade" id="alertforsessionclose" role="dialog">
                             <div class="modal-dialog">
                                 <center>
                                     <form>
-                                        <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
-                                            <div class="modal-header" style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                                                <img style="width: 45px; margin-top: -15px;margin-left: -170px;" src="/home/img/fav.png" />
+                                        <div class="modal-content"
+                                            style="color:#777;max-width:350px; border-radius: 8px;">
+                                            <div class="modal-header"
+                                                style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px; margin-top: -15px;margin-left: -170px;"
+                                                    src="/home/img/fav.png" />
                                                 <span class="modal-title" style="font-weight: 200;">Message</span>
                                             </div>
                                             <div class="modal-body">
-                                                <label id="notify_msg_confirm_content" style="color:indianred;font-size: 20px;">The link you are trying its not alive</label>
+                                                <label id="notify_msg_confirm_content"
+                                                    style="color:indianred;font-size: 20px;">The link you are trying its
+                                                    not alive</label>
                                             </div>
-                                            <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1" data-dismiss="modal" class="btn">ok</button>
+                                            <div class="modal-footer"
+                                                style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
+                                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1"
+                                                    data-dismiss="modal" class="btn">ok</button>
                                             </div>
                                         </div>
                                     </form>
@@ -473,28 +504,34 @@
                             </div>
                         </div>
 
-                        <button data-toggle="modal" data-target="#remoteJoin" id="setName" data-backdrop="static" data-keyboard="false" style="display:none">Set Name</button>
+                        <button data-toggle="modal" data-target="#remoteJoin" id="setName" data-backdrop="static"
+                            data-keyboard="false" style="display:none">Set Name</button>
                         <!-- <button data-toggle="modal" data-target="#myEmailModal" id="enterEmail" data-backdrop="static" data-keyboard="false" style="display:none">Set Name</button> -->
-                        <button data-toggle="modal" data-target="#myPasswordModal" id="enterPswd" data-backdrop="static" data-keyboard="false" style="display:none">Enter Password</button>
-                        <button data-toggle="modal" data-target="#notify_msg" id="notify_msg_button" data-backdrop="static" data-keyboard="false"
-                            style="display:none"></button>
-                        <button data-toggle="modal" data-target="#notify_msg_show" id="notify_msg_show_button" data-backdrop="static" data-keyboard="false"
-                            style="display:none"></button>
+                        <button data-toggle="modal" data-target="#myPasswordModal" id="enterPswd" data-backdrop="static"
+                            data-keyboard="false" style="display:none">Enter Password</button>
+                        <button data-toggle="modal" data-target="#notify_msg" id="notify_msg_button"
+                            data-backdrop="static" data-keyboard="false" style="display:none"></button>
+                        <button data-toggle="modal" data-target="#notify_msg_show" id="notify_msg_show_button"
+                            data-backdrop="static" data-keyboard="false" style="display:none"></button>
 
                         <div class="modal fade" id="notify_msg_show" role="dialog">
                             <div class="modal-dialog">
                                 <center>
                                     <form>
                                         <div class="modal-content" style="color:#777;max-width:350px;">
-                                            <div class="modal-header" style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                                                <img style="width: 45px;margin-top: -15px; margin-left: -150px;" src="/home/img/fav.png" />
+                                            <div class="modal-header"
+                                                style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px;margin-top: -15px; margin-left: -150px;"
+                                                    src="/home/img/fav.png" />
                                                 <span class="modal-title"></span>Message
                                             </div>
                                             <div class="modal-body">
                                                 <label id="notify_msg_show_content" style="color:red"></label>
                                             </div>
                                             <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                                <button type="button" onclick="triggerforLogin()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Ok</button>
+                                                <button type="button" onclick="triggerforLogin()"
+                                                    style="background-color: #29b6bd;color:#f1f1f1"
+                                                    class="btn">Ok</button>
                                             </div>
                                         </div>
                                     </form>
@@ -508,16 +545,21 @@
                                 <center>
                                     <form>
                                         <div class="modal-content" style="color:#777;max-width:350px;">
-                                            <div class="modal-header" style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                                                <img style="width: 45px;margin-top: -15px; margin-left: -150px;" src="/home/img/fav.png" />
+                                            <div class="modal-header"
+                                                style="display: inline-table; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px;margin-top: -15px; margin-left: -150px;"
+                                                    src="/home/img/fav.png" />
                                                 <span class="modal-title"></span>Message
                                             </div>
                                             <div class="modal-body">
                                                 <label id="notify_msg_content" style="color:red"></label>
                                             </div>
                                             <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                                <button id="resetBtn" type="button" onclick="resetLoginFlag()" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Reset</button>
-                                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn" data-dismiss="modal">Ok</button>
+                                                <button id="resetBtn" type="button" onclick="resetLoginFlag()"
+                                                    style="background-color: #29b6bd;color:#f1f1f1"
+                                                    class="btn">Reset</button>
+                                                <button type="button" style="background-color: #29b6bd;color:#f1f1f1"
+                                                    class="btn" data-dismiss="modal">Ok</button>
                                             </div>
                                         </div>
                                     </form>
@@ -529,15 +571,20 @@
                                 <center>
                                     <div class="modal-content" style="color:#777;max-width:350px;">
                                         <div class="modal-header" style="background-color: #1c3852;">
-                                            <h4 class="modal-title" style="font-size: 15px;">Please enter your email and one time password</h4>
+                                            <h4 class="modal-title" style="font-size: 15px;">Please enter your email and
+                                                one time password</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <input type="email" class="form-control" placeholder="Enter your email" id="remote_userName">
+                                            <input type="email" class="form-control" placeholder="Enter your email"
+                                                id="remote_userName">
                                             <br>
-                                            <input type="password" class="form-control" placeholder="Enter your one time password" id="remote_password">
+                                            <input type="password" class="form-control"
+                                                placeholder="Enter your one time password" id="remote_password">
                                         </div>
                                         <div class="modal-footer" style="border-top:0px;background-color: #f5f5f5;">
-                                            <button id="setNameId" type="button" style="background-color: #29b6bd;color:#f1f1f1" class="btn">Submit</button>
+                                            <button id="setNameId" type="button"
+                                                style="background-color: #29b6bd;color:#f1f1f1"
+                                                class="btn">Submit</button>
                                         </div>
                                     </div>
                                 </center>
@@ -573,18 +620,26 @@
                             <div class="modal-dialog">
                                 <center>
                                     <form>
-                                        <div class="modal-content" style="color:#777;max-width:350px; border-radius: 8px;">
-                                            <div class="modal-header" style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                                                <img style="width: 45px; margin-top: -15px;margin-left: -170px;" src="/home/img/fav.png" />
-                                                <span class="modal-title" style="font-weight: 200;">Please enter password which you got from email</span>
+                                        <div class="modal-content"
+                                            style="color:#777;max-width:350px; border-radius: 8px;">
+                                            <div class="modal-header"
+                                                style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <img style="width: 45px; margin-top: -15px;margin-left: -170px;"
+                                                    src="/home/img/fav.png" />
+                                                <span class="modal-title" style="font-weight: 200;">Please enter
+                                                    password which you got from email</span>
                                             </div>
                                             <div class="modal-body">
 
-                                                <input type="password" class="form-control" placeholder="Enter your Password" id="ppswd">
+                                                <input type="password" class="form-control"
+                                                    placeholder="Enter your Password" id="ppswd">
 
                                             </div>
-                                            <div class="modal-footer" style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
-                                                <button type="button" id="sub" onclick="checkPassword()" style="background-color: #29b6bd;color:#f1f1f1" class="btn-info">Submit</button>
+                                            <div class="modal-footer"
+                                                style="padding-top: 15px;background-image: linear-gradient(to bottom, #202224 0%, #383c3f 100%);">
+                                                <button type="button" id="sub" onclick="checkPassword()"
+                                                    style="background-color: #29b6bd;color:#f1f1f1"
+                                                    class="btn-info">Submit</button>
                                             </div>
                                         </div>
                                     </form>
@@ -598,23 +653,31 @@
                                 <center>
                                     <form onSubmit="return false;">
                                         <div class="modal-content" style="border-radius: 8px;">
-                                            <div class="modal-header  loginpopUp_header" style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                            <div class="modal-header  loginpopUp_header"
+                                                style="display: table-caption;padding-top: 15px;background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
                                                 <!-- <img style="width: 45px; margin-top: -15px;margin-left: -170px;" src="/home/img/fav.png" /> -->
-                                                <span class="modal-title" style="font-weight: 200; color: white;float: left;">
+                                                <span class="modal-title"
+                                                    style="font-weight: 200; color: white;float: left;">
                                                     <b>&nbsp;Enter Participants Email</b>
                                                 </span>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <button type="button" class="close"
+                                                    data-dismiss="modal">&times;</button>
                                             </div>
                                             <div class="modal-body">
 
-                                                <input type="textarea" class="form-control" size="45" placeholder="Email  to Invite" required id="emailInvite">
+                                                <input type="textarea" class="form-control" size="45"
+                                                    placeholder="Email  to Invite" required id="emailInvite">
                                                 <br>
-                                                <span style="color:blue; font-size:12px;">*Note: Multiple email should separated by comma (Ex:abc@gmail.com, xyz@gmail.com)</span>
+                                                <span style="color:blue; font-size:12px;">*Note: Multiple email should
+                                                    separated by comma (Ex:abc@gmail.com, xyz@gmail.com)</span>
                                                 <label id="info" style="color:blue"></label>
 
                                             </div>
-                                            <div class="modal-footer loginpopUp_footer" style=" border-bottom-right-radius:5px;  border-bottom-left-radius:5px; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
-                                                <button type="button" id="invitebutton" onclick="emailInviteSend()" style="background-color: #29b6bd;color:#f1f1f1" class="btn-primary">Invite</button>
+                                            <div class="modal-footer loginpopUp_footer"
+                                                style=" border-bottom-right-radius:5px;  border-bottom-left-radius:5px; background-image: linear-gradient(to bottom, #383c3f 0%, #202224 100%);">
+                                                <button type="button" id="invitebutton" onclick="emailInviteSend()"
+                                                    style="background-color: #29b6bd;color:#f1f1f1"
+                                                    class="btn-primary">Invite</button>
                                             </div>
                                         </div>
                                     </form>
@@ -635,39 +698,45 @@
                                 <tr>
                                     <td>
                                         <i class="fa fa-check" aria-hidden="true"></i>
-                                        <a href="http://www.careator.com/mobile-aplication-development-india.php" target="_blank">
+                                        <a href="http://www.careator.com/mobile-aplication-development-india.php"
+                                            target="_blank">
                                             Mobility Services </a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <i class="fa fa-check" aria-hidden="true"></i>
-                                        <a href="http://www.careator.com/business-intelligence-services-india.php" target="_blank">
+                                        <a href="http://www.careator.com/business-intelligence-services-india.php"
+                                            target="_blank">
                                             BI Services</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <i class="fa fa-check" aria-hidden="true"></i>
-                                        <a href="http://www.careator.com/professional-services-india.php" target="_blank">Professional Services</a>
+                                        <a href="http://www.careator.com/professional-services-india.php"
+                                            target="_blank">Professional Services</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <i class="fa fa-check" aria-hidden="true"></i>
-                                        <a href="http://www.careator.com/software-aplication-development-india.php" target="_blank"> Application Development</a>
+                                        <a href="http://www.careator.com/software-aplication-development-india.php"
+                                            target="_blank"> Application Development</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <i class="fa fa-check" aria-hidden="true"></i>
-                                        <a href="http://www.careator.com/custom-product-development-india.php" target="_blank">Custom Product Development </a>
+                                        <a href="http://www.careator.com/custom-product-development-india.php"
+                                            target="_blank">Custom Product Development </a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <i class="fa fa-check" aria-hidden="true"></i>
-                                        <a href="http://www.careator.com/software-testing-india.php" target="_blank">Testing Services </a>
+                                        <a href="http://www.careator.com/software-testing-india.php"
+                                            target="_blank">Testing Services </a>
                                     </td>
                                 </tr>
                             </table>
@@ -738,7 +807,9 @@
                                         <input id="fileselect" type="file" name="fileselect" />
                                     </div>
                                 </button>
-                                <button class="btn" id="sndmgs" style=" color:#f1f1f1; background-color:#0a425f;float:right;" onclick="sendMessage()">
+                                <button class="btn" id="sndmgs"
+                                    style=" color:#f1f1f1; background-color:#0a425f;float:right;"
+                                    onclick="sendMessage()">
                                     <span class="fa fa-paper-plane"></span>
                                 </button>
                             </div>
@@ -767,7 +838,8 @@
                             </textarea>
                         </div>
                         <div class="modal-footer" style="border-top:0px; padding: 15px;">
-                            <button id="crdsubmit" type="button" style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
+                            <button id="crdsubmit" type="button"
+                                style="background-color: #29b6bd;color:#f1f1f1; width: 100%; height:50px;" class="btn"
                                 onclick="momVC()" data-dismiss="modal">Submit</button>
                         </div>
                     </div>
@@ -975,24 +1047,31 @@
             0% {
                 border-radius: 999px 999px;
             }
+
             5% {
                 border-radius: 999px 200px;
             }
+
             22% {
                 border-radius: 400px 999px;
             }
+
             34% {
                 border-radius: 999px 700px;
             }
+
             48% {
                 border-radius: 700px 999px;
             }
+
             70% {
                 border-radius: 999px 999px;
             }
+
             85% {
                 border-radius: 850px 999px;
             }
+
             100% {
                 border-radius: 999px 999px;
             }
